@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http;
+using LatteMarche.WebApi.App_Start;
 
 namespace LatteMarche.WebApi
 {
@@ -11,7 +12,10 @@ namespace LatteMarche.WebApi
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            WebConfig.RegisterRoutes(RouteTable.Routes);
+
+			AutoFacConfig.Configure();
+			AutoMapperConfig.Configure();
         }
     }
 }
