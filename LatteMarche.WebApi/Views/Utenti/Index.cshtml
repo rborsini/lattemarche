@@ -1,0 +1,158 @@
+﻿<div class="row">
+    <a class="btn btn-primary margin-right-15 margin-bottom-20 pull-right" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Aggiungi</a>
+</div>
+<table id="utenti-table" class="table table-striped table-hover table-bordered">
+    <thead class="blue-table">
+        <tr>
+            <th>Cognome</th>
+            <th>Nome</th>
+            <th>Rag.Sociale</th>
+            <th>Login</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        var url = apiUrl + 'api/utenti';
+        var rowToRemove = null;
+
+        $('#waiter').modal('show');
+
+        var table = $('#utenti-table').dataTable({
+            "lengthMenu": [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
+            "pageLength": 20,
+            //"dom": '<"toolbar">frtip',
+            "retrieve": true,
+            "bPaginate": true,
+            "language": {
+                "sEmptyTable": "Nessun dato presente nella tabella",
+                "sInfo": "Vista da _START_ a _END_ di _TOTAL_ righe",
+                "sInfoEmpty": "Vista da 0 a 0 di 0 righe",
+                "sInfoFiltered": "(filtrati da _MAX_ righe totali)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ",",
+                "sLengthMenu": "Visualizza _MENU_ righe",
+                "sLoadingRecords": "Caricamento...",
+                "sProcessing": "Elaborazione...",
+                "sSearch": "Cerca:",
+                "sZeroRecords": "La ricerca non ha portato alcun risultato.",
+                "oPaginate": {
+                    "sFirst": "Inizio",
+                    "sPrevious": "Precedente",
+                    "sNext": "Successivo",
+                    "sLast": "Fine"
+                },
+                "oAria": {
+                    "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
+                    "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+                }
+            },
+            "columns": [
+                { "data": "Cognome" },
+                { "data": "Nome" },
+                { "data": "RagioneSociale" },
+                { "data": "Login" },
+                {
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return '<a class="edit" href="' + webUrl + 'Utenti/Details?key=' + row.Id + '" >Dettaglio</a>';
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return '<a class="delete" data-id="' + row.Id + '" href="javascript:;" >Elimina_non_implementato</a>';
+                    }
+                },
+            ]
+        });
+
+        // Caricamento dati JSON
+        $.getJSON(url, function (result) {
+
+            $('#waiter').modal('hide');
+
+            table.fnClearTable();
+            if (result.length > 0) {
+                table.fnAddData(result);
+            }
+            table.fnDraw();
+
+            // Click elimina riga tabella
+            $('#utenti-table tbody').on('click', 'tr .delete', function () {
+                rowToRemove = $(this).parents('tr');
+                $('#delete-dialog').data('id', $(this).data('id'));
+                $('#delete-dialog').modal('show');
+            });
+
+
+            // Conferma eliminazione riga tabella
+            $('.delete-dialog .confirm').unbind("click").click(function (event) {
+
+                var id = $('#delete-dialog').data('id');
+
+                $.ajax({
+                    type: "DELETE",
+                    url: apiUrl + "api/utenti/delete?id=" + id,
+                    dataType: 'text',
+                    success: function (result) {
+
+                        $('#waiter').modal('hide');
+
+                        if (result.length == 0) {
+                            table.fnDeleteRow(rowToRemove);
+                            showMsg('Info', 'Utente eliminato correttamente.');
+                        } else {
+                            showError(result[0]);
+                        }
+                    },
+                    error: function () {
+                        $('#waiter').modal('hide');
+                        showError();
+                    }
+                });
+
+            });
+
+        });
+
+        //invio event
+        $("body").keypress(function (event) {
+
+            if (event.which == 13) {
+
+                if ($('#dialog-panel').is(':visible')) {
+                    $('#dialog-panel').find('button').trigger('click');
+                }
+
+                if ($('#delete-dialog').is(':visible')) {
+                    $('#delete-dialog').find('.confirm').trigger('click');
+                }
+
+            }
+        });
+
+        // esc event
+        $(document).keyup(function (e) {
+
+            if (e.keyCode == 27) { // escape key maps to keycode `27`
+
+                if ($('#delete-dialog').hasClass('in')) {
+
+                    // conferma eliminazione utente
+                    $('#delete-dialog').find('.cancel').trigger('click');
+
+                }
+
+            }
+        });
+
+    });
+
+</script>

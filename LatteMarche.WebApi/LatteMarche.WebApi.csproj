@@ -154,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="lattemarche-dev - Web Deploy.pubxml" />
+    <Content Include="Views\Utenti\Details.cshtml" />
+    <Content Include="Views\Utenti\New.cshtml" />
+    <Content Include="Views\Utenti\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
