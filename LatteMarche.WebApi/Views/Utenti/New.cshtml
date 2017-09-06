@@ -1,1 +1,366 @@
-﻿TODO
+﻿@using LatteMarche.WebApi.Models
+
+<!-- Pannello conferma avvenuto salvataggio -->
+@Html.Partial("_NotificationDialog", new DialogViewModel()
+{
+    Id = "save-dialog-panel",
+    Title = "Conferma salvataggio",
+    Message = "L'utente è stato salvato correttamente"
+})
+
+
+<!-- BEGIN SAMPLE FORM PORTLET-->
+<div id="detail-panel" class="portlet light">
+    <div class="portlet-body form">
+        <div id="knockout-container" role="tabpanel" class="form-body padding-top-20">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tab-1" aria-controls="tab-serbatoio" role="tab" data-toggle="tab">Nuovo utente</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content padding-top-20">
+
+                <!-- Tab 1 -->
+                <div role="tabpanel" class="tab-pane active" id="tab-1">
+
+                    <!-- Ragione sociale -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Ragione sociale
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:RagioneSociale, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Username -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Username
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Username, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nome -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Nome
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Nome, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cognome -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Cognome
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Cognome, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profilo -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Profilo(scelta multipla TODO)
+                            </label>
+                            <div class="col-xs-10">
+                                <!--  <input type="text" class="form-control" data-bind="value:Profilo, valueUpdate:'keypress'" />-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sesso -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Sesso
+                            </label>
+                            <div class="col-xs-2">
+                                <select data-bind="value: Sesso, select2: {allowClear: true}" class="form-control">
+                                    <option value=""></option>
+                                    <option value="M">Maschio</option>
+                                    <option value="F">Femmina</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  P.IVA - Codice Fiscale -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                P.IVA - Codice Fiscale
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:PivaCF, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Indirizzo -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Indirizzo
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Indirizzo, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Provincia e comune -->
+                    <div class="row form-group">
+                        <label class="col-xs-3 control-label">
+                            Prov
+                        </label>
+                        <div class="col-xs-1">
+                            <select class="provincia form-control" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}"></select>
+                        </div>
+                        <label class="col-xs-3 control-label">
+                            Comune di residenza
+                        </label>
+                        <div class="col-xs-5">
+                            <select class="comune form-control" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}"></select>
+                        </div>
+                    </div>
+
+                    <!--  Telefono -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Telefono
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Telefono, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Cellulare -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Cellulare
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:Cellulare, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Codice allevatore	 -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Codice allevatore
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:CodiceAllevatore	, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Tipo di latte	 -->
+                    <div class="row form-group">
+                        <label class="col-xs-2 control-label">
+                            Tipo di latte
+                        </label>
+                        <div class="col-xs-4">
+                            <select data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <!--  Quota Latte (Kg) -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Quota Latte (Kg)
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Comunicazione Quota Latte n°	 -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Comunicazione Quota Latte n°
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Note -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Note
+                            </label>
+                            <div class="col-xs-10">
+                                <textarea class="form-control" rows="5" data-bind="value:Note, valueUpdate:'keypress'"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <!-- Password -->
+                    <div class="row form-group">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <label class="col-xs-1 control-label">
+                                Password
+                            </label>
+                            <div class="col-xs-10">
+                                <input type="password" class="form-control" data-bind="value:Password, valueUpdate:'keypress'" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="validation-messages">
+
+                <dl class="col-xs-8 col-xs-offset-2 padding-top-30 padding-left-20 ">
+                    <!-- ko foreach: ValidationMessages -->
+                    <dd><h5><strong><span class="text-danger" data-bind="text: messageText"></span></strong></h5></dd>
+                    <!-- /ko -->
+                </dl>
+
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <div class="col-xs-9 col-xs-offset-2 ">
+                <button id="save" class="btn btn-primary pull-right margin-left-20">
+                    Salva
+                </button>
+                <button id="cancel" class="btn btn-primary pull-right margin-left-20">
+                    Annulla
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        var viewModel = {
+            Username: ko.observable(),
+            Nome: ko.observable(''),
+            Cognome: ko.observable(''),
+            RagioneSociale: ko.observable(''),
+            Sesso: ko.observable(),
+            PivaCF: ko.observable(''),
+
+            Indirizzo: ko.observable(''),
+            ProvinciaSelezionata: ko.observable(''),
+            ComuneSelezionato: ko.observable(''),
+            Telefono: ko.observable(''),
+            Cellulare: ko.observable(''),
+            CodiceAllevatore: ko.observable(''),
+            IdTipoLatte: ko.observable(''),
+            QuantitaLatte: ko.observable(''),
+            NumeroComunicazione: ko.observable(''),
+            Note: ko.observable(''),
+
+            Provincie: ko.observableArray(''),
+            Comuni: ko.observableArray(''),
+            TipiLatte: ko.observableArray(''),
+
+            Id: ko.observable(''),
+            Password: ko.observable(''),
+
+
+            ValidationMessages: ko.observableArray()
+        };
+
+        ko.applyBindings(viewModel);
+
+        $('#save').click(function () {
+            $('#waiter').modal('show');
+            var model = ko.mapping.toJS(viewModel);
+
+            $.ajax({
+                type: "POST",
+                url: apiUrl + "api/utenti/create",
+                data: model,
+                dataType: 'text',
+                success: function (result) {
+                    viewModel.ValidationMessages.removeAll();
+                    for (var i = 0; i < result.length; i++) {
+                        viewModel.ValidationMessages.push({ messageText: '- ' + result[i] });
+                    }
+
+                    $('#waiter').modal('hide');
+
+                    if (result.length == 0) {
+                        $('#save-dialog-panel').modal('show');
+                    }
+                },
+                error: function (e) {
+                    $('#waiter').modal('hide');
+                    showError('Si è verificato un errore durante il salvataggio.');
+                }
+            });
+        });
+
+        $("#cancel").click(function () {
+            window.location = webUrl + 'Utenti';
+        });
+
+        $('#save-dialog-panel .ok').click(function () {
+            window.location = webUrl + 'Utenti';
+        });
+
+        // invio event
+        $("body").keypress(function (event) {
+
+            if (event.which == 13) {
+
+                if ($('#dialog-panel').hasClass('in')) {
+
+                    // pannello errore imprevisto
+                    $('#dialog-panel .ok').trigger('click');
+
+                } else if ($('#save-dialog-panel').hasClass('in')) {
+
+                    // salvato correttamente
+                    $('#save-dialog-panel .ok').trigger('click');
+
+                } else if ($('#save').is(":visible")) {
+
+                    // salvataggio
+                    $('#save').trigger('click');
+                }
+
+            }
+        });
+
+    });
+
+</script>

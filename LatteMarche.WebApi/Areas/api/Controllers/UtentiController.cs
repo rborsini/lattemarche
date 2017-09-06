@@ -74,6 +74,21 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [HttpPost]
+        public IHttpActionResult Create([FromBody] UtenteDto model)
+        {
+            try
+            {
+                var users = this.utentiService.Create(model);
+                return Ok(model);
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
 
         #endregion
 
