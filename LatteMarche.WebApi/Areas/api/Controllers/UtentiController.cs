@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -30,13 +32,9 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [HttpGet]
         public IHttpActionResult Index()
         {
-            //List<string> users = new List<string>();
-
-            //users.Add("pippo");
-
             try
             {
-				var users = this.utentiService.Index();
+                var users = this.utentiService.Index();
 				return Ok(users);                
             }
             catch(Exception exc)
@@ -44,8 +42,38 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(exc);
             }
 
+        }
+
+        [HttpGet]
+        public IHttpActionResult Details(int id)
+        {
+            try
+            {
+                var users = this.utentiService.Index();
+                return Ok(this.utentiService.Details(id));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
 
         }
+
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] UtenteDto model)
+        {
+            try
+            {
+                var users = this.utentiService.Update(model);
+                return Ok(model);
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
 
         #endregion
 

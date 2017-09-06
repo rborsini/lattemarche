@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.WebApi", "LatteMarche.WebApi\LatteMarche.WebApi.csproj", "{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}"
 EndProject
@@ -9,6 +9,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.EntityFramework", "LatteMarche.EntityFramework\LatteMarche.EntityFramework.csproj", "{939A98BB-3372-4BBC-8A9C-213113AEE01C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Application", "LatteMarche.Application\LatteMarche.Application.csproj", "{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Utils", "ActivityLibrary1\LatteMarche.Utils.csproj", "{64314C9F-14DB-4387-A7F4-F07EC1CD7A7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64314C9F-14DB-4387-A7F4-F07EC1CD7A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64314C9F-14DB-4387-A7F4-F07EC1CD7A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64314C9F-14DB-4387-A7F4-F07EC1CD7A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64314C9F-14DB-4387-A7F4-F07EC1CD7A7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

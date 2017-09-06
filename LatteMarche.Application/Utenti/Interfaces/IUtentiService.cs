@@ -9,7 +9,7 @@ namespace LatteMarche.Application.Utenti.Interfaces
     public interface IUtentiService : IEntityService<Utente, int, UtenteDto>
 	{
 
-		//bool ValidateUser(string username, string password);
+		bool ValidateUser(string username, string password);
 
 		//void SetPasswordHash(string username, string passwordHash);
 
@@ -17,12 +17,14 @@ namespace LatteMarche.Application.Utenti.Interfaces
 
 		//void SetRole(string username, string role);
 
-		//string ChangePassword(string username, string oldPassword, string password, string rePassword);
+		string ChangePassword(string username, string oldPassword, string password, string rePassword);
 
-		//string ResetPassword(string email);
+        //string ResetPassword(string email);
 
-		//string NewPassword(string resetPasswordId, string password, string rePassword);
+        //string NewPassword(string resetPasswordId, string password, string rePassword);
 
-	}
+        Utente GetByUsername(string username);
+
+    }
 
 }

@@ -110,11 +110,13 @@
   <ItemGroup>
     <Folder Include="Areas\api\Models\" />
     <Folder Include="Areas\web\Models\" />
+    <Folder Include="Content\" />
     <Folder Include="Attributes\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -128,6 +130,8 @@
     <Compile Include="Areas\api\Controllers\UtentiController.cs" />
     <Compile Include="Controllers\PippoController.cs" />
     <Compile Include="Controllers\PippiController.cs" />
+    <Compile Include="Models\DialogViewModel.cs" />
+    <Compile Include="Models\BreadcrumbViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\app\js\dashboard.js" />
@@ -683,6 +687,9 @@
     <Content Include="Views\Utenti\Details.cshtml" />
     <Content Include="Views\Utenti\New.cshtml" />
     <Content Include="Views\Utenti\Index.cshtml" />
+    <Content Include="Views\Shared\_ConfirmDialog.cshtml" />
+    <Content Include="Views\Shared\_NotificationDialog.cshtml" />
+    <Content Include="Views\Shared\_ItemNotFound.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
