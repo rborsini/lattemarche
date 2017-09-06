@@ -1,4 +1,29 @@
-﻿<div class="row">
+﻿@using LatteMarche.WebApi.Models
+
+@*
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Amministrazione" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Utenti" });
+    }
+
+    @* Breadcrumb *@@*
+    @Html.Partial("_Breadcrumb", bm)
+}
+*@
+<!-- Pannello conferma eliminazione riga excel -->
+@Html.Partial("_ConfirmDialog", new DialogViewModel()
+{
+    Id = "delete-dialog",
+    ClassName = "delete-dialog",
+    Title = "Conferma eliminazione",
+    Message = "Sei sicuro di voler eliminare l'utente selezionato?"
+})
+
+<div class="row">
     <a class="btn btn-primary margin-right-15 margin-bottom-20 pull-right" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Aggiungi</a>
 </div>
 <table id="utenti-table" class="table table-striped table-hover table-bordered">

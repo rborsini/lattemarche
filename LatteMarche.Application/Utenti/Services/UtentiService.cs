@@ -112,10 +112,34 @@ namespace LatteMarche.Application.Utenti.Services
 		{
             dbEntity.Nome = viewEntity.Nome;
             dbEntity.Cognome = viewEntity.Cognome;
+            dbEntity.PivaCF = viewEntity.PivaCF;
+            dbEntity.Indirizzo = viewEntity.Indirizzo;
+            dbEntity.IdProfilo = viewEntity.IdProfilo;
+            dbEntity.RagioneSociale = viewEntity.RagioneSociale;
+            dbEntity.CodiceAllevatore = viewEntity.CodiceAllevatore;
+            dbEntity.QuantitaLatte = viewEntity.QuantitaLatte;
+            dbEntity.Telefono = viewEntity.Telefono;
+            dbEntity.Cellulare = viewEntity.Cellulare;
+            dbEntity.Sesso = viewEntity.Sesso;
+            dbEntity.IdTipoLatte = viewEntity.IdTipoLatte;
+            dbEntity.NumeroComunicazione = viewEntity.NumeroComunicazione;
+            dbEntity.Note = viewEntity.Note;
 
-			return dbEntity;
+            return dbEntity;
 		}
-        
+
+        public override UtenteDto Details(int key)
+        {
+            UtenteDto utenteDto = null;
+            Utente utente = this.repository.GetById(key);
+            if (utente != null)
+            {
+                utenteDto = ConvertToDto(utente);
+            }
+
+            return utenteDto;
+        }
+
         #endregion
     }
 

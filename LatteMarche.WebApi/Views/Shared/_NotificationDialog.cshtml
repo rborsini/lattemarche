@@ -1,0 +1,18 @@
+﻿@using LatteMarche.WebApi.Models
+@model DialogViewModel
+
+<div class="modal fade @Model.ClassName" id="@Model.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">@Model.Title</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Model.Message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default ok" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
