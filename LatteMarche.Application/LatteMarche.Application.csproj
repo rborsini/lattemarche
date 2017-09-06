@@ -48,6 +48,10 @@
     <Compile Include="Utenti\Services\UtentiService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActivityLibrary1\LatteMarche.Utils.csproj">
+      <Project>{64314c9f-14db-4387-a7f4-f07ec1cd7a7f}</Project>
+      <Name>LatteMarche.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">
       <Project>{7399BB9D-FA00-400E-B9F8-C78751CE153F}</Project>
       <Name>LatteMarche.Core</Name>
@@ -60,6 +64,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

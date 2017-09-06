@@ -24,7 +24,7 @@ namespace LatteMarche.Core.Models
         public string Indirizzo { get; set; }
 
         [Column("LOGIN")]
-        public string Login { get; set; }
+        public string Username { get; set; }
 
         [Column("PASSWORD")]
         public string Password { get; set; }
@@ -46,5 +46,26 @@ namespace LatteMarche.Core.Models
 
         [Column("QUANTITA_LATTE")]
         public int QuantitaLatte { get; set; }
+
+        [Column("TELEFONO")]
+        public string Telefono { get; set; }
+
+        [Column("CELLULARE")]
+        public string Cellulare { get; set; }
+
+        [Column("ID_COMUNE")]
+        public int IdComune { get; set; }
+
+        [Column("SESSO")]
+        public string Sesso { get; set; }
+
+        [Column("ID_TIPO_LATTE")]
+        public int IdTipoLatte { get; set; }
+
+        [Column("NUMERO_COMUNICAZIONE")]
+        public string NumeroComunicazione { get; set; }
+
+        [Column("NOTE")]
+        public string Note { get; set; }
     }
 }
