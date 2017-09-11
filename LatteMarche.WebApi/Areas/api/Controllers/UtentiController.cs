@@ -30,6 +30,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
+        [HttpPost]
         public IHttpActionResult Index()
         {
             try
