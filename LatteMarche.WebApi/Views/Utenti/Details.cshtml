@@ -274,7 +274,7 @@
     </div>
 </div>*@
 
-<div class="col-lg-12">
+<div class="col-lg-12" id="detail-panel">
     <div class="m-portlet">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
@@ -330,17 +330,10 @@
                         Sesso:
                     </label>
                     <div class="col-lg-3">
-                        <div class="m-radio-inline">
-                            <label class="m-radio m-radio--solid">
-                                <input type="radio" name="example_2" checked="" value="2">
-                                Maschio
-                                <span></span>
-                            </label>
-                            <label class="m-radio m-radio--solid">
-                                <input type="radio" name="example_2" value="2">
-                                Femmina
-                                <span></span>
-                            </label>
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                            <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Sesso</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Sesso, select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
                         </div>
                     </div>
                     <label class="col-lg-2 col-form-label">
@@ -371,7 +364,7 @@
                 </label>
                 <div class="col-lg-1">
                     <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left"></span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Prov.</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                     </div>
                         <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
                     </div>
