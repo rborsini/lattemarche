@@ -3887,17 +3887,19 @@ body.m--skin-dark {
 
 .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link {
   color: #898b96; }
-  .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last {
-    color: #716aca;
-    background: #edecf8; }
+    .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last {
+        color: #36a3f7;
+        background: #edecf8;
+    }
     .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first:hover, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev:hover, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next:hover, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last:hover {
       background: #deddf3; }
   .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link:hover {
     color: #716aca;
     background: #edecf8; }
-  .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--active {
-    background: #716aca;
-    color: #ffffff; }
+    .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--active {
+        background: #36a3f7;
+        color: #ffffff;
+    }
 
 .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-pager-input {
   background: #edecf8;
@@ -16650,7 +16652,7 @@ select.m-select2 {
     transition: all 0.3s ease;
     -webkit-box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.5);
     -moz-box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.5);
-    box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.5); }
+    box-shadow: 0px 1px 15px 1px #36a3f7; }
     .m-header .m-header__top {
       padding: 0;
       position: relative;
