@@ -31,7 +31,7 @@
 })
 
 <!-- BEGIN SAMPLE FORM PORTLET-->
-<div id="detail-panel" class="portlet light">
+@*<div id="detail-panel" class="portlet light" style="padding-top:15em;padding-left:10em">
     <div class="portlet-body form">
         <div id="knockout-container" role="tabpanel" class="form-body padding-top-20">
 
@@ -249,7 +249,7 @@
                 </div>
 
                 <!-- Tab - Assegnazione ruoli -->
-                <div role="tabpanel" class="tab-pane" id="tab-ruoli" <!--data-bind="foreach: Ruoli"-->>
+                <div role="tabpanel" class="tab-pane" id="tab-ruoli" <!--data-bind="foreach: Ruoli"-->
                     TODO
                     <!--
                     <div class="row form-group">
@@ -258,38 +258,208 @@
                         </div>
                         <a data-bind="attr: {href: Link}"><span class="col-xs-2" data-bind="text: Title"></span></a>
                     </div>-->
-
                 </div>
-
 
             </div>
 
             <div id="validation-messages">
-
                 <dl class="col-xs-8 col-xs-offset-2 padding-top-30 padding-left-20 ">
                     <!-- ko foreach: ValidationMessages -->
                     <dd><h5><strong><span class="text-danger" data-bind="text: messageText"></span></strong></h5></dd>
                     <!-- /ko -->
                 </dl>
+            </div>
 
+        </div>
+    </div>
+</div>*@
+
+<div class="col-lg-12">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Dettaglio Utente Allevatore
+                    </h3>
+                </div>
             </div>
         </div>
-
-        <div class="form-actions">
-            <div class="col-xs-9 col-xs-offset-2 ">
-                <button id="save" class="btn btn-primary pull-right margin-left-20">
-                    Salva
-                </button>
-                <button id="cancel" class="btn btn-primary pull-right margin-left-20">
-                    Annulla
-                </button>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Ragione Sociale:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci ragione sociale" data-bind="value:RagioneSociale, valueUpdate:'keypress'">
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Nome:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo nome" data-bind="value:Nome, valueUpdate:'keypress'">
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Cognome:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo cognome" class="form-control" data-bind="value:Cognome, valueUpdate:'keypress'">
+                        </div>
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Username:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci username" data-bind="value:Username, valueUpdate:'keypress', enable:false">
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Sesso:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-radio-inline">
+                            <label class="m-radio m-radio--solid">
+                                <input type="radio" name="example_2" checked="" value="2">
+                                Maschio
+                                <span></span>
+                            </label>
+                            <label class="m-radio m-radio--solid">
+                                <input type="radio" name="example_2" value="2">
+                                Femmina
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        P.Iva - CF:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci P.Iva - CF" data-bind="value:PivaCF, valueUpdate:'keypress'">
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Indirizzo:
+                </label>
+                <div class="col-lg-3">
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo indirizzo" data-bind="value:Indirizzo, valueUpdate:'keypress'">
+                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                        </span>
+                    </div>
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Provincia:
+                </label>
+                <div class="col-lg-1">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left"></span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona Città" aria-expanded="false"><span class="filter-option pull-left">Città</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Telefono:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Telefono, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Cellulare:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Cellulare, valueUpdate:'keypress'" placeholder="Inserisci numero di cellulare">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Codice Allevatore:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore	, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Tipo di Latte:
+                </label>
+                <div class="col-lg-3">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona tipo di Latte" aria-expanded="false"><span class="filter-option pull-left">Seleziona tipo di Latte</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" class="form-control" title="Air &amp; pill style" tabindex="-98"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Quota del Latte (Kg):
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Comunicazione Quota Latte N°:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" placeholder="Inserisci comunicazione quota">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Note:
+                </label>
+                <div class="col-lg-8">
+                    <textarea class="form-control m-input m-input--pill m-input--air" data-bind="value:Note, valueUpdate:'keypress'" id="exampleTextarea" rows="3"></textarea>
+                </div>
+            </div>
 
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-10">
+                            <button type="reset" class="btn m-btn--pill m-btn--air         btn-info">
+                                Salva
+                            </button>
+                            <button type="reset" class="btn m-btn--pill m-btn--air         btn-danger">
+                                Annulla
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
     </div>
 </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
     jQuery(document).ready(function () {
 
@@ -321,13 +491,13 @@
 
             Id:ko.observable(''),
 
-            //gestire province, comuni, tipi latte,  
+            //gestire province, comuni, tipi latte,
 
             //Ruoli: ko.observableArray(''),
 
             ValidationMessages: ko.observableArray('')
         };
-       
+
         // apre il tab selezionato nella query string
         $('#tabs a[href="' + window.location.hash + '"]').tab('show');
 
@@ -369,14 +539,14 @@
              //   viewModel.Ruoli = ko.mapping.fromJS(result.Ruoli);
 
                 ko.applyBindings(viewModel);
-                
+
 
             } else {
                 $('#detail-panel').addClass('hide');
                 $('#not-found-panel').removeClass('hide');
             }
         });
-        
+
 
         $('#save').click(function () {
             $('#waiter').modal('show');
@@ -438,4 +608,4 @@
 
     });
 
-</script>
+    </script>

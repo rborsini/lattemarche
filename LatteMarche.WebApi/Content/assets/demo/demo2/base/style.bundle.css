@@ -5878,8 +5878,9 @@ code {
     box-shadow: 0px 5px 10px 2px rgba(244, 81, 108, 0.26); }
 
 .btn.btn-default, .btn.btn-secondary {
-  background: white;
-  border-color: #ebedf2; }
+    background: white;
+    border-color: rgba(0, 0, 0, 0.15);
+}
   .btn.btn-default i, .btn.btn-secondary i {
     color: #6f727d; }
   .btn.btn-default:hover, .btn.btn-default.active, .btn.btn-default:active, .btn.btn-default:focus,
@@ -13383,7 +13384,7 @@ code {
   padding-top: 15px;
   padding-bottom: 15px; }
   .m-form .m-form__group label {
-    font-weight: 400; }
+    font-weight: 600; }
     .m-form .m-form__group label.col-form-label {
       padding-top: 0.65rem; }
   .m-form .m-form__group.m-form__group--first, .m-form .m-form__group:first-child {
@@ -13446,7 +13447,9 @@ code {
   margin: 0; }
 
 .m-form .m-form__actions {
-  padding: 30px; }
+  padding: 30px;
+  margin-top: 20px;
+}
   .m-form .m-form__actions:before, .m-form .m-form__actions:after {
     content: " ";
     display: table; }
@@ -13478,7 +13481,7 @@ code {
 
 .m-form.m-form--group-seperator-dashed .m-form__group, .m-form.m-form--group-seperator .m-form__group {
   padding-top: 25px;
-  padding-bottom: 25px; }
+  padding-bottom: 0px; }
 
 .m-form .form-control-feedback {
   margin-top: 0.2rem; }
@@ -13491,8 +13494,6 @@ code {
   .m-form.m-form--group-seperator .m-form__group.m-form__group--last, .m-form.m-form--group-seperator .m-form__group:last-child {
     border-bottom: 0; }
 
-.m-form.m-form--group-seperator-dashed .m-form__group {
-  border-bottom: 1px dashed #ebedf2; }
   .m-form.m-form--group-seperator-dashed .m-form__group.m-form__group--last, .m-form.m-form--group-seperator-dashed .m-form__group:last-child {
     border-bottom: 0; }
 
@@ -14987,11 +14988,12 @@ select.m-bootstrap-select {
       filter: alpha(opacity=80) ; }
 
 .bootstrap-select.btn-group.show > .dropdown-toggle.btn-default, .bootstrap-select.btn-group.show > .dropdown-toggle.btn-secondary {
-  border-color: #716aca !important;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  background-color: transparent; }
+    border-color: #36a3f7 !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: transparent;
+}
 
 .bootstrap-select.btn-group .dropdown-menu.inner > li > a .text {
   color: #3f4047; }

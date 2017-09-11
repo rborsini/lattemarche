@@ -75,13 +75,14 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
   display: block; }
 
 body {
-  margin: 0;
-  font-family: "Poppins";
-  font-size: 1rem;
-  font-weight: normal;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #fff; }
+    margin: 0;
+    font-family: "Poppins";
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #f2f9ff;
+}
 
 [tabindex="-1"]:focus {
   outline: none !important; }
@@ -515,7 +516,6 @@ pre {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
   margin-left: -15px; }
 
 .no-gutters {
@@ -1090,16 +1090,17 @@ pre {
   background-image: none;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+  border-radius: 1.25rem;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
   .form-control::-ms-expand {
     background-color: transparent;
     border: 0; }
-  .form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #c2c7f3;
-    outline: none; }
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #36a3f7;
+        outline: none;
+    }
   .form-control::placeholder {
     color: #868e96;
     opacity: 1; }
