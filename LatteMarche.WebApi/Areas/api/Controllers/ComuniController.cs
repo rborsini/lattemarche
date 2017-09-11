@@ -22,8 +22,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                //return ((IComuniService)this.comuniService).Details(id);
-                return Ok(((IComuniService)this.comuniService).Details(id));
+                return Ok((this.comuniService).Details(id));
             }
             catch (Exception exc)
             {
@@ -36,8 +35,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                //return ((IComuniService)this.comuniService).Search(provincia);
-                return Ok(((IComuniService)this.comuniService).Search(provincia));
+                return Ok(this.comuniService.Search(provincia));
             }
             catch (Exception exc)
             {
