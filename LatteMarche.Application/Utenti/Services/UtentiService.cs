@@ -4,8 +4,7 @@ using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
-using LatteMarche.Utils.Hash;
-
+using RB.Hash;
 
 namespace LatteMarche.Application.Utenti.Services
 {
