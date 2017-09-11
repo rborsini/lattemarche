@@ -110,12 +110,10 @@
   <ItemGroup>
     <Folder Include="Areas\api\Models\" />
     <Folder Include="Areas\web\Models\" />
-    <Folder Include="Content\" />
-    <Folder Include="Attributes\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
