@@ -50,13 +50,13 @@
     <script src="@Url.Content("~/Content/plugins/knockout-select2/knockout-select2.js")" type="text/javascript"></script>
 
 </head>
+
 <body>
     
-    <header class="m-grid__item		m-header " data-minimize-mobile="hide" data-minimize-offset="200" data-minimize-mobile-offset="200" data-minimize="minimize">
+    <header class="m-grid__item	m-header" data-minimize-mobile="hide" data-minimize-offset="200" data-minimize-mobile-offset="200" data-minimize="minimize">
         <div class="m-header__top">
             <div class="m-container m-container--responsive m-container--xxl m-container--full-height m-page__container">
                 <div class="m-stack m-stack--ver m-stack--desktop">
-                    <!-- begin::Brand -->
                     <div class="m-stack__item m-brand">
                         <div class="m-stack m-stack--ver m-stack--general m-stack--inline">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
@@ -65,21 +65,18 @@
                                 </a>
                             </div>
                             <div class="m-stack__item m-stack__item--middle m-brand__tools">
-                                <!-- begin::Responsive Header Menu Toggler-->
+
                                 <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
                                     <span></span>
                                 </a>
-                                <!-- end::Responsive Header Menu Toggler-->
-                                <!-- begin::Topbar Toggler-->
+
                                 <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
                                     <i class="flaticon-more"></i>
                                 </a>
-                                <!--end::Topbar Toggler-->
+                                
                             </div>
                         </div>
                     </div>
-                    <!-- end::Brand -->
-                    <!-- begin::Topbar -->
                     <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
                         <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
                             <div class="m-stack__item m-topbar__nav-wrapper">
@@ -391,7 +388,6 @@
                             <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
                                 <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
                                     <a href="index.html" class="m-menu__link ">
-                                        <span class="m-menu__item-here"></span>
                                         <span class="m-menu__link-text">
                                             Dashboard
                                         </span>
@@ -510,17 +506,16 @@
     <!-- END CORE PLUGINS -->
     <!-- Components plugins -->
 
-    <script src="@Url.Content("~/Content/plugins/datatables/media/js/jquery.dataTables.min.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Content/plugins/datatables/media/js/jquery.dataTables.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/plugins/dataTables.dateFormat.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Content/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/plugins/jquery-fileupload/jquery.ui.widget.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/plugins/jquery-fileupload/jquery.iframe-transport.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/plugins/jquery-fileupload/jquery.fileupload.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Content/plugins/jquery-mask/jquery.maskedinput.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/plugins/jquery-mask/jquery.maskedinput.min.js")" type="text/javascript"></script>*@
 
-    <script src="@Url.Content("~/Content/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Content/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.it.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/components/general/datatable.js")" type="text/javascript"></script>
 
+    @*<script src="@Url.Content("~/Content/assets/app/js/dashboard.js")" type="text/javascript"></script>*@
 
     <script type="text/javascript">
 
@@ -562,7 +557,7 @@
             <div class="m-footer__wrapper">
                 <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
                     <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
-                        <span class="m-footer__copyright">2017 &copy; <strong>Latte Marche</strong> Soc. Coop. Agricola</span>
+                        <span class="m-footer__copyright">2018 &copy; <strong>Latte Marche</strong> Soc. Coop. Agricola</span>
                     </div>
                 </div>
             </div>

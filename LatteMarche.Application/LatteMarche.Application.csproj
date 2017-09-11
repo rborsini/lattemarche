@@ -34,6 +34,9 @@
     <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="HashHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HashHelper.1.0.0\lib\net45\HashHelper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -51,10 +54,6 @@
     <Compile Include="Utenti\Services\UtentiService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActivityLibrary1\LatteMarche.Utils.csproj">
-      <Project>{64314c9f-14db-4387-a7f4-f07ec1cd7a7f}</Project>
-      <Name>LatteMarche.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">
       <Project>{7399BB9D-FA00-400E-B9F8-C78751CE153F}</Project>
       <Name>LatteMarche.Core</Name>
