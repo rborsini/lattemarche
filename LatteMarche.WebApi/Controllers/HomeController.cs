@@ -19,5 +19,6 @@ namespace LatteMarche.WebApi.Controllers
 
             return View();
         }
+
     }
 }

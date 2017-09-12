@@ -1,19 +1,6 @@
 ﻿@using LatteMarche.WebApi.Models
 
-@*
-@section Breadcrumb
-{
-    @{
-        BreadcrumbViewModel bm = new BreadcrumbViewModel();
-        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
-        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Amministrazione" });
-        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Utenti" });
-    }
 
-    @* Breadcrumb *@@*
-    @Html.Partial("_Breadcrumb", bm)
-}
-*@
 <!-- Pannello conferma eliminazione riga excel -->
 @Html.Partial("_ConfirmDialog", new DialogViewModel()
 {
@@ -23,231 +10,178 @@
     Message = "Sei sicuro di voler eliminare l'utente selezionato?"
 })
 
-@*<div class="row">
-    <a class="btn btn-primary margin-right-15 margin-bottom-20 pull-right" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Aggiungi</a>
-</div>
-
-<table id="utenti-table" class="table table-striped table-hover table-bordered">
-    <thead class="blue-table">
-        <tr>
-            <th>Cognome</th>
-            <th>Nome</th>
-            <th>Rag.Sociale</th>
-            <th>Username</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>*@
 
 
-        <div class="col-lg-12" style="margin-top:1em">
-            <div class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                Elenco degli Utenti
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Utente</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <!--begin: Datatable -->
-                    <div class="m_datatable" ></div>
-                    <!--end: Datatable -->
+<div class="col-lg-12" style="margin-top:1em">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+
+            <!-- Portlet Caption -->
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Elenco degli Utenti
+                    </h3>
                 </div>
             </div>
-        </div>
 
-    <script type="text/javascript">
+            <!-- Portlet Tools -->
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Utente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <!--begin: Datatable -->
+            <div class="m_datatable" ></div>
+            <!--end: Datatable -->
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
 
     jQuery(document).ready(function () {
 
-        var utenti = [
-            { "Nome": "Roberto", "Cognome": "Borsini" },
-            { "Nome": "Giacomo", "Cognome": "Corallini" }
-        ];
-
         var datatable = $('.m_datatable').mDatatable({
+            // datasource definition
             data: {
-                type: 'local',
-                source: utenti,
-                pageSize: 20
+                type: 'remote',
+                source: {
+                    read: {
+                        url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php'
+                    }
+                },
+                pageSize: 10,
+                saveState: {
+                    cookie: true,
+                    webstorage: true
+                },
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
             },
 
+            // layout definition
             layout: {
-                theme: 'default',
-                class: '',
-                scroll: true,
-                height: 380,
-                footer: false
+                theme: 'default', // datatable theme
+                class: '', // custom wrapper class
+                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                footer: false // display/hide footer
             },
 
+            // column sorting
             sortable: true,
 
+            // column based filtering
             filterable: false,
 
             pagination: true,
 
+            // columns definition
             columns: [{
-                field: "Cognome",
-                title: "Cognone",
-                sortable: 'asc',
-                filterable: false,
-                width: 150,
+                field: "RecordID",
+                title: "#",
+                sortable: false, // disable sort for this column
+                width: 40,
+                selector: false,
+                textAlign: 'center',
             }, {
-                field: "Nome",
-                title: "Nome",
+                field: "OrderID",
+                title: "Order ID",
+                // sortable: 'asc', // default sort
+                filterable: false, // disable or enable filtering
                 width: 150,
-                responsive: { visible: 'lg' }
+                // basic templating support for column rendering,
+                template: '{{OrderID}} - {{ShipCountry}}'
+            }, {
+                field: "ShipCountry",
+                title: "Ship Country",
+                width: 150,
+                template: function (row) {
+                    // callback function support for column rendering
+                    return row.ShipCountry + ' - ' + row.ShipCity;
+                }
+            }, {
+                field: "ShipCity",
+                title: "Ship City"
+            }, {
+                field: "Currency",
+                title: "Currency",
+                width: 100
+            }, {
+                field: "ShipDate",
+                title: "Ship Date",
+                sortable: 'asc'
+            }, {
+                field: "Latitude",
+                title: "Latitude"
+            }, {
+                field: "Status",
+                title: "Status",
+                // callback function support for column rendering
+                template: function (row) {
+                    var status = {
+                        1: { 'title': 'Pending', 'class': 'm-badge--brand' },
+                        2: { 'title': 'Delivered', 'class': ' m-badge--metal' },
+                        3: { 'title': 'Canceled', 'class': ' m-badge--primary' },
+                        4: { 'title': 'Success', 'class': ' m-badge--success' },
+                        5: { 'title': 'Info', 'class': ' m-badge--info' },
+                        6: { 'title': 'Danger', 'class': ' m-badge--danger' },
+                        7: { 'title': 'Warning', 'class': ' m-badge--warning' }
+                    };
+                    return '<span class="m-badge ' + status[row.Status].class + ' m-badge--wide">' + status[row.Status].title + '</span>';
+                }
+            }, {
+                field: "Type",
+                title: "Type",
+                // callback function support for column rendering
+                template: function (row) {
+                    var status = {
+                        1: { 'title': 'Online', 'state': 'danger' },
+                        2: { 'title': 'Retail', 'state': 'primary' },
+                        3: { 'title': 'Direct', 'state': 'accent' }
+                    };
+                    return '<span class="m-badge m-badge--' + status[row.Type].state + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + status[row.Type].state + '">' + status[row.Type].title + '</span>';
+                }
+            }, {
+                field: "Actions",
+                width: 110,
+                title: "Actions",
+                sortable: false,
+                overflow: 'visible',
+                template: function (row) {
+                    var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+
+                    return '\
+						<div class="dropdown '+ dropup + '">\
+							<a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
+                                <i class="la la-ellipsis-h"></i>\
+                            </a>\
+						  	<div class="dropdown-menu dropdown-menu-right">\
+						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
+						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
+						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
+						  	</div>\
+						</div>\
+						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
+							<i class="la la-trash"></i>\
+						</a>\
+					';
+                }
             }]
         });
 
-        
-
-        //var url = apiUrl + 'api/utenti';
-        //var rowToRemove = null;
-
-        //$('#waiter').modal('show');
-
-        //var table = $('#utenti-table').dataTable({
-        //    "lengthMenu": [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
-        //    "pageLength": 20,
-        //    //"dom": '<"toolbar">frtip',
-        //    "retrieve": true,
-        //    "bPaginate": true,
-        //    "language": {
-        //        "sEmptyTable": "Nessun dato presente nella tabella",
-        //        "sInfo": "Vista da _START_ a _END_ di _TOTAL_ righe",
-        //        "sInfoEmpty": "Vista da 0 a 0 di 0 righe",
-        //        "sInfoFiltered": "(filtrati da _MAX_ righe totali)",
-        //        "sInfoPostFix": "",
-        //        "sInfoThousands": ",",
-        //        "sLengthMenu": "Visualizza _MENU_ righe",
-        //        "sLoadingRecords": "Caricamento...",
-        //        "sProcessing": "Elaborazione...",
-        //        "sSearch": "Cerca:",
-        //        "sZeroRecords": "La ricerca non ha portato alcun risultato.",
-        //        "oPaginate": {
-        //            "sFirst": "Inizio",
-        //            "sPrevious": "Precedente",
-        //            "sNext": "Successivo",
-        //            "sLast": "Fine"
-        //        },
-        //        "oAria": {
-        //            "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
-        //            "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
-        //        }
-        //    },
-        //    "columns": [
-        //        { "data": "Cognome" },
-        //        { "data": "Nome" },
-        //        { "data": "RagioneSociale" },
-        //        { "data": "Username" },
-        //        {
-        //            "data": null,
-        //            "render": function (data, type, row) {
-        //                return '<a class="edit" href="' + webUrl + 'Utenti/Details?key=' + row.Id + '" >Dettaglio</a>';
-        //            }
-        //        },
-        //        {
-        //            "data": null,
-        //            "render": function (data, type, row) {
-        //                return '<a class="delete" data-id="' + row.Id + '" href="javascript:;" >Elimina_non_implementato</a>';
-        //            }
-        //        },
-        //    ]
-        //});
-
-        //// Caricamento dati JSON
-        //$.getJSON(url, function (result) {
-
-        //    $('#waiter').modal('hide');
-
-        //    table.fnClearTable();
-        //    if (result.length > 0) {
-        //        table.fnAddData(result);
-        //    }
-        //    table.fnDraw();
-
-        //    // Click elimina riga tabella
-        //    $('#utenti-table tbody').on('click', 'tr .delete', function () {
-        //        rowToRemove = $(this).parents('tr');
-        //        $('#delete-dialog').data('id', $(this).data('id'));
-        //        $('#delete-dialog').modal('show');
-        //    });
-
-
-        //    // Conferma eliminazione riga tabella
-        //    $('.delete-dialog .confirm').unbind("click").click(function (event) {
-
-        //        var id = $('#delete-dialog').data('id');
-
-        //        $.ajax({
-        //            type: "DELETE",
-        //            url: apiUrl + "api/utenti/delete?id=" + id,
-        //            dataType: 'text',
-        //            success: function (result) {
-
-        //                $('#waiter').modal('hide');
-
-        //                if (result.length == 0) {
-        //                    table.fnDeleteRow(rowToRemove);
-        //                    showMsg('Info', 'Utente eliminato correttamente.');
-        //                } else {
-        //                    showError(result[0]);
-        //                }
-        //            },
-        //            error: function () {
-        //                $('#waiter').modal('hide');
-        //                showError();
-        //            }
-        //        });
-
-        //    });
-
-        //});
-
-        ////invio event
-        //$("body").keypress(function (event) {
-
-        //    if (event.which == 13) {
-
-        //        if ($('#dialog-panel').is(':visible')) {
-        //            $('#dialog-panel').find('button').trigger('click');
-        //        }
-
-        //        if ($('#delete-dialog').is(':visible')) {
-        //            $('#delete-dialog').find('.confirm').trigger('click');
-        //        }
-
-        //    }
-        //});
-
-        //// esc event
-        //$(document).keyup(function (e) {
-
-        //    if (e.keyCode == 27) { // escape key maps to keycode `27`
-
-        //        if ($('#delete-dialog').hasClass('in')) {
-
-        //            // conferma eliminazione utente
-        //            $('#delete-dialog').find('.cancel').trigger('click');
-
-        //        }
-
-        //    }
-        //});
+        var query = datatable.getDataSourceQuery();
 
     });
 
-    </script>
+</script>

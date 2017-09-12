@@ -109,12 +109,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\api\Models\" />
-    <Folder Include="Areas\web\Models\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
+    <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -123,11 +122,7 @@
     <Compile Include="App_Start\AutoFacConfig.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
-    <Compile Include="Areas\web\webAreaRegistration.cs" />
-    <Compile Include="Areas\web\Controllers\UtentiController.cs" />
     <Compile Include="Areas\api\Controllers\UtentiController.cs" />
-    <Compile Include="Controllers\PippoController.cs" />
-    <Compile Include="Controllers\PippiController.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
   </ItemGroup>
@@ -911,6 +906,11 @@
     <Content Include="Content\plugins\select2\select2_locale_zh-CN.js" />
     <Content Include="Content\plugins\select2\select2_locale_zh-TW.js" />
     <Content Include="Content\plugins\select2\select2_metro.css" />
+    <Content Include="Content\style.bundle.css" />
+    <Content Include="Content\scripts.bundle.js" />
+    <Content Include="Content\vendors.bundle.css" />
+    <Content Include="Content\vendors.bundle.js" />
+    <Content Include="Scripts\data-ajax.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -919,9 +919,6 @@
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
-    <Content Include="Areas\web\Views\web.config" />
-    <Content Include="Areas\web\Views\Utenti\Index.cshtml" />
-    <Content Include="Views\Pippo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteMarche.Application\LatteMarche.Application.csproj">
@@ -1068,6 +1065,10 @@
     <Content Include="Views\Shared\_ConfirmDialog.cshtml" />
     <Content Include="Views\Shared\_NotificationDialog.cshtml" />
     <Content Include="Views\Shared\_ItemNotFound.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
