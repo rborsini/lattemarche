@@ -13,8 +13,9 @@ namespace LatteMarche.EntityFramework
 	public class LatteMarcheDbContext : DbContext, IContext
 	{
 		public DbSet<Utente> Utenti { get; set; }
+        public DbSet<Comune> Comuni { get; set; }
 
-		public LatteMarcheDbContext()
+        public LatteMarcheDbContext()
 			: base("name=LatteMarcheDbContext")
 		{
 			Database.SetInitializer<LatteMarcheDbContext>(null);

@@ -2,6 +2,7 @@
 using AutoMapper;
 using System.Linq.Expressions;
 using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Comuni.Dtos;
 
 namespace LatteMarche.Application
 {
@@ -13,6 +14,7 @@ namespace LatteMarche.Application
 		public static void Configure()
 		{
 			UtentiMappings.Configure();
+            ComuniMappings.Configure();
 		}
 	}
 

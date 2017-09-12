@@ -113,6 +113,7 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -640,6 +641,7 @@
     <Content Include="Content\assets\vendors\custom\jqvmap\jqvmap.bundle.js" />
     <Content Include="Content\css\plugins.css" />
     <Content Include="Content\fonts\font.css" />
+    <Content Include="Content\js\components\general\datatable.js" />
     <Content Include="Content\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Content\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />

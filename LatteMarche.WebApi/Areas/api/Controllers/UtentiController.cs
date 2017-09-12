@@ -50,7 +50,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                var users = this.utentiService.Index();
                 return Ok(this.utentiService.Details(id));
             }
             catch (Exception exc)

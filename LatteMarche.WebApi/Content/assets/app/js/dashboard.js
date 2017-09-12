@@ -1329,14 +1329,14 @@ var Dashboard = function() {
                 source: {
                     read: {
                         // url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php'
-                        url: 'http://localhost:54913/Api/Utenti'
+                        url: 'Api/Utenti'
                     }
                 },
                 pageSize: 20,
-                //saveState: {
-                //    cookie: true,
-                //    webstorage: true
-                //},
+                saveState: {
+                    cookie: false,
+                    webstorage: false
+                },
                 serverPaging: false,
                 serverFiltering: false,
                 serverSorting: false
@@ -1350,20 +1350,20 @@ var Dashboard = function() {
                 footer: false
             },
 
-            sortable: true,
+            sortable: false,
 
             filterable: false,
 
-            pagination: true,
+            pagination: false,
 
             columns: [{
-                field: "Id",
-                title: "#",
-                sortable: false,
-                width: 40,
-                selector: {class: 'm-checkbox--solid m-checkbox--brand'},
-                textAlign: 'center'
-            }, {
+            //    field: "Id",
+            //    title: "#",
+            //    sortable: false,
+            //    width: 40,
+            //    selector: {class: 'm-checkbox--solid m-checkbox--brand'},
+            //    textAlign: 'center'
+            //}, {
                 field: "Cognome",
                 title: "Cognone",
                 sortable: 'asc',
@@ -1375,40 +1375,40 @@ var Dashboard = function() {
                 title: "Nome",
                 width: 150,
                 responsive: {visible: 'lg'}
-            }, {
+            //}, {
             //    field: "ShipDate",
             //    title: "Ragione Sociale"
             //}, {
             //    field: "ShipDate",
             //    title: "Username"
             //}, {
-                field: "Actions",
-                width: 110,
-                title: "Actions",
-                sortable: false,
-                overflow: 'visible',
-                template: function (row) {
-                    var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+            //    field: "Actions",
+            //    width: 110,
+            //    title: "Actions",
+            //    sortable: false,
+            //    overflow: 'visible',
+            //    template: function (row) {
+            //        var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
 
-                    return '\
-                        <div class="dropdown '+ dropup +'">\
-                            <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
-                                <i class="la la-ellipsis-h"></i>\
-                            </a>\
-                            <div class="dropdown-menu dropdown-menu-right">\
-                                <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                                <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                                <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-                            </div>\
-                        </div>\
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-                            <i class="la la-edit"></i>\
-                        </a>\
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
-                            <i class="la la-trash"></i>\
-                        </a>\
-                    ';
-                }
+            //        return '\
+            //            <div class="dropdown '+ dropup +'">\
+            //                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
+            //                    <i class="la la-ellipsis-h"></i>\
+            //                </a>\
+            //                <div class="dropdown-menu dropdown-menu-right">\
+            //                    <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
+            //                    <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
+            //                    <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
+            //                </div>\
+            //            </div>\
+            //            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+            //                <i class="la la-edit"></i>\
+            //            </a>\
+            //            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
+            //                <i class="la la-trash"></i>\
+            //            </a>\
+            //        ';
+            //    }
             }]
         });
     }
