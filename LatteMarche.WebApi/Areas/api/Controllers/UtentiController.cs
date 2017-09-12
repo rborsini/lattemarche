@@ -6,6 +6,8 @@ using System.Linq;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti;
+using LatteMarche.WebApi.Areas.api.Models;
+using Newtonsoft.Json.Linq;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -35,8 +37,24 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
+
+
                 var users = this.utentiService.Index();
-				return Ok(users);                
+
+                //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
+
+                //result.meta.page = 1;
+                //result.meta.pages = users.Count / 10;
+                //result.meta.perpage = 10;
+                //result.meta.total = users.Count;
+                //result.meta.sort = "asc";
+                //result.meta.field = "Nome";
+
+                //result.data = users;
+
+                //return Ok(result);                
+
+                return Ok(users);
             }
             catch(Exception exc)
             {

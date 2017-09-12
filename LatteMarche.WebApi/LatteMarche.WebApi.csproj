@@ -107,11 +107,10 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\api\Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
+    <Compile Include="Areas\api\Models\DataTableResult.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
