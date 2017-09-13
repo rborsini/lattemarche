@@ -331,9 +331,9 @@
                     </label>
                     <div class="col-lg-3">
                         <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                            <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Sesso</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Sesso, select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98">
+                            <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            </div>
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Sesso, select2: {allowClear: true}"tabindex="-98">
                                 <option value=""></option>
                                 <option value="M">Maschio</option>
                                 <option value="F">Femmina</option>
@@ -367,10 +367,10 @@
                     Provincia:
                 </label>
                <!--- <div class="col-lg-1">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Prov.</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                            <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Prov.</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" tabindex="-98"></select>
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -381,20 +381,22 @@
                     </div>
                 </div>-->
                 <div class="col-lg-1">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Prov.</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, value: ProvinciaSelezionata, select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
+                            <option></option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-2">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona Città" aria-expanded="false"><span class="filter-option pull-left">Città</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Comuni, value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
+                            <option>
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
+
             <div class="form-group m-form__group row">
                 <label class="col-lg-2 col-form-label">
                     Telefono:
@@ -420,10 +422,10 @@
                     Tipo di Latte:
                 </label>
                 <div class="col-lg-3">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona tipo di Latte" aria-expanded="false"><span class="filter-option pull-left">Seleziona tipo di Latte</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" class="form-control" title="Air &amp; pill style" tabindex="-98"></select>
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -476,7 +478,7 @@
 
         $('#waiter').modal('show');
 
-        var key = '@Request["id"]';
+        var id = '@Request["id"]';
         var viewModel = {
             Username: ko.observable(),
             Nome: ko.observable(''),
@@ -519,10 +521,11 @@
             window.location.hash = this.hash;
         });
 
-
-        $.getJSON(apiUrl + 'utenti/details', { id: key }, function (result) {
+        $.getJSON(apiUrl + 'utenti/details', { id: id }, function (result) {
 
             $('#waiter').modal('hide');
+
+            //console.log("result", result);
 
             if (result) {
                 viewModel.Username(result.Username);
@@ -533,7 +536,7 @@
                 viewModel.PivaCF(result.PivaCF);
 
                 viewModel.Indirizzo(result.Indirizzo);
-                //viewModel.ProvinciaSelezionata(result.ProvinciaSelezionata);
+                viewModel.ProvinciaSelezionata(result.ProvinciaSelezionata);
                 viewModel.ComuneSelezionato(result.ComuneSelezionato);
                 viewModel.Telefono(result.Telefono);
                 viewModel.Cellulare(result.Cellulare);
