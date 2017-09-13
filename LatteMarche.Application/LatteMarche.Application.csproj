@@ -41,6 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationModule.cs" />
+    <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
+    <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />
+    <Compile Include="TipiLatte\Services\TipiLatteService.cs" />
+    <Compile Include="TipiProfilo\Dtos\TipoProfiloDto.cs" />
+    <Compile Include="TipiProfilo\Interfaces\ITipiProfiloService.cs" />
+    <Compile Include="TipiProfilo\Services\TipiProfiloService.cs" />
     <Compile Include="Comuni\Dtos\ComuneDto.cs" />
     <Compile Include="Comuni\Interfaces\IComuniService.cs" />
     <Compile Include="Comuni\Services\ComuniService.cs" />

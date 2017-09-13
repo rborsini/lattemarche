@@ -111,6 +111,8 @@
     <Folder Include="Areas\api\Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
+    <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\UtentiController.cs" />

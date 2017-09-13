@@ -6,6 +6,11 @@ using LatteMarche.Application.Utenti.Services;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Comuni.Services;
 using LatteMarche.Application.Comuni.Interfaces;
+using LatteMarche.Application.TipiLatte.Services;
+using LatteMarche.Application.TipiLatte.Interfaces;
+using LatteMarche.Application.TipiProfilo.Services;
+using LatteMarche.Application.TipiProfilo.Interfaces;
+
 
 namespace LatteMarche.Application
 {
@@ -34,10 +39,12 @@ namespace LatteMarche.Application
 
 				builder.RegisterType<UtentiService>().As<IUtentiService>().InstancePerRequest();
                 builder.RegisterType<ComuniService>().As<IComuniService>().InstancePerRequest();
+                builder.RegisterType<TipiLatteService>().As<ITipiLatteService>().InstancePerRequest();
+                builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>().InstancePerRequest();
 
 
             }
-			else
+            else
 			{
 				builder.RegisterModule(new DataModule(false));
 
@@ -45,10 +52,13 @@ namespace LatteMarche.Application
 
 				builder.RegisterType<UtentiService>().As<IUtentiService>();
                 builder.RegisterType<ComuniService>().As<IComuniService>();
+                builder.RegisterType<TipiLatteService>().As<ITipiLatteService>();
+                builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>();
+
             }
 
 
-			base.Load(builder);
+            base.Load(builder);
 		}
 	}
 }

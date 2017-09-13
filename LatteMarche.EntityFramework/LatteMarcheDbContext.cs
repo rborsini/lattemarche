@@ -14,6 +14,9 @@ namespace LatteMarche.EntityFramework
 	{
 		public DbSet<Utente> Utenti { get; set; }
         public DbSet<Comune> Comuni { get; set; }
+        public DbSet<TipoLatte> TipiLatte { get; set; }
+        public DbSet<TipoProfilo> TipiProfilo { get; set; }
+
 
         public LatteMarcheDbContext()
 			: base("name=LatteMarcheDbContext")
