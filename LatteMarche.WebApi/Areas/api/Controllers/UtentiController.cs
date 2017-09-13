@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Web.Http;
-using System.Linq;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti;
