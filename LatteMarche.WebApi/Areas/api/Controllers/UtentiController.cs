@@ -1,13 +1,7 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Web.Http;
-using System.Linq;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti;
-using LatteMarche.WebApi.Areas.api.Models;
-using Newtonsoft.Json.Linq;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
