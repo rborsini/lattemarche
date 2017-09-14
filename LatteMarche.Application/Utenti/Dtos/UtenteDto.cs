@@ -15,8 +15,8 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string Username { get; set; }
         public string Password { get; set; }
         public int IdProfilo { get; set; }
-        public bool? Abilitato { get; set; }
-        public bool? Visibile { get; set; }
+        public bool Abilitato { get; set; }
+        public bool Visibile { get; set; }
         public string RagioneSociale { get; set; }
         public string CodiceAllevatore { get; set; }
         public int QuantitaLatte { get; set; }

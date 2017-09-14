@@ -160,7 +160,7 @@
                             Comune di residenza
                         </label>
                         <div class="col-xs-5">
-                            <select class="comune form-control" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}"></select>
+                            <select class="comune form-control" data-bind="options: Comuni, optionsValue: 'Id', value: IdComune, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}"></select>
                         </div>
                     </div>
 
@@ -366,30 +366,16 @@
                 <label class="col-lg-2 col-form-label">
                     Provincia:
                 </label>
-               <!--- <div class="col-lg-1">
-                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                            <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona provincia" aria-expanded="false"><span class="filter-option pull-left">Prov.</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" tabindex="-98"></select>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="Seleziona Città" aria-expanded="false"><span class="filter-option pull-left">Città</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" title="Air &amp; pill style" tabindex="-98"></select>
-                    </div>
-                </div>-->
                 <div class="col-lg-1">
                     <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
+                        <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie,  value: ProvinciaSelezionata, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
                             <option></option>
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: IdComune, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
                             <option>
                             </option>
                         </select>
@@ -423,7 +409,7 @@
                 </label>
                 <div class="col-lg-3">
                     <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Id', value: IdTipoLatte, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
                             <option></option>
                         </select>
                     </div>
@@ -445,6 +431,46 @@
             </div>
             <div class="form-group m-form__group row">
                 <label class="col-lg-2 col-form-label">
+                    Tipo di Profilo:
+                </label>
+                <div class="col-lg-3">
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiProfilo, optionsValue: 'Id', value: IdProfilo, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di profilo" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-lg-1 col-form-label">
+                    Abilitato:
+                </label>
+                <div class="col-lg-1">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Abilitato, select2: {allowClear: true}" tabindex="-98">
+                            <option value=""></option>
+                            <option value="true">Si</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-lg-1 col-form-label">
+                    Visibile:
+                </label>
+                <div class="col-lg-1">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Visibile, select2: {allowClear: true}" tabindex="-98">
+                            <option value=""></option>
+                            <option value="true">Si</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
                     Note:
                 </label>
                 <div class="col-lg-8">
@@ -457,7 +483,7 @@
                     <div class="row">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-10">
-                            <button type="reset" class="btn m-btn--pill m-btn--air         btn-info">
+                            <button id="save" type="reset" class="btn m-btn--pill m-btn--air         btn-info">
                                 Salva
                             </button>
                             <button type="reset" class="btn m-btn--pill m-btn--air         btn-danger">
@@ -467,19 +493,21 @@
                     </div>
                 </div>
             </div>
-        </form>
+</form>
         <!--end::Form-->
     </div>
 </div>
 
     <script type="text/javascript">
 
+        var viewModel = null;
+        var idC=0;
     jQuery(document).ready(function () {
 
         $('#waiter').modal('show');
 
         var id = '@Request["id"]';
-        var viewModel = {
+        viewModel = {
             Username: ko.observable(),
             Nome: ko.observable(''),
             Cognome: ko.observable(''),
@@ -489,11 +517,12 @@
 
             Indirizzo: ko.observable(''),
             ProvinciaSelezionata: ko.observable(''),
-            ComuneSelezionato: ko.observable(''),
+            IdComune: ko.observable(''),
             Telefono: ko.observable(''),
             Cellulare: ko.observable(''),
             CodiceAllevatore: ko.observable(''),
             IdTipoLatte: ko.observable(''),
+            IdProfilo: ko.observable(''),
             QuantitaLatte: ko.observable(''),
             NumeroComunicazione: ko.observable(''),
             Note: ko.observable(''),
@@ -501,15 +530,15 @@
             Provincie: ko.observableArray(''),
             Comuni: ko.observableArray(''),
             TipiLatte: ko.observableArray(''),
+            TipiProfilo: ko.observableArray(''),
 
             ProvinciaSelezionata: ko.observable(''),
-            ComuneSelezionato: ko.observable(''),
+            IdComune: ko.observable(''),
+
+            Abilitato: ko.observable(false),
+            Visibile: ko.observable(false),
 
             Id:ko.observable(''),
-
-            //gestire province, comuni, tipi latte,
-
-            //Ruoli: ko.observableArray(''),
 
             ValidationMessages: ko.observableArray('')
         };
@@ -536,30 +565,25 @@
                 viewModel.PivaCF(result.PivaCF);
 
                 viewModel.Indirizzo(result.Indirizzo);
-                viewModel.ProvinciaSelezionata(result.ProvinciaSelezionata);
-                viewModel.ComuneSelezionato(result.ComuneSelezionato);
+             //   viewModel.ProvinciaSelezionata(result.ProvinciaSelezionata);
+                viewModel.IdComune(result.IdComune);
                 viewModel.Telefono(result.Telefono);
                 viewModel.Cellulare(result.Cellulare);
                 viewModel.CodiceAllevatore(result.CodiceAllevatore);
                 viewModel.IdTipoLatte(result.IdTipoLatte);
+                viewModel.IdProfilo(result.IdProfilo);
                 viewModel.QuantitaLatte(result.QuantitaLatte);
                 viewModel.NumeroComunicazione(result.NumeroComunicazione);
                 viewModel.Note(result.Note);
-
+                viewModel.Abilitato(result.Abilitato==false ? "false":"true");
+                viewModel.Visibile(result.Visibile == false ? "false" : "true");
                 viewModel.Id(result.Id);
-
-
-                /*for (var i = 0; i < result.Ruoli.length; i++) {
-                    result.Ruoli[i].Link = webUrl + 'Ruoli/Details?id=' + result.Ruoli[i].IdRuolo + '#tab-autorizzazioni';
-                }*/
-
-             //   viewModel.Ruoli = ko.mapping.fromJS(result.Ruoli);
-
                 
+                idC = result.IdComune;                
                 ko.applyBindings(viewModel);
-                BindProvincie(result.ProvinciaSelezionata);
-                BindComuni(result.ProvinciaSelezionata, result.ComuneSelezionato);
-
+                BindProvincie();
+                BindTipiLatte(result.IdTipoLatte);
+                BindTipiProfilo(result.IdProfilo);
 
             } else {
                 $('#detail-panel').addClass('hide');
@@ -635,24 +659,47 @@
             }
         });
 
+        // in base al comune selezionato cerca la provincia
+        function GetProvincia(idComune) {
+            $.getJSON(apiUrl + "comuni/details?id=" + idComune, function (result) {
+                if (result != null) {
+                    viewModel.ProvinciaSelezionata(result.Provincia);
+                    BindComuni(result.Provincia, idComune);
+                }
+            });
+        }
+
         // bind dropdown provincie
-        function BindProvincie(provinciaSelezionata) {
+        function BindProvincie() {
             $.getJSON(apiUrl + "comuni/province", function (result) {
                 viewModel.Provincie(result);
-                //viewModel.Provincie.push(result);
-                alert(viewModel.Provincie());
-                ko.applyBindings;
-                //viewModel.ProvinciaSelezionata(provinciaSelezionata);
+                GetProvincia(idC);
             });
         }
 
         // bind dropdown comuni
-        function BindComuni(provincia, comuneSelezionato) {
+        function BindComuni(provincia, IdComune) {
             if (provincia == null)
                 return;
-            $.getJSON(apiUrl + "comuni/search?idProvincia=" + provincia, function (result) {
+            $.getJSON(apiUrl + "comuni/search?provincia=" + provincia, function (result) {
                 viewModel.Comuni(result);
-                viewModel.ComuneSelezionato(comuneSelezionato);
+                viewModel.IdComune(IdComune);
+            });
+        }
+
+        // bind dropdown TipiLatte
+        function BindTipiLatte(idTipoLatte) {
+            $.getJSON(apiUrl + "TipiLatte/index", function (result) {
+                viewModel.TipiLatte(result);
+                viewModel.IdTipoLatte(idTipoLatte);
+            });
+        }
+
+        // bind dropdown TipiProfilo
+        function BindTipiProfilo(idTipoProfilo) {
+            $.getJSON(apiUrl + "TipiProfilo/index", function (result) {
+                viewModel.TipiProfilo(result);
+                viewModel.IdProfilo(idTipoProfilo);
             });
         }
 

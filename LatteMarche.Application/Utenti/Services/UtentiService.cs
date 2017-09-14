@@ -123,6 +123,9 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.IdTipoLatte = viewEntity.IdTipoLatte;
             dbEntity.NumeroComunicazione = viewEntity.NumeroComunicazione;
             dbEntity.Note = viewEntity.Note;
+            dbEntity.Abilitato = viewEntity.Abilitato;
+            dbEntity.Visibile = viewEntity.Visibile;
+            dbEntity.IdComune = viewEntity.IdComune;
 
             return dbEntity;
 		}

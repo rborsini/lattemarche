@@ -10,266 +10,236 @@
 
 
 <!-- BEGIN SAMPLE FORM PORTLET-->
-<div id="detail-panel" class="portlet light">
-    <div class="portlet-body form">
-        <div id="knockout-container" role="tabpanel" class="form-body padding-top-20">
-
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tab-1" aria-controls="tab-serbatoio" role="tab" data-toggle="tab">Nuovo utente</a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content padding-top-20">
-
-                <!-- Tab 1 -->
-                <div role="tabpanel" class="tab-pane active" id="tab-1">
-
-                    <!-- Ragione sociale -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Ragione sociale
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:RagioneSociale, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Username -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Username
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Username, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nome -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Nome
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Nome, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cognome -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Cognome
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Cognome, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Profilo -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Profilo(scelta multipla TODO)
-                            </label>
-                            <div class="col-xs-10">
-                                <!--  <input type="text" class="form-control" data-bind="value:Profilo, valueUpdate:'keypress'" />-->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sesso -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Sesso
-                            </label>
-                            <div class="col-xs-2">
-                                <select data-bind="value: Sesso, select2: {allowClear: true}" class="form-control">
-                                    <option value=""></option>
-                                    <option value="M">Maschio</option>
-                                    <option value="F">Femmina</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  P.IVA - Codice Fiscale -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                P.IVA - Codice Fiscale
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:PivaCF, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Indirizzo -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Indirizzo
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Indirizzo, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Provincia e comune -->
-                    <div class="row form-group">
-                        <label class="col-xs-3 control-label">
-                            Prov
-                        </label>
-                        <div class="col-xs-1">
-                            <select class="provincia form-control" data-bind="options: Provincie, optionsValue: 'Id', value: ProvinciaSelezionata, optionsText: 'Sigla', optionsCaption: '', select2: {allowClear: true}"></select>
-                        </div>
-                        <label class="col-xs-3 control-label">
-                            Comune di residenza
-                        </label>
-                        <div class="col-xs-5">
-                            <select class="comune form-control" data-bind="options: Comuni, optionsValue: 'Id', value: ComuneSelezionato, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}"></select>
-                        </div>
-                    </div>
-
-                    <!--  Telefono -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Telefono
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Telefono, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Cellulare -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Cellulare
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:Cellulare, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Codice allevatore	 -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Codice allevatore
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:CodiceAllevatore	, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Tipo di latte	 -->
-                    <div class="row form-group">
-                        <label class="col-xs-2 control-label">
-                            Tipo di latte
-                        </label>
-                        <div class="col-xs-4">
-                            <select data-bind="options: TipiLatte, optionsValue: 'Value', value: IdTipoLatte, optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" class="form-control"></select>
-                        </div>
-                    </div>
-
-                    <!--  Quota Latte (Kg) -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Quota Latte (Kg)
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Comunicazione Quota Latte n°	 -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Comunicazione Quota Latte n°
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="text" class="form-control" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--  Note -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Note
-                            </label>
-                            <div class="col-xs-10">
-                                <textarea class="form-control" rows="5" data-bind="value:Note, valueUpdate:'keypress'"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
+<div class="col-lg-12" id="detail-panel">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Dettaglio Utente Allevatore
+                    </h3>
                 </div>
-
-                    <!-- Password -->
-                    <div class="row form-group">
-                        <div class="col-xs-8 col-xs-offset-2">
-                            <label class="col-xs-1 control-label">
-                                Password
-                            </label>
-                            <div class="col-xs-10">
-                                <input type="password" class="form-control" data-bind="value:Password, valueUpdate:'keypress'" />
-                            </div>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Ragione Sociale:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci ragione sociale" data-bind="value:RagioneSociale, valueUpdate:'keypress'">
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Nome:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo nome" data-bind="value:Nome, valueUpdate:'keypress'">
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Cognome:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo cognome" class="form-control" data-bind="value:Cognome, valueUpdate:'keypress'">
                         </div>
                     </div>
-
+                    <label class="col-lg-2 col-form-label">
+                        Username:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci username" data-bind="value:Username, valueUpdate:'keypress', enable:true">
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Sesso:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                            <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            </div>
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Sesso, select2: {allowClear: true}" tabindex="-98">
+                                <option value=""></option>
+                                <option value="M">Maschio</option>
+                                <option value="F">Femmina</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        P.Iva - CF:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci P.Iva - CF" data-bind="value:PivaCF, valueUpdate:'keypress'">
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Indirizzo:
+                </label>
+                <div class="col-lg-3">
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo indirizzo" data-bind="value:Indirizzo, valueUpdate:'keypress'">
+                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                        </span>
+                    </div>
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Provincia:
+                </label>
+                <div class="col-lg-1">
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie,  value: ProvinciaSelezionata, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: IdComune, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div id="validation-messages">
-
-                <dl class="col-xs-8 col-xs-offset-2 padding-top-30 padding-left-20 ">
-                    <!-- ko foreach: ValidationMessages -->
-                    <dd><h5><strong><span class="text-danger" data-bind="text: messageText"></span></strong></h5></dd>
-                    <!-- /ko -->
-                </dl>
-
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Telefono:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Telefono, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Cellulare:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Cellulare, valueUpdate:'keypress'" placeholder="Inserisci numero di cellulare">
+                </div>
             </div>
-        </div>
-
-        <div class="form-actions">
-            <div class="col-xs-9 col-xs-offset-2 ">
-                <button id="save" class="btn btn-primary pull-right margin-left-20">
-                    Salva
-                </button>
-                <button id="cancel" class="btn btn-primary pull-right margin-left-20">
-                    Annulla
-                </button>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Codice Allevatore:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore	, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Tipo di Latte:
+                </label>
+                <div class="col-lg-3">
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Id', value: IdTipoLatte, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Quota del Latte (Kg):
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
+                </div>
+                <label class="col-lg-2 col-form-label">
+                    Comunicazione Quota Latte N°:
+                </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" placeholder="Inserisci comunicazione quota">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Tipo di Profilo:
+                </label>
+                <div class="col-lg-3">
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiProfilo, optionsValue: 'Id', value: IdProfilo, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di profilo" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-lg-1 col-form-label">
+                    Abilitato:
+                </label>
+                <div class="col-lg-1">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Abilitato, select2: {allowClear: true}" tabindex="-98">
+                            <option value=""></option>
+                            <option value="true">Si</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-lg-1 col-form-label">
+                    Visibile:
+                </label>
+                <div class="col-lg-1">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Visibile, select2: {allowClear: true}" tabindex="-98">
+                            <option value=""></option>
+                            <option value="true">Si</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-2 col-form-label">
+                    Note:
+                </label>
+                <div class="col-lg-8">
+                    <textarea class="form-control m-input m-input--pill m-input--air" data-bind="value:Note, valueUpdate:'keypress'" id="exampleTextarea" rows="3"></textarea>
+                </div>
+            </div>
 
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-10">
+                            <button id="save"  class="btn m-btn--pill m-btn--air         btn-info">
+                                Salva
+                            </button>
+                            <button type="reset" class="btn m-btn--pill m-btn--air         btn-danger">
+                                Annulla
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
     </div>
 </div>
 
 <script type="text/javascript">
 
+    var viewModel = null;
+
     jQuery(document).ready(function () {
 
-        var viewModel = {
+        viewModel = {
             Username: ko.observable(),
             Nome: ko.observable(''),
             Cognome: ko.observable(''),
@@ -279,11 +249,12 @@
 
             Indirizzo: ko.observable(''),
             ProvinciaSelezionata: ko.observable(''),
-            ComuneSelezionato: ko.observable(''),
+            IdComune: ko.observable(''),
             Telefono: ko.observable(''),
             Cellulare: ko.observable(''),
             CodiceAllevatore: ko.observable(''),
             IdTipoLatte: ko.observable(''),
+            IdProfilo: ko.observable(''),
             QuantitaLatte: ko.observable(''),
             NumeroComunicazione: ko.observable(''),
             Note: ko.observable(''),
@@ -291,15 +262,24 @@
             Provincie: ko.observableArray(''),
             Comuni: ko.observableArray(''),
             TipiLatte: ko.observableArray(''),
+            TipiProfilo: ko.observableArray(''),
 
-            Id: ko.observable(''),
-            Password: ko.observable(''),
+            ProvinciaSelezionata: ko.observable(''),
+            IdComune: ko.observable(''),
 
+            Abilitato: ko.observable(false),
+            Visibile: ko.observable(false),
 
-            ValidationMessages: ko.observableArray()
+            Id:ko.observable(''),
+
+            ValidationMessages: ko.observableArray('')
         };
 
         ko.applyBindings(viewModel);
+        BindProvincie();
+        BindTipiLatte(viewModel.IdTipoLatte);
+        BindTipiProfilo(viewModel.IdProfilo);
+        BindComuni(viewModel.Provincia, viewModel.idComune);
 
         $('#save').click(function () {
             $('#waiter').modal('show');
@@ -317,6 +297,7 @@
                     }
 
                     $('#waiter').modal('hide');
+                    $('#save-dialog-panel').modal('show');
 
                     if (result.length == 0) {
                         $('#save-dialog-panel').modal('show');
@@ -361,6 +342,50 @@
             }
         });
 
+        
+        // change dropdown provincia
+        $(".provincia").change(function (e) {
+            if (e.val) {
+                var provincie = $(this).val();
+                BindComuni(provincie);
+            }
+        });
+
+        
+        // bind dropdown provincie
+        function BindProvincie() {
+            $.getJSON(apiUrl + "comuni/province", function (result) {
+                viewModel.Provincie(result);
+            });
+        }
+
+        // bind dropdown comuni
+        function BindComuni(provincia, IdComune) {
+            if (provincia == null)
+                return;
+            $.getJSON(apiUrl + "comuni/search?provincia=" + provincia, function (result) {
+                viewModel.Comuni(result);
+                viewModel.IdComune(IdComune);
+            });
+        }
+
+        // bind dropdown TipiLatte
+        function BindTipiLatte(idTipoLatte) {
+            $.getJSON(apiUrl + "TipiLatte/index", function (result) {
+                viewModel.TipiLatte(result);
+                viewModel.IdTipoLatte(idTipoLatte);
+            });
+        }
+
+        // bind dropdown TipiProfilo
+        function BindTipiProfilo(idTipoProfilo) {
+            $.getJSON(apiUrl + "TipiProfilo/index", function (result) {
+                viewModel.TipiProfilo(result);
+                viewModel.IdProfilo(idTipoProfilo);
+            });
+        }
+
     });
+    
 
 </script>

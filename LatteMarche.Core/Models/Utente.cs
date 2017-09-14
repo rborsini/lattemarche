@@ -33,10 +33,10 @@ namespace LatteMarche.Core.Models
         public int IdProfilo { get; set; }
 
         [Column("ABILITATO")]
-        public bool? Abilitato { get; set; }
+        public bool Abilitato { get; set; }
 
         [Column("VISIBILE")]
-        public bool? Visibile { get; set; }
+        public bool Visibile { get; set; }
 
         [Column("RAGIONE_SOCIALE")]
         public string RagioneSociale { get; set; }
