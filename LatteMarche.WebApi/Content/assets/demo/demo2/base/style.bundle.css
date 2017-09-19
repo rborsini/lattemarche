@@ -12461,7 +12461,7 @@ code {
     background-color: #f7f8fa; }
 
 .m-input-icon .m-input-icon__icon i {
-  color: #a4a2bb; }
+  color: #fff; }
 
 .form-control.form-control--skin-dark[readonly], .form-control.form-control--skin-dark {
   border-color: #ebedf2;
@@ -12553,13 +12553,6 @@ code {
 .m-input-icon.m-input-icon--skin-dark .m-input-icon__icon i {
   color: white; }
 
-/*
-    <span class="m-switch">
-            <input type="checkbox" checked="checked" name="">
-            <span></span>
-        </label>
-    </span>
-*/
 .m-switch {
   display: inline-block;
   font-size: 1rem; }
