@@ -5470,8 +5470,10 @@ code {
     color: #c4c5d6; }
   .btn.m-btn--label-light {
     color: #ffffff; }
-  .btn.m-btn--label-accent {
-    color: #00c5dc; }
+    .btn.m-btn--label-accent {
+        color: #36a3f7;
+        font-weight: 600;
+    }
   .btn.m-btn--label-focus {
     color: #9816f4; }
   .btn.m-btn--label-primary {
@@ -5803,9 +5805,10 @@ code {
 
 .btn-outline-focus.m-btn--air,
 .btn-focus.m-btn--air {
-  -webkit-box-shadow: 0px 5px 10px 2px rgba(152, 22, 244, 0.19);
-  -moz-box-shadow: 0px 5px 10px 2px rgba(152, 22, 244, 0.19);
-  box-shadow: 0px 5px 10px 2px rgba(152, 22, 244, 0.19); }
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(29, 51, 255, 0.54);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(29, 51, 255, 0.54);
+    box-shadow: 0px 5px 10px 2px rgba(29, 51, 255, 0.54);
+}
   .btn-outline-focus.m-btn--air.focus, .btn-outline-focus.m-btn--air:focus, .btn-outline-focus.m-btn--air:hover,
   .btn-focus.m-btn--air.focus,
   .btn-focus.m-btn--air:focus,
@@ -5898,13 +5901,14 @@ code {
   -moz-box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.17);
   box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.17);
   border-color: #ffffff !important; }
-  .btn.m-btn--air.btn-default.focus, .btn.m-btn--air.btn-default:focus, .btn.m-btn--air.btn-default:hover, .btn.m-btn--air.btn-secondary.focus, .btn.m-btn--air.btn-secondary:focus, .btn.m-btn--air.btn-secondary:hover {
-    -webkit-box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.26);
-    -moz-box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.26);
-    box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.26);
-    background: #716aca !important;
-    color: #ffffff !important;
-    border-color: #716aca !important; }
+    .btn.m-btn--air.btn-default.focus, .btn.m-btn--air.btn-default:focus, .btn.m-btn--air.btn-default:hover, .btn.m-btn--air.btn-secondary.focus, .btn.m-btn--air.btn-secondary:focus, .btn.m-btn--air.btn-secondary:hover {
+        -webkit-box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.26);
+        -moz-box-shadow: 0px 3px 20px 0px rgba(113, 106, 202, 0.26);
+        box-shadow: 0px 3px 20px 0px #1d33ff;
+        background: #1d33ff !important;
+        color: #ffffff !important;
+        border-color: #1d33ff !important;
+    }
     .btn.m-btn--air.btn-default.focus i, .btn.m-btn--air.btn-default:focus i, .btn.m-btn--air.btn-default:hover i, .btn.m-btn--air.btn-secondary.focus i, .btn.m-btn--air.btn-secondary:focus i, .btn.m-btn--air.btn-secondary:hover i {
       color: #ffffff !important; }
 
@@ -10142,7 +10146,7 @@ code {
     opacity: 0.8 ;
     filter: alpha(opacity=80) ; }
   .m-checkbox.m-checkbox--light > span {
-    border: 1px solid #bdc3d4; }
+    border: 1px solid #fff; }
     .m-checkbox.m-checkbox--light > span:after {
       border: solid #ffffff; }
   .m-checkbox.m-checkbox--light > input:checked ~ span {
@@ -15840,7 +15844,7 @@ select.m-select2 {
           .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group .form-control {
             border-radius: 40px;
             border: none;
-            padding: 1.5rem 1.5rem;
+            padding: 1rem 1.5rem;
             margin-top: 1.5rem; }
             .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group .form-control.m-login__form-input--last {
               border: 0; }
@@ -15862,7 +15866,7 @@ select.m-select2 {
           .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-login__form-action .m-login__btn {
             display: inline-block;
             text-align: center;
-            padding: 1.4rem 4rem;
+            padding: 1rem 4rem;
             margin-top: 0.8rem; }
       .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__account {
         text-align: center;
@@ -15950,9 +15954,10 @@ select.m-select2 {
 
 .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form {
   color: #c2acf4; }
-  .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control {
-    color: #e3d9fa;
-    background: rgba(67, 34, 167, 0.4); }
+    .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control {
+        color: #e3d9fa;
+        background: #1d33ff;
+    }
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control::-moz-placeholder {
       color: #b295f1;
       opacity: 1; }
@@ -15969,10 +15974,12 @@ select.m-select2 {
         color: #e3d9fa; }
       .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .form-control:focus::-webkit-input-placeholder {
         color: #e3d9fa; }
-  .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-checkbox {
-    color: #c2acf4; }
-  .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link {
-    color: #c2acf4; }
+    .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-checkbox {
+        color: #fff;
+    }
+    .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link {
+        color: #fff;
+    }
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link:hover {
       color: white; }
       .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-sub .m-link:hover:after {
@@ -15986,9 +15993,10 @@ select.m-select2 {
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn:focus, .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn:hover {
       border-color: white;
       color: white; }
-  .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary {
-    color: white;
-    border-color: #c2acf4; }
+    .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary {
+        color: white;
+        border-color: #1d33ff;
+    }
     .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary:focus, .m-login.m-login--2.m-login-2--skin-1 .m-login__container .m-login__form .m-login__form-action .m-login__btn.m-login__btn--primary:hover {
       border-color: white;
       color: white; }

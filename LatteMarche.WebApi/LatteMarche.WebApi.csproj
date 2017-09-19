@@ -115,6 +115,7 @@
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1060,6 +1061,7 @@
     <Content Include="Content\assets\plugins\socicon\font\socicon.woff" />
     <Content Include="Content\assets\plugins\socicon\README.md" />
     <Content Include="Content\assets\plugins\tether\LICENSE" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="lattemarche-dev - Web Deploy.pubxml" />
     <Content Include="Views\Utenti\Details.cshtml" />
     <Content Include="Views\Utenti\New.cshtml" />
