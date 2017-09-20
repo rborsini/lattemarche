@@ -52,7 +52,18 @@ namespace LatteMarche.Identity
 
         public async Task<CustomUser> FindByIdAsync(string userId)
         {
-            UtenteDto userDto = service.Details(Convert.ToInt32(userId));
+            //UtenteDto userDto = service.Details(Convert.ToInt32(userId));
+
+            UtenteDto userDto = new UtenteDto()
+            {
+                Abilitato = true,
+                Id = 1,
+                Username = "arcadia",
+                Password = "ziogaro",
+                Nome = "Peppe",
+                Cognome = "De Cellò"
+            };
+
             CustomUser user = ConvertToCustomUser(userDto);
 
             return await Task.FromResult<CustomUser>(user);
@@ -60,7 +71,18 @@ namespace LatteMarche.Identity
 
         public async Task<CustomUser> FindByNameAsync(string userName)
         {
-            UtenteDto userDto = this.service.GetByUsername(userName);
+            //UtenteDto userDto = this.service.GetByUsername(userName);
+
+            UtenteDto userDto = new UtenteDto()
+            {
+                Abilitato = true,
+                Id = 1,
+                Username = "arcadia",
+                Password = "ziogaro",
+                Nome = "Peppe",
+                Cognome = "De Cellò"
+            };
+
             CustomUser user = ConvertToCustomUser(userDto);
 
             return await Task.FromResult<CustomUser>(user);
@@ -74,7 +96,18 @@ namespace LatteMarche.Identity
 
         public Task<string> GetPasswordHashAsync(CustomUser user)
         {
-            UtenteDto userDto = service.GetByUsername(user.UserName);
+            //UtenteDto userDto = service.GetByUsername(user.UserName);
+            UtenteDto userDto = new UtenteDto()
+            {
+                Abilitato = true,
+                Id = 1,
+                Username = "arcadia",
+                Password = "ziogaro",
+                Nome = "Peppe",
+                Cognome = "De Cellò"
+            };
+
+
             return Task.FromResult<string>(userDto.Password);
         }
 

@@ -20,5 +20,14 @@ namespace LatteMarche.WebApi.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Default page for unauthorized request
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Unauthorized()
+        {
+            return View();
+        }
+
     }
 }

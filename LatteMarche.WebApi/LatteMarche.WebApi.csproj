@@ -140,6 +140,8 @@
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
+    <Compile Include="Attributes\ApiCustomAuthorize.cs" />
+    <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
@@ -666,6 +668,7 @@
     <Content Include="Content\assets\vendors\custom\gmaps\gmaps.js" />
     <Content Include="Content\assets\vendors\custom\jqvmap\jqvmap.bundle.css" />
     <Content Include="Content\assets\vendors\custom\jqvmap\jqvmap.bundle.js" />
+    <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\plugins.css" />
     <Content Include="Content\fonts\font.css" />
     <Content Include="Content\js\components\general\datatable.js" />
@@ -1105,6 +1108,8 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\Shared\_FullPageLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
