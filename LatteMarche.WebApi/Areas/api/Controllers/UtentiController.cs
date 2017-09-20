@@ -4,9 +4,11 @@ using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti;
 using Newtonsoft.Json.Linq;
+using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+    [ApiCustomAuthorize]
     public class UtentiController : ApiController
     {
 
