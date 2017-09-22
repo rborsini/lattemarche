@@ -40,6 +40,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
+    <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
+    <Compile Include="Allevatori\Services\AllevatoriService.cs" />
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
     <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />

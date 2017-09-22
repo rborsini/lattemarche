@@ -5,6 +5,8 @@ using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Comuni.Dtos;
 using LatteMarche.Application.TipiLatte.Dtos;
 using LatteMarche.Application.TipiProfilo.Dtos;
+using LatteMarche.Application.Allevatori.Dtos;
+
 
 
 namespace LatteMarche.Application
@@ -20,7 +22,7 @@ namespace LatteMarche.Application
             ComuniMappings.Configure();
             TipiLatteMappings.Configure();
             TipiProfiloMappings.Configure();
-
+            AllevatoriMappings.Configure();
         }
 	}
 
