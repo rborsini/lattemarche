@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti;
+using LatteMarche.Application.Allevamenti.Interfaces;
+using LatteMarche.Application.Allevamenti.Dtos;
+using LatteMarche.Application.Allevamenti;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
-    public class UtentiController : ApiController
+    public class AllevamentiController : ApiController
     {
 
         #region Fields
 
-        private IUtentiService utentiService;
+        private IAllevamentiService allevamentiService;
 
 		#endregion
 
 		#region Constructors
 
-		public UtentiController(IUtentiService utentiService)
+		public AllevamentiController(IAllevamentiService allevamentiService)
 		{
-            this.utentiService = utentiService;
+            this.allevamentiService = allevamentiService;
 		}
 
         #endregion
@@ -35,9 +35,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-
-
-                var users = this.utentiService.Index();
+              
+                var allevamenti = this.allevamentiService.Index();
 
                 //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
 
@@ -52,7 +51,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
                 //return Ok(result);                
 
-                return Ok(users);
+                return Ok(allevamenti);
             }
             catch(Exception exc)
             {
@@ -66,7 +65,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(this.utentiService.Details(id));
+                return Ok(this.allevamentiService.Details(id));
             }
             catch (Exception exc)
             {
@@ -75,12 +74,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] UtenteDto model)
+       [HttpPut]
+        public IHttpActionResult Update([FromBody] AllevamentoDto model)
         {
             try
             {
-                var users = this.utentiService.Update(model);
+                var users = this.allevamentiService.Update(model);
                 return Ok(model);
             }
             catch (Exception exc)
@@ -91,11 +90,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Create([FromBody] UtenteDto model)
+        public IHttpActionResult Create([FromBody] AllevamentoDto model)
         {
             try
             {
-                var users = this.utentiService.Create(model);
+                var users = this.allevamentiService.Create(model);
                 return Ok(model);
             }
             catch (Exception exc)
@@ -109,7 +108,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                this.utentiService.Delete(id);
+                this.allevamentiService.Delete(id);
                 return Ok();
             }
             catch (Exception e)
