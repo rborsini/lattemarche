@@ -1169,7 +1169,9 @@ body.m--skin-dark {
       height: auto; }
   .m-stack.m-stack--ver > .m-stack__item {
     display: block;
-    height: auto; }
+    height: auto;
+    margin-left: 1em;
+  }
 
 .m-stack.m-stack--general {
   display: table;
