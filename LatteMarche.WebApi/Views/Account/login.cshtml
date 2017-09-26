@@ -1,7 +1,7 @@
 ﻿@using LatteMarche.WebApi.Models
 @model LoginViewModel
 
-@{ 
+@{
     Layout = "~/Views/Shared/_FullPageLayout.cshtml";
 }
 
@@ -30,7 +30,7 @@
 
 
                         <div class="m-input-icon m-input-icon--left m-input-icon--right">
-                            @Html.TextBoxFor(m => m.Username, "", new { placeholder = "Username",  @class = "form-control m-input m-input--pill m-input--air" })
+                            @Html.TextBoxFor(m => m.Username, "", new { placeholder = "Username", @class = "form-control m-input m-input--pill m-input--air" })
                             <span class="m-input-icon__icon m-input-icon__icon--left">
                                 <span>
                                     <i class="la la-user"></i>
@@ -55,19 +55,19 @@
                         }
 
                         @*<div class="row m-login__form-sub">
-                            <div class="col m--align-left m-login__form-left">
-                                <label class="m-checkbox  m-checkbox--light">
-                                    <input type="checkbox" name="remember">
-                                    Ricordami
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="col m--align-right m-login__form-right">
-                                <a href="javascript:;" id="m_login_forget_password" class="m-link">
-                                    Password dimenticata ?
-                                </a>
-                            </div>
-                        </div>*@
+                                <div class="col m--align-left m-login__form-left">
+                                    <label class="m-checkbox  m-checkbox--light">
+                                        <input type="checkbox" name="remember">
+                                        Ricordami
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="col m--align-right m-login__form-right">
+                                    <a href="javascript:;" id="m_login_forget_password" class="m-link">
+                                        Password dimenticata ?
+                                    </a>
+                                </div>
+                            </div>*@
                         <div class="m-login__form-action">
                             <button type="submit" id="m_login_signin_submit" class="btn m-btn--pill m-btn--air btn-secondary m-btn m-btn--custom m-btn--label-accent">
                                 Log In
