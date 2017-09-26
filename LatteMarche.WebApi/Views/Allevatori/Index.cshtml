@@ -14,13 +14,13 @@
             </div>
 
             <!-- Portlet Tools -->
-            <div class="m-portlet__head-tools">
+            @*<div class="m-portlet__head-tools">
                 <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                     <li class="nav-item m-tabs__item">
                         <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Utente</a>
                     </li>
                 </ul>
-            </div>
+            </div>*@
         </div>
 
         <div class="m-portlet__body">
@@ -86,14 +86,14 @@
                 field: "IndirizzoAllevamento",
                 title: "Indirizzo",
             },{
-                field: "",
-                title: "",
+                field: "Comune",
+                title: "Comune",
+            }, {
+                field: "Provincia",
+                title: "Provincia",
             }, {
                 field: "",
                 title: "",
-            }, {
-                field: "Azioni",
-                title: "Azioni",
                 width: 100,
                     template: function(row) {
                         return '<a href="' + webUrl + 'Utenti/Details?id=' + row.Id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details"><i class="la la-edit"></i></a>';
