@@ -20,6 +20,12 @@ namespace LatteMarche.Core.Models
         [Column("RAGIONE_SOCIALE")]
         public string RagioneSociale { get; set; }
 
+        [Column("DESCRIZIONE")]
+        public string Comune { get; set; }
+
+        [Column("PROVINCIA")]
+        public string Provincia { get; set; }
+
         [Column("ID_UTENTE")]
         public int IdUtente { get; set; }
 
