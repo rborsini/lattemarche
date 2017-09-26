@@ -27,6 +27,6 @@ namespace LatteMarche.Core.Models
         public int IdComune { get; set; }
 
         [Column("IDSITRA_STABILIMENTO_ALLEVAMENTO")]
-        public int IdSitraStabilimentoAllevamento { get; set; }
+        public int? IdSitraStabilimentoAllevamento { get; set; }
     }
 }

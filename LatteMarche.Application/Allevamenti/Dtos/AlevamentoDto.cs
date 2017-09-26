@@ -11,7 +11,7 @@ namespace LatteMarche.Application.Allevamenti.Dtos
         public string IndirizzoAllevamento { get; set; }
         public int IdUtente { get; set; }
         public int IdComune { get; set; }
-        public int IdSitraStabilimentoAllevamento { get; set; }
+        public int? IdSitraStabilimentoAllevamento { get; set; }
     }
 
     public class AllevamentiMappings

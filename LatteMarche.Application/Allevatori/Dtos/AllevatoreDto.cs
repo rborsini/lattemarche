@@ -12,7 +12,7 @@ namespace LatteMarche.Application.Allevatori.Dtos
         public string RagioneSociale { get; set; }
         public int IdUtente { get; set; }
         public int IdComune { get; set; }
-        public int IdSitraStabilimentoAllevamento { get; set; }
+        public int? IdSitraStabilimentoAllevamento { get; set; }
 
     }
 

@@ -8,7 +8,6 @@ using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
-    [ApiCustomAuthorize]
     public class AllevatoriController : ApiController
     {
 
