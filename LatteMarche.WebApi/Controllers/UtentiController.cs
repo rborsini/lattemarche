@@ -8,6 +8,7 @@ using System.Web.Mvc.Ajax;
 
 namespace LatteMarche.WebApi.Controllers
 {
+    [MvcCustomAuthorize]
     public class UtentiController : Controller
     {
         public UtentiController()

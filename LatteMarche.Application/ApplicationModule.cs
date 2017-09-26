@@ -10,6 +10,10 @@ using LatteMarche.Application.TipiLatte.Services;
 using LatteMarche.Application.TipiLatte.Interfaces;
 using LatteMarche.Application.TipiProfilo.Services;
 using LatteMarche.Application.TipiProfilo.Interfaces;
+using LatteMarche.Application.Allevatori.Services;
+using LatteMarche.Application.Allevatori.Interfaces;
+using LatteMarche.Application.Allevamenti.Services;
+using LatteMarche.Application.Allevamenti.Interfaces;
 
 
 namespace LatteMarche.Application
@@ -41,6 +45,8 @@ namespace LatteMarche.Application
                 builder.RegisterType<ComuniService>().As<IComuniService>().InstancePerRequest();
                 builder.RegisterType<TipiLatteService>().As<ITipiLatteService>().InstancePerRequest();
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>().InstancePerRequest();
+                builder.RegisterType<AllevatoriService>().As<IAllevatoriService>().InstancePerRequest();
+                builder.RegisterType<AllevamentiService>().As<IAllevamentiService>().InstancePerRequest();
 
 
             }
@@ -54,6 +60,8 @@ namespace LatteMarche.Application
                 builder.RegisterType<ComuniService>().As<IComuniService>();
                 builder.RegisterType<TipiLatteService>().As<ITipiLatteService>();
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>();
+                builder.RegisterType<AllevatoriService>().As<IAllevatoriService>();
+                builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
 
             }
 

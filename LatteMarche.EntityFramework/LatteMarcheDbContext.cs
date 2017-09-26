@@ -16,6 +16,8 @@ namespace LatteMarche.EntityFramework
         public DbSet<Comune> Comuni { get; set; }
         public DbSet<TipoLatte> TipiLatte { get; set; }
         public DbSet<TipoProfilo> TipiProfilo { get; set; }
+        public DbSet<V_Allevatore> Allevatore { get; set; }
+        public DbSet<Allevamento> Allevamenti { get; set; }
 
 
         public LatteMarcheDbContext()

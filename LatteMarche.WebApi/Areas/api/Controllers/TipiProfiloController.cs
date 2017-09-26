@@ -5,9 +5,11 @@ using System.Web.Http;
 using System.Linq;
 using LatteMarche.Application.TipiProfilo.Interfaces;
 using LatteMarche.Application.TipiProfilo.Dtos;
+using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+    [ApiCustomAuthorize]
     public class TipiProfiloController: ApiController
     {
         private ITipiProfiloService tipiProfiloService;

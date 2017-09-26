@@ -17,5 +17,19 @@ namespace LatteMarche.WebApi
 			AutoFacConfig.Configure();
 			AutoMapperConfig.Configure();
         }
+
+        protected void Application_PostAuthorizeRequest()
+        {
+            if (IsWebApiRequest())
+            {
+                HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
+            }
+        }
+
+        private static bool IsWebApiRequest()
+        {
+            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(@"~/api");
+        }
+
     }
 }

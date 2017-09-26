@@ -73,9 +73,9 @@ namespace LatteMarche.Application.Utenti.Services
             return result;
         }
 
-        public Utente GetByUsername(string username)
+        public UtenteDto GetByUsername(string username)
         {
-            return this.utentiRepository.FindBy(u => u.Username == username);
+            return ConvertToDto(this.utentiRepository.FindBy(u => u.Username == username));
         }
 
         /// <summary>
@@ -107,8 +107,35 @@ namespace LatteMarche.Application.Utenti.Services
             return utente != null;
         }
 
+        /// <summary>
+        /// Salvataggio del token di accesso alle API
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="token"></param>
+        public void SetToken(string username, string token)
+        {
+            Utente user = this.utentiRepository.FindBy(u => u.Username == username);
+            if (user != null)
+            {
+                //user.Token = token;
+                this.uow.SaveChanges();
+            }
+        }
+
+        public override UtenteDto Details(int key)
+        {
+            UtenteDto utenteDto = null;
+            Utente utente = this.repository.GetById(key);
+            if (utente != null)
+            {
+                utenteDto = ConvertToDto(utente);
+            }
+
+            return utenteDto;
+        }
+
         protected override Utente UpdateProperties(Utente viewEntity, Utente dbEntity)
-		{
+        {
             dbEntity.Nome = viewEntity.Nome;
             dbEntity.Cognome = viewEntity.Cognome;
             dbEntity.PivaCF = viewEntity.PivaCF;
@@ -128,18 +155,6 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.IdComune = viewEntity.IdComune;
 
             return dbEntity;
-		}
-
-        public override UtenteDto Details(int key)
-        {
-            UtenteDto utenteDto = null;
-            Utente utente = this.repository.GetById(key);
-            if (utente != null)
-            {
-                utenteDto = ConvertToDto(utente);
-            }
-
-            return utenteDto;
         }
 
         #endregion

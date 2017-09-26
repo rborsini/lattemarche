@@ -5,6 +5,7 @@
 [Oo]bj/
 [Bb]in/
 packages/
+.vs/
 TestResults/
 
 # globs
@@ -38,3 +39,4 @@ Thumbs.db
 
 # dotCover
 *.dotCover
+.vs/

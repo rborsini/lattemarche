@@ -5,9 +5,11 @@ using System.Web.Http;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Comuni.Dtos;
+using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+    [ApiCustomAuthorize]
     public class ComuniController : ApiController
     {
         private IComuniService comuniService;

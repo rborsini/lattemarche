@@ -4,9 +4,11 @@ using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti;
 using Newtonsoft.Json.Linq;
+using LatteMarche.WebApi.Attributes;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+    [ApiCustomAuthorize]
     public class UtentiController : ApiController
     {
 
@@ -103,7 +105,18 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                this.utentiService.Delete(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
         #endregion
 
 

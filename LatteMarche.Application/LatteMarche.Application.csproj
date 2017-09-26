@@ -40,6 +40,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
+    <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
+    <Compile Include="Allevatori\Services\AllevatoriService.cs" />
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
     <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />
@@ -52,6 +55,9 @@
     <Compile Include="Comuni\Services\ComuniService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AutomapperConfig.cs" />
+    <Compile Include="Allevamenti\Dtos\AlevamentoDto.cs" />
+    <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
+    <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
     <Compile Include="Utenti\Dtos\UtenteDto.cs" />
     <Compile Include="EntityDto.cs" />
     <Compile Include="EntityReadOnlyService.cs" />
