@@ -10,6 +10,14 @@
                 </a>
             </li>
 
+            <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
+                <a href="/Allevatori" class="m-menu__link ">
+                    <span class="m-menu__link-text">
+                        Allevatori
+                    </span>
+                </a>
+            </li>
+
             @if (Request.IsAuthenticated)
             {
 
@@ -75,6 +83,24 @@
                     </div>
                 </li>
             }
+
+            <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" data-menu-submenu-toggle="click" aria-haspopup="true">
+
+                @**@
+                @*<div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:230px">
+                    <span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                    <div class="m-menu__subnav">
+                        <ul class="m-menu__content">
+                            <li class="m-menu__item">
+                                <h3 class="m-menu__heading">
+
+                                    @Html.ActionLink("Utenti", "Index", "Utenti", null, new { @class = "m-menu__link m-menu__item-here m-menu__link-text" })
+                                </h3>
+                            </li>
+                        </ul>
+                    </div>
+                </div>*@
+            </li>
         </ul>
     </div>
 </div>
