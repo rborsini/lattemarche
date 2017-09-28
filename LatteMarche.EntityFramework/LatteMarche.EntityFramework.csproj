@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Scripts\V_Trasportatori.sql" />
     <Content Include="Scripts\V_Allevatori.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

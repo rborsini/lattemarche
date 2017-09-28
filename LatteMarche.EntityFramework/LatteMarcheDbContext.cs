@@ -18,6 +18,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<TipoProfilo> TipiProfilo { get; set; }
         public DbSet<V_Allevatore> Allevatore { get; set; }
         public DbSet<Allevamento> Allevamenti { get; set; }
+        public DbSet<V_Trasportatore> Trasportatori { get; set; }
 
 
         public LatteMarcheDbContext()

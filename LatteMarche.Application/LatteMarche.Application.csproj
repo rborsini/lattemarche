@@ -58,6 +58,9 @@
     <Compile Include="Allevamenti\Dtos\AlevamentoDto.cs" />
     <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
     <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
+    <Compile Include="Trasportatori\Dtos\TrasportatoreDto.cs" />
+    <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
+    <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
     <Compile Include="Utenti\Dtos\UtenteDto.cs" />
     <Compile Include="EntityDto.cs" />
     <Compile Include="EntityReadOnlyService.cs" />
