@@ -6273,11 +6273,11 @@ a.text-dark:focus, a.text-dark:hover {
     border-color: #36a3f7; }
 
 .btn-warning {
-  color: #111;
+  color: #fff;
   background-color: #ffb822;
   border-color: #ffb822; }
   .btn-warning:hover {
-    color: #111;
+    color: #fff;
     background-color: #fbaa00;
     border-color: #eea200; }
   .btn-warning:focus, .btn-warning.focus {
