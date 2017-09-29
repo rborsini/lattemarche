@@ -1122,7 +1122,9 @@ select.form-control:focus::-ms-value {
 .col-form-label {
   padding-top: calc(0.65rem - 1px * 2);
   padding-bottom: calc(0.65rem - 1px * 2);
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  font-weight: 600;
+}
 
 .col-form-label-lg {
   padding-top: calc(1rem - 1px * 2);
