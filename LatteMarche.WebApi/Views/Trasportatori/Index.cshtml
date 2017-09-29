@@ -20,9 +20,10 @@
                     Trasportatore:
                 </label>
                 <div class="col-lg-4">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
-                        <select class="form-control m-select2" data-bind="options: Trasportatori, value: TrasportatoreSelezionato, optionsValue: 'Value', optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Trasportatore"></select>
+                    <div class="m-select2 m-select2--air m-select2--pill">
+                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Trasportatori, optionsValue: 'Id', value: IdTrasportatore, optionsText: 'Nome', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true">
+                            <option></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -34,7 +35,7 @@
                 <div class="col-lg-4">
                     <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
                         <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
-                        <select class="form-control m-select2" data-bind="options: GiroAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Value', optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti"></select>
+                        <select class="form-control m-select2" data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Value', optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti"></select>
                     </div>
                 </div>
             </div>
@@ -122,7 +123,7 @@
             <div class="form-group m-form__group row">
                 <label class="col-lg-4"></label>
                 <label class="col-lg-4 col-form-label">
-                    <span style="font-weight:600;font-size:22px" data-bind="text:Trasportatore_Nome().toUpperCase() + '   ' + Trasportatore_Indirizzo()"></span>
+                    <span style="font-weight:600;font-size:22px" data-bind="text:Trasportatore_Nome() + '   ' + Trasportatore_Indirizzo()"></span>
                 </label>
             </div>
         </div>
@@ -148,46 +149,41 @@
     var viewModel = null;
 
     jQuery(document).ready(function () {
-
+        
         viewModel = {
-            Trasportatori: ko.observableArray([{ Value: 1, Text: 'Baleani' }, { Value: 2, Text: 'Fattorie Marchigiane Cons. Coop.' }]),
-            TrasportatoreSelezionato: ko.observable(),
 
-            Trasportatore_Nome: ko.observable(''),
-            Trasportatore_Indirizzo: ko.observable(''),
-
-            GiroAllevamento: ko.observableArray([{ Value: 1, Text: 'Morrovalle' }, { Value: 2, Text: 'Sibilla' }, { Value: 3, Text: 'Montecarotto' }, { Value: 4, Text: 'Pecora 1' }]),
-            GiroAllevamentoSelezionato: ko.observable(),
-
-            Allevamento: ko.observableArray([{ Value: 1, Text: 'Pioraco' }, { Value: 2, Text: 'Macerata' }]),
-            AllevamentoSelezionato: ko.observable()
+            Trasportatori: ko.observableArray(),
+            IdTrasportatore: ko.observable(),
+            Trasportatore_Nome: ko.observable(),
+            Trasportatore_Indirizzo: ko.observable(),
+            GiriAllevamento: ko.observableArray(),
+            GiroAllevamentoSelezionato: ko.observable()
         };
-
-        // in base al Trasportatore selezionato cerca i rispettivi Giri degli allevamenti
-        //function GetProvincia(idComune) {
-        //    $.getJSON(apiUrl + "comuni/details?id=" + idComune, function (result) {
-        //        if (result != null) {
-        //            viewModel.ProvinciaSelezionata(result.Provincia);
-        //            BindComuni(result.Provincia, idComune);
-        //        }
-        //    });
-
-        // selezione del Trasportatore
-        viewModel.TrasportatoreSelezionato.subscribe(function (item) {
-
-            // chiamata json per il dettaglio
-            if (item == 1) {
-                viewModel.Trasportatore_Nome("Augusto Baleani");
-                viewModel.Trasportatore_Indirizzo("Via Chiaravallese 81 - S. Paterniano OSIMO (AN)");
-            } else {
-                viewModel.Trasportatore_Nome("Iozzi Fattorie Marchigiane Cons.Coop.");
-                viewModel.Trasportatore_Indirizzo("Via Cerbara - Montemaggiore al Metauro (PU)");
-            }
-
-        });
-
+       
         ko.applyBindings(viewModel);
 
-    });
+        // bind dropdown Trasportatori
+        function BindTrasportatori(idTrasportatori) {
+            $.getJSON(apiUrl + "Trasportatori", function (result) {
+                viewModel.Trasportatori(result);
+                viewModel.IdTrasportatore(idTrasportatori);
+            });
+        };
 
+        BindTrasportatori();
+
+
+        // // // P.D. !! // // //
+        function GetTrasportatore(idTrasportatori) {
+            $.getJSON(apiUrl + "Trasportatori/details?id=123", function (result) {
+                if (result != null) {
+                    viewModel.Trasportatore_Nome(result);
+                    viewModel.Trasportatore_Indirizzo(result);
+                }
+            });
+        }
+
+        GetTrasportatore();
+   
+    });
 </script>

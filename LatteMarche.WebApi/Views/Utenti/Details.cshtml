@@ -159,7 +159,7 @@
                     Codice Allevatore:
                 </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore	, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
                 </div>
                 <label class="col-lg-2 col-form-label">
                     Tipo di Latte:
@@ -313,8 +313,6 @@
 
             $('#waiter').modal('hide');
 
-            //console.log("result", result);
-
             if (result) {
                 viewModel.Username(result.Username);
                 viewModel.Nome(result.Nome);
@@ -324,7 +322,6 @@
                 viewModel.PivaCF(result.PivaCF);
 
                 viewModel.Indirizzo(result.Indirizzo);
-             //   viewModel.ProvinciaSelezionata(result.ProvinciaSelezionata);
                 viewModel.IdComune(result.IdComune);
                 viewModel.Telefono(result.Telefono);
                 viewModel.Cellulare(result.Cellulare);
