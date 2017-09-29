@@ -8,6 +8,7 @@ using LatteMarche.Application.TipiProfilo.Dtos;
 using LatteMarche.Application.Allevatori.Dtos;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Trasportatori.Dtos;
+using LatteMarche.Application.Giri.Dtos;
 
 
 
@@ -28,6 +29,7 @@ namespace LatteMarche.Application
             AllevatoriMappings.Configure();
             AllevamentiMappings.Configure();
             TrasportatoriMappings.Configure();
+            GiriMappings.Configure();
         }
 	}
 

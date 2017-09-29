@@ -47,6 +47,9 @@
     <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
     <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />
     <Compile Include="TipiLatte\Services\TipiLatteService.cs" />
+    <Compile Include="Giri\Dtos\GiroDto.cs" />
+    <Compile Include="Giri\Interfaces\IGiriService.cs" />
+    <Compile Include="Giri\Services\GiriService.cs" />
     <Compile Include="TipiProfilo\Dtos\TipoProfiloDto.cs" />
     <Compile Include="TipiProfilo\Interfaces\ITipiProfiloService.cs" />
     <Compile Include="TipiProfilo\Services\TipiProfiloService.cs" />

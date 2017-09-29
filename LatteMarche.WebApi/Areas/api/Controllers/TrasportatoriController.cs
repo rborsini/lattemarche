@@ -2,6 +2,8 @@
 using System.Web.Http;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Trasportatori.Dtos;
+using LatteMarche.Application.Giri.Interfaces;
+using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Application.Utenti;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
@@ -15,14 +17,16 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Fields
 
         private ITrasportatoriService trasportatoriService;
+        private IGiriService giriService;
 
         #endregion
 
         #region Constructors
 
-        public TrasportatoriController(ITrasportatoriService trasportatoriService)
+        public TrasportatoriController(ITrasportatoriService trasportatoriService, IGiriService giriService)
 		{
             this.trasportatoriService = trasportatoriService;
+            this.giriService = giriService;
         }
 
         #endregion
@@ -50,7 +54,9 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(this.trasportatoriService.Details(id));
+                TrasportatoreDto trasportatore = this.trasportatoriService.Details(id);
+                trasportatore.Giri = giriService.GetGiriOfTrasportatore(id);
+                return Ok(trasportatore);
             }
             catch (Exception exc)
             {

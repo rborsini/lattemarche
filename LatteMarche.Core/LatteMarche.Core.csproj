@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Allevamento.cs" />
+    <Compile Include="Models\Giro.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />
     <Compile Include="Models\V_Allevatore.cs" />
     <Compile Include="Models\TipoProfilo.cs" />

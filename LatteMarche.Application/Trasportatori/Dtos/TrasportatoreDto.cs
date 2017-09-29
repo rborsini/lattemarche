@@ -1,6 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using LatteMarche.Core.Models;
+using System.Collections.Generic;
+using LatteMarche.Application.Giri.Dtos;
 
 namespace LatteMarche.Application.Trasportatori.Dtos
 {
@@ -14,7 +16,9 @@ namespace LatteMarche.Application.Trasportatori.Dtos
         public string Cellulare { get; set; }
         public string Comune { get; set; }       
         public string Provincia { get; set; }
-        
+
+        public List<GiroDto> Giri { get; set; }
+
     }
 
     public class TrasportatoriMappings
