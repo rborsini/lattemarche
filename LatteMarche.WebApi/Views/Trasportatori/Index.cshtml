@@ -44,7 +44,7 @@
                     <div class="m-portlet__head-tools">
                         <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                             <li class="nav-item m-tabs__item">
-                                <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Allevamento</a>
+                                <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Giro</a>
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <a class="btn m-btn--pill m-btn--air btn-warning" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Modifica Allevamento</a>
@@ -56,33 +56,78 @@
         </div>
     </div>
 
-
-    <div class="container">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__head">
-                <!-- Portlet Caption -->
-                <div class="m-portlet__head-caption">
-                    <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">
-                            Dettaglio trasportatore
-                        </h3>
-                    </div>
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <!-- Portlet Caption -->
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Dettaglio del Giro degli Allevamenti
+                    </h3>
                 </div>
             </div>
-            <div class="m-portlet__body">
-                <div class="form-group m-form__group row">
-                    <label class="col-lg-12 col-form-label">
-                        <span style="font-weight:600;font-size:22px" data-bind="text:Trasportatore_Nome()"></span>
-                    </label>
-                    <label class="col-lg-12 col-form-label">
-                        <span style="font-weight:600;font-size:20px" data-bind="text:Trasportatore_Indirizzo()"></span>
-                    </label>
+        </div>
+
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <label class="col-lg-3"></label>
+                <label class="col-lg-2 col-form-label">
+                    Denominazione del Giro:
+                </label>
+                <div class="col-lg-4">
+                    <input type="text" data-bind="" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci nome giro">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-3"></label>
+                <label class="col-lg-2 col-form-label">
+                    Codice del Giro:
+                </label>
+                <div class="col-lg-4">
+                    <input type="text" data-bind="" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci codice giro">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <label class="col-lg-5"></label>
+                <div class="col-lg-3">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Salva</a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="btn m-btn--pill m-btn--air btn-danger" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">Elimina</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <!-- Portlet Caption -->
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Dettaglio trasportatore
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <label class="col-lg-12 col-form-label">
+                    <span style="font-weight:600;font-size:22px" data-bind="text:Trasportatore_Nome()"></span>
+                </label>
+                <label class="col-lg-12 col-form-label">
+                    <span style="font-weight:600;font-size:20px" data-bind="text:Trasportatore_Indirizzo()"></span>
+                </label>
+            </div>
+        </div>
+    </div>
 
+</div>
 
 <script type="text/javascript">
 
@@ -102,7 +147,7 @@
 
             Allevamento: ko.observableArray([{ Value: 1, Text: 'Pioraco' }, { Value: 2, Text: 'Macerata' }]),
             AllevamentoSelezionato: ko.observable()
-            
+
         };
 
         // in base al Trasportatore selezionato cerca i rispettivi Giri degli allevamenti
