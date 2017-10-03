@@ -21,7 +21,7 @@
                 </label>
                 <div class="col-lg-4">
                     <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Trasportatori, optionsValue: 'Id', value: IdTrasportatore, optionsText: 'Nome', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true">
+                        <select data-bind="options: Trasportatori, optionsValue: 'Id', value: IdTrasportatore, optionsText: 'Nome', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible" >
                             <option></option>
                         </select>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="col-lg-4">
                     <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
                         <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
-                        <select class="form-control m-select2" data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Value', optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti"></select>
+                        <select data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Value', optionsText: 'Text', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti" class="form-control m-select2" ></select>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,6 @@
     <!-- INIZIO del pannello che compare nel momento in cui viene premuto il bottone "+ Aggiungi Giro" o "Modifica Giro" -->
     <div id="dettaglio-giro-allevamento" class="m-portlet m-portlet--mobile">
         <div class="m-portlet__head">
-            <!-- Portlet Caption -->
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
@@ -105,7 +104,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
     <!-- FINE del pannello che compare nel momento in cui viene premuto il bottone "+ Aggiungi Giro" o "Modifica Giro" -->
 
     <div class="m-portlet m-portlet--mobile">
@@ -371,10 +370,10 @@
                         </div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; top: 0px; display: block; height: 57px; max-height: 180px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button type="button"class="btn m-btn--pill m-btn--air btn-outline-warning" data-dismiss="modal">
                         Ritorna in Dashboard
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button"class="btn m-btn--pill m-btn--air btn-info">
                         Salva
                     </button>
                 </div>
@@ -382,9 +381,8 @@
                 
             </div>
         </div>
-    </div>
-
 </div>
+
 
 <script type="text/javascript">
 
@@ -413,19 +411,7 @@
         };
 
         BindTrasportatori();
-
-
-        // // // P.D. !! // // //
-        function GetTrasportatore(idTrasportatori) {
-            $.getJSON(apiUrl + "Trasportatori/details?id=123", function (result) {
-                if (result != null) {
-                    viewModel.Trasportatore_Nome(result);
-                    viewModel.Trasportatore_Indirizzo(result);
-                }
-            });
-        }
-
-        GetTrasportatore();
+      
    
     });
 </script>

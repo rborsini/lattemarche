@@ -3232,7 +3232,9 @@ button.close {
   padding: 0;
   background: transparent;
   border: 0;
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  cursor: pointer;
+}
 
 .modal-open {
   overflow: hidden; }
@@ -6359,8 +6361,10 @@ a.text-dark:focus, a.text-dark:hover {
   .modal .modal-content .modal-header {
     padding: 25px; }
     .modal .modal-content .modal-header .modal-title {
-      font-weight: 400;
-      font-size: 1.2rem; }
+        font-weight: 400;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
     .modal .modal-content .modal-header .close {
       line-height: 0;
       font-family: "LineAwesome";
@@ -6371,7 +6375,8 @@ a.text-dark:focus, a.text-dark:hover {
       -webkit-font-smoothing: antialiased;
       font-smoothing: antialiased;
       font-size: 0;
-      outline: none !important; }
+      outline: none !important;
+    }
       .modal .modal-content .modal-header .close:before {
         content: ""; }
       .modal .modal-content .modal-header .close:before {
