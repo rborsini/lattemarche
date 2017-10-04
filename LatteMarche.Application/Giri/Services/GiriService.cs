@@ -30,7 +30,11 @@ namespace LatteMarche.Application.Giri.Services
 
         protected override Giro UpdateProperties(Giro viewEntity, Giro dbEntity)
         {
-            throw new NotImplementedException();
+            dbEntity.Denominazione = viewEntity.Denominazione;
+            dbEntity.CodiceGiro = viewEntity.CodiceGiro;
+            dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
+
+            return dbEntity;
         }
     }
 
