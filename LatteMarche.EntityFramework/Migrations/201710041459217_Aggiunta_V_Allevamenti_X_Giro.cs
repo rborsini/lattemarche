@@ -1,0 +1,34 @@
+namespace LatteMarche.EntityFramework.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class Aggiunta_V_Allevamenti_X_Giro : DbMigration
+    {
+        public override void Up()
+        {
+
+
+            string dropQuery = "IF EXISTS (SELECT TOP 1 * FROM sys.views where Name = 'V_Allevamenti_X_Giro') DROP VIEW V_Allevamenti_X_Giro";
+
+            string createQuery = "SELECT        CAST(CAST(derivedtbl_1.ID_GIRO AS varchar(20)) + '' + CAST(derivedtbl_1.ID_ALLEVAMENTO AS varchar(20)) AS int) AS ID, derivedtbl_1.INDIRIZZO_ALLEVAMENTO, derivedtbl_1.ID_GIRO," +
+                         "derivedtbl_1.ID_ALLEVAMENTO, dbo.COMUNI.DESCRIZIONE, dbo.COMUNI.PROVINCIA, dbo.UTENTI.NOME, dbo.UTENTI.COGNOME, dbo.UTENTI.RAGIONE_SOCIALE, dbo.ALLEVAMENTO_X_GIRO.PRIORITA"+
+"FROM(SELECT        dbo.ANAGRAFE_ALLEVAMENTO.INDIRIZZO_ALLEVAMENTO, dbo.GIRO.ID_GIRO, dbo.ANAGRAFE_ALLEVAMENTO.ID_ALLEVAMENTO"+
+                       "   FROM            dbo.GIRO CROSS JOIN"+
+                       "                             dbo.ANAGRAFE_ALLEVAMENTO) AS derivedtbl_1 INNER JOIN"+
+                       "  dbo.ANAGRAFE_ALLEVAMENTO AS ANAGRAFE_ALLEVAMENTO_1 ON derivedtbl_1.ID_ALLEVAMENTO = ANAGRAFE_ALLEVAMENTO_1.ID_ALLEVAMENTO INNER JOIN"+
+                       "  dbo.UTENTI ON ANAGRAFE_ALLEVAMENTO_1.ID_UTENTE = dbo.UTENTI.ID_UTENTE INNER JOIN"+
+                        " dbo.COMUNI ON ANAGRAFE_ALLEVAMENTO_1.ID_COMUNE = dbo.COMUNI.ID_COMUNE LEFT OUTER JOIN"+
+                        " dbo.ALLEVAMENTO_X_GIRO ON ANAGRAFE_ALLEVAMENTO_1.ID_ALLEVAMENTO = dbo.ALLEVAMENTO_X_GIRO.ID_ALLEVAMENTO AND derivedtbl_1.ID_GIRO = dbo.ALLEVAMENTO_X_GIRO.ID_GIRO";
+
+            Sql(dropQuery);
+            Sql(createQuery);
+
+        }
+        
+        public override void Down()
+        {
+            DropTable("dbo.V_Allevamenti_X_Giro");
+        }
+    }
+}

@@ -55,6 +55,10 @@
     <Compile Include="Migrations\201710041007313_Aggiunta_V_Trasportatori.Designer.cs">
       <DependentUpon>201710041007313_Aggiunta_V_Trasportatori.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710041459217_Aggiunta_V_Allevamenti_X_Giro.cs" />
+    <Compile Include="Migrations\201710041459217_Aggiunta_V_Allevamenti_X_Giro.Designer.cs">
+      <DependentUpon>201710041459217_Aggiunta_V_Allevamenti_X_Giro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -85,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710041007313_Aggiunta_V_Trasportatori.resx">
       <DependentUpon>201710041007313_Aggiunta_V_Trasportatori.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041459217_Aggiunta_V_Allevamenti_X_Giro.resx">
+      <DependentUpon>201710041459217_Aggiunta_V_Allevamenti_X_Giro.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
