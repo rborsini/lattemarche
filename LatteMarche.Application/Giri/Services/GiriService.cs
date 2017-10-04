@@ -27,6 +27,11 @@ namespace LatteMarche.Application.Giri.Services
         {
             return ConvertToDtoList(this.giriRepository.FilterBy(g => g.IdTrasportatore == idTrasportatore).ToList());
         }
+
+        protected override Giro UpdateProperties(Giro viewEntity, Giro dbEntity)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
