@@ -43,6 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModule.cs" />
+    <Compile Include="Migrations\201710040951538_PrimaMigration.cs" />
+    <Compile Include="Migrations\201710040951538_PrimaMigration.Designer.cs">
+      <DependentUpon>201710040951538_PrimaMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710040952333_Aggiunta_V_Allevatori.cs" />
+    <Compile Include="Migrations\201710040952333_Aggiunta_V_Allevatori.Designer.cs">
+      <DependentUpon>201710040952333_Aggiunta_V_Allevatori.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710041007313_Aggiunta_V_Trasportatori.cs" />
+    <Compile Include="Migrations\201710041007313_Aggiunta_V_Trasportatori.Designer.cs">
+      <DependentUpon>201710041007313_Aggiunta_V_Trasportatori.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
     <Compile Include="UnitOfWork.cs" />
@@ -58,10 +71,20 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Scripts\V_Trasportatori.sql" />
     <Content Include="Scripts\V_Allevatori.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710040951538_PrimaMigration.resx">
+      <DependentUpon>201710040951538_PrimaMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040952333_Aggiunta_V_Allevatori.resx">
+      <DependentUpon>201710040952333_Aggiunta_V_Allevatori.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710041007313_Aggiunta_V_Trasportatori.resx">
+      <DependentUpon>201710041007313_Aggiunta_V_Trasportatori.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
