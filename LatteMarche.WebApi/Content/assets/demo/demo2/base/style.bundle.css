@@ -1202,8 +1202,10 @@ body.m--skin-dark {
     height: 80px; }
   .m-stack.m-stack--general.m-stack--ver > .m-stack__item {
     display: table-cell;
-    vertical-align: top;
-    height: 100%; }
+    vertical-align: middle;
+    height: 100%;
+    padding-right: 1em;
+  }
     .m-stack.m-stack--general.m-stack--ver > .m-stack__item.m-stack__item--fluid {
       width: 100%; }
     .m-stack.m-stack--general.m-stack--ver > .m-stack__item.m-stack__item--left {
