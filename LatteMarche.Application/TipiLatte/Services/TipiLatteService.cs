@@ -15,20 +15,13 @@ namespace LatteMarche.Application.TipiLatte.Services
     public class TipiLatteService: EntityReadOnlyService<TipoLatte, int, TipoLatteDto>, ITipiLatteService
     {
 
-      //  private IRepository<Tipo, int> comuniRepository;
+        #region Constructors
 
         public TipiLatteService(IUnitOfWork uow)
-            : base(uow)
-        {
-           // this.comuniRepository = this.uow.Get<Comune, int>();
-        }
-      
-        public override TipoLatteDto Details(int key)
-        {
-            TipoLatteDto tipoLatte = base.Details(key);
+            : base(uow) { }
 
-            return tipoLatte;
-        }
+        #endregion
+
     }
 
 }

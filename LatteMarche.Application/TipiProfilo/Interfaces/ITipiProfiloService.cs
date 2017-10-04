@@ -10,8 +10,6 @@ namespace LatteMarche.Application.TipiProfilo.Interfaces
     public interface ITipiProfiloService : IEntityReadOnlyService<TipoProfilo, int, TipoProfiloDto>
     {
 
-       // List<TipoLatteDto> Search(int id);
-
     }
 
 }

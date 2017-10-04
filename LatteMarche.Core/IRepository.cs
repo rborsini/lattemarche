@@ -14,7 +14,7 @@ namespace LatteMarche.Core
 		where TEntity : class
 	{
 
-		void Add(TEntity entity);
+        TEntity Add(TEntity entity);
 		void Add(IEnumerable<TEntity> entities);
 		void Update(TEntity entity);
 		void Update(IEnumerable<TEntity> entities);

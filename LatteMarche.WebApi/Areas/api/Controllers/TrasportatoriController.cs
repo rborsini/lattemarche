@@ -16,17 +16,15 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Fields
 
-        private ITrasportatoriService trasportatoriService;
-        private IGiriService giriService;
+        private ITrasportatoriService trasportatoriService;      
 
         #endregion
 
         #region Constructors
 
-        public TrasportatoriController(ITrasportatoriService trasportatoriService, IGiriService giriService)
+        public TrasportatoriController(ITrasportatoriService trasportatoriService)
 		{
-            this.trasportatoriService = trasportatoriService;
-            this.giriService = giriService;
+            this.trasportatoriService = trasportatoriService;     
         }
 
         #endregion
@@ -34,13 +32,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
             {
-                var trasportatori = this.trasportatoriService.Index();      
-                return Ok(trasportatori);
+                return Ok(this.trasportatoriService.Index());
             }
             catch(Exception exc)
             {
@@ -54,9 +50,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                TrasportatoreDto trasportatore = this.trasportatoriService.Details(id);
-                trasportatore.Giri = giriService.GetGiriOfTrasportatore(id);
-                return Ok(trasportatore);
+                return Ok(this.trasportatoriService.Details(id));
             }
             catch (Exception exc)
             {

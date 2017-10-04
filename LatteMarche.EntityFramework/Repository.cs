@@ -36,9 +36,9 @@ namespace LatteMarche.EntityFramework
 			}
 		}
 
-		public void Add(TEntity entity)
+		public TEntity Add(TEntity entity)
 		{
-			dbset.Add(entity);
+			return dbset.Add(entity);
 		}
 
 		public void Delete(IEnumerable<TEntity> entities)

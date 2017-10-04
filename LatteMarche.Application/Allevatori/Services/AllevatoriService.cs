@@ -22,24 +22,7 @@ namespace LatteMarche.Application.Allevatori.Services
             this.allevatoriRepository = this.uow.Get<V_Allevatore, int>();
         }
 
-        /* 
 
-         public List<ComuneDto> Search(string provincia)
-         {
-             return ConvertToDtoList(this.repository.FilterBy(p => p.Provincia == provincia).OrderBy(c => c.Descrizione).ToList());
-         }
-
-         public List<String> getProvince()
-         {
-             return this.repository.GetAll().ToList().Select(p => p.Provincia).Distinct().ToList();
-         }
-
-         public override ComuneDto Details(int key)
-         {
-             ComuneDto comune = base.Details(key);
-
-             return comune;
-         }*/
     }
 
 }

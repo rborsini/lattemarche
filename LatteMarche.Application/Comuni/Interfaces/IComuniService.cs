@@ -10,9 +10,9 @@ namespace LatteMarche.Application.Comuni.Interfaces
     public interface IComuniService : IEntityReadOnlyService<Comune, int, ComuneDto>
     {
 
-        List<ComuneDto> Search(string provincia);
+        List<ComuneDto> Search(ComuniSearchDto searchDto);
 
-        List<String> getProvince();
+        List<string> GetProvince();
 
     }
 

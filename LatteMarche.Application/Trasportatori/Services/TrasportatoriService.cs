@@ -5,6 +5,7 @@ using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using RB.Hash;
+using LatteMarche.Application.Giri.Interfaces;
 
 namespace LatteMarche.Application.Trasportatori.Services
 {
@@ -14,22 +15,36 @@ namespace LatteMarche.Application.Trasportatori.Services
 
 		#region Fields
          
-		private IRepository<Utente, int> trasportatoriRepository;			
+		private IRepository<Utente, int> trasportatoriRepository;
+
+        private IGiriService giriService;
 
 		#endregion
 
 		#region Constructors
 
-		public TrasportatoriService(IUnitOfWork uow)
+		public TrasportatoriService(IUnitOfWork uow, IGiriService giriService)
 			: base(uow)
 		{
 			this.trasportatoriRepository = this.uow.Get<Utente, int>();
+
+            this.giriService = giriService;
 		}
 
         #endregion
 
         #region Methods
-     
+
+        public override TrasportatoreDto Details(int key)
+        {
+            TrasportatoreDto trasportatore = base.Details(key);
+
+            if(trasportatore != null)
+                trasportatore.Giri = this.giriService.GetGiriOfTrasportatore(key);
+
+            return trasportatore;
+        }
+
         #endregion
     }
 
