@@ -57,7 +57,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult AllevamentiXGiro(int idGiro)
+        public IHttpActionResult Index(int idGiro)
         {
             try
             {
