@@ -1,5 +1,5 @@
-SELECT        derivedtbl_1.INDIRIZZO_ALLEVAMENTO, derivedtbl_1.ID_GIRO, derivedtbl_1.ID_ALLEVAMENTO, dbo.COMUNI.DESCRIZIONE, dbo.COMUNI.PROVINCIA, dbo.UTENTI.NOME, dbo.UTENTI.COGNOME, 
-                         dbo.UTENTI.RAGIONE_SOCIALE, dbo.ALLEVAMENTO_X_GIRO.PRIORITA
+SELECT        CAST(CAST(derivedtbl_1.ID_GIRO AS varchar(20)) + '' + CAST(derivedtbl_1.ID_ALLEVAMENTO AS varchar(20)) AS int) AS ID, derivedtbl_1.INDIRIZZO_ALLEVAMENTO, derivedtbl_1.ID_GIRO, 
+                         derivedtbl_1.ID_ALLEVAMENTO, dbo.COMUNI.DESCRIZIONE, dbo.COMUNI.PROVINCIA, dbo.UTENTI.NOME, dbo.UTENTI.COGNOME, dbo.UTENTI.RAGIONE_SOCIALE, dbo.ALLEVAMENTO_X_GIRO.PRIORITA
 FROM            (SELECT        dbo.ANAGRAFE_ALLEVAMENTO.INDIRIZZO_ALLEVAMENTO, dbo.GIRO.ID_GIRO, dbo.ANAGRAFE_ALLEVAMENTO.ID_ALLEVAMENTO
                           FROM            dbo.GIRO CROSS JOIN
                                                     dbo.ANAGRAFE_ALLEVAMENTO) AS derivedtbl_1 INNER JOIN
