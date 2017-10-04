@@ -1170,7 +1170,6 @@ body.m--skin-dark {
   .m-stack.m-stack--ver > .m-stack__item {
     display: block;
     height: auto;
-    margin-left: 1em;
   }
 
 .m-stack.m-stack--general {
@@ -16417,7 +16416,7 @@ select.m-select2 {
         -ms-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
-        height: 48px;
+        height: 30px;
       }
       .m-header--minimize-on .m-brand .m-brand__logo .m-brand__logo-wrapper img {
         max-height: 36px;
@@ -16662,7 +16661,7 @@ select.m-select2 {
       padding: 0;
       position: relative;
       z-index: 2;
-      height: 90px;
+      height: 75px;
       -webkit-transition: all 0.3s ease;
       -moz-transition: all 0.3s ease;
       -ms-transition: all 0.3s ease;

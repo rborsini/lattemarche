@@ -318,6 +318,7 @@
     <Content Include="Content\assets\demo\demo2\media\img\logo\favicon.ico" />
     <Content Include="Content\assets\demo\demo2\media\img\logo\lattemarche-logo.png" />
     <Content Include="Content\assets\demo\demo2\media\img\logo\logo.png" />
+    <Content Include="Content\assets\demo\demo2\media\img\logo\logo_lattemarche.svg" />
     <Content Include="Content\assets\fonts\Flaticon.svg" />
     <Content Include="Content\assets\img\arrows.png" />
     <Content Include="Content\assets\img\bg.jpg" />
@@ -329,6 +330,8 @@
     <Content Include="Content\assets\img\demos\demo5.png" />
     <Content Include="Content\assets\img\demos\demo6.png" />
     <Content Include="Content\assets\img\favicon.ico" />
+    <Content Include="Content\assets\img\gocce.svg" />
+    <Content Include="Content\assets\img\gocce_2.svg" />
     <Content Include="Content\assets\img\icon_drible.png" />
     <Content Include="Content\assets\img\icon_purchase.png" />
     <Content Include="Content\assets\img\icon_twitter.png" />
