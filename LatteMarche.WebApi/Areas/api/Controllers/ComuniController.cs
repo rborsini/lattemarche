@@ -12,11 +12,37 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
     [ApiCustomAuthorize]
     public class ComuniController : ApiController
     {
+
+        #region Fields
+
         private IComuniService comuniService;
+
+        #endregion
+
+        #region Constructors
 
         public ComuniController(IComuniService comuniService)
         {
             this.comuniService = comuniService;
+        }
+
+        #endregion
+
+        #region Methods
+
+        [HttpGet]
+        public IHttpActionResult Index()
+        {
+            try
+            {
+                var comuni = this.comuniService.Index();
+                return Ok(comuni);
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
         }
 
         [HttpGet]
@@ -37,27 +63,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(this.comuniService.Search(provincia));
+                return Ok(this.comuniService.Search(new ComuniSearchDto() { SiglaProvincia = provincia }));
             }
             catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
-        }
-
-        [HttpGet]
-        public IHttpActionResult Index()
-        {
-            try
-            {
-                var comuni = this.comuniService.Index();
-                return Ok(comuni);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
         }
 
         [HttpGet]
@@ -65,12 +76,15 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(((IComuniService)this.comuniService).getProvince());
+                return Ok(((IComuniService)this.comuniService).GetProvince());
             }
             catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
         }
+
+        #endregion
+
     }
 }

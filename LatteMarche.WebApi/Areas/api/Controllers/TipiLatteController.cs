@@ -12,11 +12,36 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
     [ApiCustomAuthorize]
     public class TipiLatteController : ApiController
     {
+
+        #region Fields
+
         private ITipiLatteService tipiLatteService;
+
+        #endregion
+
+        #region Constructors
 
         public TipiLatteController(ITipiLatteService tipiLatteService)
         {
             this.tipiLatteService = tipiLatteService;
+        }
+
+        #endregion
+
+        #region Methods
+
+        [HttpGet]
+        public IHttpActionResult Index()
+        {
+            try
+            {
+                return Ok(this.tipiLatteService.Index());
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
         }
 
         [HttpGet]
@@ -24,7 +49,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok((this.tipiLatteService).Details(id));
+                return Ok(this.tipiLatteService.Details(id));
             }
             catch (Exception exc)
             {
@@ -32,19 +57,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
-        [HttpGet]
-        public IHttpActionResult Index()
-        {
-            try
-            {
-                var tipiLatte = this.tipiLatteService.Index();
-                return Ok(tipiLatte);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+        #endregion
 
-        }
     }
 }

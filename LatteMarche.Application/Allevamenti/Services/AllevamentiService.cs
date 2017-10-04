@@ -30,17 +30,6 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         #region Methods
 
-        public override AllevamentoDto Details(int key)
-        {
-            AllevamentoDto allevamentoDto = null;
-            Allevamento allevamento = this.allevamentiRepository.GetById(key);
-            if (allevamento != null)
-            {
-                allevamentoDto = ConvertToDto(allevamento);
-            }
-
-            return allevamentoDto;
-        }
 
         protected override Allevamento UpdateProperties(Allevamento viewEntity, Allevamento dbEntity)
         {

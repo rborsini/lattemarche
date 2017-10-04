@@ -10,8 +10,6 @@ namespace LatteMarche.Application.TipiLatte.Interfaces
     public interface ITipiLatteService : IEntityReadOnlyService<TipoLatte, int, TipoLatteDto>
     {
 
-       // List<TipoLatteDto> Search(int id);
-
     }
 
 }

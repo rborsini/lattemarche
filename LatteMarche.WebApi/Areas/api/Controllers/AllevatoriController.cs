@@ -29,29 +29,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
-            {
-
-
-                var allevatori = this.allevatoriService.Index();
-
-                //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
-
-                //result.meta.page = 1;
-                //result.meta.pages = users.Count / 10;
-                //result.meta.perpage = 10;
-                //result.meta.total = users.Count;
-                //result.meta.sort = "asc";
-                //result.meta.field = "Nome";
-
-                //result.data = users;
-
-                //return Ok(result);                
-
-                return Ok(allevatori);
+            {    
+                return Ok(this.allevatoriService.Index());
             }
             catch(Exception exc)
             {

@@ -16,26 +16,25 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         private IAllevamentiService allevamentiService;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public AllevamentiController(IAllevamentiService allevamentiService)
-		{
+        public AllevamentiController(IAllevamentiService allevamentiService)
+        {
             this.allevamentiService = allevamentiService;
-		}
+        }
 
         #endregion
 
         #region Methods
 
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
             {
-              
+
                 var allevamenti = this.allevamentiService.Index();
 
                 //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
@@ -53,7 +52,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
                 return Ok(allevamenti);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
@@ -74,13 +73,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-       [HttpPut]
+        [HttpPut]
         public IHttpActionResult Update([FromBody] AllevamentoDto model)
         {
             try
             {
-                var users = this.allevamentiService.Update(model);
-                return Ok(model);
+                return Ok(this.allevamentiService.Update(model));
             }
             catch (Exception exc)
             {
@@ -94,8 +92,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                var users = this.allevamentiService.Create(model);
-                return Ok(model);
+                return Ok(this.allevamentiService.Create(model));
             }
             catch (Exception exc)
             {
@@ -104,6 +101,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try

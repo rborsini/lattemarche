@@ -30,29 +30,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
             {
-
-
-                var users = this.giriService.Index();
-
-                //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
-
-                //result.meta.page = 1;
-                //result.meta.pages = users.Count / 10;
-                //result.meta.perpage = 10;
-                //result.meta.total = users.Count;
-                //result.meta.sort = "asc";
-                //result.meta.field = "Nome";
-
-                //result.data = users;
-
-                //return Ok(result);                
-
-                return Ok(users);
+                return Ok(this.giriService.Index());
             }
             catch(Exception exc)
             {
@@ -80,8 +62,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                var users = this.giriService.Update(model);
-                return Ok(model);
+                return Ok(this.giriService.Update(model));
             }
             catch (Exception exc)
             {
@@ -95,8 +76,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                var users = this.giriService.Create(model);
-                return Ok(model);
+                return Ok(this.giriService.Create(model));
             }
             catch (Exception exc)
             {
@@ -105,6 +85,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try

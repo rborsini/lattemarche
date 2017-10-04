@@ -29,7 +29,7 @@ namespace LatteMarche.Application
 			// conversione da dto a entity
 			TEntity dbEntity = ConvertToEntity(model);
 
-			this.repository.Add(dbEntity);
+            dbEntity = this.repository.Add(dbEntity);
 			this.uow.SaveChanges();
 
 			return this.ConvertToDto(dbEntity);

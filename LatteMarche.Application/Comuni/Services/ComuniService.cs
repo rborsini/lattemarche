@@ -15,7 +15,13 @@ namespace LatteMarche.Application.Comuni.Services
     public class ComuniService : EntityReadOnlyService<Comune, int, ComuneDto>, IComuniService
     {
 
+        #region Fields
+
         private IRepository<Comune, int> comuniRepository;
+
+        #endregion
+
+        #region Constructors
 
         public ComuniService(IUnitOfWork uow)
             : base(uow)
@@ -23,22 +29,35 @@ namespace LatteMarche.Application.Comuni.Services
             this.comuniRepository = this.uow.Get<Comune, int>();
         }
 
-        public List<ComuneDto> Search(string provincia)
+        #endregion
+
+        #region Methods
+
+        public List<ComuneDto> Search(ComuniSearchDto searchDto)
         {
-            return ConvertToDtoList(this.repository.FilterBy(p => p.Provincia == provincia).OrderBy(c => c.Descrizione).ToList());
+            IQueryable<Comune> query = this.comuniRepository.GetAll();
+
+            // Sigla Provincia
+            if(!String.IsNullOrEmpty(searchDto.SiglaProvincia))
+            {
+                query = query.Where(c => c.Provincia == searchDto.SiglaProvincia);
+            }
+
+            return ConvertToDtoList(query.OrderBy(c => c.Descrizione).ToList());
         }
 
-        public List<String> getProvince()
+        public List<string> GetProvince()
         {
-            return this.repository.GetAll().ToList().Select(p => p.Provincia).Distinct().ToList();
+            return this.repository
+                .GetAll()
+                .Where(p => !String.IsNullOrEmpty(p.Provincia))
+                .Select(p => p.Provincia)
+                .Distinct()
+                .OrderBy(p => p)
+                .ToList();
         }
     
-        public override ComuneDto Details(int key)
-        {
-            ComuneDto comune = base.Details(key);
-
-            return comune;
-        }
+        #endregion
     }
 
 }

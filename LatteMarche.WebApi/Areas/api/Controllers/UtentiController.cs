@@ -30,7 +30,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -95,8 +94,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                var users = this.utentiService.Create(model);
-                return Ok(model);
+                return Ok(this.utentiService.Create(model));
             }
             catch (Exception exc)
             {
@@ -105,6 +103,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try
@@ -117,6 +116,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(e);
             }
         }
+        
         #endregion
 
 
