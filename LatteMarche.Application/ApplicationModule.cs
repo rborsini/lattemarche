@@ -18,6 +18,8 @@ using LatteMarche.Application.Trasportatori.Services;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Giri.Services;
 using LatteMarche.Application.Giri.Interfaces;
+using LatteMarche.Application.AllevamentiXGiro.Services;
+using LatteMarche.Application.AllevamentiXGiro.Interfaces;
 
 
 namespace LatteMarche.Application
@@ -53,6 +55,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>().InstancePerRequest();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>().InstancePerRequest();
                 builder.RegisterType<GiriService>().As<IGiriService>().InstancePerRequest();
+                builder.RegisterType<AllevamentiXGiroService>().As<IAllevamentiXGiroService>().InstancePerRequest();
 
 
             }
@@ -70,6 +73,8 @@ namespace LatteMarche.Application
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>();
                 builder.RegisterType<GiriService>().As<IGiriService>();
+                builder.RegisterType<AllevamentiXGiroService>().As<IAllevamentiXGiroService>();
+
             }
 
 

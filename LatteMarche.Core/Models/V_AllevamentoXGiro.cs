@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LatteMarche.Core.Models
 {
     [System.ComponentModel.DataAnnotations.Schema.Table("V_Allevamenti_X_Giro")]
-    public class V_AllevamentiXGiro : Entity<int>
+    public class V_AllevamentoXGiro : Entity<int>
     {
-       // [Key]
-        
+   
+        [Key]
+        [Column("ID")]
+        public override int Id { get; set; }
 
         [Column("ID_GIRO")]
         public int IdGiro { get; set; }
@@ -35,6 +37,6 @@ namespace LatteMarche.Core.Models
         public string RagioneSociale { get; set; }
 
         [Column("PRIORITA")]
-        public int Priorita { get; set; }
+        public int? Priorita { get; set; }
     }
 }

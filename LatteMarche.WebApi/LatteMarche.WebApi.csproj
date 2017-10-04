@@ -140,6 +140,7 @@
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
     <Compile Include="Areas\api\Controllers\AllevatoriController.cs" />
+    <Compile Include="Areas\api\Controllers\AllevamentiXGiroController.cs" />
     <Compile Include="Areas\api\Controllers\TrasportatoriController.cs" />
     <Compile Include="Areas\api\Controllers\GiriController.cs" />
     <Compile Include="Attributes\ApiCustomAuthorize.cs" />
