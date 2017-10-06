@@ -5,6 +5,7 @@ using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Application.Giri;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
+using WebApi.OutputCache.V2;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -30,11 +31,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
-        public IHttpActionResult Index()
+        [HttpPost]
+        public IHttpActionResult Index(int idTrasportatore)
         {
             try
             {
-                return Ok(this.giriService.Index());
+                return Ok(this.giriService.GetGiriOfTrasportatore(idTrasportatore));
             }
             catch(Exception exc)
             {
@@ -98,6 +100,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(e);
             }
         }
+        
         #endregion
 
 

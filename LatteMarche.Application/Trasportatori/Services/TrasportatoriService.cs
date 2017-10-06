@@ -6,6 +6,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using RB.Hash;
 using LatteMarche.Application.Giri.Interfaces;
+using System.Collections.Generic;
 
 namespace LatteMarche.Application.Trasportatori.Services
 {

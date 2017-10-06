@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
     public class HomeController : Controller
     {
+
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
             var mvcName = typeof(Controller).Assembly.GetName();
@@ -24,6 +27,7 @@ namespace LatteMarche.WebApi.Controllers
         /// Default page for unauthorized request
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Unauthorized()
         {
             return View();

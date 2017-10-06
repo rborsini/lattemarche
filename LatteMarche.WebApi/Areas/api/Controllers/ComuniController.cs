@@ -6,6 +6,7 @@ using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Comuni.Dtos;
 using LatteMarche.WebApi.Attributes;
+using WebApi.OutputCache.V2;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -31,6 +32,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
+        [HttpPost]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Index()
         {
             try
@@ -46,6 +49,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Details(int id)
         {
             try
@@ -59,6 +63,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(string provincia)
         {
             try
@@ -72,6 +77,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Province()
         {
             try

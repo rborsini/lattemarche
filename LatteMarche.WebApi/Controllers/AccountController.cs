@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
@@ -36,6 +37,7 @@ namespace LatteMarche.WebApi.Controllers
         #region Methods
 
         [AllowAnonymous]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -72,7 +74,7 @@ namespace LatteMarche.WebApi.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                catch
+                catch (Exception exc)
                 {
                     ViewBag.ErrorMessage = "Username o password errati";
                 }

@@ -6,8 +6,9 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using LatteMarche.Application.Allevatori.Interfaces;
+using LatteMarche.EntityFramework;
+using LatteMarche.Application.Allevatori.Dtos;
 
 namespace LatteMarche.Application.Giri.Services
 {
@@ -15,12 +16,48 @@ namespace LatteMarche.Application.Giri.Services
     public class GiriService: EntityService<Giro, int, GiroDto>, IGiriService
     {
 
-        private IRepository<Giro, int> giriRepository;
+        #region Fields
 
-        public GiriService(IUnitOfWork uow)
+        private IRepository<Giro, int> giriRepository;
+        private IAllevatoriService allevatoriService;
+
+        #endregion
+
+        #region Constructor
+
+        public GiriService(IUnitOfWork uow, IAllevatoriService allevatoriService)
             : base(uow)
         {
             this.giriRepository = this.uow.Get<Giro, int>();
+            this.allevatoriService = allevatoriService;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override GiroDto Details(int key)
+        {
+            GiroDto dto = base.Details(key);
+
+            //List<AllevatoreDto> allevatori = this.allevatoriService.Index();
+            //List<AllevamentoXGiro> allevamentiGiro = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
+
+            //foreach(AllevatoreDto allevatore in allevatori)
+            //{
+            //    AllevamentoXGiro allevamentoXGiro = allevamentiGiro.FirstOrDefault(ag => ag.IdAllevamento == allevatore.Id);
+
+            //    dto.Items.Add(new GiroItemDto()
+            //    {
+            //       IdGiro = key,
+            //       IdAllevamento = allevatore.Id,
+            //       Indirizzo = allevatore.IndirizzoAllevamento,
+            //       RagioneSociale = allevatore.RagioneSociale,
+            //       Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita : (int?)null
+            //    });
+            //}
+
+            return dto;
         }
 
         public List<GiroDto> GetGiriOfTrasportatore(int idTrasportatore)
@@ -36,6 +73,9 @@ namespace LatteMarche.Application.Giri.Services
 
             return dbEntity;
         }
+
+        #endregion
+
     }
 
 }

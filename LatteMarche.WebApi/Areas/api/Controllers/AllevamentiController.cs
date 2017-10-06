@@ -5,6 +5,7 @@ using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
+using WebApi.OutputCache.V2;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -30,6 +31,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Methods
 
         [HttpGet]
+        [HttpPost]
         public IHttpActionResult Index()
         {
             try

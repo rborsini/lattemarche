@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
@@ -17,6 +18,7 @@ namespace LatteMarche.WebApi.Controllers
 
         // GET: Utenti
         [ViewItem(nameof(Index), "Utenti", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
             return View();
@@ -25,6 +27,7 @@ namespace LatteMarche.WebApi.Controllers
         //
         // GET: /Utente/New
         [ViewItem(nameof(New), "Utenti", "Aggiungi")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult New()
         {
             return View();
@@ -33,6 +36,7 @@ namespace LatteMarche.WebApi.Controllers
         //
         // GET: /Utente/Details
         [ViewItem(nameof(Details), "Utenti", "Modifica")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Details()
         {
             return View();

@@ -9,17 +9,16 @@ using LatteMarche.Application.Allevatori.Dtos;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Application.Giri.Dtos;
-using LatteMarche.Application.AllevamentiXGiro.Dtos;
 
 
 
 
 namespace LatteMarche.Application
 {
-	/// <summary>
-	/// Configurazione dei mapping da Entity e Dto
-	/// </summary>
-	public static class AutomapperConfig
+    /// <summary>
+    /// Configurazione dei mapping da Entity e Dto
+    /// </summary>
+    public static class AutomapperConfig
 	{
 		public static void Configure()
 		{
@@ -31,7 +30,6 @@ namespace LatteMarche.Application
             AllevamentiMappings.Configure();
             TrasportatoriMappings.Configure();
             GiriMappings.Configure();
-            AllevamentiXGiroMappings.Configure();
         }
 	}
 

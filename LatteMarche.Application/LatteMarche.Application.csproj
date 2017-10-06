@@ -38,16 +38,15 @@
       <HintPath>..\packages\HashHelper.1.0.0\lib\net45\HashHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllevamentiXGiro\Dtos\AllevamentoXGiroDto.cs" />
-    <Compile Include="AllevamentiXGiro\Interfaces\IAllevamentiXGiroService.cs" />
-    <Compile Include="AllevamentiXGiro\Services\AllevamentiXGiroService.cs" />
     <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
     <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
     <Compile Include="Allevatori\Services\AllevatoriService.cs" />
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="Comuni\Dtos\ComuniSearchDto.cs" />
+    <Compile Include="Giri\Dtos\GiroItemDto.cs" />
     <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
     <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />
     <Compile Include="TipiLatte\Services\TipiLatteService.cs" />

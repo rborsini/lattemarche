@@ -11,6 +11,7 @@ namespace LatteMarche.Core
 	/// </summary>
 	public interface IUnitOfWork : IDisposable
 	{
+        //IContext Context { get; }
 		void SaveChanges();
 		IDbTransaction BeginTransaction();
 		void Commit();
