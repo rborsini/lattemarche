@@ -9,6 +9,7 @@ using System.Linq;
 using LatteMarche.Application.Allevatori.Interfaces;
 using LatteMarche.EntityFramework;
 using LatteMarche.Application.Allevatori.Dtos;
+using System.Data.Entity;
 
 namespace LatteMarche.Application.Giri.Services
 {
@@ -20,6 +21,8 @@ namespace LatteMarche.Application.Giri.Services
 
         private IRepository<Giro, int> giriRepository;
         private IAllevatoriService allevatoriService;
+
+        private DbSet<AllevamentoXGiro> allevamentiXGiroRepository { get { return (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro; } }
 
         #endregion
 
@@ -36,12 +39,17 @@ namespace LatteMarche.Application.Giri.Services
 
         #region Methods
 
+        /// <summary>
+        /// Caricamento dettaglio Giro (items compresi)
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override GiroDto Details(int key)
         {
             GiroDto dto = base.Details(key);
 
-            List<AllevatoreDto> allevatori = this.allevatoriService.Index();
-            List<AllevamentoXGiro> allevamentiGiro = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
+            List<AllevatoreDto> allevatori = this.allevatoriService.Index().Take(5).ToList();
+            List<AllevamentoXGiro> allevamentiGiro = allevamentiXGiroRepository.Where(a => a.IdGiro == key).ToList();
 
             foreach (AllevatoreDto allevatore in allevatori)
             {
@@ -61,9 +69,55 @@ namespace LatteMarche.Application.Giri.Services
             return dto;
         }
 
+        /// <summary>
+        /// Caricamento giri singolo trasportatore
+        /// </summary>
+        /// <param name="idTrasportatore"></param>
+        /// <returns></returns>
         public List<GiroDto> GetGiriOfTrasportatore(int idTrasportatore)
         {
             return ConvertToDtoList(this.giriRepository.FilterBy(g => g.IdTrasportatore == idTrasportatore).ToList());
+        }
+
+        public override GiroDto Update(GiroDto model)
+        {            
+            List<AllevamentoXGiro> allevamentiDb = allevamentiXGiroRepository.Where(a => a.IdGiro == model.Id).ToList();
+
+            List<AllevamentoXGiro> allevamentiDaEliminare = new List<AllevamentoXGiro>();
+
+            foreach(GiroItemDto item in model.Items)
+            {
+                AllevamentoXGiro allevamentoDb = allevamentiDb.FirstOrDefault(a => a.IdGiro == model.Id && a.IdAllevamento == item.IdAllevamento);
+
+                // update
+                if(allevamentoDb !=  null && allevamentoDb.Priorita != item.Priorita)
+                    allevamentoDb.Priorita = item.Priorita;
+
+                // insert
+                if(allevamentoDb == null && item.Priorita.HasValue)
+                {
+                    this.allevamentiXGiroRepository.Add(new AllevamentoXGiro()
+                    {
+                        IdGiro = model.Id,
+                        IdAllevamento = item.IdAllevamento,
+                        Priorita = item.Priorita
+                    });
+                }
+            }
+
+            // remove
+            foreach(AllevamentoXGiro allevamentoDb in allevamentiDb)
+            {
+                GiroItemDto item = model.Items.FirstOrDefault(i => i.IdAllevamento == allevamentoDb.IdAllevamento);
+
+                if (item == null)
+                    allevamentiDaEliminare.Add(allevamentoDb);
+            }
+            this.allevamentiXGiroRepository.RemoveRange(allevamentiDaEliminare);
+
+            this.uow.SaveChanges();
+
+            return base.Update(model);
         }
 
         protected override Giro UpdateProperties(Giro viewEntity, Giro dbEntity)

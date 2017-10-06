@@ -32,6 +32,8 @@
                         <!-- ko foreach: RigheAllevamenti -->
 
                             <div class="m-form__group form-group row">
+
+                                <!-- SX -->
                                 <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
                                     <label>
                                         <input type="checkbox" data-bind="checked: $data.Selezionato_SX" >
@@ -65,13 +67,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
+
+                                <!-- DX -->
+                                <span data-bind="visible: $data.Visible_DX" class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
                                     <label>
                                         <input type="checkbox" data-bind="checked: $data.Selezionato_DX">
                                         <span></span>
                                     </label>
                                 </span>
-                                <div class="col-5">
+
+                                <div class="col-5" data-bind="visible: $data.Visible_DX" >
                                     <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
                                     <div class="m-widget5__content" style="margin:10px">
                                         <div class="m-list-timeline">
@@ -434,6 +439,7 @@
 
             $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
 
+                giroSelezionato = result;
                 
                 for (var i = 0; i < result.Items.length; i = i+2) {
                     var riga = {}
@@ -445,6 +451,7 @@
                     riga.Indirizzo_SX = ko.observable(item_SX.Indirizzo);
                     riga.Allevatore_SX = ko.observable(item_SX.Allevatore);
                     riga.Selezionato_SX = ko.observable(item_SX.Priorita != undefined);
+                    riga.IdAllevamento_SX = ko.observable(item_SX.IdAllevamento);
 
                     if (i < result.Items.length - 1) {
 
@@ -455,6 +462,10 @@
                         riga.Indirizzo_DX = ko.observable(item_DX.Indirizzo);
                         riga.Allevatore_DX = ko.observable(item_DX.Allevatore);
                         riga.Selezionato_DX = ko.observable(item_DX.Priorita != undefined);
+                        riga.IdAllevamento_DX = ko.observable(item_DX.IdAllevamento);
+                        riga.Visible_DX = ko.observable(true);
+                    } else {
+                        riga.Visible_DX = ko.observable(false);
                     }
 
                     viewModel.RigheAllevamenti.push(riga);
@@ -469,12 +480,45 @@
         // evento click bottone 'Salva allevamenti'
         viewModel.SalvaAllevamenti_Clicked = function () {
 
-            
+            giroSelezionato.Giri = [];
 
-            console.log("salvataggio allevamenti");
+            for (var i = 0; i < viewModel.RigheAllevamenti().length; i++) {
 
-            viewModel.RigheAllevamenti.removeAll();
-            $('modale-priorita').modal('hide');
+                var row = viewModel.RigheAllevamenti()[i];
+                giroSelezionato.Giri.push({
+                    IdGiro: giroSelezionato.Id,
+                    IdAllevamento: row.IdAllevamento_SX(),
+                    Priorita: row.Selezionato_SX() ? row.Priorita_SX() : null
+                });
+
+                if (row.Visible_DX()) {
+                    giroSelezionato.Giri.push({
+                        IdGiro: giroSelezionato.Id,
+                        IdAllevamento: row.IdAllevamento_DX(),
+                        Priorita: row.Selezionato_DX() ? row.Priorita_DX() : null
+                    });
+                }
+            }
+
+            console.log("giro", giroSelezionato.Giri);
+
+            $.ajax({
+                type: "PUT",
+                url: apiUrl + "giri/update",
+                data: giroSelezionato,
+                dataType: 'json',
+                success: function (result) {
+                    $('#waiter').modal('hide');
+                    $('#save-dialog-panel').modal('show');
+
+                    viewModel.RigheAllevamenti.removeAll();
+                    $('#modale-priorita').modal('hide');
+                },
+                error: function (result) {
+                    $('#waiter').modal('hide');
+                    showError('Si è verificato un errore durante il salvataggio.');
+                }
+            });
 
         };
 
