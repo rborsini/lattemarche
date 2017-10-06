@@ -26,9 +26,9 @@ namespace LatteMarche.EntityFramework
 		private Object objectLock = new Object();
 		private Hashtable repositories;
 
-        //public IContext Context { get { return this.context; } }
+        public IContext Context { get { return this.context; } }
 
-		public UnitOfWork(IContext context)
+        public UnitOfWork(IContext context)
 		{
 			this.context = context;
 			this.repositories = new Hashtable();

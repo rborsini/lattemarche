@@ -40,22 +40,22 @@ namespace LatteMarche.Application.Giri.Services
         {
             GiroDto dto = base.Details(key);
 
-            //List<AllevatoreDto> allevatori = this.allevatoriService.Index();
-            //List<AllevamentoXGiro> allevamentiGiro = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
+            List<AllevatoreDto> allevatori = this.allevatoriService.Index();
+            List<AllevamentoXGiro> allevamentiGiro = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
 
-            //foreach(AllevatoreDto allevatore in allevatori)
-            //{
-            //    AllevamentoXGiro allevamentoXGiro = allevamentiGiro.FirstOrDefault(ag => ag.IdAllevamento == allevatore.Id);
+            foreach (AllevatoreDto allevatore in allevatori)
+            {
+                AllevamentoXGiro allevamentoXGiro = allevamentiGiro.FirstOrDefault(ag => ag.IdAllevamento == allevatore.Id);
 
-            //    dto.Items.Add(new GiroItemDto()
-            //    {
-            //       IdGiro = key,
-            //       IdAllevamento = allevatore.Id,
-            //       Indirizzo = allevatore.IndirizzoAllevamento,
-            //       RagioneSociale = allevatore.RagioneSociale,
-            //       Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita : (int?)null
-            //    });
-            //}
+                dto.Items.Add(new GiroItemDto()
+                {
+                    IdGiro = key,
+                    IdAllevamento = allevatore.Id,
+                    Indirizzo = allevatore.IndirizzoAllevamento,
+                    RagioneSociale = allevatore.RagioneSociale,
+                    Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita : (int?)null
+                });
+            }
 
             return dto;
         }
