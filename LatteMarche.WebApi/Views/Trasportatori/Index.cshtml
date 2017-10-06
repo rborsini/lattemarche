@@ -480,27 +480,25 @@
         // evento click bottone 'Salva allevamenti'
         viewModel.SalvaAllevamenti_Clicked = function () {
 
-            giroSelezionato.Giri = [];
+            giroSelezionato.Items = [];
 
             for (var i = 0; i < viewModel.RigheAllevamenti().length; i++) {
 
                 var row = viewModel.RigheAllevamenti()[i];
-                giroSelezionato.Giri.push({
+                giroSelezionato.Items.push({
                     IdGiro: giroSelezionato.Id,
                     IdAllevamento: row.IdAllevamento_SX(),
-                    Priorita: row.Selezionato_SX() ? row.Priorita_SX() : null
+                    Priorita: row.Selezionato_SX() ? parseInt(row.Priorita_SX()) : null
                 });
 
                 if (row.Visible_DX()) {
-                    giroSelezionato.Giri.push({
+                    giroSelezionato.Items.push({
                         IdGiro: giroSelezionato.Id,
                         IdAllevamento: row.IdAllevamento_DX(),
-                        Priorita: row.Selezionato_DX() ? row.Priorita_DX() : null
+                        Priorita: row.Selezionato_DX() ? parseInt(row.Priorita_DX()) : null
                     });
                 }
             }
-
-            console.log("giro", giroSelezionato.Giri);
 
             $.ajax({
                 type: "PUT",

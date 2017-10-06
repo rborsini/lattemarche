@@ -62,7 +62,7 @@ namespace LatteMarche.Application.Giri.Services
                     Allevatore = String.Format("{0} {1}", allevatore.Cognome, allevatore.Nome),
                     Indirizzo = allevatore.IndirizzoAllevamento,
                     RagioneSociale = allevatore.RagioneSociale,
-                    Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita : (int?)null
+                    Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita.Value : (int?)null
                 });
             }
 
@@ -90,8 +90,15 @@ namespace LatteMarche.Application.Giri.Services
                 AllevamentoXGiro allevamentoDb = allevamentiDb.FirstOrDefault(a => a.IdGiro == model.Id && a.IdAllevamento == item.IdAllevamento);
 
                 // update
-                if(allevamentoDb !=  null && allevamentoDb.Priorita != item.Priorita)
-                    allevamentoDb.Priorita = item.Priorita;
+                if(allevamentoDb !=  null)
+                {
+                    if (item.Priorita.HasValue && allevamentoDb.Priorita != item.Priorita)
+                        allevamentoDb.Priorita = Convert.ToInt32(item.Priorita);
+
+                    if (!item.Priorita.HasValue)
+                        allevamentiDaEliminare.Add(allevamentoDb);
+                }
+
 
                 // insert
                 if(allevamentoDb == null && item.Priorita.HasValue)
@@ -100,7 +107,7 @@ namespace LatteMarche.Application.Giri.Services
                     {
                         IdGiro = model.Id,
                         IdAllevamento = item.IdAllevamento,
-                        Priorita = item.Priorita
+                        Priorita = Convert.ToInt32(item.Priorita)
                     });
                 }
             }
