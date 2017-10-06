@@ -1,4 +1,6 @@
 ﻿using LatteMarche.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Tests
 {
-    public class InMemoryDbSet<TEntity, TPrimaryKey> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>
-        where TEntity : Entity<TPrimaryKey>
+    public class InMemoryDbSet<TEntity> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>
+        where TEntity : class
     {
 
         ObservableCollection<TEntity> data;
@@ -21,6 +23,26 @@ namespace LatteMarche.Tests
         {
             this.data = new ObservableCollection<TEntity>();
             this.query = this.data.AsQueryable();
+        }
+
+        public override TEntity Find(params object[] keyValues)
+        {
+            string json = JsonConvert.SerializeObject(this.data);
+
+            JArray jarr = JArray.Parse(json);
+            foreach (JObject content in jarr.Children<JObject>())
+            {
+                foreach (JProperty prop in content.Properties())
+                {
+                    if (prop.Name == "Id" && (string)prop.Value == keyValues[0].ToString())
+                        return content.ToObject<TEntity>();
+                                                           
+                }
+            }
+
+
+            return null;
+            
         }
 
         public override TEntity Add(TEntity item)
@@ -37,7 +59,7 @@ namespace LatteMarche.Tests
 
         public override TEntity Attach(TEntity item)
         {
-            Entity<TPrimaryKey> entity = item as Entity<TPrimaryKey>;
+            Entity<object> entity = item as Entity<object>;
             switch (entity.ObjectState)
             {
                 case ObjectState.Modified:
@@ -107,4 +129,3 @@ namespace LatteMarche.Tests
 
     }
 }
-

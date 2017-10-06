@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LatteMarche.Core.Models;
+using System;
+using System.Data.Entity;
+
 namespace LatteMarche.Core
 {
 	/// <summary>
@@ -7,11 +10,18 @@ namespace LatteMarche.Core
 	public interface IContext
 	{
 
-		/// <summary>
-		/// Commit delle modifiche pendenti
-		/// </summary>
-		/// <returns></returns>
-		int SaveChanges();
+        DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
+
+        DbSet<TEntity> Set<TEntity>()
+            where TEntity : class;
+
+        void SetModified(object entity);
+
+        /// <summary>
+        /// Commit delle modifiche pendenti
+        /// </summary>
+        /// <returns></returns>
+        int SaveChanges();
 
 	}
 }

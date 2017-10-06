@@ -25,7 +25,7 @@ namespace LatteMarche.EntityFramework
 		public Repository(IContext context)
 		{
 			this.dataContext = context;
-			dbset = ((DbContext)dataContext).Set<TEntity>();
+			dbset = dataContext.Set<TEntity>();
 		}
 
 		public void Add(IEnumerable<TEntity> entities)

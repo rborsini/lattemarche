@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Core;
+using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,16 +13,23 @@ namespace LatteMarche.Tests
     {
         public int SaveChangesCount { get; private set; }
 
+        public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
+
+        public InMemoryContext()
+        {
+            this.AllevamentiXGiro = new InMemoryDbSet<AllevamentoXGiro>();
+        }
+
         public int SaveChanges()
         {
             this.SaveChangesCount++;
             return 1;
         }
 
-        public DbSet<TEntity> Set<TEntity, TPrimaryKey>()
-            where TEntity : Entity<TPrimaryKey>
+        public DbSet<TEntity> Set<TEntity>()
+              where TEntity : class
         {
-            return new InMemoryDbSet<TEntity, TPrimaryKey>();
+            return new InMemoryDbSet<TEntity>();
         }
 
         public void SetModified(object entity)
