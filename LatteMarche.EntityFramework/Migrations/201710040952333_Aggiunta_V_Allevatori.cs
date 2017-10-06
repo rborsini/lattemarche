@@ -18,6 +18,8 @@ namespace LatteMarche.EntityFramework.Migrations
 	                                "    dbo.ANAGRAFE_ALLEVAMENTO.ID_UTENTE, " +
 	                                "    dbo.ANAGRAFE_ALLEVAMENTO.INDIRIZZO_ALLEVAMENTO, " +
 	                                "    dbo.ANAGRAFE_ALLEVAMENTO.ID_COMUNE, " +
+                                    "    dbo.UTENTI.NOME,"+
+                                    "    dbo.UTENTI.COGNOME,"+
                                     "    dbo.UTENTI.RAGIONE_SOCIALE, " +
 	                                "    dbo.ANAGRAFE_ALLEVAMENTO.IDSITRA_STABILIMENTO_ALLEVAMENTO, " +
 	                                "    dbo.ANAGRAFE_ALLEVAMENTO.CODICE_ASL, dbo.COMUNI.PROVINCIA, " +

@@ -11,6 +11,8 @@ namespace LatteMarche.Application.Allevatori.Dtos
         public string IndirizzoAllevamento { get; set; }
         public string Comune { get; set; }
         public string Provincia { get; set; }
+        public string Nome { get; set; }
+        public string Cognome { get; set; }
         public string RagioneSociale { get; set; }
         public int IdUtente { get; set; }
         public int IdComune { get; set; }
@@ -26,6 +28,8 @@ namespace LatteMarche.Application.Allevatori.Dtos
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.CodiceAsl, opts => opts.MapFrom(src => src.CodiceAsl.Trim()))
                 .ForMember(dest => dest.IndirizzoAllevamento, opts => opts.MapFrom(src => src.IndirizzoAllevamento.Trim()))
+                .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
+                .ForMember(dest => dest.Cognome, opts => opts.MapFrom(src => src.Cognome.Trim()))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
                 .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))
@@ -38,6 +42,8 @@ namespace LatteMarche.Application.Allevatori.Dtos
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.CodiceAsl, opts => opts.MapFrom(src => src.CodiceAsl.Trim()))
                 .ForMember(dest => dest.IndirizzoAllevamento, opts => opts.MapFrom(src => src.IndirizzoAllevamento.Trim()))
+                .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
+                .ForMember(dest => dest.Cognome, opts => opts.MapFrom(src => src.Cognome.Trim()))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
                 .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))

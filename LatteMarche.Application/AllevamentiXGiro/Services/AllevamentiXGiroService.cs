@@ -12,11 +12,11 @@ using System.Linq;
 namespace LatteMarche.Application.AllevamentiXGiro.Services
 {
 
-    public class AllevamentiXGiroService : EntityReadOnlyService<V_AllevamentoXGiro, int, AllevamentoXGiroDto>, IAllevamentiXGiroService
+    public class AllevamentiXGiroService : EntityService<AllevamentoXGiro, int, AllevamentoXGiroDto>, IAllevamentiXGiroService
     {
         #region Fields
 
-        private IRepository<V_AllevamentoXGiro, int> allevamentiXGiroRepository;
+        private IRepository<AllevamentoXGiro, int> allevamentiXGiroRepository;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace LatteMarche.Application.AllevamentiXGiro.Services
         public AllevamentiXGiroService(IUnitOfWork uow)
             : base(uow)
         {
-            this.allevamentiXGiroRepository = this.uow.Get<V_AllevamentoXGiro, int>();
+            this.allevamentiXGiroRepository = this.uow.Get<AllevamentoXGiro, int>();
         }
 
         #endregion
@@ -36,6 +36,11 @@ namespace LatteMarche.Application.AllevamentiXGiro.Services
         {
            return ConvertToDtoList(this.allevamentiXGiroRepository.FilterBy(a => a.IdGiro == idGiro).ToList());
 
+        }
+
+        protected override AllevamentoXGiro UpdateProperties(AllevamentoXGiro viewEntity, AllevamentoXGiro dbEntity)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

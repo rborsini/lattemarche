@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace LatteMarche.Application.AllevamentiXGiro.Interfaces
 {
 
-    public interface IAllevamentiXGiroService : IEntityReadOnlyService<V_AllevamentoXGiro, int, AllevamentoXGiroDto>
+    public interface IAllevamentiXGiroService : IEntityService<AllevamentoXGiro, int, AllevamentoXGiroDto>
     {
         List<AllevamentoXGiroDto> GetByGiro(int idGiro);
     }
