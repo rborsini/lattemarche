@@ -12,6 +12,8 @@ namespace LatteMarche.Application.Giri.Dtos
 
         public int IdAllevamento { get; set; }
 
+        public string Allevatore { get; set; }
+
         public string RagioneSociale { get; set; }
 
         public string Indirizzo { get; set; }

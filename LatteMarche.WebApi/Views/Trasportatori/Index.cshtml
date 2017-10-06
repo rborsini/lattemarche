@@ -29,74 +29,78 @@
                 <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="600" style="max-height: 600px; height: 600px; position: relative; overflow: visible;">
                     <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 
-                        <div class="m-form__group form-group row">
-                            <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
-                                <label>
-                                    <input type="checkbox" checked="checked" name="">
-                                    <span></span>
-                                </label>
-                            </span>
-                            <div class="col-5">
-                                <input type="text" data-bind="" class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
-                                <div class="m-widget5__content" style="margin:10px">
-                                    <div class="m-list-timeline">
-                                        <div class="m-list-timeline__items">
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Ragione Sociale:</strong><br />Agricola di Accoglienza
-                                                </span>
+                        <!-- ko foreach: RigheAllevamenti -->
+
+                            <div class="m-form__group form-group row">
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
+                                    <label>
+                                        <input type="checkbox" data-bind="checked: $data.Selezionato_SX" >
+                                        <span></span>
+                                    </label>
+                                </span>
+                                <div class="col-5">
+                                    <input type="number" data-bind="value: $data.Priorita_SX, enable: $data.Selezionato_SX" class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
+                                    <div class="m-widget5__content" style="margin:10px">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Ragione Sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_SX" ></span>
+                                                    </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_SX" ></span>
+                                                    </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Indirizzo Allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_SX" ></span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Allevatore:</strong><br />Ascari Achille
-                                                </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Indirizzo Allevamento:</strong><br />San Cristoforo 26 AMANDOLA
-                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
+                                    <label>
+                                        <input type="checkbox" data-bind="checked: $data.Selezionato_DX">
+                                        <span></span>
+                                    </label>
+                                </span>
+                                <div class="col-5">
+                                    <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
+                                    <div class="m-widget5__content" style="margin:10px">
+                                        <div class="m-list-timeline">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Ragione Sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_DX"></span>
+                                                    </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_DX"></span>
+                                                    </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        <strong>Indirizzo Allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_DX"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
-                                <label>
-                                    <input type="checkbox" checked="checked" name="">
-                                    <span></span>
-                                </label>
-                            </span>
-                            <div class="col-5">
-                                <input type="text" data-bind="" class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
-                                <div class="m-widget5__content" style="margin:10px">
-                                    <div class="m-list-timeline">
-                                        <div class="m-list-timeline__items">
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Ragione Sociale:</strong><br />Agricola di Accoglienza
-                                                </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Allevatore:</strong><br />Ascari Achille
-                                                </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge"></span>
-                                                <span class="m-list-timeline__text">
-                                                    <strong>Indirizzo Allevamento:</strong><br />San Cristoforo 26 AMANDOLA
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <!-- /ko -->
 
                     </div>
                 </div>
@@ -106,7 +110,7 @@
                 <button type="button" class="btn m-btn--pill m-btn--air btn-outline-warning" data-dismiss="modal">
                     Ritorna in Dashboard
                 </button>
-                <button type="button" class="btn m-btn--pill m-btn--air btn-info">
+                <button data-bind="click: SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-info">
                     Salva
                 </button>
             </div>
@@ -334,6 +338,8 @@
             Trasportatore_Nome: ko.observable(''),
             Trasportatore_Indirizzo: ko.observable(''),
 
+            // allevamenti
+            RigheAllevamenti: ko.observableArray()
 
         };
 
@@ -420,10 +426,55 @@
 
         }
 
-        // evento click botton 'Carica allevamenti'
+        // evento click bottone 'Carica allevamenti'
         viewModel.CaricaAllevamenti_Clicked = function () {
 
             $('#modale-priorita').modal('show');
+
+
+            $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
+
+                
+                for (var i = 0; i < result.Items.length; i = i+2) {
+                    var riga = {}
+
+                    var item_SX = result.Items[i];
+
+                    riga.Priorita_SX = ko.observable(item_SX.Priorita);
+                    riga.RagioneSociale_SX = ko.observable(item_SX.RagioneSociale);
+                    riga.Indirizzo_SX = ko.observable(item_SX.Indirizzo);
+                    riga.Allevatore_SX = ko.observable(item_SX.Allevatore);
+                    riga.Selezionato_SX = ko.observable(item_SX.Priorita != undefined);
+
+                    if (i < result.Items.length - 1) {
+
+                        var item_DX = result.Items[i + 1];
+
+                        riga.Priorita_DX = ko.observable(item_DX.Priorita);
+                        riga.RagioneSociale_DX = ko.observable(item_DX.RagioneSociale);
+                        riga.Indirizzo_DX = ko.observable(item_DX.Indirizzo);
+                        riga.Allevatore_DX = ko.observable(item_DX.Allevatore);
+                        riga.Selezionato_DX = ko.observable(item_DX.Priorita != undefined);
+                    }
+
+                    viewModel.RigheAllevamenti.push(riga);
+                }
+
+                $('#modale-priorita').modal('show');
+
+            });
+
+        };
+
+        // evento click bottone 'Salva allevamenti'
+        viewModel.SalvaAllevamenti_Clicked = function () {
+
+            
+
+            console.log("salvataggio allevamenti");
+
+            viewModel.RigheAllevamenti.removeAll();
+            $('modale-priorita').modal('hide');
 
         };
 

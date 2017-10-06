@@ -51,6 +51,7 @@ namespace LatteMarche.Application.Giri.Services
                 {
                     IdGiro = key,
                     IdAllevamento = allevatore.Id,
+                    Allevatore = String.Format("{0} {1}", allevatore.Cognome, allevatore.Nome),
                     Indirizzo = allevatore.IndirizzoAllevamento,
                     RagioneSociale = allevatore.RagioneSociale,
                     Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita : (int?)null

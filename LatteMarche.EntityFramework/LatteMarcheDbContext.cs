@@ -21,6 +21,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<V_Trasportatore> Trasportatori { get; set; }
         public DbSet<Giro> Giri { get; set; }
         public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
+        public DbSet<LaboratorioAnalisi> LaboratoriAnalisi { get; set; }
 
 
         public LatteMarcheDbContext()
