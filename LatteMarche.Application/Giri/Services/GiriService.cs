@@ -77,6 +77,11 @@ namespace LatteMarche.Application.Giri.Services
             return ConvertToDtoList(this.giriRepository.FilterBy(g => g.IdTrasportatore == idTrasportatore).ToList());
         }
 
+        /// <summary>
+        /// Aggiornamento allevatori selezionati e relative priorità
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public override GiroDto Update(GiroDto model)
         {            
             List<AllevamentoXGiro> allevamentiDb = this.uow.Context.AllevamentiXGiro.Where(a => a.IdGiro == model.Id).ToList();
@@ -122,7 +127,9 @@ namespace LatteMarche.Application.Giri.Services
 
             this.uow.SaveChanges();
 
-            return base.Update(model);
+            base.Update(model);
+
+            return Details(model.Id);
         }
 
         protected override Giro UpdateProperties(Giro viewEntity, Giro dbEntity)

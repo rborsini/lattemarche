@@ -10,18 +10,10 @@ namespace LatteMarche.Core
 	/// <summary>
 	/// Classe base per tutte le entità del modello
 	/// </summary>
-	public abstract class Entity<TPrimaryKey> : ICloneable, IObjectState
+	public abstract class Entity<TPrimaryKey> : BaseEntity
     {
 		[Key]
 		public virtual TPrimaryKey Id { get; set; }
-
-        [NotMapped]
-        public ObjectState ObjectState { get; set; }
-
-        public object Clone()
-		{
-			return this.MemberwiseClone();
-		}
 
 	}
 }

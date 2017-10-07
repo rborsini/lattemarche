@@ -17,7 +17,8 @@ namespace LatteMarche.EntityFramework
 	/// </summary>
 	/// <typeparam name="TEntity"></typeparam>
 	/// <typeparam name="TPrimaryKey"></typeparam>
-	public class Repository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
+	public class Repository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> 
+        where TEntity : Entity<TPrimaryKey>
 	{
 		protected IContext dataContext;
 		protected readonly IDbSet<TEntity> dbset;
@@ -93,7 +94,13 @@ namespace LatteMarche.EntityFramework
 
 		public void Update(TEntity entity)
 		{
-			((DbContext)dataContext).Entry(entity).State = EntityState.Modified;
+
+            entity.ObjectState = ObjectState.Modified;
+            dbset.Attach(entity);
+            dataContext.SetModified(entity);
+
+
+            //((DbContext)dataContext).Entry(entity).State = EntityState.Modified;
 		}
 	}
 }

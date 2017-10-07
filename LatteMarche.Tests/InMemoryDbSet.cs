@@ -57,9 +57,17 @@ namespace LatteMarche.Tests
             return item;
         }
 
+        public override IEnumerable<TEntity> RemoveRange(IEnumerable<TEntity> entities)
+        {
+            foreach (TEntity entity in entities)
+                Remove(entity);
+
+            return entities;
+        }
+
         public override TEntity Attach(TEntity item)
         {
-            Entity<object> entity = item as Entity<object>;
+            BaseEntity entity = item as BaseEntity;
             switch (entity.ObjectState)
             {
                 case ObjectState.Modified:

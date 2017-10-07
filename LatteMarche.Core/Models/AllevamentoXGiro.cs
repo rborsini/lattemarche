@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LatteMarche.Core.Models
 {
     [System.ComponentModel.DataAnnotations.Schema.Table("ALLEVAMENTO_X_GIRO")]
-    public class AllevamentoXGiro
+    public class AllevamentoXGiro : BaseEntity
     {
 
         [Key, Column("ID_GIRO", Order = 0)]
