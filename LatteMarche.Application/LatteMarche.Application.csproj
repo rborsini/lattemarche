@@ -47,6 +47,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
+    <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
+    <Compile Include="PrelieviLatte\Services\PrelieviLatteService.cs" />
+    <Compile Include="VPrelieviLatte\Dtos\VPrelievoLatteDto.cs" />
+    <Compile Include="VPrelieviLatte\Interfaces\IVPrelieviLatteService.cs" />
+    <Compile Include="VPrelieviLatte\Services\VPrelieviLatteService.cs" />
     <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
     <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
     <Compile Include="Allevatori\Services\AllevatoriService.cs" />

@@ -4,7 +4,6 @@ using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
-using RB.Hash;
 
 namespace LatteMarche.Application.Allevamenti.Services
 {
