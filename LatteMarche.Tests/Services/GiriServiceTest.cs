@@ -81,7 +81,7 @@ namespace LatteMarche.Tests.Services
         }
 
         [TestMethod]
-        public void Update_PrioritaDeselezionate_RecordEliminati()
+        public void GiriService_Update_PrioritaDeselezionate_RecordEliminati()
         {
             this.SeedAllevatori(9);
             this.SeedGiri(1);
@@ -102,7 +102,7 @@ namespace LatteMarche.Tests.Services
         }
 
         [TestMethod]
-        public void Update_PrioritaModificate_RecordAggiornati()
+        public void GiriService_Update_PrioritaModificate_RecordAggiornati()
         {
             this.SeedAllevatori(9);
             this.SeedGiri(1);
