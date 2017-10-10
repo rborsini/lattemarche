@@ -51,6 +51,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquirenti\Dtos\AcquirenteDto.cs" />
+    <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
+    <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
     <Compile Include="PrelieviLatte\Services\PrelieviLatteService.cs" />

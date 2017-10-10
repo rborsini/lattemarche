@@ -23,6 +23,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
         public DbSet<LaboratorioAnalisi> LaboratoriAnalisi { get; set; }
         public DbSet<PrelievoLatte> PrelieviLatte { get; set; }
+        public DbSet<Acquirente> Acquirenti { get; set; }
 
 
         public LatteMarcheDbContext()

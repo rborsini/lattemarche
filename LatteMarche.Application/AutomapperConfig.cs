@@ -11,6 +11,7 @@ using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.LaboratoriAnalisi.Dtos;
+using LatteMarche.Application.Acquirenti.Dtos;
 
 
 
@@ -34,6 +35,7 @@ namespace LatteMarche.Application
             GiriMappings.Configure();
             PrelieviLatteMappings.Configure();
             LaboratoriAnalisiMappings.Configure();
+            AcquirentiMappings.Configure();
         }
 	}
 
