@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using LatteMarche.Core.Models;
-//using RB.Date;
+
 
 namespace LatteMarche.Application.PrelieviLatte.Dtos
 {
@@ -29,6 +29,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
     {
         public static void Configure()
         {
+            //RB.Date.DateHelper //instanziare DateHelper. non è più statico
             Mapper.CreateMap<PrelievoLatte, PrelievoLatteDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.IdAllevamento, opts => opts.MapFrom(src => src.IdAllevamento))

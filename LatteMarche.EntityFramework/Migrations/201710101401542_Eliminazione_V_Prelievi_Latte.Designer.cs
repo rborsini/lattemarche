@@ -7,13 +7,13 @@ namespace LatteMarche.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Aggiunta_V_Prelievi_Latte1 : IMigrationMetadata
+    public sealed partial class Eliminazione_V_Prelievi_Latte : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Aggiunta_V_Prelievi_Latte1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Eliminazione_V_Prelievi_Latte));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710090807421_Aggiunta_V_Prelievi_Latte1"; }
+            get { return "201710101401542_Eliminazione_V_Prelievi_Latte"; }
         }
         
         string IMigrationMetadata.Source

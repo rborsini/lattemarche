@@ -49,7 +49,6 @@
     <Compile Include="Models\AllevamentoXGiro.cs" />
     <Compile Include="Models\LaboratorioAnalisi.cs" />
     <Compile Include="Models\PrelievoLatte.cs" />
-    <Compile Include="Models\V_PrelievoLatte.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />
     <Compile Include="Models\V_Allevatore.cs" />
     <Compile Include="Models\TipoProfilo.cs" />

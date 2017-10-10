@@ -34,6 +34,10 @@
     <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DateHelper, Version=1.0.6492.17801, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DateHelper.1.0.6492.17801\lib\net45\DateHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -50,9 +54,6 @@
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
     <Compile Include="PrelieviLatte\Services\PrelieviLatteService.cs" />
-    <Compile Include="VPrelieviLatte\Dtos\VPrelievoLatteDto.cs" />
-    <Compile Include="VPrelieviLatte\Interfaces\IVPrelieviLatteService.cs" />
-    <Compile Include="VPrelieviLatte\Services\VPrelieviLatteService.cs" />
     <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
     <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
     <Compile Include="Allevatori\Services\AllevatoriService.cs" />

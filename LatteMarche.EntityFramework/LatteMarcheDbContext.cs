@@ -22,7 +22,6 @@ namespace LatteMarche.EntityFramework
         public DbSet<Giro> Giri { get; set; }
         public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
         public DbSet<LaboratorioAnalisi> LaboratoriAnalisi { get; set; }
-        public DbSet<V_PrelievoLatte> VPrelieviLatte { get; set; }
         public DbSet<PrelievoLatte> PrelieviLatte { get; set; }
 
 

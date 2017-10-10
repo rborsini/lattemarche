@@ -52,6 +52,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             return dbEntity;
         }
 
+        public List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento)
+        {
+            return ConvertToDtoList(this.prielieviLatteRepository.FilterBy(p => p.IdAllevamento == idAllevamento).ToList());
+        }
+
         #endregion
 
     }

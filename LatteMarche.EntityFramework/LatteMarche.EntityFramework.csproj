@@ -71,9 +71,9 @@
     <Compile Include="Migrations\201710061310105_SeedTabellaLaboratoriAnalisi.Designer.cs">
       <DependentUpon>201710061310105_SeedTabellaLaboratoriAnalisi.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710090807421_Aggiunta_V_Prelievi_Latte.cs" />
-    <Compile Include="Migrations\201710090807421_Aggiunta_V_Prelievi_Latte.Designer.cs">
-      <DependentUpon>201710090807421_Aggiunta_V_Prelievi_Latte.cs</DependentUpon>
+    <Compile Include="Migrations\201710101401542_Eliminazione_V_Prelievi_Latte.cs" />
+    <Compile Include="Migrations\201710101401542_Eliminazione_V_Prelievi_Latte.Designer.cs">
+      <DependentUpon>201710101401542_Eliminazione_V_Prelievi_Latte.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,8 +117,8 @@
     <EmbeddedResource Include="Migrations\201710061310105_SeedTabellaLaboratoriAnalisi.resx">
       <DependentUpon>201710061310105_SeedTabellaLaboratoriAnalisi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090807421_Aggiunta_V_Prelievi_Latte.resx">
-      <DependentUpon>201710090807421_Aggiunta_V_Prelievi_Latte.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710101401542_Eliminazione_V_Prelievi_Latte.resx">
+      <DependentUpon>201710101401542_Eliminazione_V_Prelievi_Latte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
