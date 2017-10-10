@@ -66,6 +66,9 @@
     <Compile Include="Giri\Dtos\GiroDto.cs" />
     <Compile Include="Giri\Interfaces\IGiriService.cs" />
     <Compile Include="Giri\Services\GiriService.cs" />
+    <Compile Include="LaboratoriAnalisi\Dtos\LaboratorioAnalisiDto.cs" />
+    <Compile Include="LaboratoriAnalisi\Interfaces\ILaboratoriAnalisiService.cs" />
+    <Compile Include="LaboratoriAnalisi\Services\LaboratoriAnalisiService.cs" />
     <Compile Include="TipiProfilo\Dtos\TipoProfiloDto.cs" />
     <Compile Include="TipiProfilo\Interfaces\ITipiProfiloService.cs" />
     <Compile Include="TipiProfilo\Services\TipiProfiloService.cs" />

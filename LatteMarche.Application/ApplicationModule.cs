@@ -19,6 +19,8 @@ using LatteMarche.Application.Giri.Services;
 using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.Application.PrelieviLatte.Services;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.LaboratoriAnalisi.Services;
+using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
 
 
 namespace LatteMarche.Application
@@ -55,6 +57,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>().InstancePerRequest();
                 builder.RegisterType<GiriService>().As<IGiriService>().InstancePerRequest();
                 builder.RegisterType<PrelieviLatteService>().As<IPrelieviLatteService>().InstancePerRequest();
+                builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>().InstancePerRequest();
 
             }
             else
@@ -72,6 +75,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>();
                 builder.RegisterType<GiriService>().As<IGiriService>();
                 builder.RegisterType<PrelieviLatteService>().As<IPrelieviLatteService>();
+                builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>();
             }
 
 

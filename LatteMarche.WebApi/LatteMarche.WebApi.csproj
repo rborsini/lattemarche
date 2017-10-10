@@ -143,6 +143,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\api\Controllers\AllevamentiController.cs" />
+    <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
