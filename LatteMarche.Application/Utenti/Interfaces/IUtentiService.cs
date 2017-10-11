@@ -2,6 +2,7 @@
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using System.Collections.Generic;
 
 namespace LatteMarche.Application.Utenti.Interfaces
 {
@@ -24,6 +25,8 @@ namespace LatteMarche.Application.Utenti.Interfaces
         //string NewPassword(string resetPasswordId, string password, string rePassword);
 
         UtenteDto GetByUsername(string username);
+
+        List<UtenteDto> Search(UtentiSearchDto searchDto);
 
     }
 

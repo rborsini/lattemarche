@@ -5,6 +5,8 @@ using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using RB.Hash;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LatteMarche.Application.Utenti.Services
 {
@@ -155,6 +157,19 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.IdComune = viewEntity.IdComune;
 
             return dbEntity;
+        }
+
+        public List<UtenteDto> Search(UtentiSearchDto searchDto)
+        {
+            IQueryable<Utente> query = this.utentiRepository.GetAll();
+
+            // Tipo profilo
+            if (searchDto.IdProfilo!=null)
+            {
+                query = query.Where(u => u.IdProfilo == searchDto.IdProfilo);
+            }
+
+            return ConvertToDtoList(query.ToList());
         }
 
         #endregion

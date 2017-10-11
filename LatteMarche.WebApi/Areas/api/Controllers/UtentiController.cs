@@ -2,7 +2,8 @@
 using System.Web.Http;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti;
+using LatteMarche.Application.TipiProfilo.Interfaces;
+using LatteMarche.Application.TipiProfilo.Dtos;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
@@ -16,15 +17,17 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Fields
 
         private IUtentiService utentiService;
+        private ITipiProfiloService tipiProfiloService;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public UtentiController(IUtentiService utentiService)
+        public UtentiController(IUtentiService utentiService, ITipiProfiloService tipiProfiloService)
 		{
             this.utentiService = utentiService;
-		}
+            this.tipiProfiloService = tipiProfiloService;
+        }
 
         #endregion
 
@@ -118,7 +121,37 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(e);
             }
         }
-        
+
+        [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
+        public IHttpActionResult Search(int idProfilo)
+        {
+            //possibilità di mettere altri parametri per la search
+            try
+            {
+                return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
+        public IHttpActionResult Destinatari()
+        {
+            try
+            {
+                int idProfilo = tipiProfiloService.getIdProfilo("Destinatario");
+                return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
         #endregion
 
 

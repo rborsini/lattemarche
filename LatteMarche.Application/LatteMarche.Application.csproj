@@ -55,6 +55,7 @@
     <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
+    <Compile Include="PrelieviLatte\Dtos\PrelieviLatteSearchDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
     <Compile Include="PrelieviLatte\Services\PrelieviLatteService.cs" />
     <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Trasportatori\Dtos\TrasportatoreDto.cs" />
     <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
+    <Compile Include="Utenti\Dtos\UtentiSearchDto.cs" />
     <Compile Include="Utenti\Dtos\UtenteDto.cs" />
     <Compile Include="EntityDto.cs" />
     <Compile Include="EntityReadOnlyService.cs" />

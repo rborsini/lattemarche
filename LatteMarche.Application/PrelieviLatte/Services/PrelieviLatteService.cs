@@ -52,13 +52,38 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             return dbEntity;
         }
 
-        public List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento)
+        /*public List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento)
         {
             return ConvertToDtoList(this.prielieviLatteRepository.FilterBy(p => p.IdAllevamento == idAllevamento).ToList());
         }
+        */
+        public List<PrelievoLatteDto> Search(PrelieviLatteSearchDto searchDto)
+        {
+            IQueryable<PrelievoLatte> query = this.prielieviLatteRepository.GetAll();
 
-        #endregion
+            // Allevamento
+            if (searchDto.idAllevamento != null)
+            {
+                query = query.Where(p => p.IdAllevamento == searchDto.idAllevamento);
+            }
 
-    }
+            // Periodo Prelievo
+            if (searchDto.DataPeriodoInizio.HasValue || searchDto.DataPeriodoFine.HasValue)
+            {
+                DateTime from = searchDto.DataPeriodoInizio.HasValue ? searchDto.DataPeriodoInizio.Value : DateTime.MinValue;
+                DateTime to = searchDto.DataPeriodoFine.HasValue ? searchDto.DataPeriodoFine.Value.AddDays(1) : DateTime.MaxValue;
+
+                query = query.Where(p => from <= p.DataPrelievo && p.DataPrelievo < to);
+            }
+
+            return ConvertToDtoList(query.ToList());
+        }
+
+       
+
+
+    #endregion
+
+}
 
 }

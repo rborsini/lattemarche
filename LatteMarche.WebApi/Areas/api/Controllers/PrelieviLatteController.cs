@@ -101,6 +101,27 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [HttpGet]
+        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
+        public IHttpActionResult Search(int idAllevamento,
+            DateTime? DataPeriodoInizio=null,
+            DateTime? DataPeriodoFine=null
+            )
+        {
+            //possibilità di mettere altri parametri come le date periodo prelievo
+            try
+            {
+                return Ok(this.prelieviLatteService.Search(new PrelieviLatteSearchDto() {
+                    idAllevamento = idAllevamento,
+                    DataPeriodoInizio = DataPeriodoInizio,
+                    DataPeriodoFine =DataPeriodoFine
+                }));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
 
         #endregion
 

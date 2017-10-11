@@ -17,16 +17,26 @@ namespace LatteMarche.Application.TipiProfilo.Services
 
         #region Fields
 
+        private IRepository<TipoProfilo, int> tipiProfiloRepository;
+
         #endregion
 
         #region Constructors
 
         public TipiProfiloService(IUnitOfWork uow)
-            : base(uow) { }
+            : base(uow)
+        {
+            this.tipiProfiloRepository = this.uow.Get<TipoProfilo, int>();
+        }
 
         #endregion
 
         #region Methods
+
+        public int getIdProfilo(string DescrizioneProfilo)
+        {
+            return this.tipiProfiloRepository.FindBy(t => t.Descrizione == DescrizioneProfilo).Id;
+        }
 
         #endregion
 

@@ -9,7 +9,9 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
 
     public interface IPrelieviLatteService : IEntityService<PrelievoLatte, int, PrelievoLatteDto>
     {
-        List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento);
+       // List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento);
+
+        List<PrelievoLatteDto> Search(PrelieviLatteSearchDto searchDto);
     }
 
 }
