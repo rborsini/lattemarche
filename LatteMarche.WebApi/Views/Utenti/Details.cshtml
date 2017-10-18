@@ -91,7 +91,7 @@
                         <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
                             <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                             </div>
-                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" placeholder="Seleziona" data-bind="value: Sesso, select2: {allowClear: true}"tabindex="-98">
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" placeholder="Seleziona" data-bind="value: Sesso, select2: {allowClear: true}" tabindex="-98">
                                 <option value=""></option>
                                 <option value="M">Maschio</option>
                                 <option value="F">Femmina</option>
@@ -109,132 +109,131 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Indirizzo:
-                </label>
-                <div class="col-lg-3">
-                    <div class="m-input-icon m-input-icon--right">
-                        <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo indirizzo" data-bind="value:Indirizzo, valueUpdate:'keypress'">
-                        <span class="m-input-icon__icon m-input-icon__icon--right">
-                        </span>
-                    </div>
-                </div>
-                <label class="col-lg-2 col-form-label">
-                    Provincia:
-                </label>
-                <div class="col-lg-1">
-                    <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie,  value: ProvinciaSelezionata, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="m-select2 m-select2--air m-select2--pill mar-top--prov">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: IdComune, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Telefono:
-                </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Telefono, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
-                </div>
-                <label class="col-lg-2 col-form-label">
-                    Cellulare:
-                </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Cellulare, valueUpdate:'keypress'" placeholder="Inserisci numero di cellulare">
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Codice Allevatore:
-                </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
-                </div>
-                <label class="col-lg-2 col-form-label">
-                    Tipo di Latte:
-                </label>
-                <div class="col-lg-3">
-                    <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Id', value: IdTipoLatte, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Quota del Latte (Kg):
-                </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
-                </div>
-                <label class="col-lg-2 col-form-label">
-                    Comunicazione Quota Latte N°:
-                </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" placeholder="Inserisci comunicazione quota">
-                </div>
-            </div>
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Tipo di Profilo:
-                </label>
-                <div class="col-lg-3">
-                    <div class="m-select2 m-select2--air m-select2--pill">
-                        <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiProfilo, optionsValue: 'Id', value: IdProfilo, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di profilo" tabindex="-1" aria-hidden="true">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-                <label class="col-lg-2 col-form-label">
-                    Abilitato:
-                </label>
-                <div class="col-lg-1">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Indirizzo:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input m-input--pill m-input--air" placeholder="Inserisci il tuo indirizzo" data-bind="value:Indirizzo, valueUpdate:'keypress'">
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                            </span>
                         </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Abilitato, select2: {allowClear: true}" tabindex="-98">
-                            <option value=""></option>
-                            <option value="true">Si</option>
-                            <option value="false">No</option>
-                        </select>
                     </div>
-                </div>
-                <label class="col-lg-1 col-form-label">
-                    Visibile:
-                </label>
-                <div class="col-lg-1">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
-                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <label class="col-lg-2 col-form-label">
+                        Provincia:
+                    </label>
+                    <div class="col-lg-1">
+                        <div class="m-select2 m-select2--air m-select2--pill">
+                            <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie,  value: ProvinciaSelezionata, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
+                                <option></option>
+                            </select>
                         </div>
-                        <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Visibile, select2: {allowClear: true}" tabindex="-98">
-                            <option value=""></option>
-                            <option value="true">Si</option>
-                            <option value="false">No</option>
-                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="m-select2 m-select2--air m-select2--pill mar-top--prov">
+                            <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: Comuni, optionsValue: 'Id', value: IdComune, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Città" tabindex="-1" aria-hidden="true">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Telefono:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Telefono, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Cellulare:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:Cellulare, valueUpdate:'keypress'" placeholder="Inserisci numero di cellulare">
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Codice Allevatore:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:CodiceAllevatore, valueUpdate:'keypress'" placeholder="Inserisci numero di telefono">
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Tipo di Latte:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-select2 m-select2--air m-select2--pill">
+                            <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiLatte, optionsValue: 'Id', value: IdTipoLatte, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di Latte" tabindex="-1" aria-hidden="true">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Quota del Latte (Kg):
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Comunicazione Quota Latte N°:
+                    </label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" placeholder="Inserisci comunicazione quota">
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Tipo di Profilo:
+                    </label>
+                    <div class="col-lg-3">
+                        <div class="m-select2 m-select2--air m-select2--pill">
+                            <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: TipiProfilo, optionsValue: 'Id', value: IdProfilo, optionsText: 'Descrizione', optionsCaption: '', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Tipo di profilo" tabindex="-1" aria-hidden="true">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="col-lg-2 col-form-label">
+                        Abilitato:
+                    </label>
+                    <div class="col-lg-1">
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                            <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            </div>
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Abilitato, select2: {allowClear: true}" tabindex="-98">
+                                <option value=""></option>
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label class="col-lg-1 col-form-label">
+                        Visibile:
+                    </label>
+                    <div class="col-lg-1">
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                            <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            </div>
+                            <select class="form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_selectpicker" data-bind="value: Visibile, select2: {allowClear: true}" tabindex="-98">
+                                <option value=""></option>
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2 col-form-label">
+                        Note:
+                    </label>
+                    <div class="col-lg-8">
+                        <textarea class="form-control m-input m-input--pill m-input--air" data-bind="value:Note, valueUpdate:'keypress'" id="exampleTextarea" rows="3"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2 col-form-label">
-                    Note:
-                </label>
-                <div class="col-lg-8">
-                    <textarea class="form-control m-input m-input--pill m-input--air" data-bind="value:Note, valueUpdate:'keypress'" id="exampleTextarea" rows="3"></textarea>
-                </div>
-            </div>
-
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions--solid">
                     <div class="row">

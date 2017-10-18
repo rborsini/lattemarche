@@ -20,47 +20,7 @@
 
             @if (Request.IsAuthenticated)
             {
-
-                <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" data-menu-submenu-toggle="click" aria-haspopup="true">
-                    <a href="#" class="m-menu__link m-menu__toggle">
-                        <span class="m-menu__item-here"></span>
-                        <span class="m-menu__link-text">Item 1</span>
-                        <i class="m-menu__hor-arrow la la-angle-down"></i>
-                        <i class="m-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                    <div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:230px">
-                        <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                        <div class="m-menu__subnav">
-                            <ul class="m-menu__content">
-                                <li class="m-menu__item">
-                                    <h3 class="m-menu__heading m-menu__toggle">
-                                        <a href="#" class="m-menu__link"><span class="m-menu__item-here m-menu__link-text">Subitem 1</span></a>
-                                    </h3>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" data-menu-submenu-toggle="click" aria-haspopup="true">
-                    <a href="#" class="m-menu__link m-menu__toggle">
-                        <span class="m-menu__item-here"></span>
-                        <span class="m-menu__link-text">Item 2</span>
-                        <i class="m-menu__hor-arrow la la-angle-down"></i>
-                        <i class="m-menu__ver-arrow la la-angle-right"></i>
-                    </a>
-                    <div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:230px">
-                        <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                        <div class="m-menu__subnav">
-                            <ul class="m-menu__content">
-                                <li class="m-menu__item">
-                                    <h3 class="m-menu__heading m-menu__toggle">
-                                        <a href="#" class="m-menu__link"><span class="m-menu__item-here m-menu__link-text">Subtem 2</span></a>
-                                    </h3>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+          
                 <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel" data-menu-submenu-toggle="click" aria-haspopup="true">
                     <a href="#" class="m-menu__link m-menu__toggle">
                         <span class="m-menu__item-here"></span>
@@ -68,7 +28,7 @@
                         <i class="m-menu__hor-arrow la la-angle-down"></i>
                         <i class="m-menu__ver-arrow la la-angle-right"></i>
                     </a>
-                    <div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:230px">
+                    <div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:255px">
                         <span class="m-menu__arrow m-menu__arrow--adjust"></span>
                         <div class="m-menu__subnav">
                             <ul class="m-menu__content">
@@ -81,9 +41,17 @@
                             </ul>
                             <ul class="m-menu__content">
                                 <li class="m-menu__item">
-                                    <h3 class="m-menu__heading">
+                                    <h3 class="m-menu__heading" style="margin-top:-30px">
                                         @*<a href="/" class="m-menu__link"><span class="m-menu__item-here m-menu__link-text">Utenti</span></a>*@
                                         @Html.ActionLink("Gestione Trasportatori", "Index", "Trasportatori", null, new { @class = "m-menu__link m-menu__item-here m-menu__link-text" })
+                                    </h3>                      
+                                </li>                          
+                            </ul>                              
+                            <ul class="m-menu__content">       
+                                <li class="m-menu__item">      
+                                    <h3 class="m-menu__heading" style="margin-top:-30px">
+                                        @*<a href="/" class="m-menu__link"><span class="m-menu__item-here m-menu__link-text">Utenti</span></a>*@
+                                        @Html.ActionLink("Gestione prelievi del Latte", "Index", "Prelievi", null, new { @class = "m-menu__link m-menu__item-here m-menu__link-text" })
                                     </h3>
                                 </li>
                             </ul>
