@@ -25,7 +25,7 @@
                     </label>
                     <div class="col-lg-4">
                         <div class="m-select2 m-select2--air m-select2--pill">
-                            <select class="form-control m-select2 select2-hidden-accessible" data-bind="options: RagioniSociali, optionsValue: 'Id', value: IdRagioneSociale, optionsText: 'RagioneSociale', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona la ragione sociale" tabindex="-1" aria-hidden="true">
+                            <select id="allevatori" class="form-control m-select2 select2-hidden-accessible" data-bind="options: RagioniSociali, optionsValue: 'Id', value: IdRagioneSociale, optionsText: 'RagioneSociale', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona la ragione sociale" tabindex="-1" aria-hidden="true">
                                 <option></option>
                             </select>
                         </div>
@@ -35,7 +35,7 @@
                 <!-- selezione per il range delle date -->
                 <div class="form-group m-form__group row">
                     <label class="col-form-label col-lg-4 col-sm-12">
-                        Seleziona Date
+                        Visualizza i prelievi nel periodo
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <div class="input-daterange input-group" id="m_datepicker_1">
@@ -47,12 +47,59 @@
                         </div>
                     </div>
                 </div>
- 
+
+                <!-- bottoni -->
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-4"></label>
+                    <div class="col-lg-3">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <button class="btn m-btn--pill m-btn--air btn-warning">Annulla selezioni</button>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <button data-bind=" " class="btn m-btn--pill m-btn--air btn-info">Cerca</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </form>
         <!--end::Form-->
     </div>
+
+
+
+    <!-- tabella dei prelievi  visibile dopo aver effettuato la ricerca-->
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <!-- Portlet Caption -->
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <span data-bind="visible: TextRagioneSociale, text: 'Prelievo di ' + TextRagioneSociale()"></span>
+                    </h3>
+                </div>
+            </div>
+            <!-- Portlet Tools -->
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="btn m-btn--pill m-btn--air btn-info" href="">Inserisci manualmente un Prelievo de Latte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <div class="m_datatable"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -63,12 +110,18 @@
         viewModel = {
 
             RagioniSociali: ko.observableArray(),
+            
 
             IdRagioneSociale: ko.observable(''),
-
+            TextRagioneSociale: ko.observable(),
         };
 
         ko.applyBindings(viewModel);
+
+        viewModel.IdRagioneSociale.subscribe(function (item) {
+
+            viewModel.TextRagioneSociale($("#allevatori option:selected").text());
+        });
 
         // bind dropdown Ragione Sociale
         function BindRagioneSociale(idRagioneSociale) {
@@ -83,6 +136,66 @@
 
         // chiamata per visualizzare il datapicker
         $('#m_datepicker_1').datepicker();
+
+        // tabella dei prelievi
+        var datatable = $('.m_datatable').mDatatable({
+
+            // datasource definition
+            data: {
+                type: 'remote',
+                source: 'http://localhost:54913/api/Utenti',
+                pageSize: 6,
+                saveState: {
+                    cookie: true,
+                    webstorage: true
+                },
+            },
+
+            // layout definition
+            layout: {
+                theme: 'default', // datatable theme
+                class: '',        // custom wrapper class
+                scroll: true,    // enable/disable datatable scroll both horizontal and vertical when needed.
+                footer: false,    // display/hide footer
+            },
+
+            // column sorting
+            sortable: true,
+
+            // column based filtering
+            filterable: true,
+
+            pagination: true,
+
+            // columns definition
+            columns: [{
+                field: "Id",
+                title: "#",
+                sortable: false,
+                width: 60,
+                selector: false,
+                textAlign: 'center',
+            }, {
+                field: "DataPrelievo",
+                title: "Data Prelievo",
+                width: 150,
+            }, {
+                field: "DataConsegna",
+                title: "Data Consegna",
+                width: 150,
+            }, {
+                field: "Quantita",
+                title: "Quantità in Kg",
+            }, {
+                field: "Azioni",
+                title: "Azioni",
+                width: 150,
+                template: function (row) {
+                    return '<a href="" class="m-badge m-badge--primary m-badge--wide" title="Seleziona">Seleziona</a>';
+                },
+
+            }]
+        });
 
     });
 

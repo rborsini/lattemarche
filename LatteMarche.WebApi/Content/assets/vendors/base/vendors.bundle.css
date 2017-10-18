@@ -8848,13 +8848,13 @@ pre[class*="language-"] {
 
 .datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active:active {
   color: #fff;
-  background-color: #286090;
-  border-color: #204d74; }
+  background-color: #36a3f7;
+  border-color: #00c5dc; }
 
 .datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus, .datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus, .datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover {
   color: #fff;
-  background-color: #204d74;
-  border-color: #122b40; }
+  background-color: #00c5dc;
+  border-color: #36a3f7; }
 
 .datepicker table tr td.active.disabled.focus, .datepicker table tr td.active.disabled:focus, .datepicker table tr td.active.disabled:hover, .datepicker table tr td.active.highlighted.disabled.focus, .datepicker table tr td.active.highlighted.disabled:focus, .datepicker table tr td.active.highlighted.disabled:hover, .datepicker table tr td.active.highlighted[disabled].focus, .datepicker table tr td.active.highlighted[disabled]:focus, .datepicker table tr td.active.highlighted[disabled]:hover, .datepicker table tr td.active[disabled].focus, .datepicker table tr td.active[disabled]:focus, .datepicker table tr td.active[disabled]:hover, fieldset[disabled] .datepicker table tr td.active.focus, fieldset[disabled] .datepicker table tr td.active.highlighted.focus, fieldset[disabled] .datepicker table tr td.active.highlighted:focus, fieldset[disabled] .datepicker table tr td.active.highlighted:hover, fieldset[disabled] .datepicker table tr td.active:focus, fieldset[disabled] .datepicker table tr td.active:hover {
   background-color: #337ab7;
@@ -8939,15 +8939,15 @@ pre[class*="language-"] {
   text-align: center; }
 
 .input-daterange input:first-child {
-  border-radius: 3px 0 0 3px; }
+  border-radius: 20px 0 0 20px; }
 
 .input-daterange input:last-child {
-  border-radius: 0 3px 3px 0; }
+  border-radius: 0 20px 20px 0; }
 
 .input-daterange .input-group-addon {
   width: auto;
   min-width: 16px;
-  padding: 4px 5px;
+  padding: 4px 18px;
   line-height: 1.42857143;
   text-shadow: 0 1px 0 #fff;
   border-width: 1px 0;
