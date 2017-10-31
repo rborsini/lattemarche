@@ -13,10 +13,10 @@ namespace LatteMarche.Identity
 
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
-            //if (hashedPassword == HashPassword(providedPassword))
+            if (hashedPassword == HashPassword(providedPassword))
                 return PasswordVerificationResult.Success;
-            //else
-            //    return PasswordVerificationResult.Failed;
+            else
+                return PasswordVerificationResult.Failed;
         }
     }
 }

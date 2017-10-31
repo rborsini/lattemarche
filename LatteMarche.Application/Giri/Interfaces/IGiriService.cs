@@ -9,7 +9,13 @@ namespace LatteMarche.Application.Giri.Interfaces
 
     public interface IGiriService : IEntityService<Giro, int, GiroDto>
     {
-        List<GiroDto> GetGiriOfTrasportatore(int idTrasportatore);
+
+        /// <summary>
+        /// Recupero giri trasportatore
+        /// </summary>
+        /// <param name="idTrasportatore"></param>
+        /// <returns></returns>
+        List<GiroDto> GetGiriTrasportatore(int idTrasportatore);
 
     }
 

@@ -26,7 +26,10 @@ namespace LatteMarche.Core.Models
         [Column("LOGIN")]
         public string Username { get; set; }
 
-        [Column("PASSWORD")]
+        //[Column("PASSWORD")]
+        //public string Password { get; set; }
+
+        [Column("PASSWORD_NEW")]
         public string Password { get; set; }
 
         [Column("ID_PROFILO")]

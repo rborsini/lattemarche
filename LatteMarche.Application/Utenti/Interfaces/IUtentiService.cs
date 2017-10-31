@@ -10,22 +10,43 @@ namespace LatteMarche.Application.Utenti.Interfaces
     public interface IUtentiService : IEntityService<Utente, int, UtenteDto>
 	{
 
+        /// <summary>
+        /// Recupero utente tramite username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        UtenteDto Details(string username);
+
+        /// <summary>
+        /// Validazione utente lato MVC
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
 		bool ValidateUser(string username, string password);
 
-        //void SetPasswordHash(string username, string passwordHash);
+        /// <summary>
+        /// Aggiornamento del campo PasswordHash
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordHash"></param>
+        void SetPasswordHash(string username, string passwordHash);
 
-        void SetToken(string username, string token);
-
-        //void SetRole(string username, string role);
-
+        /// <summary>
+        /// Cambio password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="password"></param>
+        /// <param name="rePassword"></param>
+        /// <returns></returns>
         string ChangePassword(string username, string oldPassword, string password, string rePassword);
 
-        //string ResetPassword(string email);
-
-        //string NewPassword(string resetPasswordId, string password, string rePassword);
-
-        UtenteDto GetByUsername(string username);
-
+        /// <summary>
+        /// Ricerca utenti
+        /// </summary>
+        /// <param name="searchDto"></param>
+        /// <returns></returns>
         List<UtenteDto> Search(UtentiSearchDto searchDto);
 
     }

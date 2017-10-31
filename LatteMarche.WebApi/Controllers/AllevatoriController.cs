@@ -9,7 +9,6 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
-    [MvcCustomAuthorize]
     public class AllevatoriController : Controller
     {
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]

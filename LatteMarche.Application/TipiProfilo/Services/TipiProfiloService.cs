@@ -33,10 +33,10 @@ namespace LatteMarche.Application.TipiProfilo.Services
 
         #region Methods
 
-        public int getIdProfilo(string DescrizioneProfilo)
-        {
-            return this.tipiProfiloRepository.FindBy(t => t.Descrizione == DescrizioneProfilo).Id;
-        }
+        //public int getIdProfilo(string DescrizioneProfilo)
+        //{
+        //    return this.tipiProfiloRepository.FindBy(t => t.Descrizione == DescrizioneProfilo).Id;
+        //}
 
         #endregion
 

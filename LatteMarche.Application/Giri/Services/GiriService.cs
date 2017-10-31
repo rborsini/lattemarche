@@ -72,7 +72,7 @@ namespace LatteMarche.Application.Giri.Services
         /// </summary>
         /// <param name="idTrasportatore"></param>
         /// <returns></returns>
-        public List<GiroDto> GetGiriOfTrasportatore(int idTrasportatore)
+        public List<GiroDto> GetGiriTrasportatore(int idTrasportatore)
         {
             return ConvertToDtoList(this.giriRepository.FilterBy(g => g.IdTrasportatore == idTrasportatore).ToList());
         }

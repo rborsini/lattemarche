@@ -13,7 +13,7 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string PivaCF { get; set; }
         public string Indirizzo { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }      
+        public string Password { get; set; }
         public bool Abilitato { get; set; }
         public bool Visibile { get; set; }
         public string RagioneSociale { get; set; }
@@ -25,6 +25,7 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string NumeroComunicazione { get; set; }
         public string Note { get; set; }
 
+        public string SiglaProvincia { get; set; }
         public int IdComune { get; set; }
         public int IdProfilo { get; set; }
         public int IdTipoLatte { get; set; }

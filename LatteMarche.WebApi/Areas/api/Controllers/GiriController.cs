@@ -36,7 +36,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(this.giriService.GetGiriOfTrasportatore(idTrasportatore));
+                return Ok(this.giriService.GetGiriTrasportatore(idTrasportatore));
             }
             catch(Exception exc)
             {

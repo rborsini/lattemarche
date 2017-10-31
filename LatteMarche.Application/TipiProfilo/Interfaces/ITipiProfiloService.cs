@@ -9,7 +9,7 @@ namespace LatteMarche.Application.TipiProfilo.Interfaces
 
     public interface ITipiProfiloService : IEntityReadOnlyService<TipoProfilo, int, TipoProfiloDto>
     {
-        int getIdProfilo(string DescrizioneProfilo);
+        //int getIdProfilo(string DescrizioneProfilo);
     }
 
 }

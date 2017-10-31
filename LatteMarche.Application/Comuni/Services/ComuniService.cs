@@ -33,6 +33,11 @@ namespace LatteMarche.Application.Comuni.Services
 
         #region Methods
 
+        /// <summary>
+        /// Ricerca comuni
+        /// </summary>
+        /// <param name="searchDto"></param>
+        /// <returns></returns>
         public List<ComuneDto> Search(ComuniSearchDto searchDto)
         {
             IQueryable<Comune> query = this.comuniRepository.GetAll();
@@ -46,6 +51,10 @@ namespace LatteMarche.Application.Comuni.Services
             return ConvertToDtoList(query.OrderBy(c => c.Descrizione).ToList());
         }
 
+        /// <summary>
+        /// Elenco province
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetProvince()
         {
             return this.repository

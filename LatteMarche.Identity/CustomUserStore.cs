@@ -52,63 +52,28 @@ namespace LatteMarche.Identity
 
         public async Task<CustomUser> FindByIdAsync(string userId)
         {
-            //UtenteDto userDto = service.Details(Convert.ToInt32(userId));
-
-            UtenteDto userDto = new UtenteDto()
-            {
-                Abilitato = true,
-                Id = 1,
-                Username = "arcadia",
-                Password = "ziogaro",
-                Nome = "Peppe",
-                Cognome = "De Cellò"
-            };
-
+            UtenteDto userDto = service.Details(Convert.ToInt32(userId));
             CustomUser user = ConvertToCustomUser(userDto);
-
             return await Task.FromResult<CustomUser>(user);
         }
 
-        public async Task<CustomUser> FindByNameAsync(string userName)
+        public async Task<CustomUser> FindByNameAsync(string username)
         {
-            //UtenteDto userDto = this.service.GetByUsername(userName);
-
-            UtenteDto userDto = new UtenteDto()
-            {
-                Abilitato = true,
-                Id = 1,
-                Username = "arcadia",
-                Password = "ziogaro",
-                Nome = "Peppe",
-                Cognome = "De Cellò"
-            };
-
+            UtenteDto userDto = service.Details(username);
             CustomUser user = ConvertToCustomUser(userDto);
-
             return await Task.FromResult<CustomUser>(user);
         }
 
         public Task SetPasswordHashAsync(CustomUser user, string passwordHash)
         {
-            //service.SetPasswordHash(user.UserName, passwordHash);
+            service.SetPasswordHash(user.UserName, passwordHash);
             return Task.FromResult(0);
         }
 
         public Task<string> GetPasswordHashAsync(CustomUser user)
         {
-            //UtenteDto userDto = service.GetByUsername(user.UserName);
-            UtenteDto userDto = new UtenteDto()
-            {
-                Abilitato = true,
-                Id = 1,
-                Username = "arcadia",
-                Password = "ziogaro",
-                Nome = "Peppe",
-                Cognome = "De Cellò"
-            };
-
-
-            return Task.FromResult<string>(userDto.Password);
+            UtenteDto utente = service.Details(user.UserName);
+            return Task.FromResult<string>(utente.Password);
         }
 
         public Task<bool> HasPasswordAsync(CustomUser user)

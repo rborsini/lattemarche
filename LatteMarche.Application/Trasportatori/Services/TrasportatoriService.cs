@@ -36,12 +36,17 @@ namespace LatteMarche.Application.Trasportatori.Services
 
         #region Methods
 
+        /// <summary>
+        /// Caricamento dettaglio trasportatore
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override TrasportatoreDto Details(int key)
         {
             TrasportatoreDto trasportatore = base.Details(key);
 
             if(trasportatore != null)
-                trasportatore.Giri = this.giriService.GetGiriOfTrasportatore(key);
+                trasportatore.Giri = this.giriService.GetGiriTrasportatore(key);
 
             return trasportatore;
         }

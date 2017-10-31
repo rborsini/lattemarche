@@ -53,7 +53,7 @@
             // datasource definition
             data: {
                 type: 'remote',
-                source: 'http://localhost:54913/api/Utenti',
+                source: apiUrl + 'Utenti',
                 pageSize: 10,
                 saveState: {
                 cookie: true,
@@ -69,11 +69,34 @@
                 footer: false, // display/hide footer
             },
 
+            translate: {
+                records: {
+                    processing: 'Caricamento in corso...',
+                    noRecords: 'Nessun record trovato'
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: 'Prima',
+                                prev: 'Precedente',
+                                next: 'Successiva',
+                                last: 'Ultima',
+                                more: 'Più pagine',
+                                input: 'Numero pagina',
+                                select: 'Seleziona dimensione pagine'
+                            },
+                            info: 'Visualizzato {{start}} - {{end}} di {{total}} records'
+                        }
+                    }
+                }
+            },
+
             // column sorting
             sortable: true,
 
             // column based filtering
-            filterable: false,
+            filterable: true,
 
             pagination: true,
 
@@ -86,18 +109,16 @@
                 selector: false,
                 textAlign: 'center',
             }, {
+                field: "Username",
+                title: "Username",
+            }, {
                 field: "Nome",
                 title: "Nome",
                 filterable: false,
-                width: 150,
             }, {
                 field: "Cognome",
                 title: "Cognome",
-                width: 150,
             }, {
-                field: "Username",
-                title: "Username",
-            },{
                 field: "",
                 title: "",
             }, {

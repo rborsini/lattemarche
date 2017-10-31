@@ -33,30 +33,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
 
         #region Methods
 
-        protected override PrelievoLatte UpdateProperties(PrelievoLatte viewEntity, PrelievoLatte dbEntity)
-        {
-            dbEntity.IdDestinatario = viewEntity.IdDestinatario;
-            dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
-            dbEntity.IdAquirente = viewEntity.IdAquirente;
-            dbEntity.IdLabAnalisi = viewEntity.IdLabAnalisi;
-            dbEntity.DataConsegna = viewEntity.DataConsegna;
-            dbEntity.DataPrelievo = viewEntity.DataPrelievo;
-            dbEntity.DataUltimaMungitura = viewEntity.DataUltimaMungitura;
-            dbEntity.Quantita = viewEntity.Quantita;
-            dbEntity.Temperatura = viewEntity.Temperatura;
-            dbEntity.NumeroMungiture = viewEntity.NumeroMungiture;
-            dbEntity.Scomparto = viewEntity.Scomparto;
-            dbEntity.LottoConsegna = viewEntity.LottoConsegna;
-            dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
-
-            return dbEntity;
-        }
-
-        /*public List<PrelievoLatteDto> getPrelieviByIdAllevamento(int idAllevamento)
-        {
-            return ConvertToDtoList(this.prielieviLatteRepository.FilterBy(p => p.IdAllevamento == idAllevamento).ToList());
-        }
-        */
+        /// <summary>
+        /// Ricerca prelievi latte
+        /// </summary>
+        /// <param name="searchDto"></param>
+        /// <returns></returns>
         public List<PrelievoLatteDto> Search(PrelieviLatteSearchDto searchDto)
         {
             IQueryable<PrelievoLatte> query = this.prielieviLatteRepository.GetAll();
@@ -79,11 +60,28 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             return ConvertToDtoList(query.ToList());
         }
 
-       
+        protected override PrelievoLatte UpdateProperties(PrelievoLatte viewEntity, PrelievoLatte dbEntity)
+        {
+            dbEntity.IdDestinatario = viewEntity.IdDestinatario;
+            dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
+            dbEntity.IdAquirente = viewEntity.IdAquirente;
+            dbEntity.IdLabAnalisi = viewEntity.IdLabAnalisi;
+            dbEntity.DataConsegna = viewEntity.DataConsegna;
+            dbEntity.DataPrelievo = viewEntity.DataPrelievo;
+            dbEntity.DataUltimaMungitura = viewEntity.DataUltimaMungitura;
+            dbEntity.Quantita = viewEntity.Quantita;
+            dbEntity.Temperatura = viewEntity.Temperatura;
+            dbEntity.NumeroMungiture = viewEntity.NumeroMungiture;
+            dbEntity.Scomparto = viewEntity.Scomparto;
+            dbEntity.LottoConsegna = viewEntity.LottoConsegna;
+            dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
+
+            return dbEntity;
+        }
 
 
-    #endregion
+        #endregion
 
-}
+    }
 
 }

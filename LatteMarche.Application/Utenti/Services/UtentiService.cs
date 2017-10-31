@@ -7,6 +7,7 @@ using LatteMarche.Core.Models;
 using RB.Hash;
 using System.Collections.Generic;
 using System.Linq;
+using LatteMarche.Application.Comuni.Interfaces;
 
 namespace LatteMarche.Application.Utenti.Services
 {
@@ -16,23 +17,102 @@ namespace LatteMarche.Application.Utenti.Services
 
 		#region Fields
 
-		private IRepository<Utente, int> utentiRepository;			
+		private IRepository<Utente, int> utentiRepository;
+
+        private IComuniService comuniService;
 
 		#endregion
 
 		#region Constructors
 
-		public UtentiService(IUnitOfWork uow)
+		public UtentiService(IUnitOfWork uow, IComuniService comuniService)
 			: base(uow)
 		{
 			this.utentiRepository = this.uow.Get<Utente, int>();
+            this.comuniService = comuniService;
 		}
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Caricamento dettaglio utente tramite username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public UtenteDto Details(string username)
+        {
+            UtenteDto utenteDto = null;
+            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
 
+            if(utente != null)
+            {
+                utenteDto = ConvertToDto(utente);
+
+                utenteDto.SiglaProvincia = this.comuniService.Details(utenteDto.IdComune).Provincia;
+
+            }
+
+            return utenteDto;
+        }
+
+        /// <summary>
+        /// Caricamento dettaglio utente tramite id
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override UtenteDto Details(int key)
+        {
+            UtenteDto utenteDto = null;
+            Utente utente = this.repository.GetById(key);
+            if (utente != null)
+            {
+                utenteDto = ConvertToDto(utente);
+
+                utenteDto.SiglaProvincia = this.comuniService.Details(utenteDto.IdComune).Provincia;
+            }
+
+            return utenteDto;
+        }
+
+        /// <summary>
+        /// Validazione utente lato MVC
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool ValidateUser(string username, string password)
+        {
+            string passwordHash = new HashHelper().HashPassword(password);
+
+            Utente utente = this.utentiRepository.FindBy(u => u.Username == username && u.Password == passwordHash);
+            return utente != null;
+        }
+
+        /// <summary>
+        /// Impostazione della password hashata
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordHash"></param>
+        public void SetPasswordHash(string username, string passwordHash)
+        {
+            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+            if (utente != null)
+            {
+                utente.Password = passwordHash;
+                this.uow.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        ///  Cambio password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="password"></param>
+        /// <param name="rePassword"></param>
+        /// <returns></returns>
         public string ChangePassword(string username, string oldPassword, string password, string rePassword)
         {
             string result = "";
@@ -75,66 +155,24 @@ namespace LatteMarche.Application.Utenti.Services
             return result;
         }
 
-        public UtenteDto GetByUsername(string username)
-        {
-            return ConvertToDto(this.utentiRepository.FindBy(u => u.Username == username));
-        }
-
         /// <summary>
-        /// Impostazione della password hashata
+        /// Ricerca utenti
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="passwordHash"></param>
-      /*  public void SetPasswordHash(string username, string passwordHash)
-        {
-            Utente utente = this.utentiRepository.GetByU(username);
-            if (utente != null)
-            {
-                utente.Password = passwordHash;
-                this.uow.SaveChanges();
-            }
-        }*/
-
-        /// <summary>
-        /// Validazione utente lato MVC
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="searchDto"></param>
         /// <returns></returns>
-        public bool ValidateUser(string username, string password)
+        public List<UtenteDto> Search(UtentiSearchDto searchDto)
         {
-            string passwordHash = new HashHelper().HashPassword(password);
+            IQueryable<Utente> query = this.utentiRepository.GetAll();
 
-            Utente utente = this.utentiRepository.FindBy(u => u.Username == username && u.Password == passwordHash);
-            return utente != null;
-        }
-
-        /// <summary>
-        /// Salvataggio del token di accesso alle API
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="token"></param>
-        public void SetToken(string username, string token)
-        {
-            Utente user = this.utentiRepository.FindBy(u => u.Username == username);
-            if (user != null)
+            // Tipo profilo
+            if (searchDto.IdProfilo != null)
             {
-                //user.Token = token;
-                this.uow.SaveChanges();
-            }
-        }
-
-        public override UtenteDto Details(int key)
-        {
-            UtenteDto utenteDto = null;
-            Utente utente = this.repository.GetById(key);
-            if (utente != null)
-            {
-                utenteDto = ConvertToDto(utente);
+                query = query.Where(u => u.IdProfilo == searchDto.IdProfilo);
             }
 
-            return utenteDto;
+            return ConvertToDtoList(query.ToList());
         }
+
 
         protected override Utente UpdateProperties(Utente viewEntity, Utente dbEntity)
         {
@@ -159,18 +197,7 @@ namespace LatteMarche.Application.Utenti.Services
             return dbEntity;
         }
 
-        public List<UtenteDto> Search(UtentiSearchDto searchDto)
-        {
-            IQueryable<Utente> query = this.utentiRepository.GetAll();
 
-            // Tipo profilo
-            if (searchDto.IdProfilo!=null)
-            {
-                query = query.Where(u => u.IdProfilo == searchDto.IdProfilo);
-            }
-
-            return ConvertToDtoList(query.ToList());
-        }
 
         #endregion
     }

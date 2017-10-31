@@ -75,6 +75,18 @@
     <Compile Include="Migrations\201710101401542_Eliminazione_V_Prelievi_Latte.Designer.cs">
       <DependentUpon>201710101401542_Eliminazione_V_Prelievi_Latte.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710261305400_AggiuntaTabellaAnagrafe.cs" />
+    <Compile Include="Migrations\201710261305400_AggiuntaTabellaAnagrafe.Designer.cs">
+      <DependentUpon>201710261305400_AggiuntaTabellaAnagrafe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710261306113_AggiuntoCampoPasswordNew.cs" />
+    <Compile Include="Migrations\201710261306113_AggiuntoCampoPasswordNew.Designer.cs">
+      <DependentUpon>201710261306113_AggiuntoCampoPasswordNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710261326574_EstesoCampoUsername.cs" />
+    <Compile Include="Migrations\201710261326574_EstesoCampoUsername.Designer.cs">
+      <DependentUpon>201710261326574_EstesoCampoUsername.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -119,6 +131,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710101401542_Eliminazione_V_Prelievi_Latte.resx">
       <DependentUpon>201710101401542_Eliminazione_V_Prelievi_Latte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710261305400_AggiuntaTabellaAnagrafe.resx">
+      <DependentUpon>201710261305400_AggiuntaTabellaAnagrafe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710261306113_AggiuntoCampoPasswordNew.resx">
+      <DependentUpon>201710261306113_AggiuntoCampoPasswordNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710261326574_EstesoCampoUsername.resx">
+      <DependentUpon>201710261326574_EstesoCampoUsername.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
