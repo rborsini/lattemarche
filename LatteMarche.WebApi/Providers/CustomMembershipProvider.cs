@@ -19,9 +19,9 @@ namespace LatteMarche.WebApi.Providers
         /// <returns></returns>
         public override bool ValidateUser(string username, string password)
         {
-            //IUtentiService service = DependencyResolver.Current.GetService<IUtentiService>();
-            //return service.ValidateUser(username, password);
-            return true;
+            IUtentiService service = DependencyResolver.Current.GetService<IUtentiService>();
+            return service.ValidateUser(username, password);
+            //return true;
         }
 
         public override string ApplicationName

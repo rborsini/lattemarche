@@ -52,7 +52,9 @@ namespace LatteMarche.Application.Utenti.Services
             {
                 utenteDto = ConvertToDto(utente);
 
-                utenteDto.SiglaProvincia = this.comuniService.Details(utenteDto.IdComune).Provincia;
+                var comune = this.comuniService.Details(utenteDto.IdComune);
+                if(comune != null)
+                    utenteDto.SiglaProvincia = comune.Provincia;
 
             }
 
