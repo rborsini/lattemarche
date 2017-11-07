@@ -103,11 +103,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 model.Abilitato = true;
                 model.Password = new HashHelper().HashPassword(model.Password);
 
-                this.utentiService.Create(model);
+                UtenteDto utente = this.utentiService.Create(model);
 
                 string tokenUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.LocalPath, "/Token");
 
-                return Ok();
+                return Ok(utente);
             }
             catch (Exception exc)
             {

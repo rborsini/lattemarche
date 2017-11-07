@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Comuni.Services;
+using LatteMarche.Application.Comuni.Dtos;
 
 namespace LatteMarche.Application.Utenti.Services
 {
@@ -71,7 +72,10 @@ namespace LatteMarche.Application.Utenti.Services
             {
                 utenteDto = ConvertToDto(utente);
 
-                utenteDto.SiglaProvincia = this.comuniService.Details(utenteDto.IdComune).Provincia;
+                ComuneDto comuneDto = this.comuniService.Details(utenteDto.IdComune);
+
+                if(comuneDto != null)
+                    utenteDto.SiglaProvincia = comuneDto.Provincia;
             }
 
             return utenteDto;

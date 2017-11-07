@@ -34,7 +34,7 @@
         </div>
 
         <!--begin::Form-->
-        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
             <div class="m-portlet__body">
 
 
@@ -127,7 +127,7 @@
                     </label>
                     <div class="col-1">
                         <div class="m-select2 m-select2--air m-select2--pill">
-                            <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Provincie,  value: ProvinciaSelezionata, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
+                            <select class="provincia form-control m-select2" id="m_select2_12_3" data-bind="options: Province,  value: SiglaProvincia, optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Prov.">
                                 <option></option>
                             </select>
                         </div>
@@ -183,10 +183,10 @@
                         Quota del Latte (Kg):
                     </label>
                     <div class="col-3">
-                        <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
+                        <input type="number" class="form-control m-input m-input--pill m-input--air" data-bind="value:QuantitaLatte, valueUpdate:'keypress'" placeholder="Inserisci quota del latte">
                     </div>
                     <label class="col-2 col-form-label">
-                        Comunicazione Quota Latte N°:
+                        Com. Quota Latte N°:
                     </label>
                     <div class="col-3">
                         <input type="text" class="form-control m-input m-input--pill m-input--air" data-bind="value:NumeroComunicazione, valueUpdate:'keypress'" placeholder="Inserisci comunicazione quota">
@@ -244,6 +244,7 @@
                         <textarea class="form-control m-input m-input--pill m-input--air" data-bind="value:Note, valueUpdate:'keypress'" id="exampleTextarea" rows="3"></textarea>
                     </div>
                 </div>
+            
             </div>
 
             <!-- Bottoni -->
@@ -261,7 +262,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
         <!--end::Form-->
 
     </div>
@@ -275,7 +276,7 @@
 
     jQuery(document).ready(function () {
 
-        $('#waiter').modal('show');
+        //$('#waiter').modal('show');
 
         viewModel = {
 
@@ -289,7 +290,7 @@
             PivaCF: ko.observable(''),
 
             Indirizzo: ko.observable(''),
-            ProvinciaSelezionata: ko.observable(''),
+            SiglaProvincia: ko.observable(''),
             IdComune: ko.observable(''),
             Telefono: ko.observable(''),
             Cellulare: ko.observable(''),
@@ -300,7 +301,7 @@
             NumeroComunicazione: ko.observable(''),
             Note: ko.observable(''),
 
-            Provincie: ko.observableArray(''),
+            Province: ko.observableArray(''),
             Comuni: ko.observableArray(''),
             TipiLatte: ko.observableArray(''),
             TipiProfilo: ko.observableArray(''),
@@ -313,11 +314,17 @@
 
         ko.applyBindings(viewModel);
 
+        bindProvince();
+
 
         // caricamento dettaglio utente
-        $.getJSON(apiUrl + 'utenti/details', { id: id }, function (result) {
+        $.getJSON(apiUrl + 'utenti/details', { id: '@Request["id"]' }, function (result) {
 
-            $('#waiter').modal('hide');
+            
+
+            //$('#waiter').modal('hide');
+
+            console.log("result", result);
 
             if (result) {
                 viewModel.Username(result.Username);
@@ -337,12 +344,14 @@
                 viewModel.QuantitaLatte(result.QuantitaLatte);
                 viewModel.NumeroComunicazione(result.NumeroComunicazione);
                 viewModel.Note(result.Note);
-                viewModel.Abilitato(result.Abilitato);
-                viewModel.Visibile(result.Visibile);
+                viewModel.Abilitato(result.Abilitato ? 'true' : 'false');
+                viewModel.Visibile(result.Visibile ? 'true' : 'false');
 
-                BindProvincie();
-                BindTipiLatte(result.IdTipoLatte);
-                BindTipiProfilo(result.IdProfilo);
+                viewModel.SiglaProvincia(result.SiglaProvincia);
+                
+                bindTipiLatte(result.IdTipoLatte);
+                bindTipiProfilo(result.IdProfilo);
+                bindComuni(result.SiglaProvincia, result.IdComune);
 
             } else {
                 $('#detail-panel').addClass('d-none');
@@ -357,25 +366,25 @@
 
             console.log("model", model);
 
-            //$.ajax({
-            //    type: "PUT",
-            //    url: apiUrl  + "utenti/update",
-            //    data: model,
-            //    dataType: 'json',
-            //    success: function (result) {
-            //        viewModel.ValidationMessages.removeAll();
-            //        for (var i = 0; i < result.length; i++) {
-            //            viewModel.ValidationMessages.push({ messageText: '- ' + result[i] });
-            //        }
+            $.ajax({
+                type: "PUT",
+                url: apiUrl  + "utenti/update",
+                data: model,
+                dataType: 'json',
+                success: function (result) {
+                    viewModel.ValidationMessages.removeAll();
+                    for (var i = 0; i < result.length; i++) {
+                        viewModel.ValidationMessages.push({ messageText: '- ' + result[i] });
+                    }
 
-            //        $('#waiter').modal('hide');
-            //        $('#save-dialog-panel').modal('show');
-            //    },
-            //    error: function (result) {
-            //        $('#waiter').modal('hide');
-            //        showError('Si è verificato un errore durante il salvataggio.');
-            //    }
-            //});
+                    $('#waiter').modal('hide');
+                    $('#save-dialog-panel').modal('show');
+                },
+                error: function (result) {
+                    $('#waiter').modal('hide');
+                    showError('Si è verificato un errore durante il salvataggio.');
+                }
+            });
         });
 
         // ritorno alla pagina index
@@ -391,42 +400,47 @@
         // change dropdown provincia
         $(".provincia").change(function (e) {
             if (e.val) {
-                var provincie = $(this).val();
-                BindComuni(provincie);
+                var provincia = $(this).val();
+                bindComuni(provincia);
             }
         });
 
-        // in base al comune selezionato cerca la provincia
-        function GetProvincia(idComune) {
-            $.getJSON(apiUrl + "comuni/details?id=" + idComune, function (result) {
-                if (result != null) {
-                    viewModel.ProvinciaSelezionata(result.Provincia);
-                    BindComuni(result.Provincia, idComune);
-                }
-            });
-        }
-
-        // bind dropdown provincie
-        function BindProvincie() {
+        // bind dropdown province
+        function bindProvince(provinciaSelezionata) {
             $.getJSON(apiUrl + "comuni/province", function (result) {
-                viewModel.Provincie(result);
-                GetProvincia(idC);
+                viewModel.Province(result);
+
+                if (provinciaSelezionata) {
+                    viewModel.Provincia(provinciaSelezionata);
+                }
+
             });
         }
 
         // bind dropdown comuni
-        function bindComuni(provincia, idComune) {
+        function bindComuni(provincia, comuneSelezionato) {
+
+            if (provincia == null)
+                return;
+
             $.getJSON(apiUrl + "comuni/search?provincia=" + provincia, function (result) {
                 viewModel.Comuni(result);
-                viewModel.IdComune(idComune);
+
+                if (comuneSelezionato) {
+                    viewModel.IdComune(comuneSelezionato);
+                }
             });
+
         }
 
         // bind dropdown TipiLatte
         function bindTipiLatte(idTipoLatte) {
             $.getJSON(apiUrl + "TipiLatte", function (result) {
                 viewModel.TipiLatte(result);
-                viewModel.IdTipoLatte(idTipoLatte);
+
+                if (idTipoLatte) {
+                    viewModel.IdTipoLatte(idTipoLatte);
+                }
             });
         }
 
@@ -434,9 +448,14 @@
         function bindTipiProfilo(idTipoProfilo) {
             $.getJSON(apiUrl + "TipiProfilo", function (result) {
                 viewModel.TipiProfilo(result);
-                viewModel.IdProfilo(idTipoProfilo);
+
+                if (idTipoProfilo) {
+                    viewModel.IdProfilo(idTipoProfilo);
+                }
+
             });
         }
+
 
         // invio event
         $("body").keypress(function (event) {

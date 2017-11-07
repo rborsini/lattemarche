@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Utenti.Interfaces;
+﻿using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Models;
 using Newtonsoft.Json;
@@ -51,6 +52,13 @@ namespace LatteMarche.WebApi.Controllers
             if (ModelState.IsValid && Membership.ValidateUser(model.Username, model.Password))
             {
                 Uri u = Request.Url;
+
+                UtenteDto utenteDto = this.utentiService.Details(model.Username);
+
+                if(utenteDto != null)
+                {
+                    Session["fullname"] = String.Format("{0} {1}", utenteDto.Nome, utenteDto.Cognome);
+                }
 
                 string tokenUrl = Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "/Token");
 

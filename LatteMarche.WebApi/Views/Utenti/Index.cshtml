@@ -18,16 +18,24 @@
 
             <!-- Portlet Caption -->
             <div class="m-portlet__head-caption">
-                <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text">
-                        Elenco degli Utenti Allevatori
-                    </h3>
+
+                <div class="row">
+                    <div class="col align-self-start">
+                        <h3 class="m-portlet__head-text">
+                            Elenco degli Utenti Allevatori
+                        </h3>
+                    </div>
                 </div>
+
+
             </div>
 
             <!-- Portlet Tools -->
             <div class="m-portlet__head-tools">
                 <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <input type="text" class="form-control m-input m-input--solid" placeholder="Cerca..." id="search">
+                    </li>
                     <li class="nav-item m-tabs__item">
                         <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Utente</a>
                     </li>
@@ -134,6 +142,10 @@
 
              }]
         });
+
+        $('#search').on('keyup', function (e) {
+            datatable.search($(this).val().toLowerCase());
+        });  
 
 
     });

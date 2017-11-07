@@ -1134,6 +1134,7 @@
     <Content Include="Views\Allevatori\Index.cshtml" />
     <Content Include="Views\Trasportatori\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
+    <Content Include="Views\Shared\_Waiter.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
