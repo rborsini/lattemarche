@@ -129,6 +129,7 @@ Modifed by keenthemes for Metronic theme integration.
     color: #000;
     border: 1px solid #e5e5e5;
     border-top: 0;
+    border-radius: 8px;
 }
 
 .select2-drop-auto-width {
@@ -144,6 +145,7 @@ Modifed by keenthemes for Metronic theme integration.
     margin-top: 1px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 0;
+    border-radius: 8px;
 }
 
 .select2-drop-active {
