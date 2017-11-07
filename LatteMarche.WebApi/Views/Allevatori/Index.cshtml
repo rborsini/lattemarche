@@ -6,21 +6,23 @@
 
             <!-- Portlet Caption -->
             <div class="m-portlet__head-caption">
-                <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text">
-                        I nostri Allevatori
-                    </h3>
+                
+                <div class="row">
+                    <div class="col align-self-start">
+                        <h3 class="m-portlet__head-text">
+                            I nostri Allevatori
+                        </h3>
+                    </div>
+                    <div class="col-3 align-self-end pr-0">
+                        <input type="text" class="form-control m-input m-input--solid" placeholder="Cerca..." id="search">
+                    </div>
                 </div>
+
+
             </div>
 
-            <!-- Portlet Tools -->
-            @*<div class="m-portlet__head-tools">
-                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                    <li class="nav-item m-tabs__item">
-                        <a class="btn m-btn--pill m-btn--air btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]Utenti/New">+ Aggiungi Utente</a>
-                    </li>
-                </ul>
-            </div>*@
+
+
         </div>
 
         <div class="m-portlet__body">
@@ -55,6 +57,29 @@
                 class: '', // custom wrapper class
                 scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
                 footer: false, // display/hide footer
+            },
+
+            translate: {
+                records: {
+                    processing: 'Caricamento in corso...',
+                    noRecords: 'Nessun record trovato'
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: 'Prima',
+                                prev: 'Precedente',
+                                next: 'Successiva',
+                                last: 'Ultima',
+                                more: 'Più pagine',
+                                input: 'Numero pagina',
+                                select: 'Seleziona dimensione pagine'
+                            },
+                            info: 'Visualizzato {{start}} - {{end}} di {{total}} records'
+                        }
+                    }
+                }
             },
 
             // column sorting
@@ -102,6 +127,9 @@
              }]
         });
 
+        $('#search').on('keyup', function (e) {
+            datatable.search($(this).val().toLowerCase());
+        });                              
 
     });
 

@@ -8,6 +8,7 @@ using RB.Hash;
 using System.Collections.Generic;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
+using LatteMarche.Application.Comuni.Services;
 
 namespace LatteMarche.Application.Utenti.Services
 {
@@ -25,11 +26,11 @@ namespace LatteMarche.Application.Utenti.Services
 
 		#region Constructors
 
-		public UtentiService(IUnitOfWork uow, IComuniService comuniService)
+		public UtentiService(IUnitOfWork uow)
 			: base(uow)
 		{
 			this.utentiRepository = this.uow.Get<Utente, int>();
-            this.comuniService = comuniService;
+            this.comuniService = new ComuniService(uow);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
 		}
 
         #endregion

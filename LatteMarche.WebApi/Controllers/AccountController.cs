@@ -60,7 +60,7 @@ namespace LatteMarche.WebApi.Controllers
                     if (!String.IsNullOrEmpty(token))
                     {
                         Session["token"] = token;
-                        this.utentiService.SetToken(model.Username, token);
+                        //this.utentiService.SetToken(model.Username, token);
                     }
 
                     FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);

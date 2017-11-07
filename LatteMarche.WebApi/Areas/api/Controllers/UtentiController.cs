@@ -151,7 +151,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                int idProfilo = tipiProfiloService.getIdProfilo("Destinatario");
+                int idProfilo = tipiProfiloService.GetIdProfilo("Destinatario");
                 return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
             }
             catch (Exception exc)
