@@ -5,6 +5,7 @@ using LatteMarche.Application.PrelieviLatte.Dtos;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using RB.Date;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -102,19 +103,17 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
+        [HttpPost]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Search(int idAllevamento,
-            DateTime? DataPeriodoInizio=null,
-            DateTime? DataPeriodoFine=null
-            )
+        public IHttpActionResult Search(string idAllevamento = "", string dal = "", string al = "")
         {
             //possibilità di mettere altri parametri come le date periodo prelievo
             try
             {
                 return Ok(this.prelieviLatteService.Search(new PrelieviLatteSearchDto() {
-                    idAllevamento = idAllevamento,
-                    DataPeriodoInizio = DataPeriodoInizio,
-                    DataPeriodoFine =DataPeriodoFine
+                    idAllevamento = String.IsNullOrEmpty(idAllevamento) || idAllevamento == "undefined" ? (int?)null : Convert.ToInt32(idAllevamento),
+                    DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
+                    DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
                 }));
             }
             catch (Exception exc)

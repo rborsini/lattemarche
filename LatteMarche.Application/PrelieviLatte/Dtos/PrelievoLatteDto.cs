@@ -24,6 +24,11 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string LottoConsegna { get; set; }
         public string SerialeLabAnalisi { get; set; }
 
+        public string DataPrelievoStr { get { return new DateHelper().FormatDate(this.DataPrelievo); } }
+        public string DataConsegnaStr { get { return new DateHelper().FormatDate(this.DataConsegna); } }
+        public string DataUltimaMungituraStr { get { return new DateHelper().FormatDate(this.DataUltimaMungitura); } }
+
+
     }
 
     public class PrelieviLatteMappings

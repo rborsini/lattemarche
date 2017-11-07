@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RB.Date;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
     {
         public DateTime? DataPeriodoInizio { get; set; }
         public DateTime? DataPeriodoFine { get; set; }
+
         public int? idAllevamento { get; set; }
 
     }
