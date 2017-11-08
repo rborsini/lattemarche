@@ -24,17 +24,17 @@
                             <label class="col-lg-4 col-form-label">
                                 Data prelievo
                             </label>
-                            <div class="col-4 input-group date" id="m_datepicker_2">
+                            <div class="col-4 input-group date date-picker">
                                 <input data-bind="value: DataPrelievo" type="text" class="form-control m-input">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
                             </div>
-                            <div class="col-4 input-group timepicker" id="m_timepicker_1">
+                            <div class="col-4 input-group timepicker">
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraPrelievo" type="text" class="form-control m-input" placeholder="Select time">
+                                <input data-bind="value: OraPrelievo" type="text" class="form-control m-input timepicker" placeholder="Select time">
                             </div>
                         </div>
 
@@ -43,17 +43,17 @@
                             <label class="col-lg-4 col-form-label">
                                 Data ultima mungitura
                             </label>
-                            <div class="col-4 input-group date" id="m_datepicker_3">
+                            <div class="col-4 input-group date date-picker">
                                 <input data-bind="value: DataUltimaMungitura" type="text" class="form-control m-input">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
                             </div>
-                            <div class="col-4 input-group timepicker" id="m_timepicker_2">
+                            <div class="col-4 input-group timepicker">
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input" placeholder="Select time">
+                                <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input timepicker" placeholder="Select time">
                             </div>
                         </div>
 
@@ -62,17 +62,17 @@
                             <label class="col-lg-4 col-form-label">
                                 Data di consegna
                             </label>
-                            <div class="col-4 input-group date" id="m_datepicker_4">
+                            <div class="col-4 input-group date date-picker">
                                 <input data-bind="value: DataConsegna" type="text" class="form-control m-input">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
                             </div>
-                            <div class="col-4 input-group timepicker" id="m_timepicker_3">
+                            <div class="col-4 input-group timepicker">
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraConsegna" type="text" class="form-control m-input" placeholder="Select time">
+                                <input data-bind="value: OraConsegna" type="text" class="form-control m-input timepicker" placeholder="Select time">
                             </div>
                         </div>
 
@@ -226,7 +226,7 @@
             </div>
         </div>
 
-        <!--begin::Form-->
+        <!-- inizio form per ricerca dei prelievi -->
         <div class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
             <div class="m-portlet__body mt-4">
 
@@ -250,7 +250,7 @@
                         Visualizza i prelievi nel periodo
                     </label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
-                        <div class="input-daterange input-group" id="m_datepicker_1">
+                        <div class="input-daterange input-group date-picker">
                             <input type="text" class="form-control m-input" name="start" placeholder="Dal" data-bind="value: DataDal">
                             <span class="input-group-addon">
                                 <i class="la la-ellipsis-h"></i>
@@ -279,7 +279,6 @@
 
             </div>
         </div>
-        <!--end::Form-->
 
     </div>
 
@@ -322,14 +321,23 @@
         viewModel = {
 
             RagioniSociali: ko.observableArray(),
+
+            // datepicker dal - al
             DataDal: ko.observable('06-10-2008'),
             DataAl: ko.observable('07-10-2008'),
+
+            // data e ora prelievo
             DataPrelievo: ko.observable(),
             OraPrelievo: ko.observable(),
+
+            // data e ora ultima mungitura
             DataUltimaMungitura: ko.observable(),
             OraUltimaMungitura: ko.observable(),
+
+            // data e ora consegna
             DataConsegna: ko.observable(),
             OraConsegna: ko.observable(),
+
             NumeroMungiture: ko.observable(),
             QuantitaMungitura: ko.observable(),
             TemperaturaMungitura: ko.observable(),
@@ -369,9 +377,7 @@
         // Cerca click
         viewModel.onCerca_Clicked = function (e) {
             console.log("cerca click");
-
             bindTable();
-
         }
 
         // Gestione cambiamento ragione sociale
@@ -485,11 +491,13 @@
         }
 
         // chiamata per visualizzare il datapicker
-        $('#m_datepicker_1').datepicker({
+        $('.date-picker').datepicker({
             weekStart: 1,
             language: 'it',
             autoclose: true
         });
+
+        $('.timepicker').timepicker();
 
         // evento selezione prelievo\
         $(window).on('hashchange', function (e) {
