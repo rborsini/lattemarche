@@ -145,7 +145,9 @@
       <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.10.0\lib\net45\WebApi.OutputCache.V2.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="lattemarche-dev - Web Deploy.pubxml" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\api\Controllers\AcquirentiController.cs" />
@@ -1124,7 +1126,6 @@
     <Content Include="Content\assets\plugins\socicon\README.md" />
     <Content Include="Content\assets\plugins\tether\LICENSE" />
     <Content Include="Views\Account\Login.cshtml" />
-    <None Include="lattemarche-dev - Web Deploy.pubxml" />
     <Content Include="Views\Utenti\Details.cshtml" />
     <Content Include="Views\Utenti\New.cshtml" />
     <Content Include="Views\Utenti\Index.cshtml" />

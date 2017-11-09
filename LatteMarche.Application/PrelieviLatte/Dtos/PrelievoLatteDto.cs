@@ -8,6 +8,8 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 {
     public class PrelievoLatteDto : EntityDto
     {
+        private DateHelper dateHelper;
+
         public int Id { get; set; }
         public int IdAllevamento { get; set; }
         public int IdDestinatario { get; set; }
@@ -24,15 +26,33 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string LottoConsegna { get; set; }
         public string SerialeLabAnalisi { get; set; }
 
-        public string DataPrelievoStr { get { return new DateHelper().FormatDate(this.DataPrelievo); } }
+        public string DataPrelievoStr
+        {
+            get { return new DateHelper().FormatDate(this.DataPrelievo); }
+            set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
         public string OraPrelievo { get { return this.DataPrelievo.ToString("HH:mm"); } }
 
-        public string DataConsegnaStr { get { return new DateHelper().FormatDate(this.DataConsegna); } }
+        public string DataConsegnaStr
+        {
+            get { return new DateHelper().FormatDate(this.DataConsegna); }
+            set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
+
         public string OraConsegna { get { return this.DataConsegna.ToString("HH:mm"); } }
 
-        public string DataUltimaMungituraStr { get { return new DateHelper().FormatDate(this.DataUltimaMungitura); } }
+        public string DataUltimaMungituraStr
+        {
+            get { return new DateHelper().FormatDate(this.DataUltimaMungitura); }
+            set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
+
         public string OraUltimaMungitura { get { return this.DataUltimaMungitura.ToString("HH:mm"); } }
 
+        public PrelievoLatteDto()
+        {
+            this.dateHelper = new DateHelper();
+        }
 
     }
 
@@ -41,7 +61,8 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public static void Configure()
         {
             Mapper.CreateMap<PrelievoLatte, PrelievoLatteDto>();
-                
+            Mapper.CreateMap<PrelievoLatteDto, PrelievoLatte>();
+
         }
     }
 

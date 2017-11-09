@@ -59,27 +59,18 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] PrelievoLatteDto model)
-        {
-            try
-            {
-                var users = this.prelieviLatteService.Update(model);
-                return Ok(model);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
         [HttpPost]
-        public IHttpActionResult Create([FromBody] PrelievoLatteDto model)
+        public IHttpActionResult Save([FromBody] PrelievoLatteDto model)
         {
             try
             {
-                return Ok(this.prelieviLatteService.Create(model));
+                if(model.Id == 0)
+                    this.prelieviLatteService.Create(model);
+                else
+                    this.prelieviLatteService.Update(model);
+
+
+                return Ok(model);
             }
             catch (Exception exc)
             {

@@ -82,7 +82,7 @@
                                 Numero di mungiture
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: NumeroMungiture" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 Quantità Kg
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: QuantitaMungitura" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -102,7 +102,7 @@
                                 Temperatura C°
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: TemperaturaMungitura" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -166,7 +166,7 @@
                                 Seriale laboratorio
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: SerialeLaboratorio" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@
                                 Scomparto
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: Scomparto" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: Scomparto" type="number" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@
                                 Lotto di consegna
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: LottoConsegna" type="email" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input m-input--air" placeholder="">
                             </div>
                         </div>
 
@@ -195,13 +195,13 @@
 
                 <!-- bottoni -->
                 <div class="modal-footer">
-                    <button type="button" class="btn m-btn--pill m-btn--air btn-warning" data-dismiss="modal">
+                    @*<button type="button" class="btn m-btn--pill m-btn--air btn-warning" data-dismiss="modal">
                         Elimina
+                    </button>*@
+                    <button  data-bind="click: onAnnullaSalvaPrelievo_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-info" data-dismiss="modal">
+                        Annulla
                     </button>
-                    <button type="button" class="btn m-btn--pill m-btn--air btn-info" data-dismiss="modal">
-                        Modifica
-                    </button>
-                    <button data-bind="SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-success">
+                    <button data-bind="click: onSalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-success">
                         Salva
                     </button>
                 </div>
@@ -300,7 +300,7 @@
             <div class="m-portlet__head-tools">
                 <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                     <li class="nav-item m-tabs__item">
-                        <a class="btn m-btn--pill m-btn--air btn-info" href="#modale-dettaglio-prelievo-latte">Inserisci manualmente un prelievo de latte</a>
+                        <a data-bind="click: onInserisciManualmente_Clicked" class="btn m-btn--pill m-btn--air btn-info" href="#modale-dettaglio-prelievo-latte">Inserisci manualmente un prelievo de latte</a>
                     </li>
                 </ul>
             </div>
@@ -326,8 +326,8 @@
             RagioniSociali: ko.observableArray(),
 
             // datepicker dal - al
-            DataDal: ko.observable('06-10-2008'),
-            DataAl: ko.observable('07-10-2008'),
+            DataDal: ko.observable('@DateTime.Today.AddDays(-1).ToString("dd-MM-yyyy")'),
+            DataAl: ko.observable('@DateTime.Today.ToString("dd-MM-yyyy")'),
 
             // data e ora prelievo
             DataPrelievo: ko.observable(),
@@ -367,7 +367,8 @@
 
             IdPrelievo: ko.observable(),
             IdRagioneSociale: ko.observable(''),
-            TextRagioneSociale: ko.observable(),
+            TextRagioneSociale: ko.observable()
+
         };
 
         // Annulla selezioni click
@@ -377,10 +378,97 @@
             viewModel.DataAl('');
         }
 
+        // Annulla modale prelievo
+        viewModel.onAnnullaSalvaPrelievo_Clicked = function () {
+            window.location.hash = '';
+        }
+
         // Cerca click
         viewModel.onCerca_Clicked = function (e) {
-            console.log("cerca click");
             bindTable();
+        }
+
+        // Salva prelievo
+        viewModel.onSalvaAllevamenti_Clicked = function (e) {
+
+            window.location.hash = "";
+
+            var model = {
+                Id: viewModel.IdPrelievo(),
+                IdAllevamento: viewModel.IdRagioneSociale(),
+                IdDestinatario: viewModel.DestinatarioSelezionato(),
+                IdAquirente: viewModel.AcquirenteSelezionato(),
+                IdTrasportatore: viewModel.TrasportatoreSelezionato(),
+                IdLabAnalisi: viewModel.LaboratorioAnalisiSelezionato(),
+                DataPrelievoStr: viewModel.DataPrelievo(),
+                DataConsegna: viewModel.DataConsegna(),
+                DataUltimaMungitura: viewModel.DataUltimaMungitura(),
+                Quantita: viewModel.QuantitaMungitura(),
+                Temperatura: viewModel.TemperaturaMungitura(),
+                NumeroMungiture: viewModel.NumeroMungiture(),
+                Scomparto: viewModel.Scomparto(),
+                LottoConsegna: viewModel.LottoConsegna(),
+                SerialeLabAnalisi: viewModel.SerialeLaboratorio()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: apiUrl + "prelieviLatte/Save",
+                data: model,
+                dataType: 'json',
+                success: function (result) {  
+
+                    bindTable();
+
+                    $('#modale-dettaglio-prelievo-latte').modal('hide');
+                    $('#save-dialog-panel').modal('show');
+                },
+                error: function (result) {
+                    $('#modale-dettaglio-prelievo-latte').modal('hide');
+                    alert('Si è verificato un errore durante il salvataggio.');
+                }
+            });
+
+        };
+
+        // Apertura modale inserimento nuovo prelievo
+        viewModel.onInserisciManualmente_Clicked = function () {
+
+            // data e ora prelievo
+            viewModel.DataPrelievo('');
+            viewModel.OraPrelievo('');
+
+            // data e ora ultima mungitura
+            viewModel.DataUltimaMungitura('');
+            viewModel.OraUltimaMungitura('');
+
+            // data e ora consegna
+            viewModel.DataConsegna('');
+            viewModel.OraConsegna('');
+
+            viewModel.NumeroMungiture();
+            viewModel.QuantitaMungitura();
+            viewModel.TemperaturaMungitura();
+
+            // trasportatori
+            viewModel.TrasportatoreSelezionato('');
+
+            // acquirenti
+            viewModel.AcquirenteSelezionato('');
+
+            // destinatari
+            viewModel.DestinatarioSelezionato('');
+
+            // laboratori analisi
+            viewModel.LaboratorioAnalisiSelezionato('');
+
+            viewModel.SerialeLaboratorio('');
+            viewModel.Scomparto('');
+            viewModel.LottoConsegna('');
+
+            viewModel.IdPrelievo(0);
+
+            $('#modale-dettaglio-prelievo-latte').modal('show');
         }
 
         // Gestione cambiamento ragione sociale
@@ -482,12 +570,6 @@
                 }]
             });
 
-            if (datatable) {
-                datatable.on('draw.dt', function () {
-                    //$('.edit').click(edit);
-                    console.log("draw");
-                });
-            }
 
         }
 
@@ -534,53 +616,55 @@
             autoclose: true
         });
 
-        // chiamata per visualizzare il timepicker
-        $('.timepicker').timepicker();
+        //// chiamata per visualizzare il timepicker
+        //$('.timepicker').timepicker();
 
         // evento selezione prelievo\
         $(window).on('hashchange', function (e) {
+
             viewModel.IdPrelievo(getIdPrelievo(window.location));
 
-            $.getJSON(apiUrl + 'PrelieviLatte/Details?id=' + viewModel.IdPrelievo(), function (result) {
+            if (viewModel.IdPrelievo() != '') {
 
-                console.log("prelievo", result);
+                $.getJSON(apiUrl + 'PrelieviLatte/Details?id=' + viewModel.IdPrelievo(), function (result) {
 
-                // data e ora prelievo
-                viewModel.DataPrelievo(result.DataPrelievoStr);
-                viewModel.OraPrelievo(result.OraPrelievo);
+                    // data e ora prelievo
+                    viewModel.DataPrelievo(result.DataPrelievoStr);
+                    viewModel.OraPrelievo(result.OraPrelievo);
 
-                // data e ora ultima mungitura
-                viewModel.DataUltimaMungitura(result.DataUltimaMungituraStr);
-                viewModel.OraUltimaMungitura(result.OraUltimaMungitura);
+                    // data e ora ultima mungitura
+                    viewModel.DataUltimaMungitura(result.DataUltimaMungituraStr);
+                    viewModel.OraUltimaMungitura(result.OraUltimaMungitura);
 
-                // data e ora consegna
-                viewModel.DataConsegna(result.DataConsegnaStr);
-                viewModel.OraConsegna(result.OraConsegna);
+                    // data e ora consegna
+                    viewModel.DataConsegna(result.DataConsegnaStr);
+                    viewModel.OraConsegna(result.OraConsegna);
 
-                viewModel.NumeroMungiture(result.NumeroMungiture);
-                viewModel.QuantitaMungitura(result.Quantita);
-                viewModel.TemperaturaMungitura(result.Temperatura);
+                    viewModel.NumeroMungiture(result.NumeroMungiture);
+                    viewModel.QuantitaMungitura(result.Quantita);
+                    viewModel.TemperaturaMungitura(result.Temperatura);
 
-                // trasportatori
-                viewModel.TrasportatoreSelezionato(result.IdTrasportatore);
+                    // trasportatori
+                    viewModel.TrasportatoreSelezionato(result.IdTrasportatore);
 
-                // acquirenti
-                viewModel.AcquirenteSelezionato(result.IdAquirente);
+                    // acquirenti
+                    viewModel.AcquirenteSelezionato(result.IdAquirente);
 
-                // destinatari
-                viewModel.DestinatarioSelezionato(result.IdDestinatario);
+                    // destinatari
+                    viewModel.DestinatarioSelezionato(result.IdDestinatario);
 
-                // laboratori analisi
-                viewModel.LaboratorioAnalisiSelezionato(result.IdLabAnalisi);
+                    // laboratori analisi
+                    viewModel.LaboratorioAnalisiSelezionato(result.IdLabAnalisi);
 
-                viewModel.SerialeLaboratorio(result.SerialeLabAnalisi);
-                viewModel.Scomparto(result.Scomparto);
-                viewModel.LottoConsegna(result.LottoConsegna);
+                    viewModel.SerialeLaboratorio(result.SerialeLabAnalisi);
+                    viewModel.Scomparto(result.Scomparto);
+                    viewModel.LottoConsegna(result.LottoConsegna);
 
-                $('#modale-dettaglio-prelievo-latte').modal('show');
+                    $('#modale-dettaglio-prelievo-latte').modal('show');
 
-            });
+                });
 
+            }
 
 
         });
