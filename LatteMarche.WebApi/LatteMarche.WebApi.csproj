@@ -341,6 +341,7 @@
     <Content Include="Content\assets\img\arrows.png" />
     <Content Include="Content\assets\img\bg.jpg" />
     <Content Include="Content\assets\img\blockquote.png" />
+    <Content Include="Content\assets\img\cow.png" />
     <Content Include="Content\assets\img\demos\demo1.png" />
     <Content Include="Content\assets\img\demos\demo2.png" />
     <Content Include="Content\assets\img\demos\demo3.png" />
