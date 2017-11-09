@@ -25,8 +25,13 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string SerialeLabAnalisi { get; set; }
 
         public string DataPrelievoStr { get { return new DateHelper().FormatDate(this.DataPrelievo); } }
+        public string OraPrelievo { get { return this.DataPrelievo.ToString("HH:mm"); } }
+
         public string DataConsegnaStr { get { return new DateHelper().FormatDate(this.DataConsegna); } }
+        public string OraConsegna { get { return this.DataConsegna.ToString("HH:mm"); } }
+
         public string DataUltimaMungituraStr { get { return new DateHelper().FormatDate(this.DataUltimaMungitura); } }
+        public string OraUltimaMungitura { get { return this.DataUltimaMungitura.ToString("HH:mm"); } }
 
 
     }
@@ -35,24 +40,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
     {
         public static void Configure()
         {
-            DateHelper helper = new DateHelper();
-            Mapper.CreateMap<PrelievoLatte, PrelievoLatteDto>()
-                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-                .ForMember(dest => dest.IdAllevamento, opts => opts.MapFrom(src => src.IdAllevamento))
-                .ForMember(dest => dest.IdTrasportatore, opts => opts.MapFrom(src => src.IdTrasportatore))
-                .ForMember(dest => dest.IdAquirente, opts => opts.MapFrom(src => src.IdAquirente))
-                .ForMember(dest => dest.IdDestinatario, opts => opts.MapFrom(src => src.IdDestinatario))
-                .ForMember(dest => dest.IdLabAnalisi, opts => opts.MapFrom(src => src.IdLabAnalisi))
-                .ForMember(dest => dest.DataPrelievo, opts => opts.MapFrom(src => helper.FormatDate(src.DataPrelievo)))
-                .ForMember(dest => dest.DataUltimaMungitura, opts => opts.MapFrom(src => helper.FormatDate(src.DataUltimaMungitura)))
-                .ForMember(dest => dest.DataConsegna, opts => opts.MapFrom(src => helper.FormatDate(src.DataConsegna)))
-                .ForMember(dest => dest.NumeroMungiture, opts => opts.MapFrom(src => src.NumeroMungiture))
-                .ForMember(dest => dest.Quantita, opts => opts.MapFrom(src => src.Quantita))
-                .ForMember(dest => dest.Temperatura, opts => opts.MapFrom(src => src.Temperatura))          
-                .ForMember(dest => dest.Scomparto, opts => opts.MapFrom(src => src.Scomparto.Trim()))
-                .ForMember(dest => dest.LottoConsegna, opts => opts.MapFrom(src => src.LottoConsegna.Trim()))
-                .ForMember(dest => dest.SerialeLabAnalisi, opts => opts.MapFrom(src => src.SerialeLabAnalisi.Trim()))
-                ;
+            Mapper.CreateMap<PrelievoLatte, PrelievoLatteDto>();
                 
         }
     }

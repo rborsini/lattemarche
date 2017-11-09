@@ -45,6 +45,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="Models\Allevamento.cs" />
+    <Compile Include="Models\Destinatario.cs" />
     <Compile Include="Models\Giro.cs" />
     <Compile Include="Models\AllevamentoXGiro.cs" />
     <Compile Include="Models\LaboratorioAnalisi.cs" />
