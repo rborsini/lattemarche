@@ -40,7 +40,7 @@
             // datasource definition
             data: {
                 type: 'remote',
-                source: apiUrl + '/api/Allevatori',
+                source: apiUrl + '/Allevatori',
                 pageSize: 10,
                 saveState: {
                     cookie: true,
@@ -114,8 +114,8 @@
                 field: "Provincia",
                 title: "Provincia",
             }, {
-                field: "",
-                title: "",
+                field: "Edit",
+                title: "Dettaglio",
                 width: 100,
                     template: function(row) {
                         return '<a href="' + webUrl + 'Utenti/Details?id=' + row.Id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details"><i class="la la-edit"></i></a>';
