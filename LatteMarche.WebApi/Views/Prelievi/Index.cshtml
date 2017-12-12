@@ -25,7 +25,7 @@
                                 Data prelievo
                             </label>
                             <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataPrelievo" type="text" class="form-control m-input">
+                                <input data-bind="value: DataPrelievo" type="text" class="form-control m-input" placeholder="Data prelievo">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
@@ -34,7 +34,7 @@
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraPrelievo" type="text" class="form-control m-input timepicker" placeholder="Select time">
+                                <input data-bind="value: OraPrelievo" type="text" class="form-control m-input timepicker" placeholder="Ora prelievo">
                             </div>
                         </div>
 
@@ -44,7 +44,7 @@
                                 Data ultima mungitura
                             </label>
                             <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataUltimaMungitura" type="text" class="form-control m-input">
+                                <input data-bind="value: DataUltimaMungitura" type="text" class="form-control m-input" placeholder="Data mungitura">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
@@ -53,7 +53,7 @@
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input timepicker" placeholder="Select time">
+                                <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input timepicker" placeholder="Ora mungitura">
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                 Data di consegna
                             </label>
                             <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataConsegna" type="text" class="form-control m-input">
+                                <input data-bind="value: DataConsegna" type="text" class="form-control m-input" placeholder="Data consegna">
                                 <span class="input-group-addon">
                                     <i class="la la-calendar"></i>
                                 </span>
@@ -72,7 +72,7 @@
                                 <span class="input-group-addon">
                                     <i class="la la-clock-o"></i>
                                 </span>
-                                <input data-bind="value: OraConsegna" type="text" class="form-control m-input timepicker" placeholder="Select time">
+                                <input data-bind="value: OraConsegna" type="text" class="form-control m-input timepicker" placeholder="Ora consegna">
                             </div>
                         </div>
 
@@ -82,7 +82,7 @@
                                 Numero di mungiture
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input m-input--air" placeholder="Inserisci numero mungiture">
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 Quantità Kg
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input m-input--air" placeholder="Inserisci quantità">
                             </div>
                         </div>
 
@@ -102,7 +102,7 @@
                                 Temperatura C°
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input m-input--air" placeholder="Inseriesci temperatura">
                             </div>
                         </div>
 
@@ -113,7 +113,7 @@
                             </label>
                             <div class="col-lg-8">
                                 <div class="m-select2 m-select2--air m-select2--pill">
-                                    <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                    <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" name="param" data-placeholder="Seleziona trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
                                 </div>
@@ -127,7 +127,7 @@
                             </label>
                             <div class="col-lg-8">
                                 <div class="m-select2 m-select2--air m-select2--pill">
-                                    <select data-bind="options: Acquirenti, optionsValue: 'Id', value: AcquirenteSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Selezione acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                    <select data-bind="options: Acquirenti, optionsValue: 'Id', value: AcquirenteSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
                                 </div>
@@ -141,7 +141,7 @@
                             </label>
                             <div class="col-lg-8">
                                 <div class="m-select2 m-select2--air m-select2--pill">
-                                    <select data-bind="options: Destinatari, optionsValue: 'Id', value: DestinatarioSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Selezione acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                    <select data-bind="options: Destinatari, optionsValue: 'Id', value: DestinatarioSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona destinatario" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
                                 </div>
@@ -154,7 +154,7 @@
                                 Laboratorio analisi
                             </label>
                             <div class="col-lg-8">
-                                <select data-bind="options: LaboratoriAnalisi, optionsValue: 'Id', value: LaboratorioAnalisiSelezionato, optionsText: 'Descrizione', select2: {allowClear: true}" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                <select data-bind="options: LaboratoriAnalisi, optionsValue: 'Id', value: LaboratorioAnalisiSelezionato, optionsText: 'Descrizione', select2: {allowClear: true}" name="param" placeholder="Seleziona laboratorio analisi" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                     <option></option>
                                 </select>
                             </div>
@@ -166,7 +166,7 @@
                                 Seriale laboratorio
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input m-input--air" placeholder="Seleziona seriale laboratorio">
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@
                                 Scomparto
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: Scomparto" type="number" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: Scomparto" type="number" class="form-control m-input m-input--air" placeholder="Seleziona scomparto">
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@
                                 Lotto di consegna
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input m-input--air" placeholder="">
+                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input m-input--air" placeholder="Seleziona lotto di consegna">
                             </div>
                         </div>
 
@@ -213,6 +213,7 @@
 
 <!-- pannello gestione prelievi del latte -->
 <div class="col-lg-12" id="detail-panel">
+
     <div class="m-portlet mt-4">
 
         <!-- header pannello ricerca prelievi del latte -->
@@ -240,7 +241,7 @@
                     </label>
                     <div class="col-lg-4">
                         <div class="m-select2 m-select2--air m-select2--pill">
-                            <select id="allevatori" class="form-control m-select2 select2-hidden-accessible" data-bind="options: RagioniSociali, optionsValue: 'Id', value: IdRagioneSociale, optionsText: 'RagioneSociale', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona la ragione sociale" tabindex="-1" aria-hidden="true">
+                            <select id="allevatori" class="form-control m-select2 select2-hidden-accessible" data-bind="options: RagioniSociali, optionsValue: 'Id', value: IdRagioneSociale, optionsText: 'RagioneSociale', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona ragione sociale" tabindex="-1" aria-hidden="true">
                                 <option></option>
                             </select>
                         </div>
@@ -683,6 +684,7 @@
                 return '';
 
         }
+
 
     });
 
