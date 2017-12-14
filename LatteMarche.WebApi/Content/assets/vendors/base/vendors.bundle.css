@@ -54,6 +54,12 @@ xl: 1200px
   .table-bordered td {
     border: 1px solid #ddd !important; } }
 
+.gocce-bg {
+    background: url("../../img/gocce_2.svg") center center;
+    background-size: cover !important;
+    height: 100%;
+}
+
 html {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -83,6 +89,7 @@ body {
     color: #212529;
     background-color: #f2f9ff;
 }
+
 
 [tabindex="-1"]:focus {
   outline: none !important; }
