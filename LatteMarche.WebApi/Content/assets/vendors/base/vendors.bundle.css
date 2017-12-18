@@ -60,21 +60,19 @@ xl: 1200px
     background-size: cover;
 }
 
-div.gocce-bg h2,
 div.gocce-bg h1 {
-    color: #36B7F7 !important;
-}
-div.gocce-bg h1 {
+    color: #fff;
     font-family: "Poppins";
     font-weight: 600;
 }
+
 div.gocce-bg h2 {
     font-family: "Poppins";
     font-weight: 100;
+    color: #1d33ff !important;
 }
 
 div.gocce-bg {
-    margin-top: -16px;
     height: 100%;
 }
 
