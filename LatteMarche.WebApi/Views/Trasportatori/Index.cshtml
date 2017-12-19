@@ -41,7 +41,7 @@
                                     </label>
                                 </span>
                                 <div class="col-5">
-                                    <input type="number" data-bind="value: $data.Priorita_SX, enable: $data.Selezionato_SX" class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
+                                    <input type="number" data-bind="value: $data.Priorita_SX, enable: $data.Selezionato_SX" class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
                                     <div class="m-widget5__content" style="margin:10px">
                                         <div class="m-list-timeline">
                                             <div class="m-list-timeline__items">
@@ -77,7 +77,7 @@
                                 </span>
 
                                 <div class="col-5" data-bind="visible: $data.Visible_DX" >
-                                    <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill m-input--air" placeholder="Priorità" style="font-weight:600">
+                                    <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
                                     <div class="m-widget5__content" style="margin:10px">
                                         <div class="m-list-timeline">
                                             <div class="m-list-timeline__items">
@@ -112,10 +112,10 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill m-btn--air btn-outline-warning" data-dismiss="modal">
+                <button type="button" class="btn m-btn--pill btn-outline-warning" data-dismiss="modal">
                     Ritorna in dashboard
                 </button>
-                <button data-bind="click: SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-info">
+                <button data-bind="click: SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info">
                     Salva
                 </button>
             </div>
@@ -147,8 +147,8 @@
                         Codice:
                     </label>
                     <div class="col-lg-4">
-                        <div class="m-select2 m-select2--air m-select2--pill">
-                            <input type="text" data-bind="value: NuovoGiro_Codice" class="form-control m-input m-input--pill m-input--air" placeholder="Codice">
+                        <div class="m-select2 m-select2--pill">
+                            <input type="text" data-bind="value: NuovoGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
                         </div>
                     </div>
                 </div>
@@ -160,16 +160,16 @@
                         Denominazione:
                     </label>
                     <div class="col-lg-4">
-                        <input type="text" data-bind="value: NuovoGiro_Denominazione" class="form-control m-input m-input--pill m-input--air" placeholder="Denominazione">
+                        <input type="text" data-bind="value: NuovoGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill m-btn--air btn-info" data-dismiss="modal">
+                <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
                     Annulla
                 </button>
-                <button data-bind="click: NuovoGiro_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-success">
+                <button data-bind="click: NuovoGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
                     Salva
                 </button>
             </div>
@@ -201,8 +201,8 @@
                         Codice:
                     </label>
                     <div class="col-lg-4">
-                        <div class="m-select2 m-select2--air m-select2--pill">
-                            <input type="text" data-bind="value: DettaglioGiro_Codice" class="form-control m-input m-input--pill m-input--air" placeholder="Codice">
+                        <div class="m-select2 m-select2--pill">
+                            <input type="text" data-bind="value: DettaglioGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
                         </div>
                     </div>
                 </div>
@@ -214,16 +214,16 @@
                         Denominazione:
                     </label>
                     <div class="col-lg-4">
-                        <input type="text" data-bind="value: DettaglioGiro_Denominazione" class="form-control m-input m-input--pill m-input--air" placeholder="Denominazione">
+                        <input type="text" data-bind="value: DettaglioGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill m-btn--air btn-info" data-dismiss="modal">
+                <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
                     Annulla
                 </button>
-                <button data-bind="click: SalvaGiro_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-success">
+                <button data-bind="click: SalvaGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
                     Salva
                 </button>
             </div>
@@ -256,7 +256,7 @@
                     Trasportatore:
                 </label>
                 <div class="col-lg-4">
-                    <div class="m-select2 m-select2--air m-select2--pill">
+                    <div class="m-select2 m-select2--pill">
                         <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                             <option></option>
                         </select>
@@ -271,7 +271,7 @@
                     Giro degli allevamenti:
                 </label>
                 <div class="col-lg-4">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--air m-bootstrap-select--pill m_">
+                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--pill m_">
                         <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
                         <select data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Id', optionsText: 'Denominazione', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti" class="form-control m-select2"></select>
                     </div>
@@ -285,10 +285,10 @@
                     <div class="m-portlet__head-tools">
                         <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                             <li class="nav-item m-tabs__item">
-                                <button data-bind="click: AggiungiGiro_Clicked" class="btn m-btn--pill m-btn--air btn-info">+ Aggiungi giro</button>
+                                <button data-bind="click: AggiungiGiro_Clicked" class="btn m-btn--pill btn-info">+ Aggiungi giro</button>
                             </li>
                             <li class="nav-item m-tabs__item">
-                                <button data-bind="click: ModificaGiro_Clicked" class="btn m-btn--pill m-btn--air btn-warning">Modifica giro</button>
+                                <button data-bind="click: ModificaGiro_Clicked" class="btn m-btn--pill btn-warning">Modifica giro</button>
                             </li>
                         </ul>
                     </div>
@@ -299,7 +299,7 @@
             <div class="form-group m-form__group row">
                 <label class="col-lg-4"></label>
                 <label class="col-lg-4 col-form-label">
-                    <button data-bind="click: CaricaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-info btn-block" data-toggle="modal">
+                    <button data-bind="click: CaricaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info btn-block" data-toggle="modal">
                         Carica gli allevamenti in cui si reca il trasportatore
                     </button>
                 </label>

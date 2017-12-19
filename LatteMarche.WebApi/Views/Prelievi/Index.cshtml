@@ -82,7 +82,7 @@
                                 Numero di mungiture
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input m-input--air" placeholder="Inserisci numero mungiture">
+                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input" placeholder="Inserisci numero mungiture">
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 Quantità Kg
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input m-input--air" placeholder="Inserisci quantità">
+                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input" placeholder="Inserisci quantità">
                             </div>
                         </div>
 
@@ -102,7 +102,7 @@
                                 Temperatura C°
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input m-input--air" placeholder="Inseriesci temperatura">
+                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input" placeholder="Inseriesci temperatura">
                             </div>
                         </div>
 
@@ -112,7 +112,7 @@
                                 Trasportatore
                             </label>
                             <div class="col-lg-8">
-                                <div class="m-select2 m-select2--air m-select2--pill">
+                                <div class="m-select2 m-select2--pill">
                                     <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" name="param" data-placeholder="Seleziona trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
@@ -126,7 +126,7 @@
                                 Acquirente
                             </label>
                             <div class="col-lg-8">
-                                <div class="m-select2 m-select2--air m-select2--pill">
+                                <div class="m-select2 m-select2--pill">
                                     <select data-bind="options: Acquirenti, optionsValue: 'Id', value: AcquirenteSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
@@ -140,7 +140,7 @@
                                 Destinatario
                             </label>
                             <div class="col-lg-8">
-                                <div class="m-select2 m-select2--air m-select2--pill">
+                                <div class="m-select2 m-select2--pill">
                                     <select data-bind="options: Destinatari, optionsValue: 'Id', value: DestinatarioSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona destinatario" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
@@ -166,7 +166,7 @@
                                 Seriale laboratorio
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input m-input--air" placeholder="Seleziona seriale laboratorio">
+                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input" placeholder="Seleziona seriale laboratorio">
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@
                                 Scomparto
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: Scomparto" type="number" class="form-control m-input m-input--air" placeholder="Seleziona scomparto">
+                                <input data-bind="value: Scomparto" type="number" class="form-control m-input" placeholder="Seleziona scomparto">
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@
                                 Lotto di consegna
                             </label>
                             <div class="col-lg-8">
-                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input m-input--air" placeholder="Seleziona lotto di consegna">
+                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input" placeholder="Seleziona lotto di consegna">
                             </div>
                         </div>
 
@@ -195,13 +195,13 @@
 
                 <!-- bottoni -->
                 <div class="modal-footer">
-                    @*<button type="button" class="btn m-btn--pill m-btn--air btn-warning" data-dismiss="modal">
+                    @*<button type="button" class="btn m-btn--pill btn-warning" data-dismiss="modal">
                         Elimina
                     </button>*@
-                    <button  data-bind="click: onAnnullaSalvaPrelievo_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-info" data-dismiss="modal">
+                    <button  data-bind="click: onAnnullaSalvaPrelievo_Clicked" type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
                         Annulla
                     </button>
-                    <button data-bind="click: onSalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill m-btn--air btn-success">
+                    <button data-bind="click: onSalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-success">
                         Salva
                     </button>
                 </div>
@@ -240,7 +240,7 @@
                         Ragione sociale:
                     </label>
                     <div class="col-lg-4">
-                        <div class="m-select2 m-select2--air m-select2--pill">
+                        <div class="m-select2 m-select2--pill">
                             <select id="allevatori" class="form-control m-select2 select2-hidden-accessible" data-bind="options: RagioniSociali, optionsValue: 'Id', value: IdRagioneSociale, optionsText: 'RagioneSociale', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona ragione sociale" tabindex="-1" aria-hidden="true">
                                 <option></option>
                             </select>
@@ -271,10 +271,10 @@
                         <div class="m-portlet__head-tools">
                             <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                                 <li class="nav-item m-tabs__item">
-                                    <button data-bind="click: onAnnullaSelezioni_Clicked" class="btn m-btn--pill m-btn--air btn-warning">Annulla selezioni</button>
+                                    <button data-bind="click: onAnnullaSelezioni_Clicked" class="btn m-btn--pill btn-warning">Annulla selezioni</button>
                                 </li>
                                 <li class="nav-item m-tabs__item">
-                                    <button data-bind="click: onCerca_Clicked" class="btn m-btn--pill m-btn--air btn-info">Cerca</button>
+                                    <button data-bind="click: onCerca_Clicked" class="btn m-btn--pill btn-info">Cerca</button>
                                 </li>
                             </ul>
                         </div>
@@ -301,7 +301,7 @@
             <div class="m-portlet__head-tools">
                 <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                     <li class="nav-item m-tabs__item">
-                        <a data-bind="click: onInserisciManualmente_Clicked" class="btn m-btn--pill m-btn--air btn-info" href="#modale-dettaglio-prelievo-latte">Inserisci manualmente un prelievo de latte</a>
+                        <a data-bind="click: onInserisciManualmente_Clicked" class="btn m-btn--pill btn-info" href="#modale-dettaglio-prelievo-latte">Inserisci manualmente un prelievo de latte</a>
                     </li>
                 </ul>
             </div>
