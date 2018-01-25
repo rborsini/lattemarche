@@ -33,6 +33,108 @@ namespace LatteMarche.Application.PrelieviLatte.Services
 
         #region Methods
 
+        public override PrelievoLatteDto Create(PrelievoLatteDto model)
+        {
+            // conversione da dto a entity
+            var dbEntity = ConvertToEntity(model);
+
+            dbEntity.LastOperation = Common.OperationEnum.Added;
+            dbEntity.LastChange = DateTime.Now;
+
+            dbEntity = this.repository.Add(dbEntity);
+            this.uow.SaveChanges();
+
+            return this.ConvertToDto(dbEntity);
+        }
+
+        public override PrelievoLatteDto Update(PrelievoLatteDto model)
+        {
+            var viewEntity = ConvertToEntity(model);
+            var dbEntity = this.repository.GetById(viewEntity.Id);
+
+            var entityToSave = UpdateProperties(viewEntity, dbEntity);
+
+            dbEntity.LastOperation = Common.OperationEnum.Updated;
+            dbEntity.LastChange = DateTime.Now;
+
+            this.repository.Update(entityToSave);
+            this.uow.SaveChanges();
+            return this.ConvertToDto(dbEntity);
+        }
+
+        /// <summary>
+        /// Pull prelievi per sincronizzazione
+        /// </summary>
+        /// <param name="timestamp"></param>
+        /// <returns></returns>
+        public List<PrelievoLatteDto> Pull(DateTime? timestamp)
+        {
+            List<PrelievoLatteDto> result = new List<PrelievoLatteDto>();
+
+            var query = this.repository.FilterBy(p => p.LastOperation != Common.OperationEnum.Synched);
+
+            if (timestamp.HasValue)
+                query = query.Where(p => p.LastChange > timestamp.Value);
+
+            var entities = query.ToList();
+            result = ConvertToDtoList(entities);
+
+            foreach(var entity in entities)
+            {
+                entity.LastOperation = Common.OperationEnum.Synched;
+                this.repository.Update(entity);
+            }
+
+            this.uow.SaveChanges();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Push prelievi per sincronizzazione
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public int Push(List<PrelievoLatteDto> list)
+        {
+            int counter = 0;
+            foreach(PrelievoLatteDto item in list)
+            {
+                try
+                {
+                    var prelievoDb = repository.FindBy(p =>
+                            p.IdAllevamento == item.IdAllevamento &&
+                            p.IdTrasportatore == item.IdTrasportatore &&
+                            p.DataPrelievo == item.DataPrelievo);
+
+
+                    if (prelievoDb != null)
+                    {
+                        // update
+                        prelievoDb = UpdateProperties(ConvertToEntity(item), prelievoDb);
+                        prelievoDb.LastOperation = Common.OperationEnum.Synched;
+
+                        this.repository.Update(prelievoDb);
+                    }
+                    else
+                    {
+                        // insert
+                        prelievoDb = ConvertToEntity(item);
+                        prelievoDb.LastOperation = Common.OperationEnum.Synched;
+
+                        this.repository.Add(prelievoDb);
+                    }
+
+                    this.uow.SaveChanges();
+                    counter++;
+                }
+                catch { }
+
+            }
+
+            return counter;
+        }
+
         /// <summary>
         /// Ricerca prelievi latte
         /// </summary>

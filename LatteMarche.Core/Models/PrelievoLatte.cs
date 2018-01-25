@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LatteMarche.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -52,6 +53,10 @@ namespace LatteMarche.Core.Models
 
         [Column("SERIALE_LAB_ANALISI")]
         public string SerialeLabAnalisi { get; set; }
+
+        public OperationEnum LastOperation { get; set; }
+
+        public DateTime LastChange { get; set; }
 
     }
 }

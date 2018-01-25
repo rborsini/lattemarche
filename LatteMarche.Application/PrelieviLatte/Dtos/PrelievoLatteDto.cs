@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoMapper;
+using LatteMarche.Common;
 using LatteMarche.Core.Models;
 using RB.Date;
 
@@ -25,6 +26,10 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string Scomparto { get; set; }
         public string LottoConsegna { get; set; }
         public string SerialeLabAnalisi { get; set; }
+
+        public OperationEnum LastOperation { get; set; }
+
+        public DateTime LastChange { get; set; }
 
         public string DataPrelievoStr
         {

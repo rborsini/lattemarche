@@ -16,6 +16,21 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// <param name="searchDto"></param>
         /// <returns></returns>
         List<PrelievoLatteDto> Search(PrelieviLatteSearchDto searchDto);
+
+        /// <summary>
+        /// Pull prelievi per sincronizzazione
+        /// </summary>
+        /// <param name="timestamp"></param>
+        /// <returns></returns>
+        List<PrelievoLatteDto> Pull(DateTime? timestamp);
+
+        /// <summary>
+        /// Push prelievi per sincronizzazione
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        int Push(List<PrelievoLatteDto> list);
+
     }
 
 }

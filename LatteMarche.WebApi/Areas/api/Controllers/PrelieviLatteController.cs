@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using RB.Date;
+using System.Collections.Generic;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -111,6 +112,22 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             {
                 return InternalServerError(exc);
             }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IHttpActionResult Pull(string timestamp)
+        {
+            var prelievi = this.prelieviLatteService.Pull(new DateHelper().ConvertToDateTime(timestamp));
+
+            return Ok(prelievi);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IHttpActionResult Push(List<PrelievoLatteDto> prelievi)
+        {
+            return Ok(this.prelieviLatteService.Push(prelievi));
         }
 
         #endregion
