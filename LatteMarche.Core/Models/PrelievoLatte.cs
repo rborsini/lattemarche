@@ -19,7 +19,7 @@ namespace LatteMarche.Core.Models
         public int IdDestinatario { get; set; }
 
         [Column("ID_ACQUIRENTE")]
-        public int IdAquirente { get; set; }
+        public int IdAcquirente { get; set; }
 
         [Column("ID_TRASPORTATORE")]
         public int IdTrasportatore { get; set; }

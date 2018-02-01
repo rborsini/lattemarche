@@ -14,7 +14,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public int Id { get; set; }
         public int IdAllevamento { get; set; }
         public int IdDestinatario { get; set; }
-        public int IdAquirente { get; set; }
+        public int IdAcquirente { get; set; }
         public int IdTrasportatore { get; set; }
         public int IdLabAnalisi { get; set; }
         public DateTime DataPrelievo { get; set; }

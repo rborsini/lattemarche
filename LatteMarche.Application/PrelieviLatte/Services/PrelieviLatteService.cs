@@ -166,7 +166,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         {
             dbEntity.IdDestinatario = viewEntity.IdDestinatario;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
-            dbEntity.IdAquirente = viewEntity.IdAquirente;
+            dbEntity.IdAcquirente = viewEntity.IdAcquirente;
             dbEntity.IdLabAnalisi = viewEntity.IdLabAnalisi;
             dbEntity.DataConsegna = viewEntity.DataConsegna;
             dbEntity.DataPrelievo = viewEntity.DataPrelievo;
