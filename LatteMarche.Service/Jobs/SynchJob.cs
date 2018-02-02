@@ -10,7 +10,7 @@ namespace LatteMarche.Service.Jobs
         #region Properties
 
         #endregion
-
+        //prova
         #region Constructors
 
         public SynchJob()
