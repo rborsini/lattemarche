@@ -7,8 +7,8 @@
     <ProjectGuid>{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Synchronizator</RootNamespace>
-    <AssemblyName>Synchronizator</AssemblyName>
+    <RootNamespace>LatteMarche.Synch</RootNamespace>
+    <AssemblyName>LatteMarche.Synch</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,20 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataType\OperationEnum.cs" />
+    <Compile Include="DataType\OperationTypeEnum.cs" />
+    <Compile Include="DataType\Prelievo.cs" />
+    <Compile Include="DataType\Synch.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="DataOperation\TablePrelieviOperations.cs" />
     <Compile Include="DataOperation\TableSynchOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LatteMarche.Application\LatteMarche.Application.csproj">
-      <Project>{c7eb12a1-580d-4b9c-9dfd-711a962a61e8}</Project>
-      <Name>LatteMarche.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">
-      <Project>{7399bb9d-fa00-400e-b9f8-c78751ce153f}</Project>
-      <Name>LatteMarche.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

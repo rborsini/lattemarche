@@ -1,5 +1,4 @@
-﻿using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Core;
+﻿using LatteMarche.Synch.DataType;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,11 +23,11 @@ namespace LatteMarche.Synch
         public Service(string connectionString, int daysDepth, string baseUrl)
         {
             this.connectionString = connectionString;
-            this.DepthDays = DepthDays;
+            this.daysDepth = daysDepth;
             this.baseUrl = baseUrl;
         }
 
-        public List<PrelievoLatteDto> Pull()
+        public List<Prelievo> Pull()
         {
             TableSynchOperations synchTable = new TableSynchOperations(connectionString);
 
@@ -37,7 +36,7 @@ namespace LatteMarche.Synch
 
             TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
 
-            List<PrelievoLatteDto> prelievi = operation.PullRequest(lastTimeStamp, connectionString);
+            List<Prelievo> prelievi = operation.PullRequest(lastTimeStamp, connectionString);
 
             System.Console.WriteLine($"Prelievi Count {prelievi.Count()}\n");
 
@@ -46,14 +45,14 @@ namespace LatteMarche.Synch
             return prelievi;
         }
 
-        public void Push(List<PrelievoLatteDto> prelievi)
+        public void Push(List<Prelievo> prelievi)
         {
-            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, DepthDays);
+            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
             TableSynchOperations synchTable = new TableSynchOperations(connectionString);
 
             operation.InsertOrUpdate(prelievi, connectionString);
 
-            List<PrelievoLatteDto> prelieviPush = operation.SelectLastPrelievi(connectionString);
+            List<Prelievo> prelieviPush = operation.SelectLastPrelievi(connectionString);
 
             operation.PushRecords(prelieviPush, baseUrl);
 

@@ -1,4 +1,4 @@
-﻿using LatteMarche.Core;
+﻿using LatteMarche.Synch.DataType;
 using System;
 using System.Data.SqlClient;
 using Newtonsoft.Json;

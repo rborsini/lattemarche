@@ -1,5 +1,4 @@
-﻿using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Core;
+﻿using LatteMarche.Synch.DataType;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,13 +25,13 @@ namespace LatteMarche.Synch
             this.DepthDays = DepthDays;
         }
 
-        public void InsertOrUpdate(List<PrelievoLatteDto> prelievi, string connectionString)
+        public void InsertOrUpdate(List<Prelievo> prelievi, string connectionString)
         {
             int add = 0, upd = 0;
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
-            foreach (PrelievoLatteDto prelievo in prelievi)
+            foreach (Prelievo prelievo in prelievi)
             {
                 switch (prelievo.LastOperation)
                 {
@@ -47,21 +46,21 @@ namespace LatteMarche.Synch
 
         }
 
-        public List<PrelievoLatteDto> SelectLastPrelievi(string connectionString)
+        public List<Prelievo> SelectLastPrelievi(string connectionString)
         {
-            List<PrelievoLatteDto> prelieviPush = Select_Prelievi();
+            List<Prelievo> prelieviPush = Select_Prelievi();
             return prelieviPush;
         }
 
         #region Pull
-        public List<PrelievoLatteDto> PullRequest(DateTime lastDate, string baseUrl)
+        public List<Prelievo> PullRequest(DateTime lastDate, string baseUrl)
         {
 
             string page = $"{baseUrl}/Api/PrelieviLatte/pull?timestamp={lastDate.ToString("yyyy-MM-dd")}";
 
             string result = RestRequestGet(page);
 
-            return JsonConvert.DeserializeObject<List<PrelievoLatteDto>>(result);
+            return JsonConvert.DeserializeObject<List<Prelievo>>(result);
 
         }
 
@@ -85,7 +84,7 @@ namespace LatteMarche.Synch
         #endregion
 
         #region Push
-        public void PushRecords(List<PrelievoLatteDto> prelievi, string baseUrl)
+        public void PushRecords(List<Prelievo> prelievi, string baseUrl)
         {
             string page = baseUrl + "/Api/PrelieviLatte/push";
             var range = Convert.ToInt32(ConfigurationManager.AppSettings["range_synch"]);
@@ -134,9 +133,9 @@ namespace LatteMarche.Synch
         /// </summary>
         /// <param name="depthDays">Profondità in gg</param>
         /// <returns></returns>
-        private static List<PrelievoLatteDto> Select_Prelievi()
+        private List<Prelievo> Select_Prelievi()
         {
-            List<PrelievoLatteDto> righe = new List<PrelievoLatteDto>();
+            List<Prelievo> righe = new List<Prelievo>();
 
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -171,7 +170,7 @@ namespace LatteMarche.Synch
             {
                 while (reader.Read())
                 {
-                    var riga = new PrelievoLatteDto();
+                    var riga = new Prelievo();
                     riga.Id = reader.GetInt32(0);
                     riga.DataPrelievo       = reader.IsDBNull(1)  ? (DateTime?) null : reader.GetDateTime(1);
                     riga.DataConsegna       = reader.IsDBNull(2)  ? (DateTime?) null : reader.GetDateTime(2);
@@ -202,7 +201,7 @@ namespace LatteMarche.Synch
         /// </summary>
         /// <param name="prelievo"></param>
         /// <param name="connection"></param>
-        public void UpdateRecord(PrelievoLatteDto prelievo, SqlConnection connection)
+        public void UpdateRecord(Prelievo prelievo, SqlConnection connection)
         {
             string query = "UPDATE [dbo].[PRELIEVO_LATTE]                       " +
                            "SET                                                 " +
@@ -246,7 +245,7 @@ namespace LatteMarche.Synch
         /// </summary>
         /// <param name="prelievo"></param>
         /// <param name="connection"></param>
-        public void InsertRecord(PrelievoLatteDto prelievo, SqlConnection connection)
+        public void InsertRecord(Prelievo prelievo, SqlConnection connection)
         {
 
             string query = "INSERT INTO [dbo].[PRELIEVO_LATTE]" +

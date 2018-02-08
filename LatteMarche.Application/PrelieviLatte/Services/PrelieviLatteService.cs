@@ -1,5 +1,4 @@
 ﻿using System;
-
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Core;
@@ -79,7 +78,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             var entities = query.ToList();
             result = ConvertToDtoList(entities);
 
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 entity.LastOperation = Common.OperationEnum.Synched;
                 this.repository.Update(entity);
@@ -98,7 +97,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         public int Push(List<PrelievoLatteDto> list)
         {
             int counter = 0;
-            foreach(PrelievoLatteDto item in list)
+            foreach (PrelievoLatteDto item in list)
             {
                 try
                 {
