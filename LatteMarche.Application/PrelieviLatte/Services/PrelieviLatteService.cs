@@ -112,6 +112,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     {
                         // update
                         prelievoDb = UpdateProperties(ConvertToEntity(item), prelievoDb);
+                        prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
                         this.repository.Update(prelievoDb);
@@ -120,6 +121,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     {
                         // insert
                         prelievoDb = ConvertToEntity(item);
+                        prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
                         this.repository.Add(prelievoDb);
@@ -128,7 +130,10 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     this.uow.SaveChanges();
                     counter++;
                 }
-                catch { }
+                catch (Exception exc)
+                {
+                    int i = 0;
+                }
 
             }
 
