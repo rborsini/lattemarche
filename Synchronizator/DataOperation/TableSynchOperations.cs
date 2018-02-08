@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 
 
-namespace LatteMarche.Service.Jobs
+namespace LatteMarche.Synch
 {
     class TableSynchOperations
     {
@@ -14,9 +14,6 @@ namespace LatteMarche.Service.Jobs
         {
             this.connectionString = connectionString;
         }
-
-        public object OperationType { get; private set; }
-
 
         /// <summary>
         /// Restituisce la data dell'ultima sincronizzazione
@@ -75,7 +72,8 @@ namespace LatteMarche.Service.Jobs
 
             cmd.ExecuteNonQuery();
         }
-
+        
+        #region SqlDataController
 
         private static SqlParameter DateTimeSqlParameter(string name, DateTime? value)
         {
@@ -85,5 +83,6 @@ namespace LatteMarche.Service.Jobs
             return parameter;
         }
 
+        #endregion //TODO: Crea una classe e usa l'ereditarietà
     }
 }

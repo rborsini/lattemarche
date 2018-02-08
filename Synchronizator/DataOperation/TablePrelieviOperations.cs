@@ -11,30 +11,134 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
 
-namespace LatteMarche.Service.Jobs
+namespace LatteMarche.Synch
 {
     class TablePrelieviOperations
     {
-        private int DepthDays { get { return Convert.ToInt32(ConfigurationManager.AppSettings["days_depth"]); } }
 
         private string connectionString;
+        private int DepthDays;
 
 
-        public TablePrelieviOperations(string connectionString)
+        public TablePrelieviOperations(string connectionString, int DepthDays)
         {
             this.connectionString = connectionString;
+            this.DepthDays = DepthDays;
         }
 
+        public void InsertOrUpdate(List<PrelievoLatteDto> prelievi, string connectionString)
+        {
+            int add = 0, upd = 0;
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            foreach (PrelievoLatteDto prelievo in prelievi)
+            {
+                switch (prelievo.LastOperation)
+                {
+                    case OperationEnum.Added: InsertRecord(prelievo, connection); add++; break;
+                    case OperationEnum.Updated: UpdateRecord(prelievo, connection); upd++; break;
+                    default: break;
+                }
+
+            }
+
+            System.Console.WriteLine($"Prelievi added {add}, updated {upd}\n");
+
+        }
+
+        public List<PrelievoLatteDto> SelectLastPrelievi(string connectionString)
+        {
+            List<PrelievoLatteDto> prelieviPush = Select_Prelievi();
+            return prelieviPush;
+        }
+
+        #region Pull
+        public List<PrelievoLatteDto> PullRequest(DateTime lastDate, string baseUrl)
+        {
+
+            string page = $"{baseUrl}/Api/PrelieviLatte/pull?timestamp={lastDate.ToString("yyyy-MM-dd")}";
+
+            string result = RestRequestGet(page);
+
+            return JsonConvert.DeserializeObject<List<PrelievoLatteDto>>(result);
+
+        }
+
+        protected static string RestRequestGet(string uri)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = WebRequestMethods.Http.Get;
+            request.Accept = "application/json";
+
+            WebResponse response = request.GetResponse();
+            string text;
+
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                text = sr.ReadToEnd();
+            }
+            return text;
+        }
+
+
+        #endregion
+
+        #region Push
+        public void PushRecords(List<PrelievoLatteDto> prelievi, string baseUrl)
+        {
+            string page = baseUrl + "/Api/PrelieviLatte/push";
+            var range = Convert.ToInt32(ConfigurationManager.AppSettings["range_synch"]);
+
+            System.Console.Write("Package ");
+
+
+            for (int i = 0; i <= prelievi.Count + range; i = i + range)
+            {
+                string prelievoJson = JsonConvert.SerializeObject(prelievi.Skip(i).Take(range));
+
+                RestRequestPost(page, prelievoJson);
+
+                System.Console.Write($"{1 + (i / range)}, ");
+
+            }
+            System.Console.Write($"sended\nPrelievi sended n:{prelievi.Count}\n");
+        }
+
+        protected static void RestRequestPost(string uri, string text)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = WebRequestMethods.Http.Post;
+            request.ContentType = "application/json";
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(text);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)request.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+
+        }
+        #endregion
+
+        #region SQL_PrelieviLatte_Operation
         /// <summary>
         /// Ricerca prelievi locali degli ultimi n giorni
         /// </summary>
         /// <param name="depthDays">Profondità in gg</param>
         /// <returns></returns>
-        public List<PrelievoLatteDto> Select_Prelievi()
+        private static List<PrelievoLatteDto> Select_Prelievi()
         {
             List<PrelievoLatteDto> righe = new List<PrelievoLatteDto>();
 
-            SqlConnection connection = new SqlConnection(this.connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
             string query = "SELECT " +
@@ -195,6 +299,35 @@ namespace LatteMarche.Service.Jobs
 
             cmd.ExecuteNonQuery();
         }
+        #endregion
+
+        #region SqlDataController
+
+        private static SqlParameter DecimalSqlParameter(string name, decimal? value)
+        {
+            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.Decimal);
+            parameter.Value = (object)value ?? DBNull.Value;
+
+            return parameter;
+        }
+
+        private static SqlParameter DateTimeSqlParameter(string name, DateTime? value)
+        {
+            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.DateTime);
+            parameter.Value = (object)value ?? DBNull.Value;
+
+            return parameter;
+        }
+
+        private static SqlParameter IntSqlParameter(string name, int? value)
+        {
+            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.Int);
+            parameter.Value = (object)value ?? DBNull.Value;
+
+            return parameter;
+        }
+
+        #endregion //TODO: Crea una classe e usa l'ereditarietà
 
 
     }
