@@ -1,0 +1,89 @@
+﻿using LatteMarche.Core;
+using System;
+using System.Data.SqlClient;
+using Newtonsoft.Json;
+
+
+namespace LatteMarche.Service.Jobs
+{
+    class TableSynchJob
+    {
+        private string connectionString;
+
+        public TableSynchJob(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
+        public object OperationType { get; private set; }
+
+
+        /// <summary>
+        /// Restituisce la data dell'ultima sincronizzazione
+        /// </summary>
+        /// <returns></returns>
+        public DateTime GetDateLastSynch()
+        {
+            DateTime result = DateTime.Today.AddDays(-30);
+
+            SqlConnection connection = new SqlConnection(this.connectionString);
+            connection.Open();
+
+            string query = "SELECT " +
+                                "ID, " +
+                                "TIMESTAMP, " +
+                                "NOTE, " +
+                                "TIPO_OPERAZIONE " +
+                            "FROM [dbo].[SYNCH] " +
+                            "WHERE ID = (SELECT MAX(ID) FROM [dbo].[SYNCH])";
+
+            SqlCommand selectCommand = new SqlCommand(query, connection);
+
+            SqlDataReader reader = selectCommand.ExecuteReader();
+
+            if (reader.HasRows)
+                while (reader.Read()) result = reader.GetDateTime(1);
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Inserisce nella tabella Synch la data dell'ultima sincronizzazione
+        /// </summary>
+        public void UpdateSyncTable(OperationTypeEnum OperationType)
+        {
+
+            SqlConnection connection = new SqlConnection(this.connectionString);
+            connection.Open();
+
+            string query = "INSERT INTO [dbo].[SYNCH]" +
+                               "([TIMESTAMP], " +
+                                "[NOTE], " +
+                                "[TIPO_OPERAZIONE]) " +
+                           "VALUES " +
+                                "(@DataOdierna, " +
+                                "@Note, " +
+                                "@TipoOperazione)";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.Add(DateTimeSqlParameter("@DataOdierna", DateTime.Now));
+            cmd.Parameters.Add(new SqlParameter("@Note", "nothing"));
+            cmd.Parameters.Add(new SqlParameter("@TipoOperazione", OperationType.ToString()));
+
+            System.Console.WriteLine($"Synch Table updated with {OperationType.ToString()} operation\n");
+
+            cmd.ExecuteNonQuery();
+        }
+
+
+        private static SqlParameter DateTimeSqlParameter(string name, DateTime? value)
+        {
+            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.DateTime);
+            parameter.Value = (object)value ?? DBNull.Value;
+
+            return parameter;
+        }
+
+    }
+}

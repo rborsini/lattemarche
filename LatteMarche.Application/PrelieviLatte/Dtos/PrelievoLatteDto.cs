@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using LatteMarche.Common;
+using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using RB.Date;
 

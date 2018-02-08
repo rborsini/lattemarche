@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Core
 {
-    public enum OperationEnum
+    public enum OperationTypeEnum
     {
-        Added   = 1,
-        Updated = 2,
-        Removed = 3,
-        Synched = 4
+        Push,
+        Pull
     }
 }
