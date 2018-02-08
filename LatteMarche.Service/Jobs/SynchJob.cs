@@ -1,6 +1,5 @@
 ﻿using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Core;
-using LatteMarche.Service.DataOperation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -37,7 +36,7 @@ namespace LatteMarche.Service.Jobs
             // get last timestamp tabella synch
             string connectionString = ConfigurationManager.ConnectionStrings["DbLatteMarcheContext"].ConnectionString;
 
-            TableSynchJob synchTable = new TableSynchJob(connectionString);
+            TableSynchOperations synchTable = new TableSynchOperations(connectionString);
 
             DateTime lastTimeStamp = synchTable.GetDateLastSynch();
             System.Console.WriteLine($"Last Timestamp {lastTimeStamp.ToString()}\n");
@@ -107,7 +106,7 @@ namespace LatteMarche.Service.Jobs
 
         private static List<PrelievoLatteDto> SelectLastPrelievi(string connectionString)
         {
-            Select select = new Select (connectionString);
+            TablePrelieviOperations select = new TablePrelieviOperations (connectionString);
             List<PrelievoLatteDto> prelieviPush = select.Select_Prelievi();
             return prelieviPush;
         }
@@ -115,18 +114,17 @@ namespace LatteMarche.Service.Jobs
 
         private static void InsertOrUpdate(List<PrelievoLatteDto> prelievi, string connectionString)
         {
-
+            int add = 0, upd = 0;
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-
-            int add = 0, upd = 0;
+            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString);
 
             foreach (PrelievoLatteDto prelievo in prelievi)
             {
                 switch (prelievo.LastOperation)
                 {
-                    case OperationEnum.Added: InsertRecord(prelievo, connection); add++; break;
-                    case OperationEnum.Updated: UpdateRecord(prelievo, connection); upd++; break;
+                    case OperationEnum.Added: operation.InsertRecord(prelievo, connection); add++; break;
+                    case OperationEnum.Updated: operation.UpdateRecord(prelievo, connection); upd++; break;
                     default: break;
                 }
 
@@ -136,49 +134,6 @@ namespace LatteMarche.Service.Jobs
 
         }
 
-        /// <summary>
-        /// Aggiorna il record in base all'ID del trasportatore, all'ID dell'allevamento e alla data del prelievo
-        /// </summary>
-        /// <param name="prelievo"></param>
-        /// <param name="connection"></param>
-        private static void UpdateRecord(PrelievoLatteDto prelievo, SqlConnection connection)
-        {
-            string query = "UPDATE [dbo].[PRELIEVO_LATTE]                       " +
-                           "SET                                                 " +
-                                "DATA_CONSEGNA          =  @DataConsegna,       " +
-                                "QUANTITA               =  @Quantita,           " +
-                                "TEMPERATURA            =  @Temperatura,        " +
-                                "DATA_ULTIMA_MUNGITURA  =  @DataUltimaMungitura," +
-                                "SERIALE_LAB_ANALISI    =  @SerialeLab,        " +
-                                "ID_DESTINATARIO        =  @IdDestinatario,     " +
-                                "ID_ACQUIRENTE          =  @IdAcquirente,       " +
-                                "ID_LABANALISI          =  @IdLabAnalisi,       " +
-                                "NUMERO_MUNGITURE       =  @NumeroMungiture,    " +
-                                "SCOMPARTO              =  @Scomparto,          " +
-                                "LOTTO_CONSEGNA         =  @LottoConsegna       " +
-                            "WHERE                                              " +
-                                "ID_TRASPORTATORE       =  @IdTrasportatore     " + "AND " +
-                                "ID_ALLEVAMENTO         =  @IdAllevamento       " + "AND " +
-                                "DATA_PRELIEVO          =  @DataPrelievo        ";
-
-            SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataPrelievo", prelievo.DataPrelievo));
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataConsegna", prelievo.DataConsegna));
-            cmd.Parameters.Add(DecimalSqlParameter("@Quantita", prelievo.Quantita));
-            cmd.Parameters.Add(DecimalSqlParameter("@Temperatura", prelievo.Temperatura));
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataUltimaMungitura", prelievo.DataUltimaMungitura));
-            cmd.Parameters.Add(new SqlParameter("@SerialeLab", prelievo.SerialeLabAnalisi));
-            cmd.Parameters.Add(IntSqlParameter("@IdAllevamento", prelievo.IdAllevamento));
-            cmd.Parameters.Add(IntSqlParameter("@IdDestinatario", prelievo.IdDestinatario));
-            cmd.Parameters.Add(IntSqlParameter("@IdAcquirente", prelievo.IdAcquirente));
-            cmd.Parameters.Add(IntSqlParameter("@IdLabAnalisi", prelievo.IdLabAnalisi));
-            cmd.Parameters.Add(IntSqlParameter("@IdTrasportatore", prelievo.IdTrasportatore));
-            cmd.Parameters.Add(IntSqlParameter("@NumeroMungiture", prelievo.NumeroMungiture));
-            cmd.Parameters.Add(new SqlParameter("@Scomparto", prelievo.Scomparto));
-            cmd.Parameters.Add(new SqlParameter("@LottoConsegna", prelievo.LottoConsegna));
-            cmd.ExecuteNonQuery();
-
-        }
 
         private static List<PrelievoLatteDto> PullRequest(DateTime lastDate)
         {
@@ -227,90 +182,6 @@ namespace LatteMarche.Service.Jobs
                 var result = streamReader.ReadToEnd();
             }
 
-        }
-
-        /// <summary>
-        /// Inserisce un nuovo Record nella tabella prelievi
-        /// </summary>
-        /// <param name="prelievo"></param>
-        /// <param name="connection"></param>
-        private static void InsertRecord(PrelievoLatteDto prelievo, SqlConnection connection)
-        {
-
-            string query = "INSERT INTO [dbo].[PRELIEVO_LATTE]" +
-                               "([DATA_PRELIEVO], " +
-                                "[DATA_CONSEGNA], " +
-                                "[QUANTITA], " +
-                                "[TEMPERATURA], " +
-                                "[DATA_ULTIMA_MUNGITURA], " +
-                                "[SERIALE_LAB_ANALISI], " +
-                                "[ID_ALLEVAMENTO], " +
-                                "[ID_DESTINATARIO], " +
-                                "[ID_ACQUIRENTE], " +
-                                "[ID_LABANALISI], " +
-                                "[ID_TRASPORTATORE], " +
-                                "[NUMERO_MUNGITURE], " +
-                                "[SCOMPARTO], " +
-                                "[LOTTO_CONSEGNA]) " +
-                          "VALUES" +
-                                "(@DataPrelievo, " +
-                                " @DataConsegna, " +
-                                " @Quantita, " +
-                                " @Temperatura, " +
-                                " @DataUltimaMungitura, " +
-                                " @SerialeLab, " +
-                                " @IdAllevamento, " +
-                                " @IdDestinatario, " +
-                                " @IdAcquirente, " +
-                                " @IdLabAnalisi, " +
-                                " @IdTrasportatore, " +
-                                " @NumeroMungiture, " +
-                                " @Scomparto, " +
-                                " @LottoConsegna);";
-
-            SqlCommand cmd = new SqlCommand(query, connection);
-
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataPrelievo", prelievo.DataPrelievo));
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataConsegna", prelievo.DataConsegna));
-            cmd.Parameters.Add(DecimalSqlParameter("@Quantita", prelievo.Quantita));
-            cmd.Parameters.Add(DecimalSqlParameter("@Temperatura", prelievo.Temperatura));
-            cmd.Parameters.Add(DateTimeSqlParameter("@DataUltimaMungitura", prelievo.DataUltimaMungitura));
-            cmd.Parameters.Add(new SqlParameter("@SerialeLab", prelievo.SerialeLabAnalisi));
-            cmd.Parameters.Add(IntSqlParameter("@IdAllevamento", prelievo.IdAllevamento));
-            cmd.Parameters.Add(IntSqlParameter("@IdDestinatario", prelievo.IdDestinatario));
-            cmd.Parameters.Add(IntSqlParameter("@IdAcquirente", prelievo.IdAcquirente));
-            cmd.Parameters.Add(IntSqlParameter("@IdLabAnalisi", prelievo.IdLabAnalisi));
-            cmd.Parameters.Add(IntSqlParameter("@IdTrasportatore", prelievo.IdTrasportatore));
-            cmd.Parameters.Add(IntSqlParameter("@NumeroMungiture", prelievo.NumeroMungiture));
-            cmd.Parameters.Add(new SqlParameter("@Scomparto", prelievo.Scomparto));
-            cmd.Parameters.Add(new SqlParameter("@LottoConsegna", prelievo.LottoConsegna));
-
-            cmd.ExecuteNonQuery();
-        }
-
-
-        private static SqlParameter DecimalSqlParameter(string name, decimal? value)
-        {
-            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.Decimal);
-            parameter.Value = (object)value ?? DBNull.Value;
-
-            return parameter;
-        }
-
-        private static SqlParameter DateTimeSqlParameter(string name, DateTime? value)
-        {
-            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.DateTime);
-            parameter.Value = (object)value ?? DBNull.Value;
-
-            return parameter;
-        }
-
-        private static SqlParameter IntSqlParameter(string name, int? value)
-        {
-            SqlParameter parameter = new SqlParameter(name, System.Data.SqlDbType.Int);
-            parameter.Value = (object)value ?? DBNull.Value;
-
-            return parameter;
         }
 
         #endregion

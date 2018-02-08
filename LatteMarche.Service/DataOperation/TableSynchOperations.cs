@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 namespace LatteMarche.Service.Jobs
 {
-    class TableSynchJob
+    class TableSynchOperations
     {
         private string connectionString;
 
-        public TableSynchJob(string connectionString)
+        public TableSynchOperations(string connectionString)
         {
             this.connectionString = connectionString;
         }
