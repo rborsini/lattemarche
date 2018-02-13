@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Configuration;
 using System.Data.SqlClient;
+using Common.Logging;
 
 namespace LatteMarche.Synch
 {
@@ -18,42 +19,40 @@ namespace LatteMarche.Synch
         private string connectionString;
         private int daysDepth;
         private string baseUrl;
+        private ILog log;
 
-
-        public Service(string connectionString, int daysDepth, string baseUrl)
+        public Service(string connectionString, int daysDepth, string baseUrl, ILog log)
         {
             this.connectionString = connectionString;
             this.daysDepth = daysDepth;
             this.baseUrl = baseUrl;
+            this.log = log;
         }
 
+        /// <summary>
+        /// Effettua il Pull dei prelievi dal server Azure al Dabase Locale in base all'ultima data di sincronizzazione. Li inserisce nel database locale ed aggiorna la tabella Synch.
+        /// </summary>
         public void Pull()
         {
-            TableSynchOperations synchTable = new TableSynchOperations(connectionString);
-            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
+            TableSynchOperations synchTable = new TableSynchOperations(connectionString, log);
+            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth, log);
 
             DateTime lastTimeStamp = synchTable.GetDateLastSynch();
-            System.Console.WriteLine($"Last Timestamp {lastTimeStamp.ToString()}\n");     
-
             List<Prelievo> prelievi = operation.PullRequest(lastTimeStamp, connectionString);
-
-            System.Console.WriteLine($"Prelievi Count {prelievi.Count()}\n");
-
             operation.InsertOrUpdate(prelievi, connectionString);
 
-            synchTable.UpdateSyncTable(OperationTypeEnum.Pull);
+            synchTable.UpdateSynchTable(OperationTypeEnum.Pull);
         }
 
         public void Push()
         {
-            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
-            TableSynchOperations synchTable = new TableSynchOperations(connectionString);
+            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth, log);
+            TableSynchOperations synchTable = new TableSynchOperations(connectionString, log);
 
             List<Prelievo> prelieviPush = operation.SelectLastPrelievi(connectionString);
-
             operation.PushRecords(prelieviPush, baseUrl);
 
-            synchTable.UpdateSyncTable(OperationTypeEnum.Push);
+            synchTable.UpdateSynchTable(OperationTypeEnum.Push);
         }
     }
 }

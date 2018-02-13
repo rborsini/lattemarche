@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
+using Common.Logging;
 
 
 namespace LatteMarche.Synch
@@ -9,10 +10,13 @@ namespace LatteMarche.Synch
     class TableSynchOperations
     {
         private string connectionString;
+        private ILog log;
 
-        public TableSynchOperations(string connectionString)
+        public TableSynchOperations(string connectionString, ILog log)
         {
             this.connectionString = connectionString;
+            this.log = log;
+
         }
 
         /// <summary>
@@ -35,11 +39,12 @@ namespace LatteMarche.Synch
                             "WHERE ID = (SELECT MAX(ID) FROM [dbo].[SYNCH])";
 
             SqlCommand selectCommand = new SqlCommand(query, connection);
-
             SqlDataReader reader = selectCommand.ExecuteReader();
 
             if (reader.HasRows)
                 while (reader.Read()) result = reader.GetDateTime(1);
+
+            this.log.Info($"Last Timestamp {result.ToString()}\n");
 
             return result;
         }
@@ -48,7 +53,7 @@ namespace LatteMarche.Synch
         /// <summary>
         /// Inserisce nella tabella Synch la data dell'ultima sincronizzazione
         /// </summary>
-        public void UpdateSyncTable(OperationTypeEnum OperationType)
+        public void UpdateSynchTable(OperationTypeEnum OperationType)
         {
 
             SqlConnection connection = new SqlConnection(this.connectionString);
@@ -68,7 +73,7 @@ namespace LatteMarche.Synch
             cmd.Parameters.Add(new SqlParameter("@Note", "nothing"));
             cmd.Parameters.Add(new SqlParameter("@TipoOperazione", OperationType.ToString()));
 
-            System.Console.WriteLine($"Synch Table updated with {OperationType.ToString()} operation\n");
+            this.log.Info($"Synch Table updated with {OperationType.ToString()} operation\n");
 
             cmd.ExecuteNonQuery();
         }

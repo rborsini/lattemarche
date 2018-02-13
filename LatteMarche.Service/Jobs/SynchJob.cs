@@ -38,7 +38,7 @@ namespace LatteMarche.Service.Jobs
         {
             this.log.Debug("Debug synch job");
             this.log.Info("Info synch job");
-            Synch.Service synch = new Synch.Service(connectionString, DepthDays, baseUrl);
+            Synch.Service synch = new Synch.Service(connectionString, DepthDays, baseUrl, this.log);
             if (pullBool) synch.Pull();
             if (pushBool) synch.Push();
         }

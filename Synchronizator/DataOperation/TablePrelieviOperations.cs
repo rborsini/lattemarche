@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
+using Common.Logging;
 
 namespace LatteMarche.Synch
 {
@@ -18,11 +19,13 @@ namespace LatteMarche.Synch
         private string connectionString;
         private int DepthDays;
 
+        private ILog log;
 
-        public TablePrelieviOperations(string connectionString, int DepthDays)
+        public TablePrelieviOperations(string connectionString, int DepthDays, ILog log)
         {
             this.connectionString = connectionString;
             this.DepthDays = DepthDays;
+            this.log = log;
         }
 
         public void InsertOrUpdate(List<Prelievo> prelievi, string connectionString)
@@ -42,7 +45,7 @@ namespace LatteMarche.Synch
 
             }
 
-            System.Console.WriteLine($"Prelievi added {add}, updated {upd}\n");
+            this.log.Info($"Prelievi added {add}, updated {upd}\n");
 
         }
 
@@ -53,17 +56,30 @@ namespace LatteMarche.Synch
         }
 
         #region Pull
+
+        /// <summary>
+        /// Restituisce la lista di Prelievi letti dal Server
+        /// </summary>
+        /// <param name="lastDate"></param>
+        /// <param name="baseUrl"></param>
+        /// <returns></returns>
         public List<Prelievo> PullRequest(DateTime lastDate, string baseUrl)
         {
-
             string page = $"{baseUrl}/Api/PrelieviLatte/pull?timestamp={lastDate.ToString("yyyy-MM-dd")}";
-
             string result = RestRequestGet(page);
+            
+            List<Prelievo> prelievi = JsonConvert.DeserializeObject<List<Prelievo>>(result);
 
-            return JsonConvert.DeserializeObject<List<Prelievo>>(result);
+            this.log.Info($"Prelievi Count {prelievi.Count()}\n");
 
+            return prelievi;
         }
 
+        /// <summary>
+        /// Richiesta di GET per i prelievi tramite archiettura REST
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
         protected static string RestRequestGet(string uri)
         {
             var request = (HttpWebRequest)WebRequest.Create(uri);
@@ -84,26 +100,32 @@ namespace LatteMarche.Synch
         #endregion
 
         #region Push
+
+        /// <summary>
+        /// Invio Prelievi
+        /// </summary>
+        /// <param name="prelievi"></param>
+        /// <param name="baseUrl"></param>
         public void PushRecords(List<Prelievo> prelievi, string baseUrl)
         {
             string page = baseUrl + "/Api/PrelieviLatte/push";
             var range = Convert.ToInt32(ConfigurationManager.AppSettings["range_synch"]);
-
-            System.Console.Write("Package ");
-
 
             for (int i = 0; i <= prelievi.Count + range; i = i + range)
             {
                 string prelievoJson = JsonConvert.SerializeObject(prelievi.Skip(i).Take(range));
 
                 RestRequestPost(page, prelievoJson);
-
-                System.Console.Write($"{1 + (i / range)}, ");
-
             }
-            System.Console.Write($"sended\nPrelievi sended n:{prelievi.Count}\n");
+            this.log.Info ($"Prelievi sended n:{prelievi.Count}");
+
         }
 
+        /// <summary>
+        /// Richiesta di Post per i prelievi tramite architettura Rest 
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="text"></param>
         protected static void RestRequestPost(string uri, string text)
         {
             var request = (HttpWebRequest)WebRequest.Create(uri);
@@ -191,7 +213,7 @@ namespace LatteMarche.Synch
                 }
             }
 
-            System.Console.WriteLine($"Selected {righe.Count} prelievi");
+            this.log.Info($"Selected {righe.Count} prelievi");
 
             return righe;
         }

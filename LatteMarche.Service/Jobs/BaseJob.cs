@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using Common.Logging;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +14,7 @@ namespace LatteMarche.Service.Jobs
     {
         #region Fields
 
-        protected log4net.ILog log;
+        protected ILog log;
         protected log4net.ILog serviceLog = log4net.LogManager.GetLogger("Service");
         private Stopwatch sw;
 
