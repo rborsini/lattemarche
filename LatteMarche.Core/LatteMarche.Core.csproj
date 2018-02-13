@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Synch.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="Models\Allevamento.cs" />
     <Compile Include="Models\Destinatario.cs" />

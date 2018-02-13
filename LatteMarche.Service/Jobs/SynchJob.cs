@@ -1,4 +1,4 @@
-﻿using LatteMarche.Application.PrelieviLatte.Dtos;
+﻿using LatteMarche.Synch.DataType;
 using LatteMarche.Synch;
 using LatteMarche.Core;
 using Newtonsoft.Json;
@@ -20,6 +20,8 @@ namespace LatteMarche.Service.Jobs
         private int DepthDays { get { return Convert.ToInt32(ConfigurationManager.AppSettings["days_depth"]); } }
         private string connectionString = ConfigurationManager.ConnectionStrings["DbLatteMarcheContext"].ConnectionString;
         private string baseUrl = ConfigurationManager.AppSettings["ClientSettingsProvider.ServiceUri"];
+        private bool pullBool = Convert.ToBoolean(ConfigurationManager.AppSettings["Pull"]);
+        private bool pushBool = Convert.ToBoolean(ConfigurationManager.AppSettings["Push"]);
         #endregion
 
         #region Constructors
@@ -32,21 +34,13 @@ namespace LatteMarche.Service.Jobs
 
         #region Methods
 
-        public void synchronizator()
-        {
-            LatteMarche.Synch.Service synch = new Synch.Service(connectionString, DepthDays, baseUrl);
-            List<PrelievoLatteDto> prelievi = synch.Pull();
-            synch.Push(prelievi);
-        }
-
         public override void Execute()
         {
             this.log.Debug("Debug synch job");
             this.log.Info("Info synch job");
-
-            System.Threading.Thread.Sleep(6000);
-
-
+            Synch.Service synch = new Synch.Service(connectionString, DepthDays, baseUrl);
+            if (pullBool) synch.Pull();
+            if (pushBool) synch.Push();
         }
 
 

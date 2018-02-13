@@ -27,30 +27,27 @@ namespace LatteMarche.Synch
             this.baseUrl = baseUrl;
         }
 
-        public List<Prelievo> Pull()
+        public void Pull()
         {
             TableSynchOperations synchTable = new TableSynchOperations(connectionString);
+            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
 
             DateTime lastTimeStamp = synchTable.GetDateLastSynch();
-            System.Console.WriteLine($"Last Timestamp {lastTimeStamp.ToString()}\n");
-
-            TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
+            System.Console.WriteLine($"Last Timestamp {lastTimeStamp.ToString()}\n");     
 
             List<Prelievo> prelievi = operation.PullRequest(lastTimeStamp, connectionString);
 
             System.Console.WriteLine($"Prelievi Count {prelievi.Count()}\n");
 
-            synchTable.UpdateSyncTable(OperationTypeEnum.Pull);
+            operation.InsertOrUpdate(prelievi, connectionString);
 
-            return prelievi;
+            synchTable.UpdateSyncTable(OperationTypeEnum.Pull);
         }
 
-        public void Push(List<Prelievo> prelievi)
+        public void Push()
         {
             TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth);
             TableSynchOperations synchTable = new TableSynchOperations(connectionString);
-
-            operation.InsertOrUpdate(prelievi, connectionString);
 
             List<Prelievo> prelieviPush = operation.SelectLastPrelievi(connectionString);
 
