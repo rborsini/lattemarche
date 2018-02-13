@@ -46,7 +46,7 @@ namespace LatteMarche.Service.Jobs
         public virtual void Execute(IJobExecutionContext context)
         {
             LoadParameters(context.JobDetail.JobDataMap);
-            log = log4net.LogManager.GetLogger(this.Logger);
+            log = LogManager.GetLogger(this.Logger);
 
             serviceLog.Debug(String.Format("{0} job avviato...", this.Name));
             log.Debug(String.Format("{0} job avviato...", this.Name));
