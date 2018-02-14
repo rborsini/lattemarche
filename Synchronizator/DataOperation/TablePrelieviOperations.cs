@@ -116,6 +116,9 @@ namespace LatteMarche.Synch
                 string prelievoJson = JsonConvert.SerializeObject(prelievi.Skip(i).Take(range));
 
                 RestRequestPost(page, prelievoJson);
+
+                System.Console.Write($"{1 + (i / range)}, ");
+
             }
             this.log.Info ($"Prelievi sended n:{prelievi.Count}");
 

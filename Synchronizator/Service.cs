@@ -49,8 +49,8 @@ namespace LatteMarche.Synch
             TablePrelieviOperations operation = new TablePrelieviOperations(connectionString, daysDepth, log);
             TableSynchOperations synchTable = new TableSynchOperations(connectionString, log);
 
-            List<Prelievo> prelieviPush = operation.SelectLastPrelievi(connectionString);
-            operation.PushRecords(prelieviPush, baseUrl);
+            List<Prelievo> prelievi = operation.SelectLastPrelievi(connectionString);
+            operation.PushRecords(prelievi, baseUrl);
 
             synchTable.UpdateSynchTable(OperationTypeEnum.Push);
         }
