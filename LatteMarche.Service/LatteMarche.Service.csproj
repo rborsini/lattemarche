@@ -71,6 +71,7 @@
     <Compile Include="JobGroupSection.cs" />
     <Compile Include="Jobs\BaseJob.cs" />
     <Compile Include="Jobs\ClearTempFolderJob.cs" />
+    <Compile Include="Jobs\SitraJob.cs" />
     <Compile Include="Jobs\SynchJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
