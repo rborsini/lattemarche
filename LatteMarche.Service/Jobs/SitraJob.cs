@@ -28,6 +28,11 @@ namespace LatteMarche.Service.Jobs
         }
 
 
+        public void SelectPrelieviSitra()
+        {
+
+        }
+
         #endregion
     }
 }
