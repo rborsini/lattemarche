@@ -13,15 +13,15 @@ using Common.Logging;
 
 namespace LatteMarche.Synch
 {
-    public class Service
+    public class SynchService
     {
 
         private string connectionString;
         private int daysDepth;
         private string baseUrl;
-        private ILog log;
+        private TextWriter log;
 
-        public Service(string connectionString, int daysDepth, string baseUrl, ILog log)
+        public SynchService(string connectionString, int daysDepth, string baseUrl, TextWriter log)
         {
             this.connectionString = connectionString;
             this.daysDepth = daysDepth;

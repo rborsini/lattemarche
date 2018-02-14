@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.WebApi", "LatteMarche.WebApi\LatteMarche.WebApi.csproj", "{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}"
 EndProject
@@ -17,6 +17,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Service", "LatteMarche.Service\LatteMarche.Service.csproj", "{CFF520F9-0731-425B-85D4-69CA31D29152}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Synch", "Synchronizator\LatteMarche.Synch.csproj", "{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebJobs", "WebJobs", "{36E8737B-DD05-49A0-9FD9-1FBFE68DEB07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.SynchJob", "LatteMarche.SynchJob\LatteMarche.SynchJob.csproj", "{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,9 +60,16 @@ Global
 		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0} = {36E8737B-DD05-49A0-9FD9-1FBFE68DEB07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6A4AEC1-A4A5-44F5-BC32-F95A5ECA2F4F}

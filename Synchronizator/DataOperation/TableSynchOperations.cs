@@ -3,16 +3,16 @@ using System;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
 using Common.Logging;
-
+using System.IO;
 
 namespace LatteMarche.Synch
 {
     class TableSynchOperations
     {
         private string connectionString;
-        private ILog log;
+        private TextWriter log;
 
-        public TableSynchOperations(string connectionString, ILog log)
+        public TableSynchOperations(string connectionString, TextWriter log)
         {
             this.connectionString = connectionString;
             this.log = log;
@@ -44,7 +44,7 @@ namespace LatteMarche.Synch
             if (reader.HasRows)
                 while (reader.Read()) result = reader.GetDateTime(1);
 
-            this.log.Info($"Last Timestamp {result.ToString()}\n");
+            this.log.WriteLine($"Last Timestamp {result.ToString()}\n");
 
             return result;
         }
@@ -73,7 +73,7 @@ namespace LatteMarche.Synch
             cmd.Parameters.Add(new SqlParameter("@Note", "nothing"));
             cmd.Parameters.Add(new SqlParameter("@TipoOperazione", OperationType.ToString()));
 
-            this.log.Info($"Synch Table updated with {OperationType.ToString()} operation\n");
+            this.log.WriteLine($"Synch Table updated with {OperationType.ToString()} operation\n");
 
             cmd.ExecuteNonQuery();
         }

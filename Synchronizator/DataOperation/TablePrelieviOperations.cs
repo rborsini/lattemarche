@@ -19,9 +19,9 @@ namespace LatteMarche.Synch
         private string connectionString;
         private int DepthDays;
 
-        private ILog log;
+        private TextWriter log;
 
-        public TablePrelieviOperations(string connectionString, int DepthDays, ILog log)
+        public TablePrelieviOperations(string connectionString, int DepthDays, TextWriter log)
         {
             this.connectionString = connectionString;
             this.DepthDays = DepthDays;
@@ -45,7 +45,7 @@ namespace LatteMarche.Synch
 
             }
 
-            this.log.Info($"Prelievi added {add}, updated {upd}\n");
+            this.log.WriteLine($"Prelievi added {add}, updated {upd}\n");
 
         }
 
@@ -70,7 +70,7 @@ namespace LatteMarche.Synch
             
             List<Prelievo> prelievi = JsonConvert.DeserializeObject<List<Prelievo>>(result);
 
-            this.log.Info($"Prelievi Count {prelievi.Count()}\n");
+            this.log.WriteLine($"Prelievi Count {prelievi.Count()}\n");
 
             return prelievi;
         }
@@ -120,7 +120,7 @@ namespace LatteMarche.Synch
                 System.Console.Write($"{1 + (i / range)}, ");
 
             }
-            this.log.Info ($"Prelievi sended n:{prelievi.Count}");
+            this.log.WriteLine ($"Prelievi sended n:{prelievi.Count}");
 
         }
 
@@ -216,7 +216,7 @@ namespace LatteMarche.Synch
                 }
             }
 
-            this.log.Info($"Selected {righe.Count} prelievi");
+            this.log.WriteLine($"Selected {righe.Count} prelievi");
 
             return righe;
         }
