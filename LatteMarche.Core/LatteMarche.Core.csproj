@@ -51,6 +51,7 @@
     <Compile Include="Models\LaboratorioAnalisi.cs" />
     <Compile Include="Models\PrelievoLatte.cs" />
     <Compile Include="Models\Aquirente.cs" />
+    <Compile Include="Models\Synch.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />
     <Compile Include="Models\V_Allevatore.cs" />
     <Compile Include="Models\TipoProfilo.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="IEntityDto.cs" />
     <Compile Include="IEntityReadOnlyService.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="SynchTypeEnum.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -22,14 +22,14 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// </summary>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        List<PrelievoLatteDto> Pull(DateTime? timestamp);
+        List<PrelievoLatte> Pull(DateTime timestamp);
 
         /// <summary>
         /// Push prelievi per sincronizzazione
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        int Push(List<PrelievoLatteDto> list);
+        int Push(List<PrelievoLatte> list);
 
     }
 

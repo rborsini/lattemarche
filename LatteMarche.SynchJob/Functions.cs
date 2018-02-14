@@ -1,4 +1,5 @@
-﻿using LatteMarche.Synch;
+﻿using Autofac;
+using LatteMarche.Application.Synch.Interfaces;
 using Microsoft.Azure.WebJobs;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace LatteMarche.SynchJob
 {
     public class Functions
     {
-        private static int DepthDays { get { return Convert.ToInt32(ConfigurationManager.AppSettings["days_depth"]); } }
-        private static string connectionString = ConfigurationManager.ConnectionStrings["OldDbContext"].ConnectionString;
-        private static string baseUrl = ConfigurationManager.AppSettings["ClientSettingsProvider.ServiceUri"];
+        //private static int DepthDays { get { return Convert.ToInt32(ConfigurationManager.AppSettings["days_depth"]); } }
+        //private static string connectionString = ConfigurationManager.ConnectionStrings["OldDbContext"].ConnectionString;
+        //private static string baseUrl = ConfigurationManager.AppSettings["ClientSettingsProvider.ServiceUri"];
 
         /// <summary>
         /// Sincronizzazione nuovo e vecchio server
@@ -30,11 +31,13 @@ namespace LatteMarche.SynchJob
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            SynchService synchService = new SynchService(connectionString, DepthDays, baseUrl, log);
+            using (ILifetimeScope scope = AutoFacConfig.Container.BeginLifetimeScope())
+            {
+                ISynchService service = scope.Resolve<ISynchService>();
 
-            //synchService.Pull();
+                service.Push();
 
-            synchService.Push();
+            }
 
             sw.Stop();
 

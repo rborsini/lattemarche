@@ -66,20 +66,19 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         /// </summary>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        public List<PrelievoLatteDto> Pull(DateTime? timestamp)
+        public List<PrelievoLatte> Pull(DateTime timestamp)
         {
-            List<PrelievoLatteDto> result = new List<PrelievoLatteDto>();
+            List<PrelievoLatte> result = new List<PrelievoLatte>();
 
             var query = this.repository.FilterBy(p => p.LastOperation != Common.OperationEnum.Synched);
 
-            if (timestamp.HasValue)
-                query = query.Where(p => p.LastChange > timestamp.Value);
+            query = query.Where(p => p.LastChange > timestamp);
 
             var entities = query.ToList();
-            result = ConvertToDtoList(entities);
-
+    
             foreach (var entity in entities)
             {
+                result.Add(entity.Clone() as PrelievoLatte);
                 entity.LastOperation = Common.OperationEnum.Synched;
                 this.repository.Update(entity);
             }
@@ -94,10 +93,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public int Push(List<PrelievoLatteDto> list)
+        public int Push(List<PrelievoLatte> list)
         {
             int counter = 0;
-            foreach (PrelievoLatteDto item in list)
+            int tot = list.Count;
+            foreach (PrelievoLatte item in list)
             {
                 try
                 {
@@ -105,12 +105,13 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                             p.IdAllevamento == item.IdAllevamento &&
                             p.IdTrasportatore == item.IdTrasportatore &&
                             p.DataPrelievo == item.DataPrelievo);
+                    //PrelievoLatte prelievoDb = null;
 
 
                     if (prelievoDb != null)
                     {
                         // update
-                        prelievoDb = UpdateProperties(ConvertToEntity(item), prelievoDb);
+                        prelievoDb = UpdateProperties(item, prelievoDb);
                         prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
@@ -119,14 +120,17 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     else
                     {
                         // insert
-                        prelievoDb = ConvertToEntity(item);
+                        prelievoDb = item;
                         prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
                         this.repository.Add(prelievoDb);
                     }
 
-                    this.uow.SaveChanges();
+                    Console.WriteLine($"{counter} - {tot}");
+
+                    if(counter % 100 == 0)
+                        this.uow.SaveChanges();
                     counter++;
                 }
                 catch (Exception exc)
@@ -134,7 +138,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     int i = 0;
                 }
 
+                
+
             }
+
+            this.uow.SaveChanges();
 
             return counter;
         }

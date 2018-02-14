@@ -11,7 +11,7 @@ namespace LatteMarche.SynchJob
     {
         static void Main()
         {
-            //AutoFacConfig.Configure();
+            AutoFacConfig.Configure();
             JobHostConfiguration config = new JobHostConfiguration();
             config.UseTimers();
             JobHost host = new JobHost(config);

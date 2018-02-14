@@ -25,6 +25,8 @@ using LatteMarche.Application.Acquirenti.Services;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Destinatari.Services;
 using LatteMarche.Application.Destinatari.Interfaces;
+using LatteMarche.Application.Synch.Services;
+using LatteMarche.Application.Synch.Interfaces;
 
 namespace LatteMarche.Application
 {
@@ -63,6 +65,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>().InstancePerRequest();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>().InstancePerRequest();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>().InstancePerRequest();
+                builder.RegisterType<SynchService>().As<ISynchService>().InstancePerRequest();
 
             }
             else
@@ -83,6 +86,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>();
+                builder.RegisterType<SynchService>().As<ISynchService>();
             }
 
 

@@ -114,21 +114,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IHttpActionResult Pull(string timestamp)
-        {
-            var prelievi = this.prelieviLatteService.Pull(new DateHelper().ConvertToDateTime(timestamp));
-
-            return Ok(prelievi);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IHttpActionResult Push(List<PrelievoLatteDto> prelievi)
-        {
-            return Ok(this.prelieviLatteService.Push(prelievi));
-        }
 
         #endregion
 

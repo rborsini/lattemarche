@@ -13,37 +13,37 @@ namespace LatteMarche.Core.Models
         public override int Id { get; set; }
 
         [Column("ID_ALLEVAMENTO")]
-        public int IdAllevamento { get; set; }
+        public int? IdAllevamento { get; set; }
 
         [Column("ID_DESTINATARIO")]
-        public int IdDestinatario { get; set; }
+        public int? IdDestinatario { get; set; }
 
         [Column("ID_ACQUIRENTE")]
-        public int IdAcquirente { get; set; }
+        public int? IdAcquirente { get; set; }
 
         [Column("ID_TRASPORTATORE")]
-        public int IdTrasportatore { get; set; }
+        public int? IdTrasportatore { get; set; }
 
         [Column("ID_LABANALISI")]
-        public int IdLabAnalisi { get; set; }
+        public int? IdLabAnalisi { get; set; }
 
         [Column("DATA_PRELIEVO")]
-        public DateTime DataPrelievo { get; set; }
+        public DateTime? DataPrelievo { get; set; }
 
         [Column("DATA_CONSEGNA")]
-        public DateTime DataConsegna { get; set; }
+        public DateTime? DataConsegna { get; set; }
 
         [Column("DATA_ULTIMA_MUNGITURA")]
-        public DateTime DataUltimaMungitura { get; set; }
+        public DateTime? DataUltimaMungitura { get; set; }
 
         [Column("QUANTITA")]
-        public Decimal Quantita { get; set; }
+        public Decimal? Quantita { get; set; }
 
         [Column("TEMPERATURA")]
-        public Decimal Temperatura { get; set; }
+        public Decimal? Temperatura { get; set; }
 
         [Column("NUMERO_MUNGITURE")]
-        public int NumeroMungiture { get; set; }
+        public int? NumeroMungiture { get; set; }
 
         [Column("SCOMPARTO")]
         public string Scomparto { get; set; }
