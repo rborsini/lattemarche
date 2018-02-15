@@ -10,6 +10,13 @@ using System.Collections.Generic;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+
+    public class Pippo
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
     [ApiCustomAuthorize]
     public class PrelieviLatteController : ApiController
     {
@@ -78,6 +85,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(exc);
             }
 
+        }
+
+        [HttpPost]
+        public IHttpActionResult Pippo([FromBody] Pippo model)
+        {
+            return Ok(model);
         }
 
         [HttpDelete]

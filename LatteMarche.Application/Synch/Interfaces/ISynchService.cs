@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace LatteMarche.Application.Synch.Interfaces
         /// <summary>
         /// Upload dal server locale verso il cloud
         /// </summary>
-        void Push();
+        List<PrelievoLatte> Push();
 
     }
 }

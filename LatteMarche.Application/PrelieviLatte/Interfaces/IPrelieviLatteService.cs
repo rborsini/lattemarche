@@ -28,8 +28,10 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// Push prelievi per sincronizzazione
         /// </summary>
         /// <param name="list"></param>
-        /// <returns></returns>
-        int Push(List<PrelievoLatte> list);
+        /// <returns>Nuovi prelievi inseriti</returns>
+        List<PrelievoLatte> Push(List<PrelievoLatte> list);
+
+
 
     }
 

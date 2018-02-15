@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using LatteMarche.Application.Lotti.Interfaces;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Synch.Interfaces;
 using Microsoft.Azure.WebJobs;
 using System;
@@ -33,9 +36,27 @@ namespace LatteMarche.SynchJob
 
             using (ILifetimeScope scope = AutoFacConfig.Container.BeginLifetimeScope())
             {
-                ISynchService service = scope.Resolve<ISynchService>();
+                ISynchService synchService = scope.Resolve<ISynchService>();
+                ISitraService sitraService = scope.Resolve<ISitraService>();
+                ILottiService lottiService = scope.Resolve<ILottiService>();
 
-                service.Push();
+                // scarica i dati dal cloud verso server locale
+                synchService.Pull();
+
+                // carica i dati locali verso il cloud
+                var nuoviPrelievi = synchService.Push();
+
+                // estrazione lotti dai nuovi prelievi
+                var lotti = lottiService.GetLotti(nuoviPrelievi);
+
+                // invio lotti Sitra
+                var lottiAggiornati = sitraService.InvioLotti(lotti);
+
+                // persistenza database dei lotti inviati
+                foreach(var lotto in lottiAggiornati)
+                {
+                    lottiService.Create(lotto);
+                }
 
             }
 

@@ -13,6 +13,7 @@ using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Application.Destinatari.Dtos;
+using LatteMarche.Application.Lotti.Dtos;
 
 namespace LatteMarche.Application
 {
@@ -35,6 +36,7 @@ namespace LatteMarche.Application
             LaboratoriAnalisiMappings.Configure();
             AcquirentiMappings.Configure();
             DestinatarioMappings.Configure();
+            LottiMappings.Configure();
         }
 	}
 

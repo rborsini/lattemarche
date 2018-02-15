@@ -25,6 +25,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<PrelievoLatte> PrelieviLatte { get; set; }
         public DbSet<Acquirente> Acquirenti { get; set; }
         public DbSet<Destinatario> Destinatari { get; set; }
+        public DbSet<Lotto> Lotti { get; set; }
 
 
         public LatteMarcheDbContext()

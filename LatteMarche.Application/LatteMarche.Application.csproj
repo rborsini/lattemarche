@@ -59,6 +59,9 @@
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
+    <Compile Include="Lotti\Dtos\LottoDto.cs" />
+    <Compile Include="Lotti\Interfaces\ILottiService.cs" />
+    <Compile Include="Lotti\Services\LottiService.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelieviLatteSearchDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
@@ -69,6 +72,9 @@
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="Comuni\Dtos\ComuniSearchDto.cs" />
     <Compile Include="Giri\Dtos\GiroItemDto.cs" />
+    <Compile Include="Sitra\Interfaces\ISitraService.cs" />
+    <Compile Include="Sitra\Services\SitraService.cs" />
+    <Compile Include="Sitra\Dtos\SitraDto.cs" />
     <Compile Include="Synch\Interfaces\ISynchService.cs" />
     <Compile Include="Synch\Services\SynchService.cs" />
     <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />

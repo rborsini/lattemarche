@@ -93,19 +93,21 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public int Push(List<PrelievoLatte> list)
+        public List<PrelievoLatte> Push(List<PrelievoLatte> list)
         {
+            List<PrelievoLatte> nuoviPrelievi = new List<PrelievoLatte>();
+
             int counter = 0;
             int tot = list.Count;
             foreach (PrelievoLatte item in list)
             {
                 try
                 {
-                    var prelievoDb = repository.FindBy(p =>
-                            p.IdAllevamento == item.IdAllevamento &&
-                            p.IdTrasportatore == item.IdTrasportatore &&
-                            p.DataPrelievo == item.DataPrelievo);
-                    //PrelievoLatte prelievoDb = null;
+                    //var prelievoDb = repository.FindBy(p =>
+                    //        p.IdAllevamento == item.IdAllevamento &&
+                    //        p.IdTrasportatore == item.IdTrasportatore &&
+                    //        p.DataPrelievo == item.DataPrelievo);
+                    PrelievoLatte prelievoDb = null;
 
 
                     if (prelievoDb != null)
@@ -124,12 +126,14 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                         prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
+                        nuoviPrelievi.Add(item);
                         this.repository.Add(prelievoDb);
                     }
 
-                    Console.WriteLine($"{counter} - {tot}");
+                    if (counter % 200 == 0)
+                        Console.WriteLine($"{counter} - {tot}");
 
-                    if(counter % 100 == 0)
+                    if(counter % 1000 == 0)
                         this.uow.SaveChanges();
                     counter++;
                 }
@@ -144,7 +148,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
 
             this.uow.SaveChanges();
 
-            return counter;
+            return nuoviPrelievi;
         }
 
         /// <summary>

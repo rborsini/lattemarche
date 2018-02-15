@@ -44,16 +44,18 @@ namespace LatteMarche.Application.Synch.Services
         /// <summary>
         /// Upload dal server locale verso il cloud
         /// </summary>
-        public void Push()
+        public List<PrelievoLatte> Push()
         {
             // recupero record da server locale
             List<PrelievoLatte> prelievi = Select_Prelievi();
 
             // salvataggio su database cloud
-            this.prelieviLatteService.Push(prelievi);
+            List<PrelievoLatte> nuoviPrelievi = this.prelieviLatteService.Push(prelievi);
 
             // aggiornamento tabella synch server locale
             UpdateSynchTable(SynchTypeEnum.Push);
+
+            return nuoviPrelievi;
         }
 
         /// <summary>
@@ -138,11 +140,17 @@ namespace LatteMarche.Application.Synch.Services
                                 "LOTTO_CONSEGNA " +
                            "FROM [dbo].[PRELIEVO_LATTE] " +
                            "WHERE " +
-                                "DATA_PRELIEVO > @Data";
+                                "DATA_PRELIEVO >= @DataInizio AND DATA_PRELIEVO < @DataFine";
 
             SqlCommand selectCommand = new SqlCommand(query, connection);
 
-            selectCommand.Parameters.AddWithValue("@Data", DateTime.Today.AddDays(-this.DepthDays));
+            //selectCommand.Parameters.AddWithValue("@Data", DateTime.Today.AddDays(-this.DepthDays));
+
+            DateTime inizio = new DateTime(2018, 1, 1);
+            DateTime fine = inizio.AddYears(1);
+
+            selectCommand.Parameters.AddWithValue("@DataInizio", inizio);
+            selectCommand.Parameters.AddWithValue("@DataFine", fine);
 
             SqlDataReader reader = selectCommand.ExecuteReader();
 
