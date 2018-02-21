@@ -24,6 +24,10 @@ namespace LatteMarche.Application.Lotti.Dtos
 
         public string Messaggio { get; set; }
 
+        public decimal Quantita { get; set; }
+
+        public DateTime DataUltimaMungitura { get; set; }
+
     }
 
     public class LottiMappings
