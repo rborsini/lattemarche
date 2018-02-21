@@ -54,6 +54,7 @@ namespace LatteMarche.SynchJob
                 //    lottiService.Create(lotto);
                 //}
 
+
             }
 
             sw.Stop();
@@ -61,7 +62,10 @@ namespace LatteMarche.SynchJob
             log.WriteLine("Synch job completed in " + sw.Elapsed);
         }
 
-
-
+        private static void CallTest()
+        {
+            Console.Write("TEST OK!!");
+            Console.ReadKey();
+        }
     }
 }

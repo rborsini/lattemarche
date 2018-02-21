@@ -88,9 +88,9 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Pippo([FromBody] Pippo model)
+        public IHttpActionResult Pippo()
         {
-            return Ok(model);
+            return Ok();
         }
 
         [HttpDelete]
