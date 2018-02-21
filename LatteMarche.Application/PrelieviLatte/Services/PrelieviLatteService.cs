@@ -103,11 +103,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             {
                 try
                 {
-                    //var prelievoDb = repository.FindBy(p =>
-                    //        p.IdAllevamento == item.IdAllevamento &&
-                    //        p.IdTrasportatore == item.IdTrasportatore &&
-                    //        p.DataPrelievo == item.DataPrelievo);
-                    PrelievoLatte prelievoDb = null;
+                    var prelievoDb = repository.FindBy(p =>
+                            p.IdAllevamento == item.IdAllevamento &&
+                            p.IdTrasportatore == item.IdTrasportatore &&
+                            p.DataPrelievo == item.DataPrelievo);
+                    //PrelievoLatte prelievoDb = null;
 
 
                     if (prelievoDb != null)

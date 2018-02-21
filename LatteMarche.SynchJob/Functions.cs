@@ -18,10 +18,6 @@ namespace LatteMarche.SynchJob
 {
     public class Functions
     {
-        //private static int DepthDays { get { return Convert.ToInt32(ConfigurationManager.AppSettings["days_depth"]); } }
-        //private static string connectionString = ConfigurationManager.ConnectionStrings["OldDbContext"].ConnectionString;
-        //private static string baseUrl = ConfigurationManager.AppSettings["ClientSettingsProvider.ServiceUri"];
-
         /// <summary>
         /// Sincronizzazione nuovo e vecchio server
         /// </summary>
@@ -41,22 +37,22 @@ namespace LatteMarche.SynchJob
                 ILottiService lottiService = scope.Resolve<ILottiService>();
 
                 // scarica i dati dal cloud verso server locale
-                synchService.Pull();
+                //synchService.Pull();
 
                 // carica i dati locali verso il cloud
                 var nuoviPrelievi = synchService.Push();
 
-                // estrazione lotti dai nuovi prelievi
-                var lotti = lottiService.GetLotti(nuoviPrelievi);
+                //// estrazione lotti dai nuovi prelievi
+                //var lotti = lottiService.GetLotti(nuoviPrelievi);
 
-                // invio lotti Sitra
-                var lottiAggiornati = sitraService.InvioLotti(lotti);
+                //// invio lotti Sitra
+                //var lottiAggiornati = sitraService.InvioLotti(lotti);
 
-                // persistenza database dei lotti inviati
-                foreach(var lotto in lottiAggiornati)
-                {
-                    lottiService.Create(lotto);
-                }
+                //// persistenza database dei lotti inviati
+                //foreach(var lotto in lottiAggiornati)
+                //{
+                //    lottiService.Create(lotto);
+                //}
 
             }
 

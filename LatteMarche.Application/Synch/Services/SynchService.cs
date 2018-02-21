@@ -140,17 +140,17 @@ namespace LatteMarche.Application.Synch.Services
                                 "LOTTO_CONSEGNA " +
                            "FROM [dbo].[PRELIEVO_LATTE] " +
                            "WHERE " +
-                                "DATA_PRELIEVO >= @DataInizio AND DATA_PRELIEVO < @DataFine";
+                                "DATA_PRELIEVO >= @Data";
 
             SqlCommand selectCommand = new SqlCommand(query, connection);
 
-            //selectCommand.Parameters.AddWithValue("@Data", DateTime.Today.AddDays(-this.DepthDays));
+            selectCommand.Parameters.AddWithValue("@Data", DateTime.Today.AddDays(-this.DepthDays));
 
-            DateTime inizio = new DateTime(2018, 1, 1);
-            DateTime fine = inizio.AddYears(1);
+            //DateTime inizio = new DateTime(2000, 1, 1);
+            //DateTime fine = inizio.AddYears(10);
 
-            selectCommand.Parameters.AddWithValue("@DataInizio", inizio);
-            selectCommand.Parameters.AddWithValue("@DataFine", fine);
+            //selectCommand.Parameters.AddWithValue("@DataInizio", inizio);
+            //selectCommand.Parameters.AddWithValue("@DataFine", fine);
 
             SqlDataReader reader = selectCommand.ExecuteReader();
 
