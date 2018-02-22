@@ -7,15 +7,12 @@ using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using RB.Date;
 using System.Collections.Generic;
+using LatteMarche.Application.Synch.Interfaces;
+using LatteMarche.Core;
+using LatteMarche.Core.Models;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
-
-    public class Pippo
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
 
     [ApiCustomAuthorize]
     public class PrelieviLatteController : ApiController
@@ -23,7 +20,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Fields
 
-        private IPrelieviLatteService prelieviLatteService;      
+        private IPrelieviLatteService prelieviLatteService;
 
         #endregion
 
@@ -31,7 +28,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         public PrelieviLatteController(IPrelieviLatteService prelieviLatteService)
 		{
-            this.prelieviLatteService = prelieviLatteService;     
+            this.prelieviLatteService = prelieviLatteService;
         }
 
         #endregion
@@ -90,7 +87,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [HttpGet]
         public IHttpActionResult Pippo()
         {
-            return Ok();
+            return Ok("ok");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IHttpActionResult Pluto()
+        {
+            return Ok("ok");
         }
 
 
