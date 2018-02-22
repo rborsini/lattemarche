@@ -87,11 +87,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         public IHttpActionResult Pippo()
         {
             return Ok();
         }
+
 
         [HttpDelete]
         public IHttpActionResult Delete(int id)

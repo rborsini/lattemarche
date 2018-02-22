@@ -9,33 +9,54 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
+using System.Configuration;
+
 
 namespace LatteMarche.Application.Sitra.Services
 {
     public class SitraService : ISitraService
     {
+        #region Proprietis
+        private static string sitraUrl = ConfigurationManager.AppSettings["Sitra.ServiceUri"];
+        private static string username = ConfigurationManager.AppSettings["username"];
+        private static string password = ConfigurationManager.AppSettings["password"];
+        private static int CUAA { get { return Convert.ToInt32(ConfigurationManager.AppSettings["CUAA"]); } }
+        private static int IdProdotto { get { return Convert.ToInt32(ConfigurationManager.AppSettings["idProdotto"]); } }
+        private static string codOperatore = ConfigurationManager.AppSettings["codOperatore"];
+        private static string referenza = ConfigurationManager.AppSettings["referenza"];
+        private static int IdUnitaMisura { get { return Convert.ToInt32(ConfigurationManager.AppSettings["IdUnitaMisura"]); } }
+        private static string alimentazione = ConfigurationManager.AppSettings["alimentazione"];
+        private static Double massaGrassa { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_grassa"]); } }
+        private static Double massaProteica { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_proteica"]); } }
+        #endregion
+
         public List<LottoDto> InvioLotti(List<LottoDto> lotti)
         {
             // Conversione dal modello LatteMarche a modello Sitra
 
-
-
-            #region Recupero token
-
             dynamic tokenResult = Token();
-            string accessToken = "";// tokenResult.access_token;
+            string accessToken = tokenResult.access_token;
 
-            #endregion
+            //invio lotti
+            foreach (LottoDto lotto in lotti)
+            {
+                SitraDto root = MakeRoot(lotto);
+                try
+                {
+                    lotto.CodiceSitra = SendLotto(accessToken, root);
+                    lotto.Inviato = true;
+                    //TODO: messaggio
+                    //lotto.Messaggio = "mex"
+                }
+                catch
+                {
+                    lotto.Inviato = false;
+                    //TODO: inserire eventuale erropre
+                    //lotto.Errore = "qualcosa"
+                }
+            }
 
-            #region Invio lotti
-            SitraDto root = MakeRoot();
-            string codiceLotto = SendLotto(accessToken, root);
-
-            Console.WriteLine($"codice lotto {codiceLotto}");
-
-            Console.ReadKey();
-            #endregion
-
+            //cambiare timestamp
             // Aggiornamento campi lotti (Es. Inviato, Errore, Messaggio, Timestamp, CodiceSitra)
 
             return lotti; //TODO: sistemare questa parte
@@ -44,7 +65,7 @@ namespace LatteMarche.Application.Sitra.Services
 
         private string SendLotto(string accessToken, SitraDto root)
         {
-            var client = new RestClient("http://84.38.48.58/SitraSmartTest/WebApi/api/lotti/");
+            var client = new RestClient(sitraUrl);
             var request = new RestRequest(Method.POST);
 
             request.AddHeader("Cache-Control", "no-cache");
@@ -62,7 +83,7 @@ namespace LatteMarche.Application.Sitra.Services
 
         private static dynamic Token()
         {
-            string URI = "http://84.38.48.58/SitraSmartTest/WebApi/Token"; //TODO: portare rui in configuration file
+            string URI = sitraUrl;
 
             using (WebClient wc = new WebClient())
             {
@@ -70,8 +91,8 @@ namespace LatteMarche.Application.Sitra.Services
 
                 var parameters = new System.Collections.Specialized.NameValueCollection();
                 parameters.Add("grant_type", "password");
-                parameters.Add("username", "operatore2");
-                parameters.Add("password", "operatore2");
+                parameters.Add("username", username);
+                parameters.Add("password", password);
 
                 byte[] responseBytes = wc.UploadValues(URI, "POST", parameters);
                 string responseBody = Encoding.UTF8.GetString(responseBytes);
@@ -80,47 +101,49 @@ namespace LatteMarche.Application.Sitra.Services
             }
         }
 
-        private static SitraDto MakeRoot()
+        private static SitraDto MakeRoot(LottoDto lotto)
         {
+
+
             SitraDto root = new SitraDto();
 
-            root.Lotto.CodiceLotto = Guid.NewGuid().ToString();
-            root.Lotto.DataProduzione = DateTime.Today.ToString("dd/MM/yyyy");
-            root.Lotto.Quantita = DateTime.Now.Second;
-            root.Lotto.IdUnitaMisura = 3; // litri
-            root.Lotto.Referenza = "Referenza";
-            root.Lotto.CodOperatore = "OPER2";
-            root.Lotto.IdProdotto = 28;
-            root.Lotto.CUAA = 12345678900;
+            root.Lotto.CodiceLotto = lotto.Codice;
+            root.Lotto.DataProduzione = lotto.TimeStamp.ToString("dd/MM/yyyy");
+            root.Lotto.Quantita = Convert.ToInt32(lotto.Quantita);
+            root.Lotto.IdUnitaMisura = IdUnitaMisura; // TODO: Ricordare fattore di conversione per il passaggio dei dati
+            root.Lotto.Referenza = referenza;
+            root.Lotto.CodOperatore = codOperatore;
+            root.Lotto.IdProdotto = IdProdotto;
+            root.Lotto.CUAA = CUAA;
 
-            // Data scadenza
+            // Data ultima mungitura
             root.AttributiBaseList.Add(new Attributo()
             {
-                IdAttributo = 173,
-                NomeAttributo = "Data di scadenza",
+                IdAttributo = 156,
+                NomeAttributo = "Data ultima mungitura",
                 Obbligatorio = true,
                 TipoDiDato = "data",
-                ValoreAttributo = DateTime.Today.AddDays(7).ToString("dd/MM/yyyy")
+                ValoreAttributo = lotto.DataUltimaMungitura.ToString("dd/MM/yyyy")
             });
 
-            // Modalità conservazione
+            // Tipologia di alimentazione animale prevalente
             root.AttributiBaseList.Add(new Attributo()
             {
-                IdAttributo = 174,
-                NomeAttributo = "Modalità di conservazione",
+                IdAttributo = 164,
+                NomeAttributo = "Tipologia di alimentazione animale prevalente",
                 Obbligatorio = true,
                 TipoDiDato = "testo",
-                ValoreAttributo = "Frigo"
+                ValoreAttributo = alimentazione
             });
 
-            // Data di confezionamento
+            // Ora Ultima Mungitura
             root.AttributiBaseList.Add(new Attributo()
             {
-                IdAttributo = 204,
-                NomeAttributo = "Data di confezionamento",
+                IdAttributo = 203,
+                NomeAttributo = "Ora Ultima Mungitura",
                 Obbligatorio = true,
                 TipoDiDato = "testo",
-                ValoreAttributo = DateTime.Today.AddDays(1).ToString("dd/MM/yyyy")
+                ValoreAttributo = lotto.DataUltimaMungitura.ToString("HH:mm")
             });
 
             // Tenore materia grassa
@@ -130,7 +153,7 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Tenore di Materia Grassa (% p/p)",
                 Obbligatorio = true,
                 TipoDiDato = "numero",
-                ValoreAttributo = DateTime.Now.Minute.ToString()
+                ValoreAttributo = Convert.ToString(massaGrassa)
             });
 
             // Tenore materia proteica
@@ -140,40 +163,11 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Tenore di materia Proteica (g/litro)",
                 Obbligatorio = true,
                 TipoDiDato = "numero",
-                ValoreAttributo = DateTime.Now.Millisecond.ToString()
-            });
-
-            // Tipologia caglio
-            root.AttributiList.Add(new Attributo()
-            {
-                IdAttributo = 159,
-                NomeAttributo = "Tipologia di caglio",
-                Obbligatorio = false,
-                TipoDiDato = "testo",
-                ValoreAttributo = "Caglio"
-            });
-
-            // Temperatura stoccaggio
-            root.AttributiList.Add(new Attributo()
-            {
-                IdAttributo = 166,
-                NomeAttributo = "Temperatura di stoccaggio latte dopo mungitura (°C)",
-                Obbligatorio = true,
-                TipoDiDato = "numero",
-                ValoreAttributo = (-DateTime.Now.Minute).ToString()
-            });
-
-            // Temperatura latte all'arrivo
-            root.AttributiList.Add(new Attributo()
-            {
-                IdAttributo = 167,
-                NomeAttributo = "Temperatura latte all'arrivo presso lo stabilimento di trasformazione (°C)",
-                Obbligatorio = false,
-                TipoDiDato = "numero",
-                ValoreAttributo = (-DateTime.Now.Hour).ToString()
+                ValoreAttributo = Convert.ToString(massaProteica)
             });
 
             return root;
         }
+
     }
 }
