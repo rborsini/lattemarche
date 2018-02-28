@@ -54,9 +54,9 @@ namespace LatteMarche.Application.Sitra.Services
                     //TODO: inserire eventuale erropre
                     //lotto.Errore = "qualcosa"
                 }
+                lotto.TimeStamp = DateTime.Now;
             }
 
-            //cambiare timestamp
             // Aggiornamento campi lotti (Es. Inviato, Errore, Messaggio, Timestamp, CodiceSitra)
 
             return lotti; //TODO: sistemare questa parte
@@ -108,7 +108,7 @@ namespace LatteMarche.Application.Sitra.Services
             SitraDto root = new SitraDto();
 
             root.Lotto.CodiceLotto = lotto.Codice;
-            root.Lotto.DataProduzione = lotto.TimeStamp.ToString("dd/MM/yyyy");
+            root.Lotto.DataProduzione = lotto.DataConsegna.ToString("dd/MM/yyyy"); //ATTENZIONE: è giusto?
             root.Lotto.Quantita = Convert.ToInt32(lotto.Quantita);
             root.Lotto.IdUnitaMisura = IdUnitaMisura; // TODO: Ricordare fattore di conversione per il passaggio dei dati
             root.Lotto.Referenza = referenza;

@@ -37,22 +37,22 @@ namespace LatteMarche.SynchJob
                 ILottiService lottiService = scope.Resolve<ILottiService>();
 
                 // scarica i dati dal cloud verso server locale
-                //synchService.Pull();
+                synchService.Pull();
 
                 // carica i dati locali verso il cloud
                 var nuoviPrelievi = synchService.Push();
 
-                //// estrazione lotti dai nuovi prelievi
-                //var lotti = lottiService.GetLotti(nuoviPrelievi);
+                // estrazione lotti dai nuovi prelievi
+                var lotti = lottiService.GetLotti(nuoviPrelievi);
 
-                //// invio lotti Sitra
-                //var lottiAggiornati = sitraService.InvioLotti(lotti);
+                // invio lotti Sitra
+                var lottiAggiornati = sitraService.InvioLotti(lotti);
 
-                //// persistenza database dei lotti inviati
-                //foreach(var lotto in lottiAggiornati)
-                //{
-                //    lottiService.Create(lotto);
-                //}
+                // persistenza database dei lotti inviati
+                foreach(var lotto in lottiAggiornati)
+                {
+                    lottiService.Create(lotto);
+                }
 
 
             }

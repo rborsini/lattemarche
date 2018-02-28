@@ -351,7 +351,7 @@ namespace LatteMarche.Synch
             return parameter;
         }
 
-        #endregion //TODO: Crea una classe e usa l'ereditarietà
+        #endregion
 
 
     }

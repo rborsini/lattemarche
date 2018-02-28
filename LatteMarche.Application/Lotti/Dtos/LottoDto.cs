@@ -28,6 +28,7 @@ namespace LatteMarche.Application.Lotti.Dtos
 
         public DateTime DataUltimaMungitura { get; set; }
 
+        public DateTime DataConsegna { get; set; }
     }
 
     public class LottiMappings
