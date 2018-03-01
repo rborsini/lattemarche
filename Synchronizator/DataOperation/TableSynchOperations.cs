@@ -77,7 +77,7 @@ namespace LatteMarche.Synch
 
             cmd.ExecuteNonQuery();
         }
-        
+
         #region SqlDataController
 
         private static SqlParameter DateTimeSqlParameter(string name, DateTime? value)
@@ -89,4 +89,5 @@ namespace LatteMarche.Synch
         }
 
         #endregion
+    }
 }

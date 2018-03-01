@@ -1,18 +1,11 @@
 ﻿using Autofac;
 using LatteMarche.Application.Lotti.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Synch.Interfaces;
 using Microsoft.Azure.WebJobs;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LatteMarche.SynchJob
 {
@@ -37,7 +30,7 @@ namespace LatteMarche.SynchJob
                 ILottiService lottiService = scope.Resolve<ILottiService>();
 
                 // scarica i dati dal cloud verso server locale
-                synchService.Pull();
+                //synchService.Pull(); TODO:Riattivare
 
                 // carica i dati locali verso il cloud
                 var nuoviPrelievi = synchService.Push();

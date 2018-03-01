@@ -1,8 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.WebApi", "LatteMarche.WebApi\LatteMarche.WebApi.csproj", "{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0} = {D38ABA77-2DE2-4EB5-B089-F2FC6F812CC0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Core", "LatteMarche.Core\LatteMarche.Core.csproj", "{7399BB9D-FA00-400E-B9F8-C78751CE153F}"
 EndProject

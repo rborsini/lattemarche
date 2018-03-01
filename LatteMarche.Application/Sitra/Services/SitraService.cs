@@ -26,8 +26,8 @@ namespace LatteMarche.Application.Sitra.Services
         private static string referenza = ConfigurationManager.AppSettings["referenza"];
         private static int IdUnitaMisura { get { return Convert.ToInt32(ConfigurationManager.AppSettings["IdUnitaMisura"]); } }
         private static string alimentazione = ConfigurationManager.AppSettings["alimentazione"];
-        private static Double massaGrassa { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_grassa"]); } }
-        private static Double massaProteica { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_proteica"]); } }
+        private static Double MassaGrassa { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_grassa"]); } }
+        private static Double MassaProteica { get { return Convert.ToDouble(ConfigurationManager.AppSettings["massa_proteica"]); } }
         #endregion
 
         public List<LottoDto> InvioLotti(List<LottoDto> lotti)
@@ -51,7 +51,7 @@ namespace LatteMarche.Application.Sitra.Services
                 catch
                 {
                     lotto.Inviato = false;
-                    //TODO: inserire eventuale erropre
+                    //TODO: inserire eventuale errore
                     //lotto.Errore = "qualcosa"
                 }
                 lotto.TimeStamp = DateTime.Now;
@@ -83,7 +83,7 @@ namespace LatteMarche.Application.Sitra.Services
 
         private static dynamic Token()
         {
-            string URI = sitraUrl;
+            string URI = ConfigurationManager.AppSettings["Sitra.ServiceUri"];//sitraUrl;
 
             using (WebClient wc = new WebClient())
             {
@@ -153,7 +153,7 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Tenore di Materia Grassa (% p/p)",
                 Obbligatorio = true,
                 TipoDiDato = "numero",
-                ValoreAttributo = Convert.ToString(massaGrassa)
+                ValoreAttributo = Convert.ToString(MassaGrassa)
             });
 
             // Tenore materia proteica
@@ -163,7 +163,7 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Tenore di materia Proteica (g/litro)",
                 Obbligatorio = true,
                 TipoDiDato = "numero",
-                ValoreAttributo = Convert.ToString(massaProteica)
+                ValoreAttributo = Convert.ToString(MassaProteica)
             });
 
             return root;
