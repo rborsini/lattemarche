@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using LatteMarche.Application.Synch.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
-using LatteMarche.Application.Sitra.Interfaces;
-using LatteMarche.Application.Lotti.Interfaces;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -23,20 +21,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Fields
 
         private IPrelieviLatteService prelieviLatteService;
-        private ISynchService synchService;
-        private ISitraService sitraService;
-        private ILottiService lottiService;
 
         #endregion
 
         #region Constructors
 
-        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService)
+        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService)
 		{
             this.prelieviLatteService = prelieviLatteService;
-            this.synchService = synchService;
-            this.sitraService = sitraService;
-            this.lottiService = lottiService;
         }
 
         #endregion
@@ -90,30 +82,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(exc);
             }
 
-        }
-
-        [HttpPost]
-        public IHttpActionResult Synch()
-        {
-            // scarica i dati dal cloud verso server locale
-            //synchService.Pull(); TODO:Riattivare
-
-            // carica i dati locali verso il cloud
-            var nuoviPrelievi = synchService.Push();
-
-            // estrazione lotti dai nuovi prelievi
-            var lotti = lottiService.GetLotti(nuoviPrelievi);
-
-            // invio lotti Sitra
-            var lottiAggiornati = sitraService.InvioLotti(lotti);
-
-            // persistenza database dei lotti inviati
-            foreach (var lotto in lottiAggiornati)
-            {
-                lottiService.Create(lotto);
-            }
-
-            return Ok("ok");
         }
 
         [HttpGet]
