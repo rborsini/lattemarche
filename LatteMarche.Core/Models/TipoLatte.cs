@@ -17,5 +17,8 @@ namespace LatteMarche.Core.Models
         [StringLength(5)]
         [Column("DESCRIZIONE_BREVE")]
         public string DescrizioneBreve { get; set; }
+
+        [Column("FATTORE_CONVERSIONE")]
+        public decimal FattoreConversione { get; set; }
     }
 }
