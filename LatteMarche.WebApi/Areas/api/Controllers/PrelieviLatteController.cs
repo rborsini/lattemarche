@@ -93,7 +93,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IHttpActionResult Synch()
         {
             // scarica i dati dal cloud verso server locale
@@ -114,19 +114,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 lottiService.Create(lotto);
             }
 
-            return Ok("ok");
-        }
-
-        [HttpGet]
-        public IHttpActionResult Pippo()
-        {
-            return Ok("ok");
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IHttpActionResult Pluto()
-        {
             return Ok("ok");
         }
 

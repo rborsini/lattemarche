@@ -133,7 +133,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     if (counter % 200 == 0)
                         Console.WriteLine($"{counter} - {tot}");
 
-                    if(counter % 1000 == 0)
+                    if(counter % 10 == 0)
                         this.uow.SaveChanges();
                     counter++;
                 }

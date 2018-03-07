@@ -30,7 +30,7 @@ namespace LatteMarche.Application.Sitra.Dtos
         public string Referenza { get; set; }
         public string CodOperatore { get; set; }
         public int IdProdotto { get; set; }
-        public long CUAA { get; set; }
+        public string CUAA { get; set; }
     }
 
     public class Attributo

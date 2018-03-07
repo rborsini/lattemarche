@@ -20,7 +20,7 @@ namespace LatteMarche.Application.Sitra.Services
         private static string sitraUrl = ConfigurationManager.AppSettings["Sitra.ServiceUri"];
         private static string username = ConfigurationManager.AppSettings["username"];
         private static string password = ConfigurationManager.AppSettings["password"];
-        private static int CUAA { get { return Convert.ToInt32(ConfigurationManager.AppSettings["CUAA"]); } }
+        private static string CUAA { get { return ConfigurationManager.AppSettings["CUAA"]; } }
         private static int IdProdotto { get { return Convert.ToInt32(ConfigurationManager.AppSettings["idProdotto"]); } }
         private static string codOperatore = ConfigurationManager.AppSettings["codOperatore"];
         private static string referenza = ConfigurationManager.AppSettings["referenza"];
@@ -65,7 +65,7 @@ namespace LatteMarche.Application.Sitra.Services
 
         private string SendLotto(string accessToken, SitraDto root)
         {
-            var client = new RestClient(sitraUrl);
+            var client = new RestClient($"{sitraUrl}/api/lotti");
             var request = new RestRequest(Method.POST);
 
             request.AddHeader("Cache-Control", "no-cache");
@@ -76,14 +76,14 @@ namespace LatteMarche.Application.Sitra.Services
             IRestResponse response = client.Execute(request);
 
             if (response.StatusCode == HttpStatusCode.OK)
-                return response.Content;
+                return response.Content.Replace('"', ' ').Trim();
             else
                 return String.Empty;
         }
 
         private static dynamic Token()
         {
-            string URI = ConfigurationManager.AppSettings["Sitra.ServiceUri"];//sitraUrl;
+            string URI = $"{ConfigurationManager.AppSettings["Sitra.ServiceUri"]}/Token";
 
             using (WebClient wc = new WebClient())
             {
