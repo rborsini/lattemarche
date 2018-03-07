@@ -5,8 +5,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using System.Configuration;
 
 namespace LatteMarche.Application.PrelieviLatte.Services
 {
@@ -130,19 +129,16 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                         this.repository.Add(prelievoDb);
                     }
 
-                    if (counter % 200 == 0)
-                        Console.WriteLine($"{counter} - {tot}");
-
-                    if(counter % 10 == 0)
+                    if(counter % Convert.ToInt32(ConfigurationManager.AppSettings["range_synch"]) == 0)
                         this.uow.SaveChanges();
+
                     counter++;
                 }
                 catch (Exception exc)
                 {
-                    int i = 0;
+                    Console.WriteLine($"Errore push prelievi ({exc.Message})");
+                    // TODO: Aggiungere log
                 }
-
-                
 
             }
 

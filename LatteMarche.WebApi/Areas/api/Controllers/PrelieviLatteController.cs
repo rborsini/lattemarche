@@ -12,6 +12,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Lotti.Interfaces;
+using System.Configuration;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -26,6 +27,10 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         private ISynchService synchService;
         private ISitraService sitraService;
         private ILottiService lottiService;
+
+        private bool PullEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_pull_enabled"]); } }
+        private bool PushEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_push_enabled"]); } }
+        private bool SitraEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["send_sitra_enabled"]); } }
 
         #endregion
 
@@ -96,22 +101,30 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         //[AllowAnonymous]
         public IHttpActionResult Synch()
         {
+            List<PrelievoLatte> nuoviPrelievi = new List<PrelievoLatte>();
+
             // scarica i dati dal cloud verso server locale
-            //synchService.Pull(); TODO:Riattivare
+            if(this.PullEnabled)
+                synchService.Pull();
 
             // carica i dati locali verso il cloud
-            var nuoviPrelievi = synchService.Push();
+            if(this.PushEnabled)
+                nuoviPrelievi = synchService.Push();
 
-            // estrazione lotti dai nuovi prelievi
-            var lotti = lottiService.GetLotti(nuoviPrelievi);
-
-            // invio lotti Sitra
-            var lottiAggiornati = sitraService.InvioLotti(lotti);
-
-            // persistenza database dei lotti inviati
-            foreach (var lotto in lottiAggiornati)
+            // invio sitra
+            if(this.SitraEnabled)
             {
-                lottiService.Create(lotto);
+                // estrazione lotti dai nuovi prelievi
+                var lotti = lottiService.GetLotti(nuoviPrelievi);
+
+                // invio lotti Sitra
+                var lottiAggiornati = sitraService.InvioLotti(lotti);
+
+                // persistenza database dei lotti inviati
+                foreach (var lotto in lottiAggiornati)
+                {
+                    lottiService.Create(lotto);
+                }
             }
 
             return Ok("ok");

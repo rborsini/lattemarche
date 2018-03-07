@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Tests", "LatteM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Service", "LatteMarche.Service\LatteMarche.Service.csproj", "{CFF520F9-0731-425B-85D4-69CA31D29152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Synch", "Synchronizator\LatteMarche.Synch.csproj", "{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "curl", "curl", "{6E1DBB9D-8970-4395-BE07-F9538E2263BE}"
 	ProjectSection(SolutionItems) = preProject
 		curl\bearer.txt = curl\bearer.txt
@@ -63,10 +61,6 @@ Global
 		{CFF520F9-0731-425B-85D4-69CA31D29152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFF520F9-0731-425B-85D4-69CA31D29152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFF520F9-0731-425B-85D4-69CA31D29152}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D9C9346-6A98-4E04-94A3-1F02A2FAC207}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

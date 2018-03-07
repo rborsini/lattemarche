@@ -102,10 +102,6 @@
       <Project>{7399bb9d-fa00-400e-b9f8-c78751ce153f}</Project>
       <Name>LatteMarche.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Synchronizator\LatteMarche.Synch.csproj">
-      <Project>{6d9c9346-6a98-4e04-94a3-1f02a2fac207}</Project>
-      <Name>LatteMarche.Synch</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

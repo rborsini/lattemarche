@@ -49,14 +49,14 @@ namespace LatteMarche.Application.Synch.Services
             // recupero record da server locale
             List<PrelievoLatte> prelievi = Select_Prelievi();
 
-            //// salvataggio su database cloud
-            //List<PrelievoLatte> nuoviPrelievi = this.prelieviLatteService.Push(prelievi);
+            // salvataggio su database cloud
+            List<PrelievoLatte> nuoviPrelievi = this.prelieviLatteService.Push(prelievi);
 
-            //// aggiornamento tabella synch server locale
-            //UpdateSynchTable(SynchTypeEnum.Push);
+            // aggiornamento tabella synch server locale
+            UpdateSynchTable(SynchTypeEnum.Push);
 
-            return prelievi.Take(1).ToList(); //IMPORTANT: momentaneo
-            //return nuoviPrelievi;
+            //return prelievi.Take(1).ToList(); 
+            return nuoviPrelievi;
         }
 
         /// <summary>
