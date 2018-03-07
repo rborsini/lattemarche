@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201802151058391_AggiuntaTabellaLotti.Designer.cs">
       <DependentUpon>201802151058391_AggiuntaTabellaLotti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803071110060_Add_column_fattoreConversione_on_TipiLatte.cs" />
+    <Compile Include="Migrations\201803071110060_Add_column_fattoreConversione_on_TipiLatte.Designer.cs">
+      <DependentUpon>201803071110060_Add_column_fattoreConversione_on_TipiLatte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -168,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802151058391_AggiuntaTabellaLotti.resx">
       <DependentUpon>201802151058391_AggiuntaTabellaLotti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803071110060_Add_column_fattoreConversione_on_TipiLatte.resx">
+      <DependentUpon>201803071110060_Add_column_fattoreConversione_on_TipiLatte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
