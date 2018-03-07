@@ -25,8 +25,8 @@ namespace LatteMarche.Application.Lotti.Services
                 {
                     Codice = grp.Key,
                     Quantita = grp.Count(s => s.Quantita.HasValue) == 0 ? 0 : grp.Where(s => s.Quantita.HasValue).Sum(s => s.Quantita.Value),
-                    DataConsegna = grp.Max().DataConsegna != null ? grp.Max().DataConsegna.Value : DateTime.Now, //TODO: è meglio una data di Default
-                    DataUltimaMungitura = grp.Max().DataUltimaMungitura != null ? grp.Max().DataUltimaMungitura.Value : DateTime.Now.AddHours(-2), //TODO: idem come sopra
+                    DataConsegna = grp.Max(s => s.DataConsegna) != null ? grp.Max(s => s.DataConsegna).Value : DateTime.Now, //TODO: è meglio una data di Default
+                    DataUltimaMungitura = grp.Max(s => s.DataUltimaMungitura) != null ? grp.Max(s => s.DataUltimaMungitura).Value : DateTime.Now.AddHours(-2), //TODO: idem come sopra
                 })
                 .ToList();
             return lotti;
