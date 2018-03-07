@@ -1,0 +1,134 @@
+﻿
+<div class="col-lg-12" style="margin-top:1em">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+
+            <!-- Portlet Caption -->
+            <div class="m-portlet__head-caption">
+
+                <div class="row">
+                    <div class="col align-self-start">
+                        <h3 class="m-portlet__head-text">
+                            Elenco tipi latte
+                        </h3>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Portlet Tools -->
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <input type="text" class="form-control m-input m-input--solid" placeholder="Cerca..." id="search">
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="btn m-btn--pill btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]TipiLatte/New">+ Aggiungi tipo latte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <div class="m_datatable"></div>
+            <!--end: Datatable -->
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        var datatable = $('.m_datatable').mDatatable({
+
+            // datasource definition
+            data: {
+                type: 'remote',
+                source: apiUrl + 'TipiLatte',
+                pageSize: 10,
+                saveState: {
+                    cookie: true,
+                    webstorage: true
+                },
+            },
+
+            // layout definition
+            layout: {
+                theme: 'default', // datatable theme
+                class: '', // custom wrapper class
+                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                footer: false, // display/hide footer
+            },
+
+            translate: {
+                records: {
+                    processing: 'Caricamento in corso...',
+                    noRecords: 'Nessun record trovato'
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: 'Prima',
+                                prev: 'Precedente',
+                                next: 'Successiva',
+                                last: 'Ultima',
+                                more: 'Più pagine',
+                                input: 'Numero pagina',
+                                select: 'Seleziona dimensione pagine'
+                            },
+                            info: 'Visualizzato {{start}} - {{end}} di {{total}} records'
+                        }
+                    }
+                }
+            },
+
+            // column sorting
+            sortable: true,
+
+            // column based filtering
+            filterable: true,
+
+            pagination: true,
+
+            // columns definition
+            columns: [{
+                field: "Id",
+                title: "#",
+                sortable: false,
+                width: 40,
+                selector: false,
+                textAlign: 'center',
+            }, {
+                field: "Descrizione",
+                title: "Descrizione",
+            }, {
+                field: "DescrizioneBreve",
+                title: "Sigla",
+            }, {
+                field: "FattoreConversione",
+                title: "Fattore conversione lt -> kg",
+            }, {
+                field: "Edit",
+                title: "Dettaglio",
+                width: 100,
+                    template: function(row) {
+                        return '<a href="' + webUrl + 'TipiLatte/Details?id=' + row.Id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details"><i class="la la-edit"></i></a>';
+                },
+
+             }]
+        });
+
+        $('#search').on('keyup', function (e) {
+            datatable.search($(this).val().toLowerCase());
+        });
+
+
+    });
+
+</script>

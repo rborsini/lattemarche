@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace LatteMarche.Application.TipiLatte.Interfaces
 {
 
-    public interface ITipiLatteService : IEntityReadOnlyService<TipoLatte, int, TipoLatteDto>
+    public interface ITipiLatteService : IEntityService<TipoLatte, int, TipoLatteDto>
     {
 
     }

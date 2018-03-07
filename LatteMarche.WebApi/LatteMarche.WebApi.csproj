@@ -147,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="lattemarche-dev - Web Deploy.pubxml" />
+    <Content Include="Views\TipiLatte\Index.cshtml" />
+    <Content Include="Views\TipiLatte\New.cshtml" />
+    <Content Include="Views\TipiLatte\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PrelieviController.cs" />
+    <Compile Include="Controllers\TipiLatteController.cs" />
     <Compile Include="Controllers\TrasportatoriController.cs" />
     <Compile Include="Controllers\AllevatoriController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
@@ -1142,6 +1146,7 @@
     <Content Include="Views\Prelievi\Index.cshtml" />
     <Content Include="Views\Shared\_Waiter.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

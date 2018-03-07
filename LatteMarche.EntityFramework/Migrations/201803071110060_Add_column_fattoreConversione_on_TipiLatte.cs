@@ -7,7 +7,7 @@ namespace LatteMarche.EntityFramework.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.TIPO_LATTE", "FATTORE_CONVERSIONE", c => c.Decimal(nullable: false, precision: 18, scale: 2));
+            AddColumn("dbo.TIPO_LATTE", "FATTORE_CONVERSIONE", c => c.Decimal(nullable: false, precision: 18, scale: 3));
         }
         
         public override void Down()

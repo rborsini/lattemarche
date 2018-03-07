@@ -37,6 +37,7 @@ namespace LatteMarche.EntityFramework
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<TipoLatte>().Property(x => x.FattoreConversione).HasPrecision(18, 3);
 		}
 
         public void SetModified(object entity)

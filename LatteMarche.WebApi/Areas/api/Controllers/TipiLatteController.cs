@@ -33,7 +33,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [HttpGet]
         [HttpPost]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Index()
         {
             try
@@ -48,7 +47,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Details(int id)
         {
             try
@@ -59,6 +57,34 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             {
                 return InternalServerError(exc);
             }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Create([FromBody] TipoLatteDto model)
+        {
+            try
+            {
+                return Ok(this.tipiLatteService.Create(model));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] TipoLatteDto model)
+        {
+            try
+            {
+                return Ok(this.tipiLatteService.Update(model));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
         }
 
         #endregion
