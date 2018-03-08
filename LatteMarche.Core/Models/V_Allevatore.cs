@@ -29,6 +29,9 @@ namespace LatteMarche.Core.Models
         [Column("DESCRIZIONE")]
         public string Comune { get; set; }
 
+        [Column("ID_TIPO_LATTE")]
+        public int IdTipoLatte { get; set; }
+
         [Column("PROVINCIA")]
         public string Provincia { get; set; }
 
