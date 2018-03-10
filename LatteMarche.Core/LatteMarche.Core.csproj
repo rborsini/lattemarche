@@ -53,6 +53,7 @@
     <Compile Include="Models\PrelievoLatte.cs" />
     <Compile Include="Models\Aquirente.cs" />
     <Compile Include="Models\Synch.cs" />
+    <Compile Include="Models\V_Allevamento.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />
     <Compile Include="Models\V_Allevatore.cs" />
     <Compile Include="Models\TipoProfilo.cs" />

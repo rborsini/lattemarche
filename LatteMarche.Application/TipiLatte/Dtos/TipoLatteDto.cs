@@ -10,6 +10,8 @@ namespace LatteMarche.Application.TipiLatte.Dtos
         public string Descrizione { get; set; }
         public string DescrizioneBreve { get; set; }
         public decimal FattoreConversione { get; set; }
+        public bool FlagInvioSitra { get; set; }
+
 
 
     }

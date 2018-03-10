@@ -25,6 +25,7 @@ namespace LatteMarche.Application.TipiLatte.Services
             dbEntity.Descrizione = viewEntity.Descrizione;
             dbEntity.DescrizioneBreve = viewEntity.DescrizioneBreve;
             dbEntity.FattoreConversione = viewEntity.FattoreConversione;
+            dbEntity.FlagInvioSitra = viewEntity.FlagInvioSitra; 
 
             return dbEntity;
         }

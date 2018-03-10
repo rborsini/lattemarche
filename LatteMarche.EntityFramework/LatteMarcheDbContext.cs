@@ -18,6 +18,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<TipoProfilo> TipiProfilo { get; set; }
         public DbSet<V_Allevatore> Allevatore { get; set; }
         public DbSet<Allevamento> Allevamenti { get; set; }
+        public DbSet<V_Allevamento> Allevamento { get; set; }
         public DbSet<V_Trasportatore> Trasportatori { get; set; }
         public DbSet<Giro> Giri { get; set; }
         public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
@@ -26,6 +27,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<Acquirente> Acquirenti { get; set; }
         public DbSet<Destinatario> Destinatari { get; set; }
         public DbSet<Lotto> Lotti { get; set; }
+
 
 
         public LatteMarcheDbContext()

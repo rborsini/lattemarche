@@ -59,18 +59,23 @@
 
                 </div>
 
-                <!-- Fattore di conversione -->
+                <!-- Fattore di conversione / Sincronizzare con Sitra ON/OFF -->
                 <div class="form-group m-form__group row justify-content-center">
 
-                    <label class="col-lg-2 col-form-label">
+                    <label class="col-2 col-form-label">
                         Fattore di conversione:
                     </label>
                     <div class="col-3">
                         <input type="number" step="0.001" class="form-control m-input m-input--pill" placeholder="Inserisci fattore di conversione" data-bind="value:FattoreConversione, valueUpdate:'keypress'">
                     </div>
 
-                    <div class="col-5" >
+                    <div class="col-2">
                         <span>* Conversione da litri a kg</span>
+                    </div>
+
+                    <div class="form-check col-3">
+                        <input type="checkbox" class="form-check-input" data-bind="checked:FlagInvioSitra" id="FlagInvioSitra">
+                        <label class="form-check-label" for="FlagInvioSitra">Sincronizzare con Sitra</label>
                     </div>
 
                 </div>
@@ -112,7 +117,8 @@
 
             Descrizione: ko.observable(),
             DescrizioneBreve: ko.observable(''),
-            FattoreConversione: ko.observable('')
+            FattoreConversione: ko.observable(''),
+            FlagInvioSitra: ko.observable()
 
         };
 

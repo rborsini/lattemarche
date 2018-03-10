@@ -17,6 +17,7 @@ namespace LatteMarche.Application.Allevatori.Dtos
         public int IdUtente { get; set; }
         public int IdComune { get; set; }
         public int? IdSitraStabilimentoAllevamento { get; set; }
+        public int? IdTipoLatte { get; set; }
 
     }
 
