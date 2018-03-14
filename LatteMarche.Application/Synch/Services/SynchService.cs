@@ -55,7 +55,7 @@ namespace LatteMarche.Application.Synch.Services
             // aggiornamento tabella synch server locale
             UpdateSynchTable(SynchTypeEnum.Push);
 
-            //return prelievi.Take(1).ToList(); 
+            //return prelievi; // TODO: CHANGE HERE
             return nuoviPrelievi;
         }
 

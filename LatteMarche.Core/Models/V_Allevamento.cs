@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LatteMarche.Core.Models
 {
-    [System.ComponentModel.DataAnnotations.Schema.Table("V_Allevamento")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("V_Allevamenti")]
     public class V_Allevamento : Entity<int>
     {
         [Key]
