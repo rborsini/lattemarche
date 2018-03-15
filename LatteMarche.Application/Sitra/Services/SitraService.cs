@@ -46,13 +46,13 @@ namespace LatteMarche.Application.Sitra.Services
                     lotto.CodiceSitra = SendLotto(accessToken, root);
                     lotto.Inviato = true;
                     //TODO: messaggio
-                    //lotto.Messaggio = "mex"
+                    lotto.Messaggio = $"Depositati {(int)lotto.Quantita} kg di latte";
                 }
                 catch
                 {
                     lotto.Inviato = false;
-                    //TODO: inserire eventuale errore
-                    //lotto.Errore = "qualcosa"
+                    lotto.Messaggio = "Dati lotto non inviati";
+                    lotto.Errore = true;
                 }
                 lotto.TimeStamp = DateTime.Now;
             }
