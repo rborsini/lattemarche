@@ -16,11 +16,6 @@ namespace LatteMarche.Application.Lotti.Services
 {
     public class LottiService : EntityService<Lotto, long, LottoDto>, ILottiService
     {
-
-        //private IAllevatoriService allevatoriService;
-        //private ITipiLatteService tipiLatteService;
-        //private IAllevamentiService allevamentiService;
-
         private IRepository<V_Allevamento, int> allevamentiRepository;
 
         public LottiService(IUnitOfWork uow)
@@ -33,14 +28,12 @@ namespace LatteMarche.Application.Lotti.Services
         {
             var allevamentiDaInviare = allevamentiRepository.FilterBy(a => a.FlagInvioSitra).ToList();
             var idAllevamenti = allevamentiDaInviare.Select(a => a.Id).ToList();
-            //var tipiLatteDaInviare = this.tipiLatteService.Index().Where(t => t.FlagInvioSitra).Select(t => t.Id).ToList();
-            //var allevatoriDaInviare = this.allevatoriService.Index().Where(a => a.IdTipoLatte.HasValue && tipiLatteDaInviare.Contains(a.IdTipoLatte.Value)).Select(a => a.Id).ToList();
-            //var allevamentiDaInviare = this.allevamentiService.Index().Where(a => allevatoriDaInviare.Contains(a.IdUtente)).Select(a => a.Id).ToList();
             var prelieviDaInviare = prelievi.Where(p => p.IdAllevamento.HasValue && idAllevamenti.Contains(p.IdAllevamento.Value)).ToList();
 
             foreach(var prelievo in prelieviDaInviare)
             {
                 var fattoreConversione = allevamentiDaInviare.First(a => a.Id == prelievo.IdAllevamento).FattoreConversione;
+                prelievo.Quantita *= fattoreConversione; 
             }
 
             var lotti = prelieviDaInviare
