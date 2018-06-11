@@ -1,6 +1,6 @@
-var Utente = /** @class */ (function () {
-    function Utente() {
+var Allevatore = /** @class */ (function () {
+    function Allevatore() {
     }
-    return Utente;
+    return Allevatore;
 }());
-export { Utente };
+export { Allevatore };

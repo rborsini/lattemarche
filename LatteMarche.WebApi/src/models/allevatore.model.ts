@@ -1,4 +1,4 @@
-﻿export class Utente {
+﻿export class Allevatore {
     public Id: number;
     public CodiceAsl: string;
     public IndirizzoAllevamento: string;

@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Dettaglio utente";
+}
+
+<div id="utenti-allevatori-details" class="container">
+
+    <input hidden id="id" value="@Request["id"]" />
+
+    <!-- ragione sociale / username -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Ragione sociale</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.RagioneSociale" placeholder="Ragione sociale" />
+        </div>
+        <label class="col-sm-2">Username</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Username" placeholder="Username" />
+        </div>
+    </div>
+
+    <!-- nome / cognome -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Nome</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Nome" placeholder="Nome" />
+        </div>
+        <label class="col-sm-2">Cognome</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Cognome" placeholder="Cognome" />
+        </div>
+    </div>
+
+    <!-- sesso / p.iva/cf -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Sesso</label>
+        <div class="col-sm-4">
+            <select2 class="form-control"
+                     :placeholder="'-'"
+                     :options="opzioniSesso"
+                     :value.sync="utente.Sesso"
+                     :value-field="'Value'"
+                     :text-field="'Text'" />
+        </div>
+        <label class="col-sm-2">P. Iva / C.F.</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.PivaCF" />
+            @*<datepicker :value.sync="dev.Birthday" />*@
+        </div>
+    </div>
+
+    <!-- indirizzo / provincia / città -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Indirizzo</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Indirizzo" />
+        </div>
+
+        <label class="col-sm-2">Comune</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" v-model="utente.IdComune" />
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control" v-model="utente.SiglaProvincia" />
+        </div>
+    </div>
+
+    <!-- telefono / cellulare -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Telefono</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Telefono" />
+        </div>
+        <label class="col-sm-2">Cellulare</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.Cellulare" />
+        </div>
+    </div>
+
+    <!-- codice allevatore / tipo di latte -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Codice allevatore</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.CodiceAllevatore" />
+        </div>
+        <label class="col-sm-2">Tipo latte</label>
+        <div class="col-sm-4">
+            @*<select2 class="form-control"
+                :url="/api/TipiLatte"
+                :value.sync="utente.IdTipoLatte"
+                :value-field="'Id'"
+                :text-field="'Descrizione'" />*@
+        </div>
+    </div>
+
+    <!-- quota del latte / comunicazione quota del latte -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Quota latte(Kg)</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
+        </div>
+        <label class="col-sm-2">Quota latte N°</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.NumeroComunicazione" />
+        </div>
+    </div>
+
+    <!-- tipo di profilo / comunicazione quota del latte -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Tipo profilo</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
+        </div>
+        <label class="col-sm-2">Abilitato</label>
+        <div class="col-sm-1">
+            <select2 class="form-control"
+                     :placeholder="'-'"
+                     :options="opzioniAbilitato"
+                     :value.sync="utente.Abilitato"
+                     :value-field="'Value'"
+                     :text-field="'Text'" />
+        </div>
+        <label class="col-sm-2">Visibile</label>
+        <div class="col-sm-1">
+            <select2 class="form-control"
+                     :placeholder="'-'"
+                     :options="opzioniVisibile"
+                     :value.sync="utente.Visibile"
+                     :value-field="'Value'"
+                     :text-field="'Text'" />
+        </div>
+    </div>
+
+    <!-- note -->
+    <div class="row pb-3">
+        <label class="col-sm-2">Note</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
+        </div>
+    </div>
+
+    <!-- salva -->
+    <div class="row pt-3">
+        <div class="col-md-12 text-right">
+            <button v-on:click="" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+
+</div>
+
+<script type="application/javascript" src="~/build/utenti_details_page.js"></script>
+
+
+
+
+

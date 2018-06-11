@@ -8,7 +8,7 @@
     public Password?: string;
     public Abilitato: boolean;
     public Visibile: boolean;
-    public Sociale: string;
+    public RagioneSociale: string;
     public CodiceAllevatore: string;
     public QuantitaLatte: number;
     public Telefono: string;
