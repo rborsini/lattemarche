@@ -10,9 +10,11 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
+import { Comune } from "../../models/comune.model";
 
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
+import { ComuniService } from "../../services/comuni.service";
 
 
 declare module 'vue/types/vue' {
@@ -38,7 +40,6 @@ export default class UtentiDetailsPage extends Vue {
         savedDialog: Vue
     }
 
-    public utentiServices: UtentiService;
     public utente: Utente;
     public id: string;
 
