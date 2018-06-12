@@ -82,7 +82,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(((IComuniService)this.comuniService).GetProvince());
+                var prov = ((IComuniService)this.comuniService).GetProvince();
+                return Ok();
             }
             catch (Exception exc)
             {

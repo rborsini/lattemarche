@@ -17,14 +17,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import Vue from 'vue';
+import Vue from "vue";
 import Component from "vue-class-component";
-import Select2 from '../../components/common/select2.vue';
-import Datepicker from '../../components/common/datepicker.vue';
+import Select2 from "../../components/common/select2.vue";
+import Datepicker from "../../components/common/datepicker.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Utente } from '../../models/utente.model';
-import { UtentiService } from '../../services/utenti.service';
+import { Utente } from "../../models/utente.model";
+import { UtentiService } from "../../services/utenti.service";
 import { DropdownItem } from "../../models/dropdown.model";
+import { TipiLatteService } from "../../services/tipiLatte.service";
+import { TipoLatte } from "../../models/tipoLatte.model";
 var UtentiDetailsPage = /** @class */ (function (_super) {
     __extends(UtentiDetailsPage, _super);
     function UtentiDetailsPage() {
@@ -35,6 +37,8 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         _this.id = $('#id').val();
         _this.utentiServices = new UtentiService();
         _this.utente = new Utente();
+        _this.tipiLatte = new TipoLatte;
+        _this.tipiLatteService = new TipiLatteService();
         return _this;
     }
     UtentiDetailsPage.prototype.mounted = function () {
@@ -43,6 +47,7 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
             _this.opzioniSesso = _this.getOpzioniSessoUtente();
             _this.opzioniAbilitato = _this.getOpzioniAbilitato();
             _this.opzioniVisibile = _this.getOpzioniAbilitato();
+            _this.loadTipiLatte();
         });
     };
     // carica utente
@@ -74,6 +79,16 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         opzioniVisibile.push(new DropdownItem("true", "Si"));
         opzioniVisibile.push(new DropdownItem("false", "No"));
         return opzioniVisibile;
+    };
+    // caricamento tipi latte
+    UtentiDetailsPage.prototype.loadTipiLatte = function () {
+        var _this = this;
+        this.tipiLatteService.getTipiLatte()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.tipiLatte = response.data;
+            }
+        });
     };
     UtentiDetailsPage = __decorate([
         Component({

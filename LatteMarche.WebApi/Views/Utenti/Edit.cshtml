@@ -85,11 +85,11 @@
         </div>
         <label class="col-sm-2">Tipo latte</label>
         <div class="col-sm-4">
-            @*<select2 class="form-control"
-                :url="/api/TipiLatte"
+            <select2 class="form-control"
+                :options="tipiLatte"
                 :value.sync="utente.IdTipoLatte"
                 :value-field="'Id'"
-                :text-field="'Descrizione'" />*@
+                :text-field="'Descrizione'" />
         </div>
     </div>
 

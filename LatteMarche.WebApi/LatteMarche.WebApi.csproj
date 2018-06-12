@@ -169,6 +169,7 @@
     <Content Include="src\pages\utenti\index.page.js" />
     <Content Include="src\pages\allevatori\index.page.js" />
     <Content Include="Views\Utenti\Edit.cshtml" />
+    <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\pages\utenti\details.page.ts" />
@@ -275,6 +276,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\models\allevatore.model.ts" />
     <TypeScriptCompile Include="src\models\utente.model.ts" />
+    <TypeScriptCompile Include="src\services\comuni.service.ts" />
+    <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
     <TypeScriptCompile Include="src\services\utenti.service.ts" />
     <TypeScriptCompile Include="src\vue-shims.d.ts" />
   </ItemGroup>

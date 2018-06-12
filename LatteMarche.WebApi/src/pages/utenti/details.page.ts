@@ -1,12 +1,14 @@
-﻿import Vue from 'vue';
+﻿import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
-import Select2 from '../../components/common/select2.vue';
-import Datepicker from '../../components/common/datepicker.vue';
+import Select2 from "../../components/common/select2.vue";
+import Datepicker from "../../components/common/datepicker.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Utente } from '../../models/utente.model';
-import { UtentiService } from '../../services/utenti.service';
+import { Utente } from "../../models/utente.model";
+import { UtentiService } from "../../services/utenti.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+import { TipiLatteService } from "../../services/tipiLatte.service";
+import { TipoLatte } from "../../models/tipoLatte.model";
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -32,12 +34,17 @@ export default class UtentiDetailsPage extends Vue {
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
     public opzioniVisibile: DropdownItem[] = [];
+    private tipiLatteService: TipiLatteService;
+    public tipiLatte: TipoLatte;
 
     constructor() {
         super();
         this.id = $('#id').val() as string;
         this.utentiServices = new UtentiService();
         this.utente = new Utente();
+        this.tipiLatte = new TipoLatte;
+        this.tipiLatteService = new TipiLatteService();
+
     }
 
     public mounted() {
@@ -45,6 +52,7 @@ export default class UtentiDetailsPage extends Vue {
             this.opzioniSesso = this.getOpzioniSessoUtente();
             this.opzioniAbilitato = this.getOpzioniAbilitato();
             this.opzioniVisibile = this.getOpzioniAbilitato();
+            this.loadTipiLatte();
         });
     }
 
@@ -79,6 +87,16 @@ export default class UtentiDetailsPage extends Vue {
         opzioniVisibile.push(new DropdownItem("true", "Si"));
         opzioniVisibile.push(new DropdownItem("false", "No"));
         return opzioniVisibile;
+    }
+
+    // caricamento tipi latte
+    private loadTipiLatte() {
+        this.tipiLatteService.getTipiLatte()
+            .then(response => {
+                if (response.data != null) {
+                    this.tipiLatte = response.data;
+                }
+            });
     }
 
 
