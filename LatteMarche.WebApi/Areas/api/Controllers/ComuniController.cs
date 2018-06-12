@@ -82,7 +82,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(((IComuniService)this.comuniService).GetProvince());
+                var province = ((IComuniService)this.comuniService).GetProvince();
+                Dictionary<string, string> dropDown = new Dictionary<string, string>();
+                foreach (var prov in province)
+                {
+                    dropDown.Add(prov, prov);
+                }
+                return Ok(dropDown);
             }
             catch (Exception exc)
             {
