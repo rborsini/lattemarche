@@ -6,8 +6,10 @@ export class ComuniService {
 
     constructor() { }
 
-    //public getProvince(): AxiosPromise<Dropdown> {
-        
-    //}
+    public getProvince(): AxiosPromise<Dropdown> {
+        return axios.get('/api/Comuni/Province');
+    }
+
+
 
 }

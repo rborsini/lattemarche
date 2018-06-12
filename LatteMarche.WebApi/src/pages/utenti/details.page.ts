@@ -4,11 +4,16 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import Select2 from "../../components/common/select2.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Utente } from "../../models/utente.model";
-import { UtentiService } from "../../services/utenti.service";
-import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-import { TipiLatteService } from "../../services/tipiLatte.service";
+
+import { Comune } from "../../models/comune.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
+import { Utente } from "../../models/utente.model";
+
+import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+
+import { ComuniService } from "../../services/comuni.service";
+import { TipiLatteService } from "../../services/tipiLatte.service";
+import { UtentiService } from "../../services/utenti.service";
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -28,22 +33,33 @@ declare module 'vue/types/vue' {
 
 export default class UtentiDetailsPage extends Vue {
 
-    public utentiServices: UtentiService;
     public utente: Utente;
     public id: string;
+
+    public tipiLatte: TipoLatte;
+    public comune: Comune;
+
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
     public opzioniVisibile: DropdownItem[] = [];
+
+    private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
-    public tipiLatte: TipoLatte;
+    private utentiServices: UtentiService;
+    
 
     constructor() {
         super();
+
+        this.comune = new Comune;
         this.id = $('#id').val() as string;
-        this.utentiServices = new UtentiService();
-        this.utente = new Utente();
         this.tipiLatte = new TipoLatte;
+        this.utente = new Utente();
+
+
+        this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
+        this.utentiServices = new UtentiService();
 
     }
 

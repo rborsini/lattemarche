@@ -67,6 +67,7 @@
     <Compile Include="Acquirenti\Dtos\AcquirenteDto.cs" />
     <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
+    <Compile Include="Comuni\Dtos\DropDownDto.cs" />
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
