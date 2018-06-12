@@ -9,7 +9,7 @@ export class UtentiService {
     }
 
     public update(utente: Utente): AxiosPromise<Utente> {
-        return axios.post('/api/utenti/save', utente);
+        return axios.put('/api/utenti/update', utente);
     }
 
     public getDetails(id: string): AxiosPromise<Utente> {

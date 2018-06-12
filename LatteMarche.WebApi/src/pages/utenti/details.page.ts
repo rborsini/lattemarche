@@ -1,14 +1,19 @@
 ﻿import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
+
 import Select2 from "../../components/common/select2.vue";
-import Datepicker from "../../components/common/datepicker.vue";
+import Waiter from "../../components/common/waiter.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Utente } from "../../models/utente.model";
-import { UtentiService } from "../../services/utenti.service";
+
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-import { TipiLatteService } from "../../services/tipiLatte.service";
+import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
+
+import { UtentiService } from "../../services/utenti.service";
+import { TipiLatteService } from "../../services/tipiLatte.service";
+
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -21,12 +26,17 @@ declare module 'vue/types/vue' {
     el: '#utenti-allevatori-details',
     components: {
         Select2,
-        Datepicker,
+        Waiter,
         NotificationDialog
     }
 })
 
 export default class UtentiDetailsPage extends Vue {
+
+    $refs: {
+        waiter: Vue,
+        savedDialog: Vue
+    }
 
     public utentiServices: UtentiService;
     public utente: Utente;
@@ -44,7 +54,6 @@ export default class UtentiDetailsPage extends Vue {
         this.utente = new Utente();
         this.tipiLatte = new TipoLatte;
         this.tipiLatteService = new TipiLatteService();
-
     }
 
     public mounted() {
@@ -95,6 +104,23 @@ export default class UtentiDetailsPage extends Vue {
             .then(response => {
                 if (response.data != null) {
                     this.tipiLatte = response.data;
+                }
+            });
+    }
+
+    // salvataggio utente
+    public onSave() {
+        //this.$refs.waiter.open();
+        this.utentiServices.update(this.utente)
+            .then(response => {
+                if (response.data != undefined) {
+                    // TODO: msg di validazione
+                    //this.$refs.waiter.close();
+                } else {
+                    // save OK !!
+                    this.utente = response.data;
+                    //this.$refs.waiter.close();
+                    //this.$refs.savedDialog.open();
                 }
             });
     }
