@@ -5,15 +5,20 @@
 
 <div id="utenti-allevatori-details" class="container">
 
+    <!-- Pannelli modali di conferma azioni -->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Utente salvato correttamente'"></notification-dialog>
+
     <input hidden id="id" value="@Request["id"]" />
 
     <!-- ragione sociale / username -->
     <div class="row pb-3">
-        <label class="col-sm-2">Ragione sociale</label>
+        <label class="col-sm-2 font-weight-bold">Ragione sociale</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.RagioneSociale" placeholder="Ragione sociale" />
         </div>
-        <label class="col-sm-2">Username</label>
+        <label class="col-sm-2 font-weight-bold">Username</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Username" placeholder="Username" />
         </div>
@@ -21,11 +26,11 @@
 
     <!-- nome / cognome -->
     <div class="row pb-3">
-        <label class="col-sm-2">Nome</label>
+        <label class="col-sm-2 font-weight-bold">Nome</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Nome" placeholder="Nome" />
         </div>
-        <label class="col-sm-2">Cognome</label>
+        <label class="col-sm-2 font-weight-bold">Cognome</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Cognome" placeholder="Cognome" />
         </div>
@@ -33,7 +38,7 @@
 
     <!-- sesso / p.iva/cf -->
     <div class="row pb-3">
-        <label class="col-sm-2">Sesso</label>
+        <label class="col-sm-2 font-weight-bold">Sesso</label>
         <div class="col-sm-4">
             <select2 class="form-control"
                      :placeholder="'-'"
@@ -42,36 +47,35 @@
                      :value-field="'Value'"
                      :text-field="'Text'" />
         </div>
-        <label class="col-sm-2">P. Iva / C.F.</label>
+        <label class="col-sm-2 font-weight-bold">P. Iva / C.F.</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.PivaCF" />
-            @*<datepicker :value.sync="dev.Birthday" />*@
         </div>
     </div>
 
     <!-- indirizzo / provincia / città -->
     <div class="row pb-3">
-        <label class="col-sm-2">Indirizzo</label>
+        <label class="col-sm-2 font-weight-bold">Indirizzo</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Indirizzo" />
         </div>
 
-        <label class="col-sm-2">Comune</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" v-model="utente.IdComune" />
-        </div>
+        <label class="col-sm-2 font-weight-bold">Provincia</label>
         <div class="col-sm-1">
             <input type="text" class="form-control" v-model="utente.SiglaProvincia" />
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" v-model="utente.IdComune" />
         </div>
     </div>
 
     <!-- telefono / cellulare -->
     <div class="row pb-3">
-        <label class="col-sm-2">Telefono</label>
+        <label class="col-sm-2 font-weight-bold">Telefono</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Telefono" />
         </div>
-        <label class="col-sm-2">Cellulare</label>
+        <label class="col-sm-2 font-weight-bold">Cellulare</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.Cellulare" />
         </div>
@@ -79,27 +83,27 @@
 
     <!-- codice allevatore / tipo di latte -->
     <div class="row pb-3">
-        <label class="col-sm-2">Codice allevatore</label>
+        <label class="col-sm-2 font-weight-bold">Codice allevatore</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.CodiceAllevatore" />
         </div>
-        <label class="col-sm-2">Tipo latte</label>
+        <label class="col-sm-2 font-weight-bold">Tipo latte</label>
         <div class="col-sm-4">
             <select2 class="form-control"
-                :options="tipiLatte"
-                :value.sync="utente.IdTipoLatte"
-                :value-field="'Id'"
-                :text-field="'Descrizione'" />
+                     :options="tipiLatte"
+                     :value.sync="utente.IdTipoLatte"
+                     :value-field="'Id'"
+                     :text-field="'Descrizione'" />
         </div>
     </div>
 
     <!-- quota del latte / comunicazione quota del latte -->
     <div class="row pb-3">
-        <label class="col-sm-2">Quota latte(Kg)</label>
+        <label class="col-sm-2 font-weight-bold">Quota latte(Kg)</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
         </div>
-        <label class="col-sm-2">Quota latte N°</label>
+        <label class="col-sm-2 font-weight-bold">Quota latte N°</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" v-model="utente.NumeroComunicazione" />
         </div>
@@ -107,11 +111,11 @@
 
     <!-- tipo di profilo / comunicazione quota del latte -->
     <div class="row pb-3">
-        <label class="col-sm-2">Tipo profilo</label>
+        <label class="col-sm-2 font-weight-bold">Tipo profilo</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
+            <input type="text" class="form-control" v-model="utente.IdProfilo" />
         </div>
-        <label class="col-sm-2">Abilitato</label>
+        <label class="col-sm-2 font-weight-bold">Abilitato</label>
         <div class="col-sm-1">
             <select2 class="form-control"
                      :placeholder="'-'"
@@ -120,7 +124,7 @@
                      :value-field="'Value'"
                      :text-field="'Text'" />
         </div>
-        <label class="col-sm-2">Visibile</label>
+        <label class="col-sm-2 font-weight-bold">Visibile</label>
         <div class="col-sm-1">
             <select2 class="form-control"
                      :placeholder="'-'"
@@ -133,7 +137,7 @@
 
     <!-- note -->
     <div class="row pb-3">
-        <label class="col-sm-2">Note</label>
+        <label class="col-sm-2 font-weight-bold">Note</label>
         <div class="col-sm-10">
             <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
         </div>
@@ -142,7 +146,7 @@
     <!-- salva -->
     <div class="row pt-3">
         <div class="col-md-12 text-right">
-            <button v-on:click="" class="btn btn-primary">Save</button>
+            <button v-on:click="onSave()" class="btn btn-primary">Salva</button>
         </div>
     </div>
 

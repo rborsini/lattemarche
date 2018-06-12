@@ -20,15 +20,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import Vue from "vue";
 import Component from "vue-class-component";
 import Select2 from "../../components/common/select2.vue";
-import Datepicker from "../../components/common/datepicker.vue";
+import Waiter from "../../components/common/waiter.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Comune } from "../../models/comune.model";
-import { TipoLatte } from "../../models/tipoLatte.model";
-import { Utente } from "../../models/utente.model";
 import { DropdownItem } from "../../models/dropdown.model";
-import { ComuniService } from "../../services/comuni.service";
-import { TipiLatteService } from "../../services/tipiLatte.service";
+import { Utente } from "../../models/utente.model";
+import { TipoLatte } from "../../models/tipoLatte.model";
 import { UtentiService } from "../../services/utenti.service";
+import { TipiLatteService } from "../../services/tipiLatte.service";
 var UtentiDetailsPage = /** @class */ (function (_super) {
     __extends(UtentiDetailsPage, _super);
     function UtentiDetailsPage() {
@@ -36,13 +34,11 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
-        _this.comune = new Comune;
         _this.id = $('#id').val();
-        _this.tipiLatte = new TipoLatte;
-        _this.utente = new Utente();
-        _this.comuniService = new ComuniService();
-        _this.tipiLatteService = new TipiLatteService();
         _this.utentiServices = new UtentiService();
+        _this.utente = new Utente();
+        _this.tipiLatte = new TipoLatte;
+        _this.tipiLatteService = new TipiLatteService();
         return _this;
     }
     UtentiDetailsPage.prototype.mounted = function () {
@@ -94,12 +90,30 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
             }
         });
     };
+    // salvataggio utente
+    UtentiDetailsPage.prototype.onSave = function () {
+        var _this = this;
+        //this.$refs.waiter.open();
+        this.utentiServices.update(this.utente)
+            .then(function (response) {
+            if (response.data != undefined) {
+                // TODO: msg di validazione
+                //this.$refs.waiter.close();
+            }
+            else {
+                // save OK !!
+                _this.utente = response.data;
+                //this.$refs.waiter.close();
+                //this.$refs.savedDialog.open();
+            }
+        });
+    };
     UtentiDetailsPage = __decorate([
         Component({
             el: '#utenti-allevatori-details',
             components: {
                 Select2: Select2,
-                Datepicker: Datepicker,
+                Waiter: Waiter,
                 NotificationDialog: NotificationDialog
             }
         }),
