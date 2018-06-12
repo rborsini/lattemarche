@@ -148,6 +148,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\utenti_details_page.js" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\custom.min.css" />
     <Content Include="Content\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
@@ -165,7 +166,14 @@
     <Content Include="Content\plugins\select2\css\select2.min.css" />
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
+    <Content Include="src\pages\utenti\index.page.js" />
     <Content Include="src\pages\allevatori\index.page.js" />
+    <Content Include="Views\Utenti\Edit.cshtml" />
+    <TypeScriptCompile Include="src\models\comune.model.ts" />
+    <TypeScriptCompile Include="src\models\dropdown.model.ts" />
+    <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
+    <TypeScriptCompile Include="src\pages\utenti\details.page.ts" />
+    <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
     <Content Include="Content\css\custom.scss" />
     <None Include="lattemarche-dev - Web Deploy.pubxml" />
@@ -264,15 +272,13 @@
     <Content Include="Views\Prelievi\Index.cshtml" />
     <Content Include="Views\Shared\_Waiter.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="build\" />
-    <Folder Include="src\pages\prelievi\" />
-    <Folder Include="src\services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="src\models\allevatore.model.ts" />
     <TypeScriptCompile Include="src\models\utente.model.ts" />
-    <TypeScriptCompile Include="src\pages\allevatori\details.page.ts" />
+    <TypeScriptCompile Include="src\services\comuni.service.ts" />
+    <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
+    <TypeScriptCompile Include="src\services\utenti.service.ts" />
     <TypeScriptCompile Include="src\vue-shims.d.ts" />
   </ItemGroup>
   <ItemGroup>

@@ -3,8 +3,8 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: {
-        // inserire percorsi uri del progetto
-
+        // percorsi uri del progetto
+        utenti_details_page: './src/pages/utenti/details.page.js',
     },
     output: {
         path: path.resolve(__dirname, './build'),
