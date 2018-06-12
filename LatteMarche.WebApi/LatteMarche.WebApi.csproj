@@ -170,6 +170,7 @@
     <Content Include="src\pages\allevatori\index.page.js" />
     <Content Include="Views\Utenti\Edit.cshtml" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
+    <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\pages\utenti\details.page.ts" />
     <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
