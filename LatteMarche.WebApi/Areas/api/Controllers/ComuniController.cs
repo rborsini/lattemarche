@@ -83,10 +83,10 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             try
             {
                 var province = ((IComuniService)this.comuniService).GetProvince();
-                Dictionary<string, string> dropDown = new Dictionary<string, string>();
+                DropDownDto dropDown = new DropDownDto();
                 foreach (var prov in province)
                 {
-                    dropDown.Add(prov, prov);
+                    dropDown.Items.Add(new DropDownItem() { Value = prov, Text = prov });
                 }
                 return Ok(dropDown);
             }

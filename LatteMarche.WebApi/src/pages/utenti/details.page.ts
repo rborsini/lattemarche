@@ -10,9 +10,11 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
+import { Comune } from "../../models/comune.model";
 
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
+import { ComuniService } from "../../services/comuni.service";
 
 
 declare module 'vue/types/vue' {
@@ -38,22 +40,34 @@ export default class UtentiDetailsPage extends Vue {
         savedDialog: Vue
     }
 
-    public utentiServices: UtentiService;
     public utente: Utente;
     public id: string;
+
+    public tipiLatte: TipoLatte;
+    public comune: Comune;
+
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
     public opzioniVisibile: DropdownItem[] = [];
+
+    private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
-    public tipiLatte: TipoLatte;
+    private utentiServices: UtentiService;
+    
 
     constructor() {
         super();
+
+        this.comune = new Comune;
         this.id = $('#id').val() as string;
-        this.utentiServices = new UtentiService();
-        this.utente = new Utente();
         this.tipiLatte = new TipoLatte;
+        this.utente = new Utente();
+
+
+        this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
+        this.utentiServices = new UtentiService();
+
     }
 
     public mounted() {

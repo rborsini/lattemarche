@@ -25,8 +25,10 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import { DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
+import { Comune } from "../../models/comune.model";
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
+import { ComuniService } from "../../services/comuni.service";
 var UtentiDetailsPage = /** @class */ (function (_super) {
     __extends(UtentiDetailsPage, _super);
     function UtentiDetailsPage() {
@@ -34,11 +36,13 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
+        _this.comune = new Comune;
         _this.id = $('#id').val();
-        _this.utentiServices = new UtentiService();
-        _this.utente = new Utente();
         _this.tipiLatte = new TipoLatte;
+        _this.utente = new Utente();
+        _this.comuniService = new ComuniService();
         _this.tipiLatteService = new TipiLatteService();
+        _this.utentiServices = new UtentiService();
         return _this;
     }
     UtentiDetailsPage.prototype.mounted = function () {
