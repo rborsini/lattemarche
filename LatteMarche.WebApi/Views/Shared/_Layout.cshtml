@@ -16,7 +16,8 @@
     <title>Latte Marche</title>
 
     <script>
-        var apiUrl = '@string.Format("{0}://{1}:{2}/api/", Request.Url.Scheme, Request.Url.Host, @System.Configuration.ConfigurationManager.AppSettings["apiUrlPort"])';
+        var apiUrl = '@string.Format("{0}://{1}:{2}/api/", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, @System.Configuration.ConfigurationManager.AppSettings["apiUrlPort"])';
+        var webUrl = '@string.Format("{0}://{1}:{2}{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, Url.Content("~"))';
     </script>
 </head>
 <body>
