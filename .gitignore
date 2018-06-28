@@ -8,6 +8,9 @@ packages/
 node_modules/
 .vs/
 TestResults/
+/LatteMarche.WebApi/build/**/*.js
+/LatteMarche.WebApi/src/**/*.js
+/LatteMarche.WebApi/.vscode
 
 # globs
 Makefile.in
