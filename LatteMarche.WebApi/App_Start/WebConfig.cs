@@ -9,7 +9,10 @@ namespace LatteMarche.WebApi.App_Start
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			routes.MapRoute(
+            //https://code.i-harness.com/it/q/1071ec7
+            routes.LowercaseUrls = true;
+
+            routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

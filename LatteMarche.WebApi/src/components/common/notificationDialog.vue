@@ -24,8 +24,8 @@
 <script lang="ts">
 
     import Vue from "vue";
-    import Component from "vue-class-component"
-    import { Prop, Watch, Emit } from "vue-property-decorator"
+    import Component from "vue-class-component";
+    import { Prop, Watch, Emit } from "vue-property-decorator";
 
     @Component
     export default class NotificationDialog extends Vue {
@@ -38,10 +38,9 @@
 
         mounted() {
             let nd = this;
-            document.addEventListener("keyup", function (e: any) {
-
-                if ($(nd.$el).hasClass('in')) {
-                    if (e.keyCode === 27 || e.keyCode === 13) {
+            document.addEventListener("keyup", function (event: any) {
+                if ($(nd.$el).hasClass('show')) {
+                    if (event.keyCode === 13) {
                         nd.$emit('ok');
                     }
                 }
@@ -60,3 +59,4 @@
     }
 
 </script>
+

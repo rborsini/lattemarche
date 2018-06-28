@@ -8,7 +8,7 @@
         pageLength: 10,
         ajax: {
             type: "GET",
-            url: apiUrl + 'allevatori'
+            url: apiUrl + 'Allevatori'
         },
         columns: [
             { "data": "Id" },
@@ -19,7 +19,7 @@
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return '<a class="edit" href="' + webUrl + 'Utenti/Details?id=' + row.Id + '" >Dettagli</a>';
+                    return '<a class="edit" href="' + webUrl + 'utenti/details?id=' + row.Id + '" >Dettagli</a>';
                 }
             }
         ]

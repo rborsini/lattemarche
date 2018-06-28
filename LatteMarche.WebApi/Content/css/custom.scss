@@ -1,32 +1,32 @@
-﻿// Custom.scss 
-// Option B: Include parts of Bootstrap 
+﻿// Custom.scss
+// Option B: Include parts of Bootstrap
 
 // Your variable overrides
-@import url(http://fonts.googleapis.com/css?family=Montserrat);
-@import url(http://fonts.googleapis.com/css?family=Inconsolata);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800);
+@import url(https://fonts.googleapis.com/css?family=Space+Mono:400,700);
 
-$enable-rounded: false;
-
-$font-family-sans-serif: "Montserrat";
-$font-family-monospace: "Inconsolata";
+$font-family-montserrat: "Montserrat";
+$font-family-monospace: "Space Mono";
 
 $primary: #3C2DC2;
 $secondary: #fff;
-$danger: #953C20; 
+$danger: #953C20;
 $success: #477F38;
 $warning: #DDB967;
 $info: #8283E4;
 $light: #F8F9FA;
-$dark: #151238;
+$dark: #4810ef;
 
 $body-bg: $secondary;
+$enable-rounded: false;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-.form-control {
-    border-radius: 4px;
+body {
+    padding-top: 5rem;
 }
 
-.btn-primary {
-    border-radius: 4px;
+.form-control {
+    padding: 4px 10px;
+    font-size: 0.9rem;
 }
