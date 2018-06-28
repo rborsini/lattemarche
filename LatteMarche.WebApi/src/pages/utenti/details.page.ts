@@ -124,17 +124,18 @@ export default class UtentiDetailsPage extends Vue {
 
     // salvataggio utente
     public onSave() {
-        //this.$refs.waiter.open();
+        this.$refs.waiter.open();
         this.utentiServices.update(this.utente)
             .then(response => {
                 if (response.data != undefined) {
                     // TODO: msg di validazione
-                    //this.$refs.waiter.close();
+                    this.$refs.waiter.close();
+                    this.$refs.savedDialog.open();
                 } else {
                     // save OK !!
                     this.utente = response.data;
                     //this.$refs.waiter.close();
-                    //this.$refs.savedDialog.open();
+                    this.$refs.savedDialog.open();
                 }
             });
     }

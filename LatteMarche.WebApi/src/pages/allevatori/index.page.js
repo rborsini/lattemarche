@@ -1,4 +1,4 @@
-﻿function AllevatoriIndex() {
+﻿function TabellaAllevatori() {
 
     $('#allevatori-table').DataTable({
         processing: true,
@@ -19,7 +19,7 @@
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return '<a class="edit" href="' + webUrl + 'utenti/details?id=' + row.Id + '" >Dettagli</a>';
+                    return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
                 }
             }
         ]

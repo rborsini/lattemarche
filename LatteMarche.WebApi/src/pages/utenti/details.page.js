@@ -97,18 +97,19 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
     // salvataggio utente
     UtentiDetailsPage.prototype.onSave = function () {
         var _this = this;
-        //this.$refs.waiter.open();
+        this.$refs.waiter.open();
         this.utentiServices.update(this.utente)
             .then(function (response) {
             if (response.data != undefined) {
                 // TODO: msg di validazione
-                //this.$refs.waiter.close();
+                _this.$refs.waiter.close();
+                _this.$refs.savedDialog.open();
             }
             else {
                 // save OK !!
                 _this.utente = response.data;
                 //this.$refs.waiter.close();
-                //this.$refs.savedDialog.open();
+                _this.$refs.savedDialog.open();
             }
         });
     };

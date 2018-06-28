@@ -1,6 +1,6 @@
-﻿function AllevatoriIndex() {
+﻿function TabellaUtenti() {
 
-    $('#allevatori-table').DataTable({
+    $('#utenti-table').DataTable({
         processing: true,
         serverSide: true,
         paging: true,
@@ -12,10 +12,9 @@
         },
         columns: [
             { "data": "Id" },
-            { "data": "RagioneSociale" },
-            { "data": "IndirizzoAllevamento" },
-            { "data": "Comune" },
-            { "data": "Provincia" },
+            { "data": "Username" },
+            { "data": "Nome" },
+            { "data": "Cognome" },
             {
                 "data": null,
                 "render": function (data, type, row) {
