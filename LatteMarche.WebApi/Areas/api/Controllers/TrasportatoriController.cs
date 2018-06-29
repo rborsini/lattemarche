@@ -32,8 +32,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Trasportatori", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -47,6 +47,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Trasportatori", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {

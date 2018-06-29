@@ -34,30 +34,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Utenti", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
             {
-
-
-                var users = this.utentiService.Index();
-
-                //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
-
-                //result.meta.page = 1;
-                //result.meta.pages = users.Count / 10;
-                //result.meta.perpage = 10;
-                //result.meta.total = users.Count;
-                //result.meta.sort = "asc";
-                //result.meta.field = "Nome";
-
-                //result.data = users;
-
-                //return Ok(result);                
-
-                return Ok(users);
+                return Ok(this.utentiService.Index());
             }
             catch(Exception exc)
             {
@@ -66,6 +49,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Utenti", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -80,6 +64,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Update), "Utenti", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] UtenteDto model)
         {
@@ -95,6 +80,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Create), "Utenti", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] UtenteDto model)
         {
@@ -116,6 +102,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Delete), "Utenti", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
@@ -130,6 +117,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Search), "Utenti", "Ricerca")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(int idProfilo)
@@ -145,6 +133,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Destinatari), "Utenti", "Destinatari")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Destinatari()

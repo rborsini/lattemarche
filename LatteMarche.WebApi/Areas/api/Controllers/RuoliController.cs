@@ -7,37 +7,39 @@ using LatteMarche.Application.TipiLatte.Interfaces;
 using LatteMarche.Application.TipiLatte.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using LatteMarche.Application.Ruoli.Interfaces;
+using LatteMarche.Application.Ruoli.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
-    public class TipiLatteController : ApiController
+    public class RuoliController : ApiController
     {
 
         #region Fields
 
-        private ITipiLatteService tipiLatteService;
+        private IRuoliService ruoliService;
 
         #endregion
 
         #region Constructors
 
-        public TipiLatteController(ITipiLatteService tipiLatteService)
+        public RuoliController(IRuoliService ruoliService)
         {
-            this.tipiLatteService = tipiLatteService;
+            this.ruoliService = ruoliService;
         }
 
         #endregion
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Tipi latte", "Lista")]
+        [ViewItem(nameof(Index), "Ruoli", "Lista")]
         [HttpGet]
         public IHttpActionResult Index()
         {
             try
             {
-                return Ok(this.tipiLatteService.Index());
+                return Ok(this.ruoliService.Index());
             }
             catch (Exception exc)
             {
@@ -46,13 +48,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Details), "Tipi latte", "Dettaglio")]
+        [ViewItem(nameof(Details), "Ruoli", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
             try
             {
-                return Ok(this.tipiLatteService.Details(id));
+                return Ok(this.ruoliService.Details(id));
             }
             catch (Exception exc)
             {
@@ -60,13 +62,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
-        [ViewItem(nameof(Create), "Tipi latte", "Creazione")]
+        [ViewItem(nameof(Create), "Ruoli", "Creazione")]
         [HttpPost]
-        public IHttpActionResult Create([FromBody] TipoLatteDto model)
+        public IHttpActionResult Create([FromBody] RuoloDto model)
         {
             try
             {
-                return Ok(this.tipiLatteService.Create(model));
+                return Ok(this.ruoliService.Create(model));
             }
             catch (Exception exc)
             {
@@ -75,13 +77,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Tipi latte", "Aggiornamento")]
+        [ViewItem(nameof(Update), "Ruoli", "Aggiornamento")]
         [HttpPut]
-        public IHttpActionResult Update([FromBody] TipoLatteDto model)
+        public IHttpActionResult Update([FromBody] RuoloDto model)
         {
             try
             {
-                return Ok(this.tipiLatteService.Update(model));
+                return Ok(this.ruoliService.Update(model));
             }
             catch (Exception exc)
             {

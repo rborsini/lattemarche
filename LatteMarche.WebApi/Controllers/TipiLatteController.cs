@@ -11,22 +11,22 @@ namespace LatteMarche.WebApi.Controllers
     [MvcCustomAuthorize]
     public class TipiLatteController : Controller
     {
-        // GET: TipiLatte
+        [ViewItem(nameof(Index), "Tipi latte", "Lista")]
         public ActionResult Index()
         {
             return View();
         }
 
-        //
-        // GET: /Utente/New
+        
+        [ViewItem(nameof(New), "Tipi latte", "Aggiungi")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult New()
         {
             return View();
         }
 
-        //
-        // GET: /Utente/Details
+        
+        [ViewItem(nameof(Details), "Tipi latte", "Modifica")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Details()
         {

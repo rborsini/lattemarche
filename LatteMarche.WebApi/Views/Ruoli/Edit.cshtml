@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Dettaglio ruolo";
+}
+
+<div id="ruoli-edit" class="container">
+
+    <!-- Pannello modale del caricamento -->
+    <waiter ref="waiter"></waiter>
+
+    <!-- Pannelli modali di conferma azioni -->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Ruolo salvato correttamente'"
+                         v-on:ok="window.location = '/ruoli/edit?id=' + ruolo.Id"></notification-dialog>
+
+    <input hidden id="id" value="@Request["id"]" />
+
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="tab-mvc" data-toggle="tab" href="#nav-mvc" role="tab" aria-controls="nav-home" aria-selected="true">MVC</a>
+            <a class="nav-item nav-link" id="tab-api" data-toggle="tab" href="#nav-api" role="tab" aria-controls="nav-profile" aria-selected="false">API</a>
+            <a class="nav-item nav-link" id="tab-dettaglio" data-toggle="tab" href="#nav-dettaglio" role="tab" aria-controls="nav-contact" aria-selected="false">Dettaglio</a>
+            <a class="nav-item nav-link" id="tab-utenti" data-toggle="tab" href="#nav-utenti" role="tab" aria-controls="nav-contact" aria-selected="false">Utenti</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+
+        <!-- Tab MVC -->
+        <div class="tab-pane fade show active" id="nav-mvc" role="tabpanel" aria-labelledby="nav-home-tab">
+
+            <div class="row form-group padding-top-5" v-for="(pagina, index) in ruolo.Pagine_MVC" >
+                <b><span class="col-xs-offset-3 col-xs-1">{{pagina.Title}}</span></b>
+                <div class="col-xs-7 padding-top-10" >
+
+                    <div class="row form-group" v-for="(item) in pagina.Items">
+                        <div class="col-xs-1 padding-right-5">
+                            <input type="checkbox" class="pull-right"  v-model="item.Enabled" />
+                        </div>
+                        <span class="col-xs-4" >{{item.DisplayName}}</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- API -->
+        <div class="tab-pane fade" id="nav-api" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+            <div class="row form-group padding-top-5" v-for="(pagina, index) in ruolo.Pagine_API">
+                <b><span class="col-xs-offset-3 col-xs-1">{{pagina.Title}}</span></b>
+                <div class="col-xs-7 padding-top-10">
+
+                    <div class="row form-group" v-for="(item) in pagina.Items">
+                        <div class="col-xs-1 padding-right-5">
+                            <input type="checkbox" class="pull-right" v-model="item.Enabled" />
+                        </div>
+                        <span class="col-xs-4">{{item.DisplayName}}</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Dettaglio -->
+        <div class="tab-pane fade" id="nav-dettaglio" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+            <div class="row form-group">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <label class="col-xs-2 control-label">
+                        Codice
+                    </label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" v-model="ruolo.Codice" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <label class="col-xs-2 control-label">
+                        Descrizione
+                    </label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" v-model="ruolo.Descrizione" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Utenti -->
+        <div class="tab-pane fade" id="nav-utenti" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(utente, index) in ruolo.Utenti">
+                        <td>{{utente.Username}}</td>
+                        <td>{{utente.Nome}}</td>
+                        <td>{{utente.Cognome}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- ragione sociale / username -->
+    @*<div class="row pb-3">
+            <label class="col-sm-2">Ragione sociale</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.RagioneSociale" placeholder="Ragione sociale" />
+            </div>
+            <label class="col-sm-2">Username</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Username" placeholder="Username" />
+            </div>
+        </div>*@
+
+
+    <!-- salva -->
+    <div class="row pt-3">
+        <div class="col-md-12 text-right">
+            <button v-on:click="onSave()" class="btn btn-success">Salva</button>
+        </div>
+    </div>
+
+</div>
+
+<script type="application/javascript" src="~/build/ruoli_details_page.js"></script>
+
+
+
+
+

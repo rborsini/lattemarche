@@ -12,6 +12,7 @@ namespace LatteMarche.WebApi.Controllers
     [MvcCustomAuthorize]
     public class PrelieviController: Controller
     {
+        [ViewItem(nameof(Index), "Prelievi", "Lista")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           

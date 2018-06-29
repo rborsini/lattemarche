@@ -9,8 +9,10 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
+    [MvcCustomAuthorize]
     public class LaboratorioAnalisiController : Controller
     {
+        [ViewItem(nameof(Index), "Laboratori analisi", "Lista")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           

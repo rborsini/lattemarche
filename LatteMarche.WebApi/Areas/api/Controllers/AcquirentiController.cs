@@ -29,8 +29,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Acquirenti", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -46,6 +46,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Acquirenti", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -60,6 +61,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Update), "Acquirenti", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] AcquirenteDto model)
         {
@@ -75,6 +77,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Create), "Acquirenti", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] AcquirenteDto model)
         {
@@ -90,6 +93,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Delete), "Acquirenti", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
@@ -104,6 +108,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(e);
             }
         }
+
         #endregion
 
 

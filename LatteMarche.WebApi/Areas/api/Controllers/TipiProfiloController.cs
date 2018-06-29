@@ -31,8 +31,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Tipi profilo", "Lista")]
         [HttpGet]
-        [HttpPost]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Index()
         {
@@ -47,6 +47,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Tipi profilo", "Dettaglio")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Details(int id)

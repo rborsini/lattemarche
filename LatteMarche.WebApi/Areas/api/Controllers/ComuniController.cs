@@ -31,8 +31,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Comuni", "Lista")]
         [HttpGet]
-        [HttpPost]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Index()
         {
@@ -48,6 +48,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Comuni", "Dettaglio")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Details(int id)
@@ -62,6 +63,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Search), "Comuni", "Ricerca")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(string provincia)
@@ -76,6 +78,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Province), "Comuni", "Province")]
         [HttpGet]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Province()

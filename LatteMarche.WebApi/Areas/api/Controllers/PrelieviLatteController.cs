@@ -48,8 +48,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Prelievi latte", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -63,6 +63,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Prelievi latte", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -77,6 +78,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Save), "Prelievi latte", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] PrelievoLatteDto model)
         {
@@ -97,6 +99,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Synch), "Prelievi latte", "Sincronizzazione")]
         [HttpPost]
         //[AllowAnonymous]
         public IHttpActionResult Synch()
@@ -130,7 +133,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             return Ok("ok");
         }
 
-
+        [ViewItem(nameof(Delete), "Prelievi latte", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
@@ -145,8 +148,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
-        [HttpPost]
         [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(string idAllevamento = "", string dal = "", string al = "")
         {
