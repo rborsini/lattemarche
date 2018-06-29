@@ -19,17 +19,26 @@
             </li>
             @if (Request.IsAuthenticated)
             {
-                <li class="nav-item @utentiActive">
-                    @Html.ActionLink("Utenti", "Index", "Utenti", null, new { @class = "nav-link" })
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Utenti", "Index", "Utenti", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Trasportatori", "Index", "Trasportatori", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Prelievi latte", "Index", "Prelievi", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Tipi latte", "Index", "TipiLatte", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Acquirenti", "Index", "Acquirenti", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Destinatari", "Index", "Destinatari", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Laboratorio analisi", "Index", "LaboratorioAnalisi", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Sitra", "Index", "Sitra", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Normative", "Index", "Normative", null, new { @class = "dropdown-item" })
+                    </div>
                 </li>
-                <li class="nav-item @trasportatoriActive">
-                    @Html.ActionLink("Trasportatori", "Index", "Trasportatori", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item @prelieviActive">
-                    @Html.ActionLink("Prelievi latte", "Index", "Prelievi", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item @tipiLatteActive">
-                    @Html.ActionLink("Gestione tipi latte", "Index", "TipiLatte", null, new { @class = "nav-link" })
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Amministrazione</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Azioni", "Index", "Azioni", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Ruoli", "Index", "Ruoli", null, new { @class = "dropdown-item" })
+                    </div>
                 </li>
             }
 

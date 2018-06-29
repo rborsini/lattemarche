@@ -1,14 +1,19 @@
 ﻿@using LatteMarche.WebApi.Models
 
 <!-- Pannello conferma avvenuto salvataggio -->
-@Html.Partial("_NotificationDialog", new DialogViewModel()
+@*@Html.Partial("_NotificationDialog", new DialogViewModel()
 {
     Id = "save-dialog-panel",
     Title = "Conferma salvataggio",
     Message = "Il giro è stato salvato correttamente"
-})
+})*@
 
-<!-- Modale per selezione priorità -->
+<div id="trasportatori-page" class="container">
+    <h1>Trasportatori</h1>
+</div>
+
+
+@*<!-- Modale per selezione priorità -->
 <div class="modal fade" id="modale-priorita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -552,4 +557,4 @@
         }
 
     });
-</script>
+</script>*@
