@@ -6108,6 +6108,9 @@ body {
   padding: 4px 10px;
   font-size: 0.9rem; }
 
+.main-logo {
+  width: 7rem; }
+
 .page-item.active .page-link {
   background-color: #7158be;
   border-color: #7158be; }
