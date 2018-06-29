@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LatteMarche.Application.Ruoli.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace LatteMarche.WebApi.Attributes
     public class MvcCustomAuthorize : AuthorizeAttribute
     {
         // http://docs.autofac.org/en/latest/integration/mvc.html
-        //public IAutorizzazioniService service { get; set; }
+        public IAutorizzazioniService service { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -20,8 +21,8 @@ namespace LatteMarche.WebApi.Attributes
             string userName = httpContext.User.Identity.Name;
 
 
-            return httpContext.User.Identity.IsAuthenticated;
-            //return service.Authorize(HttpContext.Current.Session, userName, "MVC", controllerName, actionName);
+            //return httpContext.User.Identity.IsAuthenticated;
+            return service.Authorize(HttpContext.Current.Session, userName, "MVC", controllerName, actionName);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

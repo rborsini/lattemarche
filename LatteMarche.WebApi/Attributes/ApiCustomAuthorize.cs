@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using LatteMarche.Application.Ruoli.Interfaces;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Net.Http;
 
 namespace LatteMarche.WebApi.Attributes
 {
@@ -17,15 +16,15 @@ namespace LatteMarche.WebApi.Attributes
 
             ////http://docs.autofac.org/en/latest/integration/webapi.html#register-the-filter-provider
             //// Standard Web API Filters are Singletons
-            //var requestScope = actionContext.ControllerContext.Request.GetDependencyScope();
+            var requestScope = actionContext.ControllerContext.Request.GetDependencyScope();
 
-            //IAutorizzazioniService service = requestScope.GetService(typeof(IAutorizzazioniService)) as IAutorizzazioniService;
+            IAutorizzazioniService service = requestScope.GetService(typeof(IAutorizzazioniService)) as IAutorizzazioniService;
 
             ////https://soabubblog.wordpress.com/2013/07/10/web-api-sessions/
 
-            //return service.Authorize(HttpContext.Current.Session, userName, "API", controllerName, actionName);
+            return service.Authorize(HttpContext.Current.Session, userName, "API", controllerName, actionName);
 
-            return HttpContext.Current.User.Identity.IsAuthenticated;
+            //return HttpContext.Current.User.Identity.IsAuthenticated;
         }
     }
 }

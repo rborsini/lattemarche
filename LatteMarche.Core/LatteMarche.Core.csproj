@@ -46,6 +46,8 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="Models\Allevamento.cs" />
+    <Compile Include="Models\Autorizzazione.cs" />
+    <Compile Include="Models\Azione.cs" />
     <Compile Include="Models\Destinatario.cs" />
     <Compile Include="Models\Giro.cs" />
     <Compile Include="Models\AllevamentoXGiro.cs" />
@@ -53,6 +55,8 @@
     <Compile Include="Models\Lotto.cs" />
     <Compile Include="Models\PrelievoLatte.cs" />
     <Compile Include="Models\Aquirente.cs" />
+    <Compile Include="Models\RuoloUtente.cs" />
+    <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Synch.cs" />
     <Compile Include="Models\V_Allevamento.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />

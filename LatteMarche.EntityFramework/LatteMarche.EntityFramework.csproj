@@ -116,6 +116,10 @@
     <Compile Include="Migrations\201803081515023_FlagInvioSitra_TipiLatte.Designer.cs">
       <DependentUpon>201803081515023_FlagInvioSitra_TipiLatte.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806291334380_AggiunteTabelleAutorizzazioni.cs" />
+    <Compile Include="Migrations\201806291334380_AggiunteTabelleAutorizzazioni.Designer.cs">
+      <DependentUpon>201806291334380_AggiunteTabelleAutorizzazioni.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -191,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803081515023_FlagInvioSitra_TipiLatte.resx">
       <DependentUpon>201803081515023_FlagInvioSitra_TipiLatte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806291334380_AggiunteTabelleAutorizzazioni.resx">
+      <DependentUpon>201806291334380_AggiunteTabelleAutorizzazioni.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

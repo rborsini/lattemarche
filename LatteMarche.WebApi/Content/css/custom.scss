@@ -15,7 +15,7 @@ $success: #477F38;
 $warning: #DDB967;
 $info: #8283E4;
 $light: #F8F9FA;
-$dark: #4810ef;
+$dark: rgb(113,88,190);
 
 $body-bg: $secondary;
 $enable-rounded: false;
@@ -29,4 +29,23 @@ body {
 .form-control {
     padding: 4px 10px;
     font-size: 0.9rem;
+}
+
+.main-logo {
+    width: 7rem;
+}
+
+.page-item.active .page-link {
+    background-color: rgb(113,88,190);
+    border-color: rgb(113,88,190);
+}
+
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #f5f5f5;
+    p {
+        font-size: 0.8rem;
+    }
 }

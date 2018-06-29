@@ -31,8 +31,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Tipi latte", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -46,6 +46,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Tipi latte", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -59,6 +60,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
+        [ViewItem(nameof(Create), "Tipi latte", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] TipoLatteDto model)
         {
@@ -73,6 +75,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Update), "Tipi latte", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] TipoLatteDto model)
         {

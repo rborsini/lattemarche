@@ -9,6 +9,7 @@ using WebApi.OutputCache.V2;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
+
     public class AllevatoriController : ApiController
     {
 

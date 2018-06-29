@@ -14,6 +14,7 @@ using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.Application.Lotti.Dtos;
+using LatteMarche.Application.Ruoli.Dtos;
 
 namespace LatteMarche.Application
 {
@@ -24,19 +25,23 @@ namespace LatteMarche.Application
 	{
 		public static void Configure()
 		{
-			UtentiMappings.Configure();
+
+            AcquirentiMappings.Configure();
+            AllevamentiMappings.Configure();
+            AllevatoriMappings.Configure();
+            AzioneMappings.Configure();
             ComuniMappings.Configure();
+            DestinatarioMappings.Configure();
+            GiriMappings.Configure();
+            LaboratoriAnalisiMappings.Configure();
+            LottiMappings.Configure();
+            PrelieviLatteMappings.Configure();
+            RuoloMappings.Configure();
             TipiLatteMappings.Configure();
             TipiProfiloMappings.Configure();
-            AllevatoriMappings.Configure();
-            AllevamentiMappings.Configure();
             TrasportatoriMappings.Configure();
-            GiriMappings.Configure();
-            PrelieviLatteMappings.Configure();
-            LaboratoriAnalisiMappings.Configure();
-            AcquirentiMappings.Configure();
-            DestinatarioMappings.Configure();
-            LottiMappings.Configure();
+            UtentiMappings.Configure();
+            
         }
 	}
 

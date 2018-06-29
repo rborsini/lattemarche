@@ -30,8 +30,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Allevamenti", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index()
         {
             try
@@ -61,6 +61,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Allevamenti", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -75,6 +76,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Update), "Allevamenti", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] AllevamentoDto model)
         {
@@ -89,6 +91,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Create), "Allevamenti", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] AllevamentoDto model)
         {
@@ -103,6 +106,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Delete), "Allevamenti", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

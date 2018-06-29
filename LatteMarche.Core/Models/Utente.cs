@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -70,5 +71,7 @@ namespace LatteMarche.Core.Models
 
         [Column("NOTE")]
         public string Note { get; set; }
+
+        public virtual List<RuoloUtente> RuoliUtente { get; set; }
     }
 }

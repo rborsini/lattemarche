@@ -30,8 +30,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Methods
 
+        [ViewItem(nameof(Index), "Giri", "Lista")]
         [HttpGet]
-        [HttpPost]
         public IHttpActionResult Index(int idTrasportatore)
         {
             try
@@ -45,6 +45,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Details), "Giri", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)
         {
@@ -59,6 +60,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Update), "Giri", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] GiroDto model)
         {
@@ -73,6 +75,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             
         }
 
+        [ViewItem(nameof(Create), "Giri", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] GiroDto model)
         {
@@ -87,6 +90,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
+        [ViewItem(nameof(Delete), "Giri", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
