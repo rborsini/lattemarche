@@ -54,6 +54,7 @@
     function loadAzioni() {
         // Caricamento dati JSON
         $.getJSON(url, function (result) {
+            console.log("azioni", result);
             $('#waiter').modal('hide');
             table.fnClearTable();
             if (result.length > 0) {

@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
-    [ApiCustomAuthorize]
+    //[ApiCustomAuthorize]
     //[ApiActionFilter]
     //[ApiExceptionFilter]
     public class AzioniController : ApiController
@@ -22,12 +22,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         }
 
         [ViewItem("Index", "Azioni", "Lista")]
+        [HttpGet]
         public IHttpActionResult Index()
         {
             return Ok(this.azioniService.Index());
         }
 
         [ViewItem("Details", "Azioni", "Dettaglio")]
+        [HttpGet]
         public IHttpActionResult Details(string id)
         {
             return Ok(this.azioniService.Details(id));
