@@ -39,3 +39,13 @@ body {
     background-color: rgb(113,88,190);
     border-color: rgb(113,88,190);
 }
+
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #f5f5f5;
+    p {
+        font-size: 0.8rem;
+    }
+}
