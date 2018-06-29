@@ -216,6 +216,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\api\Controllers\AcquirentiController.cs" />
     <Compile Include="Areas\api\Controllers\AllevamentiController.cs" />
+    <Compile Include="Areas\api\Controllers\AzioniController.cs" />
     <Compile Include="Areas\api\Controllers\DestinatariController.cs" />
     <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
     <Compile Include="Areas\api\Controllers\UtentiController.cs" />
+    <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

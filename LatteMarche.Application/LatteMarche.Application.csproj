@@ -85,6 +85,14 @@
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="Comuni\Dtos\ComuniSearchDto.cs" />
     <Compile Include="Giri\Dtos\GiroItemDto.cs" />
+    <Compile Include="Ruoli\Dtos\AzioneDto.cs" />
+    <Compile Include="Ruoli\Dtos\RuoloDto.cs" />
+    <Compile Include="Ruoli\Interfaces\IAutorizzazioniService.cs" />
+    <Compile Include="Ruoli\Interfaces\IAzioniService.cs" />
+    <Compile Include="Ruoli\Interfaces\IRuoliService.cs" />
+    <Compile Include="Ruoli\Services\AutorizzazioniService.cs" />
+    <Compile Include="Ruoli\Services\AzioniService.cs" />
+    <Compile Include="Ruoli\Services\RuoliService.cs" />
     <Compile Include="Sitra\Interfaces\ISitraService.cs" />
     <Compile Include="Sitra\Services\SitraService.cs" />
     <Compile Include="Sitra\Dtos\SitraDto.cs" />

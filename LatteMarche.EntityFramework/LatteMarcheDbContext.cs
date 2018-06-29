@@ -12,7 +12,9 @@ namespace LatteMarche.EntityFramework
 {
 	public class LatteMarcheDbContext : DbContext, IContext
 	{
-		public DbSet<Utente> Utenti { get; set; }
+        public DbSet<Autorizzazione> Autorizzazioni { get; set; }
+        public DbSet<Azione> Azioni { get; set; }
+        public DbSet<Utente> Utenti { get; set; }
         public DbSet<Comune> Comuni { get; set; }
         public DbSet<TipoLatte> TipiLatte { get; set; }
         public DbSet<TipoProfilo> TipiProfilo { get; set; }
@@ -27,7 +29,8 @@ namespace LatteMarche.EntityFramework
         public DbSet<Acquirente> Acquirenti { get; set; }
         public DbSet<Destinatario> Destinatari { get; set; }
         public DbSet<Lotto> Lotti { get; set; }
-
+        public DbSet<Ruolo> Ruoli { get; set; }
+        public DbSet<RuoloUtente> RuoliUtente { get; set; }
 
 
         public LatteMarcheDbContext()
