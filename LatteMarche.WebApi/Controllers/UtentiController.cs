@@ -35,15 +35,6 @@ namespace LatteMarche.WebApi.Controllers
 
         //
         // GET: /Utente/Details
-        [ViewItem(nameof(Details), "Utenti", "Modifica")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
-        public ActionResult Details()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Utente/Details
         [ViewItem(nameof(Edit), "Utenti", "Modifica")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Edit()

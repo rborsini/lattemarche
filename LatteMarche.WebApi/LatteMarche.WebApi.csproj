@@ -294,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Utenti\Details.cshtml" />
     <Content Include="Views\Utenti\New.cshtml" />
     <Content Include="Views\Utenti\Index.cshtml" />
     <Content Include="Views\Shared\_ItemNotFound.cshtml" />
