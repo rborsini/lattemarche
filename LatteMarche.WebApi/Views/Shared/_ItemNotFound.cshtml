@@ -1,13 +1,7 @@
 ﻿@using LatteMarche.WebApi.Models
 @model DialogViewModel
 
-
-<!-- Pannello di visualizzazione 404 -->
-<div class="alert alert-brand m-alert m-alert--icon m-alert--air m-alert--square m--margin-bottom-30 d-none" id="@Model.Id" role="alert" style="margin:1.25em">
-    <div class="m-alert__icon">
-        <i class="flaticon-exclamation-1"></i>
-    </div>
-    <div class="m-alert__text">
-        @Model.Message
-    </div>
+<!-- Pannello di errore 404 -->
+<div class="container alert alert-danger mt-3" role="alert" id="@Model.Id">
+    <strong>@Model.Message</strong>
 </div>
