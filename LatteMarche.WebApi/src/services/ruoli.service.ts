@@ -16,6 +16,8 @@ export class RuoliService {
         return axios.put('/api/ruoli/update', ruolo);
     }
 
-    
+    public create(ruolo: Ruolo): AxiosPromise<Ruolo> {
+        return axios.put('/api/ruoli/create', ruolo);
+    }
 
 }
