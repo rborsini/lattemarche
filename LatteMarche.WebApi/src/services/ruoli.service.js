@@ -11,6 +11,9 @@ var RuoliService = /** @class */ (function () {
     RuoliService.prototype.update = function (ruolo) {
         return axios.put('/api/ruoli/update', ruolo);
     };
+    RuoliService.prototype.create = function (ruolo) {
+        return axios.put('/api/ruoli/create', ruolo);
+    };
     return RuoliService;
 }());
 export { RuoliService };

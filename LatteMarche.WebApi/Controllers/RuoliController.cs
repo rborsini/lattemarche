@@ -26,5 +26,12 @@ namespace LatteMarche.WebApi.Controllers
             return View();
         }
 
+        [ViewItem(nameof(New), "Ruoli", "Aggiungi")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        public ActionResult New()
+        {
+            return View();
+        }
+
     }
 }

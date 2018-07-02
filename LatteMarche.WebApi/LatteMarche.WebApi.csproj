@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\ruoli_details_page.js" />
+    <Content Include="build\ruoli_new_page.js" />
     <Content Include="build\utenti_details_page.js" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\custom.min.css" />
@@ -188,12 +189,14 @@
     <Content Include="Views\Azioni\Index.cshtml" />
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
     <Content Include="Views\Ruoli\Edit.cshtml" />
+    <Content Include="Views\Ruoli\New.cshtml" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\details.page.ts" />
+    <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\utenti\details.page.ts" />
     <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
