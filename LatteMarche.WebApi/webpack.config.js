@@ -4,9 +4,10 @@ var webpack = require('webpack')
 module.exports = {
     entry: {
         // percorsi uri del progetto
-        ruoli_details_page: './src/pages/ruoli/details.page.js',
-        ruoli_new_page: './src/pages/ruoli/new.page.js',
         utenti_edit_page: './src/pages/utenti/edit.page.js',
+        tipilatte_edit_page: './src/pages/tipi-latte/edit.page.js',
+        ruoli_edit_page: './src/pages/ruoli/edit.page.js',
+        ruoli_new_page: './src/pages/ruoli/new.page.js'
     },
     output: {
         path: path.resolve(__dirname, './build'),

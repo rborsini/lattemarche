@@ -168,7 +168,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
     };
     UtentiEditPage = __decorate([
         Component({
-            el: '#utenti-allevatori-edit',
+            el: '#utenti-edit',
             components: {
                 Select2: Select2,
                 Waiter: Waiter,

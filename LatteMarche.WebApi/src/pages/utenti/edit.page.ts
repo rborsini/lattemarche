@@ -25,7 +25,7 @@ declare module 'vue/types/vue' {
 }
 
 @Component({
-    el: '#utenti-allevatori-edit',
+    el: '#utenti-edit',
     components: {
         Select2,
         Waiter,
