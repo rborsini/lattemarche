@@ -89,6 +89,7 @@ var UtentiNewPage = /** @class */ (function (_super) {
             }
         });
     };
+    // carica comuni
     UtentiNewPage.prototype.loadComuni = function (SiglaProvincia) {
         var _this = this;
         this.comuniService.getComuni(SiglaProvincia)
