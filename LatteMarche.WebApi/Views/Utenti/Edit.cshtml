@@ -16,6 +16,13 @@
 
     <input hidden id="id" value="@Request["id"]" />
 
+    <!-- Nome utente -->
+    <div class="row pb-2">
+        <div class="col-12">
+            <h4 class="font-weight-bold">Utente: {{utente.Nome}} {{utente.Cognome}}</h4>
+        </div>
+    </div>
+
     <!-- ragione sociale / username -->
     <div class="row pb-3">
         <label class="col-sm-2">Ragione sociale</label>
@@ -150,6 +157,7 @@
     <!-- salva -->
     <div class="row pt-3">
         <div class="col-md-12 text-right">
+            <button class="btn btn-secondary mr-2" v-on:click="window.location = '/utenti'">Annulla</button>
             <button v-on:click="onSave()" class="btn btn-success">Salva</button>
         </div>
     </div>
