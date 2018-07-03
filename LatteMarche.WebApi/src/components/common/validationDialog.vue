@@ -11,7 +11,7 @@
                 <div class="modal-body">
 
                     <div class="row form-group">
-                        <dl class="col-xs-8 col-xs-offset-2 padding-top-30 padding-left-20 ">
+                        <dl class="col-sm-8 offset-2">
                             <dd v-for="message in messages">
                                 <h5><i class="fa fa-warning red"></i>&nbsp<strong><span class="text-danger">{{message}}</span></strong></h5>
                             </dd>

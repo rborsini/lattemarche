@@ -8,7 +8,6 @@ var TipiLatteService = /** @class */ (function () {
     TipiLatteService.prototype.getTipoLatte = function (id) {
         return axios.get('/api/tipilatte/details?id=' + id);
     };
-    //TODO
     TipiLatteService.prototype.create = function (tipolatte) {
         return axios.post('/api/tipilatte/create', tipolatte);
     };

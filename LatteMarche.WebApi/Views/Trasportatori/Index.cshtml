@@ -1,560 +1,590 @@
-﻿@using LatteMarche.WebApi.Models
+﻿<div id="trasportatori-page" class="container">
 
-<!-- Pannello conferma avvenuto salvataggio -->
-@*@Html.Partial("_NotificationDialog", new DialogViewModel()
-{
-    Id = "save-dialog-panel",
-    Title = "Conferma salvataggio",
-    Message = "Il giro è stato salvato correttamente"
-})*@
+    <!-- Pannello modale del caricamento -->
+    <waiter ref="waiter"></waiter>
 
-<div id="trasportatori-page" class="container">
-    <h1>Trasportatori</h1>
+    <!-- Pannelli modali di conferma azioni -->
+    @*<notification-dialog ref="savedDialog"
+        :title="'Conferma salvataggio'"
+        :message="'Tipo latte salvato correttamente'"
+        v-on:ok="window.location = '/tipilatte'"></notification-dialog>*@
+
+    <input hidden id="id" value="@Request["id"]" />
+
+    <!-- trasportatore -->
+    <div class="row form-group">
+        <label class="col-sm-2 offset-1">Trasportatore</label>
+        <div class="col-sm-6">
+            <select2 class="form-control"
+                     :options="trasportatori"
+                     :value.sync="trasportatori.Cognome"
+                     :value-field="'Id'"
+                     :text-field="'Cognome'" />
+        </div>
+    </div>
+
+    <!-- giro allevamenti -->
+    <div class="row form-group">
+        <label class="col-sm-2 offset-1">Giro degli allevamenti</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 offset-3 text-right">
+            <button class="btn btn-secondary mr-2" data-dismiss="modal">Aggiungi giro</button>
+            <button v-on:click="onSave()" class="btn btn-success">Modifica giro</button>
+        </div>
+    </div>
+
 </div>
+
+<script type="application/javascript" src="~/build/trasportatori_edit_page.js"></script>
 
 
 @*<!-- Modale per selezione priorità -->
-<div class="modal fade" id="modale-priorita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+    <div class="modal fade" id="modale-priorita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
 
-            <!-- header modale -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    L'indice di priorità indica il percorso seguito dal trasportatore. Inserire una sequenza numerica dei soli allevamenti segnati del check.
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="600" style="max-height: 600px; height: 600px; position: relative; overflow: visible;">
-                    <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-
-                        <!-- ko foreach: RigheAllevamenti -->
-
-                            <div class="m-form__group form-group row">
-
-                                <!-- SX -->
-                                <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
-                                    <label>
-                                        <input type="checkbox" data-bind="checked: $data.Selezionato_SX" >
-                                        <span></span>
-                                    </label>
-                                </span>
-                                <div class="col-5">
-                                    <input type="number" data-bind="value: $data.Priorita_SX, enable: $data.Selezionato_SX" class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
-                                    <div class="m-widget5__content" style="margin:10px">
-                                        <div class="m-list-timeline">
-                                            <div class="m-list-timeline__items">
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Ragione sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_SX" ></span>
-                                                    </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_SX" ></span>
-                                                    </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Indirizzo allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_SX" ></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- DX -->
-                                <span data-bind="visible: $data.Visible_DX" class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
-                                    <label>
-                                        <input type="checkbox" data-bind="checked: $data.Selezionato_DX">
-                                        <span></span>
-                                    </label>
-                                </span>
-
-                                <div class="col-5" data-bind="visible: $data.Visible_DX" >
-                                    <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
-                                    <div class="m-widget5__content" style="margin:10px">
-                                        <div class="m-list-timeline">
-                                            <div class="m-list-timeline__items">
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Ragione sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_DX"></span>
-                                                    </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_DX"></span>
-                                                    </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge"></span>
-                                                    <span class="m-list-timeline__text">
-                                                        <strong>Indirizzo allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_DX"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        <!-- /ko -->
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-outline-warning" data-dismiss="modal">
-                    Ritorna in dashboard
-                </button>
-                <button data-bind="click: SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info">
-                    Salva
-                </button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modale aggiungi giro -->
-<div class="modal fade" id="modale-nuovo-giro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Dettaglio giro
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <!-- Codice Giro -->
-                <div class="form-group m-form__group row">
-                    <label class="col-lg-2"></label>
-                    <label class="col-lg-2 col-form-label">
-                        Codice:
-                    </label>
-                    <div class="col-lg-4">
-                        <div class="m-select2 m-select2--pill">
-                            <input type="text" data-bind="value: NuovoGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Denominazione -->
-                <div class="form-group m-form__group row">
-                    <label class="col-lg-2"></label>
-                    <label class="col-lg-2 col-form-label">
-                        Denominazione:
-                    </label>
-                    <div class="col-lg-4">
-                        <input type="text" data-bind="value: NuovoGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
-                    Annulla
-                </button>
-                <button data-bind="click: NuovoGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
-                    Salva
-                </button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modale modifica giro -->
-<div class="modal fade" id="modale-dettaglio-giro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Dettaglio giro
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <!-- Codice Giro -->
-                <div class="form-group m-form__group row">
-                    <label class="col-lg-2"></label>
-                    <label class="col-lg-2 col-form-label">
-                        Codice:
-                    </label>
-                    <div class="col-lg-4">
-                        <div class="m-select2 m-select2--pill">
-                            <input type="text" data-bind="value: DettaglioGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Denominazione -->
-                <div class="form-group m-form__group row">
-                    <label class="col-lg-2"></label>
-                    <label class="col-lg-2 col-form-label">
-                        Denominazione:
-                    </label>
-                    <div class="col-lg-4">
-                        <input type="text" data-bind="value: DettaglioGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
-                    Annulla
-                </button>
-                <button data-bind="click: SalvaGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
-                    Salva
-                </button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="col-lg-12" style="margin-top:1em">
-
-    <!-- Copertura Territoriale dei Trasportatori -->
-    <div class="m-portlet m-portlet--mobile">
-        <div class="m-portlet__head">
-            <div class="m-portlet__head-caption">
-                <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text">
-                        Copertura territoriale dei trasportatori
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="m-portlet__body">
-
-            <!-- Trasportatore -->
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2"></label>
-                <label class="col-lg-2 col-form-label" style="text-align:right">
-                    Trasportatore:
-                </label>
-                <div class="col-lg-4">
-                    <div class="m-select2 m-select2--pill">
-                        <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Giri allevamento -->
-            <div class="form-group m-form__group row">
-                <label class="col-lg-2"></label>
-                <label class="col-lg-2 col-form-label" style="text-align:right">
-                    Giro degli allevamenti:
-                </label>
-                <div class="col-lg-4">
-                    <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--pill m_">
-                        <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
-                        <select data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Id', optionsText: 'Denominazione', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti" class="form-control m-select2"></select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottoni -->
-            <div class="form-group m-form__group row">
-                <label class="col-lg-4"></label>
-                <div class="col-lg-3">
-                    <div class="m-portlet__head-tools">
-                        <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <button data-bind="click: AggiungiGiro_Clicked" class="btn m-btn--pill btn-info">+ Aggiungi giro</button>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <button data-bind="click: ModificaGiro_Clicked" class="btn m-btn--pill btn-warning">Modifica giro</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carica allevamenti -->
-            <div class="form-group m-form__group row">
-                <label class="col-lg-4"></label>
-                <label class="col-lg-4 col-form-label">
-                    <button data-bind="click: CaricaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info btn-block" data-toggle="modal">
-                        Carica gli allevamenti in cui si reca il trasportatore
+                <!-- header modale -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        L'indice di priorità indica il percorso seguito dal trasportatore. Inserire una sequenza numerica dei soli allevamenti segnati del check.
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
                     </button>
-                </label>
+                </div>
+
+                <div class="modal-body">
+                    <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="600" style="max-height: 600px; height: 600px; position: relative; overflow: visible;">
+                        <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
+
+                            <!-- ko foreach: RigheAllevamenti -->
+
+                                <div class="m-form__group form-group row">
+
+                                    <!-- SX -->
+                                    <span class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
+                                        <label>
+                                            <input type="checkbox" data-bind="checked: $data.Selezionato_SX" >
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                    <div class="col-5">
+                                        <input type="number" data-bind="value: $data.Priorita_SX, enable: $data.Selezionato_SX" class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
+                                        <div class="m-widget5__content" style="margin:10px">
+                                            <div class="m-list-timeline">
+                                                <div class="m-list-timeline__items">
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Ragione sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_SX" ></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_SX" ></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Indirizzo allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_SX" ></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- DX -->
+                                    <span data-bind="visible: $data.Visible_DX" class="m-switch m-switch--outline m-switch--icon m-switch--info col-1">
+                                        <label>
+                                            <input type="checkbox" data-bind="checked: $data.Selezionato_DX">
+                                            <span></span>
+                                        </label>
+                                    </span>
+
+                                    <div class="col-5" data-bind="visible: $data.Visible_DX" >
+                                        <input type="number" data-bind="value: $data.Priorita_DX, enable: $data.Selezionato_DX"  class="form-control m-input m-input--pill" placeholder="Priorità" style="font-weight:600">
+                                        <div class="m-widget5__content" style="margin:10px">
+                                            <div class="m-list-timeline">
+                                                <div class="m-list-timeline__items">
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Ragione sociale:</strong><br /><span data-bind="text: $data.RagioneSociale_DX"></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Allevatore:</strong><br /><span data-bind="text: $data.Allevatore_DX"></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge"></span>
+                                                        <span class="m-list-timeline__text">
+                                                            <strong>Indirizzo allevamento:</strong><br /><span data-bind="text: $data.Indirizzo_DX"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <!-- /ko -->
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn m-btn--pill btn-outline-warning" data-dismiss="modal">
+                        Ritorna in dashboard
+                    </button>
+                    <button data-bind="click: SalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info">
+                        Salva
+                    </button>
+                </div>
             </div>
 
         </div>
     </div>
 
-</div>
+    <!-- Modale aggiungi giro -->
+    <div class="modal fade" id="modale-nuovo-giro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Dettaglio giro
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Codice Giro -->
+                    <div class="form-group m-form__group row">
+                        <label class="col-lg-2"></label>
+                        <label class="col-lg-2 col-form-label">
+                            Codice:
+                        </label>
+                        <div class="col-lg-4">
+                            <div class="m-select2 m-select2--pill">
+                                <input type="text" data-bind="value: NuovoGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Denominazione -->
+                    <div class="form-group m-form__group row">
+                        <label class="col-lg-2"></label>
+                        <label class="col-lg-2 col-form-label">
+                            Denominazione:
+                        </label>
+                        <div class="col-lg-4">
+                            <input type="text" data-bind="value: NuovoGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
+                        Annulla
+                    </button>
+                    <button data-bind="click: NuovoGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
+                        Salva
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modale modifica giro -->
+    <div class="modal fade" id="modale-dettaglio-giro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Dettaglio giro
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Codice Giro -->
+                    <div class="form-group m-form__group row">
+                        <label class="col-lg-2"></label>
+                        <label class="col-lg-2 col-form-label">
+                            Codice:
+                        </label>
+                        <div class="col-lg-4">
+                            <div class="m-select2 m-select2--pill">
+                                <input type="text" data-bind="value: DettaglioGiro_Codice" class="form-control m-input m-input--pill" placeholder="Codice">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Denominazione -->
+                    <div class="form-group m-form__group row">
+                        <label class="col-lg-2"></label>
+                        <label class="col-lg-2 col-form-label">
+                            Denominazione:
+                        </label>
+                        <div class="col-lg-4">
+                            <input type="text" data-bind="value: DettaglioGiro_Denominazione" class="form-control m-input m-input--pill" placeholder="Denominazione">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
+                        Annulla
+                    </button>
+                    <button data-bind="click: SalvaGiro_Clicked" type="button" class="btn m-btn--pill btn-success">
+                        Salva
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
-<script type="text/javascript">
+    <div class="col-lg-12" style="margin-top:1em">
 
-    var viewModel = null;
-    var giroSelezionato = null;
+        <!-- Copertura Territoriale dei Trasportatori -->
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Copertura territoriale dei trasportatori
+                        </h3>
+                    </div>
+                </div>
+            </div>
 
-    jQuery(document).ready(function () {
+            <div class="m-portlet__body">
 
-        viewModel = {
+                <!-- Trasportatore -->
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2"></label>
+                    <label class="col-lg-2 col-form-label" style="text-align:right">
+                        Trasportatore:
+                    </label>
+                    <div class="col-lg-4">
+                        <div class="m-select2 m-select2--pill">
+                            <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" id="m_select2_12_3" name="param" data-placeholder="Selezione trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-            // trasportatori
-            Trasportatori: ko.observableArray(),
-            TrasportatoreSelezionato: ko.observable(),
+                <!-- Giri allevamento -->
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-2"></label>
+                    <label class="col-lg-2 col-form-label" style="text-align:right">
+                        Giro degli allevamenti:
+                    </label>
+                    <div class="col-lg-4">
+                        <div class="btn-group bootstrap-select form-control m-bootstrap-select m-bootstrap-select--pill m_">
+                            <div class="dropdown-menu open" role="combobox" x-placement="bottom-start" style="max-height: 295.828px; overflow: hidden; min-height: 0px; position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;"></div>
+                            <select data-bind="options: GiriAllevamento, value: GiroAllevamentoSelezionato, optionsValue: 'Id', optionsText: 'Denominazione', optionsCaption: '', select2: {allowClear: true}" name="param" data-placeholder="Seleziona il Giro degli Allevamenti" class="form-control m-select2"></select>
+                        </div>
+                    </div>
+                </div>
 
-            // giri
-            GiriAllevamento: ko.observableArray(),
-            GiroAllevamentoSelezionato: ko.observable(),
+                <!-- Bottoni -->
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-4"></label>
+                    <div class="col-lg-3">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <button data-bind="click: AggiungiGiro_Clicked" class="btn m-btn--pill btn-info">+ Aggiungi giro</button>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <button data-bind="click: ModificaGiro_Clicked" class="btn m-btn--pill btn-warning">Modifica giro</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            // aggiungi giro
-            NuovoGiro_Codice: ko.observable(),
-            NuovoGiro_Denominazione: ko.observable(),
+                <!-- Carica allevamenti -->
+                <div class="form-group m-form__group row">
+                    <label class="col-lg-4"></label>
+                    <label class="col-lg-4 col-form-label">
+                        <button data-bind="click: CaricaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-info btn-block" data-toggle="modal">
+                            Carica gli allevamenti in cui si reca il trasportatore
+                        </button>
+                    </label>
+                </div>
 
-            // modifica giro
-            DettaglioGiro_Codice: ko.observable(),
-            DettaglioGiro_Denominazione: ko.observable(),
+            </div>
+        </div>
 
-            // dettaglio trasportatore
-            Trasportatore_Nome: ko.observable(''),
-            Trasportatore_Indirizzo: ko.observable(''),
+    </div>
 
-            // allevamenti
-            RigheAllevamenti: ko.observableArray()
 
-        };
+    <script type="text/javascript">
 
-        // evento click bottone 'Aggiungi Giro'
-        viewModel.AggiungiGiro_Clicked = function () {
+        var viewModel = null;
+        var giroSelezionato = null;
 
-            $('#modale-nuovo-giro').modal('show');
-            viewModel.NuovoGiro_Codice('');
-            viewModel.NuovoGiro_Denominazione('');
+        jQuery(document).ready(function () {
 
-        };
+            viewModel = {
 
-        // evento click bottone 'Modifica Giro'
-        viewModel.ModificaGiro_Clicked = function () {
+                // trasportatori
+                Trasportatori: ko.observableArray(),
+                TrasportatoreSelezionato: ko.observable(),
 
-            $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
+                // giri
+                GiriAllevamento: ko.observableArray(),
+                GiroAllevamentoSelezionato: ko.observable(),
 
-                giroSelezionato = result;
+                // aggiungi giro
+                NuovoGiro_Codice: ko.observable(),
+                NuovoGiro_Denominazione: ko.observable(),
 
-                viewModel.DettaglioGiro_Codice(result.CodiceGiro);
-                viewModel.DettaglioGiro_Denominazione(result.Denominazione);
+                // modifica giro
+                DettaglioGiro_Codice: ko.observable(),
+                DettaglioGiro_Denominazione: ko.observable(),
 
-                $('#modale-dettaglio-giro').modal('show');
+                // dettaglio trasportatore
+                Trasportatore_Nome: ko.observable(''),
+                Trasportatore_Indirizzo: ko.observable(''),
 
-            });
-        }
+                // allevamenti
+                RigheAllevamenti: ko.observableArray()
 
-        // evento click botton 'Salva Giro' (popup aggiungi giro)
-        viewModel.NuovoGiro_Clicked = function () {
-
-            $('#modale-nuovo-giro').modal('hide');
-
-            $('#waiter').modal('show');
-            var model = {
-                CodiceGiro: viewModel.NuovoGiro_Codice(),
-                Denominazione: viewModel.NuovoGiro_Denominazione(),
-                IdTrasportatore: viewModel.TrasportatoreSelezionato()
             };
 
-            $.ajax({
-                type: 'POST',
-                url: apiUrl + "giri/create",
-                data: model,
-                dataType: 'json',
-                success: function (result) {
-                    $('#waiter').modal('hide');
-                    $('#save-dialog-panel').modal('show');
-                    BindTrasportatore(viewModel.TrasportatoreSelezionato());
-                },
-                error: function (result) {
-                    $('#waiter').modal('hide');
-                    showError('Si è verificato un errore durante il salvataggio.');
-                }
-            });
+            // evento click bottone 'Aggiungi Giro'
+            viewModel.AggiungiGiro_Clicked = function () {
 
-        }
+                $('#modale-nuovo-giro').modal('show');
+                viewModel.NuovoGiro_Codice('');
+                viewModel.NuovoGiro_Denominazione('');
 
-        // evento click bottone 'Salva Giro (popup dettaglio)'
-        viewModel.SalvaGiro_Clicked = function () {
+            };
 
-            $('#modale-dettaglio-giro').modal('hide');
+            // evento click bottone 'Modifica Giro'
+            viewModel.ModificaGiro_Clicked = function () {
 
-            viewModel.GiroAllevamentoSelezionato('');
+                $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
 
-            $('#waiter').modal('show');
-            giroSelezionato.CodiceGiro = viewModel.DettaglioGiro_Codice();
-            giroSelezionato.Denominazione = viewModel.DettaglioGiro_Denominazione();
+                    giroSelezionato = result;
 
-            $.ajax({
-                type: "PUT",
-                url: apiUrl + "giri/update",
-                data: giroSelezionato,
-                dataType: 'json',
-                success: function (result) {
-                    $('#waiter').modal('hide');
-                    $('#save-dialog-panel').modal('show');
-                    BindTrasportatore(viewModel.TrasportatoreSelezionato(), giroSelezionato.Id);
-                },
-                error: function (result) {
-                    $('#waiter').modal('hide');
-                    showError('Si è verificato un errore durante il salvataggio.');
-                }
-            });
+                    viewModel.DettaglioGiro_Codice(result.CodiceGiro);
+                    viewModel.DettaglioGiro_Denominazione(result.Denominazione);
 
-        }
+                    $('#modale-dettaglio-giro').modal('show');
 
-        // evento click bottone 'Carica allevamenti'
-        viewModel.CaricaAllevamenti_Clicked = function () {
+                });
+            }
 
-            $('#modale-priorita').modal('show');
+            // evento click botton 'Salva Giro' (popup aggiungi giro)
+            viewModel.NuovoGiro_Clicked = function () {
 
+                $('#modale-nuovo-giro').modal('hide');
 
-            $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
+                $('#waiter').modal('show');
+                var model = {
+                    CodiceGiro: viewModel.NuovoGiro_Codice(),
+                    Denominazione: viewModel.NuovoGiro_Denominazione(),
+                    IdTrasportatore: viewModel.TrasportatoreSelezionato()
+                };
 
-                giroSelezionato = result;
-                
-                for (var i = 0; i < result.Items.length; i = i+2) {
-                    var riga = {}
-
-                    var item_SX = result.Items[i];
-
-                    riga.Priorita_SX = ko.observable(item_SX.Priorita);
-                    riga.RagioneSociale_SX = ko.observable(item_SX.RagioneSociale);
-                    riga.Indirizzo_SX = ko.observable(item_SX.Indirizzo);
-                    riga.Allevatore_SX = ko.observable(item_SX.Allevatore);
-                    riga.Selezionato_SX = ko.observable(item_SX.Priorita != undefined);
-                    riga.IdAllevamento_SX = ko.observable(item_SX.IdAllevamento);
-
-                    if (i < result.Items.length - 1) {
-
-                        var item_DX = result.Items[i + 1];
-
-                        riga.Priorita_DX = ko.observable(item_DX.Priorita);
-                        riga.RagioneSociale_DX = ko.observable(item_DX.RagioneSociale);
-                        riga.Indirizzo_DX = ko.observable(item_DX.Indirizzo);
-                        riga.Allevatore_DX = ko.observable(item_DX.Allevatore);
-                        riga.Selezionato_DX = ko.observable(item_DX.Priorita != undefined);
-                        riga.IdAllevamento_DX = ko.observable(item_DX.IdAllevamento);
-                        riga.Visible_DX = ko.observable(true);
-                    } else {
-                        riga.Visible_DX = ko.observable(false);
+                $.ajax({
+                    type: 'POST',
+                    url: apiUrl + "giri/create",
+                    data: model,
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#waiter').modal('hide');
+                        $('#save-dialog-panel').modal('show');
+                        BindTrasportatore(viewModel.TrasportatoreSelezionato());
+                    },
+                    error: function (result) {
+                        $('#waiter').modal('hide');
+                        showError('Si è verificato un errore durante il salvataggio.');
                     }
+                });
 
-                    viewModel.RigheAllevamenti.push(riga);
-                }
+            }
+
+            // evento click bottone 'Salva Giro (popup dettaglio)'
+            viewModel.SalvaGiro_Clicked = function () {
+
+                $('#modale-dettaglio-giro').modal('hide');
+
+                viewModel.GiroAllevamentoSelezionato('');
+
+                $('#waiter').modal('show');
+                giroSelezionato.CodiceGiro = viewModel.DettaglioGiro_Codice();
+                giroSelezionato.Denominazione = viewModel.DettaglioGiro_Denominazione();
+
+                $.ajax({
+                    type: "PUT",
+                    url: apiUrl + "giri/update",
+                    data: giroSelezionato,
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#waiter').modal('hide');
+                        $('#save-dialog-panel').modal('show');
+                        BindTrasportatore(viewModel.TrasportatoreSelezionato(), giroSelezionato.Id);
+                    },
+                    error: function (result) {
+                        $('#waiter').modal('hide');
+                        showError('Si è verificato un errore durante il salvataggio.');
+                    }
+                });
+
+            }
+
+            // evento click bottone 'Carica allevamenti'
+            viewModel.CaricaAllevamenti_Clicked = function () {
 
                 $('#modale-priorita').modal('show');
 
-            });
 
-        };
+                $.getJSON(apiUrl + 'Giri/Details?id=' + viewModel.GiroAllevamentoSelezionato(), function (result) {
 
-        // evento click bottone 'Salva allevamenti'
-        viewModel.SalvaAllevamenti_Clicked = function () {
+                    giroSelezionato = result;
 
-            giroSelezionato.Items = [];
+                    for (var i = 0; i < result.Items.length; i = i+2) {
+                        var riga = {}
 
-            for (var i = 0; i < viewModel.RigheAllevamenti().length; i++) {
+                        var item_SX = result.Items[i];
 
-                var row = viewModel.RigheAllevamenti()[i];
-                giroSelezionato.Items.push({
-                    IdGiro: giroSelezionato.Id,
-                    IdAllevamento: row.IdAllevamento_SX(),
-                    Priorita: row.Selezionato_SX() ? parseInt(row.Priorita_SX()) : null
+                        riga.Priorita_SX = ko.observable(item_SX.Priorita);
+                        riga.RagioneSociale_SX = ko.observable(item_SX.RagioneSociale);
+                        riga.Indirizzo_SX = ko.observable(item_SX.Indirizzo);
+                        riga.Allevatore_SX = ko.observable(item_SX.Allevatore);
+                        riga.Selezionato_SX = ko.observable(item_SX.Priorita != undefined);
+                        riga.IdAllevamento_SX = ko.observable(item_SX.IdAllevamento);
+
+                        if (i < result.Items.length - 1) {
+
+                            var item_DX = result.Items[i + 1];
+
+                            riga.Priorita_DX = ko.observable(item_DX.Priorita);
+                            riga.RagioneSociale_DX = ko.observable(item_DX.RagioneSociale);
+                            riga.Indirizzo_DX = ko.observable(item_DX.Indirizzo);
+                            riga.Allevatore_DX = ko.observable(item_DX.Allevatore);
+                            riga.Selezionato_DX = ko.observable(item_DX.Priorita != undefined);
+                            riga.IdAllevamento_DX = ko.observable(item_DX.IdAllevamento);
+                            riga.Visible_DX = ko.observable(true);
+                        } else {
+                            riga.Visible_DX = ko.observable(false);
+                        }
+
+                        viewModel.RigheAllevamenti.push(riga);
+                    }
+
+                    $('#modale-priorita').modal('show');
+
                 });
 
-                if (row.Visible_DX()) {
+            };
+
+            // evento click bottone 'Salva allevamenti'
+            viewModel.SalvaAllevamenti_Clicked = function () {
+
+                giroSelezionato.Items = [];
+
+                for (var i = 0; i < viewModel.RigheAllevamenti().length; i++) {
+
+                    var row = viewModel.RigheAllevamenti()[i];
                     giroSelezionato.Items.push({
                         IdGiro: giroSelezionato.Id,
-                        IdAllevamento: row.IdAllevamento_DX(),
-                        Priorita: row.Selezionato_DX() ? parseInt(row.Priorita_DX()) : null
+                        IdAllevamento: row.IdAllevamento_SX(),
+                        Priorita: row.Selezionato_SX() ? parseInt(row.Priorita_SX()) : null
                     });
+
+                    if (row.Visible_DX()) {
+                        giroSelezionato.Items.push({
+                            IdGiro: giroSelezionato.Id,
+                            IdAllevamento: row.IdAllevamento_DX(),
+                            Priorita: row.Selezionato_DX() ? parseInt(row.Priorita_DX()) : null
+                        });
+                    }
                 }
+
+                $.ajax({
+                    type: "PUT",
+                    url: apiUrl + "giri/update",
+                    data: giroSelezionato,
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#waiter').modal('hide');
+                        $('#save-dialog-panel').modal('show');
+
+                        viewModel.RigheAllevamenti.removeAll();
+                        $('#modale-priorita').modal('hide');
+                    },
+                    error: function (result) {
+                        $('#waiter').modal('hide');
+                        showError('Si è verificato un errore durante il salvataggio.');
+                    }
+                });
+
+            };
+
+            // dettaglio del trasportatore
+            viewModel.TrasportatoreSelezionato.subscribe(function (item) {
+                BindTrasportatore(item);
+            });
+
+            ko.applyBindings(viewModel);
+
+            // caricamento trasportatori da api
+            BindTrasportatori();
+
+
+            // bind dropdown Trasportatori
+            function BindTrasportatori() {
+
+                $.getJSON(apiUrl + 'Trasportatori', function (result) {
+                    viewModel.Trasportatori(result);
+                    viewModel.TrasportatoreSelezionato(result[0].Id);
+                });
+
+            };
+
+            // bind dropdown Giri
+            function BindTrasportatore(idTrasportatore, idGiro) {
+
+                $.getJSON(apiUrl + 'Trasportatori/details?id=' + idTrasportatore, function (result) {
+                    viewModel.GiriAllevamento(result.Giri);
+
+                    if (idGiro) {
+                        viewModel.GiroAllevamentoSelezionato(idGiro);
+                    }
+
+                });
             }
 
-            $.ajax({
-                type: "PUT",
-                url: apiUrl + "giri/update",
-                data: giroSelezionato,
-                dataType: 'json',
-                success: function (result) {
-                    $('#waiter').modal('hide');
-                    $('#save-dialog-panel').modal('show');
-
-                    viewModel.RigheAllevamenti.removeAll();
-                    $('#modale-priorita').modal('hide');
-                },
-                error: function (result) {
-                    $('#waiter').modal('hide');
-                    showError('Si è verificato un errore durante il salvataggio.');
-                }
-            });
-
-        };
-
-        // dettaglio del trasportatore
-        viewModel.TrasportatoreSelezionato.subscribe(function (item) {
-            BindTrasportatore(item);
         });
-
-        ko.applyBindings(viewModel);
-
-        // caricamento trasportatori da api
-        BindTrasportatori();
-
-
-        // bind dropdown Trasportatori
-        function BindTrasportatori() {
-
-            $.getJSON(apiUrl + 'Trasportatori', function (result) {
-                viewModel.Trasportatori(result);
-                viewModel.TrasportatoreSelezionato(result[0].Id);
-            });
-
-        };
-
-        // bind dropdown Giri
-        function BindTrasportatore(idTrasportatore, idGiro) {
-
-            $.getJSON(apiUrl + 'Trasportatori/details?id=' + idTrasportatore, function (result) {
-                viewModel.GiriAllevamento(result.Giri);
-
-                if (idGiro) {
-                    viewModel.GiroAllevamentoSelezionato(idGiro);
-                }
-
-            });
-        }
-
-    });
-</script>*@
+    </script>*@

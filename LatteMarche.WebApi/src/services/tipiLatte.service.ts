@@ -13,7 +13,6 @@ export class TipiLatteService {
         return axios.get('/api/tipilatte/details?id=' + id);
     }
 
-    //TODO
     public create(tipolatte: TipoLatte): AxiosPromise<TipoLatte> {
         return axios.post('/api/tipilatte/create', tipolatte);
     }

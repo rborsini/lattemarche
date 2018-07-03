@@ -6,6 +6,7 @@ module.exports = {
         // percorsi uri del progetto
         utenti_edit_page: './src/pages/utenti/edit.page.js',
         tipilatte_edit_page: './src/pages/tipi-latte/edit.page.js',
+        trasportatori_edit_page: './src/pages/trasportatori/edit.page.js',
         ruoli_edit_page: './src/pages/ruoli/edit.page.js',
         ruoli_new_page: './src/pages/ruoli/new.page.js'
     },
