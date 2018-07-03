@@ -4,3 +4,4 @@
     public Provincia: string = "";
     public CAP: string = "";
 }
+

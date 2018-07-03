@@ -2,8 +2,16 @@ import axios from "axios";
 var ComuniService = /** @class */ (function () {
     function ComuniService() {
     }
+    ComuniService.prototype.getComuni = function (idProvincia) {
+        var url = '/api/comuni/';
+        if (idProvincia != '') {
+            url += 'search?provincia=';
+            url += idProvincia;
+        }
+        return axios.get(url);
+    };
     ComuniService.prototype.getProvince = function () {
-        return axios.get('/api/Comuni/Province');
+        return axios.get('/api/comuni/province');
     };
     return ComuniService;
 }());

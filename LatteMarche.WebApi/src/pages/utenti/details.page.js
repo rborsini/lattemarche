@@ -36,6 +36,8 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
+        _this.comuni = [];
+        _this.opzioniProvince = [];
         _this.comune = new Comune;
         _this.id = $('#id').val();
         _this.tipiLatte = new TipoLatte;
@@ -51,6 +53,10 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
             _this.opzioniSesso = _this.getOpzioniSessoUtente();
             _this.opzioniAbilitato = _this.getOpzioniAbilitato();
             _this.opzioniVisibile = _this.getOpzioniAbilitato();
+            _this.comuniService.getProvince()
+                .then(function (response) {
+                _this.opzioniProvince = response.data;
+            });
             _this.loadTipiLatte();
         });
     };
@@ -91,6 +97,15 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
             .then(function (response) {
             if (response.data != null) {
                 _this.tipiLatte = response.data;
+            }
+        });
+    };
+    UtentiDetailsPage.prototype.loadComuni = function (SiglaProvincia) {
+        var _this = this;
+        this.comuniService.getComuni(SiglaProvincia)
+            .then(function (response) {
+            if (response.data != null) {
+                _this.comuni = response.data;
             }
         });
     };

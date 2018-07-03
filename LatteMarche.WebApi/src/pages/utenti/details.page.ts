@@ -49,11 +49,13 @@ export default class UtentiDetailsPage extends Vue {
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
     public opzioniVisibile: DropdownItem[] = [];
+    public comuni: Comune[] = [];
+    public opzioniProvince: DropdownItem[] = [];
 
     private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
     private utentiServices: UtentiService;
-    
+
 
     constructor() {
         super();
@@ -75,6 +77,10 @@ export default class UtentiDetailsPage extends Vue {
             this.opzioniSesso = this.getOpzioniSessoUtente();
             this.opzioniAbilitato = this.getOpzioniAbilitato();
             this.opzioniVisibile = this.getOpzioniAbilitato();
+            this.comuniService.getProvince()
+                .then(response => {
+                    this.opzioniProvince = response.data;
+                });
             this.loadTipiLatte();
         });
     }
@@ -118,6 +124,15 @@ export default class UtentiDetailsPage extends Vue {
             .then(response => {
                 if (response.data != null) {
                     this.tipiLatte = response.data;
+                }
+            });
+    }
+
+    public loadComuni(SiglaProvincia: string): void {
+        this.comuniService.getComuni(SiglaProvincia)
+            .then(response => {
+                if (response.data != null) {
+                    this.comuni = response.data;
                 }
             });
     }

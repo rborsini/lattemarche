@@ -16,7 +16,7 @@
 
     <input hidden id="id" value="@Request["id"]" />
 
-    <!-- Nome utente -->
+    <!-- nome utente -->
     <div class="row pb-2">
         <div class="col-12">
             <h4 class="font-weight-bold">Utente: {{utente.Nome}} {{utente.Cognome}}</h4>
@@ -73,10 +73,21 @@
 
         <label class="col-sm-2">Provincia</label>
         <div class="col-sm-1">
-            <input type="text" class="form-control" v-model="utente.SiglaProvincia" />
+            @*<input type="text" class="form-control" v-model="utente.SiglaProvincia" />*@
+            <select2 class="form-control"
+                     :options="opzioniProvince"
+                     :value.sync="utente.SiglaProvincia"
+                     :value-field="'Value'"
+                     :text-field="'Text'"
+                     v-on:value-changed="loadComuni"/>
         </div>
         <div class="col-sm-3">
-            <input type="text" class="form-control" v-model="utente.IdComune" />
+            @*<input type="text" class="form-control" v-model="utente.IdComune" />*@
+            <select2 class="form-control"
+                     :options="comuni"
+                     :value.sync="utente.IdComune"
+                     :value-field="'Id'"
+                     :text-field="'Descrizione'" />
         </div>
     </div>
 
