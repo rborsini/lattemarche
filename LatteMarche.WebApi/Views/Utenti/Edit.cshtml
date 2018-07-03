@@ -1,9 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "Dettaglio utente";
-}
-
-<div id="utenti-allevatori-details" class="container">
+﻿<div id="utenti-allevatori-details" class="container-fluid">
 
     <!-- Pannello modale del caricamento -->
     <waiter ref="waiter"></waiter>
@@ -27,11 +22,11 @@
     <div class="row pb-3">
         <label class="col-sm-2">Ragione sociale</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.RagioneSociale" placeholder="Ragione sociale" />
+            <input type="text" class="form-control" v-model="utente.RagioneSociale" />
         </div>
         <label class="col-sm-2">Username</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Username" placeholder="Username" />
+            <input type="text" class="form-control" v-model="utente.Username" />
         </div>
     </div>
 
@@ -39,11 +34,11 @@
     <div class="row pb-3">
         <label class="col-sm-2">Nome</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Nome" placeholder="Nome" />
+            <input type="text" class="form-control" v-model="utente.Nome" />
         </div>
         <label class="col-sm-2">Cognome</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Cognome" placeholder="Cognome" />
+            <input type="text" class="form-control" v-model="utente.Cognome" />
         </div>
     </div>
 
@@ -73,7 +68,6 @@
 
         <label class="col-sm-2">Provincia</label>
         <div class="col-sm-1">
-            @*<input type="text" class="form-control" v-model="utente.SiglaProvincia" />*@
             <select2 class="form-control"
                      :options="opzioniProvince"
                      :value.sync="utente.SiglaProvincia"
@@ -82,7 +76,6 @@
                      v-on:value-changed="loadComuni"/>
         </div>
         <div class="col-sm-3">
-            @*<input type="text" class="form-control" v-model="utente.IdComune" />*@
             <select2 class="form-control"
                      :options="comuni"
                      :value.sync="utente.IdComune"
@@ -176,8 +169,4 @@
 </div>
 
 <script type="application/javascript" src="~/build/utenti_details_page.js"></script>
-
-
-
-
 

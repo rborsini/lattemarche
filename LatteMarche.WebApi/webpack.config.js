@@ -7,6 +7,7 @@ module.exports = {
         ruoli_details_page: './src/pages/ruoli/details.page.js',
         ruoli_new_page: './src/pages/ruoli/new.page.js',
         utenti_details_page: './src/pages/utenti/details.page.js',
+        utenti_new_page: './src/pages/utenti/new.page.js',
     },
     output: {
         path: path.resolve(__dirname, './build'),
