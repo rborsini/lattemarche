@@ -25,7 +25,7 @@ declare module 'vue/types/vue' {
 }
 
 @Component({
-    el: '#utenti-allevatori-details',
+    el: '#utenti-allevatori-edit',
     components: {
         Select2,
         Waiter,
@@ -33,7 +33,7 @@ declare module 'vue/types/vue' {
     }
 })
 
-export default class UtentiDetailsPage extends Vue {
+export default class UtentiEditPage extends Vue {
 
     $refs: {
         waiter: Vue,
@@ -56,6 +56,8 @@ export default class UtentiDetailsPage extends Vue {
     private tipiLatteService: TipiLatteService;
     private utentiServices: UtentiService;
 
+    private isNew: boolean = true;
+
 
     constructor() {
         super();
@@ -73,16 +75,30 @@ export default class UtentiDetailsPage extends Vue {
     }
 
     public mounted() {
-        this.loadUtente((utente: Utente) => {
-            this.opzioniSesso = this.getOpzioniSessoUtente();
-            this.opzioniAbilitato = this.getOpzioniAbilitato();
-            this.opzioniVisibile = this.getOpzioniAbilitato();
-            this.comuniService.getProvince()
-                .then(response => {
-                    this.opzioniProvince = response.data;
-                });
-            this.loadTipiLatte();
-        });
+        this.$refs.waiter.open();
+
+        this.comuniService.getProvince()
+            .then(response => {
+                this.opzioniProvince = response.data;
+            });
+
+        this.opzioniSesso = this.getOpzioniSessoUtente();
+        this.opzioniAbilitato = this.getOpzioniAbilitato();
+        this.opzioniVisibile = this.getOpzioniAbilitato();
+
+        //if (this.utente.SiglaProvincia != '') {
+        this.loadComuni(this.utente.SiglaProvincia);
+        //}
+
+        this.loadTipiLatte();
+
+        if (this.id != '') {
+            this.loadUtente((utente: Utente) => {
+                this.isNew = false;
+            });
+        }
+
+        this.$refs.waiter.close();
     }
 
     // carica utente
@@ -128,8 +144,9 @@ export default class UtentiDetailsPage extends Vue {
             });
     }
 
-    public loadComuni(SiglaProvincia: string): void {
-        this.comuniService.getComuni(SiglaProvincia)
+    //Carico Comuni
+    public loadComuni(provincia: string): void {
+        this.comuniService.getComuni(provincia)
             .then(response => {
                 if (response.data != null) {
                     this.comuni = response.data;
@@ -137,26 +154,53 @@ export default class UtentiDetailsPage extends Vue {
             });
     }
 
+    //Carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
+    public onComuneSelezionato(idComune: string): void {
+        if (this.utente.SiglaProvincia == '') {
+            this.comuniService.getComuneDetails(idComune)
+                .then(response => {
+                    this.utente.SiglaProvincia = response.data.Provincia;
+                })
+        }
+    }
+
     // salvataggio utente
     public onSave() {
         this.$refs.waiter.open();
-        this.utentiServices.update(this.utente)
-            .then(response => {
-                if (response.data != undefined) {
-                    // TODO: msg di validazione
-                    this.$refs.waiter.close();
-                    this.$refs.savedDialog.open();
-                } else {
-                    // save OK !!
-                    this.utente = response.data;
-                    //this.$refs.waiter.close();
-                    this.$refs.savedDialog.open();
-                }
-            });
+        if (!this.isNew) {
+            this.utentiServices.update(this.utente)
+                .then(response => {
+                    if (response.data != undefined) {
+                        // TODO: msg di validazione
+                        this.$refs.waiter.close();
+                        this.$refs.savedDialog.open();
+                    } else {
+                        // save OK !!
+                        this.utente = response.data;
+                        //this.$refs.waiter.close();
+                        this.$refs.savedDialog.open();
+                    }
+                });
+        } else {
+            this.utentiServices.create(this.utente)
+                .then(response => {
+                    if (response.data != undefined) {
+                        // TODO: msg di validazione
+                        this.$refs.waiter.close();
+                        this.$refs.savedDialog.open();
+                    } else {
+                        // save OK !!
+                        this.utente = response.data;
+                        //this.$refs.waiter.close();
+                        this.$refs.savedDialog.open();
+                    }
+                });
+        }
+
     }
 
 
 }
 
-let page = new UtentiDetailsPage();
+let page = new UtentiEditPage();
 Vue.config.devtools = true;

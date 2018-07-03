@@ -1,4 +1,4 @@
-﻿<div id="utenti-allevatori-details" class="container-fluid">
+﻿<div id="utenti-allevatori-edit" class="container-fluid">
 
     <!-- Pannello modale del caricamento -->
     <waiter ref="waiter"></waiter>
@@ -7,7 +7,7 @@
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
                          :message="'Utente salvato correttamente'"
-                         v-on:ok="window.location = '/utenti/edit?id=' + utente.Id"></notification-dialog>
+                         v-on:ok="window.location = '/utenti'"></notification-dialog>
 
     <input hidden id="id" value="@Request["id"]" />
 
@@ -80,7 +80,8 @@
                      :options="comuni"
                      :value.sync="utente.IdComune"
                      :value-field="'Id'"
-                     :text-field="'Descrizione'" />
+                     :text-field="'Descrizione'"
+                     v-on:value-changed="onComuneSelezionato"/>
         </div>
     </div>
 
@@ -168,5 +169,5 @@
 
 </div>
 
-<script type="application/javascript" src="~/build/utenti_details_page.js"></script>
+<script type="application/javascript" src="~/build/utenti_edit_page.js"></script>
 

@@ -12,6 +12,10 @@ export class UtentiService {
         return axios.put('/api/utenti/update', utente);
     }
 
+    public create(utente: Utente): AxiosPromise<Utente> {
+        return axios.post('/api/utenti/create', utente);
+    }
+
     public getDetails(id: string): AxiosPromise<Utente> {
         return axios.get('/api/utenti/details?id=' + id);
     }

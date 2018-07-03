@@ -29,15 +29,16 @@ import { Comune } from "../../models/comune.model";
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
 import { ComuniService } from "../../services/comuni.service";
-var UtentiNewPage = /** @class */ (function (_super) {
-    __extends(UtentiNewPage, _super);
-    function UtentiNewPage() {
+var UtentiEditPage = /** @class */ (function (_super) {
+    __extends(UtentiEditPage, _super);
+    function UtentiEditPage() {
         var _this = _super.call(this) || this;
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
         _this.comuni = [];
         _this.opzioniProvince = [];
+        _this.isNew = true;
         _this.comune = new Comune;
         _this.id = $('#id').val();
         _this.tipiLatte = new TipoLatte;
@@ -47,40 +48,59 @@ var UtentiNewPage = /** @class */ (function (_super) {
         _this.utentiServices = new UtentiService();
         return _this;
     }
-    UtentiNewPage.prototype.mounted = function () {
+    UtentiEditPage.prototype.mounted = function () {
         var _this = this;
-        this.opzioniSesso = this.getOpzioniSessoUtente();
-        this.opzioniAbilitato = this.getOpzioniAbilitato();
-        this.opzioniVisibile = this.getOpzioniAbilitato();
-        this.loadTipiLatte();
+        this.$refs.waiter.open();
         this.comuniService.getProvince()
             .then(function (response) {
             _this.opzioniProvince = response.data;
         });
+        this.opzioniSesso = this.getOpzioniSessoUtente();
+        this.opzioniAbilitato = this.getOpzioniAbilitato();
+        this.opzioniVisibile = this.getOpzioniAbilitato();
+        //if (this.utente.SiglaProvincia != '') {
+        this.loadComuni(this.utente.SiglaProvincia);
+        //}
+        this.loadTipiLatte();
+        if (this.id != '') {
+            this.loadUtente(function (utente) {
+                _this.isNew = false;
+            });
+        }
+        this.$refs.waiter.close();
+    };
+    // carica utente
+    UtentiEditPage.prototype.loadUtente = function (done) {
+        var _this = this;
+        this.utentiServices.getDetails(this.id)
+            .then(function (response) {
+            _this.utente = response.data;
+            done(_this.utente);
+        });
     };
     // carica dropdown sesso
-    UtentiNewPage.prototype.getOpzioniSessoUtente = function () {
+    UtentiEditPage.prototype.getOpzioniSessoUtente = function () {
         var opzioniSesso = [];
         opzioniSesso.push(new DropdownItem("M", "Maschio"));
         opzioniSesso.push(new DropdownItem("F", "Femmina"));
         return opzioniSesso;
     };
     // carica opzioni abilitato
-    UtentiNewPage.prototype.getOpzioniAbilitato = function () {
+    UtentiEditPage.prototype.getOpzioniAbilitato = function () {
         var opzioniAbilitato = [];
         opzioniAbilitato.push(new DropdownItem("true", "Si"));
         opzioniAbilitato.push(new DropdownItem("false", "No"));
         return opzioniAbilitato;
     };
     // carica opzioni visibile
-    UtentiNewPage.prototype.getOpzioniVisibile = function () {
+    UtentiEditPage.prototype.getOpzioniVisibile = function () {
         var opzioniVisibile = [];
         opzioniVisibile.push(new DropdownItem("true", "Si"));
         opzioniVisibile.push(new DropdownItem("false", "No"));
         return opzioniVisibile;
     };
-    // carica tipi latte
-    UtentiNewPage.prototype.loadTipiLatte = function () {
+    // caricamento tipi latte
+    UtentiEditPage.prototype.loadTipiLatte = function () {
         var _this = this;
         this.tipiLatteService.getTipiLatte()
             .then(function (response) {
@@ -89,38 +109,66 @@ var UtentiNewPage = /** @class */ (function (_super) {
             }
         });
     };
-    // carica comuni
-    UtentiNewPage.prototype.loadComuni = function (SiglaProvincia) {
+    //Carico Comuni
+    UtentiEditPage.prototype.loadComuni = function (provincia) {
         var _this = this;
-        this.comuniService.getComuni(SiglaProvincia)
+        this.comuniService.getComuni(provincia)
             .then(function (response) {
             if (response.data != null) {
                 _this.comuni = response.data;
             }
         });
     };
+    //Carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
+    UtentiEditPage.prototype.onComuneSelezionato = function (idComune) {
+        var _this = this;
+        if (this.utente.SiglaProvincia == '') {
+            this.comuniService.getComuneDetails(idComune)
+                .then(function (response) {
+                _this.utente.SiglaProvincia = response.data.Provincia;
+            });
+        }
+    };
     // salvataggio utente
-    UtentiNewPage.prototype.onSave = function () {
+    UtentiEditPage.prototype.onSave = function () {
         var _this = this;
         this.$refs.waiter.open();
-        this.utentiServices.update(this.utente)
-            .then(function (response) {
-            if (response.data != undefined) {
-                // TODO: msg di validazione
-                _this.$refs.waiter.close();
-                _this.$refs.savedDialog.open();
-            }
-            else {
-                // save OK !!
-                _this.utente = response.data;
-                //this.$refs.waiter.close();
-                _this.$refs.savedDialog.open();
-            }
-        });
+        if (!this.isNew) {
+            this.utentiServices.update(this.utente)
+                .then(function (response) {
+                if (response.data != undefined) {
+                    // TODO: msg di validazione
+                    _this.$refs.waiter.close();
+                    _this.$refs.savedDialog.open();
+                }
+                else {
+                    // save OK !!
+                    _this.utente = response.data;
+                    //this.$refs.waiter.close();
+                    _this.$refs.savedDialog.open();
+                }
+            });
+        }
+        else {
+            this.utentiServices.create(this.utente)
+                .then(function (response) {
+                if (response.data != undefined) {
+                    // TODO: msg di validazione
+                    _this.$refs.waiter.close();
+                    _this.$refs.savedDialog.open();
+                }
+                else {
+                    // save OK !!
+                    _this.utente = response.data;
+                    //this.$refs.waiter.close();
+                    _this.$refs.savedDialog.open();
+                }
+            });
+        }
     };
-    UtentiNewPage = __decorate([
+    UtentiEditPage = __decorate([
         Component({
-            el: '#nuovo-utente-page',
+            el: '#utenti-allevatori-edit',
             components: {
                 Select2: Select2,
                 Waiter: Waiter,
@@ -128,9 +176,9 @@ var UtentiNewPage = /** @class */ (function (_super) {
             }
         }),
         __metadata("design:paramtypes", [])
-    ], UtentiNewPage);
-    return UtentiNewPage;
+    ], UtentiEditPage);
+    return UtentiEditPage;
 }(Vue));
-export default UtentiNewPage;
-var page = new UtentiNewPage();
+export default UtentiEditPage;
+var page = new UtentiEditPage();
 Vue.config.devtools = true;

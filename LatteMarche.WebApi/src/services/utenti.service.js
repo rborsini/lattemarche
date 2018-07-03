@@ -8,6 +8,9 @@ var UtentiService = /** @class */ (function () {
     UtentiService.prototype.update = function (utente) {
         return axios.put('/api/utenti/update', utente);
     };
+    UtentiService.prototype.create = function (utente) {
+        return axios.post('/api/utenti/create', utente);
+    };
     UtentiService.prototype.getDetails = function (id) {
         return axios.get('/api/utenti/details?id=' + id);
     };

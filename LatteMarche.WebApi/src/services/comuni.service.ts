@@ -7,12 +7,18 @@ export class ComuniService {
     constructor() { }
 
     public getComuni(idProvincia: string): AxiosPromise<Comune[]> {
-        var url = '/api/comuni/';
+        var url = '/api/comuni';
         if (idProvincia != '')
         {
-            url += 'search?provincia=';
+            url += '/search?provincia=';
             url += idProvincia;
         }
+        return axios.get(url);
+    }
+
+    public getComuneDetails(idComune: string): AxiosPromise<Comune> {
+        var url = '/api/comuni/details?id=';
+        url += idComune;
         return axios.get(url);
     }
 

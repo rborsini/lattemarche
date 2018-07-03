@@ -91,7 +91,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 {
                     dropDown.Items.Add(new DropDownItem() { Value = prov, Text = prov });
                 }
-                return Ok(dropDown);
+                return Ok(dropDown.Items);
             }
             catch (Exception exc)
             {
