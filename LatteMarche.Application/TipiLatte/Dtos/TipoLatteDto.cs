@@ -11,9 +11,6 @@ namespace LatteMarche.Application.TipiLatte.Dtos
         public string DescrizioneBreve { get; set; }
         public decimal FattoreConversione { get; set; }
         public bool FlagInvioSitra { get; set; }
-
-
-
     }
 
     public class TipiLatteMappings

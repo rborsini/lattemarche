@@ -178,6 +178,7 @@
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
     <Content Include="src\pages\azioni\index.page.js" />
+    <Content Include="src\pages\normative\index.page.js" />
     <Content Include="src\pages\tipi-latte\index.page.js" />
     <Content Include="src\pages\prelievi-latte\index.page.js" />
     <Content Include="src\pages\ruoli\index.page.js" />
@@ -188,7 +189,7 @@
     <Content Include="Views\Acquirenti\Index.cshtml" />
     <Content Include="Views\Destinatari\Index.cshtml" />
     <Content Include="Views\Sitra\Index.cshtml" />
-    <Content Include="Views\Normative\Index.cshtml" />
+    <Content Include="Views\Documenti\Index.cshtml" />
     <Content Include="Views\Ruoli\Index.cshtml" />
     <Content Include="Views\Azioni\Index.cshtml" />
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
@@ -203,6 +204,7 @@
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
+    <TypeScriptCompile Include="src\pages\normative\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
@@ -238,6 +240,7 @@
     <Compile Include="Areas\api\Controllers\DestinatariController.cs" />
     <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\RuoliController.cs" />
+    <Compile Include="Areas\api\Controllers\DocumentiController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
@@ -251,7 +254,7 @@
     <Compile Include="Controllers\LaboratorioAnalisiController.cs" />
     <Compile Include="Controllers\RuoliController.cs" />
     <Compile Include="Controllers\AzioniController.cs" />
-    <Compile Include="Controllers\NormativeController.cs" />
+    <Compile Include="Controllers\DocumentiController.cs" />
     <Compile Include="Controllers\SitraController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DestinatariController.cs" />

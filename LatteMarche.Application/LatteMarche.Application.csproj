@@ -72,6 +72,9 @@
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
+    <Compile Include="Documenti\Dtos\DocumentiDto.cs" />
+    <Compile Include="Documenti\Interfaces\IDocumentiService.cs" />
+    <Compile Include="Documenti\Services\DocumentiService.cs" />
     <Compile Include="Lotti\Dtos\LottoDto.cs" />
     <Compile Include="Lotti\Interfaces\ILottiService.cs" />
     <Compile Include="Lotti\Services\LottiService.cs" />

@@ -1,0 +1,33 @@
+﻿<div id="index-normative-page">
+
+    <table class="table table-striped table-bordered" id="normative-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Descrizione</th>
+                <th>Data inserimento</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
+<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
+<script src="~/src/pages/normative/index.page.js"></script>
+
+<script>
+
+    jQuery(document).ready(function () {
+        var normativeIndex = new TabellaNormative();
+    });
+
+</script>
+
+
+
+
+
