@@ -1,8 +1,8 @@
-﻿function TabellaNormative() {
+﻿function TabellaDocumenti() {
 
     var url = apiUrl + 'documenti';
 
-    var table = $('#normative-table').dataTable({
+    var table = $('#documenti-table').dataTable({
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
         processing: true,
         pageLength: 10,
