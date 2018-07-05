@@ -8,6 +8,7 @@ var Trasportatore = /** @class */ (function () {
         this.Cellulare = "";
         this.Comune = "";
         this.Provincia = "";
+        this.Giri = [];
     }
     return Trasportatore;
 }());

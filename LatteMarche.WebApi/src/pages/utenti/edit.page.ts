@@ -66,8 +66,6 @@ export default class UtentiEditPage extends Vue {
         this.id = $('#id').val() as string;
         this.tipiLatte = new TipoLatte;
         this.utente = new Utente();
-
-
         this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
         this.utentiServices = new UtentiService();
@@ -86,9 +84,7 @@ export default class UtentiEditPage extends Vue {
         this.opzioniAbilitato = this.getOpzioniAbilitato();
         this.opzioniVisibile = this.getOpzioniAbilitato();
 
-        //if (this.utente.SiglaProvincia != '') {
         this.loadComuni(this.utente.SiglaProvincia);
-        //}
 
         this.loadTipiLatte();
 

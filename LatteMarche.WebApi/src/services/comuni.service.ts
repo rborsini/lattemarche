@@ -8,8 +8,7 @@ export class ComuniService {
 
     public getComuni(idProvincia: string): AxiosPromise<Comune[]> {
         var url = '/api/comuni';
-        if (idProvincia != '')
-        {
+        if (idProvincia != '') {
             url += '/search?provincia=';
             url += idProvincia;
         }

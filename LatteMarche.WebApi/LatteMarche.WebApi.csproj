@@ -200,6 +200,7 @@
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
+    <TypeScriptCompile Include="src\models\giro.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />

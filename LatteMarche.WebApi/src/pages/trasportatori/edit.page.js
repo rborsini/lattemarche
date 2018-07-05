@@ -24,13 +24,15 @@ import Waiter from "../../components/common/waiter.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
 import { Trasportatore } from "../../models/trasportatore.model";
-import { TrasportatoreService } from "../../services/trasportatori.service";
+import { TrasportatoriService } from "../../services/trasportatori.service";
 var TrasportatoriEditPage = /** @class */ (function (_super) {
     __extends(TrasportatoriEditPage, _super);
     function TrasportatoriEditPage() {
         var _this = _super.call(this) || this;
-        _this.trasportatori = new Trasportatore();
-        _this.trasportatoriService = new TrasportatoreService();
+        _this.trasportatori = [];
+        _this.selectedGiro = 0;
+        _this.trasportatore = new Trasportatore();
+        _this.trasportatoriService = new TrasportatoriService();
         return _this;
     }
     TrasportatoriEditPage.prototype.mounted = function () {
@@ -44,6 +46,14 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
             if (response.data != null) {
                 _this.trasportatori = response.data;
             }
+        });
+    };
+    // carico allevamenti se seleziono trasportatore
+    TrasportatoriEditPage.prototype.onTrasportatoreSelezionato = function (idTrasportatore) {
+        var _this = this;
+        this.trasportatoriService.getTrasportatoreDetails(idTrasportatore)
+            .then(function (response) {
+            _this.trasportatore = response.data;
         });
     };
     TrasportatoriEditPage = __decorate([

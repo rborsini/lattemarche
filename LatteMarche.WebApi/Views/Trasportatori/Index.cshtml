@@ -9,6 +9,10 @@
         :message="'Tipo latte salvato correttamente'"
         v-on:ok="window.location = '/tipilatte'"></notification-dialog>*@
 
+    <!-- modale modifica/aggiungi giro -->
+    <giro-trasportatori-modal ref="giroTrasportatoriModal"
+                              :giro="trasportatore.Giri[selectedGiro]"></giro-trasportatori-modal>
+
     <input hidden id="id" value="@Request["id"]" />
 
     <!-- trasportatore -->
@@ -17,9 +21,9 @@
         <div class="col-sm-6">
             <select2 class="form-control"
                      :options="trasportatori"
-                     :value.sync="trasportatori.Cognome"
                      :value-field="'Id'"
-                     :text-field="'Cognome'" />
+                     :text-field="'Cognome'"
+                     v-on:value-changed="onTrasportatoreSelezionato" />
         </div>
     </div>
 
@@ -27,14 +31,30 @@
     <div class="row form-group">
         <label class="col-sm-2 offset-1">Giro degli allevamenti</label>
         <div class="col-sm-6">
-            <input type="number" class="form-control"/>
+            <select2 class="form-control"
+                     :options="trasportatore.Giri"
+                     :value.sync="selectedGiro"
+                     :value-field="'Id'"
+                     :text-field="'Denominazione'" />
         </div>
     </div>
 
     <div class="row">
-        <div class="col-6 offset-3 text-right">
-            <button class="btn btn-secondary mr-2" data-dismiss="modal">Aggiungi giro</button>
-            <button v-on:click="onSave()" class="btn btn-success">Modifica giro</button>
+        <div class="col-sm-6 offset-3 text-right">
+            <button class="btn btn-secondary mr-2" v-on:click="$refs.giroTrasportatoriModal.open()" :disabled="selectedGiro == 0">Modifica giro</button>
+            <button class="btn btn-success" v-on:click="$refs.giroTrasportatoriModal.open()">Aggiungi giro</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <button class="btn btn-success" style="width:100%">Carica gli allevamenti in cui si reca il trasportatore</button>
         </div>
     </div>
 

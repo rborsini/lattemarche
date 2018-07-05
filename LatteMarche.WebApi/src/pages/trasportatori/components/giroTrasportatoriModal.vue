@@ -12,13 +12,13 @@
                     <div class="row form-group">
                         <label class="col-2">Codice</label>
                         <div class="col-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="giro.CodiceGiro">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label class="col-2">Denominazione</label>
                         <div class="col-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="giro.Denominazione">
                         </div>
                     </div>
                 </div>
@@ -34,18 +34,18 @@
 <script lang="ts">
 
     import Vue from "vue";
-    import Component from "vue-class-component"
-    import { Prop, Watch, Emit } from "vue-property-decorator"
-
-
-
+    import Component from "vue-class-component";
+    import { Prop, Watch, Emit } from "vue-property-decorator";
+    import { Giro } from "../../../models/giro.model";
 
     @Component({
-        components: {
-        }
+        components: { }
     })
 
     export default class GiroTrasportatoriModal extends Vue {
+
+        @Prop()
+        giro: Giro;
 
         constructor() {
             super();

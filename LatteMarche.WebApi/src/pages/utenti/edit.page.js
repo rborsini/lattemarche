@@ -58,9 +58,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
         this.opzioniSesso = this.getOpzioniSessoUtente();
         this.opzioniAbilitato = this.getOpzioniAbilitato();
         this.opzioniVisibile = this.getOpzioniAbilitato();
-        //if (this.utente.SiglaProvincia != '') {
         this.loadComuni(this.utente.SiglaProvincia);
-        //}
         this.loadTipiLatte();
         if (this.id != '') {
             this.loadUtente(function (utente) {
