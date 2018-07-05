@@ -9,6 +9,7 @@ using LatteMarche.Application.Allevatori.Dtos;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Application.Giri.Dtos;
+using LatteMarche.Application.Documenti.Dtos;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.Application.Acquirenti.Dtos;
@@ -32,6 +33,7 @@ namespace LatteMarche.Application
             AzioneMappings.Configure();
             ComuniMappings.Configure();
             DestinatarioMappings.Configure();
+            DocumentiMappings.Configure();
             GiriMappings.Configure();
             LaboratoriAnalisiMappings.Configure();
             LottiMappings.Configure();

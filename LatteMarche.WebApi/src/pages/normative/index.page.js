@@ -1,6 +1,6 @@
 ﻿function TabellaNormative() {
 
-    var url = apiUrl + 'normative';
+    var url = apiUrl + 'documenti';
 
     var table = $('#normative-table').dataTable({
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
@@ -32,16 +32,16 @@
             }
         },
         columns: [
-            { "data": "#" },
+            { "data": "Id" },
             { "data": "Descrizione" },
             { "data": "DataInserimento" },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    // TODO
-                    //return '<a class="edit" href="' + webUrl + 'normative/edit?id=' + row.Id + '" >Dettagli</a>';
-                }
-            }
+            //{
+            //    "data": null,
+            //    "render": function (data, type, row) {
+            //        // TODO
+            //        return '<a class="edit" href="' + webUrl + 'normative/edit?id=' + row.Id + '" >Dettagli</a>';
+            //    }
+            //}
         ]
     });
 

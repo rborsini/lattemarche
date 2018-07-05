@@ -6,7 +6,7 @@ using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LatteMarche.Application.TipiLatte.Services
+namespace LatteMarche.Application.Documenti.Services
 {
 
     public class DocumentiService : EntityService<Documento, int, DocumentoDto>, IDocumentiService
