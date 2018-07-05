@@ -8,7 +8,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pl-5 pr-5">
                     <div class="row form-group">
                         <label class="col-2">Codice</label>
                         <div class="col-10">
