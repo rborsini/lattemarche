@@ -178,7 +178,7 @@
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
     <Content Include="src\pages\azioni\index.page.js" />
-    <Content Include="src\pages\normative\index.page.js" />
+    <Content Include="src\pages\documenti\index.page.js" />
     <Content Include="src\pages\tipi-latte\index.page.js" />
     <Content Include="src\pages\prelievi-latte\index.page.js" />
     <Content Include="src\pages\ruoli\index.page.js" />
@@ -204,7 +204,6 @@
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
-    <TypeScriptCompile Include="src\pages\normative\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
