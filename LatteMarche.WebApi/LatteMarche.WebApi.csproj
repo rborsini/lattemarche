@@ -198,10 +198,12 @@
     <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
+    <Content Include="Views\Prelievi\Edit.cshtml" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\giro.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
+    <TypeScriptCompile Include="src\models\prelievoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />

@@ -1,6 +1,6 @@
 ﻿function TabellaPrelieviLatte() {
 
-    var url = apiUrl + 'PrelieviLatte';
+    var url = apiUrl + 'utenti';
 
     var table = $('#prelievi-latte-table').dataTable({
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
@@ -32,14 +32,14 @@
             }
         },
         columns: [
-            { "data": "Id" },
-            { "data": "Username" },
+            { "data": "RagioneSociale" },
             { "data": "Nome" },
             { "data": "Cognome" },
+            { "data": "Username" },
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    //return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
+                    return '<a class="edit" href="' + webUrl + 'prelievi/edit?id=' + row.Id + '" >Seleziona</a>';
                 }
             }
         ]

@@ -49,9 +49,11 @@ export default class UtentiDetailsPage extends Vue {
     }
 
     public mounted() {
+        this.$refs.waiter.open();
         this.loadRuolo((ruolo: Ruolo) => {
             // boh!
         });
+        this.$refs.waiter.close();
     }
 
     // carica ruolo
@@ -77,7 +79,6 @@ export default class UtentiDetailsPage extends Vue {
                 } else {
                     // save OK !!
                     this.ruolo = response.data;
-                    //this.$refs.waiter.close();
                     this.$refs.savedDialog.open();
                 }
             });

@@ -19,5 +19,13 @@ namespace LatteMarche.WebApi.Controllers
             return View();
         }
 
+        [ViewItem(nameof(Edit), "Prelievi", "Modifica")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        public ActionResult Edit(long id)
+        {
+            return View();
+        }
+
     }
+
 }

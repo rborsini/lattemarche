@@ -33,9 +33,11 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
         return _this;
     }
     UtentiDetailsPage.prototype.mounted = function () {
+        this.$refs.waiter.open();
         this.loadRuolo(function (ruolo) {
             // boh!
         });
+        this.$refs.waiter.close();
     };
     // carica ruolo
     UtentiDetailsPage.prototype.loadRuolo = function (done) {
@@ -61,7 +63,6 @@ var UtentiDetailsPage = /** @class */ (function (_super) {
             else {
                 // save OK !!
                 _this.ruolo = response.data;
-                //this.$refs.waiter.close();
                 _this.$refs.savedDialog.open();
             }
         });

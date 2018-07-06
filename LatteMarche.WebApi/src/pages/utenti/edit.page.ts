@@ -74,7 +74,6 @@ export default class UtentiEditPage extends Vue {
 
     public mounted() {
         this.$refs.waiter.open();
-
         this.comuniService.getProvince()
             .then(response => {
                 this.opzioniProvince = response.data;
@@ -93,7 +92,6 @@ export default class UtentiEditPage extends Vue {
                 this.isNew = false;
             });
         }
-
         this.$refs.waiter.close();
     }
 

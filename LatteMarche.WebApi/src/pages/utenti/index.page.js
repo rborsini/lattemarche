@@ -32,10 +32,10 @@
             }
         },
         columns: [
-            { "data": "Id" },
-            { "data": "Username" },
+            { "data": "RagioneSociale" },
             { "data": "Nome" },
             { "data": "Cognome" },
+            { "data": "Username" },
             {
                 "data": null,
                 "render": function (data, type, row) {
