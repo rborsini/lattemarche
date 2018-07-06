@@ -22,16 +22,49 @@ import Component from "vue-class-component";
 import Waiter from "../../components/common/waiter.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import { Utente } from "../../models/utente.model";
+import { PrelieviLatteService } from "../../services/prelieviLatte.service";
+import { UtentiService } from "../../services/utenti.service";
 var PrelieviLatteEditPage = /** @class */ (function (_super) {
     __extends(PrelieviLatteEditPage, _super);
     function PrelieviLatteEditPage() {
         var _this = _super.call(this) || this;
+        _this.dataInzio = "";
+        _this.dataFine = "";
+        _this.prelievi = [];
         _this.id = $('#id').val();
+        _this.utente = new Utente();
+        _this.today = new Date();
+        _this.prelieviLatteService = new PrelieviLatteService();
+        _this.utentiService = new UtentiService();
         return _this;
     }
     PrelieviLatteEditPage.prototype.mounted = function () {
+        var _this = this;
         this.$refs.waiter.open();
-        this.$refs.waiter.close();
+        this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
+        console.log(this.today); //(this.today.setMonth(this.today.getMonth() - 1)));
+        this.loadUtente();
+        this.dataInzio = '25-04-2018'; //String(this.today.getDate()) + '-' + String(this.today.getMonth() + 1) + '-' + String(this.today.getFullYear());
+        this.loadPrelievi(function (prelievi) {
+            _this.$refs.waiter.close();
+        });
+    };
+    PrelieviLatteEditPage.prototype.loadPrelievi = function (done) {
+        var _this = this;
+        console.log('Chiamata servizio');
+        this.prelieviLatteService.getPrelievi(this.id, this.dataInzio, this.dataFine)
+            .then(function (response) {
+            _this.prelievi = response.data;
+            done(_this.prelievi);
+        });
+    };
+    PrelieviLatteEditPage.prototype.loadUtente = function () {
+        var _this = this;
+        this.utentiService.getDetails(this.id)
+            .then(function (response) {
+            _this.utente = response.data;
+        });
     };
     PrelieviLatteEditPage = __decorate([
         Component({

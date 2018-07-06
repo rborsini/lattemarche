@@ -324,6 +324,7 @@
     <TypeScriptCompile Include="src\models\allevatore.model.ts" />
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
+    <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
     <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />
     <TypeScriptCompile Include="src\services\trasportatori.service.ts" />

@@ -1,16 +1,16 @@
 import axios from 'axios';
-var AllevatoriServices = /** @class */ (function () {
-    function AllevatoriServices() {
+var AllevatoriService = /** @class */ (function () {
+    function AllevatoriService() {
     }
-    AllevatoriServices.prototype.getUtenti = function () {
+    AllevatoriService.prototype.getUtenti = function () {
         return axios.get('/api/utenti');
     };
-    AllevatoriServices.prototype.update = function (allevatore) {
+    AllevatoriService.prototype.update = function (allevatore) {
         return axios.post('/api/utenti/save', allevatore);
     };
-    AllevatoriServices.prototype.getDetails = function (id) {
+    AllevatoriService.prototype.getDetails = function (id) {
         return axios.get('/api/utenti/details?id=' + id);
     };
-    return AllevatoriServices;
+    return AllevatoriService;
 }());
-export { AllevatoriServices };
+export { AllevatoriService };

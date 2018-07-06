@@ -1,7 +1,7 @@
 ﻿import axios, { AxiosPromise } from 'axios';
 import { Allevatore } from '../models/allevatore.model';
 
-export class AllevatoriServices {
+export class AllevatoriService {
     constructor() { }
 
     public getUtenti(): AxiosPromise<Allevatore[]> {

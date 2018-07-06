@@ -12,18 +12,18 @@
     <div class="row form-group">
         <label class="col-sm-2 offset-2">Visualizza prelievi dal</label>
         <div class="col-sm-2">
-            <datepicker />
+            <datepicker :value.sync="dataInzio"/>
         </div>
         <label>al</label>
         <div class="col-sm-2">
-            <datepicker />
+            <datepicker :value.sync="dataFine" />
         </div>
     </div>
 
     <!-- bottone cerca -->
     <div class="row form-group">
         <div class="col-sm-4 offset-4 text-right pr-0">
-            <button class="btn btn-success">Cerca</button>
+            <button class="btn btn-success" v-on:click="loadPrelievi">Cerca</button>
         </div>
     </div>
 
@@ -37,7 +37,8 @@
     <!-- allevatore selezionato / bottone aggiungi prelievo a mano -->
     <div class="row form-group">
         <div class="col-sm-6">
-            <h4 class="font-weight-bold">Lista prelievi di ..........</h4>
+            <h4 class="font-weight-bold">Lista prelievi di {{utente.Cognome}} {{utente.Nome}}</h4>
+            <h6>Ragione sociale: {{utente.RagioneSociale}}</h6>
         </div>
         <div class="col-sm-6 text-right">
             <button v-on:click="$refs.editazionePrelievoModal.open()" class="btn btn-success">Aggiungi prelievo manualmente</button>
@@ -57,10 +58,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>data prelievo</td>
-                        <td>data consegna</td>
-                        <td>quantita</td>
+                    <tr v-for="prelievo in prelievi">
+                        <td>{{prelievo.DataPrelievo}}</td>
+                        <td>{{prelievo.DataConsegna}}</td>
+                        <td>{{prelievo.Quantita}}</td>
                         <td>
                             <a v-on:click="$refs.editazionePrelievoModal.open()" href="#">Seleziona</a>
                         </td>
