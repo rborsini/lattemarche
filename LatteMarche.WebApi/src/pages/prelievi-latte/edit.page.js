@@ -43,7 +43,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
         var _this = this;
         this.$refs.waiter.open();
         this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
-        console.log(this.today); //(this.today.setMonth(this.today.getMonth() - 1)));
+        //this.today = this.today.setMonth(this.today.getMonth() - 1);
         this.loadUtente();
         this.dataInzio = '25-04-2018'; //String(this.today.getDate()) + '-' + String(this.today.getMonth() + 1) + '-' + String(this.today.getFullYear());
         this.loadPrelievi(function (prelievi) {
