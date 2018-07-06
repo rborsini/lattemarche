@@ -11,7 +11,7 @@ declare module 'vue/types/vue' {
 }
 
 @Component({
-    el: '#utenti-edit',
+    el: '#prelievi-latte-edit',
     components: {
         Waiter,
     }

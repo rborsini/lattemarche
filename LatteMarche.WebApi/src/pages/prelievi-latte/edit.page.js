@@ -31,7 +31,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
     };
     PrelieviLatteEditPage = __decorate([
         Component({
-            el: '#utenti-edit',
+            el: '#prelievi-latte-edit',
             components: {
                 Waiter: Waiter,
             }
