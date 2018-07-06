@@ -1,7 +1,74 @@
 ﻿<div id="prelievi-latte-edit" class="container-fluid">
 
-    <!-- Pannello modale del caricamento -->
+    <input hidden id="id" value="@Request["id"]" />
+
+    <!-- modale caricamento -->
     <waiter ref="waiter"></waiter>
+
+    <!-- modale modifica/inserisci prelievo -->
+    <editazione-prelievo-modal ref="editazionePrelievoModal"></editazione-prelievo-modal>
+
+    <!-- visualizza prelievi dal al -->
+    <div class="row form-group">
+        <label class="col-sm-2 offset-2">Visualizza prelievi dal</label>
+        <div class="col-sm-2">
+            <datepicker />
+        </div>
+        <label>al</label>
+        <div class="col-sm-2">
+            <datepicker />
+        </div>
+    </div>
+
+    <!-- bottone cerca -->
+    <div class="row form-group">
+        <div class="col-sm-4 offset-4 text-right pr-0">
+            <button class="btn btn-success">Cerca</button>
+        </div>
+    </div>
+
+    <!-- hr -->
+    <div class="row form-group">
+        <div class="col-sm-12">
+            <hr />
+        </div>
+    </div>
+
+    <!-- allevatore selezionato / bottone aggiungi prelievo a mano -->
+    <div class="row form-group">
+        <div class="col-sm-6">
+            <h4 class="font-weight-bold">Lista prelievi di ..........</h4>
+        </div>
+        <div class="col-sm-6 text-right">
+            <button v-on:click="$refs.editazionePrelievoModal.open()" class="btn btn-success">Aggiungi prelievo manualmente</button>
+        </div>
+    </div>
+
+    <!-- tabella prelievi -->
+    <div class="row form-group">
+        <div class="col-sm-12">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Data prelievo</th>
+                        <th>Data consegna</th>
+                        <th>Quantità (Kg)</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>data prelievo</td>
+                        <td>data consegna</td>
+                        <td>quantita</td>
+                        <td>
+                            <a v-on:click="$refs.editazionePrelievoModal.open()" href="#">Seleziona</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 

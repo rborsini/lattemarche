@@ -54,7 +54,7 @@ export default class UtentiEditPage extends Vue {
 
     private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
-    private utentiServices: UtentiService;
+    private utentiService: UtentiService;
 
     private isNew: boolean = true;
 
@@ -68,7 +68,7 @@ export default class UtentiEditPage extends Vue {
         this.utente = new Utente();
         this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
-        this.utentiServices = new UtentiService();
+        this.utentiService = new UtentiService();
 
     }
 
@@ -97,7 +97,7 @@ export default class UtentiEditPage extends Vue {
 
     // carica utente
     public loadUtente(done: (utente: Utente) => void) {
-        this.utentiServices.getDetails(this.id)
+        this.utentiService.getDetails(this.id)
             .then(response => {
                 this.utente = response.data;
                 done(this.utente);
@@ -162,7 +162,7 @@ export default class UtentiEditPage extends Vue {
     public onSave() {
         this.$refs.waiter.open();
         if (!this.isNew) {
-            this.utentiServices.update(this.utente)
+            this.utentiService.update(this.utente)
                 .then(response => {
                     if (response.data != undefined) {
                         // TODO: msg di validazione
@@ -176,7 +176,7 @@ export default class UtentiEditPage extends Vue {
                     }
                 });
         } else {
-            this.utentiServices.create(this.utente)
+            this.utentiService.create(this.utente)
                 .then(response => {
                     if (response.data != undefined) {
                         // TODO: msg di validazione

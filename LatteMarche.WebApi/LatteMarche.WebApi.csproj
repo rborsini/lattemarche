@@ -152,6 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\prelievi_latte_edit.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
     <Content Include="build\tipilatte_edit_page.js" />
@@ -199,6 +200,7 @@
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
+    <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\giro.model.ts" />

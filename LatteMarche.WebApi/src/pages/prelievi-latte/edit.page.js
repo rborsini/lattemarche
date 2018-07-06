@@ -20,10 +20,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import Vue from "vue";
 import Component from "vue-class-component";
 import Waiter from "../../components/common/waiter.vue";
+import Datepicker from "../../components/common/datepicker.vue";
+import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
 var PrelieviLatteEditPage = /** @class */ (function (_super) {
     __extends(PrelieviLatteEditPage, _super);
     function PrelieviLatteEditPage() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.id = $('#id').val();
+        return _this;
     }
     PrelieviLatteEditPage.prototype.mounted = function () {
         this.$refs.waiter.open();
@@ -34,6 +38,8 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             el: '#prelievi-latte-edit',
             components: {
                 Waiter: Waiter,
+                Datepicker: Datepicker,
+                EditazionePrelievoModal: EditazionePrelievoModal
             }
         }),
         __metadata("design:paramtypes", [])

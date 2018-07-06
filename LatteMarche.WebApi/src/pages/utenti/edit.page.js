@@ -45,7 +45,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
         _this.utente = new Utente();
         _this.comuniService = new ComuniService();
         _this.tipiLatteService = new TipiLatteService();
-        _this.utentiServices = new UtentiService();
+        _this.utentiService = new UtentiService();
         return _this;
     }
     UtentiEditPage.prototype.mounted = function () {
@@ -70,7 +70,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
     // carica utente
     UtentiEditPage.prototype.loadUtente = function (done) {
         var _this = this;
-        this.utentiServices.getDetails(this.id)
+        this.utentiService.getDetails(this.id)
             .then(function (response) {
             _this.utente = response.data;
             done(_this.utente);
@@ -132,7 +132,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
         var _this = this;
         this.$refs.waiter.open();
         if (!this.isNew) {
-            this.utentiServices.update(this.utente)
+            this.utentiService.update(this.utente)
                 .then(function (response) {
                 if (response.data != undefined) {
                     // TODO: msg di validazione
@@ -148,7 +148,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
             });
         }
         else {
-            this.utentiServices.create(this.utente)
+            this.utentiService.create(this.utente)
                 .then(function (response) {
                 if (response.data != undefined) {
                     // TODO: msg di validazione
