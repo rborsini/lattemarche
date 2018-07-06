@@ -43,16 +43,16 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
         var _this = this;
         this.$refs.waiter.open();
         this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
-        //this.today = this.today.setMonth(this.today.getMonth() - 1);
+        console.log(this.today.setDate(this.today.getDate() + 30));
         this.loadUtente();
-        this.dataInzio = '25-04-2018'; //String(this.today.getDate()) + '-' + String(this.today.getMonth() + 1) + '-' + String(this.today.getFullYear());
+        //restituisce i prelievi dall'inizio del mese corrente
+        this.dataInzio = String('01/' + String(this.today.getMonth()) + '/' + String(this.today.getFullYear()));
         this.loadPrelievi(function (prelievi) {
             _this.$refs.waiter.close();
         });
     };
     PrelieviLatteEditPage.prototype.loadPrelievi = function (done) {
         var _this = this;
-        console.log('Chiamata servizio');
         this.prelieviLatteService.getPrelievi(this.id, this.dataInzio, this.dataFine)
             .then(function (response) {
             _this.prelievi = response.data;

@@ -9,11 +9,11 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
-    //[MvcCustomAuthorize]
+    [MvcCustomAuthorize]
     public class TrasportatoriController : Controller
     {
         [ViewItem(nameof(Index), "Trasportatori", "Lista")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();
