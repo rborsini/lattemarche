@@ -201,7 +201,6 @@
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
-    <Content Include="src\components\common\datetimepicker.vue" />
     <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\destinatario.model.ts" />
@@ -335,7 +334,6 @@
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />
     <TypeScriptCompile Include="src\services\trasportatori.service.ts" />
     <TypeScriptCompile Include="src\services\utenti.service.ts" />
-    <TypeScriptCompile Include="src\vue-bootstrap-datetimepicker.d.ts" />
     <TypeScriptCompile Include="src\vue-shims.d.ts" />
   </ItemGroup>
   <ItemGroup>
