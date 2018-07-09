@@ -11,6 +11,12 @@ var PrelieviLatteService = /** @class */ (function () {
     PrelieviLatteService.prototype.getLaboratoriAnalisi = function () {
         return axios.get('/api/laboratorianalisi');
     };
+    PrelieviLatteService.prototype.update = function (prelievo) {
+        return axios.put('/api/utenti/save', prelievo);
+    };
+    PrelieviLatteService.prototype.create = function (prelievo) {
+        return axios.post('/api/utenti/create', prelievo);
+    };
     return PrelieviLatteService;
 }());
 export { PrelieviLatteService };

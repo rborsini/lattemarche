@@ -1,13 +1,15 @@
 ﻿<div id="ruoli-new">
 
+    <input hidden id="id" value="@Request["id"]" />
+
     <!-- Pannello modale del caricamento -->
     <waiter ref="waiter"></waiter>
 
     <!-- Pannelli modali di conferma azioni -->
-    @*<notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Il ruolo è stato salvato correttamente'"
-                         v-on:ok="window.location = '/ruoli"></notification-dialog>*@
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma creazione ruolo'"
+                         :message="'Il ruolo è stato creato correttamente'"
+                         v-on:ok="window.location = '/ruoli"></notification-dialog>
 
     <div class="container-fluid">
         <div class="row">
@@ -39,7 +41,7 @@
                         <div class="form-group row">
                             <div class="col-12 text-right">
                                 <button class="btn btn-secondary mr-2" v-on:click="window.location = '/ruoli'">Annulla</button>
-                                <button class="btn btn-success" v-on:click="onSave()" type="submit">Salva</button>
+                                <button class="btn btn-success" v-on:click="salvaRuoloCreato()" type="submit">Salva</button>
                             </div>
                         </div>
 

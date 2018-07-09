@@ -37,7 +37,7 @@ export default class UtentiDetailsPage extends Vue {
     public id: string;
 
     private ruoliService: RuoliService;
-    
+
 
     constructor() {
         super();
@@ -83,6 +83,7 @@ export default class UtentiDetailsPage extends Vue {
                 }
             });
     }
+
 
 
 }

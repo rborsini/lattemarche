@@ -58,7 +58,6 @@ export default class UtentiEditPage extends Vue {
 
     private isNew: boolean = true;
 
-
     constructor() {
         super();
 

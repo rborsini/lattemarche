@@ -36,7 +36,6 @@ export default class RouliNew extends Vue {
 
     private ruoliService: RuoliService;
 
-
     constructor() {
         super();
 
@@ -50,22 +49,19 @@ export default class RouliNew extends Vue {
 
     }
 
-    // salvataggio utente
-    public onSave() {
-        //this.$refs.waiter.open();
-        //this.ruoliService.update(this.ruolo)
-        //    .then(response => {
-        //        if (response.data != undefined) {
-        //            // TODO: msg di validazione
-        //            this.$refs.waiter.close();
-        //            this.$refs.savedDialog.open();
-        //        } else {
-        //            // save OK !!
-        //            this.ruolo = response.data;
-        //            //this.$refs.waiter.close();
-        //            this.$refs.savedDialog.open();
-        //        }
-        //    });
+    // salva ruolo creato
+    public salvaRuoloCreato() {
+        this.$refs.waiter.open();
+        this.ruoliService.create(this.ruolo)
+            .then(response => {
+                if (response.data != undefined) {
+                    this.$refs.waiter.close();
+                    this.$refs.savedDialog.open();
+                } else {
+                    this.ruolo = response.data;
+                    this.$refs.savedDialog.open();
+                }
+            });
     }
 
 
