@@ -9,7 +9,7 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
-    //[MvcCustomAuthorize]
+    [MvcCustomAuthorize]
     public class PrelieviController: Controller
     {
         [ViewItem(nameof(Index), "Prelievi", "Lista")]

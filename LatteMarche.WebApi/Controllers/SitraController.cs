@@ -9,7 +9,7 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
-    //[MvcCustomAuthorize]
+    [MvcCustomAuthorize]
     public class SitraController : Controller
     {
         [ViewItem(nameof(Index), "Sitra", "Lista")]

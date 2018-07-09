@@ -49,8 +49,8 @@ namespace LatteMarche.Application.Ruoli.Services
 
             AutorizzazioneSessione autorizzazione = autorizzazioniSessione
                 .FirstOrDefault(a => a.Type == type &&
-                                        a.Controller == controllerName &&
-                                        a.Action == actionName &&
+                                        a.Controller.ToLower() == controllerName.ToLower() &&
+                                        a.Action.ToLower() == actionName.ToLower() &&
                                         a.Authorized
                 );
 
@@ -72,9 +72,9 @@ namespace LatteMarche.Application.Ruoli.Services
 
             AutorizzazioneSessione autorizzazione = autorizzazioniSessione
                 .FirstOrDefault(a => a.Type == type &&
-                                        a.Controller == controllerName &&
-                                        a.Action == actionName &&
-                                        a.ViewItem == actionName
+                                        a.Controller.ToLower() == controllerName.ToLower() &&
+                                        a.Action.ToLower() == actionName.ToLower() &&
+                                        a.ViewItem.ToLower() == actionName.ToLower()
                 );
 
             return autorizzazione != null && autorizzazione.Authorized;
@@ -97,9 +97,9 @@ namespace LatteMarche.Application.Ruoli.Services
 
             AutorizzazioneSessione autorizzazione = autorizzazioniSessione
                 .FirstOrDefault(a => a.Type == type &&
-                                        a.Controller == controllerName &&
-                                        a.Action == actionName &&
-                                        a.ViewItem == viewItem
+                                        a.Controller.ToLower() == controllerName.ToLower() &&
+                                        a.Action.ToLower() == actionName.ToLower() &&
+                                        a.ViewItem.ToLower() == viewItem.ToLower()
                 );
 
             return autorizzazione != null && autorizzazione.Authorized;
@@ -123,9 +123,9 @@ namespace LatteMarche.Application.Ruoli.Services
 
             autorizzazioniSessione = autorizzazioniSessione
                 .Where(a => a.Type == "MVC" &&
-                            a.Controller == controllerName &&
-                            a.Action == actionName &&
-                            a.Action != a.ViewItem)
+                            a.Controller.ToLower() == controllerName.ToLower() &&
+                            a.Action.ToLower() == actionName.ToLower() &&
+                            a.Action.ToLower() != a.ViewItem.ToLower())
                 .ToList();
 
             // generazione dictionary
