@@ -330,6 +330,7 @@
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />
     <TypeScriptCompile Include="src\services\trasportatori.service.ts" />
     <TypeScriptCompile Include="src\services\utenti.service.ts" />
+    <TypeScriptCompile Include="src\vue-bootstrap-datetimepicker.d.ts" />
     <TypeScriptCompile Include="src\vue-shims.d.ts" />
   </ItemGroup>
   <ItemGroup>
