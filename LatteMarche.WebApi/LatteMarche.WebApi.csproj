@@ -201,6 +201,7 @@
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
+    <Content Include="src\components\common\datetimepicker.vue" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\giro.model.ts" />

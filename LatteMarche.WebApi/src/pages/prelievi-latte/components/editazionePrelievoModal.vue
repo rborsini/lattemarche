@@ -17,7 +17,10 @@
                         </div>
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+                            <!--<date-time-picker v-model="date" @dp-hide="doSomethingOnHide" @dp-change="doSomethingOnChange"></date-time-picker>-->
+                            <date-time-picker></date-time-picker>
+
+                            <!--<input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora ultima mungitura -->
@@ -112,6 +115,9 @@
     import Vue from "vue";
     import Component from "vue-class-component";
     import { Prop, Watch, Emit } from "vue-property-decorator";
+    import { DateTimePicker } from "../../../components/common/datetimepicker.vue"
+
+    Vue.use(DateTimePicker);
 
     @Component
     export default class EditazionePrelievoModal extends Vue {
