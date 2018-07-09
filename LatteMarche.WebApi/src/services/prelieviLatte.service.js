@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 var PrelieviLatteService = /** @class */ (function () {
     function PrelieviLatteService() {
     }
@@ -7,6 +7,9 @@ var PrelieviLatteService = /** @class */ (function () {
         url += '&dal=' + dataInizio;
         url += '&al=' + dataFine;
         return axios.get(url);
+    };
+    PrelieviLatteService.prototype.getLaboratoriAnalisi = function () {
+        return axios.get('/api/laboratorianalisi');
     };
     return PrelieviLatteService;
 }());

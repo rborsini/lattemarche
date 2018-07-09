@@ -22,6 +22,7 @@ import Component from "vue-class-component";
 import Waiter from "../../components/common/waiter.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { Utente } from "../../models/utente.model";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { UtentiService } from "../../services/utenti.service";
@@ -37,6 +38,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
         _this.today = new Date();
         _this.prelieviLatteService = new PrelieviLatteService();
         _this.utentiService = new UtentiService();
+        _this.prelievoSelezionato = new PrelievoLatte();
         return _this;
     }
     PrelieviLatteEditPage.prototype.mounted = function () {
@@ -65,6 +67,10 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             .then(function (response) {
             _this.utente = response.data;
         });
+    };
+    PrelieviLatteEditPage.prototype.onPrelievoSelezionato = function (prelievo) {
+        this.prelievoSelezionato = prelievo;
+        this.$refs.editazionePrelievoModal.open();
     };
     PrelieviLatteEditPage = __decorate([
         Component({

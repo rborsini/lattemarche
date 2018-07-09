@@ -201,9 +201,12 @@
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
+    <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
+    <TypeScriptCompile Include="src\models\destinatario.model.ts" />
     <TypeScriptCompile Include="src\models\dropdown.model.ts" />
     <TypeScriptCompile Include="src\models\giro.model.ts" />
+    <TypeScriptCompile Include="src\models\laboratorioAnalisi.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
     <TypeScriptCompile Include="src\models\prelievoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
@@ -215,6 +218,7 @@
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\utenti\edit.page.ts" />
+    <TypeScriptCompile Include="src\services\acquirenti.service.ts" />
     <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
     <Content Include="Content\css\custom.scss" />
@@ -324,6 +328,7 @@
     <TypeScriptCompile Include="src\models\allevatore.model.ts" />
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
+    <TypeScriptCompile Include="src\services\destinatari.service.ts" />
     <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
     <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />

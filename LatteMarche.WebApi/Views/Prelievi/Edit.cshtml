@@ -6,7 +6,8 @@
     <waiter ref="waiter"></waiter>
 
     <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal ref="editazionePrelievoModal"></editazione-prelievo-modal>
+    <editazione-prelievo-modal ref="editazionePrelievoModal"
+                               :prelievo-latte="prelievoSelezionato"></editazione-prelievo-modal>
 
     <!-- visualizza prelievi dal al -->
     <div class="row form-group">
@@ -63,7 +64,7 @@
                         <td>{{prelievo.DataConsegna}}</td>
                         <td>{{prelievo.Quantita}}</td>
                         <td>
-                            <a v-on:click="$refs.editazionePrelievoModal.open()" href="#">Seleziona</a>
+                            <a v-on:click="onPrelievoSelezionato(prelievo)" href="#">Seleziona</a>
                         </td>
                     </tr>
                 </tbody>
