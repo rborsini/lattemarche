@@ -17,7 +17,8 @@
                         </div>
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+
+                            <!--<input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora ultima mungitura -->
@@ -146,7 +147,7 @@
     import { TrasportatoriService } from "../../../services/trasportatori.service";
     import { AcquirentiService } from "../../../services/acquirenti.service";
     import { DestinatariService } from "../../../services/destinatari.service";
-    
+
 
     @Component({
         components: {
