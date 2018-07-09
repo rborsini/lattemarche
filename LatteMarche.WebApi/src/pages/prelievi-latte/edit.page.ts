@@ -44,6 +44,7 @@ export default class PrelieviLatteEditPage extends Vue {
 
     public prelievi: PrelievoLatte[] = [];
     public utente: Utente;
+    public prelievoSelezionato: PrelievoLatte;
 
     public prelieviLatteService: PrelieviLatteService;
     public utentiService: UtentiService;
@@ -53,9 +54,9 @@ export default class PrelieviLatteEditPage extends Vue {
         this.id = $('#id').val() as string;
         this.utente = new Utente();
         this.today = new Date();
-
         this.prelieviLatteService = new PrelieviLatteService();
         this.utentiService = new UtentiService();
+        this.prelievoSelezionato = new PrelievoLatte();
     }
 
     public mounted() {
@@ -87,6 +88,10 @@ export default class PrelieviLatteEditPage extends Vue {
             });
     }
 
+    public onPrelievoSelezionato(prelievo: PrelievoLatte): void {
+        this.prelievoSelezionato = prelievo;
+        this.$refs.editazionePrelievoModal.open()
+    }
 }
 
 let page = new PrelieviLatteEditPage();
