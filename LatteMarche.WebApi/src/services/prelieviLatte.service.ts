@@ -13,7 +13,7 @@ export class PrelieviLatteService {
         return axios.get(url);
     }
 
-    public getLaboratoriAnalisi(): AxiosPromise<LaboratorioAnalisi> {
+    public getLaboratoriAnalisi(): AxiosPromise<LaboratorioAnalisi[]> {
         return axios.get('/api/laboratorianalisi');
     }
 

@@ -49,18 +49,18 @@
                     <div class="row form-group">
                         <label class="col-2">Numero mungiture</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.NumeroMungiture">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.NumeroMungiture">
                         </div>
                         <label class="col-2">Quantità in Kg</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Quantita">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita">
                         </div>
                     </div>
                     <!-- temperatura C° / trasportatore -->
                     <div class="row form-group">
                         <label class="col-2">Temperatura in C°</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Temperatura">
+                            <input type="number" min="-20" class="form-control" v-model="prelievoLatte.Temperatura">
                         </div>
                         <label class="col-2">Trasportatore</label>
                         <div class="col-sm-4">
@@ -99,7 +99,7 @@
                         <div class="col-sm-4">
                             <select2 class="form-control"
                                      :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="laboratorioAnalisi"
+                                     :options="laboratoriAnalisi"
                                      :value.sync="prelievoLatte.IdLabAnalisi"
                                      :value-field="'Id'"
                                      :text-field="'Descrizione'" />
@@ -113,7 +113,7 @@
                     <div class="row form-group">
                         <label class="col-2">Scomparto</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Scomparto">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Scomparto">
                         </div>
                         <label class="col-2">Lotto di consegna</label>
                         <div class="col-sm-4">
@@ -170,7 +170,7 @@
         public destinatariService: DestinatariService;
         public acquirentiService: AcquirentiService;
 
-        public laboratorioAnalisi: LaboratorioAnalisi;
+        public laboratoriAnalisi: LaboratorioAnalisi[] = [];
         public trasportatore: Trasportatore[] = [];
         public destinatario: Destinatario[] = [];
         public acquirente: Acquirente[] = [];
@@ -196,7 +196,7 @@
             this.prelieviLatteService.getLaboratoriAnalisi()
                 .then(response => {
                     if (response.data != null) {
-                        this.laboratorioAnalisi = response.data;
+                        this.laboratoriAnalisi = response.data;
                     }
                 });
         }
