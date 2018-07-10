@@ -13,12 +13,11 @@ export class TipiLatteService {
         return axios.get('/api/tipilatte/details?id=' + id);
     }
 
-    public create(tipolatte: TipoLatte): AxiosPromise<TipoLatte> {
-        return axios.post('/api/tipilatte/create', tipolatte);
-    }
-
-    public update(tipolatte: TipoLatte): AxiosPromise<TipoLatte> {
-        return axios.put('/api/utenti/update', tipolatte);
+    public save(tipolatte: TipoLatte, isNew: boolean) {
+        if (isNew)
+            return axios.post('/api/tipilatte/create', tipolatte);
+        else
+            return axios.put('/api/tipilatte/update', tipolatte);
     }
 
 }
