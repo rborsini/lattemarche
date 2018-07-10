@@ -46,6 +46,10 @@ namespace LatteMarche.Application.Utenti.Services
         public UtenteDto Details(string username)
         {
             UtenteDto utenteDto = null;
+
+            if (String.IsNullOrEmpty(username))
+                return utenteDto;
+
             Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
 
             if(utente != null)

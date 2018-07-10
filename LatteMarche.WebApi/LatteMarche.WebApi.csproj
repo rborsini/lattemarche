@@ -285,6 +285,7 @@
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
