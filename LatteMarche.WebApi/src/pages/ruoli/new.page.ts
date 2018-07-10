@@ -52,6 +52,7 @@ export default class RouliNew extends Vue {
     // salva ruolo creato
     public salvaRuoloCreato() {
         this.$refs.waiter.open();
+        
         this.ruoliService.create(this.ruolo)
             .then(response => {
                 if (response.data != undefined) {

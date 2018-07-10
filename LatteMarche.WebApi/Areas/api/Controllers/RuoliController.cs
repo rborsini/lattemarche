@@ -12,7 +12,7 @@ using LatteMarche.Application.Ruoli.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     public class RuoliController : ApiController
     {
 
