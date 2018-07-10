@@ -17,8 +17,8 @@
                         </div>
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
-
-                            <!--<input type="text" class="form-control">-->
+                            <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
+                            <!--<input type="time" v-model="prelievoLatte.OraPrelievo" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora ultima mungitura -->
@@ -29,7 +29,8 @@
                         </div>
                         <label class="col-2">Ora ultima mungitura</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+                            <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
+<!--                            <input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora consegna -->
@@ -40,7 +41,8 @@
                         </div>
                         <label class="col-2">Ora consegna</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+                            <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
+                            <!--<input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- numero mungiture / quantità in kg -->
@@ -135,6 +137,7 @@
     import { Prop, Watch, Emit } from "vue-property-decorator";
     import Select2 from "../../../components/common/select2.vue";
     import Datepicker from "../../../components/common/datepicker.vue";
+    import TimeEditor from "../../../components/common/timeEditor.vue";
 
     import { Dropdown, DropdownItem } from "../../../models/dropdown.model";
     import { PrelievoLatte } from "../../../models/prelievoLatte.model";
@@ -152,7 +155,8 @@
     @Component({
         components: {
             Select2,
-            Datepicker
+            Datepicker,
+            TimeEditor
         }
     })
 

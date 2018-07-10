@@ -202,6 +202,7 @@
     <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
+    <Content Include="src\components\common\timeEditor.vue" />
     <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\destinatario.model.ts" />
