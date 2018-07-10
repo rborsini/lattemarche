@@ -33,6 +33,7 @@ declare module 'vue/types/vue' {
     }
 })
 
+
 export default class UtentiEditPage extends Vue {
 
     $refs: {
@@ -57,7 +58,6 @@ export default class UtentiEditPage extends Vue {
     private utentiService: UtentiService;
 
     private isNew: boolean = true;
-
 
     constructor() {
         super();

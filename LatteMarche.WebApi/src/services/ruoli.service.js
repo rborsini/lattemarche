@@ -12,7 +12,7 @@ var RuoliService = /** @class */ (function () {
         return axios.put('/api/ruoli/update', ruolo);
     };
     RuoliService.prototype.create = function (ruolo) {
-        return axios.put('/api/ruoli/create', ruolo);
+        return axios.post('/api/ruoli/create', ruolo);
     };
     return RuoliService;
 }());

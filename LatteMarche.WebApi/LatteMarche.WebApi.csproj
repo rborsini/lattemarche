@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\prelievi_latte_edit.js" />
+    <Content Include="build\ruoli_details_page.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
     <Content Include="build\tipilatte_edit_page.js" />

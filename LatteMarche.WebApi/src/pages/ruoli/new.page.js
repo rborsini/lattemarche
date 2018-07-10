@@ -34,22 +34,21 @@ var RouliNew = /** @class */ (function (_super) {
     }
     RouliNew.prototype.mounted = function () {
     };
-    // salvataggio utente
-    RouliNew.prototype.onSave = function () {
-        //this.$refs.waiter.open();
-        //this.ruoliService.update(this.ruolo)
-        //    .then(response => {
-        //        if (response.data != undefined) {
-        //            // TODO: msg di validazione
-        //            this.$refs.waiter.close();
-        //            this.$refs.savedDialog.open();
-        //        } else {
-        //            // save OK !!
-        //            this.ruolo = response.data;
-        //            //this.$refs.waiter.close();
-        //            this.$refs.savedDialog.open();
-        //        }
-        //    });
+    // salva ruolo creato
+    RouliNew.prototype.salvaRuoloCreato = function () {
+        var _this = this;
+        this.$refs.waiter.open();
+        this.ruoliService.create(this.ruolo)
+            .then(function (response) {
+            if (response.data != undefined) {
+                _this.$refs.waiter.close();
+                _this.$refs.savedDialog.open();
+            }
+            else {
+                _this.ruolo = response.data;
+                _this.$refs.savedDialog.open();
+            }
+        });
     };
     RouliNew = __decorate([
         Component({
