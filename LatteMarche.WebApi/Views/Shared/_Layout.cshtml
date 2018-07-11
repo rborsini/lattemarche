@@ -22,13 +22,19 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <header>        
+    <!-- Navbar -->    
+    <header>
         @Html.Action("Menu", "Home", new { area = "", currentController = ViewContext.RouteData.Values["controller"].ToString() })
     </header>
+    
+    
 
     <!-- Body -->
-    @RenderBody()
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+        
+    
 
 
     <script src="@Url.Content("~/Content/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js")" type="text/javascript"></script>

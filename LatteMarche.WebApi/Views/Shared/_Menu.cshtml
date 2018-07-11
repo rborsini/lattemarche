@@ -1,12 +1,8 @@
 ﻿@using LatteMarche.WebApi.Models
 @model MenuViewModel
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">
-        <img class="main-logo" src="~/Content/img/main-logo.svg" />
-    </a>
 
-    @helper MakeNavItem(string linkText, string actionName, string controllerName, string area, bool visible)
+@helper MakeNavItem(string linkText, string actionName, string controllerName, string area, bool visible)
     {
         string className = ViewBag.currentController == controllerName ? "active" : "";
 
@@ -23,67 +19,82 @@
                 }
             </li>
         }
-    }
+}
 
-    @{
-        string allevatoriActive = ViewContext.RouteData.Values["controller"].ToString() == "allevatori" ? "active" : "";
-    }
+@{
+    string allevatoriActive = ViewContext.RouteData.Values["controller"].ToString() == "allevatori" ? "active" : "";
+}
 
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item @allevatoriActive">
-                @Html.ActionLink("Allevatori", "Index", "Allevatori", null, new { @class = "nav-link" })
-            </li>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
 
-            @foreach (MenuItemViewModel item in Model)
-            {
-                if (item.Items.Count == 0)
+
+    <div class="container">
+
+        <a class="navbar-brand" href="/">Home
+            @*<img class="main-logo" src="~/Content/img/main-logo.svg" />*@
+        </a>
+
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item @allevatoriActive">
+                    @Html.ActionLink("Allevatori", "Index", "Allevatori", null, new { @class = "nav-link" })
+                </li>
+
+                @foreach (MenuItemViewModel item in Model)
                 {
-                    @MakeNavItem(item.Title, item.Action, item.Controller, item.Area, item.Visible)
-                }
-                else
-                {
-                    if (item.Visible)
+                    if (item.Items.Count == 0)
                     {
+                        @MakeNavItem(item.Title, item.Action, item.Controller, item.Area, item.Visible)
+                    }
+                    else
+                    {
+                        if (item.Visible)
+                        {
 
-                        string active = item.Items.Any(i => i.Controller == ViewBag.currentController) ? "active" : "";
-                        <li class="nav-item dropdown @active">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
+                            string active = item.Items.Any(i => i.Controller == ViewBag.currentController) ? "active" : "";
+                            <li class="nav-item dropdown @active">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                                @foreach (MenuItemViewModel subItem in item.Items)
-                                {
-                                    if (subItem.Visible)
+                                    @foreach (MenuItemViewModel subItem in item.Items)
                                     {
-                                        @Html.ActionLink(subItem.Title, subItem.Action, subItem.Controller, null, new { @class = "dropdown-item" })
+                                        if (subItem.Visible)
+                                        {
+                                            @Html.ActionLink(subItem.Title, subItem.Action, subItem.Controller, null, new { @class = "dropdown-item" })
+                                        }
                                     }
-                                }
 
-                            </div>
+                                </div>
 
-                        </li>
+                            </li>
+                        }
+
                     }
 
                 }
 
-            }
-
-        </ul>
-        @if (Request.IsAuthenticated)
-        {
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
-                    </div>
-                </li>
             </ul>
-        }
-        else
-        {
-            @Html.ActionLink("Area riservata", "Login", "Account", null, new { @class = "btn btn-outline-light my-2 my-sm-0" })
-        }
+            @if (Request.IsAuthenticated)
+            {
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                @Html.ActionLink("Area riservata", "Login", "Account", null, new { @class = "btn btn-outline-light my-2 my-sm-0" })
+            }
+        </div>
+
+
     </div>
+
+
 </nav>

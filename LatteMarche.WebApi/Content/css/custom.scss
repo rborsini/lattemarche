@@ -3,12 +3,19 @@
 
 // Your variable overrides
 
-$dark: rgb(113,88,190);
-$enable-rounded: false;
 
+
+/*$dark: rgb(113,88,190);
+$enable-rounded: false;*/
+@import "_variables.scss";
+@import "_bootswatch.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 body {
+    padding-top: 120px;
+}
+
+/*body {
     padding-top: 5rem;
 }
 
@@ -42,6 +49,8 @@ body {
     background-color: #007bff;
     border-color: #007bff;
 }
+
+*/
 
 label {
     text-align: right;

@@ -227,6 +227,8 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\css\_bootswatch.scss" />
+    <Content Include="Content\css\_variables.scss" />
     <None Include="lattemarche-dev - Web Deploy.pubxml" />
     <Content Include="Views\TipiLatte\Index.cshtml" />
     <Content Include="package.json" />
