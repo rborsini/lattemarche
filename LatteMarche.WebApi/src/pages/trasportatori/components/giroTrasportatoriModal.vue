@@ -49,6 +49,7 @@
 
         constructor() {
             super();
+            this.giro = new Giro();
         }
 
         mounted() {

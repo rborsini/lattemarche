@@ -153,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\prelievi_latte_edit.js" />
-    <Content Include="build\ruoli_details_page.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
     <Content Include="build\tipilatte_edit_page.js" />
@@ -211,6 +210,7 @@
     <TypeScriptCompile Include="src\models\laboratorioAnalisi.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
     <TypeScriptCompile Include="src\models\prelievoLatte.model.ts" />
+    <TypeScriptCompile Include="src\models\profilo.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
@@ -333,6 +333,7 @@
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
     <TypeScriptCompile Include="src\services\destinatari.service.ts" />
     <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
+    <TypeScriptCompile Include="src\services\profili.service.ts" />
     <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />
     <TypeScriptCompile Include="src\services\trasportatori.service.ts" />

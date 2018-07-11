@@ -6,6 +6,7 @@ import Waiter from "../../components/common/waiter.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
+import PrioritaGiroTrasportatoriModal from "./components/prioritaGiroTrasportatoriModal.vue";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Trasportatore } from "../../models/trasportatore.model";
 import { TrasportatoriService } from "../../services/trasportatori.service";
@@ -23,7 +24,8 @@ declare module 'vue/types/vue' {
         Select2,
         Waiter,
         NotificationDialog,
-        GiroTrasportatoriModal
+        GiroTrasportatoriModal,
+        PrioritaGiroTrasportatoriModal
     }
 })
 
@@ -32,7 +34,8 @@ export default class TrasportatoriEditPage extends Vue {
     $refs: {
         waiter: Vue,
         savedDialog: Vue,
-        giroTrasportatoriModal: Vue
+        giroTrasportatoriModal: Vue,
+        prioritaGiroTrasportatoriModal: Vue
     }
 
     public trasportatoriService: TrasportatoriService;

@@ -13,6 +13,9 @@
     <giro-trasportatori-modal ref="giroTrasportatoriModal"
                               :giro="trasportatore.Giri[selectedGiro]"></giro-trasportatori-modal>
 
+    <!-- modale priorita giri dei trasportatori -->
+    <priorita-giro-trasportatori-modal ref="prioritaGiroTrasportatoriModal"></priorita-giro-trasportatori-modal>
+
     <input hidden id="id" value="@Request["id"]" />
 
     <!-- trasportatore -->
@@ -42,7 +45,7 @@
     <div class="row">
         <div class="col-sm-6 offset-3 text-right">
             <button class="btn btn-primary mr-2" v-on:click="$refs.giroTrasportatoriModal.open()" :disabled="selectedGiro == 0">Modifica giro</button>
-            <button class="btn btn-success" v-on:click="$refs.giroTrasportatoriModal.open()">Aggiungi giro</button>
+            <button class="btn btn-success" v-on:click="$refs.prioritaGiroTrasportatoriModal.open()">Aggiungi giro</button>
         </div>
     </div>
 
@@ -54,7 +57,7 @@
 
     <div class="row">
         <div class="col-sm-6 offset-3">
-            <button class="btn btn-success" style="width:100%">Carica gli allevamenti in cui si reca il trasportatore</button>
+            <button class="btn btn-success" v-on:click="$refs.giroTrasportatoriModal.open()" style="width:100%">Carica gli allevamenti in cui si reca il trasportatore</button>
         </div>
     </div>
 

@@ -23,6 +23,7 @@ import Select2 from "../../components/common/select2.vue";
 import Waiter from "../../components/common/waiter.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
+import PrioritaGiroTrasportatoriModal from "./components/prioritaGiroTrasportatoriModal.vue";
 import { Trasportatore } from "../../models/trasportatore.model";
 import { TrasportatoriService } from "../../services/trasportatori.service";
 var TrasportatoriEditPage = /** @class */ (function (_super) {
@@ -63,7 +64,8 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
                 Select2: Select2,
                 Waiter: Waiter,
                 NotificationDialog: NotificationDialog,
-                GiroTrasportatoriModal: GiroTrasportatoriModal
+                GiroTrasportatoriModal: GiroTrasportatoriModal,
+                PrioritaGiroTrasportatoriModal: PrioritaGiroTrasportatoriModal
             }
         }),
         __metadata("design:paramtypes", [])
