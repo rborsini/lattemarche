@@ -23,8 +23,8 @@
 <body>
 
     <!-- Navbar -->
-    <header>
-        @Html.Partial("_Menu")
+    <header>        
+        @Html.Action("Menu", "Home", new { area = "", currentController = ViewContext.RouteData.Values["controller"].ToString() })
     </header>
 
     <!-- Body -->

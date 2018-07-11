@@ -18,8 +18,8 @@
                         </div>
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
-
-                            <!--<input type="text" class="form-control">-->
+                            <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
+                            <!--<input type="time" v-model="prelievoLatte.OraPrelievo" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora ultima mungitura -->
@@ -30,7 +30,8 @@
                         </div>
                         <label class="col-2">Ora ultima mungitura</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+                            <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
+<!--                            <input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora consegna -->
@@ -41,25 +42,26 @@
                         </div>
                         <label class="col-2">Ora consegna</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control">
+                            <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
+                            <!--<input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- numero mungiture / quantità in kg -->
                     <div class="row form-group">
                         <label class="col-2">Numero mungiture</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.NumeroMungiture">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.NumeroMungiture">
                         </div>
                         <label class="col-2">Quantità in Kg</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Quantita">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita">
                         </div>
                     </div>
                     <!-- temperatura C° / trasportatore -->
                     <div class="row form-group">
                         <label class="col-2">Temperatura in C°</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Temperatura">
+                            <input type="number" min="-20" class="form-control" v-model="prelievoLatte.Temperatura">
                         </div>
                         <label class="col-2">Trasportatore</label>
                         <div class="col-sm-4">
@@ -98,7 +100,7 @@
                         <div class="col-sm-4">
                             <select2 class="form-control"
                                      :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="laboratorioAnalisi"
+                                     :options="laboratoriAnalisi"
                                      :value.sync="prelievoLatte.IdLabAnalisi"
                                      :value-field="'Id'"
                                      :text-field="'Descrizione'" />
@@ -112,7 +114,7 @@
                     <div class="row form-group">
                         <label class="col-2">Scomparto</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" v-model="prelievoLatte.Scomparto">
+                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Scomparto">
                         </div>
                         <label class="col-2">Lotto di consegna</label>
                         <div class="col-sm-4">
@@ -136,6 +138,7 @@
     import { Prop, Watch, Emit } from "vue-property-decorator";
     import Select2 from "../../../components/common/select2.vue";
     import Datepicker from "../../../components/common/datepicker.vue";
+    import TimeEditor from "../../../components/common/timeEditor.vue";
 
     import { Dropdown, DropdownItem } from "../../../models/dropdown.model";
     import { PrelievoLatte } from "../../../models/prelievoLatte.model";
@@ -153,7 +156,8 @@
     @Component({
         components: {
             Select2,
-            Datepicker
+            Datepicker,
+            TimeEditor
         }
     })
 
@@ -167,7 +171,7 @@
         public destinatariService: DestinatariService;
         public acquirentiService: AcquirentiService;
 
-        public laboratorioAnalisi: LaboratorioAnalisi;
+        public laboratoriAnalisi: LaboratorioAnalisi[] = [];
         public trasportatore: Trasportatore[] = [];
         public destinatario: Destinatario[] = [];
         public acquirente: Acquirente[] = [];
@@ -211,7 +215,7 @@
             this.prelieviLatteService.getLaboratoriAnalisi()
                 .then(response => {
                     if (response.data != null) {
-                        this.laboratorioAnalisi = response.data;
+                        this.laboratoriAnalisi = response.data;
                     }
                 });
         }

@@ -70,36 +70,19 @@ export default class TipiLatteEditPage extends Vue {
     // salvataggio tipi latte
     public onSave() {
         this.$refs.waiter.open();
-        if (!this.isNew) {
-            this.tipiLatteService.getTipiLatte()
-                .then(response => {
-                    if (response.data != undefined) {
-                        // TODO: msg di validazione
-                        this.$refs.waiter.close();
-                        this.$refs.savedDialog.open();
-                    } else {
-                        // save OK !!
-                        this.tipiLatte = response.data;
-                        //this.$refs.waiter.close();
-                        this.$refs.savedDialog.open();
-                    }
-                });
-        } else {
-            this.tipiLatteService.create(this.tipiLatte)
-                .then(response => {
-                    if (response.data != undefined) {
-                        // TODO: msg di validazione
-                        this.$refs.waiter.close();
-                        this.$refs.savedDialog.open();
-                    } else {
-                        // save OK !!
-                        this.tipiLatte = response.data;
-                        //this.$refs.waiter.close();
-                        this.$refs.savedDialog.open();
-                    }
-                });
-        }
-
+        this.tipiLatteService.save(this.tipiLatte, this.isNew)
+            .then(response => {
+                if (response.data != undefined) {
+                    // TODO: msg di validazione
+                    this.$refs.waiter.close();
+                    this.$refs.savedDialog.open();
+                } else {
+                    // save OK !!
+                    this.tipiLatte = response.data;
+                    //this.$refs.waiter.close();
+                    this.$refs.savedDialog.open();
+                }
+            });
     }
 
 

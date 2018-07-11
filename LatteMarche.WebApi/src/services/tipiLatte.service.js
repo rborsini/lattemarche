@@ -8,11 +8,11 @@ var TipiLatteService = /** @class */ (function () {
     TipiLatteService.prototype.getTipoLatte = function (id) {
         return axios.get('/api/tipilatte/details?id=' + id);
     };
-    TipiLatteService.prototype.create = function (tipolatte) {
-        return axios.post('/api/tipilatte/create', tipolatte);
-    };
-    TipiLatteService.prototype.update = function (tipolatte) {
-        return axios.put('/api/utenti/update', tipolatte);
+    TipiLatteService.prototype.save = function (tipolatte, isNew) {
+        if (isNew)
+            return axios.post('/api/tipilatte/create', tipolatte);
+        else
+            return axios.put('/api/tipilatte/update', tipolatte);
     };
     return TipiLatteService;
 }());

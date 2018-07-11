@@ -55,38 +55,20 @@ var TipiLatteEditPage = /** @class */ (function (_super) {
     TipiLatteEditPage.prototype.onSave = function () {
         var _this = this;
         this.$refs.waiter.open();
-        if (!this.isNew) {
-            this.tipiLatteService.getTipiLatte()
-                .then(function (response) {
-                if (response.data != undefined) {
-                    // TODO: msg di validazione
-                    _this.$refs.waiter.close();
-                    _this.$refs.savedDialog.open();
-                }
-                else {
-                    // save OK !!
-                    _this.tipiLatte = response.data;
-                    //this.$refs.waiter.close();
-                    _this.$refs.savedDialog.open();
-                }
-            });
-        }
-        else {
-            this.tipiLatteService.create(this.tipiLatte)
-                .then(function (response) {
-                if (response.data != undefined) {
-                    // TODO: msg di validazione
-                    _this.$refs.waiter.close();
-                    _this.$refs.savedDialog.open();
-                }
-                else {
-                    // save OK !!
-                    _this.tipiLatte = response.data;
-                    //this.$refs.waiter.close();
-                    _this.$refs.savedDialog.open();
-                }
-            });
-        }
+        this.tipiLatteService.save(this.tipiLatte, this.isNew)
+            .then(function (response) {
+            if (response.data != undefined) {
+                // TODO: msg di validazione
+                _this.$refs.waiter.close();
+                _this.$refs.savedDialog.open();
+            }
+            else {
+                // save OK !!
+                _this.tipiLatte = response.data;
+                //this.$refs.waiter.close();
+                _this.$refs.savedDialog.open();
+            }
+        });
     };
     TipiLatteEditPage = __decorate([
         Component({

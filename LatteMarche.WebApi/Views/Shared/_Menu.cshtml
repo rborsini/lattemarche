@@ -1,17 +1,32 @@
-﻿<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+﻿@using LatteMarche.WebApi.Models
+@model MenuViewModel
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="/">
         <img class="main-logo" src="~/Content/img/main-logo.svg" />
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+
+    @helper MakeNavItem(string linkText, string actionName, string controllerName, string area, bool visible)
+    {
+        string className = ViewBag.currentController == controllerName ? "active" : "";
+
+        if (visible)
+        {
+            <li class="nav-item dropdown @className">
+                @if (String.IsNullOrEmpty(area))
+                {
+                    @Html.ActionLink(linkText, actionName, controllerName, null, new { @class = "dropdown-item" })
+                }
+                else
+                {
+                    @Html.ActionLink(linkText, actionName, controllerName, new { area = area }, new { @class = "dropdown-item" })
+                }
+            </li>
+        }
+    }
 
     @{
         string allevatoriActive = ViewContext.RouteData.Values["controller"].ToString() == "allevatori" ? "active" : "";
-        string utentiActive = ViewContext.RouteData.Values["controller"].ToString() == "utenti" ? "active" : "";
-        string trasportatoriActive = ViewContext.RouteData.Values["controller"].ToString() == "trasportatori" ? "active" : "";
-        string prelieviActive = ViewContext.RouteData.Values["controller"].ToString() == "prelievi" ? "active" : "";
-        string tipiLatteActive = ViewContext.RouteData.Values["controller"].ToString() == "tipilatte" ? "active" : "";
     }
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -19,29 +34,39 @@
             <li class="nav-item @allevatoriActive">
                 @Html.ActionLink("Allevatori", "Index", "Allevatori", null, new { @class = "nav-link" })
             </li>
-            @if (Request.IsAuthenticated)
+
+            @foreach (MenuItemViewModel item in Model)
             {
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @Html.ActionLink("Utenti", "Index", "Utenti", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Trasportatori", "Index", "Trasportatori", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Prelievi latte", "Index", "Prelievi", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Tipi latte", "Index", "TipiLatte", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Acquirenti", "Index", "Acquirenti", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Destinatari", "Index", "Destinatari", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Laboratorio analisi", "Index", "LaboratorioAnalisi", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Sitra", "Index", "Sitra", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Normative", "Index", "Documenti", null, new { @class = "dropdown-item" })
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Amministrazione</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @Html.ActionLink("Azioni", "Index", "Azioni", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Ruoli", "Index", "Ruoli", null, new { @class = "dropdown-item" })
-                    </div>
-                </li>
+                if (item.Items.Count == 0)
+                {
+                    @MakeNavItem(item.Title, item.Action, item.Controller, item.Area, item.Visible)
+                }
+                else
+                {
+                    if (item.Visible)
+                    {
+
+                        string active = item.Items.Any(i => i.Controller == ViewBag.currentController) ? "active" : "";
+                        <li class="nav-item dropdown @active">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                @foreach (MenuItemViewModel subItem in item.Items)
+                                {
+                                    if (subItem.Visible)
+                                    {
+                                        @Html.ActionLink(subItem.Title, subItem.Action, subItem.Controller, null, new { @class = "dropdown-item" })
+                                    }
+                                }
+
+                            </div>
+
+                        </li>
+                    }
+
+                }
+
             }
 
         </ul>
