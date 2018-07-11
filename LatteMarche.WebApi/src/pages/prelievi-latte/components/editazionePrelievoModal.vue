@@ -1,5 +1,4 @@
 ﻿<template>
-    <input hidden id="id" value="@Request[" id"]" />
     <div class="modal fade bd-example-modal-lg" id="editazione-prelievo-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="max-width:90%">
             <div class="modal-content">
@@ -31,7 +30,7 @@
                         <label class="col-2">Ora ultima mungitura</label>
                         <div class="col-sm-4">
                             <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
-<!--                            <input type="text" class="form-control">-->
+                            <!--                            <input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora consegna -->
@@ -124,13 +123,12 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button class="btn btn-success" v-on:click="onSave()">Salva</button>
+                    <button class="btn btn-success">Salva</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script lang="ts">
 
     import Vue from "vue";
@@ -176,8 +174,6 @@
         public destinatario: Destinatario[] = [];
         public acquirente: Acquirente[] = [];
 
-        public id: string;
-        private isNew: boolean = true;
 
         constructor() {
             super();
@@ -185,7 +181,6 @@
             this.trasporatoriService = new TrasportatoriService();
             this.destinatariService = new DestinatariService();
             this.acquirentiService = new AcquirentiService();
-            this.id = $('#id').val() as string;
         }
 
         mounted() {
@@ -193,21 +188,6 @@
             this.loadTrasportatori();
             this.loadDestinatari();
             this.loadAcquirenti();
-
-            if (this.id != '') {
-                this.loadPrelievo((prelievoLatte: PrelievoLatte) => {
-                    this.isNew = false;
-                });
-            }
-        }
-
-        // carica prelievo latte
-        public loadPrelievo(done: (prelievoLatte: PrelievoLatte) => void) {
-            this.prelieviLatteService.getPrelievoDetails(this.id)
-                .then(response => {
-                    this.utente = response.data;
-                    done(this.prelievoLatte);
-                });
         }
 
         // caricamento laboratori analisi
@@ -248,41 +228,6 @@
                         this.acquirente = response.data;
                     }
                 });
-        }
-
-        // salvataggio prelievo
-        public onSave() {
-            this.$refs.waiter.open();
-            if (!this.isNew) {
-                this.prelieviLatteService.update(this.prelievoLatte)
-                    .then(response => {
-                        if (response.data != undefined) {
-                            // TODO: msg di validazione
-                            this.$refs.waiter.close();
-                            this.$refs.savedDialog.open();
-                        } else {
-                            // save OK !!
-                            this.utente = response.data;
-                            //this.$refs.waiter.close();
-                            this.$refs.savedDialog.open();
-                        }
-                    });
-            } else {
-                this.prelieviLatteService.create(this.prelievoLatte)
-                    .then(response => {
-                        if (response.data != undefined) {
-                            // TODO: msg di validazione
-                            this.$refs.waiter.close();
-                            this.$refs.savedDialog.open();
-                        } else {
-                            // save OK !!
-                            this.utente = response.data;
-                            //this.$refs.waiter.close();
-                            this.$refs.savedDialog.open();
-                        }
-                    });
-            }
-
         }
 
         public open(): void {

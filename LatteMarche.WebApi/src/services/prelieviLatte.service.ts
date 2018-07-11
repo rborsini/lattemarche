@@ -13,19 +13,15 @@ export class PrelieviLatteService {
         return axios.get(url);
     }
 
-    public getPrelievoDetails(id: string): AxiosPromise<PrelievoLatte> {
-        return axios.get('/api/prelievilatte/details?id=' + id);
-    }
-
-    public getLaboratoriAnalisi(): AxiosPromise<LaboratorioAnalisi> {
+    public getLaboratoriAnalisi(): AxiosPromise<LaboratorioAnalisi[]> {
         return axios.get('/api/laboratorianalisi');
     }
 
-    public update(prelievoLatte: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-        return axios.put('/api/utenti/save', prelievoLatte);
+    public update(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
+        return axios.put('/api/utenti/save', prelievo);
     }
 
-    public create(prelievoLatte: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-        return axios.post('/api/utenti/create', prelievoLatte);
+    public create(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
+        return axios.post('/api/utenti/create', prelievo);
     }
 }

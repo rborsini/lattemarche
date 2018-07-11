@@ -8,7 +8,11 @@
                 <th>Indirizzo</th>
                 <th>Comune</th>
                 <th>Provincia</th>
-                <th>Azioni</th>
+                @if (Request.IsAuthenticated)
+                {
+                    <th>Azioni</th>
+                }
+
             </tr>
         </thead>
         <tbody></tbody>
@@ -21,12 +25,21 @@
 <script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
 <script src="~/src/pages/allevatori/index.page.js"></script>
 
-<script type="text/javascript">
-
-    jQuery(document).ready(function () {
-        var allevatoriIndex = new TabellaAllevatori();
-    });
-    
-</script>
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var allevatoriIndex = new TabellaAllevatori(true);
+        });
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var allevatoriIndex = new TabellaAllevatori(false);
+        });
+    </script>
+}
 
 
