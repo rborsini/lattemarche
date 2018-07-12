@@ -14,6 +14,9 @@
                         <label class="col-2">Data prelievo</label>
                         <div class="col-sm-4">
                             <datepicker :value.sync="prelievoLatte.DataPrelievoStr" />
+                            <div class="invalid-feedback">
+                                Inserire data prelievo.
+                            </div>
                         </div>
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
@@ -25,6 +28,9 @@
                         <label class="col-2">Data ultima mungitura</label>
                         <div class="col-sm-4">
                             <datepicker :value.sync="prelievoLatte.DataUltimaMungituraStr" />
+                            <div class="invalid-feedback">
+                                Inserire data ultima mungitura.
+                            </div>
                         </div>
                         <label class="col-2">Ora ultima mungitura</label>
                         <div class="col-sm-4">
@@ -36,6 +42,9 @@
                         <label class="col-2">Data consegna</label>
                         <div class="col-sm-4">
                             <datepicker :value.sync="prelievoLatte.DataConsegnaStr" />
+                            <div class="invalid-feedback">
+                                Inserire data consegna.
+                            </div>
                         </div>
                         <label class="col-2">Ora consegna</label>
                         <div class="col-sm-4">
@@ -117,6 +126,22 @@
                             <input type="text" class="form-control" v-model="prelievoLatte.LottoConsegna">
                         </div>
                     </div>
+                    <!-- progress bar -->
+                    <div class="row" v-if="progressBarSalvaPrelievo">
+                        <div class="col-sm-4 offset-4 pt-2">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     role="progressbar"
+                                     aria-valuenow="100"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 offset-4 text-center pt-2">
+                            <h4>Elaborazione in corso...</h4>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
@@ -171,7 +196,7 @@
         public destinatario: Destinatario[] = [];
         public acquirente: Acquirente[] = [];
         public id: string;
-        //private isNew: boolean = true;
+        public progressBarSalvaPrelievo = false;
 
 
         constructor() {
@@ -189,9 +214,6 @@
             this.loadDestinatari();
             this.loadAcquirenti();
 
-            //if (this.id != '') {
-            //        this.isNew = false;
-            //}
         }
 
         // caricamento laboratori analisi
@@ -235,20 +257,21 @@
         }
 
         public salvaDettaglioPrelievo() {
-
+            this.progressBarSalvaPrelievo = true;
             this.prelieviLatteService.save(this.prelievoLatte)
-                    .then(response => {
-                        if (response.data != undefined) {
-                            this.$emit("salvato");
-                            this.close();
-                        } else {
-                            // save KO!!
-                            this.prelievoLatte = response.data;
-                            // TODO: msg di validazione
-                            //this.$emit("errore");
-                            this.close();
-                        }
-                    });
+                .then(response => {
+                    if (response.data != undefined) {
+                        this.$emit("salvato");
+                        this.progressBarSalvaPrelievo = false;
+                        this.close();
+                    } else {
+                        // save KO!!
+                        this.prelievoLatte = response.data;
+                        // TODO: msg di validazione
+                        //this.$emit("errore");
+                        this.close();
+                    }
+                });
         }
 
         public open(): void {
