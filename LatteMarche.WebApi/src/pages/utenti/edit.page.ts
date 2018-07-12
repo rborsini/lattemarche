@@ -82,20 +82,19 @@ export default class UtentiEditPage extends Vue {
         if (this.id != '') {
             this.loadUtente((utente: Utente) => {
                 this.isNew = false;
+                this.loadComuni(this.utente.SiglaProvincia);
+                this.comuniService.getProvince()
+                    .then(response => {
+                        this.opzioniProvince = response.data;
+                    });
+                this.opzioniSesso = this.getOpzioniSessoUtente();
+                this.opzioniAbilitato = this.getOpzioniAbilitato();
+                this.opzioniVisibile = this.getOpzioniAbilitato();
+                this.loadTipiLatte();
+                this.loadProfili();
+                this.$refs.waiter.close();
             });
         }
-        this.loadComuni(this.utente.SiglaProvincia);
-        this.comuniService.getProvince()
-            .then(response => {
-                this.opzioniProvince = response.data;
-            });
-
-        this.opzioniSesso = this.getOpzioniSessoUtente();
-        this.opzioniAbilitato = this.getOpzioniAbilitato();
-        this.opzioniVisibile = this.getOpzioniAbilitato();
-        this.loadTipiLatte();
-        this.loadProfili();
-        this.$refs.waiter.close();
     }
 
     // carica utente

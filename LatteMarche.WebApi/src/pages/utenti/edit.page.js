@@ -57,19 +57,19 @@ var UtentiEditPage = /** @class */ (function (_super) {
         if (this.id != '') {
             this.loadUtente(function (utente) {
                 _this.isNew = false;
+                _this.loadComuni(_this.utente.SiglaProvincia);
+                _this.comuniService.getProvince()
+                    .then(function (response) {
+                    _this.opzioniProvince = response.data;
+                });
+                _this.opzioniSesso = _this.getOpzioniSessoUtente();
+                _this.opzioniAbilitato = _this.getOpzioniAbilitato();
+                _this.opzioniVisibile = _this.getOpzioniAbilitato();
+                _this.loadTipiLatte();
+                _this.loadProfili();
+                _this.$refs.waiter.close();
             });
         }
-        this.loadComuni(this.utente.SiglaProvincia);
-        this.comuniService.getProvince()
-            .then(function (response) {
-            _this.opzioniProvince = response.data;
-        });
-        this.opzioniSesso = this.getOpzioniSessoUtente();
-        this.opzioniAbilitato = this.getOpzioniAbilitato();
-        this.opzioniVisibile = this.getOpzioniAbilitato();
-        this.loadTipiLatte();
-        this.loadProfili();
-        this.$refs.waiter.close();
     };
     // carica utente
     UtentiEditPage.prototype.loadUtente = function (done) {
