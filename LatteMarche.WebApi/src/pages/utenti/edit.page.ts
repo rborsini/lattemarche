@@ -79,6 +79,12 @@ export default class UtentiEditPage extends Vue {
 
     public mounted() {
         this.$refs.waiter.open();
+        if (this.id != '') {
+            this.loadUtente((utente: Utente) => {
+                this.isNew = false;
+            });
+        }
+        this.loadComuni(this.utente.SiglaProvincia);
         this.comuniService.getProvince()
             .then(response => {
                 this.opzioniProvince = response.data;
@@ -87,16 +93,8 @@ export default class UtentiEditPage extends Vue {
         this.opzioniSesso = this.getOpzioniSessoUtente();
         this.opzioniAbilitato = this.getOpzioniAbilitato();
         this.opzioniVisibile = this.getOpzioniAbilitato();
-
-        this.loadComuni(this.utente.SiglaProvincia);
         this.loadTipiLatte();
         this.loadProfili();
-
-        if (this.id != '') {
-            this.loadUtente((utente: Utente) => {
-                this.isNew = false;
-            });
-        }
         this.$refs.waiter.close();
     }
 

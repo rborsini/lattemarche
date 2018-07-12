@@ -7,7 +7,7 @@ export class PrelieviLatteService {
     constructor() { }
 
     public getPrelievi(id: string, dataInizio: string, dataFine: string): AxiosPromise<PrelievoLatte[]> {
-        var url = '/api/PrelieviLatte/Search?idAllevamento=' + id;
+        var url = '/api/prelievilatte/Search?idAllevamento=' + id;
         url += '&dal=' + dataInizio;
         url += '&al=' + dataFine;
         return axios.get(url);
@@ -18,10 +18,10 @@ export class PrelieviLatteService {
     }
 
     public update(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-        return axios.put('/api/utenti/save', prelievo);
+        return axios.put('/api/PrelieviLatte/save', prelievo);
     }
 
-    public create(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-        return axios.post('/api/utenti/create', prelievo);
-    }
+    //public create(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
+    //    return axios.post('/api/prelievilatte/create', prelievo);
+    //}
 }

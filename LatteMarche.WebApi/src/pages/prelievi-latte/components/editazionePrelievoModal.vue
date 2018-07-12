@@ -18,7 +18,6 @@
                         <label class="col-2">Ora prelievo</label>
                         <div class="col-sm-4">
                             <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
-                            <!--<input type="time" v-model="prelievoLatte.OraPrelievo" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora ultima mungitura -->
@@ -30,7 +29,6 @@
                         <label class="col-2">Ora ultima mungitura</label>
                         <div class="col-sm-4">
                             <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
-                            <!--                            <input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- data/ora consegna -->
@@ -42,7 +40,6 @@
                         <label class="col-2">Ora consegna</label>
                         <div class="col-sm-4">
                             <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
-                            <!--<input type="text" class="form-control">-->
                         </div>
                     </div>
                     <!-- numero mungiture / quantità in kg -->
@@ -123,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button class="btn btn-success">Salva</button>
+                    <button class="btn btn-success" v-on:click="salvaDettaglioPrelievo()">Salva</button>
                 </div>
             </div>
         </div>
@@ -137,6 +134,7 @@
     import Select2 from "../../../components/common/select2.vue";
     import Datepicker from "../../../components/common/datepicker.vue";
     import TimeEditor from "../../../components/common/timeEditor.vue";
+    import NotificationDialog from "../../../components/common/notificationDialog.vue";
 
     import { Dropdown, DropdownItem } from "../../../models/dropdown.model";
     import { PrelievoLatte } from "../../../models/prelievoLatte.model";
@@ -155,7 +153,9 @@
         components: {
             Select2,
             Datepicker,
-            TimeEditor
+            TimeEditor,
+            NotificationDialog
+
         }
     })
 
@@ -173,6 +173,8 @@
         public trasportatore: Trasportatore[] = [];
         public destinatario: Destinatario[] = [];
         public acquirente: Acquirente[] = [];
+        public id: string;
+        //private isNew: boolean = true;
 
 
         constructor() {
@@ -181,6 +183,7 @@
             this.trasporatoriService = new TrasportatoriService();
             this.destinatariService = new DestinatariService();
             this.acquirentiService = new AcquirentiService();
+            this.id = $('#id').val() as string;
         }
 
         mounted() {
@@ -188,6 +191,10 @@
             this.loadTrasportatori();
             this.loadDestinatari();
             this.loadAcquirenti();
+
+            //if (this.id != '') {
+            //        this.isNew = false;
+            //}
         }
 
         // caricamento laboratori analisi
@@ -228,6 +235,36 @@
                         this.acquirente = response.data;
                     }
                 });
+        }
+
+        public salvaDettaglioPrelievo() {
+            //if (this.isNew) {
+            this.prelieviLatteService.update(this.prelievoLatte)
+                    .then(response => {
+                        if (response.data != undefined) {
+                            // TODO: msg di validazione
+                            //this.$refs.savedDialog.open();
+                        } else {
+                            // save OK !!
+                            this.prelievoLatte = response.data;
+                            //this.$refs.waiter.close();
+                            //this.$refs.savedDialog.open();
+                        }
+                    });
+            //} else if (!this.isNew) {
+            //    this.prelieviLatteService.update(this.prelievoLatte)
+            //        .then(response => {
+            //            if (response.data != undefined) {
+            //                // TODO: msg di validazione
+            //                //this.$refs.savedDialog.open();
+            //            } else {
+            //                // save OK !!
+            //                this.prelievoLatte = response.data;
+            //                //this.$refs.waiter.close();
+            //                //this.$refs.savedDialog.open();
+            //            }
+            //        });
+            //}
         }
 
         public open(): void {

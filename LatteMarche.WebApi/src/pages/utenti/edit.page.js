@@ -54,6 +54,12 @@ var UtentiEditPage = /** @class */ (function (_super) {
     UtentiEditPage.prototype.mounted = function () {
         var _this = this;
         this.$refs.waiter.open();
+        if (this.id != '') {
+            this.loadUtente(function (utente) {
+                _this.isNew = false;
+            });
+        }
+        this.loadComuni(this.utente.SiglaProvincia);
         this.comuniService.getProvince()
             .then(function (response) {
             _this.opzioniProvince = response.data;
@@ -61,14 +67,8 @@ var UtentiEditPage = /** @class */ (function (_super) {
         this.opzioniSesso = this.getOpzioniSessoUtente();
         this.opzioniAbilitato = this.getOpzioniAbilitato();
         this.opzioniVisibile = this.getOpzioniAbilitato();
-        this.loadComuni(this.utente.SiglaProvincia);
         this.loadTipiLatte();
         this.loadProfili();
-        if (this.id != '') {
-            this.loadUtente(function (utente) {
-                _this.isNew = false;
-            });
-        }
         this.$refs.waiter.close();
     };
     // carica utente

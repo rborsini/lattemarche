@@ -53,6 +53,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             _this.$refs.waiter.close();
         });
     };
+    // carico prelievi
     PrelieviLatteEditPage.prototype.loadPrelievi = function (done) {
         var _this = this;
         this.prelieviLatteService.getPrelievi(this.id, this.dataInzio, this.dataFine)
@@ -61,6 +62,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             done(_this.prelievi);
         });
     };
+    // carico gli utenti
     PrelieviLatteEditPage.prototype.loadUtente = function () {
         var _this = this;
         this.utentiService.getDetails(this.id)
@@ -68,6 +70,7 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             _this.utente = response.data;
         });
     };
+    // carica il prelievo selezionato nella modale
     PrelieviLatteEditPage.prototype.onPrelievoSelezionato = function (prelievo) {
         this.prelievoSelezionato = prelievo;
         this.$refs.editazionePrelievoModal.open();

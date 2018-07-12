@@ -37,15 +37,12 @@ export default class PrelieviLatteEditPage extends Vue {
     }
 
     public id: string;
-
     public dataInzio: string = "";
     public dataFine: string = "";
     private today: Date;
-
     public prelievi: PrelievoLatte[] = [];
     public utente: Utente;
     public prelievoSelezionato: PrelievoLatte;
-
     public prelieviLatteService: PrelieviLatteService;
     public utentiService: UtentiService;
 
@@ -72,6 +69,7 @@ export default class PrelieviLatteEditPage extends Vue {
         });
     }
 
+    // carico prelievi
     private loadPrelievi(done: (prelievi: PrelievoLatte[]) => void) {
         this.prelieviLatteService.getPrelievi(this.id, this.dataInzio, this.dataFine)
             .then(response => {
@@ -81,6 +79,7 @@ export default class PrelieviLatteEditPage extends Vue {
 
     }
 
+    // carico gli utenti
     public loadUtente(): void {
         this.utentiService.getDetails(this.id)
             .then(response => {
@@ -88,6 +87,7 @@ export default class PrelieviLatteEditPage extends Vue {
             });
     }
 
+    // carica il prelievo selezionato nella modale
     public onPrelievoSelezionato(prelievo: PrelievoLatte): void {
         this.prelievoSelezionato = prelievo;
         this.$refs.editazionePrelievoModal.open()
