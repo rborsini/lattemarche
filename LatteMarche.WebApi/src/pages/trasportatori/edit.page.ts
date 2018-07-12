@@ -6,9 +6,12 @@ import Waiter from "../../components/common/waiter.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
-import PrioritaGiroTrasportatoriModal from "./components/prioritaGiroTrasportatoriModal.vue";
+
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Trasportatore } from "../../models/trasportatore.model";
+import { Allevatore } from "../../models/allevatore.model";
+
+import { AllevatoriService } from "../../services/allevatori.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
 
 declare module 'vue/types/vue' {
@@ -25,7 +28,6 @@ declare module 'vue/types/vue' {
         Waiter,
         NotificationDialog,
         GiroTrasportatoriModal,
-        PrioritaGiroTrasportatoriModal
     }
 })
 
@@ -35,18 +37,20 @@ export default class TrasportatoriEditPage extends Vue {
         waiter: Vue,
         savedDialog: Vue,
         giroTrasportatoriModal: Vue,
-        prioritaGiroTrasportatoriModal: Vue
     }
 
     public trasportatoriService: TrasportatoriService;
     public trasportatore: Trasportatore;
     public trasportatori: Trasportatore[] = [];
     public selectedGiro: number = 0;
+    public allevatori: Allevatore[] = [];
+    public allevatoriService: AllevatoriService;
 
     constructor() {
         super();
         this.trasportatore = new Trasportatore();
         this.trasportatoriService = new TrasportatoriService();
+        this.allevatoriService = new AllevatoriService();
     }
 
     public mounted() {
@@ -54,7 +58,7 @@ export default class TrasportatoriEditPage extends Vue {
     }
 
     // caricamento trasportatori
-    private loadTrasportatori() {
+    public loadTrasportatori() {
         this.trasportatoriService.getTrasportatori()
             .then(response => {
                 if (response.data != null) {
@@ -69,6 +73,17 @@ export default class TrasportatoriEditPage extends Vue {
             .then(response => {
                 this.trasportatore = response.data;
             })
+    }
+
+    // carico allevatori
+    public loadAllevamentiTrasportatore() {
+        this.allevatoriService.getAllevatori()
+            .then(response => {
+                if (response.data != null) {
+                    this.allevatori = response.data;
+                }
+
+            });
     }
 
     //// salvataggio utente

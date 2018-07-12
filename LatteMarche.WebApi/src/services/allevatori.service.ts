@@ -16,4 +16,8 @@ export class AllevatoriService {
         return axios.get('/api/utenti/details?id=' + id);
     }
 
+    public getAllevatori(): AxiosPromise<Allevatore[]> {
+        return axios.get('/api/allevatori');
+    }
+
 }

@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="modal fade bd-example-modal-lg" id="copertura-territoriale-trasporatori" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg" style="max-width:70%">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Copertura territoriale dei trasportatori</h5>
@@ -10,15 +10,194 @@
                 </div>
                 <div class="modal-body pl-5 pr-5">
                     <div class="row form-group">
-                        <label class="col-2">Codice</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control">
+                        <div class="col-sm-12">
+                            <p>L'indice di priorità indica il percorso seguito dal trasportatore; Inserire una sequenza numerica dei soli allevamenti segnati del check.</p>
                         </div>
                     </div>
+                    <!-- ciclo for per gli allevamenti -->
                     <div class="row form-group">
-                        <label class="col-2">Denominazione</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                    </div>
+                    <!-- ciclo for per gli allevamenti -->
+                    <div class="row form-group">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                    </div>
+                    <!-- ciclo for per gli allevamenti -->
+                    <div class="row form-group">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                    </div>
+                    <!-- ciclo for per gli allevamenti -->
+                    <div class="row form-group">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                    </div>
+                    <!-- ciclo for per gli allevamenti -->
+                    <div class="row form-group">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                    </div>
+                    <!-- ciclo for per gli allevamenti -->
+                    <div class="row form-group">
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
+                        </div>
+                        <label class="col-sm-2">Priorità</label>
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Text input with checkbox">
+                            </div>
+                            <p>Ragione sociale: Donninelli Antonio</p>
+                            <p>Allevatore: Donninelli Antonio</p>
+                            <p>Indirizzo: via Frasca 14 AGUGLIANO</p>
                         </div>
                     </div>
                 </div>

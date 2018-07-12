@@ -11,6 +11,9 @@ var AllevatoriService = /** @class */ (function () {
     AllevatoriService.prototype.getDetails = function (id) {
         return axios.get('/api/utenti/details?id=' + id);
     };
+    AllevatoriService.prototype.getAllevatori = function () {
+        return axios.get('/api/allevatori');
+    };
     return AllevatoriService;
 }());
 export { AllevatoriService };
