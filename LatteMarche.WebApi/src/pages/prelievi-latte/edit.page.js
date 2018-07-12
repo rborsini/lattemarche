@@ -22,6 +22,7 @@ import Component from "vue-class-component";
 import Waiter from "../../components/common/waiter.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import NotificationDialog from "../../components/common/notificationDialog.vue";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { Utente } from "../../models/utente.model";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
@@ -45,7 +46,6 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
         var _this = this;
         this.$refs.waiter.open();
         this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
-        console.log(this.today.setDate(this.today.getDate() + 30));
         this.loadUtente();
         //restituisce i prelievi dall'inizio del mese corrente
         this.dataInzio = String('01/' + String(this.today.getMonth()) + '/' + String(this.today.getFullYear()));
@@ -81,7 +81,8 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             components: {
                 Waiter: Waiter,
                 Datepicker: Datepicker,
-                EditazionePrelievoModal: EditazionePrelievoModal
+                EditazionePrelievoModal: EditazionePrelievoModal,
+                NotificationDialog: NotificationDialog
             }
         }),
         __metadata("design:paramtypes", [])

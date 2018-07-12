@@ -134,7 +134,6 @@
     import Select2 from "../../../components/common/select2.vue";
     import Datepicker from "../../../components/common/datepicker.vue";
     import TimeEditor from "../../../components/common/timeEditor.vue";
-    import NotificationDialog from "../../../components/common/notificationDialog.vue";
 
     import { Dropdown, DropdownItem } from "../../../models/dropdown.model";
     import { PrelievoLatte } from "../../../models/prelievoLatte.model";
@@ -153,9 +152,7 @@
         components: {
             Select2,
             Datepicker,
-            TimeEditor,
-            NotificationDialog
-
+            TimeEditor
         }
     })
 
@@ -238,33 +235,20 @@
         }
 
         public salvaDettaglioPrelievo() {
-            //if (this.isNew) {
-            this.prelieviLatteService.update(this.prelievoLatte)
+
+            this.prelieviLatteService.save(this.prelievoLatte)
                     .then(response => {
                         if (response.data != undefined) {
-                            // TODO: msg di validazione
-                            //this.$refs.savedDialog.open();
+                            this.$emit("salvato");
+                            this.close();
                         } else {
-                            // save OK !!
+                            // save KO!!
                             this.prelievoLatte = response.data;
-                            //this.$refs.waiter.close();
-                            //this.$refs.savedDialog.open();
+                            // TODO: msg di validazione
+                            //this.$emit("errore");
+                            this.close();
                         }
                     });
-            //} else if (!this.isNew) {
-            //    this.prelieviLatteService.update(this.prelievoLatte)
-            //        .then(response => {
-            //            if (response.data != undefined) {
-            //                // TODO: msg di validazione
-            //                //this.$refs.savedDialog.open();
-            //            } else {
-            //                // save OK !!
-            //                this.prelievoLatte = response.data;
-            //                //this.$refs.waiter.close();
-            //                //this.$refs.savedDialog.open();
-            //            }
-            //        });
-            //}
         }
 
         public open(): void {

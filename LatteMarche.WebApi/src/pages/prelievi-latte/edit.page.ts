@@ -4,6 +4,8 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import Waiter from "../../components/common/waiter.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import NotificationDialog from "../../components/common/notificationDialog.vue";
+
 
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { Utente } from "../../models/utente.model";
@@ -24,7 +26,8 @@ declare module 'vue/types/vue' {
     components: {
         Waiter,
         Datepicker,
-        EditazionePrelievoModal
+        EditazionePrelievoModal,
+        NotificationDialog
     }
 })
 
@@ -34,6 +37,7 @@ export default class PrelieviLatteEditPage extends Vue {
         waiter: Vue,
         savedDialog: Vue,
         editazionePrelievoModal: Vue
+
     }
 
     public id: string;
@@ -60,7 +64,6 @@ export default class PrelieviLatteEditPage extends Vue {
         this.$refs.waiter.open();
         this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
 
-        console.log(this.today.setDate(this.today.getDate() +30));
         this.loadUtente();
         //restituisce i prelievi dall'inizio del mese corrente
         this.dataInzio = String('01/' + String(this.today.getMonth()) + '/' + String(this.today.getFullYear()));

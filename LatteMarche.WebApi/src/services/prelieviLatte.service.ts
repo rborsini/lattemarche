@@ -17,8 +17,8 @@ export class PrelieviLatteService {
         return axios.get('/api/laboratorianalisi');
     }
 
-    public update(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-        return axios.put('/api/PrelieviLatte/save', prelievo);
+    public save(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
+        return axios.post('/api/PrelieviLatte/save', prelievo);
     }
 
     //public create(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
