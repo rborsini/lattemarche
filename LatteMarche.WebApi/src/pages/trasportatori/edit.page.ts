@@ -9,9 +9,9 @@ import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Trasportatore } from "../../models/trasportatore.model";
-import { Allevatore } from "../../models/allevatore.model";
+import { Giro } from "../../models/giro.model";
 
-import { AllevatoriService } from "../../services/allevatori.service";
+import { GiriService } from "../../services/giri.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
 
 declare module 'vue/types/vue' {
@@ -27,7 +27,7 @@ declare module 'vue/types/vue' {
         Select2,
         Waiter,
         NotificationDialog,
-        GiroTrasportatoriModal,
+        GiroTrasportatoriModal
     }
 })
 
@@ -35,22 +35,25 @@ export default class TrasportatoriEditPage extends Vue {
 
     $refs: {
         waiter: Vue,
-        savedDialog: Vue,
-        giroTrasportatoriModal: Vue,
+        salvataggioDettaglioGiroModal: Vue,
+        salvataggioGiroModal: Vue,
+        giroTrasportatoriModal: Vue
     }
 
     public trasportatoriService: TrasportatoriService;
     public trasportatore: Trasportatore;
     public trasportatori: Trasportatore[] = [];
+    public trasportatoreSelezionato: boolean = true;
     public selectedGiro: number = 0;
-    public allevatori: Allevatore[] = [];
-    public allevatoriService: AllevatoriService;
+    public giro: Giro;
+    public giriService: GiriService;
 
     constructor() {
         super();
         this.trasportatore = new Trasportatore();
         this.trasportatoriService = new TrasportatoriService();
-        this.allevatoriService = new AllevatoriService();
+        this.giro = new Giro();
+        this.giriService = new GiriService();
     }
 
     public mounted() {
@@ -69,6 +72,9 @@ export default class TrasportatoriEditPage extends Vue {
 
     // carico allevamenti se seleziono trasportatore
     public onTrasportatoreSelezionato(idTrasportatore: string): void {
+        this.trasportatoreSelezionato = false;
+        this.giro = new Giro();
+        this.selectedGiro = 0;
         this.trasportatoriService.getTrasportatoreDetails(idTrasportatore)
             .then(response => {
                 this.trasportatore = response.data;
@@ -76,50 +82,36 @@ export default class TrasportatoriEditPage extends Vue {
     }
 
     // carico allevatori
-    public loadAllevamentiTrasportatore() {
-        this.allevatoriService.getAllevatori()
+    public loadGiro(id: number) {
+        this.giriService.getGiroDetails(id)
             .then(response => {
                 if (response.data != null) {
-                    this.allevatori = response.data;
+                    this.giro = response.data;
+                    for (let i = 0; i < this.giro.Items.length; i++) {
+                        if (this.giro.Items[i].Priorita != null) {
+                            this.giro.Items[i].BoolPriorita = true;
+                        }
+                    }
                 }
 
             });
     }
 
-    //// salvataggio utente
-    //public onSave() {
-    //    this.$refs.waiter.open();
-    //    if (!this.isNew) {
-    //        this.utentiServices.update(this.utente)
-    //            .then(response => {
-    //                if (response.data != undefined) {
-    //                    // TODO: msg di validazione
-    //                    this.$refs.waiter.close();
-    //                    this.$refs.savedDialog.open();
-    //                } else {
-    //                    // save OK !!
-    //                    this.utente = response.data;
-    //                    //this.$refs.waiter.close();
-    //                    this.$refs.savedDialog.open();
-    //                }
-    //            });
-    //    } else {
-    //        this.utentiServices.create(this.utente)
-    //            .then(response => {
-    //                if (response.data != undefined) {
-    //                    // TODO: msg di validazione
-    //                    this.$refs.waiter.close();
-    //                    this.$refs.savedDialog.open();
-    //                } else {
-    //                    // save OK !!
-    //                    this.utente = response.data;
-    //                    //this.$refs.waiter.close();
-    //                    this.$refs.savedDialog.open();
-    //                }
-    //            });
-    //    }
-
-    //}
+    // salva giro trasportatori
+    public salvaGiro() {
+        this.$refs.waiter.open();
+        this.giriService.save(this.giro)
+            .then(response => {
+                if (response.data != undefined) {
+                    this.$refs.waiter.close();
+                    this.$refs.salvataggioGiroModal.open();
+                } else {
+                    this.giro = response.data;
+                    //this.$refs.waiter.close();
+                    this.$refs.salvataggioGiroModal.open();
+                }
+            });
+    }
 
 
 }

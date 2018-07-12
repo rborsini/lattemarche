@@ -24,18 +24,20 @@ import Waiter from "../../components/common/waiter.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
 import { Trasportatore } from "../../models/trasportatore.model";
-import { AllevatoriService } from "../../services/allevatori.service";
+import { Giro } from "../../models/giro.model";
+import { GiriService } from "../../services/giri.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
 var TrasportatoriEditPage = /** @class */ (function (_super) {
     __extends(TrasportatoriEditPage, _super);
     function TrasportatoriEditPage() {
         var _this = _super.call(this) || this;
         _this.trasportatori = [];
+        _this.trasportatoreSelezionato = true;
         _this.selectedGiro = 0;
-        _this.allevatori = [];
         _this.trasportatore = new Trasportatore();
         _this.trasportatoriService = new TrasportatoriService();
-        _this.allevatoriService = new AllevatoriService();
+        _this.giro = new Giro();
+        _this.giriService = new GiriService();
         return _this;
     }
     TrasportatoriEditPage.prototype.mounted = function () {
@@ -54,18 +56,43 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
     // carico allevamenti se seleziono trasportatore
     TrasportatoriEditPage.prototype.onTrasportatoreSelezionato = function (idTrasportatore) {
         var _this = this;
+        this.trasportatoreSelezionato = false;
+        this.giro = new Giro();
+        this.selectedGiro = 0;
         this.trasportatoriService.getTrasportatoreDetails(idTrasportatore)
             .then(function (response) {
             _this.trasportatore = response.data;
         });
     };
     // carico allevatori
-    TrasportatoriEditPage.prototype.loadAllevamentiTrasportatore = function () {
+    TrasportatoriEditPage.prototype.loadGiro = function (id) {
         var _this = this;
-        this.allevatoriService.getAllevatori()
+        this.giriService.getGiroDetails(id)
             .then(function (response) {
             if (response.data != null) {
-                _this.allevatori = response.data;
+                _this.giro = response.data;
+                for (var i = 0; i < _this.giro.Items.length; i++) {
+                    if (_this.giro.Items[i].Priorita != null) {
+                        _this.giro.Items[i].BoolPriorita = true;
+                    }
+                }
+            }
+        });
+    };
+    // salva giro trasportatori
+    TrasportatoriEditPage.prototype.salvaGiro = function () {
+        var _this = this;
+        this.$refs.waiter.open();
+        this.giriService.save(this.giro)
+            .then(function (response) {
+            if (response.data != undefined) {
+                _this.$refs.waiter.close();
+                _this.$refs.salvataggioGiroModal.open();
+            }
+            else {
+                _this.giro = response.data;
+                //this.$refs.waiter.close();
+                _this.$refs.salvataggioGiroModal.open();
             }
         });
     };
@@ -76,7 +103,7 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
                 Select2: Select2,
                 Waiter: Waiter,
                 NotificationDialog: NotificationDialog,
-                GiroTrasportatoriModal: GiroTrasportatoriModal,
+                GiroTrasportatoriModal: GiroTrasportatoriModal
             }
         }),
         __metadata("design:paramtypes", [])

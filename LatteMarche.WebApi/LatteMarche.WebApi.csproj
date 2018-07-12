@@ -333,6 +333,7 @@
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
     <TypeScriptCompile Include="src\services\destinatari.service.ts" />
+    <TypeScriptCompile Include="src\services\giri.service.ts" />
     <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
     <TypeScriptCompile Include="src\services\profili.service.ts" />
     <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
