@@ -1,4 +1,4 @@
-﻿function TabellaAllevatori(isAuth) {
+﻿function TabellaAllevatori() {
 
     var url = apiUrl + 'allevatori';
 
@@ -31,35 +31,48 @@
                 "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
             }
         },
-        columns: renderizzaColonna()
+        //columns: renderizzaColonna()
+        columns: [
+            { "data": "Id" },
+            { "data": "RagioneSociale" },
+            { "data": "IndirizzoAllevamento" },
+            { "data": "Comune" },
+            { "data": "Provincia" },
+            //{
+            //    "data": null,
+            //    "render": function (data, type, row) {
+            //        return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
+            //    }
+            //}
+        ]
     });
 
     // funzione per visualizzare la colonna in base all'Auth
-    function renderizzaColonna() {
-        if (isAuth) {
-            return [
-                { "data": "Id" },
-                { "data": "RagioneSociale" },
-                { "data": "IndirizzoAllevamento" },
-                { "data": "Comune" },
-                { "data": "Provincia" },
-                {
-                    "data": null,
-                    "render": function (data, type, row) {
-                        return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
-                    }
-                }
-            ]
-        } else {
-            return [
-                { "data": "Id" },
-                { "data": "RagioneSociale" },
-                { "data": "IndirizzoAllevamento" },
-                { "data": "Comune" },
-                { "data": "Provincia" }
-            ]
-        }
-    }
+    //function renderizzaColonna() {
+    //    if (isAuth) {
+    //        return [
+    //            { "data": "Id" },
+    //            { "data": "RagioneSociale" },
+    //            { "data": "IndirizzoAllevamento" },
+    //            { "data": "Comune" },
+    //            { "data": "Provincia" },
+    //            {
+    //                "data": null,
+    //                "render": function (data, type, row) {
+    //                    return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
+    //                }
+    //            }
+    //        ]
+    //    } else {
+    //        return [
+    //            { "data": "Id" },
+    //            { "data": "RagioneSociale" },
+    //            { "data": "IndirizzoAllevamento" },
+    //            { "data": "Comune" },
+    //            { "data": "Provincia" }
+    //        ]
+    //    }
+    //}
 
     // Caricamento dati JSON
     $.getJSON(url, function (result) {
