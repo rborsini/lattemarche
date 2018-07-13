@@ -198,7 +198,6 @@
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
     <Content Include="src\components\common\timeEditor.vue" />
