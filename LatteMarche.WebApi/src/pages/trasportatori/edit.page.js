@@ -35,6 +35,7 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
         _this.trasportatoreSelezionato = true;
         _this.selectedGiro = 0;
         _this.trasportatore = new Trasportatore();
+        _this.trasportatore.Giri[0] = new Giro();
         _this.trasportatoriService = new TrasportatoriService();
         _this.giro = new Giro();
         _this.giriService = new GiriService();

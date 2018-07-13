@@ -51,6 +51,7 @@ export default class TrasportatoriEditPage extends Vue {
     constructor() {
         super();
         this.trasportatore = new Trasportatore();
+        this.trasportatore.Giri[0] = new Giro();
         this.trasportatoriService = new TrasportatoriService();
         this.giro = new Giro();
         this.giriService = new GiriService();
