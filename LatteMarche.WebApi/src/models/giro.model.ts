@@ -3,7 +3,7 @@
     public Denominazione: string = "";
     public CodiceGiro: string = "";
     public IdTrasportatore: number = 0;
-    public Items?: Items[] = [];
+    public Items: Items[] = [];
 }
 
 export class Items {
