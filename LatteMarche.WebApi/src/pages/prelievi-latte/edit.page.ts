@@ -82,6 +82,26 @@ export default class PrelieviLatteEditPage extends Vue {
 
     }
 
+    // apro la modale per aggiungere un prelievo manualmente e pulisco i campi
+    public aggiungiPrelievoManualmente() {
+        this.$refs.editazionePrelievoModal.open();
+        this.prelievoSelezionato.DataPrelievoStr = "";
+        this.prelievoSelezionato.OraPrelievo = "";
+        this.prelievoSelezionato.DataUltimaMungituraStr = "";
+        this.prelievoSelezionato.OraUltimaMungitura = "";
+        this.prelievoSelezionato.DataConsegnaStr = "";
+        this.prelievoSelezionato.OraConsegna = "";
+        this.prelievoSelezionato.NumeroMungiture = 0;
+        this.prelievoSelezionato.Quantita = 0;
+        this.prelievoSelezionato.Temperatura = 0;
+        this.prelievoSelezionato.IdTrasportatore = 0;
+        this.prelievoSelezionato.IdAcquirente = 0;
+        this.prelievoSelezionato.IdLabAnalisi = 0;
+        this.prelievoSelezionato.SerialeLabAnalisi = "";
+        this.prelievoSelezionato.Scomparto = "";
+        this.prelievoSelezionato.LottoConsegna = "";
+    }
+
     // carico gli utenti
     public loadUtente(): void {
         this.utentiService.getDetails(this.id)

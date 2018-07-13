@@ -62,6 +62,25 @@ var PrelieviLatteEditPage = /** @class */ (function (_super) {
             done(_this.prelievi);
         });
     };
+    // apro la modale per aggiungere un prelievo manualmente e pulisco i campi
+    PrelieviLatteEditPage.prototype.aggiungiPrelievoManualmente = function () {
+        this.$refs.editazionePrelievoModal.open();
+        this.prelievoSelezionato.DataPrelievoStr = "";
+        this.prelievoSelezionato.OraPrelievo = "";
+        this.prelievoSelezionato.DataUltimaMungituraStr = "";
+        this.prelievoSelezionato.OraUltimaMungitura = "";
+        this.prelievoSelezionato.DataConsegnaStr = "";
+        this.prelievoSelezionato.OraConsegna = "";
+        this.prelievoSelezionato.NumeroMungiture = 0;
+        this.prelievoSelezionato.Quantita = 0;
+        this.prelievoSelezionato.Temperatura = 0;
+        this.prelievoSelezionato.IdTrasportatore = 0;
+        this.prelievoSelezionato.IdAcquirente = 0;
+        this.prelievoSelezionato.IdLabAnalisi = 0;
+        this.prelievoSelezionato.SerialeLabAnalisi = "";
+        this.prelievoSelezionato.Scomparto = "";
+        this.prelievoSelezionato.LottoConsegna = "";
+    };
     // carico gli utenti
     PrelieviLatteEditPage.prototype.loadUtente = function () {
         var _this = this;
