@@ -28,6 +28,7 @@
             <div class="col-sm-6">
                 <select2 class="form-control"
                          :options="trasportatori"
+                         :value.sync="selectedTrasportatore"
                          :value-field="'Id'"
                          :text-field="'Cognome'"
                          v-on:value-changed="onTrasportatoreSelezionato" />
@@ -50,8 +51,12 @@
         <!-- bottoni modifica/aggiungi giro -->
         <div class="row form-group">
             <div class="col-sm-6 offset-3 text-right">
-                <button class="btn btn-primary mr-2" v-on:click="$refs.giroTrasportatoriModal.open()" :disabled="selectedGiro == 0">Modifica giro</button>
-                <button class="btn btn-success" v-on:click="$refs.giroTrasportatoriModal.open()">Aggiungi giro</button>
+                <button class="btn btn-primary mr-2" 
+                        v-on:click="$refs.giroTrasportatoriModal.open()" 
+                        :disabled="selectedGiro == 0">Modifica giro</button>
+                <button class="btn btn-success" 
+                        v-on:click="$refs.giroTrasportatoriModal.open()" 
+                        :disabled="selectedTrasportatore == 0">Aggiungi giro</button>
             </div>
         </div>
 

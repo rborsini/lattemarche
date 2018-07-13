@@ -45,6 +45,7 @@ export default class TrasportatoriEditPage extends Vue {
     public trasportatori: Trasportatore[] = [];
     public trasportatoreSelezionato: boolean = true;
     public selectedGiro: number = 0;
+    public selectedTrasportatore: number = 0;
     public giro: Giro;
     public giriService: GiriService;
 
