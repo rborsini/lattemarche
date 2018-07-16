@@ -9,19 +9,34 @@
                     </button>
                 </div>
                 <div class="modal-body pl-5 pr-5">
-                    <div class="row form-group">
-                        <label class="col-2">Codice</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control" v-model="giro.CodiceGiro">
+                    <div v-if="progressBar">
+                        <div class="row">
+                            <div class="col-sm-8 offset-2">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                         role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                </div>
+                                <h3 class="text-center pt-2">Elaborazione in corso...</h3>
+                            </div>
                         </div>
                     </div>
-                    <div class="row form-group">
-                        <label class="col-2">Denominazione</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control" v-model="giro.Denominazione">
+                    <div v-else>
+                        <div class="row form-group">
+                            <label class="col-2">Codice</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" v-model="giro.CodiceGiro">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-2">Denominazione</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" v-model="giro.Denominazione">
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
                     <button v-on:click="onSave()" class="btn btn-success">Salva</button>
@@ -37,9 +52,10 @@
     import Component from "vue-class-component";
     import { Prop, Watch, Emit } from "vue-property-decorator";
     import { Giro } from "../../../models/giro.model";
+    import { GiriService } from "../../../services/giri.service";
 
     @Component({
-        components: { }
+        components: {}
     })
 
     export default class GiroTrasportatoriModal extends Vue {
@@ -47,11 +63,30 @@
         @Prop()
         giro: Giro;
 
+        public giriService: GiriService;
+        public progressBar: boolean = false;
+
         constructor() {
             super();
+            this.giriService = new GiriService();
+            this.giro = new Giro();
         }
 
         mounted() {
+            
+        }
+
+        public onSave() {
+            this.progressBar = true;
+            this.giriService.save(this.giro)
+                .then(response => {
+                    if (response.data != undefined) {
+                        this.progressBar = false;
+                        this.close();
+                    } else {
+                        this.giro = response.data;
+                    }
+                })
         }
 
         public open(): void {

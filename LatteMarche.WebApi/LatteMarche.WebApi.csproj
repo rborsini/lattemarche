@@ -153,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\prelievi_latte_edit.js" />
-    <Content Include="build\ruoli_details_page.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
     <Content Include="build\tipilatte_edit_page.js" />
@@ -199,9 +198,11 @@
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="src\pages\trasportatori\components\prioritaGiroTrasportatoriModal.vue" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
+    <Content Include="src\components\common\timeEditor.vue" />
+    <Content Include="src\components\common\dataTable.vue" />
+    <None Include="lattemarche-test - Web Deploy.pubxml" />
     <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\destinatario.model.ts" />
@@ -210,6 +211,7 @@
     <TypeScriptCompile Include="src\models\laboratorioAnalisi.model.ts" />
     <TypeScriptCompile Include="src\models\pagina.model.ts" />
     <TypeScriptCompile Include="src\models\prelievoLatte.model.ts" />
+    <TypeScriptCompile Include="src\models\profilo.model.ts" />
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
@@ -318,7 +320,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Utenti\New.cshtml" />
     <Content Include="Views\Utenti\Index.cshtml" />
     <Content Include="Views\Shared\_ItemNotFound.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
@@ -333,7 +334,9 @@
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
     <TypeScriptCompile Include="src\services\destinatari.service.ts" />
+    <TypeScriptCompile Include="src\services\giri.service.ts" />
     <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
+    <TypeScriptCompile Include="src\services\profili.service.ts" />
     <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
     <TypeScriptCompile Include="src\services\ruoli.service.ts" />
     <TypeScriptCompile Include="src\services\trasportatori.service.ts" />

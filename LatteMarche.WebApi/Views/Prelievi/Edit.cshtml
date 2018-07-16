@@ -7,13 +7,21 @@
 
     <!-- modale modifica/inserisci prelievo -->
     <editazione-prelievo-modal ref="editazionePrelievoModal"
-                               :prelievo-latte="prelievoSelezionato"></editazione-prelievo-modal>
+                               :prelievo-latte="prelievoSelezionato"
+                               v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
+    
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Il prelievo è stato salvato correttamente'"
+                         v-on:ok="window.location = '/prelievi/edit?id=' + id"></notification-dialog>
+
 
     <!-- visualizza prelievi dal al -->
     <div class="row form-group">
         <label class="col-sm-2 offset-2">Visualizza prelievi dal</label>
         <div class="col-sm-2">
-            <datepicker :value.sync="dataInzio"/>
+            <datepicker :value.sync="dataInzio" />
         </div>
         <label>al</label>
         <div class="col-sm-2">
@@ -42,7 +50,7 @@
             <h6>Ragione sociale: {{utente.RagioneSociale}}</h6>
         </div>
         <div class="col-sm-6 text-right">
-            <button v-on:click="$refs.editazionePrelievoModal.open()" class="btn btn-success">Aggiungi prelievo manualmente</button>
+            <button v-on:click="aggiungiPrelievoManualmente()" class="btn btn-success">Aggiungi prelievo manualmente</button>
         </div>
     </div>
 
@@ -74,7 +82,7 @@
     <div class="row form-group" v-else>
         <div class="col-sm-12 text-center">
             <h4>Nessun prelievo trovato</h4>
-        </div>    
+        </div>
     </div>
 
 </div>

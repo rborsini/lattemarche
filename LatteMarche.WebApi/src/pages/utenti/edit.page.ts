@@ -11,10 +11,12 @@ import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
 import { Comune } from "../../models/comune.model";
+import { Profilo } from "../../models/profilo.model";
 
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
 import { ComuniService } from "../../services/comuni.service";
+import { ProfiliService } from "../../services/profili.service";
 
 
 declare module 'vue/types/vue' {
@@ -44,8 +46,9 @@ export default class UtentiEditPage extends Vue {
     public utente: Utente;
     public id: string;
 
-    public tipiLatte: TipoLatte;
+    public tipoLatte: TipoLatte;
     public comune: Comune;
+    public profilo: Profilo[] = [];
 
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
@@ -56,6 +59,7 @@ export default class UtentiEditPage extends Vue {
     private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
     private utentiService: UtentiService;
+    private profiliService: ProfiliService;
 
     private isNew: boolean = true;
 
@@ -64,35 +68,33 @@ export default class UtentiEditPage extends Vue {
 
         this.comune = new Comune;
         this.id = $('#id').val() as string;
-        this.tipiLatte = new TipoLatte;
+        this.tipoLatte = new TipoLatte;
         this.utente = new Utente();
         this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
         this.utentiService = new UtentiService();
+        this.profiliService = new ProfiliService();
 
     }
 
     public mounted() {
         this.$refs.waiter.open();
-        this.comuniService.getProvince()
-            .then(response => {
-                this.opzioniProvince = response.data;
-            });
-
-        this.opzioniSesso = this.getOpzioniSessoUtente();
-        this.opzioniAbilitato = this.getOpzioniAbilitato();
-        this.opzioniVisibile = this.getOpzioniAbilitato();
-
-        this.loadComuni(this.utente.SiglaProvincia);
-
-        this.loadTipiLatte();
-
         if (this.id != '') {
             this.loadUtente((utente: Utente) => {
                 this.isNew = false;
+                this.loadComuni(this.utente.SiglaProvincia);
+                this.comuniService.getProvince()
+                    .then(response => {
+                        this.opzioniProvince = response.data;
+                    });
+                this.opzioniSesso = this.getOpzioniSessoUtente();
+                this.opzioniAbilitato = this.getOpzioniAbilitato();
+                this.opzioniVisibile = this.getOpzioniAbilitato();
+                this.loadTipiLatte();
+                this.loadProfili();
+                this.$refs.waiter.close();
             });
         }
-        this.$refs.waiter.close();
     }
 
     // carica utente
@@ -133,12 +135,12 @@ export default class UtentiEditPage extends Vue {
         this.tipiLatteService.getTipiLatte()
             .then(response => {
                 if (response.data != null) {
-                    this.tipiLatte = response.data;
+                    this.tipoLatte = response.data;
                 }
             });
     }
 
-    //Carico Comuni
+    // carica comuni
     public loadComuni(provincia: string): void {
         this.comuniService.getComuni(provincia)
             .then(response => {
@@ -148,7 +150,17 @@ export default class UtentiEditPage extends Vue {
             });
     }
 
-    //Carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
+    // carica tipi profilo
+    public loadProfili(): void {
+        this.profiliService.getProfili()
+            .then(response => {
+                if (response.data != null) {
+                    this.profilo = response.data;
+                }
+            });
+    }
+
+    // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
     public onComuneSelezionato(idComune: string): void {
         if (this.utente.SiglaProvincia == '') {
             this.comuniService.getComuneDetails(idComune)

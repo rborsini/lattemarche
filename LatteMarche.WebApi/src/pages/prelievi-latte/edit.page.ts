@@ -4,6 +4,8 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import Waiter from "../../components/common/waiter.vue";
 import Datepicker from "../../components/common/datepicker.vue";
 import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import NotificationDialog from "../../components/common/notificationDialog.vue";
+
 
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { Utente } from "../../models/utente.model";
@@ -24,7 +26,8 @@ declare module 'vue/types/vue' {
     components: {
         Waiter,
         Datepicker,
-        EditazionePrelievoModal
+        EditazionePrelievoModal,
+        NotificationDialog
     }
 })
 
@@ -34,18 +37,16 @@ export default class PrelieviLatteEditPage extends Vue {
         waiter: Vue,
         savedDialog: Vue,
         editazionePrelievoModal: Vue
+
     }
 
     public id: string;
-
     public dataInzio: string = "";
     public dataFine: string = "";
     private today: Date;
-
     public prelievi: PrelievoLatte[] = [];
     public utente: Utente;
     public prelievoSelezionato: PrelievoLatte;
-
     public prelieviLatteService: PrelieviLatteService;
     public utentiService: UtentiService;
 
@@ -63,7 +64,6 @@ export default class PrelieviLatteEditPage extends Vue {
         this.$refs.waiter.open();
         this.dataFine = String(this.today.getDate()) + '/' + String(this.today.getMonth() + 1) + '/' + String(this.today.getFullYear());
 
-        console.log(this.today.setDate(this.today.getDate() +30));
         this.loadUtente();
         //restituisce i prelievi dall'inizio del mese corrente
         this.dataInzio = String('01/' + String(this.today.getMonth()) + '/' + String(this.today.getFullYear()));
@@ -72,6 +72,7 @@ export default class PrelieviLatteEditPage extends Vue {
         });
     }
 
+    // carico prelievi
     private loadPrelievi(done: (prelievi: PrelievoLatte[]) => void) {
         this.prelieviLatteService.getPrelievi(this.id, this.dataInzio, this.dataFine)
             .then(response => {
@@ -81,6 +82,27 @@ export default class PrelieviLatteEditPage extends Vue {
 
     }
 
+    // apro la modale per aggiungere un prelievo manualmente e pulisco i campi
+    public aggiungiPrelievoManualmente() {
+        this.$refs.editazionePrelievoModal.open();
+        this.prelievoSelezionato.DataPrelievoStr = "";
+        this.prelievoSelezionato.OraPrelievo = "";
+        this.prelievoSelezionato.DataUltimaMungituraStr = "";
+        this.prelievoSelezionato.OraUltimaMungitura = "";
+        this.prelievoSelezionato.DataConsegnaStr = "";
+        this.prelievoSelezionato.OraConsegna = "";
+        this.prelievoSelezionato.NumeroMungiture = 0;
+        this.prelievoSelezionato.Quantita = 0;
+        this.prelievoSelezionato.Temperatura = 0;
+        this.prelievoSelezionato.IdTrasportatore = 0;
+        this.prelievoSelezionato.IdAcquirente = 0;
+        this.prelievoSelezionato.IdLabAnalisi = 0;
+        this.prelievoSelezionato.SerialeLabAnalisi = "";
+        this.prelievoSelezionato.Scomparto = "";
+        this.prelievoSelezionato.LottoConsegna = "";
+    }
+
+    // carico gli utenti
     public loadUtente(): void {
         this.utentiService.getDetails(this.id)
             .then(response => {
@@ -88,6 +110,7 @@ export default class PrelieviLatteEditPage extends Vue {
             });
     }
 
+    // carica il prelievo selezionato nella modale
     public onPrelievoSelezionato(prelievo: PrelievoLatte): void {
         this.prelievoSelezionato = prelievo;
         this.$refs.editazionePrelievoModal.open()

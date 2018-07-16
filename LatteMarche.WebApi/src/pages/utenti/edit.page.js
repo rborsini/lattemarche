@@ -29,10 +29,12 @@ import { Comune } from "../../models/comune.model";
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
 import { ComuniService } from "../../services/comuni.service";
+import { ProfiliService } from "../../services/profili.service";
 var UtentiEditPage = /** @class */ (function (_super) {
     __extends(UtentiEditPage, _super);
     function UtentiEditPage() {
         var _this = _super.call(this) || this;
+        _this.profilo = [];
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
@@ -41,31 +43,33 @@ var UtentiEditPage = /** @class */ (function (_super) {
         _this.isNew = true;
         _this.comune = new Comune;
         _this.id = $('#id').val();
-        _this.tipiLatte = new TipoLatte;
+        _this.tipoLatte = new TipoLatte;
         _this.utente = new Utente();
         _this.comuniService = new ComuniService();
         _this.tipiLatteService = new TipiLatteService();
         _this.utentiService = new UtentiService();
+        _this.profiliService = new ProfiliService();
         return _this;
     }
     UtentiEditPage.prototype.mounted = function () {
         var _this = this;
         this.$refs.waiter.open();
-        this.comuniService.getProvince()
-            .then(function (response) {
-            _this.opzioniProvince = response.data;
-        });
-        this.opzioniSesso = this.getOpzioniSessoUtente();
-        this.opzioniAbilitato = this.getOpzioniAbilitato();
-        this.opzioniVisibile = this.getOpzioniAbilitato();
-        this.loadComuni(this.utente.SiglaProvincia);
-        this.loadTipiLatte();
         if (this.id != '') {
             this.loadUtente(function (utente) {
                 _this.isNew = false;
+                _this.loadComuni(_this.utente.SiglaProvincia);
+                _this.comuniService.getProvince()
+                    .then(function (response) {
+                    _this.opzioniProvince = response.data;
+                });
+                _this.opzioniSesso = _this.getOpzioniSessoUtente();
+                _this.opzioniAbilitato = _this.getOpzioniAbilitato();
+                _this.opzioniVisibile = _this.getOpzioniAbilitato();
+                _this.loadTipiLatte();
+                _this.loadProfili();
+                _this.$refs.waiter.close();
             });
         }
-        this.$refs.waiter.close();
     };
     // carica utente
     UtentiEditPage.prototype.loadUtente = function (done) {
@@ -103,11 +107,11 @@ var UtentiEditPage = /** @class */ (function (_super) {
         this.tipiLatteService.getTipiLatte()
             .then(function (response) {
             if (response.data != null) {
-                _this.tipiLatte = response.data;
+                _this.tipoLatte = response.data;
             }
         });
     };
-    //Carico Comuni
+    // carica comuni
     UtentiEditPage.prototype.loadComuni = function (provincia) {
         var _this = this;
         this.comuniService.getComuni(provincia)
@@ -117,7 +121,17 @@ var UtentiEditPage = /** @class */ (function (_super) {
             }
         });
     };
-    //Carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
+    // carica tipi profilo
+    UtentiEditPage.prototype.loadProfili = function () {
+        var _this = this;
+        this.profiliService.getProfili()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.profilo = response.data;
+            }
+        });
+    };
+    // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
     UtentiEditPage.prototype.onComuneSelezionato = function (idComune) {
         var _this = this;
         if (this.utente.SiglaProvincia == '') {

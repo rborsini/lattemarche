@@ -9,5 +9,5 @@ export class Trasportatore {
     public Cellulare: string = "";
     public Comune: string = "";
     public Provincia: string = "";
-    public Giri?: Giro[] = [];
+    public Giri: Giro[] = [];
 }
