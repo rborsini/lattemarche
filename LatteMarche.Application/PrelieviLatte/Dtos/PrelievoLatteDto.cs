@@ -26,6 +26,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string Scomparto { get; set; }
         public string LottoConsegna { get; set; }
         public string SerialeLabAnalisi { get; set; }
+        public string CodiceSitra { get; set; }
 
         public OperationEnum LastOperation { get; set; }
 

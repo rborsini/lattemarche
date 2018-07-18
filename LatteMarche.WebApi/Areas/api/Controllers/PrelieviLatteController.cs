@@ -13,6 +13,8 @@ using LatteMarche.Core.Models;
 using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Lotti.Interfaces;
 using System.Configuration;
+using System.Linq;
+using AutoMapper;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -104,29 +106,38 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         //[AllowAnonymous]
         public IHttpActionResult Synch()
         {
-            List<PrelievoLatte> nuoviPrelievi = new List<PrelievoLatte>();
-
             // scarica i dati dal cloud verso server locale
             if(this.PullEnabled)
-                synchService.Pull();
+                this.synchService.Pull();
 
             // carica i dati locali verso il cloud
             if(this.PushEnabled)
-                nuoviPrelievi = synchService.Push();
+                this.synchService.Push();
 
             // invio sitra
             if(this.SitraEnabled)
             {
+                // prelievi giorno precedente
+                List<PrelievoLatte> prelieviDaInviare = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
+                {
+                    DataPeriodoInizio = DateTime.Today.AddDays(-1),
+                    DataPeriodoFine = DateTime.Today
+                    //InviatoSitra = false
+                }).ToList());
+
+                // invio singoli prelievi
+                //this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
+
                 // estrazione lotti dai nuovi prelievi
-                var lotti = lottiService.GetLotti(nuoviPrelievi);
+                var lotti = this.lottiService.GetLotti(prelieviDaInviare);
 
-                // invio lotti Sitra
-                var lottiAggiornati = sitraService.InvioLotti(lotti);
+                // invio lotti
+                var lottiAggiornati = this.sitraService.InvioLotti(lotti);
 
-                // persistenza database dei lotti inviati
+                //persistenza database dei lotti inviati
                 foreach (var lotto in lottiAggiornati)
                 {
-                    lottiService.Create(lotto);
+                    this.lottiService.Create(lotto);
                 }
             }
 

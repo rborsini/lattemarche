@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LatteMarche.Application.PrelieviLatte.Dtos;
 
 namespace LatteMarche.Application.Lotti.Dtos
 {
@@ -29,6 +30,14 @@ namespace LatteMarche.Application.Lotti.Dtos
         public DateTime DataUltimaMungitura { get; set; }
 
         public DateTime DataConsegna { get; set; }
+
+        public List<PrelievoLatteDto> PrelieviPadre { get; set; }
+
+        public LottoDto()
+        {
+            this.PrelieviPadre = new List<PrelievoLatteDto>();
+        }
+
     }
 
     public class LottiMappings

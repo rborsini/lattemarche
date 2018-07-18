@@ -58,5 +58,8 @@ namespace LatteMarche.Core.Models
 
         public DateTime LastChange { get; set; }
 
+        [Column("CODICE_SITRA")]
+        public string CodiceSitra { get; set; }
+
     }
 }

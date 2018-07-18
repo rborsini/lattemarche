@@ -12,6 +12,7 @@ namespace LatteMarche.Application.Allevamenti.Dtos
         public int IdUtente { get; set; }
         public int IdComune { get; set; }
         public int? IdSitraStabilimentoAllevamento { get; set; }
+        public string CUAA { get; set; }
     }
 
     public class AllevamentiMappings
@@ -25,6 +26,7 @@ namespace LatteMarche.Application.Allevamenti.Dtos
                 .ForMember(dest => dest.IdUtente, opts => opts.MapFrom(src => src.IdUtente))
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
                 .ForMember(dest => dest.IdSitraStabilimentoAllevamento, opts => opts.MapFrom(src => src.IdSitraStabilimentoAllevamento))
+                .ForMember(dest => dest.CUAA, opts => opts.MapFrom(src => src.CUAA))
                 ;
             Mapper.CreateMap<AllevamentoDto, Allevamento>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
@@ -33,6 +35,7 @@ namespace LatteMarche.Application.Allevamenti.Dtos
                 .ForMember(dest => dest.IdUtente, opts => opts.MapFrom(src => src.IdUtente))
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
                 .ForMember(dest => dest.IdSitraStabilimentoAllevamento, opts => opts.MapFrom(src => src.IdSitraStabilimentoAllevamento))
+                .ForMember(dest => dest.CUAA, opts => opts.MapFrom(src => src.CUAA))
                 ;
         }
     }

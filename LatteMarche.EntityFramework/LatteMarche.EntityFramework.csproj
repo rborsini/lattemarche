@@ -120,6 +120,18 @@
     <Compile Include="Migrations\201806291334380_AggiunteTabelleAutorizzazioni.Designer.cs">
       <DependentUpon>201806291334380_AggiunteTabelleAutorizzazioni.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807161521547_AggiuntoTabellaDocumenti.cs" />
+    <Compile Include="Migrations\201807161521547_AggiuntoTabellaDocumenti.Designer.cs">
+      <DependentUpon>201807161521547_AggiuntoTabellaDocumenti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807161522304_AggiuntoCampo_CUAA.cs" />
+    <Compile Include="Migrations\201807161522304_AggiuntoCampo_CUAA.Designer.cs">
+      <DependentUpon>201807161522304_AggiuntoCampo_CUAA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807180811362_AggiuntoCodiceSitraPrelievo.cs" />
+    <Compile Include="Migrations\201807180811362_AggiuntoCodiceSitraPrelievo.Designer.cs">
+      <DependentUpon>201807180811362_AggiuntoCodiceSitraPrelievo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -198,6 +210,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806291334380_AggiunteTabelleAutorizzazioni.resx">
       <DependentUpon>201806291334380_AggiunteTabelleAutorizzazioni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161521547_AggiuntoTabellaDocumenti.resx">
+      <DependentUpon>201807161521547_AggiuntoTabellaDocumenti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161522304_AggiuntoCampo_CUAA.resx">
+      <DependentUpon>201807161522304_AggiuntoCampo_CUAA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807180811362_AggiuntoCodiceSitraPrelievo.resx">
+      <DependentUpon>201807180811362_AggiuntoCodiceSitraPrelievo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

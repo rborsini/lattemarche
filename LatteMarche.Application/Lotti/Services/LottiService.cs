@@ -11,30 +11,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace LatteMarche.Application.Lotti.Services
 {
     public class LottiService : EntityService<Lotto, long, LottoDto>, ILottiService
     {
-        private IRepository<V_Allevamento, int> allevamentiRepository;
+        //private IRepository<V_Allevamento, int> allevamentiRepository;
+        private IAllevamentiService allevamentiService;
 
-        public LottiService(IUnitOfWork uow)
+        public LottiService(IUnitOfWork uow, IAllevamentiService allevamentiService)
             : base(uow)
         {
-            this.allevamentiRepository = uow.Get<V_Allevamento, int>();
+            this.allevamentiService = allevamentiService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prelievi"></param>
+        /// <returns></returns>
         public List<LottoDto> GetLotti(List<PrelievoLatte> prelievi)
         {
-            var allevamentiDaInviare = allevamentiRepository.FilterBy(a => a.FlagInvioSitra).ToList();
+            // elenco allevamento con flag alta qualità obbligati all'invio SITRA
+            var allevamentiDaInviare = this.allevamentiService.GetAllevamentiSitra();
+
+            // recupero idAllevamenti
             var idAllevamenti = allevamentiDaInviare.Select(a => a.Id).ToList();
+
+            // filtro prelievi degli allevamenti da inviare
             var prelieviDaInviare = prelievi.Where(p => p.IdAllevamento.HasValue && idAllevamenti.Contains(p.IdAllevamento.Value)).ToList();
 
-            foreach(var prelievo in prelieviDaInviare)
-            {
-                var fattoreConversione = allevamentiDaInviare.First(a => a.Id == prelievo.IdAllevamento).FattoreConversione;
-                prelievo.Quantita *= fattoreConversione; 
-            }
+            // conversione da litri a kg
+            //foreach(var prelievo in prelieviDaInviare)
+            //{
+            //    var fattoreConversione = this.allevamentiService.GetFattoreConversione(prelievo.IdAllevamento.Value);
+            //    prelievo.Quantita *= fattoreConversione; 
+            //}
+
 
             var lotti = prelieviDaInviare
                 .GroupBy(u => u.LottoConsegna)
@@ -44,8 +58,10 @@ namespace LatteMarche.Application.Lotti.Services
                     Quantita = grp.Count(s => s.Quantita.HasValue) == 0 ? 0 : grp.Where(s => s.Quantita.HasValue).Sum(s => s.Quantita.Value),
                     DataConsegna = grp.Max(s => s.DataConsegna) != null ? grp.Max(s => s.DataConsegna).Value : DateTime.Now,
                     DataUltimaMungitura = grp.Max(s => s.DataUltimaMungitura) != null ? grp.Max(s => s.DataUltimaMungitura).Value : DateTime.Now.AddHours(-2),
+                    PrelieviPadre = grp.Select(p => Mapper.Map<PrelievoLatteDto>(p)).ToList()
                 })
                 .ToList();
+
             return lotti;
         }
 

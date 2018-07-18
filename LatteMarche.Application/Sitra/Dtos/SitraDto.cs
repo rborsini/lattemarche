@@ -21,11 +21,19 @@ namespace LatteMarche.Application.Sitra.Dtos
 
     }
 
+    public class LottoPadreDto
+    {
+        public long IdLotto { get; set; }
+        public long IdLottoPadre { get; set; }
+        public decimal Quantita { get; set; }
+        public int IdUnitaMisura { get; set; }
+    }
+
     public class AttributoLotto
     {
         public string CodiceLotto { get; set; }
         public string DataProduzione { get; set; }
-        public int Quantita { get; set; }
+        public decimal Quantita { get; set; }
         public int IdUnitaMisura { get; set; }
         public string Referenza { get; set; }
         public string CodOperatore { get; set; }

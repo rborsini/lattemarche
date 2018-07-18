@@ -171,6 +171,15 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                 query = query.Where(p => from <= p.DataPrelievo && p.DataPrelievo < to);
             }
 
+            // Inviato sitra
+            if (searchDto.InviatoSitra.HasValue)
+            {
+                if(searchDto.InviatoSitra.Value)
+                    query = query.Where(p => !String.IsNullOrEmpty(p.CodiceSitra));
+                else
+                    query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
+            }
+
             return ConvertToDtoList(query.ToList());
         }
 

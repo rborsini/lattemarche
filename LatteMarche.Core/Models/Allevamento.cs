@@ -25,5 +25,7 @@ namespace LatteMarche.Core.Models
 
         [Column("IDSITRA_STABILIMENTO_ALLEVAMENTO")]
         public int? IdSitraStabilimentoAllevamento { get; set; }
+
+        public string CUAA { get; set; }
     }
 }
