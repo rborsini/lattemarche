@@ -126,7 +126,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 }).ToList());
 
                 // invio singoli prelievi
-                //this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
+                this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
 
                 // estrazione lotti dai nuovi prelievi
                 var lotti = this.lottiService.GetLotti(prelieviDaInviare);
