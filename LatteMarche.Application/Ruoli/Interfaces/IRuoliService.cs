@@ -12,7 +12,12 @@ namespace LatteMarche.Application.Ruoli.Interfaces
     public interface IRuoliService : IEntityService<Ruolo, long, RuoloDto>
     {
 
-        void RemoveUserInRole(long idRuolo, int username);
+        /// <summary>
+        /// Aggiornamento ruolo singolo utente
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="role"></param>
+        void UpdateUserRole(int userId, long role);
 
     }
 }

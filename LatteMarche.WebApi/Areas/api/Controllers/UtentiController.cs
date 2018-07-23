@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using LatteMarche.Application.Ruoli.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.TipiProfilo.Interfaces;
@@ -19,16 +20,18 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         private IUtentiService utentiService;
         private ITipiProfiloService tipiProfiloService;
+        private IRuoliService ruoliService;
 
         #endregion
 
         #region Constructors
 
-        public UtentiController(IUtentiService utentiService, ITipiProfiloService tipiProfiloService)
+        public UtentiController(IUtentiService utentiService, ITipiProfiloService tipiProfiloService, IRuoliService ruoliService)
 		{
             this.utentiService = utentiService;
             this.tipiProfiloService = tipiProfiloService;
-        }
+		    this.ruoliService = ruoliService;
+		}
 
         #endregion
 
@@ -70,7 +73,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
+                // aggiornare ruoli/utenti
+                this.ruoliService.UpdateUserRole(model.Id, model.IdProfilo);
+
+                // aggiornare utente
                 var users = this.utentiService.Update(model);
+
                 return Ok(model);
             }
             catch (Exception exc)

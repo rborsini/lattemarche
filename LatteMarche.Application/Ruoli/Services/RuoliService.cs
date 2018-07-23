@@ -6,6 +6,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +15,16 @@ namespace LatteMarche.Application.Ruoli.Services
 {
     public class RuoliService : EntityService<Ruolo, long, RuoloDto>, IRuoliService
     {
-        IRepository<Azione, string> azioniRepository;
-        IRepository<Autorizzazione, long> autorizzazioniRepository;
+        private IRepository<Azione, string> azioniRepository;
+        private IRepository<Autorizzazione, long> autorizzazioniRepository;
+        private IRepository<RuoloUtente, long> ruoliUtenteRepository;
 
         public RuoliService(IUnitOfWork uow)
             : base(uow)
         {
             this.azioniRepository = uow.Get<Azione, string>();
             this.autorizzazioniRepository = uow.Get<Autorizzazione, long>();
+            this.ruoliUtenteRepository = uow.Get<RuoloUtente, long>();
         }
 
         public override RuoloDto Details(long key)
@@ -90,6 +93,28 @@ namespace LatteMarche.Application.Ruoli.Services
             return base.Update(model);
         }
 
+        /// <summary>
+        /// Aggiornamento ruolo singolo utente
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="role"></param>
+        public void UpdateUserRole(int userId, long role)
+        {
+            var ruoliUtente = this.ruoliUtenteRepository.FilterBy(ru => ru.Username == userId).ToList();
+
+            if(ruoliUtente.Count == 1 && ruoliUtente[0].IdRuolo == role)
+                return; // non c'è bisogno di fare niente perché il ruolo non è cambiato
+
+            this.ruoliUtenteRepository.Delete(ruoliUtente);
+            this.ruoliUtenteRepository.Add(new RuoloUtente()
+            {
+                IdRuolo = role,
+                Username = userId
+            });
+
+            this.uow.SaveChanges();
+        }
+
         private List<Autorizzazione> ConvertToAutorizzazioni(long idRuolo, string type, List<RuoloDto.Pagina> pagine)
         {
             List<Azione> azioni = this.azioniRepository.GetAll().ToList();
@@ -137,16 +162,5 @@ namespace LatteMarche.Application.Ruoli.Services
             return dbEntity;
         }
 
-        public void RemoveUserInRole(long idRuolo, int username)
-        {
-            Ruolo ruolo = repository.GetById(idRuolo);
-            RuoloUtente ruoloUtente = ruolo.UtentiRuolo.FirstOrDefault(ur => ur.UtenteObj.Id == username);
-
-            if (ruoloUtente != null)
-            {
-                this.uow.Get<RuoloUtente, long>().Delete(ruoloUtente);
-                this.uow.SaveChanges();
-            }
-        }
     }
 }

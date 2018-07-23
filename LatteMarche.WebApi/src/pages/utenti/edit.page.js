@@ -29,12 +29,12 @@ import { Comune } from "../../models/comune.model";
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
 import { ComuniService } from "../../services/comuni.service";
-import { ProfiliService } from "../../services/profili.service";
+import { RuoliService } from "../../services/ruoli.service";
 var UtentiEditPage = /** @class */ (function (_super) {
     __extends(UtentiEditPage, _super);
     function UtentiEditPage() {
         var _this = _super.call(this) || this;
-        _this.profilo = [];
+        _this.ruoli = [];
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
         _this.opzioniVisibile = [];
@@ -48,7 +48,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
         _this.comuniService = new ComuniService();
         _this.tipiLatteService = new TipiLatteService();
         _this.utentiService = new UtentiService();
-        _this.profiliService = new ProfiliService();
+        _this.ruoliService = new RuoliService();
         return _this;
     }
     UtentiEditPage.prototype.mounted = function () {
@@ -124,10 +124,10 @@ var UtentiEditPage = /** @class */ (function (_super) {
     // carica tipi profilo
     UtentiEditPage.prototype.loadProfili = function () {
         var _this = this;
-        this.profiliService.getProfili()
+        this.ruoliService.getRuoli()
             .then(function (response) {
             if (response.data != null) {
-                _this.profilo = response.data;
+                _this.ruoli = response.data;
             }
         });
     };

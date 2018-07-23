@@ -11,12 +11,12 @@ import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
 import { Comune } from "../../models/comune.model";
-import { Profilo } from "../../models/profilo.model";
+import { Ruolo } from "../../models/ruolo.model";
 
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
 import { ComuniService } from "../../services/comuni.service";
-import { ProfiliService } from "../../services/profili.service";
+import { RuoliService } from "../../services/ruoli.service";
 
 
 declare module 'vue/types/vue' {
@@ -48,7 +48,7 @@ export default class UtentiEditPage extends Vue {
 
     public tipoLatte: TipoLatte;
     public comune: Comune;
-    public profilo: Profilo[] = [];
+    public ruoli: Ruolo[] = [];
 
     public opzioniSesso: DropdownItem[] = [];
     public opzioniAbilitato: DropdownItem[] = [];
@@ -59,7 +59,7 @@ export default class UtentiEditPage extends Vue {
     private comuniService: ComuniService;
     private tipiLatteService: TipiLatteService;
     private utentiService: UtentiService;
-    private profiliService: ProfiliService;
+    private ruoliService: RuoliService;
 
     private isNew: boolean = true;
 
@@ -73,7 +73,7 @@ export default class UtentiEditPage extends Vue {
         this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
         this.utentiService = new UtentiService();
-        this.profiliService = new ProfiliService();
+        this.ruoliService = new RuoliService();
 
     }
 
@@ -152,10 +152,10 @@ export default class UtentiEditPage extends Vue {
 
     // carica tipi profilo
     public loadProfili(): void {
-        this.profiliService.getProfili()
+        this.ruoliService.getRuoli()
             .then(response => {
                 if (response.data != null) {
-                    this.profilo = response.data;
+                    this.ruoli = response.data;
                 }
             });
     }
