@@ -19,10 +19,10 @@
                 }
             </li>
         }
-}
+}   
 
 @{
-    string allevatoriActive = ViewContext.RouteData.Values["controller"].ToString() == "allevatori" ? "active" : "";
+    string allevatoriActive = ViewContext.RouteData.Values["currentController"].ToString().ToLower() == "allevatori" ? "active" : "";
 }
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
@@ -30,8 +30,8 @@
 
     <div class="container">
 
-        <a class="navbar-brand" href="/">Home
-            @*<img class="main-logo" src="~/Content/img/main-logo.svg" />*@
+        <a class="navbar-brand" href="/">
+            <img class="main-logo" src="~/Content/img/main-logo.svg" />
         </a>
 
 
@@ -52,7 +52,7 @@
                         if (item.Visible)
                         {
 
-                            string active = item.Items.Any(i => i.Controller == ViewBag.currentController) ? "active" : "";
+                            string active = item.Items.Any(i => i.Controller.ToLower() == ViewBag.currentController) ? "active" : "";
                             <li class="nav-item dropdown @active">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
 

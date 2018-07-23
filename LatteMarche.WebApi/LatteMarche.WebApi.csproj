@@ -158,6 +158,7 @@
     <Content Include="build\tipilatte_edit_page.js" />
     <Content Include="build\trasportatori_edit_page.js" />
     <Content Include="build\utenti_edit_page.js" />
+    <Content Include="Content\cow-head.png" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\custom.min.css" />
     <Content Include="Content\img\logo.svg" />
@@ -178,6 +179,7 @@
     <Content Include="Content\plugins\select2\css\select2.min.css" />
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
+    <Content Include="favicon.ico" />
     <Content Include="src\pages\azioni\index.page.js" />
     <Content Include="src\pages\documenti\index.page.js" />
     <Content Include="src\pages\tipi-latte\index.page.js" />
