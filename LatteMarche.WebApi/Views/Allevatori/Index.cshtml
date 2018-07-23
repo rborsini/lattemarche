@@ -9,9 +9,9 @@
                 <th>Comune</th>
                 <th>Provincia</th>
                 @*@if (Request.IsAuthenticated)
-                    {
-                        <th>Azioni</th>
-                    }*@
+                {
+                    <th>Azioni</th>
+                }*@
 
             </tr>
         </thead>
@@ -28,10 +28,11 @@
 
 <script type="text/javascript">
 
-    var isAuthenticated = '@Request.IsAuthenticated' == 'True';
+    //var isAuthenticated = '@Request.IsAuthenticated' == 'True';
+    var isAuthenticated = false;
 
     jQuery(document).ready(function () {
-        var allevatoriIndex = new TabellaAllevatori();
+        var allevatoriIndex = new TabellaAllevatori(isAuthenticated);
     });
 
 </script>

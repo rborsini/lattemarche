@@ -3,15 +3,15 @@
     public Denominazione: string = "";
     public CodiceGiro: string = "";
     public IdTrasportatore: number = 0;
-    public Items: Items[] = [];
+    public Items: Item[] = [];
 }
 
-export class Items {
+export class Item {
     public IdGiro: number = 0;
     public IdAllevamento: number = 0;
     public Allevatore: string = "";
     public RagioneSociale: string = "";
     public Indirizzo: string = "";
-    public BoolPriorita: boolean = false;
-    public Priorita: number = 0;
+    public Selezionato: boolean = false;
+    public Priorita?: number = 0;
 }

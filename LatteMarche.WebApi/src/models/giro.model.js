@@ -9,16 +9,16 @@ var Giro = /** @class */ (function () {
     return Giro;
 }());
 export { Giro };
-var Items = /** @class */ (function () {
-    function Items() {
+var Item = /** @class */ (function () {
+    function Item() {
         this.IdGiro = 0;
         this.IdAllevamento = 0;
         this.Allevatore = "";
         this.RagioneSociale = "";
         this.Indirizzo = "";
-        this.BoolPriorita = false;
+        this.Selezionato = false;
         this.Priorita = 0;
     }
-    return Items;
+    return Item;
 }());
-export { Items };
+export { Item };

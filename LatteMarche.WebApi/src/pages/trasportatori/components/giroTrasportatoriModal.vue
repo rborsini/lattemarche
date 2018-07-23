@@ -25,13 +25,13 @@
                         <div class="row form-group">
                             <label class="col-2">Codice</label>
                             <div class="col-10">
-                                <input type="text" class="form-control" v-model="giro.CodiceGiro">
+                                <input v-if="giro" type="text" class="form-control" v-model="giro.CodiceGiro">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label class="col-2">Denominazione</label>
                             <div class="col-10">
-                                <input type="text" class="form-control" v-model="giro.Denominazione">
+                                <input v-if="giro" type="text" class="form-control" v-model="giro.Denominazione">
                             </div>
                         </div>
                     </div>

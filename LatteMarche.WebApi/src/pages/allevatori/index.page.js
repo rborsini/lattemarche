@@ -1,6 +1,23 @@
-﻿function TabellaAllevatori() {
+﻿function TabellaAllevatori(isAuthenticated) {
 
     var url = apiUrl + 'allevatori';
+
+    cols = [
+        { "data": "Id" },
+        { "data": "RagioneSociale" },
+        { "data": "IndirizzoAllevamento" },
+        { "data": "Comune" },
+        { "data": "Provincia" }
+    ];
+
+    if (isAuthenticated) {
+        cols.push({
+            "data": null,
+            "render": function (data, type, row) {
+                return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
+            }
+        });
+    }
 
     var table = $('#allevatori-table').dataTable({
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
@@ -31,48 +48,11 @@
                 "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
             }
         },
-        //columns: renderizzaColonna()
-        columns: [
-            { "data": "Id" },
-            { "data": "RagioneSociale" },
-            { "data": "IndirizzoAllevamento" },
-            { "data": "Comune" },
-            { "data": "Provincia" },
-            //{
-            //    "data": null,
-            //    "render": function (data, type, row) {
-            //        return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
-            //    }
-            //}
-        ]
+        columns: cols
+
     });
 
-    // funzione per visualizzare la colonna in base all'Auth
-    //function renderizzaColonna() {
-    //    if (isAuth) {
-    //        return [
-    //            { "data": "Id" },
-    //            { "data": "RagioneSociale" },
-    //            { "data": "IndirizzoAllevamento" },
-    //            { "data": "Comune" },
-    //            { "data": "Provincia" },
-    //            {
-    //                "data": null,
-    //                "render": function (data, type, row) {
-    //                    return '<a class="edit" href="' + webUrl + 'utenti/edit?id=' + row.Id + '" >Dettagli</a>';
-    //                }
-    //            }
-    //        ]
-    //    } else {
-    //        return [
-    //            { "data": "Id" },
-    //            { "data": "RagioneSociale" },
-    //            { "data": "IndirizzoAllevamento" },
-    //            { "data": "Comune" },
-    //            { "data": "Provincia" }
-    //        ]
-    //    }
-    //}
+
 
     // Caricamento dati JSON
     $.getJSON(url, function (result) {

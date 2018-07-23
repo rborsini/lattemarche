@@ -60,9 +60,11 @@ namespace LatteMarche.Application.Giri.Services
                     Allevatore = String.Format("{0} {1}", allevatore.Cognome, allevatore.Nome),
                     Indirizzo = allevatore.IndirizzoAllevamento,
                     RagioneSociale = allevatore.RagioneSociale,
-                    Priorita = allevamentoXGiro != null ? allevamentoXGiro.Priorita.Value : (int?)null
+                    Priorita = allevamentoXGiro != null && allevamentoXGiro.Priorita.HasValue ? allevamentoXGiro.Priorita.Value : (int?)null
                 });
             }
+
+            dto.Items = dto.Items.OrderByDescending(i => i.Priorita.HasValue).ThenBy(i => i.Priorita).ToList();
 
             return dto;
         }

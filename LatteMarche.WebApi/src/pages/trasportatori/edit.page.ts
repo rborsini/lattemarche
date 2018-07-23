@@ -9,7 +9,7 @@ import GiroTrasportatoriModal from "./components/giroTrasportatoriModal.vue";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Trasportatore } from "../../models/trasportatore.model";
-import { Giro } from "../../models/giro.model";
+import { Giro, Item } from "../../models/giro.model";
 
 import { GiriService } from "../../services/giri.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
@@ -83,6 +83,16 @@ export default class TrasportatoriEditPage extends Vue {
             })
     }
 
+    // Selezione / Deselezione item del giro
+    public onItemSelectedChanged(event: any, item: Item) {
+
+        if (!item.Selezionato) {
+            item.Priorita = undefined;
+        }
+
+    }
+
+
     // carico allevatori
     public loadGiro(id: number) {
         this.giriService.getGiroDetails(id)
@@ -91,7 +101,9 @@ export default class TrasportatoriEditPage extends Vue {
                     this.giro = response.data;
                     for (let i = 0; i < this.giro.Items.length; i++) {
                         if (this.giro.Items[i].Priorita != null) {
-                            this.giro.Items[i].BoolPriorita = true;
+                            this.giro.Items[i].Selezionato = true;
+                        } else {
+                            this.giro.Items[i].Selezionato = false;
                         }
                     }
                 }

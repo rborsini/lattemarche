@@ -18,6 +18,8 @@ namespace LatteMarche.Application.Giri.Dtos
 
         public string Indirizzo { get; set; }
 
+        public bool? Selezionato { get; set; }
+
         public int? Priorita { get; set; }
 
     }

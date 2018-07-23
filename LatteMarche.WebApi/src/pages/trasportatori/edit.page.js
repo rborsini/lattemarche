@@ -66,6 +66,12 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
             _this.trasportatore = response.data;
         });
     };
+    // Selezione / Deselezione item del giro
+    TrasportatoriEditPage.prototype.onItemSelectedChanged = function (event, item) {
+        if (!item.Selezionato) {
+            item.Priorita = undefined;
+        }
+    };
     // carico allevatori
     TrasportatoriEditPage.prototype.loadGiro = function (id) {
         var _this = this;
@@ -75,7 +81,10 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
                 _this.giro = response.data;
                 for (var i = 0; i < _this.giro.Items.length; i++) {
                     if (_this.giro.Items[i].Priorita != null) {
-                        _this.giro.Items[i].BoolPriorita = true;
+                        _this.giro.Items[i].Selezionato = true;
+                    }
+                    else {
+                        _this.giro.Items[i].Selezionato = false;
                     }
                 }
             }
