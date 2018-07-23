@@ -3,10 +3,10 @@
     <table class="table table-striped table-bordered">
         <thead>
             <slot name="thead">
-        <th v-for="col in thead">
-            {{col}}
-        </th>
-        </slot>
+                <th v-for="col in thead">
+                    {{col}}
+                </th>
+            </slot>
         </thead>
         <tbody></tbody>
     </table>
@@ -19,7 +19,7 @@
 
     export default {
 
-        props: ['columns'],
+        props: ['columns', 'rows'],
 
         mounted: function () { },
 
@@ -27,6 +27,12 @@
 
             columns: function (columns) {
                 this.init(columns);
+            },
+
+            rows: function (rows) {
+                table.clear();
+                table.rows.add(rows);
+                table.draw();
             }
 
         },
@@ -44,19 +50,12 @@
                     columns: columns
 
                 });
-
-                $.getJSON("/api/devs", function (result) {
-
-                    table.clear();
-                    table.rows.add(result);
-                    table.draw();
-
-                });
-
             }
 
         }
 
     }
+
+
 
 </script>

@@ -152,6 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\allevatori_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
@@ -186,7 +187,6 @@
     <Content Include="src\pages\prelievi-latte\index.page.js" />
     <Content Include="src\pages\ruoli\index.page.js" />
     <Content Include="src\pages\utenti\index.page.js" />
-    <Content Include="src\pages\allevatori\index.page.js" />
     <Content Include="Views\Utenti\Edit.cshtml" />
     <Content Include="package-lock.json" />
     <Content Include="Views\Acquirenti\Index.cshtml" />
@@ -227,6 +227,7 @@
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
+    <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />

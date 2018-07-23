@@ -1,41 +1,24 @@
 ﻿<div id="index-allevatori-page">
-
-    <table class="table table-striped table-bordered table-hover" id="allevatori-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Azienda</th>
-                <th>Indirizzo</th>
-                <th>Comune</th>
-                <th>Provincia</th>
-                @*@if (Request.IsAuthenticated)
-                {
-                    <th>Azioni</th>
-                }*@
-
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    
+    <data-table :columns="columnOptions" :rows="allevatori" >
+        <template slot="thead">
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Category</th>
+            <th>Birthday</th>
+        </template>
+    </data-table>
 
 </div>
 
 <link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
 <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-<script src="~/src/pages/allevatori/index.page.js"></script>
+
+<script type="application/javascript" src="~/build/allevatori_index_page.js"></script>
 
 
-<script type="text/javascript">
-
-    //var isAuthenticated = '@Request.IsAuthenticated' == 'True';
-    var isAuthenticated = false;
-
-    jQuery(document).ready(function () {
-        var allevatoriIndex = new TabellaAllevatori(isAuthenticated);
-    });
-
-</script>
 
 
 
