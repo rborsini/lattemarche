@@ -1,4 +1,19 @@
-﻿<div id="utenti-edit" class="container-fluid pr-5 pl-5">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Utenti", DisplayName = "Utenti" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Modifica" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="utenti-edit" class="container-fluid pr-5 pl-5">
 
     <!-- Pannello modale del caricamento -->
     <waiter ref="waiter"></waiter>

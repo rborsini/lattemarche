@@ -1,6 +1,20 @@
-﻿<div id="index-allevatori-page">
-    
-    <data-table :columns="columnOptions" :rows="allevatori" >
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Allevatori" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="index-allevatori-page">
+
+    <data-table :columns="columnOptions" :rows="allevatori">
         <template slot="thead">
             <th>Id</th>
             <th>First Name</th>

@@ -1,0 +1,34 @@
+﻿@using LatteMarche.WebApi.Models
+@model BreadcrumbViewModel
+
+
+
+<ol class="breadcrumb">
+
+    @foreach (LatteMarche.WebApi.Models.BreadcrumbViewModel.BreadcrumbItem item in Model.Items)
+    {
+
+        if (item != Model.Items.Last())
+        {
+            <li class="breadcrumb-item">
+                @Html.ActionLink(item.DisplayName, item.ActionName, item.ControllerName, new { area = item.AreaName }, new { @class = "root" })
+            </li>
+        }
+        else
+        {
+            <li class="breadcrumb-item active">
+                @item.DisplayName
+            </li>                     
+        }
+    }
+
+</ol>
+
+
+
+
+
+
+
+
+

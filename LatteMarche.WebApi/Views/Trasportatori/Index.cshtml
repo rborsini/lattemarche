@@ -1,4 +1,18 @@
-﻿<div id="trasportatori-page">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Trasportatori" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="trasportatori-page">
 
     <input hidden id="id" value="@Request["id"]" />
 
@@ -7,15 +21,15 @@
 
     <!-- Pannelli modali di conferma azioni -->
     <notification-dialog ref="salvataggioDettaglioGiroModal"
-                        :title="'Conferma salvataggio'"
-                        :message="'Dettaglio giro salvato correttamente'"
-                        v-on:ok="window.location = '/trasportatori'"></notification-dialog>
+                         :title="'Conferma salvataggio'"
+                         :message="'Dettaglio giro salvato correttamente'"
+                         v-on:ok="window.location = '/trasportatori'"></notification-dialog>
 
     <!-- Pannelli modali di conferma azioni -->
     <notification-dialog ref="salvataggioGiroModal"
-                        :title="'Conferma salvataggio'"
-                        :message="'Giro salvato correttamente'"
-                        v-on:ok="window.location = '/trasportatori'"></notification-dialog>
+                         :title="'Conferma salvataggio'"
+                         :message="'Giro salvato correttamente'"
+                         v-on:ok="window.location = '/trasportatori'"></notification-dialog>
 
     <!-- modale modifica/aggiungi giro -->
     <giro-trasportatori-modal ref="giroTrasportatoriModal"
@@ -51,22 +65,28 @@
         <!-- bottoni modifica/aggiungi giro -->
         <div class="row form-group">
             <div class="col-sm-6 offset-3 text-right">
-                <button class="btn btn-primary mr-2" 
-                        v-on:click="$refs.giroTrasportatoriModal.open()" 
-                        :disabled="selectedGiro == 0">Modifica giro</button>
-                <button class="btn btn-success" 
-                        v-on:click="$refs.giroTrasportatoriModal.open()" 
-                        :disabled="selectedTrasportatore == 0">Aggiungi giro</button>
+                <button class="btn btn-primary mr-2"
+                        v-on:click="$refs.giroTrasportatoriModal.open()"
+                        :disabled="selectedGiro == 0">
+                    Modifica giro
+                </button>
+                <button class="btn btn-success"
+                        v-on:click="$refs.giroTrasportatoriModal.open()"
+                        :disabled="selectedTrasportatore == 0">
+                    Aggiungi giro
+                </button>
             </div>
         </div>
 
         <!-- bottone carica allevamenti trasportatore -->
         <div class="row form-group">
             <div class="col-sm-6 offset-3">
-                <button class="btn btn-success" 
+                <button class="btn btn-success"
                         v-on:click="loadGiro(selectedGiro)"
                         :disabled="selectedGiro == 0"
-                        style="width:100%">Carica gli allevamenti in cui si reca il trasportatore</button>
+                        style="width:100%">
+                    Carica gli allevamenti in cui si reca il trasportatore
+                </button>
             </div>
         </div>
     </div>
@@ -113,9 +133,13 @@
             <!-- bottoni annulla/salva priorità giro dei trasportatori -->
             <div class="col-sm-12 text-right">
                 <button class="btn btn-secondary mr-2"
-                        v-on:click="window.location = '/trasportatori'">Annulla</button>
+                        v-on:click="window.location = '/trasportatori'">
+                    Annulla
+                </button>
                 <button class="btn btn-success"
-                        v-on:click="salvaGiro()">Salva</button>
+                        v-on:click="salvaGiro()">
+                    Salva
+                </button>
             </div>
         </div>
     </div>

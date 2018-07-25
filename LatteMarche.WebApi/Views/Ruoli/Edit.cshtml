@@ -1,4 +1,19 @@
-﻿<div id="ruoli-edit" class="container-fluid">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Ruoli", DisplayName = "Ruoli" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Modifica" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="ruoli-edit" class="container-fluid">
 
     <!-- Pannello modale del caricamento -->
     <waiter ref="waiter"></waiter>

@@ -1,14 +1,11 @@
-﻿@*<div class="home-section">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="font-weight-bold display-2">Latte Marche</h1>
-                <h4>SOC. COOPERATIVA AGRICOLA</h4>
-            </div>
-        </div>
-        
-    </div>
-</div>*@
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+    }
+}
 
 <h1>Home</h1>
 

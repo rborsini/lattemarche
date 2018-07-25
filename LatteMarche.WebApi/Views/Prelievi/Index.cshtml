@@ -1,4 +1,18 @@
-﻿<div id="index-prelievi-latte-page">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Prelievi latte" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="index-prelievi-latte-page">
 
     <table class="table table-striped table-bordered" id="prelievi-latte-table">
         <thead>
@@ -58,214 +72,214 @@
 
 <!-- Modale per dettaglio del prelievo -->
 @*<div class="modal fade" id="modale-dettaglio-prelievo-latte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
 
-            <!-- header modale -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="font-weight:600">Dettaglio del prelievo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
-                </button>
-            </div>
+                <!-- header modale -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-weight:600">Dettaglio del prelievo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
 
-            <div class="modal-body">
-                <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="600" style="max-height: 600px; height: 600px; position: relative; overflow: visible;">
-                    <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
+                <div class="modal-body">
+                    <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollbar-shown="true" data-scrollable="true" data-max-height="600" style="max-height: 600px; height: 600px; position: relative; overflow: visible;">
+                        <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 
-                        <!-- data prelievo -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Data prelievo
-                            </label>
-                            <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataPrelievo" type="text" class="form-control m-input" placeholder="Data prelievo">
-                                <span class="input-group-addon">
-                                    <i class="la la-calendar"></i>
-                                </span>
+                            <!-- data prelievo -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Data prelievo
+                                </label>
+                                <div class="col-4 input-group date date-picker">
+                                    <input data-bind="value: DataPrelievo" type="text" class="form-control m-input" placeholder="Data prelievo">
+                                    <span class="input-group-addon">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="col-4 input-group timepicker">
+                                    <span class="input-group-addon">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                    <input data-bind="value: OraPrelievo" type="text" class="form-control m-input timepicker" placeholder="Ora prelievo">
+                                </div>
                             </div>
-                            <div class="col-4 input-group timepicker">
-                                <span class="input-group-addon">
-                                    <i class="la la-clock-o"></i>
-                                </span>
-                                <input data-bind="value: OraPrelievo" type="text" class="form-control m-input timepicker" placeholder="Ora prelievo">
-                            </div>
-                        </div>
 
-                        <!-- data ultima mungitura -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Data ultima mungitura
-                            </label>
-                            <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataUltimaMungitura" type="text" class="form-control m-input" placeholder="Data mungitura">
-                                <span class="input-group-addon">
-                                    <i class="la la-calendar"></i>
-                                </span>
+                            <!-- data ultima mungitura -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Data ultima mungitura
+                                </label>
+                                <div class="col-4 input-group date date-picker">
+                                    <input data-bind="value: DataUltimaMungitura" type="text" class="form-control m-input" placeholder="Data mungitura">
+                                    <span class="input-group-addon">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="col-4 input-group timepicker">
+                                    <span class="input-group-addon">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                    <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input timepicker" placeholder="Ora mungitura">
+                                </div>
                             </div>
-                            <div class="col-4 input-group timepicker">
-                                <span class="input-group-addon">
-                                    <i class="la la-clock-o"></i>
-                                </span>
-                                <input data-bind="value: OraUltimaMungitura" type="text" class="form-control m-input timepicker" placeholder="Ora mungitura">
-                            </div>
-                        </div>
 
-                        <!--data di consegna -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Data di consegna
-                            </label>
-                            <div class="col-4 input-group date date-picker">
-                                <input data-bind="value: DataConsegna" type="text" class="form-control m-input" placeholder="Data consegna">
-                                <span class="input-group-addon">
-                                    <i class="la la-calendar"></i>
-                                </span>
+                            <!--data di consegna -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Data di consegna
+                                </label>
+                                <div class="col-4 input-group date date-picker">
+                                    <input data-bind="value: DataConsegna" type="text" class="form-control m-input" placeholder="Data consegna">
+                                    <span class="input-group-addon">
+                                        <i class="la la-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="col-4 input-group timepicker">
+                                    <span class="input-group-addon">
+                                        <i class="la la-clock-o"></i>
+                                    </span>
+                                    <input data-bind="value: OraConsegna" type="text" class="form-control m-input timepicker" placeholder="Ora consegna">
+                                </div>
                             </div>
-                            <div class="col-4 input-group timepicker">
-                                <span class="input-group-addon">
-                                    <i class="la la-clock-o"></i>
-                                </span>
-                                <input data-bind="value: OraConsegna" type="text" class="form-control m-input timepicker" placeholder="Ora consegna">
-                            </div>
-                        </div>
 
-                        <!-- numero di mungiture -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Numero di mungiture
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input" placeholder="Inserisci numero mungiture">
+                            <!-- numero di mungiture -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Numero di mungiture
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: NumeroMungiture" type="number" class="form-control m-input" placeholder="Inserisci numero mungiture">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- quantita in kg -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Quantità Kg
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input" placeholder="Inserisci quantità">
+                            <!-- quantita in kg -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Quantità Kg
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: QuantitaMungitura" type="number" class="form-control m-input" placeholder="Inserisci quantità">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- tempratura in C° -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Temperatura C°
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input" placeholder="Inseriesci temperatura">
+                            <!-- tempratura in C° -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Temperatura C°
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: TemperaturaMungitura" type="number" class="form-control m-input" placeholder="Inseriesci temperatura">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- trasportatore -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Trasportatore
-                            </label>
-                            <div class="col-lg-8">
-                                <div class="m-select2 m-select2--pill">
-                                    <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" name="param" data-placeholder="Seleziona trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                            <!-- trasportatore -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Trasportatore
+                                </label>
+                                <div class="col-lg-8">
+                                    <div class="m-select2 m-select2--pill">
+                                        <select id="trasportatori" data-bind="options: Trasportatori, optionsValue: 'Id', value: TrasportatoreSelezionato, optionsText: 'Cognome', select2: {allowClear: true}" name="param" data-placeholder="Seleziona trasportatore" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- acquirente -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Acquirente
+                                </label>
+                                <div class="col-lg-8">
+                                    <div class="m-select2 m-select2--pill">
+                                        <select data-bind="options: Acquirenti, optionsValue: 'Id', value: AcquirenteSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- destinatario -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Destinatario
+                                </label>
+                                <div class="col-lg-8">
+                                    <div class="m-select2 m-select2--pill">
+                                        <select data-bind="options: Destinatari, optionsValue: 'Id', value: DestinatarioSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona destinatario" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- laboratorio analisi -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Laboratorio analisi
+                                </label>
+                                <div class="col-lg-8">
+                                    <select data-bind="options: LaboratoriAnalisi, optionsValue: 'Id', value: LaboratorioAnalisiSelezionato, optionsText: 'Descrizione', select2: {allowClear: true}" name="param" placeholder="Seleziona laboratorio analisi" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
                                         <option></option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- acquirente -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Acquirente
-                            </label>
-                            <div class="col-lg-8">
-                                <div class="m-select2 m-select2--pill">
-                                    <select data-bind="options: Acquirenti, optionsValue: 'Id', value: AcquirenteSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona acquirente" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
-                                        <option></option>
-                                    </select>
+                            <!-- seriale laboratorio -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Seriale laboratorio
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input" placeholder="Seleziona seriale laboratorio">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- destinatario -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Destinatario
-                            </label>
-                            <div class="col-lg-8">
-                                <div class="m-select2 m-select2--pill">
-                                    <select data-bind="options: Destinatari, optionsValue: 'Id', value: DestinatarioSelezionato, optionsText: 'RagioneSociale', select2: {allowClear: true}" name="param" data-placeholder="Seleziona destinatario" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
-                                        <option></option>
-                                    </select>
+                            <!-- scomparto -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Scomparto
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: Scomparto" type="number" class="form-control m-input" placeholder="Seleziona scomparto">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- laboratorio analisi -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Laboratorio analisi
-                            </label>
-                            <div class="col-lg-8">
-                                <select data-bind="options: LaboratoriAnalisi, optionsValue: 'Id', value: LaboratorioAnalisiSelezionato, optionsText: 'Descrizione', select2: {allowClear: true}" name="param" placeholder="Seleziona laboratorio analisi" tabindex="-1" aria-hidden="true" class="form-control m-select2 select2-hidden-accessible">
-                                    <option></option>
-                                </select>
+                            <!-- lotto di consegna -->
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-4 col-form-label">
+                                    Lotto di consegna
+                                </label>
+                                <div class="col-lg-8">
+                                    <input data-bind="value: LottoConsegna" type="text" class="form-control m-input" placeholder="Seleziona lotto di consegna">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- seriale laboratorio -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Seriale laboratorio
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: SerialeLaboratorio" type="text" class="form-control m-input" placeholder="Seleziona seriale laboratorio">
-                            </div>
                         </div>
+                    </div>
 
-                        <!-- scomparto -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Scomparto
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: Scomparto" type="number" class="form-control m-input" placeholder="Seleziona scomparto">
-                            </div>
-                        </div>
-
-                        <!-- lotto di consegna -->
-                        <div class="form-group m-form__group row">
-                            <label class="col-lg-4 col-form-label">
-                                Lotto di consegna
-                            </label>
-                            <div class="col-lg-8">
-                                <input data-bind="value: LottoConsegna" type="text" class="form-control m-input" placeholder="Seleziona lotto di consegna">
-                            </div>
-                        </div>
-
+                    <!-- bottoni -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn m-btn--pill btn-warning" data-dismiss="modal">
+                            Elimina
+                        </button>
+    <button data-bind="click: onAnnullaSalvaPrelievo_Clicked" type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
+        Annulla
+    </button>
+    <button data-bind="click: onSalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-success">
+        Salva
+    </button>
                     </div>
                 </div>
 
-                <!-- bottoni -->
-                <div class="modal-footer">
-                    <button type="button" class="btn m-btn--pill btn-warning" data-dismiss="modal">
-                        Elimina
-                    </button>
-<button data-bind="click: onAnnullaSalvaPrelievo_Clicked" type="button" class="btn m-btn--pill btn-info" data-dismiss="modal">
-    Annulla
-</button>
-<button data-bind="click: onSalvaAllevamenti_Clicked" type="button" class="btn m-btn--pill btn-success">
-    Salva
-</button>
-                </div>
             </div>
-
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 <!-- pannello gestione prelievi del latte -->
 @*<div class="col-lg-12" id="detail-panel">

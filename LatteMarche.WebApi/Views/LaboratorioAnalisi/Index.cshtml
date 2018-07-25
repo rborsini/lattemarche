@@ -1,4 +1,18 @@
-﻿<div id="laboratorio-analisi-page" class="container">
+﻿using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Laboratori analisi" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="laboratorio-analisi-page" class="container">
     <h1>Laboratorio analisi</h1>
 </div>
 

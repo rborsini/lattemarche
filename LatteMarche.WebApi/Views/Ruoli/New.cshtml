@@ -1,4 +1,20 @@
-﻿<div id="ruoli-new">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Ruoli", DisplayName = "Ruoli" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Nuovo" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+
+<div id="ruoli-new">
 
     <input hidden id="id" value="@Request["id"]" />
 
@@ -27,14 +43,14 @@
                         <div class="form-group row pt-3">
                             <label class="col-sm-1 offset-2 col-form-label">Codice</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" v-model="ruolo.Codice" >
+                                <input type="text" class="form-control" v-model="ruolo.Codice">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-1 offset-2 col-form-label">Descrizione</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" v-model="ruolo.Descrizione" >
+                                <input type="text" class="form-control" v-model="ruolo.Descrizione">
                             </div>
                         </div>
 

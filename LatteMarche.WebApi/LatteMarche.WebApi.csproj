@@ -206,6 +206,7 @@
     <Content Include="src\components\common\dataTable.vue" />
     <None Include="lattemarche-prod - Web Deploy.pubxml" />
     <None Include="lattemarche-test - Web Deploy.pubxml" />
+    <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

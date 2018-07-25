@@ -1,4 +1,19 @@
-﻿<div id="prelievi-latte-edit" class="container-fluid">
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Prelievi", DisplayName = "Prelievi latte" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Dettaglio" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="prelievi-latte-edit" class="container-fluid">
 
     <input hidden id="id" value="@Request["id"]" />
 
@@ -9,7 +24,7 @@
     <editazione-prelievo-modal ref="editazionePrelievoModal"
                                :prelievo-latte="prelievoSelezionato"
                                v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
-    
+
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
