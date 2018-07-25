@@ -13,6 +13,10 @@ export class PrelieviLatteService {
         return axios.get(url);
     }
 
+    public getPrelievo(id: string): AxiosPromise<PrelievoLatte> {
+        return axios.get('/api/prelieviLatte/Details?id=' + id);
+    }
+
     public getLaboratoriAnalisi(): AxiosPromise<LaboratorioAnalisi[]> {
         return axios.get('/api/laboratorianalisi');
     }

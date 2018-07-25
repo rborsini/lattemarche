@@ -1,16 +1,19 @@
 ﻿<template>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-            <slot name="thead">
-                <th v-for="col in thead">
-                    {{col}}
-                </th>
+    <div>
+        <table class="table table-hover table-striped table-bordered">
+            <div class="d-none">
+                <slot class="toolbox" name="toolbox"></slot>
+            </div>            
+            <thead>
+                <slot name="thead">
+            <th v-for="col in thead">
+                {{col}}
+            </th>
             </slot>
-        </thead>
-        <tbody></tbody>
-    </table>
-
+            </thead>
+            <tbody></tbody>
+        </table>        
+    </div>
 </template>
 
 <script>
@@ -21,11 +24,14 @@
 
         props: ['columns', 'rows'],
 
-        mounted: function () { },
+        mounted: function () {
+
+        },
 
         watch: {
 
             columns: function (columns) {
+                
                 this.init(columns);
             },
 
@@ -41,15 +47,58 @@
 
             init: function (columns) {
 
-                table = $(this.$el).DataTable({
-                    processing: true,
+                var vm = this;
+
+                // https://datatables.net/reference/option/dom
+                var dom = '';
+
+                if ($('.toolbox')[0])
+                    dom = '<"top row"<"col-6"i><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
+                else
+                    dom = '<"row"<"col-6"i><"col-6"f>>t<"row"<"col-6"l><"col-6"p>>';
+
+                table = $(this.$el.children[0]).DataTable({
+                    dom: dom,
+                    initComplete: function () {
+
+                        if ($('.toolbox')[0])
+                            $('.toolbox-div')[0].append($('.toolbox')[0]);
+                    },
                     serverSide: false,
                     paging: true,
                     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-                    pageLength: 10,
+                    pageLength: 20,
+                    language: {
+                        "sEmptyTable": "Nessun dato presente nella tabella",
+                        "sInfo": "Vista da _START_ a _END_ di _TOTAL_ righe",
+                        "sInfoEmpty": "Vista da 0 a 0 di 0 righe",
+                        "sInfoFiltered": "(filtrati da _MAX_ righe totali)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ",",
+                        "sLengthMenu": "Visualizza _MENU_ righe",
+                        "sLoadingRecords": "Caricamento...",
+                        "sProcessing": "Elaborazione...",
+                        "sSearch": "Cerca:",
+                        "sZeroRecords": "La ricerca non ha portato alcun risultato.",
+                        "oPaginate": {
+                            "sFirst": "Inizio",
+                            "sPrevious": "Precedente",
+                            "sNext": "Successivo",
+                            "sLast": "Fine"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
+                            "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+                        }
+                    },
                     columns: columns
 
                 });
+
+                table.on('draw.dt', function () {
+                    vm.$emit('data-loaded');
+                });
+
             }
 
         }

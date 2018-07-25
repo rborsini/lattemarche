@@ -161,7 +161,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
+        //[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(string idAllevamento = "", string dal = "", string al = "")
         {
             //possibilità di mettere altri parametri come le date periodo prelievo
@@ -179,7 +179,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(exc);
             }
         }
-
 
         #endregion
 

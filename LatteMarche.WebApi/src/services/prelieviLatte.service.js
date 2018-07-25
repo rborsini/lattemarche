@@ -8,6 +8,9 @@ var PrelieviLatteService = /** @class */ (function () {
         url += '&al=' + dataFine;
         return axios.get(url);
     };
+    PrelieviLatteService.prototype.getPrelievo = function (id) {
+        return axios.get('/api/prelieviLatte/Details?id=' + id);
+    };
     PrelieviLatteService.prototype.getLaboratoriAnalisi = function () {
         return axios.get('/api/laboratorianalisi');
     };

@@ -14,34 +14,91 @@
 
 <div id="index-prelievi-latte-page">
 
-    <table class="table table-striped table-bordered" id="prelievi-latte-table">
-        <thead>
-            <tr>
-                <th>Ragione sociale</th>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>Login</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- modale modifica/inserisci prelievo -->
+    <editazione-prelievo-modal ref="editazionePrelievoModal"
+                               :prelievo-latte="prelievoSelezionato"
+                               v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
+
+
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Il prelievo è stato salvato correttamente'"></notification-dialog>
+
+
+
+    <!-- Box ricerca -->
+    <div class="jumbotron">
+
+        <h2>Ricerca</h2>
+
+        <!-- Campi ricerca -->
+        <div class="row pt-1">
+
+            <label class="offset-1 col-1">Allevatore:</label>
+
+            <div class="col-3">
+                <select2 class="form-control"
+                         :placeholder="'-'"
+                         :options="allevatori"
+                         :value.sync="idAllevatoreSelezionato"
+                         :value-field="'Id'"
+                         :text-field="'RagioneSociale'" />
+            </div>
+
+            <label class="col-1">Dal:</label>
+
+            <div class="col-2">
+                <datepicker class="form-control" :value.sync="dal" />
+            </div>
+
+            <label class="col-1">Al:</label>
+
+            <div class="col-2">
+                <datepicker class="form-control" :value.sync="al" />
+            </div>
+
+
+        </div>
+
+        <!-- Bottoni ricerca -->
+        <div class="row pt-4">
+            <div class="col-11">
+                <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
+                <button v-on:click="onAnnullaClick" class="float-right btn btn-primary mr-2" href="#" role="button">Annulla</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="prelievi" v-on:data-loaded="onDataLoaded">
+
+        <!-- Toolbox -->
+        <template slot="toolbox">
+            <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="toolbox float-right btn btn-primary" >Esporta excel</a>
+        </template>
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>Data prelievo</th>
+            <th>Data consegna</th>
+            <th>Quantità</th>
+            <th>Temperatura</th>
+            <th>Trasportatore</th>
+            <th>Allevamento</th>
+            <th></th>
+        </template>
+
+    </data-table>
 
 </div>
 
 <link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
 <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-<script src="~/src/pages/prelievi-latte/index.page.js"></script>
 
-<script>
-
-    jQuery(document).ready(function () {
-        var prelieviLatteIndex = new TabellaPrelieviLatte();
-    });
-
-</script>
-
+<script type="application/javascript" src="~/build/prelievi_latte_index_page.js"></script>
 
 
 
