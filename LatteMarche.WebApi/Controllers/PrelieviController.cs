@@ -25,20 +25,11 @@ namespace LatteMarche.WebApi.Controllers
         }
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();
         }
 
-        [ViewItem(nameof(Edit), "Prelievi", "Modifica")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
-        public ActionResult Edit(long id)
-        {
-            return View();
-        }
-
-        //[ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Excel(string idAllevamento = "", string dal = "", string al = "")

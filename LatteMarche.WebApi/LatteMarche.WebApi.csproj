@@ -170,6 +170,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\acquirenti_index_page.js" />
     <Content Include="build\allevatori_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
     <Content Include="build\prelievi_latte_edit_page.js" />
@@ -219,13 +220,13 @@
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
     <Content Include="src\components\common\timeEditor.vue" />
     <Content Include="src\components\common\dataTable.vue" />
     <None Include="lattemarche-prod - Web Deploy.pubxml" />
     <None Include="lattemarche-test - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
+    <Content Include="src\pages\acquirenti\edit.vue" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -247,6 +248,7 @@
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
+    <TypeScriptCompile Include="src\pages\acquirenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />

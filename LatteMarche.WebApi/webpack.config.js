@@ -4,6 +4,7 @@ var webpack = require('webpack')
 module.exports = {
     entry: {
         // percorsi uri del progetto
+        acquirenti_index_page: './src/pages/acquirenti/index.page.js',
         allevatori_index_page: './src/pages/allevatori/index.page.js',
         utenti_edit_page: './src/pages/utenti/edit.page.js',
         tipilatte_edit_page: './src/pages/tipi-latte/edit.page.js',

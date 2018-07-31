@@ -5,6 +5,7 @@ var Acquirente = /** @class */ (function () {
         this.Piva = "";
         this.Indirizzo = "";
         this.IdComune = 0;
+        this.SiglaProvincia = "";
         this.IdSitra = 0;
     }
     return Acquirente;

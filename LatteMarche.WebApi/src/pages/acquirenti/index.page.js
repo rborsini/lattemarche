@@ -1,0 +1,85 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import Vue from "vue";
+import Component from "vue-class-component";
+import DataTable from "../../components/common/dataTable.vue";
+import Select2 from "../../components/common/select2.vue";
+import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
+import NotificationDialog from "../../components/common/notificationDialog.vue";
+import { Acquirente } from "../../models/acquirente.model";
+import { AcquirentiService } from "../../services/acquirenti.service";
+var AcquirentiIndexPage = /** @class */ (function (_super) {
+    __extends(AcquirentiIndexPage, _super);
+    function AcquirentiIndexPage() {
+        var _this = _super.call(this) || this;
+        _this.columnOptions = [];
+        _this.acquirenti = [];
+        _this.acquirentiService = new AcquirentiService();
+        _this.acquirente = new Acquirente();
+        return _this;
+    }
+    AcquirentiIndexPage.prototype.mounted = function () {
+        var _this = this;
+        this.initTable();
+        this.acquirentiService.getAcquirenti()
+            .then(function (response) {
+            _this.acquirenti = response.data;
+        });
+    };
+    // Evento fine generazione tabella
+    AcquirentiIndexPage.prototype.onDataLoaded = function () {
+        var _this = this;
+        $('.edit').click(function (event) {
+            var element = $(event.currentTarget);
+            var rowId = $(element).data("row-id");
+            _this.acquirentiService.getDetails(rowId)
+                .then(function (response) {
+                _this.acquirente = response.data;
+                _this.$refs.editazioneAcquirenteModal.open();
+            });
+        });
+    };
+    // inizializzazione tabella
+    AcquirentiIndexPage.prototype.initTable = function () {
+        this.columnOptions.push({ data: "Piva" });
+        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({
+            render: function (data, type, row) {
+                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
+            }
+        });
+    };
+    AcquirentiIndexPage = __decorate([
+        Component({
+            el: '#acquirenti-page',
+            components: {
+                Select2: Select2,
+                NotificationDialog: NotificationDialog,
+                EditazioneAcquirenteModal: EditazioneAcquirenteModal,
+                DataTable: DataTable
+            }
+        }),
+        __metadata("design:paramtypes", [])
+    ], AcquirentiIndexPage);
+    return AcquirentiIndexPage;
+}(Vue));
+export default AcquirentiIndexPage;
+var page = new AcquirentiIndexPage();
+Vue.config.devtools = true;

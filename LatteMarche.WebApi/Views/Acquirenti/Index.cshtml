@@ -13,8 +13,33 @@
 }
 
 <div id="acquirenti-page" class="container">
-    <h1>Acquirenti</h1>
+
+    <!-- Pannello editazione dettaglio -->
+    <editazione-acquirente-modal ref="editazioneAcquirenteModal"
+                               :acquirente="acquirente"
+                               v-on:salvato="$refs.savedDialog.open()"></editazione-acquirente-modal>
+
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'L acquirente è stato salvato correttamente'"></notification-dialog>
+
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="acquirenti" v-on:data-loaded="onDataLoaded">
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>P. IVA</th>
+            <th>Ragione sociale</th>
+            <th></th>
+        </template>
+
+    </data-table>
 </div>
 
+<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
+<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
 
+<script type="application/javascript" src="~/build/acquirenti_index_page.js"></script>
 

@@ -4,5 +4,6 @@
     public Piva: string = "";
     public Indirizzo: string = "";
     public IdComune: number = 0;
+    public SiglaProvincia: string = "";
     public IdSitra: number = 0;
 }

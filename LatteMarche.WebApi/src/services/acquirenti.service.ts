@@ -7,4 +7,13 @@ export class AcquirentiService {
     public getAcquirenti(): AxiosPromise<Acquirente[]> {
         return axios.get('/api/acquirenti');
     }
+
+    public getDetails(id: number): AxiosPromise<Acquirente> {
+        return axios.get('/api/acquirenti/details?id=' + id);
+    }
+
+    public update(acquirente: Acquirente): AxiosPromise<Acquirente> {
+        return axios.put('/api/Acquirenti/update', acquirente);
+    }
+
 }

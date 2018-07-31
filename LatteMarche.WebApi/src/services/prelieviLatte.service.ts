@@ -25,7 +25,4 @@ export class PrelieviLatteService {
         return axios.post('/api/PrelieviLatte/save', prelievo);
     }
 
-    //public create(prelievo: PrelievoLatte): AxiosPromise<PrelievoLatte> {
-    //    return axios.post('/api/prelievilatte/create', prelievo);
-    //}
 }
