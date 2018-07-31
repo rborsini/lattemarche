@@ -1,0 +1,116 @@
+﻿using RB.Date;
+using RB.Excel;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LatteMarche.Core.Models
+{
+    [System.ComponentModel.DataAnnotations.Schema.Table("V_PrelieviLatte")]
+    public class V_PrelievoLatte : Entity<int>
+    {
+        private DateHelper dateHelper;
+
+        [Key]
+        [Column("ID_PRELIEVO")]
+        public override int Id { get; set; }
+
+        [Column("DATA_PRELIEVO")]
+        public DateTime? DataPrelievo { get; set; }
+
+        [NotMapped]
+        [ExcelHeader("DATA E ORA PRELIEVO", 6)]
+        public string DataPrelievoStr
+        {
+            get { return new DateHelper().FormatDate(this.DataPrelievo); }
+            set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
+
+        [Column("DATA_CONSEGNA")]
+        public DateTime? DataConsegna { get; set; }
+
+        [NotMapped]
+        public string DataConsegnaStr
+        {
+            get { return new DateHelper().FormatDate(this.DataConsegna); }
+            set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
+
+        [Column("QUANTITA")]
+        [ExcelHeader("QUANTITA (Kg)", 7)]
+        public Decimal? Quantita { get; set; }
+
+        [Column("TEMPERATURA")]
+        public Decimal? Temperatura { get; set; }
+
+        [Column("DATA_ULTIMA_MUNGITURA")]
+        public DateTime? DataUltimaMungitura { get; set; }
+
+        [NotMapped]
+        public string DataUltimaMungituraStr
+        {
+            get { return new DateHelper().FormatDate(this.DataUltimaMungitura); }
+            set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+        }
+
+        [Column("ID_ALLEVAMENTO")]
+        public int? IdAllevamento { get; set; }
+
+        [Column("DESCR_ALLEVAMENTO")]
+        public string Allevamento { get; set; }
+
+        [Column("PIVA_ALLEVAMENTO")]
+        public string PIVA_Allevamento { get; set; }
+
+        [NotMapped]
+        [ExcelHeader("PRODUTTORE", 1)]
+        public string AllevamentoCompleto { get { return $"{this.Allevamento} {this.PIVA_Allevamento}"; } }
+
+        [Column("ID_DESTINATARIO")]
+        public int? IdDestinatario { get; set; }
+
+        [Column("RAG_SOC_DESTINATARIO")]
+        [ExcelHeader("DESTINATARIO", 3)]
+        public string Destinatario { get; set; }
+
+        [Column("ID_ACQUIRENTE")]
+        public int? IdAcquirente { get; set; }
+
+        [Column("RAG_SOC_ACQUIRENTE")]
+        [ExcelHeader("ACQUIRENTE", 2)]
+        public string Acquirente { get; set; }
+
+        [Column("ID_LABANALISI")]
+        public int? IdLabAnalisi { get; set; }
+
+        [Column("ID_TRASPORTATORE")]
+        public int? IdTrasportatore { get; set; }
+
+        [Column("TRASPORTATORE")]
+        [ExcelHeader("TRASPORTATORE", 4)]
+        public string Trasportatore { get; set; }
+
+        [Column("TARGA_MEZZO")]
+        [ExcelHeader("TARGA", 5)]
+        public string Targa { get; set; }
+
+        [Column("NUMERO_MUNGITURE")]
+        public int? NumeroMungiture { get; set; }
+
+        [Column("SCOMPARTO")]
+        [ExcelHeader("SCOMPARTO", 8)]
+        public string Scomparto { get; set; }
+
+        [Column("LOTTO_CONSEGNA")]
+        [ExcelHeader("LOTTO CONSEGNA", 9)]
+        public string LottoConsegna { get; set; }
+
+        [Column("CODICE_SITRA")]
+        public string CodiceSitra { get; set; }
+
+        public V_PrelievoLatte()
+        {
+            this.dateHelper = new DateHelper();
+        }
+    }
+}

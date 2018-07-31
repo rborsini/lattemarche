@@ -16,6 +16,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         #region Fields
 
         private IRepository<PrelievoLatte, int> prielieviLatteRepository;
+        private IRepository<V_PrelievoLatte, int> v_prelieviLatteRepository;
 
         #endregion
 
@@ -25,6 +26,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             : base(uow)
         {
             this.prielieviLatteRepository = this.uow.Get<PrelievoLatte, int>();
+            this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
         }
 
         #endregion
@@ -152,9 +154,9 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        public List<PrelievoLatteDto> Search(PrelieviLatteSearchDto searchDto)
+        public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto)
         {
-            IQueryable<PrelievoLatte> query = this.prielieviLatteRepository.GetAll();
+            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.GetAll();
 
             // Allevamento
             if (searchDto.idAllevamento != null)
@@ -180,7 +182,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
             }
 
-            return ConvertToDtoList(query.ToList());
+            return query.ToList();
         }
 
         protected override PrelievoLatte UpdateProperties(PrelievoLatte viewEntity, PrelievoLatte dbEntity)

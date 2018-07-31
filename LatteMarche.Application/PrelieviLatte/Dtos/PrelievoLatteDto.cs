@@ -11,7 +11,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
     {
         private DateHelper dateHelper;
 
-        [ExcelHeader("Id")]
+        
         public int Id { get; set; }
 
         public int IdAllevamento { get; set; }
@@ -34,17 +34,17 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public DateTime LastChange { get; set; }
 
-        [ExcelHeader("Data Prelievo")]
+        
         public string DataPrelievoStr
         {
             get { return new DateHelper().FormatDate(this.DataPrelievo); }
             set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
         }
 
-        [ExcelHeader("Ora Prelievo")]
+        
         public string OraPrelievo { get { return this.DataPrelievo.ToString("HH:mm"); } }
 
-        [ExcelHeader("Data Consegna")]
+        
         public string DataConsegnaStr
         {
             get { return new DateHelper().FormatDate(this.DataConsegna); }

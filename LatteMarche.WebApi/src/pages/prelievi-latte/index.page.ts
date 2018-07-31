@@ -112,8 +112,8 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.columnOptions.push({ data: "DataConsegnaStr" });
         this.columnOptions.push({ data: "Quantita" });
         this.columnOptions.push({ data: "Temperatura" });
-        this.columnOptions.push({ data: "IdTrasportatore" });
-        this.columnOptions.push({ data: "IdAllevamento" });
+        this.columnOptions.push({ data: "Trasportatore" });
+        this.columnOptions.push({ data: "Allevamento" });
 
         this.columnOptions.push({
             render: function (data: any, type: any, row: any) {

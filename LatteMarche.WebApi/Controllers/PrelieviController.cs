@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Attributes;
 using RB.Date;
 using System;
@@ -51,7 +52,7 @@ namespace LatteMarche.WebApi.Controllers
 
             RB.Excel.ExcelMaker maker = new RB.Excel.ExcelMaker();
 
-            byte[] content = maker.Make<PrelievoLatteDto>(prelievi);
+            byte[] content = maker.Make<V_PrelievoLatte>(prelievi);
 
             return File(content, "application/vnd.ms-excel", "prelievi.xls");
 
