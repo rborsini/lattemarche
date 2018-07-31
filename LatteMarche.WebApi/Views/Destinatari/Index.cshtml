@@ -13,8 +13,35 @@
 }
 
 <div id="destinatari-page" class="container">
-    <h1>Destinatari</h1>
+
+    <!-- Pannello editazione dettaglio -->
+    <editazione-destinatario-modal ref="editazioneDestinatarioModal"
+                                 :destinatario="destinatario"
+                                 v-on:salvato="$refs.savedDialog.open()"></editazione-destinatario-modal>
+
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Il destinatario è stato salvato correttamente'"></notification-dialog>
+
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="destinatari" v-on:data-loaded="onDataLoaded">
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>P. IVA</th>
+            <th>Ragione sociale</th>
+            <th></th>
+        </template>
+
+    </data-table>
 </div>
+
+<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
+<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
+
+<script type="application/javascript" src="~/build/destinatari_index_page.js"></script>
 
 
 

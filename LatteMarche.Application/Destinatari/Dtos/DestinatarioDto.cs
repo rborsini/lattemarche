@@ -17,7 +17,7 @@ namespace LatteMarche.Application.Destinatari.Dtos
         public string P_IVA { get; set; }
 
         public string Indirizzo { get; set; }
-
+        public string SiglaProvincia { get; set; }
         public int? IdComune { get; set; }
 
         public string Stabilimento { get; set; }
@@ -31,6 +31,7 @@ namespace LatteMarche.Application.Destinatari.Dtos
         public static void Configure()
         {
             Mapper.CreateMap<Destinatario, DestinatarioDto>();
+            Mapper.CreateMap<DestinatarioDto, Destinatario>();
         }
     }
 }

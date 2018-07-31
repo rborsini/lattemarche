@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Destinatari.Interfaces
 {
-    public interface IDestinatariService : IEntityReadOnlyService<Destinatario, int, DestinatarioDto>
+    public interface IDestinatariService : IEntityService<Destinatario, int, DestinatarioDto>
     {
     }
 }

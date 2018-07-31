@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Destinatari.Dtos;
+﻿using LatteMarche.Application.Comuni.Interfaces;
+using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
@@ -10,20 +11,51 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Destinatari.Services
 {
-    public class DestinatariService : EntityReadOnlyService<Destinatario, int, DestinatarioDto>, IDestinatariService
+    public class DestinatariService : EntityService<Destinatario, int, DestinatarioDto>, IDestinatariService
     {
         #region Fields
+
+        private IComuniService comuniService;
 
         #endregion
 
         #region Constructors
 
-        public DestinatariService(IUnitOfWork uow)
-            : base(uow) { }
+        public DestinatariService(IUnitOfWork uow, IComuniService comuniService)
+            : base(uow)
+        {
+            this.comuniService = comuniService;
+        }
 
         #endregion
 
         #region Methods
+
+        public override DestinatarioDto Details(int key)
+        {
+            var dto = base.Details(key);
+
+            if (dto != null && dto.IdComune.HasValue)
+            {
+                var comuneObj = this.comuniService.Details(dto.IdComune.Value);
+
+                if (comuneObj != null)
+                    dto.SiglaProvincia = comuneObj.Provincia;
+            }
+
+            return dto;
+        }
+
+        protected override Destinatario UpdateProperties(Destinatario viewEntity, Destinatario dbEntity)
+        {
+            dbEntity.IdComune = viewEntity.IdComune;
+            dbEntity.Indirizzo = viewEntity.Indirizzo;
+            dbEntity.P_IVA = viewEntity.P_IVA;
+            dbEntity.RagioneSociale = viewEntity.RagioneSociale;
+            dbEntity.Stabilimento = viewEntity.Stabilimento;
+
+            return dbEntity;
+        }
 
         #endregion
     }

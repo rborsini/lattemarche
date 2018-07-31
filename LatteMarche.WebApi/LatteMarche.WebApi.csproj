@@ -227,6 +227,7 @@
     <None Include="lattemarche-test - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <Content Include="src\pages\acquirenti\edit.vue" />
+    <Content Include="src\pages\destinatari\edit.vue" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -250,6 +251,7 @@
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
     <TypeScriptCompile Include="src\pages\acquirenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
+    <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\edit.page.ts" />

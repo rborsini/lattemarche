@@ -4,6 +4,7 @@ var Destinatario = /** @class */ (function () {
         this.RagioneSociale = "";
         this.P_IVA = "";
         this.Indirizzo = "";
+        this.SiglaProvincia = "";
         this.IdComune = 0;
         this.Stabilimento = "";
         this.IdSitraStabilimentoCaseificio = 0;

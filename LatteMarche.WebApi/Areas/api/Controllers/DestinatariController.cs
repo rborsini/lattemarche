@@ -8,6 +8,7 @@ using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.Application.Destinatari.Interfaces;
+using LatteMarche.Application.Destinatari.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -59,6 +60,22 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             {
                 return InternalServerError(exc);
             }
+        }
+
+        [ViewItem(nameof(Update), "Destinatari", "Aggiornamento")]
+        [HttpPut]
+        public IHttpActionResult Update([FromBody] DestinatarioDto model)
+        {
+            //E' previsto che si possa fare?
+            try
+            {
+                return Ok(this.destinatariService.Update(model));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
         }
 
         #endregion
