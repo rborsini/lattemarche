@@ -198,6 +198,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
             dbEntity.Scomparto = viewEntity.Scomparto;
             dbEntity.LottoConsegna = viewEntity.LottoConsegna;
             dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
+            dbEntity.CodiceSitra = viewEntity.CodiceSitra;
 
             return dbEntity;
         }

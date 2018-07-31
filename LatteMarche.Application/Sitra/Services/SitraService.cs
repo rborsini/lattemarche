@@ -91,7 +91,7 @@ namespace LatteMarche.Application.Sitra.Services
                 }
                 finally
                 {
-                    this.prelieviLatteService.Update(prelievo);                    
+                    prelieviInviati.Add(this.prelieviLatteService.Update(prelievo));                    
                 }
             }
 
@@ -186,7 +186,7 @@ namespace LatteMarche.Application.Sitra.Services
 
             IRestResponse response = client.Execute(request);
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.NoContent)
                 return response.Content.Replace('"', ' ').Trim();
             else
                 return String.Empty;

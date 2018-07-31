@@ -42,14 +42,7 @@ namespace LatteMarche.Application.Lotti.Services
             // filtro prelievi degli allevamenti da inviare
             var prelieviDaInviare = prelievi.Where(p => p.IdAllevamento.HasValue && idAllevamenti.Contains(p.IdAllevamento.Value)).ToList();
 
-            // conversione da litri a kg
-            //foreach(var prelievo in prelieviDaInviare)
-            //{
-            //    var fattoreConversione = this.allevamentiService.GetFattoreConversione(prelievo.IdAllevamento.Value);
-            //    prelievo.Quantita *= fattoreConversione; 
-            //}
-
-
+            // raggruppamento per lotto
             var lotti = prelieviDaInviare
                 .GroupBy(u => u.LottoConsegna)
                 .Select(grp => new LottoDto()

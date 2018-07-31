@@ -121,8 +121,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 List<PrelievoLatte> prelieviDaInviare = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     DataPeriodoInizio = DateTime.Today.AddDays(-1),
-                    DataPeriodoFine = DateTime.Today
-                    //InviatoSitra = false
+                    DataPeriodoFine = DateTime.Today,
+                    InviatoSitra = false
                 }).ToList());
 
                 // invio singoli prelievi
