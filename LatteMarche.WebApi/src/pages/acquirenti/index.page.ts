@@ -77,6 +77,22 @@ export default class AcquirentiIndexPage extends Vue {
 
         });
 
+        $('.delete').click((event) => {
+
+            var element = $(event.currentTarget);
+            var rowId = $(element).data("row-id");
+
+            console.log("remove");
+
+        });
+
+    }
+
+    // nuovo acquirente
+    public onAggiungi() {
+
+        console.log("nuovo");
+
     }
 
     // inizializzazione tabella
@@ -86,7 +102,13 @@ export default class AcquirentiIndexPage extends Vue {
 
         this.columnOptions.push({
             render: function (data: any, type: any, row: any) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+
+                var html = '<div class="text-center">';
+                html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                html += '</div>';
+
+                return html;
             }
         });
 

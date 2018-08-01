@@ -28,6 +28,11 @@
     <!-- Tabella -->
     <data-table :columns="columnOptions" :rows="acquirenti" v-on:data-loaded="onDataLoaded">
 
+        <!-- Toolbox -->
+        <template slot="toolbox">
+            <button class="toolbox btn btn-primary float-right" v-on:click="onAggiungi()" >Aggiungi</button>
+        </template>
+
         <!-- Colonne -->
         <template slot="thead">
             <th>P. IVA</th>

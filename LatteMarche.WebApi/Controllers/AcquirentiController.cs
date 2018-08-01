@@ -13,7 +13,7 @@ namespace LatteMarche.WebApi.Controllers
     public class AcquirentiController : Controller
     {
         [ViewItem(nameof(Index), "Acquirenti", "Lista")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

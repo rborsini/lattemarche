@@ -55,6 +55,15 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
                 _this.$refs.editazioneAcquirenteModal.openAcquirente(_this.acquirente);
             });
         });
+        $('.delete').click(function (event) {
+            var element = $(event.currentTarget);
+            var rowId = $(element).data("row-id");
+            console.log("remove");
+        });
+    };
+    // nuovo acquirente
+    AcquirentiIndexPage.prototype.onAggiungi = function () {
+        console.log("nuovo");
     };
     // inizializzazione tabella
     AcquirentiIndexPage.prototype.initTable = function () {
@@ -62,7 +71,11 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
         this.columnOptions.push({ data: "RagioneSociale" });
         this.columnOptions.push({
             render: function (data, type, row) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                var html = '<div class="text-center">';
+                html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                html += '</div>';
+                return html;
             }
         });
     };
