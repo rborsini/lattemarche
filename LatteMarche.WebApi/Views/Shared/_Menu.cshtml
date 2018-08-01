@@ -26,75 +26,69 @@
 }
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">
+        <img class="main-logo" src="~/Content/img/main-logo.svg" />
+    </a>
 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item @allevatoriActive">
+                @Html.ActionLink("Allevatori", "Index", "Allevatori", null, new { @class = "nav-link" })
+            </li>
 
-        <a class="navbar-brand" href="/">
-            <img class="main-logo" src="~/Content/img/main-logo.svg" />
-        </a>
-
-
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item @allevatoriActive">
-                    @Html.ActionLink("Allevatori", "Index", "Allevatori", null, new { @class = "nav-link" })
-                </li>
-
-                @foreach (MenuItemViewModel item in Model)
+            @foreach (MenuItemViewModel item in Model)
+            {
+                if (item.Items.Count == 0)
                 {
-                    if (item.Items.Count == 0)
+                    @MakeNavItem(item.Title, item.Action, item.Controller, item.Area, item.Visible)
+                }
+                else
+                {
+                    if (item.Visible)
                     {
-                        @MakeNavItem(item.Title, item.Action, item.Controller, item.Area, item.Visible)
-                    }
-                    else
-                    {
-                        if (item.Visible)
-                        {
 
-                            string active = item.Items.Any(i => i.Controller.ToLower() == ViewBag.currentController) ? "active" : "";
-                            <li class="nav-item dropdown @active">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
+                        string active = item.Items.Any(i => i.Controller.ToLower() == ViewBag.currentController) ? "active" : "";
+                        <li class="nav-item dropdown @active">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Title</a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                                    @foreach (MenuItemViewModel subItem in item.Items)
+                                @foreach (MenuItemViewModel subItem in item.Items)
+                                {
+                                    if (subItem.Visible)
                                     {
-                                        if (subItem.Visible)
-                                        {
-                                            @Html.ActionLink(subItem.Title, subItem.Action, subItem.Controller, null, new { @class = "dropdown-item" })
-                                        }
+                                        @Html.ActionLink(subItem.Title, subItem.Action, subItem.Controller, null, new { @class = "dropdown-item" })
                                     }
+                                }
 
-                                </div>
+                            </div>
 
-                            </li>
-                        }
-
+                        </li>
                     }
 
                 }
 
+            }
+
+        </ul>
+        @if (Request.IsAuthenticated)
+        {
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
             </ul>
-            @if (Request.IsAuthenticated)
-            {
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
-                        </div>
-                    </li>
-                </ul>
-            }
-            else
-            {
-                @Html.ActionLink("Area riservata", "Login", "Account", null, new { @class = "btn btn-outline-light my-2 my-sm-0" })
-            }
-        </div>
-
-
+        }
+        else
+        {
+            @Html.ActionLink("Area riservata", "Login", "Account", null, new { @class = "btn btn-outline-light my-2 my-sm-0" })
+        }
     </div>
-
-
 </nav>
