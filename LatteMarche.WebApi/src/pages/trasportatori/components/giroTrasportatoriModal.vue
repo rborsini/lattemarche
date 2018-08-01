@@ -93,6 +93,11 @@
             $(this.$el).modal('show');
         }
 
+        public openGiro(giro: Giro): void {
+            this.giro = giro;
+            this.open();
+        }
+
         public close(): void {
             $(this.$el).modal('hide');
         }

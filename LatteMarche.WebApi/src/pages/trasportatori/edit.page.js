@@ -75,11 +75,10 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
     // modifica giro
     TrasportatoriEditPage.prototype.modificaGiro = function (id) {
         var _this = this;
-        this.$refs.giroTrasportatoriModal.open();
         this.giriService.getGiroDetails(id)
             .then(function (response) {
             if (response.data != null) {
-                _this.giro = response.data;
+                _this.$refs.giroTrasportatoriModal.openGiro(response.data);
             }
             else {
                 return null;
@@ -90,6 +89,7 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
     TrasportatoriEditPage.prototype.aggiungiGiro = function () {
         this.giro = new Giro();
         this.$refs.giroTrasportatoriModal.open();
+        this.giro.IdTrasportatore = this.trasportatore.Id;
         this.giro.CodiceGiro = "";
         this.giro.Denominazione = "";
     };

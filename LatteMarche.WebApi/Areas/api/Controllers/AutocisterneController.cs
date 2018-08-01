@@ -61,28 +61,16 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Autocisterne", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] AutocisternaDto model)
-        {
-            try
-            {
-                return Ok(this.autocisterneService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Create), "Autocisterne", "Creazione")]
+        [ViewItem(nameof(Save), "Autocisterne", "Salvataggio")]
         [HttpPost]
-        public IHttpActionResult Create([FromBody] AutocisternaDto model)
+        public IHttpActionResult Save([FromBody] AutocisternaDto model)
         {
             try
             {
-                return Ok(this.autocisterneService.Create(model));
+                if(model.Id == 0)
+                    return Ok(this.autocisterneService.Create(model));
+                else
+                    return Ok(this.autocisterneService.Update(model));
             }
             catch (Exception exc)
             {

@@ -309,7 +309,6 @@
     <Content Include="src\components\common\select2.vue" />
     <Content Include="src\components\common\validationDialog.vue" />
     <Content Include="src\components\common\waiter.vue" />
-    <Content Include="src\components\home.vue" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />

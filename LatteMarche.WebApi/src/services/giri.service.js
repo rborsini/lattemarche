@@ -9,7 +9,7 @@ var GiriService = /** @class */ (function () {
     //    return axios.put('/api/giri/update', giro);
     //}
     GiriService.prototype.save = function (giro) {
-        return axios.put('/api/giri/save', giro);
+        return axios.post('/api/giri/save', giro);
     };
     return GiriService;
 }());

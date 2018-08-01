@@ -22,6 +22,7 @@ import Component from "vue-class-component";
 import DataTable from "../../components/common/dataTable.vue";
 import EditazioneAutocisternaModal from "../autocisterne/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { Autocisterna } from "../../models/autocisterna.model";
 import { AutocisterneService } from "../../services/autocisterne.service";
 var AutocisterneIndexPage = /** @class */ (function (_super) {
@@ -30,14 +31,20 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.autocisterne = [];
+        _this.canAdd = false;
+        _this.canEdit = false;
+        _this.canRemove = false;
         _this.autocisterneService = new AutocisterneService();
         _this.autocisterna = new Autocisterna();
+        _this.canAdd = $('#canAdd').val() == "true";
+        _this.canEdit = $('#canEdit').val() == "true";
+        _this.canRemove = $('#canRemove').val() == "true";
         return _this;
     }
     AutocisterneIndexPage.prototype.mounted = function () {
         var _this = this;
         this.initTable();
-        this.autocisterneService.getAutocisterne()
+        this.autocisterneService.index()
             .then(function (response) {
             _this.autocisterne = response.data;
         });
@@ -48,11 +55,29 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
         $('.edit').click(function (event) {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
-            _this.autocisterneService.getDetails(rowId)
+            _this.autocisterneService.details(rowId)
                 .then(function (response) {
                 _this.autocisterna = response.data;
                 _this.$refs.editazioneAutocisternaModal.open();
             });
+        });
+        $('.delete').click(function (event) {
+            var element = $(event.currentTarget);
+            _this.idAutocisterna = $(element).data("row-id");
+            _this.$refs.confirmDeleteDialog.open();
+        });
+    };
+    // nuova autocisterna
+    AutocisterneIndexPage.prototype.onAdd = function () {
+        this.autocisterna = new Autocisterna();
+        this.$refs.editazioneAutocisternaModal.open();
+    };
+    // rimozione autocisterna
+    AutocisterneIndexPage.prototype.onRemove = function () {
+        var _this = this;
+        this.autocisterneService.delete(this.idAutocisterna)
+            .then(function (response) {
+            _this.$refs.removedDialog.open();
         });
     };
     // inizializzazione tabella
@@ -61,17 +86,28 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
         this.columnOptions.push({ data: "Modello" });
         this.columnOptions.push({ data: "Targa" });
         this.columnOptions.push({ data: "Portata" });
-        this.columnOptions.push({ data: "NumScomparti" });
-        this.columnOptions.push({
-            render: function (data, type, row) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+        if (ce || cr) {
+            this.columnOptions.push({
+                render: function (data, type, row) {
+                    var html = '<div class="text-center">';
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                    html += '</div>';
+                    return html;
+                },
+                orderable: false
+            });
+        }
     };
     AutocisterneIndexPage = __decorate([
         Component({
             el: '#autocisterne-page',
             components: {
+                ConfirmDialog: ConfirmDialog,
                 NotificationDialog: NotificationDialog,
                 EditazioneAutocisternaModal: EditazioneAutocisternaModal,
                 DataTable: DataTable

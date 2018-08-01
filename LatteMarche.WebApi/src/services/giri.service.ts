@@ -13,7 +13,7 @@ export class GiriService {
     //}
 
     public save(giro: Giro): AxiosPromise<Giro> {
-        return axios.put('/api/giri/save', giro);
+        return axios.post('/api/giri/save', giro);
     }
 
 }

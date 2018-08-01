@@ -5,9 +5,9 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import DataTable from "../../components/common/dataTable.vue";
 import EditazioneAutocisternaModal from "../autocisterne/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 
 import { Autocisterna } from "../../models/autocisterna.model";
-
 import { AutocisterneService } from "../../services/autocisterne.service";
 
 
@@ -21,6 +21,7 @@ declare module 'vue/types/vue' {
 @Component({
     el: '#autocisterne-page',
     components: {
+        ConfirmDialog,
         NotificationDialog,
         EditazioneAutocisternaModal,
         DataTable
@@ -33,26 +34,36 @@ export default class AutocisterneIndexPage extends Vue {
 
     $refs: {
         savedDialog: Vue,
-        editazioneAutocisternaModal: Vue
+        editazioneAutocisternaModal: Vue,
+        confirmDeleteDialog: Vue,
+        removedDialog: Vue
     }
 
     private autocisterneService: AutocisterneService;
     private autocisterna: Autocisterna;
+    private idAutocisterna: number;
 
     public columnOptions: any[] = [];
     public autocisterne: Autocisterna[] = [];
+    public canAdd: boolean = false;
+    public canEdit: boolean = false;
+    public canRemove: boolean = false;
 
     constructor() {
         super();
 
         this.autocisterneService = new AutocisterneService();
         this.autocisterna = new Autocisterna();
+
+        this.canAdd = $('#canAdd').val() == "true";
+        this.canEdit = $('#canEdit').val() == "true";
+        this.canRemove = $('#canRemove').val() == "true";
     }
 
     public mounted() {
         this.initTable();
 
-        this.autocisterneService.getAutocisterne()
+        this.autocisterneService.index()
             .then(response => {
                 this.autocisterne = response.data;
             });
@@ -66,7 +77,7 @@ export default class AutocisterneIndexPage extends Vue {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
 
-            this.autocisterneService.getDetails(rowId)
+            this.autocisterneService.details(rowId)
                 .then(response => {
                     this.autocisterna = response.data;
                     this.$refs.editazioneAutocisternaModal.open();
@@ -74,7 +85,35 @@ export default class AutocisterneIndexPage extends Vue {
 
         });
 
+        $('.delete').click((event) => {
+
+            var element = $(event.currentTarget);
+            this.idAutocisterna = $(element).data("row-id");
+
+            this.$refs.confirmDeleteDialog.open();
+
+        });
+
     }
+
+
+    // nuova autocisterna
+    public onAdd() {
+
+        this.autocisterna = new Autocisterna();
+        this.$refs.editazioneAutocisternaModal.open();
+
+    }
+
+    // rimozione autocisterna
+    public onRemove() {
+
+        this.autocisterneService.delete(this.idAutocisterna)
+            .then(response => {
+                this.$refs.removedDialog.open();
+            });
+    }
+
 
     // inizializzazione tabella
     private initTable(): void {
@@ -82,13 +121,31 @@ export default class AutocisterneIndexPage extends Vue {
         this.columnOptions.push({ data: "Modello" });
         this.columnOptions.push({ data: "Targa" });
         this.columnOptions.push({ data: "Portata" });
-        this.columnOptions.push({ data: "NumScomparti" });
 
-        this.columnOptions.push({
-            render: function (data: any, type: any, row: any) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+
+        if (ce || cr) {
+
+            this.columnOptions.push({
+                render: function (data: any, type: any, row: any) {
+
+                    var html = '<div class="text-center">';
+
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+
+                    html += '</div>';
+
+                    return html;
+                },
+                orderable: false
+            });
+
+        }
 
     }
 

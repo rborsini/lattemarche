@@ -148,7 +148,7 @@
 
         public onSave() {
             this.progressBarVisible = true;
-            this.autocisterneService.update(this.autocisterna)
+            this.autocisterneService.save(this.autocisterna)
                 .then(response => {
                     if (response.data != undefined) {
                         this.$emit("salvato");

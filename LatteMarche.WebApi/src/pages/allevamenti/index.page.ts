@@ -122,6 +122,7 @@ export default class AllevamentiIndexPage extends Vue {
 
         this.columnOptions.push({ data: "Id" });
         this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "CUAA" });
         this.columnOptions.push({ data: "CodiceAsl" });
 
         var ce = this.canEdit;

@@ -17,6 +17,7 @@ import { TrasportatoriService } from "../../services/trasportatori.service";
 declare module 'vue/types/vue' {
     interface Vue {
         open(): void
+        openGiro(giro: Giro): void
         close(): void
     }
 }
@@ -95,11 +96,11 @@ export default class TrasportatoriEditPage extends Vue {
 
     // modifica giro
     public modificaGiro(id: number) {
-        this.$refs.giroTrasportatoriModal.open();
+        
         this.giriService.getGiroDetails(id)
             .then(response => {
                 if (response.data != null) {
-                    this.giro = response.data;
+                    this.$refs.giroTrasportatoriModal.openGiro(response.data);
                 } else {
                     return null;
                 }
@@ -110,6 +111,7 @@ export default class TrasportatoriEditPage extends Vue {
     public aggiungiGiro() {
         this.giro = new Giro();
         this.$refs.giroTrasportatoriModal.open();
+        this.giro.IdTrasportatore = this.trasportatore.Id;
         this.giro.CodiceGiro = "";
         this.giro.Denominazione = "";
     }
