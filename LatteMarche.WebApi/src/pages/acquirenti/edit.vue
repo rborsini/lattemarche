@@ -131,21 +131,15 @@
 
         mounted() {
 
-
-        }
-
-        public openAcquirente(acqu: Acquirente): void {
-
-            $(this.$el).modal('show');
-
-            this.loadComuni(acqu.SiglaProvincia);
-
             this.comuniService.getProvince()
                 .then(response => {
                     this.opzioniProvince = response.data;
                 });
+        }
 
-
+        public openAcquirente(acqu: Acquirente): void {
+            $(this.$el).modal('show');
+            this.loadComuni(acqu.SiglaProvincia);
         }
 
         public open(): void {
@@ -174,7 +168,7 @@
 
         public onSave() {
             this.progressBarVisible = true;
-            this.acquirentiService.update(this.acquirente)
+            this.acquirentiService.save(this.acquirente)
                 .then(response => {
                     if (response.data != undefined) {
                         this.$emit("salvato");
