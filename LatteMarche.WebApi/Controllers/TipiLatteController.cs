@@ -15,23 +15,7 @@ namespace LatteMarche.WebApi.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-
-        
-        [ViewItem(nameof(New), "Tipi latte", "Aggiungi")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
-        public ActionResult New()
-        {
-            return View();
-        }
-
-        
-        [ViewItem(nameof(Details), "Tipi latte", "Modifica")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
-        public ActionResult Details()
-        {
-            return View();
-        }
+        }      
 
         [ViewItem(nameof(Edit), "Tipi latte", "Modifica")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
