@@ -62,20 +62,37 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
-        [ViewItem(nameof(Update), "Destinatari", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] DestinatarioDto model)
+        [ViewItem(nameof(Save), "Destinatari", "Salvataggio")]
+        [HttpPost]
+        public IHttpActionResult Save([FromBody] DestinatarioDto model)
         {
-            //E' previsto che si possa fare?
             try
             {
-                return Ok(this.destinatariService.Update(model));
+                if(model.Id == 0)
+                    return Ok(this.destinatariService.Create(model));
+                else
+                    return Ok(this.destinatariService.Update(model));
             }
             catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
 
+        }
+
+        [ViewItem(nameof(Delete), "Destinatari", "Rimozione")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                this.destinatariService.Delete(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         #endregion

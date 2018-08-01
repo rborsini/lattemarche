@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="modal fade bd-example-modal-lg" id="editazione-destinatario-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" >
+        <div class="modal-dialog modal-lg" >
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Dettagli destinatario</h5>
@@ -139,6 +139,10 @@
 
         mounted() {
 
+            this.comuniService.getProvince()
+                .then(response => {
+                    this.opzioniProvince = response.data;
+                });
 
         }
 
@@ -184,7 +188,7 @@
 
         public onSave() {
             this.progressBarVisible = true;
-            this.destinatariService.update(this.destinatario)
+            this.destinatariService.save(this.destinatario)
                 .then(response => {
                     if (response.data != undefined) {
                         this.$emit("salvato");

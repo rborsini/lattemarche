@@ -4,16 +4,20 @@ import { Destinatario } from "../models/destinatario.model";
 export class DestinatariService {
     constructor() { }
 
-    public getDestinatari(): AxiosPromise<Destinatario[]> {
+    public index(): AxiosPromise<Destinatario[]> {
         return axios.get('/api/destinatari');
     }
 
-    public getDetails(id: number): AxiosPromise<Destinatario> {
+    public details(id: number): AxiosPromise<Destinatario> {
         return axios.get('/api/destinatari/details?id=' + id);
     }
 
-    public update(destinatario: Destinatario): AxiosPromise<Destinatario> {
-        return axios.put('/api/destinatari/update', destinatario);
+    public save(destinatario: Destinatario): AxiosPromise<Destinatario> {
+        return axios.post('/api/destinatari/save', destinatario);
+    }
+
+    public delete(idDestinatario: number): AxiosPromise<Destinatario> {
+        return axios.delete('/api/destinatari/delete?id=' + idDestinatario);
     }
 
 }

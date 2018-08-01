@@ -23,6 +23,7 @@ import DataTable from "../../components/common/dataTable.vue";
 import Select2 from "../../components/common/select2.vue";
 import EditazioneDestinatarioModal from "../destinatari/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { Destinatario } from "../../models/destinatario.model";
 import { DestinatariService } from "../../services/destinatari.service";
 var DestinatariIndexPage = /** @class */ (function (_super) {
@@ -31,14 +32,20 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.destinatari = [];
+        _this.canAdd = false;
+        _this.canEdit = false;
+        _this.canRemove = false;
         _this.destinatariService = new DestinatariService();
         _this.destinatario = new Destinatario();
+        _this.canAdd = $('#canAdd').val() == "true";
+        _this.canEdit = $('#canEdit').val() == "true";
+        _this.canRemove = $('#canRemove').val() == "true";
         return _this;
     }
     DestinatariIndexPage.prototype.mounted = function () {
         var _this = this;
         this.initTable();
-        this.destinatariService.getDestinatari()
+        this.destinatariService.index()
             .then(function (response) {
             _this.destinatari = response.data;
         });
@@ -49,30 +56,58 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
         $('.edit').click(function (event) {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
-            _this.destinatariService.getDetails(rowId)
+            _this.destinatariService.details(rowId)
                 .then(function (response) {
                 _this.destinatario = response.data;
-                console.log("select", _this.destinatario.SiglaProvincia);
                 _this.$refs.editazioneDestinatarioModal.openDestinatario(_this.destinatario);
-                //this.$refs.editazioneDestinatarioModal.open();
             });
+        });
+        $('.delete').click(function (event) {
+            var element = $(event.currentTarget);
+            _this.idDestinatarioDaRimuovere = $(element).data("row-id");
+            _this.$refs.confirmDeleteDialog.open();
+        });
+    };
+    // nuovo destinatario
+    DestinatariIndexPage.prototype.onAdd = function () {
+        this.destinatario = new Destinatario();
+        this.$refs.editazioneDestinatarioModal.open();
+    };
+    // rimozione destinatario
+    DestinatariIndexPage.prototype.onRemove = function () {
+        var _this = this;
+        this.destinatariService.delete(this.idDestinatarioDaRimuovere)
+            .then(function (response) {
+            _this.$refs.removedDialog.open();
         });
     };
     // inizializzazione tabella
     DestinatariIndexPage.prototype.initTable = function () {
         this.columnOptions.push({ data: "P_IVA" });
         this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({
-            render: function (data, type, row) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+        if (ce || cr) {
+            this.columnOptions.push({
+                render: function (data, type, row) {
+                    var html = '<div class="text-center">';
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                    html += '</div>';
+                    return html;
+                },
+                orderable: false
+            });
+        }
     };
     DestinatariIndexPage = __decorate([
         Component({
             el: '#destinatari-page',
             components: {
                 Select2: Select2,
+                ConfirmDialog: ConfirmDialog,
                 NotificationDialog: NotificationDialog,
                 EditazioneDestinatarioModal: EditazioneDestinatarioModal,
                 DataTable: DataTable

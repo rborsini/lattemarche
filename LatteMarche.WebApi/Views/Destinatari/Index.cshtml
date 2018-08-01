@@ -14,25 +14,52 @@
 
 <div id="destinatari-page" class="container-fluid">
 
+    @{
+        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    }
+
+    <input hidden id="canAdd" value="@canAdd" />
+    <input hidden id="canEdit" value="@canEdit" />
+    <input hidden id="canRemove" value="@canRemove" />
+
     <!-- Pannello editazione dettaglio -->
     <editazione-destinatario-modal ref="editazioneDestinatarioModal"
-                                 :destinatario="destinatario"
-                                 v-on:salvato="$refs.savedDialog.open()"
-                                v-on:ok="window.location = '/Destinatari'" ></editazione-destinatario-modal>
+                                   :destinatario="destinatario"
+                                   v-on:salvato="$refs.savedDialog.open()"
+                                   v-on:ok="window.location = '/Destinatari'"></editazione-destinatario-modal>
 
-    <!-- Pannello Salvataggio prelievo-->
+    <!-- Pannello notifica salvatagggio -->
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
                          :message="'Il destinatario è stato salvato correttamente'"></notification-dialog>
 
+    <!-- Pannello notifica rimozione -->
+    <notification-dialog ref="removedDialog"
+                         :title="'Conferma rimozione'"
+                         :message="'Destinatario rimosso correttamente'"
+                         v-on:ok="window.location = '/Destinatari'"></notification-dialog>
+
+    <!-- Pannello modale conferma eliminazione -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di voler rimuovere il destinatario selezionato?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>
+
     <!-- Tabella -->
     <data-table :columns="columnOptions" :rows="destinatari" v-on:data-loaded="onDataLoaded">
+
+        <!-- Toolbox -->
+        <template slot="toolbox" v-if="canAdd">
+            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+        </template>
 
         <!-- Colonne -->
         <template slot="thead">
             <th>P. IVA</th>
             <th>Ragione sociale</th>
-            <th></th>
+            <th v-if="canEdit || canRemove"></th>
         </template>
 
     </data-table>

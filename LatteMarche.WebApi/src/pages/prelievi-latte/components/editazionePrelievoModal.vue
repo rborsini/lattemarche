@@ -247,7 +247,7 @@
 
         // caricamento destinatari
         public loadDestinatari() {
-            this.destinatariService.getDestinatari()
+            this.destinatariService.index()
                 .then(response => {
                     if (response.data != null) {
                         this.destinatario = response.data;
