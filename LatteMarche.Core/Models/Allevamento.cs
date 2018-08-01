@@ -18,13 +18,10 @@ namespace LatteMarche.Core.Models
         public string IndirizzoAllevamento { get; set; }
 
         [Column("ID_UTENTE")]
-        public int IdUtente { get; set; }
+        public int? IdUtente { get; set; }
 
         [Column("ID_COMUNE")]
         public int IdComune { get; set; }
-
-        [Column("IDSITRA_STABILIMENTO_ALLEVAMENTO")]
-        public int? IdSitraStabilimentoAllevamento { get; set; }
 
         public string CUAA { get; set; }
     }

@@ -12,9 +12,9 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-allevatori-page">
+<div id="index-allevatori-page" class="container-fluid">
 
-    <data-table :columns="columnOptions" :rows="allevatori">
+    <data-table :columns="columnOptions" :rows="allevatori" >
         <template slot="thead">
             <th>#</th>
             <th>Azienda</th>

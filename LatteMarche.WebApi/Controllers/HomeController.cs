@@ -26,12 +26,6 @@ namespace LatteMarche.WebApi.Controllers
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
-            var mvcName = typeof(Controller).Assembly.GetName();
-            var isMono = Type.GetType("Mono.Runtime") != null;
-
-            ViewData["Version"] = mvcName.Version.Major + "." + mvcName.Version.Minor;
-            ViewData["Runtime"] = isMono ? "Mono" : ".NET";
-
             return View();
         }
 
@@ -54,6 +48,7 @@ namespace LatteMarche.WebApi.Controllers
             MenuItemViewModel gestione = new MenuItemViewModel("Gestione");
 
             gestione.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
+            gestione.Items.Add(MakeViewModel("Allevamenti", "Index", "Allevamenti"));
             gestione.Items.Add(MakeViewModel("Autocisterne", "Index", "Autocisterne"));
             gestione.Items.Add(MakeViewModel("Destinatari", "Index", "Destinatari"));
             //gestione.Items.Add(MakeViewModel("Normative", "Index", "Documenti"));

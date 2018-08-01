@@ -5,6 +5,7 @@ module.exports = {
     entry: {
         // percorsi uri del progetto
         acquirenti_index_page: './src/pages/acquirenti/index.page.js',
+        allevamenti_index_page: './src/pages/allevamenti/index.page.js',
         allevatori_index_page: './src/pages/allevatori/index.page.js',
         autocisterne_index_page: './src/pages/autocisterne/index.page.js',
         destinatari_index_page: './src/pages/destinatari/index.page.js',

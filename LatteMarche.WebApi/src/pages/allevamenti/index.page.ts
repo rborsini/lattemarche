@@ -3,51 +3,49 @@ import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
 
 import DataTable from "../../components/common/dataTable.vue";
-import Select2 from "../../components/common/select2.vue";
-import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
+import EditazioneAllevamentoModal from "../allevamenti/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 
-import { Acquirente } from "../../models/acquirente.model";
-import { AcquirentiService } from "../../services/acquirenti.service";
+import { Allevamento } from "../../models/allevamento.model";
+import { AllevamentiService } from "../../services/allevamenti.service";
 
 
 declare module 'vue/types/vue' {
     interface Vue {
         open(): void
-        openAcquirente(acqu: Acquirente): void
+        openAllevamento(allevamento: Allevamento): void
         close(): void
     }
 }
 
 @Component({
-    el: '#acquirenti-page',
+    el: '#index-allevamenti-page',
     components: {
-        Select2,
         ConfirmDialog,
         NotificationDialog,
-        EditazioneAcquirenteModal,
+        EditazioneAllevamentoModal,
         DataTable
     }
 })
 
 
-export default class AcquirentiIndexPage extends Vue {
-
+export default class AllevamentiIndexPage extends Vue {
 
     $refs: {
         savedDialog: Vue,
         removedDialog: Vue,
-        editazioneAcquirenteModal: Vue,
+        editazioneAllevamentoModal: Vue,
         confirmDeleteDialog: Vue
     }
 
-    private acquirentiService: AcquirentiService;
-    private acquirente: Acquirente;
-    private idAcquirenteDaRimuovere: number;
+    private allevamentiService: AllevamentiService;
+    private allevamento: Allevamento;
+    private idAllevamentoDaRimuovere: number;
 
     public columnOptions: any[] = [];
-    public acquirenti: Acquirente[] = [];
+    public allevamenti: Allevamento[] = [];
+
     public canAdd: boolean = false;
     public canEdit: boolean = false;
     public canRemove: boolean = false;
@@ -55,8 +53,8 @@ export default class AcquirentiIndexPage extends Vue {
     constructor() {
         super();
 
-        this.acquirentiService = new AcquirentiService();
-        this.acquirente = new Acquirente();
+        this.allevamentiService = new AllevamentiService();
+        this.allevamento = new Allevamento();
 
         this.canAdd = $('#canAdd').val() == "true";
         this.canEdit = $('#canEdit').val() == "true";
@@ -64,12 +62,14 @@ export default class AcquirentiIndexPage extends Vue {
     }
 
     public mounted() {
+
         this.initTable();
 
-        this.acquirentiService.index()
+        this.allevamentiService.index()
             .then(response => {
-                this.acquirenti = response.data;
+                this.allevamenti = response.data;
             });
+
     }
 
     // Evento fine generazione tabella
@@ -80,10 +80,10 @@ export default class AcquirentiIndexPage extends Vue {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
 
-            this.acquirentiService.details(rowId)
+            this.allevamentiService.details(rowId)
                 .then(response => {
-                    this.acquirente = response.data;
-                    this.$refs.editazioneAcquirenteModal.openAcquirente(this.acquirente);
+                    this.allevamento = response.data;
+                    this.$refs.editazioneAllevamentoModal.openAllevamento(this.allevamento);
                 });
 
         });
@@ -91,7 +91,7 @@ export default class AcquirentiIndexPage extends Vue {
         $('.delete').click((event) => {
 
             var element = $(event.currentTarget);
-            this.idAcquirenteDaRimuovere = $(element).data("row-id");
+            this.idAllevamentoDaRimuovere = $(element).data("row-id");
 
             this.$refs.confirmDeleteDialog.open();
 
@@ -99,18 +99,19 @@ export default class AcquirentiIndexPage extends Vue {
 
     }
 
-    // nuovo acquirente
+    // nuovo allevamento
     public onAdd() {
 
-        this.acquirente = new Acquirente();
-        this.$refs.editazioneAcquirenteModal.open();
+        this.allevamento = new Allevamento();
+        this.$refs.editazioneAllevamentoModal.open();
 
     }
+
 
     // rimozione acquirente
     public onRemove() {
 
-        this.acquirentiService.delete(this.idAcquirenteDaRimuovere)
+        this.allevamentiService.delete(this.idAllevamentoDaRimuovere)
             .then(response => {
                 this.$refs.removedDialog.open();
             });
@@ -118,8 +119,10 @@ export default class AcquirentiIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ "data": "Piva" });
-        this.columnOptions.push({ "data": "RagioneSociale" });
+
+        this.columnOptions.push({ data: "Id" });
+        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "CodiceAsl" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
@@ -149,5 +152,5 @@ export default class AcquirentiIndexPage extends Vue {
 
 }
 
-let page = new AcquirentiIndexPage();
+let page = new AllevamentiIndexPage();
 Vue.config.devtools = true;

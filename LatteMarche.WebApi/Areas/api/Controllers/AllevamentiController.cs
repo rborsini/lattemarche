@@ -36,23 +36,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-
-                var allevamenti = this.allevamentiService.Index();
-
-                //DataTableResult<UtenteDto> result = new DataTableResult<UtenteDto>();
-
-                //result.meta.page = 1;
-                //result.meta.pages = users.Count / 10;
-                //result.meta.perpage = 10;
-                //result.meta.total = users.Count;
-                //result.meta.sort = "asc";
-                //result.meta.field = "Nome";
-
-                //result.data = users;
-
-                //return Ok(result);                
-
-                return Ok(allevamenti);
+                return Ok(this.allevamentiService.Search());
             }
             catch (Exception exc)
             {
@@ -76,28 +60,16 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Allevamenti", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] AllevamentoDto model)
-        {
-            try
-            {
-                return Ok(this.allevamentiService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Create), "Allevamenti", "Creazione")]
+        [ViewItem(nameof(Save), "Allevamenti", "Aggiornamento")]
         [HttpPost]
-        public IHttpActionResult Create([FromBody] AllevamentoDto model)
+        public IHttpActionResult Save([FromBody] AllevamentoDto model)
         {
             try
             {
-                return Ok(this.allevamentiService.Create(model));
+                if(model.Id == 0)
+                    return Ok(this.allevamentiService.Create(model));
+                else
+                    return Ok(this.allevamentiService.Update(model));
             }
             catch (Exception exc)
             {

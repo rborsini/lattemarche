@@ -32,15 +32,19 @@ var AllevatoriIndexPage = /** @class */ (function (_super) {
     }
     AllevatoriIndexPage.prototype.mounted = function () {
         var _this = this;
+        this.initTable();
+        this.allevatoriService.getAllevatori()
+            .then(function (response) {
+            _this.allevatori = response.data;
+        });
+    };
+    // inizializzazione tabella
+    AllevatoriIndexPage.prototype.initTable = function () {
         this.columnOptions.push({ data: "Id" });
         this.columnOptions.push({ data: "RagioneSociale" });
         this.columnOptions.push({ data: "IndirizzoAllevamento" });
         this.columnOptions.push({ data: "Comune" });
         this.columnOptions.push({ data: "Provincia" });
-        this.allevatoriService.getAllevatori()
-            .then(function (response) {
-            _this.allevatori = response.data;
-        });
     };
     AllevatoriIndexPage = __decorate([
         Component({

@@ -7,14 +7,6 @@ import DataTable from "../../components/common/dataTable.vue";
 import { Allevatore } from "../../models/allevatore.model";
 import { AllevatoriService } from "../../services/allevatori.service";
 
-
-declare module 'vue/types/vue' {
-    interface Vue {
-        open(): void
-        close(): void
-    }
-}
-
 @Component({
     el: '#index-allevatori-page',
     components: {
@@ -26,6 +18,7 @@ declare module 'vue/types/vue' {
 export default class AllevatoriIndexPage extends Vue {
 
     private allevatoriService: AllevatoriService;
+    private allevatore: Allevatore;
 
     public columnOptions: any[] = [];
     public allevatori: Allevatore[] = [];
@@ -38,11 +31,7 @@ export default class AllevatoriIndexPage extends Vue {
 
     public mounted() {
 
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "IndirizzoAllevamento" });
-        this.columnOptions.push({ data: "Comune" });
-        this.columnOptions.push({ data: "Provincia" });
+        this.initTable();
 
         this.allevatoriService.getAllevatori()
             .then(response => {
@@ -52,6 +41,15 @@ export default class AllevatoriIndexPage extends Vue {
     }
 
 
+    // inizializzazione tabella
+    private initTable(): void {
+
+        this.columnOptions.push({ data: "Id" });
+        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "IndirizzoAllevamento" });
+        this.columnOptions.push({ data: "Comune" });
+        this.columnOptions.push({ data: "Provincia" });
+    }
 
 }
 

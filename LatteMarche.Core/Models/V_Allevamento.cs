@@ -11,13 +11,21 @@ namespace LatteMarche.Core.Models
         [Column("ID_ALLEVAMENTO")]
         public override int Id { get; set; }
 
-        [Column("ID_TIPO_LATTE")]
-        public int IdTipoLatte { get; set; }
+        [Column("CODICE_ASL")]
+        public string CodiceAsl { get; set; }
 
-        [Column("FATTORE_CONVERSIONE")]
-        public decimal FattoreConversione { get; set; }
+        [Column("INDIRIZZO_ALLEVAMENTO")]
+        public string IndirizzoAllevamento { get; set; }
 
-        [Column("FLAG_INVIO_SITRA")]
-        public bool FlagInvioSitra { get; set; }
+        [Column("ID_UTENTE")]
+        public int? IdUtente { get; set; }
+
+        [Column("ID_COMUNE")]
+        public int IdComune { get; set; }
+
+        public string CUAA { get; set; }
+
+        [Column("RAGIONE_SOCIALE")]
+        public string RagioneSociale { get; set; }
     }
 }

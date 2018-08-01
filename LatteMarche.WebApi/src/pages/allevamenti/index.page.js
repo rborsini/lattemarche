@@ -20,71 +20,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import Vue from "vue";
 import Component from "vue-class-component";
 import DataTable from "../../components/common/dataTable.vue";
-import Select2 from "../../components/common/select2.vue";
-import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
+import EditazioneAllevamentoModal from "../allevamenti/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
-import { Acquirente } from "../../models/acquirente.model";
-import { AcquirentiService } from "../../services/acquirenti.service";
-var AcquirentiIndexPage = /** @class */ (function (_super) {
-    __extends(AcquirentiIndexPage, _super);
-    function AcquirentiIndexPage() {
+import { Allevamento } from "../../models/allevamento.model";
+import { AllevamentiService } from "../../services/allevamenti.service";
+var AllevamentiIndexPage = /** @class */ (function (_super) {
+    __extends(AllevamentiIndexPage, _super);
+    function AllevamentiIndexPage() {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
-        _this.acquirenti = [];
+        _this.allevamenti = [];
         _this.canAdd = false;
         _this.canEdit = false;
         _this.canRemove = false;
-        _this.acquirentiService = new AcquirentiService();
-        _this.acquirente = new Acquirente();
+        _this.allevamentiService = new AllevamentiService();
+        _this.allevamento = new Allevamento();
         _this.canAdd = $('#canAdd').val() == "true";
         _this.canEdit = $('#canEdit').val() == "true";
         _this.canRemove = $('#canRemove').val() == "true";
         return _this;
     }
-    AcquirentiIndexPage.prototype.mounted = function () {
+    AllevamentiIndexPage.prototype.mounted = function () {
         var _this = this;
         this.initTable();
-        this.acquirentiService.index()
+        this.allevamentiService.index()
             .then(function (response) {
-            _this.acquirenti = response.data;
+            _this.allevamenti = response.data;
         });
     };
     // Evento fine generazione tabella
-    AcquirentiIndexPage.prototype.onDataLoaded = function () {
+    AllevamentiIndexPage.prototype.onDataLoaded = function () {
         var _this = this;
         $('.edit').click(function (event) {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
-            _this.acquirentiService.details(rowId)
+            _this.allevamentiService.details(rowId)
                 .then(function (response) {
-                _this.acquirente = response.data;
-                _this.$refs.editazioneAcquirenteModal.openAcquirente(_this.acquirente);
+                _this.allevamento = response.data;
+                _this.$refs.editazioneAllevamentoModal.openAllevamento(_this.allevamento);
             });
         });
         $('.delete').click(function (event) {
             var element = $(event.currentTarget);
-            _this.idAcquirenteDaRimuovere = $(element).data("row-id");
+            _this.idAllevamentoDaRimuovere = $(element).data("row-id");
             _this.$refs.confirmDeleteDialog.open();
         });
     };
-    // nuovo acquirente
-    AcquirentiIndexPage.prototype.onAdd = function () {
-        this.acquirente = new Acquirente();
-        this.$refs.editazioneAcquirenteModal.open();
+    // nuovo allevamento
+    AllevamentiIndexPage.prototype.onAdd = function () {
+        this.allevamento = new Allevamento();
+        this.$refs.editazioneAllevamentoModal.open();
     };
     // rimozione acquirente
-    AcquirentiIndexPage.prototype.onRemove = function () {
+    AllevamentiIndexPage.prototype.onRemove = function () {
         var _this = this;
-        this.acquirentiService.delete(this.idAcquirenteDaRimuovere)
+        this.allevamentiService.delete(this.idAllevamentoDaRimuovere)
             .then(function (response) {
             _this.$refs.removedDialog.open();
         });
     };
     // inizializzazione tabella
-    AcquirentiIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ "data": "Piva" });
-        this.columnOptions.push({ "data": "RagioneSociale" });
+    AllevamentiIndexPage.prototype.initTable = function () {
+        this.columnOptions.push({ data: "Id" });
+        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "CodiceAsl" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
@@ -102,21 +102,20 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
             });
         }
     };
-    AcquirentiIndexPage = __decorate([
+    AllevamentiIndexPage = __decorate([
         Component({
-            el: '#acquirenti-page',
+            el: '#index-allevamenti-page',
             components: {
-                Select2: Select2,
                 ConfirmDialog: ConfirmDialog,
                 NotificationDialog: NotificationDialog,
-                EditazioneAcquirenteModal: EditazioneAcquirenteModal,
+                EditazioneAllevamentoModal: EditazioneAllevamentoModal,
                 DataTable: DataTable
             }
         }),
         __metadata("design:paramtypes", [])
-    ], AcquirentiIndexPage);
-    return AcquirentiIndexPage;
+    ], AllevamentiIndexPage);
+    return AllevamentiIndexPage;
 }(Vue));
-export default AcquirentiIndexPage;
-var page = new AcquirentiIndexPage();
+export default AllevamentiIndexPage;
+var page = new AllevamentiIndexPage();
 Vue.config.devtools = true;

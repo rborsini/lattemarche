@@ -10,10 +10,14 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {
-    
-    public class AllevatoriController : Controller
+    [MvcCustomAuthorize]
+    [MvcActionFilter]
+    public class AllevamentiController : Controller
     {
-
+        [ViewItem(nameof(Index), "Allevamenti", "Lista")]
+        [ViewItem("Aggiungi", "Allevamenti", "Aggiungi")]
+        [ViewItem("Modifica", "Allevamenti", "Modifica")]
+        [ViewItem("Rimuovi", "Allevamenti", "Rimuovi")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           

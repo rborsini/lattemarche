@@ -171,7 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\acquirenti_index_page.js" />
-    <Content Include="build\allevatori_index_page.js" />
+    <Content Include="build\allevamenti_index_page.js" />
     <Content Include="build\autocisterne_index_page.js" />
     <Content Include="build\destinatari_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
@@ -249,6 +249,8 @@
     <Content Include="src\pages\destinatari\edit.vue" />
     <Content Include="Views\Autocisterne\Index.cshtml" />
     <Content Include="src\pages\autocisterne\edit.vue" />
+    <Content Include="src\pages\allevamenti\edit.vue" />
+    <Content Include="Views\Allevatori\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -258,6 +260,7 @@
     <None Include="Web.TEST.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <TypeScriptCompile Include="src\models\allevamento.model.ts" />
     <TypeScriptCompile Include="src\models\autocisterna.model.ts" />
     <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
@@ -273,6 +276,7 @@
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
     <TypeScriptCompile Include="src\pages\acquirenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
+    <TypeScriptCompile Include="src\pages\allevamenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\autocisterne\index.page.ts" />
     <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
@@ -282,6 +286,7 @@
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\utenti\edit.page.ts" />
+    <TypeScriptCompile Include="src\services\allevamenti.service.ts" />
     <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
     <TypeScriptCompile Include="src\services\acquirenti.service.ts" />
     <TypeScriptCompile Include="src\services\allevatori.service.ts" />
@@ -327,6 +332,7 @@
     <Compile Include="Attributes\ApiCustomAuthorize.cs" />
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
+    <Compile Include="Controllers\AllevatoriController.cs" />
     <Compile Include="Controllers\AutocisterneController.cs" />
     <Compile Include="Controllers\LaboratorioAnalisiController.cs" />
     <Compile Include="Controllers\RuoliController.cs" />
@@ -339,7 +345,7 @@
     <Compile Include="Controllers\PrelieviController.cs" />
     <Compile Include="Controllers\TipiLatteController.cs" />
     <Compile Include="Controllers\TrasportatoriController.cs" />
-    <Compile Include="Controllers\AllevatoriController.cs" />
+    <Compile Include="Controllers\AllevamentiController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\MvcActionFilter.cs" />
@@ -390,7 +396,7 @@
     <Content Include="Views\Shared\_ItemNotFound.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
-    <Content Include="Views\Allevatori\Index.cshtml" />
+    <Content Include="Views\Allevamenti\Index.cshtml" />
     <Content Include="Views\Trasportatori\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
