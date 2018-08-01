@@ -81,6 +81,7 @@ export default class TrasportatoriEditPage extends Vue {
             .then(response => {
                 this.trasportatore = response.data;
             })
+        
     }
 
     // Selezione / Deselezione item del giro
@@ -92,6 +93,26 @@ export default class TrasportatoriEditPage extends Vue {
 
     }
 
+    // modifica giro
+    public modificaGiro(id: number) {
+        this.$refs.giroTrasportatoriModal.open();
+        this.giriService.getGiroDetails(id)
+            .then(response => {
+                if (response.data != null) {
+                    this.giro = response.data;
+                } else {
+                    return null;
+                }
+            })
+    }
+
+    // aggiungo giro
+    public aggiungiGiro() {
+        this.giro = new Giro();
+        this.$refs.giroTrasportatoriModal.open();
+        this.giro.CodiceGiro = "";
+        this.giro.Denominazione = "";
+    }
 
     // carico allevatori
     public loadGiro(id: number) {

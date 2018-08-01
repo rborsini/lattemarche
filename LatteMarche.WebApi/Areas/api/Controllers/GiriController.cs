@@ -75,6 +75,24 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             
         }
 
+        [ViewItem(nameof(Save), "Giri", "Salvataggio")]
+        [HttpPost]
+        public IHttpActionResult Save([FromBody] GiroDto model)
+        {
+            try
+            {
+                if (model.Id == 0)
+                    return Ok(this.giriService.Create(model));
+                else
+                    return Ok(this.giriService.Update(model));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
         [ViewItem(nameof(Create), "Giri", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] GiroDto model)

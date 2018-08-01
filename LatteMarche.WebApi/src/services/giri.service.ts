@@ -8,7 +8,12 @@ export class GiriService {
         return axios.get('/api/giri/details?id=' + id);
     }
 
+    //public save(giro: Giro): AxiosPromise<Giro> {
+    //    return axios.put('/api/giri/update', giro);
+    //}
+
     public save(giro: Giro): AxiosPromise<Giro> {
-        return axios.put('/api/giri/update', giro);
+        return axios.put('/api/giri/save', giro);
     }
+
 }

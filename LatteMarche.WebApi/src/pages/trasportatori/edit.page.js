@@ -72,6 +72,27 @@ var TrasportatoriEditPage = /** @class */ (function (_super) {
             item.Priorita = undefined;
         }
     };
+    // modifica giro
+    TrasportatoriEditPage.prototype.modificaGiro = function (id) {
+        var _this = this;
+        this.$refs.giroTrasportatoriModal.open();
+        this.giriService.getGiroDetails(id)
+            .then(function (response) {
+            if (response.data != null) {
+                _this.giro = response.data;
+            }
+            else {
+                return null;
+            }
+        });
+    };
+    // aggiungo giro
+    TrasportatoriEditPage.prototype.aggiungiGiro = function () {
+        this.giro = new Giro();
+        this.$refs.giroTrasportatoriModal.open();
+        this.giro.CodiceGiro = "";
+        this.giro.Denominazione = "";
+    };
     // carico allevatori
     TrasportatoriEditPage.prototype.loadGiro = function (id) {
         var _this = this;

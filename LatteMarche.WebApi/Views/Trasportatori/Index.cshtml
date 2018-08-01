@@ -33,7 +33,7 @@
 
     <!-- modale modifica/aggiungi giro -->
     <giro-trasportatori-modal ref="giroTrasportatoriModal"
-                              :giro="trasportatore.Giri[selectedGiro]"></giro-trasportatori-modal>
+                              :giro="giro"></giro-trasportatori-modal>
 
     <div class="container">
         <!-- selezione trasportatore -->
@@ -58,7 +58,8 @@
                          :value.sync="selectedGiro"
                          :value-field="'Id'"
                          :text-field="'Denominazione'"
-                         :disabled="trasportatoreSelezionato" />
+                         :disabled="trasportatoreSelezionato"
+                         />
             </div>
         </div>
 
@@ -66,12 +67,12 @@
         <div class="row form-group">
             <div class="col-sm-6 offset-3 text-right">
                 <button class="btn btn-primary mr-2"
-                        v-on:click="$refs.giroTrasportatoriModal.open()"
+                        v-on:click="modificaGiro(selectedGiro)"
                         :disabled="selectedGiro == 0">
                     Modifica giro
                 </button>
                 <button class="btn btn-success"
-                        v-on:click="$refs.giroTrasportatoriModal.open()"
+                        v-on:click="aggiungiGiro()"
                         :disabled="selectedTrasportatore == 0">
                     Aggiungi giro
                 </button>
