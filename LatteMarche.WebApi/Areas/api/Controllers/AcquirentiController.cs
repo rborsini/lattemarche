@@ -61,36 +61,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Acquirenti", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] AcquirenteDto model)
-        {            
-            try
-            {
-                return Ok(this.acquirentiService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Create), "Acquirenti", "Creazione")]
-        [HttpPost]
-        public IHttpActionResult Create([FromBody] AcquirenteDto model)
-        {
-            try
-            {
-                return Ok(this.acquirentiService.Create(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
         [ViewItem(nameof(Save), "Acquirenti", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] AcquirenteDto model)

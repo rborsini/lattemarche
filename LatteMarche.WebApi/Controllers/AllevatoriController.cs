@@ -13,6 +13,9 @@ namespace LatteMarche.WebApi.Controllers
     public class AllevatoriController : Controller
     {
         [ViewItem(nameof(Index), "Allevatori", "Lista")]
+        [ViewItem("Aggiungi", "Allevatori", "Aggiungi")]
+        [ViewItem("Modifica", "Allevatori", "Modifica")]
+        [ViewItem("Rimuovi", "Allevatori", "Rimuovi")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           

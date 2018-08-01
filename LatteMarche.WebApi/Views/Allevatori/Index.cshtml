@@ -12,15 +12,55 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-allevatori-page">
+<div id="index-allevatori-page" class="container-fluid">
 
-    <data-table :columns="columnOptions" :rows="allevatori">
+    @{
+        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    }
+
+    <input hidden id="canAdd" value="@canAdd" />
+    <input hidden id="canEdit" value="@canEdit" />
+    <input hidden id="canRemove" value="@canRemove" />
+
+    <!-- Pannello editazione dettaglio -->
+    <editazione-acquirente-modal ref="editazioneAllevatoreModal"
+                                 :allevatore="allevatore"
+                                 v-on:salvato="$refs.savedDialog.open()"></editazione-acquirente-modal>
+
+    <!-- Pannello notifica salvatagggio -->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Allevatore salvato correttamente'"
+                         v-on:ok="window.location = '/Allevatori'"></notification-dialog>
+
+    <!-- Pannello notifica rimozione -->
+    <notification-dialog ref="removedDialog"
+                         :title="'Conferma rimozione'"
+                         :message="'Allevatore rimosso correttamente'"
+                         v-on:ok="window.location = '/Allevatori'"></notification-dialog>
+
+    <!-- Pannello modale conferma invio Apice richiesta -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di voler rimuovere l\'allevatore selezionato?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>
+
+    <data-table :columns="columnOptions" :rows="allevatori" v-on:data-loaded="onDataLoaded">
+
+        <!-- Toolbox -->
+        <template slot="toolbox" v-if="canAdd">
+            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+        </template>
+
         <template slot="thead">
             <th>#</th>
             <th>Azienda</th>
             <th>Indirizzo</th>
             <th>Comune</th>
             <th>Provincia</th>
+            <th v-if="canEdit || canRemove"></th>
         </template>
     </data-table>
 

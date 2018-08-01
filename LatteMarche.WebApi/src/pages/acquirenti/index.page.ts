@@ -9,7 +9,6 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 
 import { Acquirente } from "../../models/acquirente.model";
-
 import { AcquirentiService } from "../../services/acquirenti.service";
 
 
@@ -146,10 +145,6 @@ export default class AcquirentiIndexPage extends Vue {
             });
 
         }
-
-
-
-
     }
 
 }

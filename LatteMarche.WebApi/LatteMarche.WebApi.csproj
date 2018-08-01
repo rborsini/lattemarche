@@ -249,6 +249,7 @@
     <Content Include="src\pages\destinatari\edit.vue" />
     <Content Include="Views\Autocisterne\Index.cshtml" />
     <Content Include="src\pages\autocisterne\edit.vue" />
+    <Content Include="src\pages\allevatori\edit.vue" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

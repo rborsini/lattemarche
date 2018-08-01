@@ -51,9 +51,9 @@
                 var dom = '';
 
                 if ($('.toolbox')[0])
-                    dom = '<"top row"<"col-6"i><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
+                    dom = '<"top row"<"col-6 float-left"f><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
                 else
-                    dom = '<"row"<"col-6"i><"col-6"f>>t<"row"<"col-6"l><"col-6"p>>';
+                    dom = '<"row"<"col-6"f><"col-6"i>>t<"row"<"col-6"l><"col-6"p>>';
 
                 table = $(this.$el.children[0]).DataTable({
                     dom: dom,
@@ -73,7 +73,7 @@
                         "sInfoFiltered": "(filtrati da _MAX_ righe totali)",
                         "sInfoPostFix": "",
                         "sInfoThousands": ",",
-                        "sLengthMenu": "Visualizza _MENU_ righe",
+                        "sLengthMenu": "Visualizza _MENU_ righe per pagina",
                         "sLoadingRecords": "Caricamento...",
                         "sProcessing": "Elaborazione...",
                         "sSearch": "Cerca:",

@@ -3,6 +3,7 @@
     var url = apiUrl + 'utenti';
 
     var table = $('#utenti-table').DataTable({
+        dom: '<"row"<"col-6"f><"col-6">>t<"row"<"col-6"l><"col-6"p>>',
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
         processing: true,
         pageLength: 10,
@@ -15,7 +16,7 @@
             "sInfoFiltered": "(filtrati da _MAX_ righe totali)",
             "sInfoPostFix": "",
             "sInfoThousands": ",",
-            "sLengthMenu": "Visualizza _MENU_ righe",
+            "sLengthMenu": "Visualizza _MENU_ righe per pagina",
             "sLoadingRecords": "Caricamento...",
             "sProcessing": "Elaborazione...",
             "sSearch": "Cerca:",

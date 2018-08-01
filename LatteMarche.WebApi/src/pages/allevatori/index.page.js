@@ -20,6 +20,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import Vue from "vue";
 import Component from "vue-class-component";
 import DataTable from "../../components/common/dataTable.vue";
+import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { AllevatoriService } from "../../services/allevatori.service";
 var AllevatoriIndexPage = /** @class */ (function (_super) {
     __extends(AllevatoriIndexPage, _super);
@@ -27,25 +29,68 @@ var AllevatoriIndexPage = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.allevatori = [];
+        _this.canAdd = false;
+        _this.canEdit = false;
+        _this.canRemove = false;
         _this.allevatoriService = new AllevatoriService();
         return _this;
     }
     AllevatoriIndexPage.prototype.mounted = function () {
         var _this = this;
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "IndirizzoAllevamento" });
-        this.columnOptions.push({ data: "Comune" });
-        this.columnOptions.push({ data: "Provincia" });
+        this.initTable();
         this.allevatoriService.getAllevatori()
             .then(function (response) {
             _this.allevatori = response.data;
         });
     };
+    // Evento fine generazione tabella
+    AllevatoriIndexPage.prototype.onDataLoaded = function () {
+        var _this = this;
+        $('.edit').click(function (event) {
+            var element = $(event.currentTarget);
+            var rowId = $(element).data("row-id");
+            _this.allevatoriService.details(rowId)
+                .then(function (response) {
+                _this.acquirente = response.data;
+                _this.$refs.editazioneAcquirenteModal.openAcquirente(_this.acquirente);
+            });
+        });
+        $('.delete').click(function (event) {
+            var element = $(event.currentTarget);
+            _this.idAcquirenteDaRimuovere = $(element).data("row-id");
+            _this.$refs.confirmDeleteDialog.open();
+        });
+    };
+    // inizializzazione tabella
+    AllevatoriIndexPage.prototype.initTable = function () {
+        this.columnOptions.push({ data: "Id" });
+        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "IndirizzoAllevamento" });
+        this.columnOptions.push({ data: "Comune" });
+        this.columnOptions.push({ data: "Provincia" });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+        if (ce || cr) {
+            this.columnOptions.push({
+                render: function (data, type, row) {
+                    var html = '<div class="text-center">';
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                    html += '</div>';
+                    return html;
+                },
+                orderable: false
+            });
+        }
+    };
     AllevatoriIndexPage = __decorate([
         Component({
             el: '#index-allevatori-page',
             components: {
+                ConfirmDialog: ConfirmDialog,
+                NotificationDialog: NotificationDialog,
                 DataTable: DataTable
             }
         }),
