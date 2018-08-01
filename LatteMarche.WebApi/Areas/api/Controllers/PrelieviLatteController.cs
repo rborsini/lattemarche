@@ -115,13 +115,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 this.synchService.Push();
 
             // invio sitra
-            if(this.SitraEnabled)
+            if (this.SitraEnabled)
             {
                 // prelievi giorno precedente
                 List<PrelievoLatte> prelieviDaInviare = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     DataPeriodoInizio = DateTime.Today.AddDays(-1),
-                    DataPeriodoFine = DateTime.Today,
+                    DataPeriodoFine = DateTime.Today.AddDays(-1),
                     InviatoSitra = false
                 }).ToList());
 

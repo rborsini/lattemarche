@@ -67,7 +67,7 @@
                     serverSide: false,
                     paging: true,
                     lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-                    pageLength: 20,
+                    pageLength: 10,
                     language: {
                         "sEmptyTable": "Nessun dato presente nella tabella",
                         "sInfo": "Vista da _START_ a _END_ di _TOTAL_ righe",

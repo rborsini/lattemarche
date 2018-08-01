@@ -76,6 +76,8 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
             Mapper.CreateMap<PrelievoLatte, PrelievoLatteDto>();
             Mapper.CreateMap<PrelievoLatteDto, PrelievoLatte>();
 
+            Mapper.CreateMap<V_PrelievoLatte, PrelievoLatte>();
+
         }
     }
 

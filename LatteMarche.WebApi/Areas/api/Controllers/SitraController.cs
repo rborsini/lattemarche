@@ -49,7 +49,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 List<PrelievoLatte> prelievi = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     DataPeriodoInizio = day,
-                    DataPeriodoFine = day.AddDays(1),
+                    DataPeriodoFine = day,
                     InviatoSitra = false
                 }).ToList());
 
