@@ -12,6 +12,7 @@ namespace LatteMarche.EntityFramework
 {
 	public class LatteMarcheDbContext : DbContext, IContext
 	{
+        public DbSet<Autocisterna> Autocisterne { get; set; }
         public DbSet<Autorizzazione> Autorizzazioni { get; set; }
         public DbSet<Azione> Azioni { get; set; }
         public DbSet<Utente> Utenti { get; set; }

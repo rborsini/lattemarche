@@ -22,7 +22,8 @@
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
-                         :message="'L acquirente è stato salvato correttamente'"></notification-dialog>
+                         :message="'L acquirente è stato salvato correttamente'"  
+                         v-on:ok="window.location = '/Acquirenti'"></notification-dialog>
 
     <!-- Tabella -->
     <data-table :columns="columnOptions" :rows="acquirenti" v-on:data-loaded="onDataLoaded">

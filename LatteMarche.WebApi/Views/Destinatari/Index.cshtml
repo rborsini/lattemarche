@@ -17,7 +17,8 @@
     <!-- Pannello editazione dettaglio -->
     <editazione-destinatario-modal ref="editazioneDestinatarioModal"
                                  :destinatario="destinatario"
-                                 v-on:salvato="$refs.savedDialog.open()"></editazione-destinatario-modal>
+                                 v-on:salvato="$refs.savedDialog.open()"
+                                v-on:ok="window.location = '/Destinatari'" ></editazione-destinatario-modal>
 
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog"

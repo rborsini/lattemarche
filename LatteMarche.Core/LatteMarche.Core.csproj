@@ -74,6 +74,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="Models\Allevamento.cs" />
+    <Compile Include="Models\Autocisterna.cs" />
     <Compile Include="Models\Autorizzazione.cs" />
     <Compile Include="Models\Azione.cs" />
     <Compile Include="Models\Destinatario.cs" />
