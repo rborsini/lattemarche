@@ -257,7 +257,7 @@
 
         // caricamento acquirenti
         public loadAcquirenti() {
-            this.acquirentiService.getAcquirenti()
+            this.acquirentiService.index()
                 .then(response => {
                     if (response.data != null) {
                         this.acquirente = response.data;

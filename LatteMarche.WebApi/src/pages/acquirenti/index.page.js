@@ -23,6 +23,7 @@ import DataTable from "../../components/common/dataTable.vue";
 import Select2 from "../../components/common/select2.vue";
 import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { Acquirente } from "../../models/acquirente.model";
 import { AcquirentiService } from "../../services/acquirenti.service";
 var AcquirentiIndexPage = /** @class */ (function (_super) {
@@ -31,14 +32,20 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.acquirenti = [];
+        _this.canAdd = false;
+        _this.canEdit = false;
+        _this.canRemove = false;
         _this.acquirentiService = new AcquirentiService();
         _this.acquirente = new Acquirente();
+        _this.canAdd = $('#canAdd').val() == "true";
+        _this.canEdit = $('#canEdit').val() == "true";
+        _this.canRemove = $('#canRemove').val() == "true";
         return _this;
     }
     AcquirentiIndexPage.prototype.mounted = function () {
         var _this = this;
         this.initTable();
-        this.acquirentiService.getAcquirenti()
+        this.acquirentiService.index()
             .then(function (response) {
             _this.acquirenti = response.data;
         });
@@ -49,7 +56,7 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
         $('.edit').click(function (event) {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
-            _this.acquirentiService.getDetails(rowId)
+            _this.acquirentiService.details(rowId)
                 .then(function (response) {
                 _this.acquirente = response.data;
                 _this.$refs.editazioneAcquirenteModal.openAcquirente(_this.acquirente);
@@ -57,33 +64,49 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
         });
         $('.delete').click(function (event) {
             var element = $(event.currentTarget);
-            var rowId = $(element).data("row-id");
-            console.log("remove");
+            _this.idAcquirenteDaRimuovere = $(element).data("row-id");
+            _this.$refs.confirmDeleteDialog.open();
         });
     };
     // nuovo acquirente
-    AcquirentiIndexPage.prototype.onAggiungi = function () {
-        console.log("nuovo");
+    AcquirentiIndexPage.prototype.onAdd = function () {
+        this.acquirente = new Acquirente();
+        this.$refs.editazioneAcquirenteModal.open();
+    };
+    // rimozione acquirente
+    AcquirentiIndexPage.prototype.onRemove = function () {
+        var _this = this;
+        this.acquirentiService.delete(this.idAcquirenteDaRimuovere)
+            .then(function (response) {
+            _this.$refs.removedDialog.open();
+        });
     };
     // inizializzazione tabella
     AcquirentiIndexPage.prototype.initTable = function () {
         this.columnOptions.push({ data: "Piva" });
         this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({
-            render: function (data, type, row) {
-                var html = '<div class="text-center">';
-                html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
-                html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
-                html += '</div>';
-                return html;
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+        if (ce || cr) {
+            this.columnOptions.push({
+                render: function (data, type, row) {
+                    var html = '<div class="text-center">';
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                    html += '</div>';
+                    return html;
+                }
+            });
+        }
     };
     AcquirentiIndexPage = __decorate([
         Component({
             el: '#acquirenti-page',
             components: {
                 Select2: Select2,
+                ConfirmDialog: ConfirmDialog,
                 NotificationDialog: NotificationDialog,
                 EditazioneAcquirenteModal: EditazioneAcquirenteModal,
                 DataTable: DataTable

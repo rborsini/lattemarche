@@ -64,8 +64,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [ViewItem(nameof(Update), "Acquirenti", "Aggiornamento")]
         [HttpPut]
         public IHttpActionResult Update([FromBody] AcquirenteDto model)
-        {
-            //E' previsto che si possa fare?
+        {            
             try
             {
                 return Ok(this.acquirentiService.Update(model));
@@ -81,10 +80,27 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [HttpPost]
         public IHttpActionResult Create([FromBody] AcquirenteDto model)
         {
-            //E' previsto che si possa fare?
             try
             {
                 return Ok(this.acquirentiService.Create(model));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
+        [ViewItem(nameof(Save), "Acquirenti", "Salvataggio")]
+        [HttpPost]
+        public IHttpActionResult Save([FromBody] AcquirenteDto model)
+        {
+            try
+            {
+                if(model.Id == 0)
+                    return Ok(this.acquirentiService.Create(model));
+                else
+                    return Ok(this.acquirentiService.Update(model));
             }
             catch (Exception exc)
             {
@@ -97,7 +113,6 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            //E' previsto che si possa fare?
             try
             {
                 this.acquirentiService.Delete(id);

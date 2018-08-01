@@ -327,6 +327,7 @@
     <Compile Include="Controllers\AllevatoriController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\MvcActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
