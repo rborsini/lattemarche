@@ -52,15 +52,16 @@ namespace LatteMarche.WebApi.Controllers
             MenuViewModel model = new MenuViewModel();
 
             MenuItemViewModel gestione = new MenuItemViewModel("Gestione");
-            gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
-            gestione.Items.Add(MakeViewModel("Trasportatori", "Index", "Trasportatori"));
+
+            gestione.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
+            gestione.Items.Add(MakeViewModel("Autocisterne", "Index", "Autocisterne"));
+            gestione.Items.Add(MakeViewModel("Destinatari", "Index", "Destinatari"));
+            gestione.Items.Add(MakeViewModel("Normative", "Index", "Documenti"));
             gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
             gestione.Items.Add(MakeViewModel("Tipi latte", "Index", "TipiLatte"));
-            gestione.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
-            gestione.Items.Add(MakeViewModel("Destinatari", "Index", "Destinatari"));
-            //gestione.Items.Add(MakeViewModel("Laboratorio analisi", "Index", "LaboratorioAnalisi"));
-            //gestione.Items.Add(MakeViewModel("Sitra", "Index", "Sitra"));
-            gestione.Items.Add(MakeViewModel("Normative", "Index", "Documenti"));
+            gestione.Items.Add(MakeViewModel("Trasportatori", "Index", "Trasportatori"));
+            gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
+            
             model.Add(gestione);
 
             MenuItemViewModel amministrazione = new MenuItemViewModel("Amministrazione");

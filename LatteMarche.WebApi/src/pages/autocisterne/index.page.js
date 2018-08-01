@@ -20,68 +20,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import Vue from "vue";
 import Component from "vue-class-component";
 import DataTable from "../../components/common/dataTable.vue";
-import Select2 from "../../components/common/select2.vue";
-import EditazioneDestinatarioModal from "../destinatari/edit.vue";
+import EditazioneAutocisternaModal from "../autocisterne/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
-import { Destinatario } from "../../models/destinatario.model";
-import { DestinatariService } from "../../services/destinatari.service";
-var DestinatariIndexPage = /** @class */ (function (_super) {
-    __extends(DestinatariIndexPage, _super);
-    function DestinatariIndexPage() {
+import { Autocisterna } from "../../models/autocisterna.model";
+import { AutocisterneService } from "../../services/autocisterne.service";
+var AutocisterneIndexPage = /** @class */ (function (_super) {
+    __extends(AutocisterneIndexPage, _super);
+    function AutocisterneIndexPage() {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
-        _this.destinatari = [];
-        _this.destinatariService = new DestinatariService();
-        _this.destinatario = new Destinatario();
+        _this.autocisterne = [];
+        _this.autocisterneService = new AutocisterneService();
+        _this.autocisterna = new Autocisterna();
         return _this;
     }
-    DestinatariIndexPage.prototype.mounted = function () {
+    AutocisterneIndexPage.prototype.mounted = function () {
         var _this = this;
         this.initTable();
-        this.destinatariService.getDestinatari()
+        this.autocisterneService.getAutocisterne()
             .then(function (response) {
-            _this.destinatari = response.data;
+            _this.autocisterne = response.data;
         });
     };
     // Evento fine generazione tabella
-    DestinatariIndexPage.prototype.onDataLoaded = function () {
+    AutocisterneIndexPage.prototype.onDataLoaded = function () {
         var _this = this;
         $('.edit').click(function (event) {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
-            _this.destinatariService.getDetails(rowId)
+            _this.autocisterneService.getDetails(rowId)
                 .then(function (response) {
-                _this.destinatario = response.data;
-                console.log("select", _this.destinatario.SiglaProvincia);
-                _this.$refs.editazioneDestinatarioModal.openDestinatario(_this.destinatario);
-                //this.$refs.editazioneDestinatarioModal.open();
+                _this.autocisterna = response.data;
+                _this.$refs.editazioneAutocisternaModal.open();
             });
         });
     };
     // inizializzazione tabella
-    DestinatariIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "P_IVA" });
-        this.columnOptions.push({ data: "RagioneSociale" });
+    AutocisterneIndexPage.prototype.initTable = function () {
+        this.columnOptions.push({ data: "Marca" });
+        this.columnOptions.push({ data: "Modello" });
+        this.columnOptions.push({ data: "Targa" });
+        this.columnOptions.push({ data: "Portata" });
+        this.columnOptions.push({ data: "NumScomparti" });
         this.columnOptions.push({
             render: function (data, type, row) {
                 return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
             }
         });
     };
-    DestinatariIndexPage = __decorate([
+    AutocisterneIndexPage = __decorate([
         Component({
-            el: '#destinatari-page',
+            el: '#autocisterne-page',
             components: {
-                Select2: Select2,
                 NotificationDialog: NotificationDialog,
-                EditazioneDestinatarioModal: EditazioneDestinatarioModal,
+                EditazioneAutocisternaModal: EditazioneAutocisternaModal,
                 DataTable: DataTable
             }
         }),
         __metadata("design:paramtypes", [])
-    ], DestinatariIndexPage);
-    return DestinatariIndexPage;
+    ], AutocisterneIndexPage);
+    return AutocisterneIndexPage;
 }(Vue));
-export default DestinatariIndexPage;
-var page = new DestinatariIndexPage();
+export default AutocisterneIndexPage;
+var page = new AutocisterneIndexPage();
 Vue.config.devtools = true;

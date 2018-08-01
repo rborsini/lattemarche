@@ -52,7 +52,7 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
             _this.acquirentiService.getDetails(rowId)
                 .then(function (response) {
                 _this.acquirente = response.data;
-                _this.$refs.editazioneAcquirenteModal.open();
+                _this.$refs.editazioneAcquirenteModal.openAcquirente(_this.acquirente);
             });
         });
     };

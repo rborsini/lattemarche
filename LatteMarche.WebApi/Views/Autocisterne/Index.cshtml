@@ -1,0 +1,51 @@
+﻿@using LatteMarche.WebApi.Models
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Autocisterne" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="autocisterne-page" class="container">
+
+    <!-- Pannello editazione dettaglio -->
+    <editazione-autocisterna-modal ref="editazioneAutocisternaModal"
+                                 :autocisterna="autocisterna"
+                                 v-on:salvato="$refs.savedDialog.open()"></editazione-autocisterna-modal>
+
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Autocisterna salvata correttamente'" 
+                          v-on:ok="window.location = '/Autocisterne'"></notification-dialog>
+
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="autocisterne" v-on:data-loaded="onDataLoaded">
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>Marca</th>
+            <th>Modello</th>
+            <th>Targa</th>
+            <th>Portata</th>
+            <th>Num scomparti</th>
+            <th></th>
+        </template>
+
+    </data-table>
+</div>
+
+<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
+<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
+
+<script type="application/javascript" src="~/build/autocisterne_index_page.js"></script>
+
+
+

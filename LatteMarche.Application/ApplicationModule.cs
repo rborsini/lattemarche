@@ -35,6 +35,7 @@ using LatteMarche.Application.Sitra.Services;
 using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Ruoli.Services;
 using LatteMarche.Application.Ruoli.Interfaces;
+using LatteMarche.Application.Autocisterne.Interfaces;
 
 namespace LatteMarche.Application
 {
@@ -61,6 +62,7 @@ namespace LatteMarche.Application
 
 				builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
 
+                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>().InstancePerRequest();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>().InstancePerRequest();
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>().InstancePerRequest();
                 builder.RegisterType<AllevatoriService>().As<IAllevatoriService>().InstancePerRequest();
@@ -88,6 +90,7 @@ namespace LatteMarche.Application
 
 				builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
+                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>().InstancePerRequest();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>();
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
                 builder.RegisterType<AllevatoriService>().As<IAllevatoriService>();

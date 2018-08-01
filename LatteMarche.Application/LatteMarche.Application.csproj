@@ -93,6 +93,9 @@
     <Compile Include="Acquirenti\Dtos\AcquirenteDto.cs" />
     <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
+    <Compile Include="Autocisterne\Dtos\AutocisternaDto.cs" />
+    <Compile Include="Autocisterne\Interfaces\IAutocisterneService.cs" />
+    <Compile Include="Autocisterne\Services\AutocisterneService.cs" />
     <Compile Include="Comuni\Dtos\DropDownDto.cs" />
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />

@@ -39,6 +39,7 @@
                         <label class="col-3">Provincia</label>
                         <div class="col-9">
                             <select2 class="form-control"
+                                     :dropdownparent="'#editazione-acquirente-modal'"
                                      :options="opzioniProvince"
                                      :value.sync="acquirente.SiglaProvincia"
                                      :value-field="'Value'"
@@ -53,6 +54,7 @@
                         <label class="col-3">Comune</label>
                         <div class="col-9">
                             <select2 class="form-control"
+                                     :dropdownparent="'#editazione-acquirente-modal'"
                                      :options="comuni"
                                      :value.sync="acquirente.IdComune"
                                      :value-field="'Id'"
@@ -132,18 +134,22 @@
 
         }
 
-        public open(): void {
+        public openAcquirente(acqu: Acquirente): void {
 
             $(this.$el).modal('show');
 
-            this.loadComuni(this.acquirente.SiglaProvincia);
+            this.loadComuni(acqu.SiglaProvincia);
 
             this.comuniService.getProvince()
                 .then(response => {
                     this.opzioniProvince = response.data;
                 });
 
-            
+
+        }
+
+        public open(): void {
+            $(this.$el).modal('show');
         }
 
         // carica comuni

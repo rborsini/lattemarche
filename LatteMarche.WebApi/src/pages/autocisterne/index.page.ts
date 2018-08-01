@@ -3,61 +3,58 @@ import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
 
 import DataTable from "../../components/common/dataTable.vue";
-import Select2 from "../../components/common/select2.vue";
-import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
+import EditazioneAutocisternaModal from "../autocisterne/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 
-import { Acquirente } from "../../models/acquirente.model";
+import { Autocisterna } from "../../models/autocisterna.model";
 
-import { AcquirentiService } from "../../services/acquirenti.service";
+import { AutocisterneService } from "../../services/autocisterne.service";
 
 
 declare module 'vue/types/vue' {
     interface Vue {
         open(): void
-        openAcquirente(acqu: Acquirente): void
         close(): void
     }
 }
 
 @Component({
-    el: '#acquirenti-page',
+    el: '#autocisterne-page',
     components: {
-        Select2,
         NotificationDialog,
-        EditazioneAcquirenteModal,
+        EditazioneAutocisternaModal,
         DataTable
     }
 })
 
 
-export default class AcquirentiIndexPage extends Vue {
+export default class AutocisterneIndexPage extends Vue {
 
 
     $refs: {
         savedDialog: Vue,
-        editazioneAcquirenteModal: Vue
+        editazioneAutocisternaModal: Vue
     }
 
-    private acquirentiService: AcquirentiService;
-    private acquirente: Acquirente;
+    private autocisterneService: AutocisterneService;
+    private autocisterna: Autocisterna;
 
     public columnOptions: any[] = [];
-    public acquirenti: Acquirente[] = [];
+    public autocisterne: Autocisterna[] = [];
 
     constructor() {
         super();
 
-        this.acquirentiService = new AcquirentiService();
-        this.acquirente = new Acquirente();
+        this.autocisterneService = new AutocisterneService();
+        this.autocisterna = new Autocisterna();
     }
 
     public mounted() {
         this.initTable();
 
-        this.acquirentiService.getAcquirenti()
+        this.autocisterneService.getAutocisterne()
             .then(response => {
-                this.acquirenti = response.data;
+                this.autocisterne = response.data;
             });
     }
 
@@ -69,10 +66,10 @@ export default class AcquirentiIndexPage extends Vue {
             var element = $(event.currentTarget);
             var rowId = $(element).data("row-id");
 
-            this.acquirentiService.getDetails(rowId)
+            this.autocisterneService.getDetails(rowId)
                 .then(response => {
-                    this.acquirente = response.data;
-                    this.$refs.editazioneAcquirenteModal.openAcquirente(this.acquirente);
+                    this.autocisterna = response.data;
+                    this.$refs.editazioneAutocisternaModal.open();
                 });
 
         });
@@ -81,8 +78,11 @@ export default class AcquirentiIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "Piva" });
-        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ data: "Marca" });
+        this.columnOptions.push({ data: "Modello" });
+        this.columnOptions.push({ data: "Targa" });
+        this.columnOptions.push({ data: "Portata" });
+        this.columnOptions.push({ data: "NumScomparti" });
 
         this.columnOptions.push({
             render: function (data: any, type: any, row: any) {
@@ -94,5 +94,5 @@ export default class AcquirentiIndexPage extends Vue {
 
 }
 
-let page = new AcquirentiIndexPage();
+let page = new AutocisterneIndexPage();
 Vue.config.devtools = true;

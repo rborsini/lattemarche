@@ -172,6 +172,8 @@
   <ItemGroup>
     <Content Include="build\acquirenti_index_page.js" />
     <Content Include="build\allevatori_index_page.js" />
+    <Content Include="build\autocisterne_index_page.js" />
+    <Content Include="build\destinatari_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
     <Content Include="build\prelievi_latte_edit_page.js" />
     <Content Include="build\prelievi_latte_index_page.js" />
@@ -228,6 +230,8 @@
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <Content Include="src\pages\acquirenti\edit.vue" />
     <Content Include="src\pages\destinatari\edit.vue" />
+    <Content Include="Views\Autocisterne\Index.cshtml" />
+    <Content Include="src\pages\autocisterne\edit.vue" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -237,6 +241,7 @@
     <None Include="Web.TEST.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <TypeScriptCompile Include="src\models\autocisterna.model.ts" />
     <TypeScriptCompile Include="src\models\acquirente.model.ts" />
     <TypeScriptCompile Include="src\models\comune.model.ts" />
     <TypeScriptCompile Include="src\models\destinatario.model.ts" />
@@ -251,6 +256,7 @@
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
     <TypeScriptCompile Include="src\pages\acquirenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
+    <TypeScriptCompile Include="src\pages\autocisterne\index.page.ts" />
     <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
@@ -259,6 +265,7 @@
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\utenti\edit.page.ts" />
+    <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
     <TypeScriptCompile Include="src\services\acquirenti.service.ts" />
     <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
@@ -284,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\api\Controllers\AutocisterneController.cs" />
     <Compile Include="Areas\api\Controllers\AcquirentiController.cs" />
     <Compile Include="Areas\api\Controllers\AllevamentiController.cs" />
     <Compile Include="Areas\api\Controllers\AzioniController.cs" />
@@ -302,6 +310,7 @@
     <Compile Include="Attributes\ApiCustomAuthorize.cs" />
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
+    <Compile Include="Controllers\AutocisterneController.cs" />
     <Compile Include="Controllers\LaboratorioAnalisiController.cs" />
     <Compile Include="Controllers\RuoliController.cs" />
     <Compile Include="Controllers\AzioniController.cs" />
