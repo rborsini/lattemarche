@@ -1,13 +1,14 @@
 ﻿SELECT 
-	dbo.V_Allevatori.ID_ALLEVAMENTO, 
-	dbo.TIPO_LATTE.ID_TIPO_LATTE, 
-	dbo.TIPO_LATTE.FATTORE_CONVERSIONE, 
-	dbo.TIPO_LATTE.FLAG_INVIO_SITRA
+	allevamenti.ID_ALLEVAMENTO,
+	allevamenti.CODICE_ASL,
+	allevamenti.CUAA,
+	allevamenti.ID_COMUNE,
+	allevamenti.INDIRIZZO_ALLEVAMENTO,
+	allevamenti.ID_UTENTE,
+	utenti.RAGIONE_SOCIALE
 FROM            
-	dbo.V_Allevatori 
+	ANAGRAFE_ALLEVAMENTO as allevamenti
+
+	left outer join UTENTI as utenti
+	on allevamenti.ID_UTENTE = utenti.ID_UTENTE
 	
-	INNER JOIN
-    dbo.UTENTI ON dbo.V_Allevatori.ID_UTENTE = dbo.UTENTI.ID_UTENTE 
-	
-	INNER JOIN
-    dbo.TIPO_LATTE ON dbo.UTENTI.ID_TIPO_LATTE = dbo.TIPO_LATTE.ID_TIPO_LATTE

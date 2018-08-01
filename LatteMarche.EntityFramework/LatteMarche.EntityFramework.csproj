@@ -152,6 +152,14 @@
     <Compile Include="Migrations\201807311522284_AggiuntaTabella_AutoCisterne.Designer.cs">
       <DependentUpon>201807311522284_AggiuntaTabella_AutoCisterne.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808011350459_Aggiunta_V_Allevamenti.cs" />
+    <Compile Include="Migrations\201808011350459_Aggiunta_V_Allevamenti.Designer.cs">
+      <DependentUpon>201808011350459_Aggiunta_V_Allevamenti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808011354152_arcadia.cs" />
+    <Compile Include="Migrations\201808011354152_arcadia.Designer.cs">
+      <DependentUpon>201808011354152_arcadia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -250,6 +258,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807311522284_AggiuntaTabella_AutoCisterne.resx">
       <DependentUpon>201807311522284_AggiuntaTabella_AutoCisterne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011350459_Aggiunta_V_Allevamenti.resx">
+      <DependentUpon>201808011350459_Aggiunta_V_Allevamenti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011354152_arcadia.resx">
+      <DependentUpon>201808011354152_arcadia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -1,28 +1,28 @@
 ﻿<template>
-    <div class="modal fade bd-example-modal-lg" id="editazione-acquirente-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" >
+    <div class="modal fade bd-example-modal-lg" id="editazione-allevamento-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" >
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Dettagli acquirente</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Dettagli allevamento</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body pl-5 pr-5">
 
-                    <!-- P. IVA -->
+                    <!-- Codice ASL -->
                     <div class="row form-group">
-                        <label class="col-3">P. IVA</label>
+                        <label class="col-3">Codice ASL</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" v-model="acquirente.Piva" />
+                            <input type="text" class="form-control" v-model="allevamento.CodiceAsl" />
                         </div>
                     </div>
 
-                    <!-- Ragione sociale -->
+                    <!-- CUAA -->
                     <div class="row form-group">
-                        <label class="col-3">Rag. sociale</label>
+                        <label class="col-3">CUAA</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" v-model="acquirente.RagioneSociale" />
+                            <input type="text" class="form-control" v-model="allevamento.CUAA" />
                         </div>
                     </div>
 
@@ -30,7 +30,7 @@
                     <div class="row form-group">
                         <label class="col-3">Indirizzo</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" v-model="acquirente.Indirizzo" />
+                            <input type="text" class="form-control" v-model="allevamento.IndirizzoAllevamento" />
                         </div>
                     </div>
 
@@ -39,9 +39,9 @@
                         <label class="col-3">Provincia</label>
                         <div class="col-9">
                             <select2 class="form-control"
-                                     :dropdownparent="'#editazione-acquirente-modal'"
+                                     :dropdownparent="'#editazione-allevamento-modal'"
                                      :options="opzioniProvince"
-                                     :value.sync="acquirente.SiglaProvincia"
+                                     :value.sync="allevamento.SiglaProvincia"
                                      :value-field="'Value'"
                                      :text-field="'Text'"
                                      v-on:value-changed="loadComuni" />
@@ -54,9 +54,9 @@
                         <label class="col-3">Comune</label>
                         <div class="col-9">
                             <select2 class="form-control"
-                                     :dropdownparent="'#editazione-acquirente-modal'"
+                                     :dropdownparent="'#editazione-allevamento-modal'"
                                      :options="comuni"
-                                     :value.sync="acquirente.IdComune"
+                                     :value.sync="allevamento.IdComune"
                                      :value-field="'Id'"
                                      :text-field="'Descrizione'"
                                      v-on:value-changed="onComuneSelezionato" />
@@ -96,10 +96,10 @@
     import Select2 from "../../components/common/select2.vue";
 
     import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-    import { Acquirente } from "../../models/acquirente.model";
+    import { Allevamento } from "../../models/allevamento.model";
     import { Comune } from "../../models/comune.model";
 
-    import { AcquirentiService } from "../../services/acquirenti.service";
+    import { AllevamentiService } from "../../services/allevamenti.service";
     import { ComuniService } from "../../services/comuni.service";
 
 
@@ -109,15 +109,15 @@
         }
     })
 
-    export default class EditazioneAcquirenteModal extends Vue {
+    export default class EditazioneAllevamentoModal extends Vue {
 
         @Prop()
-        acquirente: Acquirente = new Acquirente();
+        allevamento: Allevamento = new Allevamento();
 
         public comuni: Comune[] = [];
         public opzioniProvince: DropdownItem[] = [];
 
-        public acquirentiService: AcquirentiService;
+        public allevamentiService: AllevamentiService;
         private comuniService: ComuniService;
 
         public progressBarVisible = false;
@@ -125,7 +125,7 @@
 
         constructor() {
             super();
-            this.acquirentiService = new AcquirentiService();
+            this.allevamentiService = new AllevamentiService();
             this.comuniService = new ComuniService();
         }
 
@@ -137,9 +137,9 @@
                 });
         }
 
-        public openAcquirente(acqu: Acquirente): void {
+        public openAllevamento(all: Allevamento): void {
             $(this.$el).modal('show');
-            this.loadComuni(acqu.SiglaProvincia);
+            this.loadComuni(all.SiglaProvincia);
         }
 
         public open(): void {
@@ -158,17 +158,17 @@
 
         // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
         public onComuneSelezionato(idComune: string): void {
-            if (this.acquirente.SiglaProvincia == '') {
+            if (this.allevamento.SiglaProvincia == '') {
                 this.comuniService.getComuneDetails(idComune)
                     .then(response => {
-                        this.acquirente.SiglaProvincia = response.data.Provincia;
+                        this.allevamento.SiglaProvincia = response.data.Provincia;
                     })
             }
         }
 
         public onSave() {
             this.progressBarVisible = true;
-            this.acquirentiService.save(this.acquirente)
+            this.allevamentiService.save(this.allevamento)
                 .then(response => {
                     if (response.data != undefined) {
                         this.$emit("salvato");
@@ -176,7 +176,7 @@
                         this.close();
                     } else {
                         // save KO!!
-                        this.acquirente = response.data;
+                        this.allevamento = response.data;
                         // TODO: msg di validazione
                         //this.$emit("errore");
                         this.close();

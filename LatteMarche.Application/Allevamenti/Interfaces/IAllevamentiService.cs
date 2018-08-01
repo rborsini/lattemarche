@@ -11,7 +11,7 @@ namespace LatteMarche.Application.Allevamenti.Interfaces
 	{
 	    List<AllevamentoDto> GetAllevamentiSitra();
 
-	    decimal GetFattoreConversione(int idAllevamento);
+        List<V_Allevamento> Search();
 
 	}
 

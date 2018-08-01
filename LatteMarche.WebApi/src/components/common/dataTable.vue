@@ -53,7 +53,7 @@
                 if ($('.toolbox')[0])
                     dom = '<"top row"<"col-6 float-left"f><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
                 else
-                    dom = '<"row"<"col-6"f><"col-6"i>>t<"row"<"col-6"l><"col-6"p>>';
+                    dom = '<"row"<"col-6"f><"col-6">>t<"row"<"col-6"l><"col-6"p>>';
 
                 table = $(this.$el.children[0]).DataTable({
                     dom: dom,
