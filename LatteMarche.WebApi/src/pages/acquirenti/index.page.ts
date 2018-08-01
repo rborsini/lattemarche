@@ -15,6 +15,7 @@ import { AcquirentiService } from "../../services/acquirenti.service";
 declare module 'vue/types/vue' {
     interface Vue {
         open(): void
+        openAcquirente(acqu: Acquirente): void
         close(): void
     }
 }
@@ -71,7 +72,7 @@ export default class AcquirentiIndexPage extends Vue {
             this.acquirentiService.getDetails(rowId)
                 .then(response => {
                     this.acquirente = response.data;
-                    this.$refs.editazioneAcquirenteModal.open();
+                    this.$refs.editazioneAcquirenteModal.openAcquirente(this.acquirente);
                 });
 
         });

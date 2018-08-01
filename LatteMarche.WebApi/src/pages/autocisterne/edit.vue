@@ -39,6 +39,7 @@
                         <label class="col-3">Autotrasportatore</label>
                         <div class="col-9">
                             <select2 class="form-control"
+                                     :dropdownparent="'#editazione-autocisterna-modal'"
                                      :options="trasportatori"
                                      :value.sync="autocisterna.IdTrasportatore"
                                      :value-field="'Id'"

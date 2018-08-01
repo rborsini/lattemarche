@@ -9,6 +9,7 @@
                     </button>
                 </div>
                 <div class="modal-body pl-5 pr-5">
+
                     <!-- data/ora prelievo -->
                     <div class="row form-group">
                         <label class="col-2">Data prelievo</label>
@@ -23,6 +24,7 @@
                             <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
                         </div>
                     </div>
+
                     <!-- data/ora ultima mungitura -->
                     <div class="row form-group">
                         <label class="col-2">Data ultima mungitura</label>
@@ -37,6 +39,7 @@
                             <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
                         </div>
                     </div>
+
                     <!-- data/ora consegna -->
                     <div class="row form-group">
                         <label class="col-2">Data consegna</label>
@@ -51,6 +54,7 @@
                             <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
                         </div>
                     </div>
+
                     <!-- numero mungiture / quantità in kg -->
                     <div class="row form-group">
                         <label class="col-2">Numero mungiture</label>
@@ -62,6 +66,7 @@
                             <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita">
                         </div>
                     </div>
+
                     <!-- temperatura C° / trasportatore -->
                     <div class="row form-group">
                         <label class="col-2">Temperatura in C°</label>
@@ -78,6 +83,7 @@
                                      :text-field="'Cognome'" />
                         </div>
                     </div>
+
                     <!-- acquirente / destinatario -->
                     <div class="row form-group">
                         <label class="col-2">Acquirente</label>
@@ -99,6 +105,7 @@
                                      :text-field="'RagioneSociale'" />
                         </div>
                     </div>
+
                     <!-- laboratorio analisi / seriale laboratorio -->
                     <div class="row form-group">
                         <label class="col-2">Laboratorio analisi</label>
@@ -115,6 +122,7 @@
                             <input type="text" class="form-control" v-model="prelievoLatte.SerialeLabAnalisi">
                         </div>
                     </div>
+
                     <!-- scomparto / lotto di consegna -->
                     <div class="row form-group">
                         <label class="col-2">Scomparto</label>
@@ -126,6 +134,7 @@
                             <input type="text" class="form-control" v-model="prelievoLatte.LottoConsegna">
                         </div>
                     </div>
+
                     <!-- progress bar -->
                     <div class="row" v-if="progressBarSalvaPrelievo">
                         <div class="col-sm-4 offset-4 pt-2">

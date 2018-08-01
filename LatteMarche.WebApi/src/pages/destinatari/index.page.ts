@@ -15,6 +15,7 @@ import { DestinatariService } from "../../services/destinatari.service";
 declare module 'vue/types/vue' {
     interface Vue {
         open(): void
+        openDestinatario(destinatario: Destinatario): void
         close(): void
     }
 }
@@ -71,7 +72,10 @@ export default class DestinatariIndexPage extends Vue {
             this.destinatariService.getDetails(rowId)
                 .then(response => {
                     this.destinatario = response.data;
-                    this.$refs.editazioneDestinatarioModal.open();
+
+                    console.log("select", this.destinatario.SiglaProvincia);
+                    this.$refs.editazioneDestinatarioModal.openDestinatario(this.destinatario);
+                    //this.$refs.editazioneDestinatarioModal.open();
                 });
 
         });

@@ -52,7 +52,9 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
             _this.destinatariService.getDetails(rowId)
                 .then(function (response) {
                 _this.destinatario = response.data;
-                _this.$refs.editazioneDestinatarioModal.open();
+                console.log("select", _this.destinatario.SiglaProvincia);
+                _this.$refs.editazioneDestinatarioModal.openDestinatario(_this.destinatario);
+                //this.$refs.editazioneDestinatarioModal.open();
             });
         });
     };
