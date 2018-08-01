@@ -3,23 +3,23 @@
 
 
 @helper MakeNavItem(string linkText, string actionName, string controllerName, string area, bool visible)
-    {
-        string className = ViewBag.currentController == controllerName ? "active" : "";
+{
+    string className = ViewBag.currentController == controllerName ? "active" : "";
 
-        if (visible)
-        {
-            <li class="nav-item dropdown @className">
-                @if (String.IsNullOrEmpty(area))
-                {
-                    @Html.ActionLink(linkText, actionName, controllerName, null, new { @class = "dropdown-item" })
-                }
-                else
-                {
-                    @Html.ActionLink(linkText, actionName, controllerName, new { area = area }, new { @class = "dropdown-item" })
-                }
-            </li>
-        }
-}   
+    if (visible)
+    {
+        <li class="nav-item dropdown @className">
+            @if (String.IsNullOrEmpty(area))
+            {
+                @Html.ActionLink(linkText, actionName, controllerName, null, new { @class = "dropdown-item" })
+            }
+            else
+            {
+                @Html.ActionLink(linkText, actionName, controllerName, new { area = area }, new { @class = "dropdown-item" })
+            }
+        </li>
+    }
+}
 
 @{
     string allevatoriActive = ViewContext.RouteData.Values["currentController"].ToString().ToLower() == "allevatori" ? "active" : "";
@@ -28,7 +28,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
 
 
-    <div class="container">
+    <div class="container-fluid">
 
         <a class="navbar-brand" href="/">
             <img class="main-logo" src="~/Content/img/main-logo.svg" />
