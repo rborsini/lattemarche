@@ -86,9 +86,10 @@ export default class AcquirentiIndexPage extends Vue {
 
         this.columnOptions.push({
             render: function (data: any, type: any, row: any) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
+                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
             }
         });
+
 
     }
 

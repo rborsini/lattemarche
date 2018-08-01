@@ -3,10 +3,6 @@
 
 // Your variable overrides
 
-
-
-/*$dark: rgb(113,88,190);
-$enable-rounded: false;*/
 @import "_variables.scss";
 @import "_bootswatch.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap";
@@ -30,18 +26,6 @@ body {
 
 .jumbotron {
     padding: 1rem;
-}
-
-.card-img-overlay {
-    top: unset;
-
-    h1 {
-        font-size: 4rem;
-    }
-
-    h2 {
-        font-size: 3rem;
-    }
 }
 
 .main-footer {

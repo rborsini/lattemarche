@@ -199,6 +199,8 @@
     <Content Include="Content\plugins\datatables\images\sort_desc.png" />
     <Content Include="Content\plugins\datatables\images\sort_desc_disabled.png" />
     <Content Include="Content\plugins\datatables\jquery.dataTables.js" />
+    <Content Include="Content\plugins\fontawesome\css\all.min.css" />
+    <Content Include="Content\plugins\fontawesome\js\all.min.js" />
     <Content Include="Content\plugins\jquery\jquery.min.js" />
     <Content Include="Content\plugins\select2\css\select2.min.css" />
     <Content Include="Content\plugins\select2\it.js" />

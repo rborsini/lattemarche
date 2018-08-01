@@ -62,7 +62,7 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
         this.columnOptions.push({ data: "RagioneSociale" });
         this.columnOptions.push({
             render: function (data, type, row) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
+                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
             }
         });
     };

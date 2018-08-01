@@ -1,6 +1,4 @@
-﻿/*$dark: rgb(113,88,190);
-$enable-rounded: false;*/
-.btn:focus, .btn:active, .btn:active:focus, .btn.active:focus {
+﻿.btn:focus, .btn:active, .btn:active:focus, .btn.active:focus {
   outline: none; }
 
 .btn-secondary {
@@ -6198,13 +6196,6 @@ body {
 
 .jumbotron {
   padding: 1rem; }
-
-.card-img-overlay {
-  top: unset; }
-  .card-img-overlay h1 {
-    font-size: 4rem; }
-  .card-img-overlay h2 {
-    font-size: 3rem; }
 
 .main-footer {
   position: fixed;
