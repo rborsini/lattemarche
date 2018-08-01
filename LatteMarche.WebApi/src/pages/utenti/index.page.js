@@ -2,7 +2,7 @@
 
     var url = apiUrl + 'utenti';
 
-    var table = $('#utenti-table').dataTable({
+    var table = $('#utenti-table').DataTable({
         lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "Tutte"]],
         processing: true,
         pageLength: 10,
@@ -48,11 +48,11 @@
     // Caricamento dati JSON
     $.getJSON(url, function (result) {
 
-        table.fnClearTable();
+        table.clear();
         if (result.length > 0) {
-            table.fnAddData(result);
+            table.rows.add(result);
         }
-        table.fnDraw();
+        table.draw();
     });
 
 }

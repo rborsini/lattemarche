@@ -83,8 +83,8 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     AcquirentiIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "Piva" });
-        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ "data": "Piva" });
+        this.columnOptions.push({ "data": "RagioneSociale" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
@@ -97,7 +97,8 @@ var AcquirentiIndexPage = /** @class */ (function (_super) {
                         html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
                     html += '</div>';
                     return html;
-                }
+                },
+                orderable: false
             });
         }
     };

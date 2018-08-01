@@ -3,13 +3,11 @@
         <table class="table table-hover table-striped table-bordered">
             <div class="d-none">
                 <slot class="toolbox" name="toolbox"></slot>
-            </div>            
+            </div>
             <thead>
-                <slot name="thead">
-            <th v-for="col in thead">
-                {{col}}
-            </th>
-            </slot>
+                <tr>
+                    <slot name="thead"></slot>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>        

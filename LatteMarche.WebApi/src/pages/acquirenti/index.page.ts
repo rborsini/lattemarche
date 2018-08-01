@@ -119,8 +119,8 @@ export default class AcquirentiIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "Piva" });
-        this.columnOptions.push({ data: "RagioneSociale" });
+        this.columnOptions.push({ "data": "Piva" });
+        this.columnOptions.push({ "data": "RagioneSociale" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
@@ -141,7 +141,8 @@ export default class AcquirentiIndexPage extends Vue {
                     html += '</div>';
 
                     return html;
-                }
+                },
+                orderable: false
             });
 
         }
