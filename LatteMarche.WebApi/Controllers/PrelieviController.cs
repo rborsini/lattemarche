@@ -2,6 +2,7 @@
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Attributes;
+using LatteMarche.WebApi.Filters;
 using RB.Date;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Web.UI;
 namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
+    [MvcActionFilter]
     public class PrelieviController: Controller
     {
 
@@ -25,6 +27,9 @@ namespace LatteMarche.WebApi.Controllers
         }
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
+        [ViewItem("Aggiungi", "Prelievi", "Aggiungi")]
+        [ViewItem("Modifica", "Prelievi", "Modifica")]
+        [ViewItem("Rimuovi", "Prelievi", "Rimuovi")]
         public ActionResult Index()
         {           
             return View();

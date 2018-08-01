@@ -22,8 +22,9 @@ import Component from "vue-class-component";
 import DataTable from "../../components/common/dataTable.vue";
 import Select2 from "../../components/common/select2.vue";
 import Datepicker from "../../components/common/datepicker.vue";
-import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import EditazionePrelievoModal from "../prelievi-latte/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { AllevatoriService } from "../../services/allevatori.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
@@ -37,9 +38,15 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         _this.idAllevatoreSelezionato = 0;
         _this.dal = "";
         _this.al = "";
+        _this.canAdd = false;
+        _this.canEdit = false;
+        _this.canRemove = false;
         _this.prelieviLatteService = new PrelieviLatteService();
         _this.allevatoriService = new AllevatoriService();
         _this.prelievoSelezionato = new PrelievoLatte();
+        _this.canAdd = $('#canAdd').val() == "true";
+        _this.canEdit = $('#canEdit').val() == "true";
+        _this.canRemove = $('#canRemove').val() == "true";
         return _this;
     }
     PrelieviLatteIndexPage.prototype.mounted = function () {
@@ -72,10 +79,28 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
                 _this.$refs.editazionePrelievoModal.open();
             });
         });
+        $('.delete').click(function (event) {
+            var element = $(event.currentTarget);
+            _this.idPrelievoDaEliminare = $(element).data("row-id");
+            _this.$refs.confirmDeleteDialog.open();
+        });
     };
     // Evento richiesta esportazione excel
     PrelieviLatteIndexPage.prototype.onExportClick = function () {
         console.log("on export click");
+    };
+    // nuova autocisterna
+    PrelieviLatteIndexPage.prototype.onAdd = function () {
+        this.prelievoSelezionato = new PrelievoLatte();
+        this.$refs.editazionePrelievoModal.open();
+    };
+    // rimozione autocisterna
+    PrelieviLatteIndexPage.prototype.onRemove = function () {
+        var _this = this;
+        this.prelieviLatteService.delete(this.idPrelievoDaEliminare)
+            .then(function (response) {
+            _this.$refs.removedDialog.open();
+        });
     };
     // inizializzazione tabella
     PrelieviLatteIndexPage.prototype.initTable = function () {
@@ -85,11 +110,22 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         this.columnOptions.push({ data: "Temperatura" });
         this.columnOptions.push({ data: "Trasportatore" });
         this.columnOptions.push({ data: "Allevamento" });
-        this.columnOptions.push({
-            render: function (data, type, row) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+        if (ce || cr) {
+            this.columnOptions.push({
+                render: function (data, type, row) {
+                    var html = '<div class="text-center">';
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+                    html += '</div>';
+                    return html;
+                },
+                orderable: false
+            });
+        }
     };
     // inizializzazione parametri di ricerca
     PrelieviLatteIndexPage.prototype.initSearchBox = function () {
@@ -121,6 +157,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
             el: '#index-prelievi-latte-page',
             components: {
                 Select2: Select2,
+                ConfirmDialog: ConfirmDialog,
                 Datepicker: Datepicker,
                 EditazionePrelievoModal: EditazionePrelievoModal,
                 NotificationDialog: NotificationDialog,

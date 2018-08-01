@@ -14,6 +14,16 @@
 
 <div id="index-prelievi-latte-page">
 
+    @{
+        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    }
+
+    <input hidden id="canAdd" value="@canAdd" />
+    <input hidden id="canEdit" value="@canEdit" />
+    <input hidden id="canRemove" value="@canRemove" />
+
     <!-- modale modifica/inserisci prelievo -->
     <editazione-prelievo-modal ref="editazionePrelievoModal"
                                :prelievo-latte="prelievoSelezionato"
@@ -23,21 +33,31 @@
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
-                         :message="'Il prelievo è stato salvato correttamente'"></notification-dialog>
+                         :message="'Il prelievo è stato salvato correttamente'"
+                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
 
+    <!-- Pannello notifica rimozione -->
+    <notification-dialog ref="removedDialog"
+                         :title="'Conferma rimozione'"
+                         :message="'Prelievo rimosso correttamente'"
+                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
+
+    <!-- Pannello modale conferma eliminazione -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>
 
 
     <!-- Box ricerca -->
     <div class="jumbotron">
-
-        <h2>Ricerca</h2>
 
         <!-- Campi ricerca -->
         <div class="row pt-1">
 
             <label class="offset-1 col-1">Allevatore:</label>
 
-            <div class="col-3">
+            <div class="col-2">
                 <select2 class="form-control"
                          :placeholder="'-'"
                          :options="allevatori"
@@ -58,16 +78,13 @@
                 <datepicker class="form-control" :value.sync="al" />
             </div>
 
-
-        </div>
-
-        <!-- Bottoni ricerca -->
-        <div class="row pt-4">
-            <div class="col-11">
+            <div class="col-2">
                 <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
                 <button v-on:click="onAnnullaClick" class="float-right btn btn-primary mr-2" href="#" role="button">Annulla</button>
             </div>
+
         </div>
+
 
     </div>
 
@@ -76,7 +93,10 @@
 
         <!-- Toolbox -->
         <template slot="toolbox">
-            <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="toolbox float-right btn btn-primary" >Esporta excel</a>
+            <div class="toolbox">
+                <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="float-right btn btn-primary">Esporta excel</a>
+                <button v-if="canAdd" class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
+            </div>
         </template>
 
         <!-- Colonne -->
@@ -87,7 +107,7 @@
             <th>Temperatura</th>
             <th>Trasportatore</th>
             <th>Allevamento</th>
-            <th></th>
+            <th v-if="canEdit || canRemove"></th>
         </template>
 
     </data-table>

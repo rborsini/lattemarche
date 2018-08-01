@@ -25,4 +25,8 @@ export class PrelieviLatteService {
         return axios.post('/api/PrelieviLatte/save', prelievo);
     }
 
+    public delete(idPrelievo: number): AxiosPromise<PrelievoLatte> {
+        return axios.delete('/api/PrelieviLatte/delete?id=' + idPrelievo);
+    }
+
 }

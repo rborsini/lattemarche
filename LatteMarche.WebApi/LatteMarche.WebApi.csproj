@@ -175,7 +175,6 @@
     <Content Include="build\autocisterne_index_page.js" />
     <Content Include="build\destinatari_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
-    <Content Include="build\prelievi_latte_edit_page.js" />
     <Content Include="build\prelievi_latte_index_page.js" />
     <Content Include="build\ruoli_edit_page.js" />
     <Content Include="build\ruoli_new_page.js" />
@@ -227,7 +226,7 @@
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="src\pages\prelievi-latte\components\editazionePrelievoModal.vue" />
+    <Content Include="src\pages\prelievi-latte\edit.vue" />
     <Content Include="src\components\common\timeEditor.vue" />
     <Content Include="src\components\common\dataTable.vue" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.eot" />
@@ -281,7 +280,6 @@
     <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
-    <TypeScriptCompile Include="src\pages\prelievi-latte\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />

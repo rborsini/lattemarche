@@ -5,8 +5,9 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import DataTable from "../../components/common/dataTable.vue";
 import Select2 from "../../components/common/select2.vue";
 import Datepicker from "../../components/common/datepicker.vue";
-import EditazionePrelievoModal from "../prelievi-latte/components/editazionePrelievoModal.vue";
+import EditazionePrelievoModal from "../prelievi-latte/edit.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
+import ConfirmDialog from "../../components/common/confirmDialog.vue";
 
 import { Allevatore } from "../../models/allevatore.model";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
@@ -26,6 +27,7 @@ declare module 'vue/types/vue' {
     el: '#index-prelievi-latte-page',
     components: {
         Select2,
+        ConfirmDialog,
         Datepicker,
         EditazionePrelievoModal,
         NotificationDialog,
@@ -39,7 +41,9 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     $refs: {
         savedDialog: Vue,
-        editazionePrelievoModal: Vue
+        editazionePrelievoModal: Vue,
+        confirmDeleteDialog: Vue,
+        removedDialog: Vue
     }
 
     private prelieviLatteService: PrelieviLatteService;
@@ -48,11 +52,16 @@ export default class PrelieviLatteIndexPage extends Vue {
     public columnOptions: any[] = [];
     public allevatori: Allevatore[] = [];
     public prelievi: PrelievoLatte[] = [];
+    private idPrelievoDaEliminare: number;
 
     public idAllevatoreSelezionato: number = 0;
     public prelievoSelezionato: PrelievoLatte;
     public dal: string = "";
     public al: string = "";
+
+    public canAdd: boolean = false;
+    public canEdit: boolean = false;
+    public canRemove: boolean = false;
 
     constructor() {
         super();
@@ -60,6 +69,10 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.prelieviLatteService = new PrelieviLatteService();
         this.allevatoriService = new AllevatoriService();
         this.prelievoSelezionato = new PrelievoLatte();
+
+        this.canAdd = $('#canAdd').val() == "true";
+        this.canEdit = $('#canEdit').val() == "true";
+        this.canRemove = $('#canRemove').val() == "true";
     }
 
     public mounted() {
@@ -98,6 +111,14 @@ export default class PrelieviLatteIndexPage extends Vue {
 
         });
 
+        $('.delete').click((event) => {
+
+            var element = $(event.currentTarget);
+            this.idPrelievoDaEliminare = $(element).data("row-id");
+
+            this.$refs.confirmDeleteDialog.open();
+
+        });
     }
 
     // Evento richiesta esportazione excel
@@ -105,6 +126,22 @@ export default class PrelieviLatteIndexPage extends Vue {
         console.log("on export click");
     }
 
+    // nuova autocisterna
+    public onAdd() {
+
+        this.prelievoSelezionato = new PrelievoLatte();
+        this.$refs.editazionePrelievoModal.open();
+
+    }
+
+    // rimozione autocisterna
+    public onRemove() {
+
+        this.prelieviLatteService.delete(this.idPrelievoDaEliminare)
+            .then(response => {
+                this.$refs.removedDialog.open();
+            });
+    }
 
     // inizializzazione tabella
     private initTable(): void {
@@ -115,11 +152,30 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.columnOptions.push({ data: "Trasportatore" });
         this.columnOptions.push({ data: "Allevamento" });
 
-        this.columnOptions.push({
-            render: function (data: any, type: any, row: any) {
-                return '<a class="edit" style="cursor: pointer;" data-row-id="' + row.Id + '" >Dettagli</a>';
-            }
-        });
+        var ce = this.canEdit;
+        var cr = this.canRemove;
+
+        if (ce || cr) {
+
+            this.columnOptions.push({
+                render: function (data: any, type: any, row: any) {
+
+                    var html = '<div class="text-center">';
+
+                    if (ce)
+                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+
+                    if (cr)
+                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+
+                    html += '</div>';
+
+                    return html;
+                },
+                orderable: false
+            });
+
+        }
 
     }
 

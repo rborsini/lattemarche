@@ -17,6 +17,9 @@ var PrelieviLatteService = /** @class */ (function () {
     PrelieviLatteService.prototype.save = function (prelievo) {
         return axios.post('/api/PrelieviLatte/save', prelievo);
     };
+    PrelieviLatteService.prototype.delete = function (idPrelievo) {
+        return axios.delete('/api/PrelieviLatte/delete?id=' + idPrelievo);
+    };
     return PrelieviLatteService;
 }());
 export { PrelieviLatteService };

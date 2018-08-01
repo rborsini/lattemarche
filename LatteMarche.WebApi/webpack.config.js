@@ -14,8 +14,7 @@ module.exports = {
         trasportatori_edit_page: './src/pages/trasportatori/edit.page.js',
         ruoli_edit_page: './src/pages/ruoli/edit.page.js',
         ruoli_new_page: './src/pages/ruoli/new.page.js',
-        prelievi_latte_index_page: './src/pages/prelievi-latte/index.page.js',
-        prelievi_latte_edit_page: './src/pages/prelievi-latte/edit.page.js'
+        prelievi_latte_index_page: './src/pages/prelievi-latte/index.page.js'
     },
     output: {
         path: path.resolve(__dirname, './build'),

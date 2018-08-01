@@ -165,21 +165,21 @@
     import Vue from "vue";
     import Component from "vue-class-component";
     import { Prop, Watch, Emit } from "vue-property-decorator";
-    import Select2 from "../../../components/common/select2.vue";
-    import Datepicker from "../../../components/common/datepicker.vue";
-    import TimeEditor from "../../../components/common/timeEditor.vue";
+    import Select2 from "../../components/common/select2.vue";
+    import Datepicker from "../../components/common/datepicker.vue";
+    import TimeEditor from "../../components/common/timeEditor.vue";
 
-    import { Dropdown, DropdownItem } from "../../../models/dropdown.model";
-    import { PrelievoLatte } from "../../../models/prelievoLatte.model";
-    import { LaboratorioAnalisi } from "../../../models/laboratorioAnalisi.model";
-    import { Trasportatore } from "../../../models/trasportatore.model";
-    import { Acquirente } from "../../../models/acquirente.model";
-    import { Destinatario } from "../../../models/destinatario.model";
+    import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+    import { PrelievoLatte } from "../../models/prelievoLatte.model";
+    import { LaboratorioAnalisi } from "../../models/laboratorioAnalisi.model";
+    import { Trasportatore } from "../../models/trasportatore.model";
+    import { Acquirente } from "../../models/acquirente.model";
+    import { Destinatario } from "../../models/destinatario.model";
 
-    import { PrelieviLatteService } from "../../../services/prelieviLatte.service";
-    import { TrasportatoriService } from "../../../services/trasportatori.service";
-    import { AcquirentiService } from "../../../services/acquirenti.service";
-    import { DestinatariService } from "../../../services/destinatari.service";
+    import { PrelieviLatteService } from "../../services/prelieviLatte.service";
+    import { TrasportatoriService } from "../../services/trasportatori.service";
+    import { AcquirentiService } from "../../services/acquirenti.service";
+    import { DestinatariService } from "../../services/destinatari.service";
 
 
     @Component({
