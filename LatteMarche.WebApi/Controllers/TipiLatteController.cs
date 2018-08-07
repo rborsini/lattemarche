@@ -1,4 +1,5 @@
 ﻿using LatteMarche.WebApi.Attributes;
+using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,14 @@ using System.Web.UI;
 namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
+    [MvcActionFilter]
     public class TipiLatteController : Controller
     {
         [ViewItem(nameof(Index), "Tipi latte", "Lista")]
+        [ViewItem("Aggiungi", "Tipi latte", "Aggiungi")]
+        [ViewItem("Modifica", "Tipi latte", "Modifica")]
+        [ViewItem("Rimuovi", "Tipi latte", "Rimuovi")]
         public ActionResult Index()
-        {
-            return View();
-        }      
-
-        [ViewItem(nameof(Edit), "Tipi latte", "Modifica")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
-        public ActionResult Edit()
         {
             return View();
         }

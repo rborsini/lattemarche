@@ -60,13 +60,16 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             }
         }
 
-        [ViewItem(nameof(Create), "Tipi latte", "Creazione")]
+        [ViewItem(nameof(Save), "Tipi latte", "Salvataggio")]
         [HttpPost]
-        public IHttpActionResult Create([FromBody] TipoLatteDto model)
+        public IHttpActionResult Save([FromBody] TipoLatteDto model)
         {
             try
             {
-                return Ok(this.tipiLatteService.Create(model));
+                if(model.Id == 0)
+                    return Ok(this.tipiLatteService.Create(model));
+                else
+                    return Ok(this.tipiLatteService.Update(model));
             }
             catch (Exception exc)
             {
@@ -75,19 +78,20 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Tipi latte", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] TipoLatteDto model)
+
+        [ViewItem(nameof(Delete), "Tipi latte", "Rimozione")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
-                return Ok(this.tipiLatteService.Update(model));
+                this.tipiLatteService.Delete(id);
+                return Ok();
             }
-            catch (Exception exc)
+            catch (Exception e)
             {
-                return InternalServerError(exc);
+                return InternalServerError(e);
             }
-
         }
 
         #endregion

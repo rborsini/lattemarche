@@ -14,13 +14,40 @@
 
 <div id="index-tipi-latte-page">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 text-right pb-3">
-                <a class="btn btn-success" href="/tipilatte/edit">Aggiungi</a>
-            </div>
-        </div>
-    </div>
+    @{
+        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    }
+
+    <input hidden id="canAdd" value="@canAdd" />
+    <input hidden id="canEdit" value="@canEdit" />
+    <input hidden id="canRemove" value="@canRemove" />
+
+
+    <!-- modale modifica/inserisci prelievo -->
+    <editazione-prelievo-modal ref="editazionePrelievoModal"
+                               :prelievo-latte="prelievoSelezionato"
+                               v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
+
+
+    <!-- Pannello Salvataggio prelievo-->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Il prelievo è stato salvato correttamente'"
+                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
+
+    <!-- Pannello notifica rimozione -->
+    <notification-dialog ref="removedDialog"
+                         :title="'Conferma rimozione'"
+                         :message="'Prelievo rimosso correttamente'"
+                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
+
+    <!-- Pannello modale conferma eliminazione -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>
 
     <table class="table table-striped table-bordered" id="tipi-latte-table">
         <thead>
