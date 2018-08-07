@@ -15,6 +15,7 @@ using LatteMarche.Application.Lotti.Interfaces;
 using System.Configuration;
 using System.Linq;
 using AutoMapper;
+using LatteMarche.WebApi.Models;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -104,10 +105,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [ViewItem(nameof(Synch), "Prelievi latte", "Sincronizzazione")]
         [HttpPost]
         //[AllowAnonymous]
-        public IHttpActionResult Synch()
+        public IHttpActionResult Synch([FromUri] string day = "")
         {
+            SitraResponseVieModel response = new SitraResponseVieModel();
+
             // scarica i dati dal cloud verso server locale
-            if(this.PullEnabled)
+            if (this.PullEnabled)
                 this.synchService.Pull();
 
             // carica i dati locali verso il cloud
@@ -117,16 +120,19 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             // invio sitra
             if (this.SitraEnabled)
             {
+
+
+                DateTime data = String.IsNullOrEmpty(day) ? DateTime.Today.AddDays(-1) : new DateHelper().ConvertToDateTime(day).Value;
+
                 // prelievi giorno precedente
                 List<PrelievoLatte> prelieviDaInviare = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
-                    DataPeriodoInizio = DateTime.Today.AddDays(-1),
-                    DataPeriodoFine = DateTime.Today.AddDays(-1),
-                    InviatoSitra = false
+                    DataPeriodoInizio = data,
+                    DataPeriodoFine = data
                 }).ToList());
 
                 // invio singoli prelievi
-                this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
+                response.PrelieviInviati = this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
 
                 // estrazione lotti dai nuovi prelievi
                 var lotti = this.lottiService.GetLotti(prelieviDaInviare);
@@ -137,11 +143,16 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 //persistenza database dei lotti inviati
                 foreach (var lotto in lottiAggiornati)
                 {
-                    this.lottiService.Create(lotto);
+                    var lottoInviato = lotto;
+
+                    if (lotto.Id == 0)
+                        lottoInviato.Id = this.lottiService.Create(lotto).Id;
+
+                    response.LottiInviati.Add(lottoInviato);
                 }
             }
 
-            return Ok("ok");
+            return Ok(response);
         }
 
         [ViewItem(nameof(Delete), "Prelievi latte", "Rimozione")]

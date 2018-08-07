@@ -26,6 +26,16 @@ namespace LatteMarche.Application.Lotti.Services
             this.allevamentiService = allevamentiService;
         }
 
+        public LottoDto GetByCodiceLotto(string codiceLotto)
+        {
+            var lotti = this.repository.FilterBy(l => l.Codice == codiceLotto && !String.IsNullOrEmpty(l.CodiceSitra));
+
+            if (lotti != null && lotti.Count() > 0)
+                return ConvertToDto(lotti.First());
+            else
+                return null;
+        }
+
         /// <summary>
         /// 
         /// </summary>

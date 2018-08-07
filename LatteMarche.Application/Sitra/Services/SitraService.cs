@@ -16,7 +16,8 @@ using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
-
+using LatteMarche.Application.Lotti.Interfaces;
+using System.Threading;
 
 namespace LatteMarche.Application.Sitra.Services
 {
@@ -25,6 +26,7 @@ namespace LatteMarche.Application.Sitra.Services
         #region  Fields
 
         private IAllevamentiService allevamentiService;
+        private ILottiService lottiService;
         private IPrelieviLatteService prelieviLatteService;
 
         #endregion
@@ -47,10 +49,11 @@ namespace LatteMarche.Application.Sitra.Services
 
         #region  Constructors
 
-        public SitraService(IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService)
+        public SitraService(IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService, ILottiService lottiService)
         {
             this.allevamentiService = allevamentiService;
             this.prelieviLatteService = prelieviLatteService;
+            this.lottiService = lottiService;
         }
 
         #endregion
@@ -77,25 +80,41 @@ namespace LatteMarche.Application.Sitra.Services
             // invio singoli prelievi 
             foreach (var prelievo in prelievi.Where(p => alllevamentiSitra.Keys.Contains(p.IdAllevamento)))
             {
-                // testata del documento da inviare
-                SitraDto root = MakeRoot(prelievo, alllevamentiSitra[prelievo.IdAllevamento]);
+                // se non è già stato inviato
+                if(!Sent(prelievo))
+                {
+                    // testata del documento da inviare
+                    SitraDto root = MakeRoot(prelievo, alllevamentiSitra[prelievo.IdAllevamento]);
 
-                try
-                {
-                    // invio lotto e aggiornamento codice sitra
-                    prelievo.CodiceSitra = InserimentoLotto(accessToken, root);
+                    try
+                    {
+                        // invio lotto e aggiornamento codice sitra
+                        prelievo.CodiceSitra = InserimentoLotto(accessToken, root);
+                    }
+                    catch
+                    {
+                        prelievo.CodiceSitra = "ERRORE_INVIO";
+                    }
+                    finally
+                    {
+                        prelieviInviati.Add(this.prelieviLatteService.Update(prelievo));
+                    }
                 }
-                catch
-                {
-                    prelievo.CodiceSitra = "ERRORE_INVIO";
-                }
-                finally
-                {
-                    prelieviInviati.Add(this.prelieviLatteService.Update(prelievo));                    
-                }
+
+
             }
 
             return prelieviInviati;
+        }
+
+        /// <summary>
+        /// Verifica condizione inviato sitra
+        /// </summary>
+        /// <param name="prelievo"></param>
+        /// <returns></returns>
+        private bool Sent(PrelievoLatteDto prelievo)
+        {
+            return !String.IsNullOrEmpty(prelievo.CodiceSitra) && prelievo.CodiceSitra != "ERRORE_INVIO";
         }
 
         /// <summary>
@@ -131,7 +150,7 @@ namespace LatteMarche.Application.Sitra.Services
                         });
                     }
                 }
-                catch
+                catch(Exception exc)
                 {
                     lotto.Inviato = false;
                     lotto.Messaggio = "Dati lotto non inviati";
@@ -152,6 +171,11 @@ namespace LatteMarche.Application.Sitra.Services
         /// <returns></returns>
         private string InserimentoLotto(string accessToken, SitraDto root)
         {
+            var lotto = this.lottiService.GetByCodiceLotto(root.Lotto.CodiceLotto);
+
+            if (Sent(lotto))
+                return lotto.CodiceSitra;
+
             var client = new RestClient($"{sitraUrl}/api/lotti");
             var request = new RestRequest(Method.POST);
 
@@ -169,6 +193,36 @@ namespace LatteMarche.Application.Sitra.Services
         }
 
         /// <summary>
+        /// Verifica se lotto già inviato
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private bool Sent(LottoDto lotto)
+        {
+            return lotto != null && !String.IsNullOrEmpty(lotto.CodiceSitra) && lotto.Inviato;
+        }
+
+        /// <summary>
+        /// Verifica set lotto padre già inviato
+        /// </summary>
+        /// <param name="lottoPadre"></param>
+        /// <returns></returns>
+        private bool Sent(string accessToken, LottoPadreDto lottoPadre)
+        {
+            var client = new RestClient($"{sitraUrl}/api/lottiPadre/{lottoPadre.IdLotto}");
+            var request = new RestRequest(Method.GET);
+            
+            request.AddHeader("Cache-Control", "no-cache");
+            request.AddHeader("Authorization", $"Bearer {accessToken}");
+            IRestResponse response = client.Execute(request);
+
+            List<LottoPadreDto> lottiPadre = JsonConvert.DeserializeObject<List<LottoPadreDto>>(response.Content);
+
+            return lottiPadre != null && lottiPadre.Count > 0 && lottiPadre.Select(l => l.IdLottoPadre).Contains(lottoPadre.IdLottoPadre);
+
+        }
+
+        /// <summary>
         /// Chiamata REST per l'inserimento del lotto padre
         /// </summary>
         /// <param name="accessToken"></param>
@@ -176,6 +230,9 @@ namespace LatteMarche.Application.Sitra.Services
         /// <returns></returns>
         private string InserimentoLottoPadre(string accessToken, LottoPadreDto lottoPadre)
         {
+            if (Sent(accessToken, lottoPadre))
+                return "";
+
             var client = new RestClient($"{sitraUrl}/api/lottiPadre");
             var request = new RestRequest(Method.POST);
 
@@ -191,6 +248,8 @@ namespace LatteMarche.Application.Sitra.Services
             else
                 return String.Empty;
         }
+
+        
 
         /// <summary>
         /// Autenticazione e recupero del token di accesso
