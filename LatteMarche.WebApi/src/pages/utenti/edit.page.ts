@@ -46,7 +46,7 @@ export default class UtentiEditPage extends Vue {
     public utente: Utente;
     public id: string;
 
-    public tipoLatte: TipoLatte;
+    public tipiLatte: TipoLatte[] = [];
     public comune: Comune;
     public ruoli: Ruolo[] = [];
 
@@ -68,7 +68,6 @@ export default class UtentiEditPage extends Vue {
 
         this.comune = new Comune;
         this.id = $('#id').val() as string;
-        this.tipoLatte = new TipoLatte;
         this.utente = new Utente();
         this.comuniService = new ComuniService();
         this.tipiLatteService = new TipiLatteService();
@@ -132,10 +131,10 @@ export default class UtentiEditPage extends Vue {
 
     // caricamento tipi latte
     private loadTipiLatte() {
-        this.tipiLatteService.getTipiLatte()
+        this.tipiLatteService.index()
             .then(response => {
                 if (response.data != null) {
-                    this.tipoLatte = response.data;
+                    this.tipiLatte = response.data;
                 }
             });
     }

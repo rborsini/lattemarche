@@ -10,7 +10,7 @@ module.exports = {
         autocisterne_index_page: './src/pages/autocisterne/index.page.js',
         destinatari_index_page: './src/pages/destinatari/index.page.js',
         utenti_edit_page: './src/pages/utenti/edit.page.js',
-        tipilatte_edit_page: './src/pages/tipi-latte/edit.page.js',
+        tipi_latte_index_page: './src/pages/tipi-latte/index.page.js',
         trasportatori_edit_page: './src/pages/trasportatori/edit.page.js',
         ruoli_edit_page: './src/pages/ruoli/edit.page.js',
         ruoli_new_page: './src/pages/ruoli/new.page.js',

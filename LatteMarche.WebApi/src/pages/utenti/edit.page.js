@@ -24,7 +24,6 @@ import Waiter from "../../components/common/waiter.vue";
 import NotificationDialog from "../../components/common/notificationDialog.vue";
 import { DropdownItem } from "../../models/dropdown.model";
 import { Utente } from "../../models/utente.model";
-import { TipoLatte } from "../../models/tipoLatte.model";
 import { Comune } from "../../models/comune.model";
 import { UtentiService } from "../../services/utenti.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
@@ -34,6 +33,7 @@ var UtentiEditPage = /** @class */ (function (_super) {
     __extends(UtentiEditPage, _super);
     function UtentiEditPage() {
         var _this = _super.call(this) || this;
+        _this.tipiLatte = [];
         _this.ruoli = [];
         _this.opzioniSesso = [];
         _this.opzioniAbilitato = [];
@@ -43,7 +43,6 @@ var UtentiEditPage = /** @class */ (function (_super) {
         _this.isNew = true;
         _this.comune = new Comune;
         _this.id = $('#id').val();
-        _this.tipoLatte = new TipoLatte;
         _this.utente = new Utente();
         _this.comuniService = new ComuniService();
         _this.tipiLatteService = new TipiLatteService();
@@ -104,10 +103,10 @@ var UtentiEditPage = /** @class */ (function (_super) {
     // caricamento tipi latte
     UtentiEditPage.prototype.loadTipiLatte = function () {
         var _this = this;
-        this.tipiLatteService.getTipiLatte()
+        this.tipiLatteService.index()
             .then(function (response) {
             if (response.data != null) {
-                _this.tipoLatte = response.data;
+                _this.tipiLatte = response.data;
             }
         });
     };
