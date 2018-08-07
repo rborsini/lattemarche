@@ -49,8 +49,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 List<PrelievoLatte> prelievi = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     DataPeriodoInizio = day,
-                    DataPeriodoFine = day,
-                    InviatoSitra = false
+                    DataPeriodoFine = day
                 }).ToList());
 
                 // invio singoli prelievi
@@ -65,7 +64,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 //persistenza database dei lotti inviati
                 foreach (var lotto in lottiAggiornati)
                 {
-                    response.LottiInviati.Add(this.lottiService.Create(lotto));
+                    var lottoInviato = lotto;
+
+                    if (lotto.Id == 0)
+                        lottoInviato.Id = this.lottiService.Create(lotto).Id;
+
+                    response.LottiInviati.Add(lottoInviato);
                 }
 
                 return Ok(response);
