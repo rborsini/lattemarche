@@ -16,6 +16,7 @@ namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
     [MvcActionFilter]
+    [MvcExceptionFilter]
     public class PrelieviController: Controller
     {
 

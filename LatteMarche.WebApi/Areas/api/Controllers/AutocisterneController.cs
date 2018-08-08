@@ -7,10 +7,13 @@ using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.Application.Autocisterne.Interfaces;
 using LatteMarche.Application.Autocisterne.Dtos;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class AutocisterneController : ApiController
     {
 

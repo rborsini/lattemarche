@@ -17,6 +17,7 @@ using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.Application.Lotti.Dtos;
 using LatteMarche.Application.Ruoli.Dtos;
 using LatteMarche.Application.Autocisterne.Dtos;
+using LatteMarche.Application.Logs.Dtos;
 
 namespace LatteMarche.Application
 {
@@ -38,6 +39,7 @@ namespace LatteMarche.Application
             DocumentiMappings.Configure();
             GiriMappings.Configure();
             LaboratoriAnalisiMappings.Configure();
+            LogsMappings.Configure();
             LottiMappings.Configure();
             PrelieviLatteMappings.Configure();
             RuoloMappings.Configure();

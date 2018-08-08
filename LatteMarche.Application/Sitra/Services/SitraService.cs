@@ -18,6 +18,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using LatteMarche.Application.Lotti.Interfaces;
 using System.Threading;
+using LatteMarche.Application.Logs.Interfaces;
 
 namespace LatteMarche.Application.Sitra.Services
 {
@@ -28,6 +29,7 @@ namespace LatteMarche.Application.Sitra.Services
         private IAllevamentiService allevamentiService;
         private ILottiService lottiService;
         private IPrelieviLatteService prelieviLatteService;
+        private ILogsService logsService;
 
         #endregion
 
@@ -49,11 +51,12 @@ namespace LatteMarche.Application.Sitra.Services
 
         #region  Constructors
 
-        public SitraService(IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService, ILottiService lottiService)
+        public SitraService(IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService, ILottiService lottiService, ILogsService logsService)
         {
             this.allevamentiService = allevamentiService;
             this.prelieviLatteService = prelieviLatteService;
             this.lottiService = lottiService;
+            this.logsService = logsService;
         }
 
         #endregion
@@ -73,7 +76,9 @@ namespace LatteMarche.Application.Sitra.Services
             // autenticazione
             dynamic tokenResult = Token();
             string accessToken = tokenResult.access_token;
-            
+
+            //this.LogDebug($"accessToken [{accessToken}]");
+
             // recupero allevamenti per cui si deve effettuare l'invio al sitra
             Dictionary<int, AllevamentoDto> alllevamentiSitra = this.allevamentiService.GetAllevamentiSitra().ToDictionary(k => k.Id, k => k);
 
@@ -90,9 +95,11 @@ namespace LatteMarche.Application.Sitra.Services
                     {
                         // invio lotto e aggiornamento codice sitra
                         prelievo.CodiceSitra = InserimentoLotto(accessToken, root);
+                        //this.LogDebug($"Prelievo inviato correttamente [{prelievo.Id}]");
                     }
-                    catch
+                    catch(Exception exc)
                     {
+                        //this.LogDebug($"Errore invio SITRA [{exc.Message}]");
                         prelievo.CodiceSitra = "ERRORE_INVIO";
                     }
                     finally
@@ -100,7 +107,10 @@ namespace LatteMarche.Application.Sitra.Services
                         prelieviInviati.Add(this.prelieviLatteService.Update(prelievo));
                     }
                 }
-
+                else
+                {
+                    //this.LogDebug($"prelievo già inviato in passato [{prelievo.Id}]");
+                }
 
             }
 
@@ -141,6 +151,8 @@ namespace LatteMarche.Application.Sitra.Services
                     // aggancio lotti padre
                     foreach (var prelievoPadre in lotto.PrelieviPadre)
                     {
+                        this.LogDebug($"InvioLotti {JsonConvert.SerializeObject(prelievoPadre)}");
+
                         InserimentoLottoPadre(accessToken, new LottoPadreDto()
                         {
                             IdLotto = Convert.ToInt32(lotto.CodiceSitra),
@@ -186,6 +198,8 @@ namespace LatteMarche.Application.Sitra.Services
 
             IRestResponse response = client.Execute(request);
 
+            //this.LogDebug($"Response lotto {root.Lotto.CodiceLotto} [{JsonConvert.SerializeObject(response)}]");
+
             if (response.StatusCode == HttpStatusCode.OK)
                 return response.Content.Replace('"', ' ').Trim();
             else
@@ -230,22 +244,26 @@ namespace LatteMarche.Application.Sitra.Services
         /// <returns></returns>
         private string InserimentoLottoPadre(string accessToken, LottoPadreDto lottoPadre)
         {
-            if (Sent(accessToken, lottoPadre))
-                return "";
+            this.LogDebug($"InserimentoLottoPadre {JsonConvert.SerializeObject(lottoPadre)}");
 
-            var client = new RestClient($"{sitraUrl}/api/lottiPadre");
-            var request = new RestRequest(Method.POST);
+            //if (Sent(accessToken, lottoPadre))
+            //    return "";
 
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Authorization", $"Bearer {accessToken}");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("undefined", JsonConvert.SerializeObject(lottoPadre), ParameterType.RequestBody);
+            //var client = new RestClient($"{sitraUrl}/api/lottiPadre");
+            //var request = new RestRequest(Method.POST);
 
-            IRestResponse response = client.Execute(request);
+            //request.AddHeader("Cache-Control", "no-cache");
+            //request.AddHeader("Authorization", $"Bearer {accessToken}");
+            //request.AddHeader("Content-Type", "application/json");
+            //request.AddParameter("undefined", JsonConvert.SerializeObject(lottoPadre), ParameterType.RequestBody);
 
-            if (response.StatusCode == HttpStatusCode.NoContent)
-                return response.Content.Replace('"', ' ').Trim();
-            else
+            //IRestResponse response = client.Execute(request);
+
+            //this.LogDebug($"Response lotto padre {JsonConvert.SerializeObject(lottoPadre)} [{JsonConvert.SerializeObject(response)}]");
+
+            //if (response.StatusCode == HttpStatusCode.NoContent)
+            //    return response.Content.Replace('"', ' ').Trim();
+            //else
                 return String.Empty;
         }
 
@@ -337,6 +355,16 @@ namespace LatteMarche.Application.Sitra.Services
             return root;
         }
 
+        private void LogDebug(string message)
+        {
+            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
+            {
+                Date = DateTime.Now,
+                Level = "DEBUG",
+                Logger = "api",
+                Message = message
+            });
+        }
 
         #endregion
 

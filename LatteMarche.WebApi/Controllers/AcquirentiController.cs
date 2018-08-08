@@ -12,6 +12,7 @@ namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
     [MvcActionFilter]
+    [MvcExceptionFilter]
     public class AcquirentiController : Controller
     {
         [ViewItem(nameof(Index), "Acquirenti", "Lista")]

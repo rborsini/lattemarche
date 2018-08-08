@@ -9,10 +9,13 @@ using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Destinatari.Dtos;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class DestinatariController: ApiController
     {
 

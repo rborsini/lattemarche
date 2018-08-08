@@ -34,6 +34,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<Lotto> Lotti { get; set; }
         public DbSet<Ruolo> Ruoli { get; set; }
         public DbSet<RuoloUtente> RuoliUtente { get; set; }
+        public DbSet<LogRecord> Logs { get; set; }
 
 
         public LatteMarcheDbContext()

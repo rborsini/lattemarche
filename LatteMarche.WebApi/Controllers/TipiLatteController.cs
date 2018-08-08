@@ -11,6 +11,7 @@ namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
     [MvcActionFilter]
+    [MvcExceptionFilter]
     public class TipiLatteController : Controller
     {
         [ViewItem(nameof(Index), "Tipi latte", "Lista")]

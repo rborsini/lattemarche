@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Application.Ruoli.Interfaces;
 using LatteMarche.WebApi.Attributes;
+using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ using System.Web.Http;
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
-    //[ApiActionFilter]
-    //[ApiExceptionFilter]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class AzioniController : ApiController
     {
         private IAzioniService azioniService;

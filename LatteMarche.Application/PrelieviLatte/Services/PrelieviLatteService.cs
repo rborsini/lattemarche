@@ -6,6 +6,7 @@ using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Configuration;
+using LatteMarche.Application.Logs.Interfaces;
 
 namespace LatteMarche.Application.PrelieviLatte.Services
 {
@@ -18,15 +19,19 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         private IRepository<PrelievoLatte, int> prielieviLatteRepository;
         private IRepository<V_PrelievoLatte, int> v_prelieviLatteRepository;
 
+        private ILogsService logsService;
+
         #endregion
 
         #region Constructor
 
-        public PrelieviLatteService(IUnitOfWork uow)
+        public PrelieviLatteService(IUnitOfWork uow, ILogsService logsService)
             : base(uow)
         {
             this.prielieviLatteRepository = this.uow.Get<PrelievoLatte, int>();
             this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
+
+            this.logsService = logsService;
         }
 
         #endregion

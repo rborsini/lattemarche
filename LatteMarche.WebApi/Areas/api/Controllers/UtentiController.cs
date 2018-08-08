@@ -9,10 +9,13 @@ using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using RB.Hash;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class UtentiController : ApiController
     {
 

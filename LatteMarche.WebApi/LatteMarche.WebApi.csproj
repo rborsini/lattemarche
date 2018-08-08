@@ -72,6 +72,9 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -113,6 +116,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -250,6 +254,9 @@
     <Content Include="src\pages\autocisterne\edit.vue" />
     <Content Include="src\pages\allevamenti\edit.vue" />
     <Content Include="Views\Allevatori\Index.cshtml" />
+    <Content Include="log4net.release.config" />
+    <Content Include="log4net.test.config" />
+    <Content Include="log4net.debug.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -309,6 +316,7 @@
     <Content Include="src\components\common\waiter.vue" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\LoggerConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\api\Controllers\AutocisterneController.cs" />
     <Compile Include="Areas\api\Controllers\AcquirentiController.cs" />
@@ -318,7 +326,6 @@
     <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\RuoliController.cs" />
     <Compile Include="Areas\api\Controllers\DocumentiController.cs" />
-    <Compile Include="Areas\api\Controllers\SitraController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
@@ -345,7 +352,10 @@
     <Compile Include="Controllers\AllevamentiController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\ApiActionFilter.cs" />
+    <Compile Include="Filters\ApiExceptionFilter.cs" />
     <Compile Include="Filters\MvcActionFilter.cs" />
+    <Compile Include="Filters\MvcExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -385,6 +395,10 @@
     <ProjectReference Include="..\LatteMarche.Identity\LatteMarche.Identity.csproj">
       <Project>{25ae69d8-01c1-4a07-81fd-3355766d5f4c}</Project>
       <Name>LatteMarche.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LatteMarche.Utils\LatteMarche.Utils.csproj">
+      <Project>{edc79ac8-16c0-4f80-a81c-bd2bc6af87f6}</Project>
+      <Name>LatteMarche.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

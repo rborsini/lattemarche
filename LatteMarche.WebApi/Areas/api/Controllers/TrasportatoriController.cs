@@ -8,10 +8,13 @@ using LatteMarche.Application.Utenti;
 using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class TrasportatoriController : ApiController
     {
 

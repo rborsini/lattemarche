@@ -12,6 +12,7 @@ namespace LatteMarche.WebApi.Controllers
 {
     [MvcCustomAuthorize]
     [MvcActionFilter]
+    [MvcExceptionFilter]
     public class AutocisterneController : Controller
     {
         [ViewItem(nameof(Index), "Autocisterne", "Lista")]

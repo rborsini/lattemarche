@@ -7,10 +7,13 @@ using LatteMarche.Application.TipiLatte.Interfaces;
 using LatteMarche.Application.TipiLatte.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class TipiLatteController : ApiController
     {
 

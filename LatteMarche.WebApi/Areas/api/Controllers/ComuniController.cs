@@ -7,10 +7,13 @@ using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Comuni.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class ComuniController : ApiController
     {
 

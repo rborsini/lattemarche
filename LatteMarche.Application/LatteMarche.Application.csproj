@@ -103,6 +103,9 @@
     <Compile Include="Documenti\Dtos\DocumentiDto.cs" />
     <Compile Include="Documenti\Interfaces\IDocumentiService.cs" />
     <Compile Include="Documenti\Services\DocumentiService.cs" />
+    <Compile Include="Logs\Dtos\LogRecordDto.cs" />
+    <Compile Include="Logs\Interfaces\ILogsServices.cs" />
+    <Compile Include="Logs\Services\LogsService.cs" />
     <Compile Include="Lotti\Dtos\LottoDto.cs" />
     <Compile Include="Lotti\Interfaces\ILottiService.cs" />
     <Compile Include="Lotti\Services\LottiService.cs" />

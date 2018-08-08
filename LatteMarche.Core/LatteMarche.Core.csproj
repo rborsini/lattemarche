@@ -82,6 +82,7 @@
     <Compile Include="Models\Giro.cs" />
     <Compile Include="Models\AllevamentoXGiro.cs" />
     <Compile Include="Models\LaboratorioAnalisi.cs" />
+    <Compile Include="Models\LogRecord.cs" />
     <Compile Include="Models\Lotto.cs" />
     <Compile Include="Models\PrelievoLatte.cs" />
     <Compile Include="Models\Aquirente.cs" />

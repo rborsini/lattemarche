@@ -7,10 +7,13 @@ using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
 using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
+using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
     [ApiCustomAuthorize]
+    [ApiActionFilter]
+    [ApiExceptionFilter]
     public class LaboratoriAnalisiController: ApiController
     {
 
