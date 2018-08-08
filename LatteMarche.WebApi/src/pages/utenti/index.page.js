@@ -99,6 +99,7 @@ var UtentiIndexPage = /** @class */ (function (_super) {
                     html += '</div>';
                     return html;
                 },
+                className: "edit-column",
                 orderable: false
             });
         }

@@ -145,6 +145,7 @@ export default class AllevamentiIndexPage extends Vue {
 
                     return html;
                 },
+                className: "edit-column",
                 orderable: false
             });
 

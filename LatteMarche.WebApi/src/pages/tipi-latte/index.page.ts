@@ -142,6 +142,7 @@ export default class TipiLatteIndexPage extends Vue {
 
                     return html;
                 },
+                className: "edit-column",
                 orderable: false
             });
 

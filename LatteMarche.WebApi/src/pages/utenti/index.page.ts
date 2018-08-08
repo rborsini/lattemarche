@@ -143,6 +143,7 @@ export default class UtentiIndexPage extends Vue {
 
                     return html;
                 },
+                className: "edit-column",
                 orderable: false
             });
 

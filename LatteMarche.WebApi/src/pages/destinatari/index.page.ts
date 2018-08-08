@@ -141,6 +141,7 @@ export default class DestinatariIndexPage extends Vue {
 
                     return html;
                 },
+                className: "edit-column",
                 orderable: false
             });
 
