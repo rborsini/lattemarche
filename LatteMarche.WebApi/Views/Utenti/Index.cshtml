@@ -12,40 +12,65 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-utenti-page">
+<div id="utenti-page" class="container-fluid">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 text-right pb-3">
-                <a class="btn btn-success" href="/utenti/edit">Aggiungi</a>
-            </div>
-        </div>
-    </div>
+    @{
+        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    }
 
-    <table class="table table-striped table-bordered" id="utenti-table">
-        <thead>
-            <tr>
-                <th>Ragione sociale</th>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Username</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <input hidden id="canAdd" value="@canAdd" />
+    <input hidden id="canEdit" value="@canEdit" />
+    <input hidden id="canRemove" value="@canRemove" />
 
+    <!-- Pannello editazione dettaglio -->
+    <editazione-utente-modal ref="editazioneUtenteModal"
+                                   :utente="utente"
+                                   v-on:salvato="$refs.savedDialog.open()"></editazione-utente-modal>
+
+    <!-- Pannello notifica salvatagggio -->
+    <notification-dialog ref="savedDialog"
+                         :title="'Conferma salvataggio'"
+                         :message="'Utente salvato correttamente'"
+                         v-on:ok="window.location = '/Utenti'"></notification-dialog>
+
+    <!-- Pannello notifica rimozione -->
+    <notification-dialog ref="removedDialog"
+                         :title="'Conferma rimozione'"
+                         :message="'Utente rimosso correttamente'"
+                         v-on:ok="window.location = '/Utenti'"></notification-dialog>
+
+    <!-- Pannello modale conferma eliminazione -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di voler rimuovere l\'utente selezionato?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>
+
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="utenti" v-on:data-loaded="onDataLoaded">
+
+        <!-- Toolbox -->
+        <template slot="toolbox" v-if="canAdd">
+            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+        </template>
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>Ragione sociale</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Username</th>
+            <th v-if="canEdit || canRemove"></th>
+        </template>
+
+    </data-table>
 </div>
 
 <link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
 <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-<script src="~/src/pages/utenti/index.page.js"></script>
 
-<script>
+<script type="application/javascript" src="~/build/utenti_index_page.js"></script>
 
-    jQuery(document).ready(function () {
-        var untentiIndex = new TabellaUtenti();
-    });
 
-</script>

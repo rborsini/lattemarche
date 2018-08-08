@@ -212,7 +212,7 @@
     <Content Include="src\pages\documenti\index.page.js" />
     <TypeScriptCompile Include="src\pages\tipi-latte\index.page.ts" />
     <Content Include="src\pages\ruoli\index.page.js" />
-    <Content Include="src\pages\utenti\index.page.js" />
+    <TypeScriptCompile Include="src\pages\utenti\index.page.ts" />
     <Content Include="Views\Utenti\Edit.cshtml" />
     <Content Include="package-lock.json" />
     <Content Include="Views\Acquirenti\Index.cshtml" />
@@ -283,7 +283,6 @@
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
-    <TypeScriptCompile Include="src\pages\utenti\edit.page.ts" />
     <TypeScriptCompile Include="src\services\allevamenti.service.ts" />
     <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
     <TypeScriptCompile Include="src\services\acquirenti.service.ts" />

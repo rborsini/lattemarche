@@ -8,17 +8,11 @@ var TipiLatteService = /** @class */ (function () {
     TipiLatteService.prototype.details = function (id) {
         return axios.get('/api/tipilatte/details?id=' + id);
     };
-    //public save(tipolatte: TipoLatte, isNew: boolean) {
-    //    if (isNew)
-    //        return axios.post('/api/tipilatte/create', tipolatte);
-    //    else
-    //        return axios.put('/api/tipilatte/update', tipolatte);
-    //}
     TipiLatteService.prototype.save = function (tipolatte) {
-        return axios.post('/api/autocisterne/save', tipolatte);
+        return axios.post('/api/tipilatte/save', tipolatte);
     };
     TipiLatteService.prototype.delete = function (idTipoLatte) {
-        return axios.delete('/api/autocisterne/delete?id=' + idTipoLatte);
+        return axios.delete('/api/tipilatte/delete?id=' + idTipoLatte);
     };
     return TipiLatteService;
 }());
