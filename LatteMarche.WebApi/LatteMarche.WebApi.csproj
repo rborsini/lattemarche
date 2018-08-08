@@ -214,9 +214,9 @@
     <Content Include="favicon.ico" />
     <Content Include="src\pages\azioni\index.page.js" />
     <Content Include="src\pages\documenti\index.page.js" />
-    <Content Include="src\pages\tipi-latte\index.page.js" />
+    <TypeScriptCompile Include="src\pages\tipi-latte\index.page.ts" />
     <Content Include="src\pages\ruoli\index.page.js" />
-    <Content Include="src\pages\utenti\index.page.js" />
+    <TypeScriptCompile Include="src\pages\utenti\index.page.ts" />
     <Content Include="Views\Utenti\Edit.cshtml" />
     <Content Include="package-lock.json" />
     <Content Include="Views\Acquirenti\Index.cshtml" />
@@ -228,7 +228,6 @@
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
     <Content Include="Views\Ruoli\Edit.cshtml" />
     <Content Include="Views\Ruoli\New.cshtml" />
-    <Content Include="Views\TipiLatte\Edit.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
     <Content Include="src\pages\prelievi-latte\edit.vue" />
     <Content Include="src\components\common\timeEditor.vue" />
@@ -254,6 +253,7 @@
     <Content Include="src\pages\autocisterne\edit.vue" />
     <Content Include="src\pages\allevamenti\edit.vue" />
     <Content Include="Views\Allevatori\Index.cshtml" />
+    <Content Include="src\pages\utenti\edit.vue" />
     <Content Include="log4net.release.config" />
     <Content Include="log4net.test.config" />
     <Content Include="log4net.debug.config" />
@@ -286,11 +286,10 @@
     <TypeScriptCompile Include="src\pages\autocisterne\index.page.ts" />
     <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
     <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
-    <TypeScriptCompile Include="src\pages\tipi-latte\edit.page.ts" />
+    <None Include="src\pages\tipi-latte\edit.vue" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
     <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
-    <TypeScriptCompile Include="src\pages\utenti\edit.page.ts" />
     <TypeScriptCompile Include="src\services\allevamenti.service.ts" />
     <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
     <TypeScriptCompile Include="src\services\acquirenti.service.ts" />

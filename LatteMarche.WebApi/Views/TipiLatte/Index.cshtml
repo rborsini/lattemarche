@@ -12,7 +12,7 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-tipi-latte-page">
+<div id="tipilatte-page" class="container-fluid">
 
     @{
         string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
@@ -24,207 +24,54 @@
     <input hidden id="canEdit" value="@canEdit" />
     <input hidden id="canRemove" value="@canRemove" />
 
+    <!-- Pannello editazione dettaglio -->
+    <editazione-tipo-latte-modal ref="editazioneTipoLatteModal"
+                                   :tipo-latte="tipoLatte"
+                                   v-on:salvato="$refs.savedDialog.open()"></editazione-tipo-latte-modal>
 
-    <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal ref="editazionePrelievoModal"
-                               :prelievo-latte="prelievoSelezionato"
-                               v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
-
-
-    <!-- Pannello Salvataggio prelievo-->
+    <!-- Pannello notifica salvatagggio -->
     <notification-dialog ref="savedDialog"
                          :title="'Conferma salvataggio'"
-                         :message="'Il prelievo è stato salvato correttamente'"
-                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
+                         :message="'Tipo latte salvato correttamente'"
+                         v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
     <notification-dialog ref="removedDialog"
                          :title="'Conferma rimozione'"
-                         :message="'Prelievo rimosso correttamente'"
-                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
+                         :message="'Tipo latte rimosso correttamente'"
+                         v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
     <confirm-dialog ref="confirmDeleteDialog"
                     :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'"
+                    :message="'Sei sicuro di voler rimuovere il tipo latte selezionato?'"
                     v-on:confirmed="onRemove()"></confirm-dialog>
 
-    <table class="table table-striped table-bordered" id="tipi-latte-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Descrizione</th>
-                <th>Sigla</th>
-                <th>Fattore conversione LT -> KG</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- Tabella -->
+    <data-table :columns="columnOptions" :rows="tipiLatte" v-on:data-loaded="onDataLoaded">
 
+        <!-- Toolbox -->
+        <template slot="toolbox" v-if="canAdd">
+            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+        </template>
+
+        <!-- Colonne -->
+        <template slot="thead">
+            <th>#</th>
+            <th>Descrizione</th>
+            <th>Sigla</th>
+            <th>Fattore conversione LT -> KG</th>
+            <th v-if="canEdit || canRemove"></th>
+        </template>
+
+    </data-table>
 </div>
 
 <link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
 <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-<script src="~/src/pages/tipi-latte/index.page.js"></script>
 
-<script>
-
-    jQuery(document).ready(function () {
-        var tipiLatteIndex = new TabellaTipiLatte();
-    });
-
-</script>
+<script type="application/javascript" src="~/build/tipi_latte_index_page.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<div class="col-lg-12" style="margin-top:1em">
-        <div class="m-portlet m-portlet--mobile">
-            <div class="m-portlet__head">
-
-                <!-- Portlet Caption -->
-                <div class="m-portlet__head-caption">
-
-                    <div class="row">
-                        <div class="col align-self-start">
-                            <h3 class="m-portlet__head-text">
-                                Elenco tipi latte
-                            </h3>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <!-- Portlet Tools -->
-                <div class="m-portlet__head-tools">
-                    <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                        <li class="nav-item m-tabs__item">
-                            <input type="text" class="form-control m-input m-input--solid" placeholder="Cerca..." id="search">
-                        </li>
-                        <li class="nav-item m-tabs__item">
-                            <a class="btn m-btn--pill btn-info" href="@System.Configuration.ConfigurationManager.AppSettings["webUrl"]TipiLatte/New">+ Aggiungi tipo latte</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="m-portlet__body">
-                <!--begin: Datatable -->
-                <div class="m_datatable"></div>
-                <!--end: Datatable -->
-            </div>
-
-        </div>
-    </div>*@
-
-
-@*<script type="text/javascript">
-
-        jQuery(document).ready(function () {
-
-            var datatable = $('.m_datatable').mDatatable({
-
-                // datasource definition
-                data: {
-                    type: 'remote',
-                    source: apiUrl + 'TipiLatte',
-                    pageSize: 10,
-                    saveState: {
-                        cookie: true,
-                        webstorage: true
-                    },
-                },
-
-                // layout definition
-                layout: {
-                    theme: 'default', // datatable theme
-                    class: '', // custom wrapper class
-                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-                    footer: false, // display/hide footer
-                },
-
-                translate: {
-                    records: {
-                        processing: 'Caricamento in corso...',
-                        noRecords: 'Nessun record trovato'
-                    },
-                    toolbar: {
-                        pagination: {
-                            items: {
-                                default: {
-                                    first: 'Prima',
-                                    prev: 'Precedente',
-                                    next: 'Successiva',
-                                    last: 'Ultima',
-                                    more: 'Più pagine',
-                                    input: 'Numero pagina',
-                                    select: 'Seleziona dimensione pagine'
-                                },
-                                info: 'Visualizzato {{start}} - {{end}} di {{total}} records'
-                            }
-                        }
-                    }
-                },
-
-                // column sorting
-                sortable: true,
-
-                // column based filtering
-                filterable: true,
-
-                pagination: true,
-
-                // columns definition
-                columns: [{
-                    field: "Id",
-                    title: "#",
-                    sortable: false,
-                    width: 40,
-                    selector: false,
-                    textAlign: 'center',
-                }, {
-                    field: "Descrizione",
-                    title: "Descrizione",
-                }, {
-                    field: "DescrizioneBreve",
-                    title: "Sigla",
-                }, {
-                    field: "FattoreConversione",
-                    title: "Fattore conversione lt -> kg",
-                }, {
-                    field: "Edit",
-                    title: "Dettaglio",
-                    width: 100,
-                        template: function(row) {
-                            return '<a href="' + webUrl + 'TipiLatte/Details?id=' + row.Id + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details"><i class="la la-edit"></i></a>';
-                    },
-
-                 }]
-            });
-
-            $('#search').on('keyup', function (e) {
-                datatable.search($(this).val().toLowerCase());
-            });
-
-
-        });
-
-    </script>*@

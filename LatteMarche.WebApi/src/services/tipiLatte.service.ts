@@ -5,19 +5,19 @@ export class TipiLatteService {
 
     constructor() { }
 
-    public getTipiLatte(): AxiosPromise<TipoLatte> {
+    public index(): AxiosPromise<TipoLatte[]> {
         return axios.get('/api/tipilatte');
     }
 
-    public getTipoLatte(id: string): AxiosPromise<TipoLatte> {
+    public details(id: string): AxiosPromise<TipoLatte> {
         return axios.get('/api/tipilatte/details?id=' + id);
     }
 
-    public save(tipolatte: TipoLatte, isNew: boolean) {
-        if (isNew)
-            return axios.post('/api/tipilatte/create', tipolatte);
-        else
-            return axios.put('/api/tipilatte/update', tipolatte);
+    public save(tipolatte: TipoLatte): AxiosPromise<TipoLatte> {
+        return axios.post('/api/tipilatte/save', tipolatte);
     }
 
+    public delete(idTipoLatte: number): AxiosPromise<TipoLatte> {
+        return axios.delete('/api/tipilatte/delete?id=' + idTipoLatte);
+    }
 }

@@ -4,20 +4,20 @@ import { Utente } from '../models/utente.model';
 export class UtentiService {
     constructor() { }
 
-    public getUtenti(): AxiosPromise<Utente[]> {
+    public index(): AxiosPromise<Utente[]> {
         return axios.get('/api/utenti');
     }
 
-    public update(utente: Utente): AxiosPromise<Utente> {
-        return axios.put('/api/utenti/update', utente);
-    }
-
-    public create(utente: Utente): AxiosPromise<Utente> {
-        return axios.post('/api/utenti/create', utente);
-    }
-
-    public getDetails(id: string): AxiosPromise<Utente> {
+    public details(id: string): AxiosPromise<Utente> {
         return axios.get('/api/utenti/details?id=' + id);
+    }
+
+    public save(utente: Utente): AxiosPromise<Utente> {
+        return axios.post('/api/utenti/save', utente);
+    }
+
+    public delete(id: number): AxiosPromise<Utente> {
+        return axios.delete('/api/utenti/delete?id=' + id);
     }
 
 }

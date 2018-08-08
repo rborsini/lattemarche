@@ -70,41 +70,34 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         }
 
-        [ViewItem(nameof(Update), "Utenti", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] UtenteDto model)
-        {
-            try
-            {
-                // aggiornare ruoli/utenti
-                this.ruoliService.UpdateUserRole(model.Id, model.IdProfilo);
 
-                // aggiornare utente
-                var users = this.utentiService.Update(model);
-
-                return Ok(model);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Create), "Utenti", "Creazione")]
+        [ViewItem(nameof(Save), "Utenti", "Salvataggio")]
         [HttpPost]
-        public IHttpActionResult Create([FromBody] UtenteDto model)
+        public IHttpActionResult Save([FromBody] UtenteDto model)
         {
             try
             {
-                model.Abilitato = true;
-                model.Password = new HashHelper().HashPassword(model.Password);
+                if (model.Id == 0)
+                {
+                    model.Abilitato = true;
+                    model.Password = new HashHelper().HashPassword(model.Password);
 
-                UtenteDto utente = this.utentiService.Create(model);
+                    UtenteDto utente = this.utentiService.Create(model);
 
-                string tokenUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.LocalPath, "/Token");
+                    string tokenUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.LocalPath, "/Token");
 
-                return Ok(utente);
+                    return Ok(utente);
+                }
+                else
+                {
+                    // aggiornare ruoli/utenti
+                    this.ruoliService.UpdateUserRole(model.Id, model.IdProfilo);
+
+                    // aggiornare utente
+                    var users = this.utentiService.Update(model);
+
+                    return Ok(model);
+                }
             }
             catch (Exception exc)
             {
