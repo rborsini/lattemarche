@@ -258,6 +258,18 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
             {
                 idAllevamento = utente.Id.ToString();
             }
+            else if (utente.IdProfilo == 5) // profilo trasportatore
+            {
+                idTrasportatore = utente.Id.ToString();
+            }
+            else if (utente.IdProfilo == 7) // profilo acquirente
+            {
+                idAcquirente = utente.Id.ToString();
+            }
+            else if (utente.IdProfilo == 6) // profilo destinatario
+            {
+                idDestinatario = utente.Id.ToString();
+            }
 
             //possibilità di mettere altri parametri come le date periodo prelievo
             try
