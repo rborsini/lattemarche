@@ -169,6 +169,21 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                 query = query.Where(p => p.IdAllevamento == searchDto.idAllevamento);
             }
 
+            if (searchDto.idTrasportatore != null)
+            {
+                query = query.Where(p => p.IdTrasportatore == searchDto.idTrasportatore);
+            }
+
+            if (searchDto.idAcquirente != null)
+            {
+                query = query.Where(p => p.IdAcquirente == searchDto.idAcquirente);
+            }
+
+            if (searchDto.idDestinatario != null)
+            {
+                query = query.Where(p => p.IdDestinatario == searchDto.idDestinatario);
+            }
+
             // Periodo Prelievo
             if (searchDto.DataPeriodoInizio.HasValue || searchDto.DataPeriodoFine.HasValue)
             {

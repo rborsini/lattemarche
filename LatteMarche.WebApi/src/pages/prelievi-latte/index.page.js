@@ -27,6 +27,9 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { AllevatoriService } from "../../services/allevatori.service";
+import { TrasportatoriService } from "../../services/trasportatori.service";
+import { AcquirentiService } from "../../services/acquirenti.service";
+import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     __extends(PrelieviLatteIndexPage, _super);
@@ -34,24 +37,44 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.allevatori = [];
+        _this.trasportatore = [];
+        _this.destinatario = [];
+        _this.acquirente = [];
         _this.prelievi = [];
         _this.idAllevatoreSelezionato = 0;
+        _this.idTrasportatoreSelezionato = 0;
+        _this.idDestinatarioSelezionato = 0;
+        _this.idAcquirenteSelezionato = 0;
         _this.dal = "";
         _this.al = "";
         _this.canAdd = false;
         _this.canEdit = false;
         _this.canRemove = false;
+        _this.canSearchAllevatore = false;
+        _this.canSearchTrasportatore = false;
+        _this.canSearchAcquirente = false;
+        _this.canSearchDestinatario = false;
         _this.prelieviLatteService = new PrelieviLatteService();
         _this.allevatoriService = new AllevatoriService();
         _this.prelievoSelezionato = new PrelievoLatte();
+        _this.trasporatoriService = new TrasportatoriService();
+        _this.destinatariService = new DestinatariService();
+        _this.acquirentiService = new AcquirentiService();
         _this.canAdd = $('#canAdd').val() == "true";
         _this.canEdit = $('#canEdit').val() == "true";
         _this.canRemove = $('#canRemove').val() == "true";
+        _this.canSearchAllevatore = $('#canSearchAllevatore').val() == "true";
+        _this.canSearchTrasportatore = $('#canSearchTrasportatore').val() == "true";
+        _this.canSearchAcquirente = $('#canSearchAcquirente').val() == "true";
+        _this.canSearchDestinatario = $('#canSearchDestinatario').val() == "true";
         return _this;
     }
     PrelieviLatteIndexPage.prototype.mounted = function () {
         this.initTable();
         this.loadAllevatori();
+        this.loadTrasportatori();
+        this.loadDestinatari();
+        this.loadAcquirenti();
         this.initSearchBox();
     };
     // Pulizia selezione
@@ -62,7 +85,10 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     PrelieviLatteIndexPage.prototype.onCercaClick = function () {
         var _this = this;
         var idAllevatoreStr = this.idAllevatoreSelezionato == 0 ? "" : this.idAllevatoreSelezionato.toString();
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, this.dal, this.al)
+        var idTrasportatoreStr = this.idTrasportatoreSelezionato == 0 ? "" : this.idTrasportatoreSelezionato.toString();
+        var idAcquirenteStr = this.idAcquirenteSelezionato == 0 ? "" : this.idAcquirenteSelezionato.toString();
+        var idDestinatarioStr = this.idDestinatarioSelezionato == 0 ? "" : this.idDestinatarioSelezionato.toString();
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
             .then(function (response) {
             _this.prelievi = response.data;
         });
@@ -131,6 +157,9 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     // inizializzazione parametri di ricerca
     PrelieviLatteIndexPage.prototype.initSearchBox = function () {
         this.idAllevatoreSelezionato = 0;
+        this.idTrasportatoreSelezionato = 0;
+        this.idAcquirenteSelezionato = 0;
+        this.idDestinatarioSelezionato = 0;
         var today = new Date();
         this.al = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
         var yesterday = this.addDays(today, -1);
@@ -143,6 +172,36 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
             .then(function (response) {
             if (response.data != null) {
                 _this.allevatori = response.data;
+            }
+        });
+    };
+    // caricamento trasportatori
+    PrelieviLatteIndexPage.prototype.loadTrasportatori = function () {
+        var _this = this;
+        this.trasporatoriService.getTrasportatori()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.trasportatore = response.data;
+            }
+        });
+    };
+    // caricamento destinatari
+    PrelieviLatteIndexPage.prototype.loadDestinatari = function () {
+        var _this = this;
+        this.destinatariService.index()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.destinatario = response.data;
+            }
+        });
+    };
+    // caricamento acquirenti
+    PrelieviLatteIndexPage.prototype.loadAcquirenti = function () {
+        var _this = this;
+        this.acquirentiService.index()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.acquirente = response.data;
             }
         });
     };

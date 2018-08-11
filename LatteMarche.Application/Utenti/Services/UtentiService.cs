@@ -208,6 +208,13 @@ namespace LatteMarche.Application.Utenti.Services
             return dbEntity;
         }
 
+        public UtenteDto GetByUsername(string username)
+        {
+            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+
+            return ConvertToDto(utente);
+        }
+
 
 
         #endregion

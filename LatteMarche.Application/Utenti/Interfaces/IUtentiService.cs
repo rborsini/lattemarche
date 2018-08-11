@@ -49,6 +49,12 @@ namespace LatteMarche.Application.Utenti.Interfaces
         /// <returns></returns>
         List<UtenteDto> Search(UtentiSearchDto searchDto);
 
+        /// <summary>
+        /// Restituisce l'utente a partire dall'username
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        UtenteDto GetByUsername(string name);
     }
 
 }

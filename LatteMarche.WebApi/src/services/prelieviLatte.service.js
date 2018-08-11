@@ -2,8 +2,11 @@ import axios from "axios";
 var PrelieviLatteService = /** @class */ (function () {
     function PrelieviLatteService() {
     }
-    PrelieviLatteService.prototype.getPrelievi = function (id, dataInizio, dataFine) {
-        var url = '/api/prelievilatte/Search?idAllevamento=' + id;
+    PrelieviLatteService.prototype.getPrelievi = function (idAllevamento, idTrasportatore, idAcquirente, idDestinatario, dataInizio, dataFine) {
+        var url = '/api/prelievilatte/Search?idAllevamento=' + idAllevamento;
+        url += '&idTrasportatore=' + idTrasportatore;
+        url += '&idAcquirente' + idAcquirente;
+        url += '&idDestinatario' + idDestinatario;
         url += '&dal=' + dataInizio;
         url += '&al=' + dataFine;
         return axios.get(url);

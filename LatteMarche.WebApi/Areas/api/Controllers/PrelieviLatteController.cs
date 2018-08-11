@@ -19,6 +19,8 @@ using LatteMarche.WebApi.Models;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Logs.Interfaces;
 using Newtonsoft.Json;
+using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -36,6 +38,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         private ISitraService sitraService;
         private ILottiService lottiService;
         private ILogsService logsService;
+        private IUtentiService utentiService;
+        
 
         private bool PullEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_pull_enabled"]); } }
         private bool PushEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_push_enabled"]); } }
@@ -45,13 +49,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Constructors
 
-        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService)
+        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
             this.synchService = synchService;
             this.sitraService = sitraService;
             this.lottiService = lottiService;
             this.logsService = logsService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -244,14 +249,25 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
         //[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Search(string idAllevamento = "", string dal = "", string al = "")
+        public IHttpActionResult Search(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string dal = "", string al = "")
         {
+
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+            
+            if(utente.IdProfilo == 3)   // profilo allevatore
+            {
+                idAllevamento = utente.Id.ToString();
+            }
+
             //possibilità di mettere altri parametri come le date periodo prelievo
             try
             {
                 return Ok(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     idAllevamento = String.IsNullOrEmpty(idAllevamento) || idAllevamento == "undefined" ? (int?)null : Convert.ToInt32(idAllevamento),
+                    idTrasportatore = String.IsNullOrEmpty(idTrasportatore) || idTrasportatore == "undefined" ? (int?)null : Convert.ToInt32(idTrasportatore),
+                    idAcquirente = String.IsNullOrEmpty(idAcquirente) || idAcquirente == "undefined" ? (int?)null : Convert.ToInt32(idAcquirente),
+                    idDestinatario = String.IsNullOrEmpty(idDestinatario) || idDestinatario == "undefined" ? (int?)null : Convert.ToInt32(idDestinatario),
                     DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
                     DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
                 }));
