@@ -31,6 +31,11 @@ namespace LatteMarche.WebApi.Controllers
         [ViewItem("Aggiungi", "Prelievi", "Aggiungi")]
         [ViewItem("Modifica", "Prelievi", "Modifica")]
         [ViewItem("Rimuovi", "Prelievi", "Rimuovi")]
+        [ViewItem("RicercaAllevatore", "Prelievi", "Ricerca per Allevatore")]
+        [ViewItem("RicercaTrasportatore", "Prelievi", "Ricerca per Trasportatore")]
+        [ViewItem("RicercaAcquirente", "Prelievi", "Ricerca per Acquirente")]
+        [ViewItem("RicercaDestinatario", "Prelievi", "Ricerca per Destinatario")]
+    
         public ActionResult Index()
         {           
             return View();

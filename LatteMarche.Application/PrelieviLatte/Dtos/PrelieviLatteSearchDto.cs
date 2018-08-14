@@ -9,10 +9,14 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 {
     public class PrelieviLatteSearchDto
     {
+
         public DateTime? DataPeriodoInizio { get; set; }
         public DateTime? DataPeriodoFine { get; set; }
 
         public int? idAllevamento { get; set; }
+        public int? idTrasportatore;
+        public int? idAcquirente;
+        public int? idDestinatario;
 
         public bool? InviatoSitra { get; set; }
 

@@ -10,9 +10,15 @@ import NotificationDialog from "../../components/common/notificationDialog.vue";
 import ConfirmDialog from "../../components/common/confirmDialog.vue";
 
 import { Allevatore } from "../../models/allevatore.model";
+import { Trasportatore } from "../../models/trasportatore.model";
+import { Acquirente } from "../../models/acquirente.model";
+import { Destinatario } from "../../models/destinatario.model";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 
 import { AllevatoriService } from "../../services/allevatori.service";
+import { TrasportatoriService } from "../../services/trasportatori.service";
+import { AcquirentiService } from "../../services/acquirenti.service";
+import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 
 
@@ -48,13 +54,24 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     private prelieviLatteService: PrelieviLatteService;
     private allevatoriService: AllevatoriService;
+    public trasporatoriService: TrasportatoriService;
+    public destinatariService: DestinatariService;
+    public acquirentiService: AcquirentiService;
 
     public columnOptions: any[] = [];
     public allevatori: Allevatore[] = [];
+    public trasportatore: Trasportatore[] = [];
+    public destinatario: Destinatario[] = [];
+    public acquirente: Acquirente[] = [];
     public prelievi: PrelievoLatte[] = [];
     private idPrelievoDaEliminare: number;
 
     public idAllevatoreSelezionato: number = 0;
+    public idTrasportatoreSelezionato: number = 0;
+    public idDestinatarioSelezionato: number = 0;
+    public idAcquirenteSelezionato: number = 0;
+
+
     public prelievoSelezionato: PrelievoLatte;
     public dal: string = "";
     public al: string = "";
@@ -62,6 +79,10 @@ export default class PrelieviLatteIndexPage extends Vue {
     public canAdd: boolean = false;
     public canEdit: boolean = false;
     public canRemove: boolean = false;
+    public canSearchAllevatore: boolean = false;
+    public canSearchTrasportatore: boolean = false;
+    public canSearchAcquirente: boolean = false;
+    public canSearchDestinatario: boolean = false;
 
     constructor() {
         super();
@@ -69,15 +90,26 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.prelieviLatteService = new PrelieviLatteService();
         this.allevatoriService = new AllevatoriService();
         this.prelievoSelezionato = new PrelievoLatte();
+        this.trasporatoriService = new TrasportatoriService();
+        this.destinatariService = new DestinatariService();
+        this.acquirentiService = new AcquirentiService();
 
         this.canAdd = $('#canAdd').val() == "true";
         this.canEdit = $('#canEdit').val() == "true";
         this.canRemove = $('#canRemove').val() == "true";
+        this.canSearchAllevatore = $('#canSearchAllevatore').val() == "true";
+        this.canSearchTrasportatore = $('#canSearchTrasportatore').val() == "true";
+        this.canSearchAcquirente = $('#canSearchAcquirente').val() == "true";
+        this.canSearchDestinatario = $('#canSearchDestinatario').val() == "true";
+
     }
 
     public mounted() {
         this.initTable();
         this.loadAllevatori();
+        this.loadTrasportatori();
+        this.loadDestinatari();
+        this.loadAcquirenti();
         this.initSearchBox();
     }
 
@@ -89,7 +121,10 @@ export default class PrelieviLatteIndexPage extends Vue {
     // Ricerca
     public onCercaClick() {
         var idAllevatoreStr = this.idAllevatoreSelezionato == 0 ? "" : this.idAllevatoreSelezionato.toString();
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, this.dal, this.al)
+        var idTrasportatoreStr = this.idTrasportatoreSelezionato == 0 ? "" : this.idTrasportatoreSelezionato.toString();
+        var idAcquirenteStr = this.idAcquirenteSelezionato == 0 ? "" : this.idAcquirenteSelezionato.toString();
+        var idDestinatarioStr = this.idDestinatarioSelezionato == 0 ? "" : this.idDestinatarioSelezionato.toString();
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
             .then(response => {
                 this.prelievi = response.data;
             });
@@ -183,6 +218,10 @@ export default class PrelieviLatteIndexPage extends Vue {
     // inizializzazione parametri di ricerca
     private initSearchBox() {
         this.idAllevatoreSelezionato = 0;
+        this.idTrasportatoreSelezionato = 0;
+        this.idAcquirenteSelezionato = 0;
+        this.idDestinatarioSelezionato = 0;
+
 
         var today = new Date();
         this.al = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
@@ -203,6 +242,36 @@ export default class PrelieviLatteIndexPage extends Vue {
                 }
             });
 
+    }
+     
+    // caricamento trasportatori
+    public loadTrasportatori() {
+        this.trasporatoriService.getTrasportatori()
+            .then(response => {
+                if (response.data != null) {
+                    this.trasportatore = response.data;
+                }
+            });
+    }
+
+    // caricamento destinatari
+    public loadDestinatari() {
+        this.destinatariService.index()
+            .then(response => {
+                if (response.data != null) {
+                    this.destinatario = response.data;
+                }
+            });
+    }
+
+    // caricamento acquirenti
+    public loadAcquirenti() {
+        this.acquirentiService.index()
+            .then(response => {
+                if (response.data != null) {
+                    this.acquirente = response.data;
+                }
+            });
     }
 
     private addDays(date: Date, days: number): Date {
