@@ -84,6 +84,9 @@ export default class PrelieviLatteIndexPage extends Vue {
     public canSearchAcquirente: boolean = false;
     public canSearchDestinatario: boolean = false;
 
+    public totale_prelievi_kg: number = 0;
+    public totale_prelievi_lt: number = 0;
+
     constructor() {
         super();
 
@@ -114,20 +117,27 @@ export default class PrelieviLatteIndexPage extends Vue {
     }
 
     // Pulizia selezione
-    public onAnnullaClick() {     
+    public onAnnullaClick() {
         this.initSearchBox();
     }
 
     // Ricerca
     public onCercaClick() {
+        this.totale_prelievi_kg = 0;
+        this.totale_prelievi_lt = 0;
         var idAllevatoreStr = this.idAllevatoreSelezionato == 0 ? "" : this.idAllevatoreSelezionato.toString();
         var idTrasportatoreStr = this.idTrasportatoreSelezionato == 0 ? "" : this.idTrasportatoreSelezionato.toString();
         var idAcquirenteStr = this.idAcquirenteSelezionato == 0 ? "" : this.idAcquirenteSelezionato.toString();
         var idDestinatarioStr = this.idDestinatarioSelezionato == 0 ? "" : this.idDestinatarioSelezionato.toString();
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
-            .then(response => {
-                this.prelievi = response.data;
-            });
+        this.loadPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, (prelievi: PrelievoLatte[]) => {
+            for (let prelievo of this.prelievi) {
+                this.totale_prelievi_kg += prelievo.Quantita;
+                this.totale_prelievi_lt += prelievo.QuantitaLitri;
+                prelievo.QuantitaLitri = Math.round(prelievo.QuantitaLitri * 100) / 100;
+            }
+            this.totale_prelievi_lt = Math.round(this.totale_prelievi_lt * 100) / 100;
+        });
+
     }
 
     // Evento fine generazione tabella
@@ -183,8 +193,11 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.columnOptions.push({ data: "DataPrelievoStr" });
         this.columnOptions.push({ data: "DataConsegnaStr" });
         this.columnOptions.push({ data: "Quantita" });
+        this.columnOptions.push({ data: "QuantitaLitri" });
         this.columnOptions.push({ data: "Temperatura" });
         this.columnOptions.push({ data: "Trasportatore" });
+        this.columnOptions.push({ data: "Acquirente" });
+        this.columnOptions.push({ data: "Destinatario" });
         this.columnOptions.push({ data: "Allevamento" });
 
         var ce = this.canEdit;
@@ -229,7 +242,7 @@ export default class PrelieviLatteIndexPage extends Vue {
         var yesterday = this.addDays(today, -1);
 
         this.dal = yesterday.getDate() + '/' + (yesterday.getMonth() + 1) + '/' + yesterday.getFullYear();
-        
+
     }
 
     // caricamento allevatori
@@ -243,9 +256,9 @@ export default class PrelieviLatteIndexPage extends Vue {
             });
 
     }
-     
+
     // caricamento trasportatori
-    public loadTrasportatori() {
+    private loadTrasportatori() {
         this.trasporatoriService.getTrasportatori()
             .then(response => {
                 if (response.data != null) {
@@ -255,7 +268,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     }
 
     // caricamento destinatari
-    public loadDestinatari() {
+    private loadDestinatari() {
         this.destinatariService.index()
             .then(response => {
                 if (response.data != null) {
@@ -265,12 +278,21 @@ export default class PrelieviLatteIndexPage extends Vue {
     }
 
     // caricamento acquirenti
-    public loadAcquirenti() {
+    private loadAcquirenti() {
         this.acquirentiService.index()
             .then(response => {
                 if (response.data != null) {
                     this.acquirente = response.data;
                 }
+            });
+    }
+
+    private loadPrelievi(idAllevatoreStr: string, idTrasportatoreStr: string, idAcquirenteStr: string, idDestinatarioStr: string, done: (prelievi: PrelievoLatte[]) => void) {
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
+            .then(response => {
+                this.prelievi = response.data;
+
+                done(this.prelievi);
             });
     }
 

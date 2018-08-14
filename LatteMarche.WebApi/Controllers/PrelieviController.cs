@@ -1,5 +1,7 @@
 ﻿using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
@@ -21,10 +23,13 @@ namespace LatteMarche.WebApi.Controllers
     {
 
         private IPrelieviLatteService prelieviLatteService;
+        private IUtentiService utentiService;
 
-        public PrelieviController(IPrelieviLatteService prelieviLatteService)
+
+        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
+            this.utentiService = utentiService;
         }
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
@@ -43,11 +48,33 @@ namespace LatteMarche.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Excel(string idAllevamento = "", string dal = "", string al = "")
+        public ActionResult Excel(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string dal = "", string al = "")
         {
+
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+
+            switch (utente.IdProfilo)
+            {
+                case 3:     // profilo allevatore
+                    idAllevamento = utente.Id.ToString();
+                    break;
+                case 5:     // profilo trasportatore
+                    idTrasportatore = utente.Id.ToString();
+                    break;
+                case 7:     // profilo acquirente
+                    idAcquirente = utente.Id.ToString();
+                    break;
+                case 6:     // profilo destinatario
+                    idDestinatario = utente.Id.ToString();
+                    break;
+            }
+
             var prelievi = this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
             {
                 idAllevamento = String.IsNullOrEmpty(idAllevamento) || idAllevamento == "undefined" || idAllevamento == "0" ? (int?)null : Convert.ToInt32(idAllevamento),
+                idTrasportatore = String.IsNullOrEmpty(idTrasportatore) || idTrasportatore == "undefined" || idTrasportatore == "0" ? (int?)null : Convert.ToInt32(idTrasportatore),
+                idAcquirente = String.IsNullOrEmpty(idAcquirente) || idAcquirente == "undefined" || idAcquirente == "0" ? (int?)null : Convert.ToInt32(idAcquirente),
+                idDestinatario = String.IsNullOrEmpty(idDestinatario) || idDestinatario == "undefined" || idDestinatario == "0" ? (int?)null : Convert.ToInt32(idDestinatario),
                 DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
                 DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
             });
@@ -55,7 +82,7 @@ namespace LatteMarche.WebApi.Controllers
             RB.Excel.ExcelMaker maker = new RB.Excel.ExcelMaker();
 
             byte[] content = maker.Make<V_PrelievoLatte>(prelievi);
-
+            
             return File(content, "application/vnd.ms-excel", "prelievi.xls");
 
         }

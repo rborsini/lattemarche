@@ -3,6 +3,7 @@ using RB.Excel;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LatteMarche.Core.Models;
 
 namespace LatteMarche.Core.Models
 {
@@ -39,6 +40,10 @@ namespace LatteMarche.Core.Models
         [Column("QUANTITA")]
         [ExcelHeader("QUANTITA (Kg)", 7)]
         public Decimal? Quantita { get; set; }
+
+        [NotMapped]
+        [ExcelHeader("QUANTITA (lt)", 8)]
+        public Decimal? QuantitaLitri { get { return Fattore_Conversione is null ? null : Quantita * Fattore_Conversione; } }
 
         [Column("TEMPERATURA")]
         public Decimal? Temperatura { get; set; }
@@ -98,15 +103,18 @@ namespace LatteMarche.Core.Models
         public int? NumeroMungiture { get; set; }
 
         [Column("SCOMPARTO")]
-        [ExcelHeader("SCOMPARTO", 8)]
+        [ExcelHeader("SCOMPARTO", 9)]
         public string Scomparto { get; set; }
 
         [Column("LOTTO_CONSEGNA")]
-        [ExcelHeader("LOTTO CONSEGNA", 9)]
+        [ExcelHeader("LOTTO CONSEGNA", 10)]
         public string LottoConsegna { get; set; }
 
         [Column("CODICE_SITRA")]
         public string CodiceSitra { get; set; }
+
+        [Column("FATTORE_CONVERSIONE")]
+        public decimal? Fattore_Conversione { get; set; }
 
         public V_PrelievoLatte()
         {

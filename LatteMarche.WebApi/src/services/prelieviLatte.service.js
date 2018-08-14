@@ -5,8 +5,8 @@ var PrelieviLatteService = /** @class */ (function () {
     PrelieviLatteService.prototype.getPrelievi = function (idAllevamento, idTrasportatore, idAcquirente, idDestinatario, dataInizio, dataFine) {
         var url = '/api/prelievilatte/Search?idAllevamento=' + idAllevamento;
         url += '&idTrasportatore=' + idTrasportatore;
-        url += '&idAcquirente' + idAcquirente;
-        url += '&idDestinatario' + idDestinatario;
+        url += '&idAcquirente=' + idAcquirente;
+        url += '&idDestinatario=' + idDestinatario;
         url += '&dal=' + dataInizio;
         url += '&al=' + dataFine;
         return axios.get(url);
