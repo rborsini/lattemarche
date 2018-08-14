@@ -113,13 +113,14 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                             p.IdAllevamento == item.IdAllevamento &&
                             p.IdTrasportatore == item.IdTrasportatore &&
                             p.DataPrelievo == item.DataPrelievo);
-                    //PrelievoLatte prelievoDb = null;
 
 
                     if (prelievoDb != null)
                     {
                         // update
+                        string codiceSitra = prelievoDb.CodiceSitra;
                         prelievoDb = UpdateProperties(item, prelievoDb);
+                        prelievoDb.CodiceSitra = codiceSitra;
                         prelievoDb.LastChange = DateTime.Now;
                         prelievoDb.LastOperation = Common.OperationEnum.Synched;
 
