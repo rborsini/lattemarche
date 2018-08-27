@@ -17,7 +17,7 @@ namespace LatteMarche.Application.Lotti.Interfaces
         /// </summary>
         /// <param name="prelievi"></param>
         /// <returns></returns>
-        List<LottoDto> GetLotti(List<PrelievoLatte> prelievi);
+        List<LottoDto> GetLotti(List<PrelievoLatteDto> prelievi);
 
         /// <summary>
         /// Ricerca per codice lotto

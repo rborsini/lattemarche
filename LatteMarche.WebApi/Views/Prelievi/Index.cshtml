@@ -150,7 +150,7 @@
         <!-- Toolbox -->
         <template slot="toolbox">
             <div class="toolbox">
-                <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="float-right btn btn-primary">Esporta excel</a>
+                <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&idTrasportatore=' + idTrasportatoreSelezionato + '&idAcquirente=' + idAcquirenteSelezionato + '&idDestinatario=' + idDestinatarioSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="float-right btn btn-primary">Esporta excel</a>
                 <button v-if="canAdd" class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
             </div>
         </template>
@@ -159,10 +159,26 @@
         <template slot="thead">
             <th>Data prelievo</th>
             <th>Data consegna</th>
-            <th>Quantità</th>
-            <th>Temperatura</th>
+            <th>Quant. Kg</th>
+            <th>Quant. lt</th>
+            <th>Temp. C°</th>
             <th>Trasportatore</th>
+            <th>Acquirente</th>
+            <th>Destinatario</th>
             <th>Allevamento</th>
+            <th v-if="canEdit || canRemove"></th>
+        </template>
+
+        <!-- foot -->
+        <template slot="tfoot">
+            <th colspan="2" style="text-align:right">Totale:</th>
+            <th>{{totale_prelievi_kg}} kg</th>
+            <th>{{totale_prelievi_lt}} lt</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th v-if="canEdit || canRemove"></th>
         </template>
 

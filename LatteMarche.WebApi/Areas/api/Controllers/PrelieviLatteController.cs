@@ -150,27 +150,40 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             SitraResponseVieModel response = new SitraResponseVieModel();
 
+            response.SitraEnabled = this.SitraEnabled;
+
             // invio sitra
-            //this.LogDebug("InvioSitra", $"SitraEnabled [{this.SitraEnabled}]");
+            this.LogDebug("InvioSitra", $"SitraEnabled [{this.SitraEnabled}]");
             if (this.SitraEnabled)
             {
                 DateTime data = String.IsNullOrEmpty(day) ? DateTime.Today.AddDays(-1) : new DateHelper().ConvertToDateTime(day).Value;
 
-                //this.LogDebug("InvioSitra", $"data [{data}]");
+                this.LogDebug("InvioSitra", $"data [{data}]");
 
                 // prelievi giorno precedente
-                List<PrelievoLatte> prelieviDaInviare = Mapper.Map<List<PrelievoLatte>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
+                List<PrelievoLatteDto> prelieviDaInviare = Mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
                 {
                     DataPeriodoInizio = data,
                     DataPeriodoFine = data
                 }).ToList());
 
-                //this.LogDebug("InvioSitra", $"prelievi giornalieri [{prelieviDaInviare.Count}]");
+                this.LogDebug("InvioSitra", $"prelievi giornalieri [{prelieviDaInviare.Count}]");
 
                 // invio singoli prelievi
                 response.PrelieviInviati = this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
 
-                //this.LogDebug("InvioSitra", $"prelievi inviati [{JsonConvert.SerializeObject(response.PrelieviInviati)}]");
+                this.LogDebug("InvioSitra", $"prelievi inviati [{JsonConvert.SerializeObject(response.PrelieviInviati)}]");
+
+                // fix valorizzazione codice sitra
+                foreach(var prelievo in prelieviDaInviare)
+                {
+                    var prelievoInviato = response.PrelieviInviati.FirstOrDefault(p => p.Id == prelievo.Id);
+
+                    if (prelievoInviato != null)
+                        prelievo.CodiceSitra = prelievoInviato.CodiceSitra;
+                }
+
+                this.LogDebug("InvioSitra", $"prelieviDaInviare2 [{JsonConvert.SerializeObject(prelieviDaInviare)}]");
 
                 // estrazione lotti dai nuovi prelievi
                 var lotti = this.lottiService.GetLotti(prelieviDaInviare);
@@ -253,22 +266,21 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
 
             UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
-            
-            if(utente.IdProfilo == 3)   // profilo allevatore
+
+            switch (utente.IdProfilo)
             {
-                idAllevamento = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 5) // profilo trasportatore
-            {
-                idTrasportatore = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 7) // profilo acquirente
-            {
-                idAcquirente = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 6) // profilo destinatario
-            {
-                idDestinatario = utente.Id.ToString();
+                case 3:     // profilo allevatore
+                    idAllevamento = utente.Id.ToString();
+                    break;
+                case 5:     // profilo trasportatore
+                    idTrasportatore = utente.Id.ToString();
+                    break;
+                case 7:     // profilo acquirente
+                    idAcquirente = utente.Id.ToString();
+                    break;
+                case 6:     // profilo destinatario
+                    idDestinatario = utente.Id.ToString();
+                    break;
             }
 
             //possibilità di mettere altri parametri come le date periodo prelievo

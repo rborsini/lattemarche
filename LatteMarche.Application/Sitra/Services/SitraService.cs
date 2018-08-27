@@ -80,16 +80,16 @@ namespace LatteMarche.Application.Sitra.Services
             //this.LogDebug($"accessToken [{accessToken}]");
 
             // recupero allevamenti per cui si deve effettuare l'invio al sitra
-            Dictionary<int, AllevamentoDto> alllevamentiSitra = this.allevamentiService.GetAllevamentiSitra().ToDictionary(k => k.Id, k => k);
+            Dictionary<int, AllevamentoDto> allevamentiSitra = this.allevamentiService.GetAllevamentiSitra().ToDictionary(k => k.Id, k => k);
 
             // invio singoli prelievi 
-            foreach (var prelievo in prelievi.Where(p => alllevamentiSitra.Keys.Contains(p.IdAllevamento)))
+            foreach (var prelievo in prelievi.Where(p => allevamentiSitra.Keys.Contains(p.IdAllevamento.Value)))
             {
                 // se non è già stato inviato
                 if(!Sent(prelievo))
                 {
                     // testata del documento da inviare
-                    SitraDto root = MakeRoot(prelievo, alllevamentiSitra[prelievo.IdAllevamento]);
+                    SitraDto root = MakeRoot(prelievo, allevamentiSitra[prelievo.IdAllevamento.Value]);
 
                     try
                     {
@@ -157,7 +157,7 @@ namespace LatteMarche.Application.Sitra.Services
                         {
                             IdLotto = Convert.ToInt32(lotto.CodiceSitra),
                             IdLottoPadre = Convert.ToInt32(prelievoPadre.CodiceSitra),
-                            Quantita = prelievoPadre.Quantita,
+                            Quantita = prelievoPadre.Quantita.HasValue ? prelievoPadre.Quantita.Value : 0,
                             IdUnitaMisura = IdUnitaMisura
                         });
                     }
@@ -246,24 +246,24 @@ namespace LatteMarche.Application.Sitra.Services
         {
             this.LogDebug($"InserimentoLottoPadre {JsonConvert.SerializeObject(lottoPadre)}");
 
-            //if (Sent(accessToken, lottoPadre))
-            //    return "";
+            if (Sent(accessToken, lottoPadre))
+                return "";
 
-            //var client = new RestClient($"{sitraUrl}/api/lottiPadre");
-            //var request = new RestRequest(Method.POST);
+            var client = new RestClient($"{sitraUrl}/api/lottiPadre");
+            var request = new RestRequest(Method.POST);
 
-            //request.AddHeader("Cache-Control", "no-cache");
-            //request.AddHeader("Authorization", $"Bearer {accessToken}");
-            //request.AddHeader("Content-Type", "application/json");
-            //request.AddParameter("undefined", JsonConvert.SerializeObject(lottoPadre), ParameterType.RequestBody);
+            request.AddHeader("Cache-Control", "no-cache");
+            request.AddHeader("Authorization", $"Bearer {accessToken}");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", JsonConvert.SerializeObject(lottoPadre), ParameterType.RequestBody);
 
-            //IRestResponse response = client.Execute(request);
+            IRestResponse response = client.Execute(request);
 
-            //this.LogDebug($"Response lotto padre {JsonConvert.SerializeObject(lottoPadre)} [{JsonConvert.SerializeObject(response)}]");
+            this.LogDebug($"Response lotto padre {JsonConvert.SerializeObject(lottoPadre)} [{JsonConvert.SerializeObject(response)}]");
 
-            //if (response.StatusCode == HttpStatusCode.NoContent)
-            //    return response.Content.Replace('"', ' ').Trim();
-            //else
+            if (response.StatusCode == HttpStatusCode.NoContent)
+                return response.Content.Replace('"', ' ').Trim();
+            else
                 return String.Empty;
         }
 
@@ -303,10 +303,10 @@ namespace LatteMarche.Application.Sitra.Services
         {
             SitraDto root = new SitraDto();
 
-            root.Lotto.CodiceLotto = prelievo.DataConsegna.ToString("ddMMyy");
-            root.Lotto.DataProduzione = prelievo.DataConsegna.ToString("dd/MM/yyyy");
+            root.Lotto.CodiceLotto = prelievo.DataConsegna.Value.ToString("ddMMyy");
+            root.Lotto.DataProduzione = prelievo.DataConsegna.Value.ToString("dd/MM/yyyy");
             //root.Lotto.Quantita = Convert.ToInt32(prelievo.Quantita * this.allevamentiService.GetFattoreConversione(allevamento.Id));
-            root.Lotto.Quantita = prelievo.Quantita;
+            root.Lotto.Quantita = prelievo.Quantita.HasValue ? prelievo.Quantita.Value : 0;
             root.Lotto.IdUnitaMisura = IdUnitaMisura; 
             root.Lotto.CodOperatore = codOperatore;
             root.Lotto.IdProdotto = idLatteCrudo;
@@ -319,7 +319,7 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Data ultima mungitura",
                 Obbligatorio = true,
                 TipoDiDato = "data",
-                ValoreAttributo = prelievo.DataUltimaMungitura.ToString("dd/MM/yyyy")
+                ValoreAttributo = prelievo.DataUltimaMungitura.HasValue ? prelievo.DataUltimaMungitura.Value.ToString("dd/MM/yyyy") : String.Empty
             });
 
             // Ora Ultima Mungitura
@@ -329,7 +329,7 @@ namespace LatteMarche.Application.Sitra.Services
                 NomeAttributo = "Ora Ultima Mungitura",
                 Obbligatorio = true,
                 TipoDiDato = "testo",
-                ValoreAttributo = prelievo.DataUltimaMungitura.ToString("HH:mm")
+                ValoreAttributo = prelievo.DataUltimaMungitura.HasValue ? prelievo.DataUltimaMungitura.Value.ToString("HH:mm") : String.Empty
             });
 
             return root;

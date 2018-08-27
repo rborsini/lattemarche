@@ -41,7 +41,7 @@ namespace LatteMarche.Application.Lotti.Services
         /// </summary>
         /// <param name="prelievi"></param>
         /// <returns></returns>
-        public List<LottoDto> GetLotti(List<PrelievoLatte> prelievi)
+        public List<LottoDto> GetLotti(List<PrelievoLatteDto> prelievi)
         {
             // elenco allevamento con flag alta qualità obbligati all'invio SITRA
             var allevamentiDaInviare = this.allevamentiService.GetAllevamentiSitra();
