@@ -9,8 +9,8 @@ export class PrelieviLatteService {
     public getPrelievi(idAllevamento: string, idTrasportatore: string, idAcquirente: string, idDestinatario: string,  dataInizio: string, dataFine: string): AxiosPromise<PrelievoLatte[]> {
         var url = '/api/prelievilatte/Search?idAllevamento=' + idAllevamento;
         url += '&idTrasportatore=' + idTrasportatore;
-        url += '&idAcquirente' + idAcquirente;
-        url += '&idDestinatario' + idDestinatario;
+        url += '&idAcquirente=' + idAcquirente;
+        url += '&idDestinatario=' + idDestinatario;
         url += '&dal=' + dataInizio;
         url += '&al=' + dataFine;
         return axios.get(url);

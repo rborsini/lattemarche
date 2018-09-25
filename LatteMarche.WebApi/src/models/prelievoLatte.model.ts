@@ -19,6 +19,7 @@
     public OraPrelievo: string = "";
     public OraUltimaMungitura: string = "";
     public Quantita: number = 0;
+    public QuantitaLitri: number = 0;
     public Scomparto: string = "";
     public SerialeLabAnalisi: string = "";
     public Temperatura: number = 0;

@@ -10,6 +10,11 @@
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <slot name="tfoot"></slot>
+                </tr>
+            </tfoot>
         </table>        
     </div>
 </template>

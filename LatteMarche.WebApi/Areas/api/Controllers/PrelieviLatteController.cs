@@ -266,22 +266,21 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
 
             UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
-            
-            if(utente.IdProfilo == 3)   // profilo allevatore
+
+            switch (utente.IdProfilo)
             {
-                idAllevamento = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 5) // profilo trasportatore
-            {
-                idTrasportatore = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 7) // profilo acquirente
-            {
-                idAcquirente = utente.Id.ToString();
-            }
-            else if (utente.IdProfilo == 6) // profilo destinatario
-            {
-                idDestinatario = utente.Id.ToString();
+                case 3:     // profilo allevatore
+                    idAllevamento = utente.Id.ToString();
+                    break;
+                case 5:     // profilo trasportatore
+                    idTrasportatore = utente.Id.ToString();
+                    break;
+                case 7:     // profilo acquirente
+                    idAcquirente = utente.Id.ToString();
+                    break;
+                case 6:     // profilo destinatario
+                    idDestinatario = utente.Id.ToString();
+                    break;
             }
 
             //possibilità di mettere altri parametri come le date periodo prelievo

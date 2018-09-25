@@ -20,6 +20,7 @@ var PrelievoLatte = /** @class */ (function () {
         this.OraPrelievo = "";
         this.OraUltimaMungitura = "";
         this.Quantita = 0;
+        this.QuantitaLitri = 0;
         this.Scomparto = "";
         this.SerialeLabAnalisi = "";
         this.Temperatura = 0;
