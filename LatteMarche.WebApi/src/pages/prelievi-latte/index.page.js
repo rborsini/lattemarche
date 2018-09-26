@@ -141,6 +141,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     PrelieviLatteIndexPage.prototype.initTable = function () {
         this.columnOptions.push({ data: "DataPrelievoStr" });
         this.columnOptions.push({ data: "DataConsegnaStr" });
+        this.columnOptions.push({ data: "DataUltimaMungituraStr" });
         this.columnOptions.push({ data: "Quantita" });
         this.columnOptions.push({ data: "QuantitaLitri" });
         this.columnOptions.push({ data: "Temperatura" });
