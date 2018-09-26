@@ -31,12 +31,14 @@ import { TrasportatoriService } from "../../services/trasportatori.service";
 import { AcquirentiService } from "../../services/acquirenti.service";
 import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
+import { TipiLatteService } from "../../services/tipiLatte.service";
 var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     __extends(PrelieviLatteIndexPage, _super);
     function PrelieviLatteIndexPage() {
         var _this = _super.call(this) || this;
         _this.columnOptions = [];
         _this.allevatori = [];
+        _this.tipiLatte = [];
         _this.trasportatore = [];
         _this.destinatario = [];
         _this.acquirente = [];
@@ -45,6 +47,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         _this.idTrasportatoreSelezionato = 0;
         _this.idDestinatarioSelezionato = 0;
         _this.idAcquirenteSelezionato = 0;
+        _this.idTipoLatteSelezionato = 0;
         _this.dal = "";
         _this.al = "";
         _this.canAdd = false;
@@ -58,6 +61,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         _this.totale_prelievi_lt = 0;
         _this.prelieviLatteService = new PrelieviLatteService();
         _this.allevatoriService = new AllevatoriService();
+        _this.tipiLatteService = new TipiLatteService();
         _this.prelievoSelezionato = new PrelievoLatte();
         _this.trasporatoriService = new TrasportatoriService();
         _this.destinatariService = new DestinatariService();
@@ -74,6 +78,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     PrelieviLatteIndexPage.prototype.mounted = function () {
         this.initTable();
         this.loadAllevatori();
+        this.loadTipiLatte();
         this.loadTrasportatori();
         this.loadDestinatari();
         this.loadAcquirenti();
@@ -89,10 +94,11 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         this.totale_prelievi_kg = 0;
         this.totale_prelievi_lt = 0;
         var idAllevatoreStr = this.idAllevatoreSelezionato == 0 ? "" : this.idAllevatoreSelezionato.toString();
+        var idTipoLatteStr = this.idTipoLatteSelezionato == 0 ? "" : this.idTipoLatteSelezionato.toString();
         var idTrasportatoreStr = this.idTrasportatoreSelezionato == 0 ? "" : this.idTrasportatoreSelezionato.toString();
         var idAcquirenteStr = this.idAcquirenteSelezionato == 0 ? "" : this.idAcquirenteSelezionato.toString();
         var idDestinatarioStr = this.idDestinatarioSelezionato == 0 ? "" : this.idDestinatarioSelezionato.toString();
-        this.loadPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, function (prelievi) {
+        this.loadPrelievi(idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, function (prelievi) {
             for (var _i = 0, _a = _this.prelievi; _i < _a.length; _i++) {
                 var prelievo = _a[_i];
                 _this.totale_prelievi_kg += prelievo.Quantita;
@@ -187,6 +193,16 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
             }
         });
     };
+    // caricamento tipi latte
+    PrelieviLatteIndexPage.prototype.loadTipiLatte = function () {
+        var _this = this;
+        this.tipiLatteService.index()
+            .then(function (response) {
+            if (response.data != null) {
+                _this.tipiLatte = response.data;
+            }
+        });
+    };
     // caricamento trasportatori
     PrelieviLatteIndexPage.prototype.loadTrasportatori = function () {
         var _this = this;
@@ -217,9 +233,9 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
             }
         });
     };
-    PrelieviLatteIndexPage.prototype.loadPrelievi = function (idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, done) {
+    PrelieviLatteIndexPage.prototype.loadPrelievi = function (idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, done) {
         var _this = this;
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
             .then(function (response) {
             _this.prelievi = response.data;
             done(_this.prelievi);

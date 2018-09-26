@@ -14,12 +14,14 @@ import { Trasportatore } from "../../models/trasportatore.model";
 import { Acquirente } from "../../models/acquirente.model";
 import { Destinatario } from "../../models/destinatario.model";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
+import { TipoLatte } from "../../models/tipoLatte.model";
 
 import { AllevatoriService } from "../../services/allevatori.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
 import { AcquirentiService } from "../../services/acquirenti.service";
 import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
+import { TipiLatteService } from "../../services/tipiLatte.service";
 
 
 declare module 'vue/types/vue' {
@@ -54,12 +56,14 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     private prelieviLatteService: PrelieviLatteService;
     private allevatoriService: AllevatoriService;
+    private tipiLatteService: TipiLatteService;
     public trasporatoriService: TrasportatoriService;
     public destinatariService: DestinatariService;
     public acquirentiService: AcquirentiService;
 
     public columnOptions: any[] = [];
     public allevatori: Allevatore[] = [];
+    public tipiLatte: TipoLatte[] = [];
     public trasportatore: Trasportatore[] = [];
     public destinatario: Destinatario[] = [];
     public acquirente: Acquirente[] = [];
@@ -70,6 +74,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     public idTrasportatoreSelezionato: number = 0;
     public idDestinatarioSelezionato: number = 0;
     public idAcquirenteSelezionato: number = 0;
+    public idTipoLatteSelezionato: number = 0;
 
 
     public prelievoSelezionato: PrelievoLatte;
@@ -92,6 +97,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
         this.prelieviLatteService = new PrelieviLatteService();
         this.allevatoriService = new AllevatoriService();
+        this.tipiLatteService = new TipiLatteService();
         this.prelievoSelezionato = new PrelievoLatte();
         this.trasporatoriService = new TrasportatoriService();
         this.destinatariService = new DestinatariService();
@@ -110,6 +116,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     public mounted() {
         this.initTable();
         this.loadAllevatori();
+        this.loadTipiLatte();
         this.loadTrasportatori();
         this.loadDestinatari();
         this.loadAcquirenti();
@@ -126,10 +133,11 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.totale_prelievi_kg = 0;
         this.totale_prelievi_lt = 0;
         var idAllevatoreStr = this.idAllevatoreSelezionato == 0 ? "" : this.idAllevatoreSelezionato.toString();
+        var idTipoLatteStr = this.idTipoLatteSelezionato == 0 ? "" : this.idTipoLatteSelezionato.toString();
         var idTrasportatoreStr = this.idTrasportatoreSelezionato == 0 ? "" : this.idTrasportatoreSelezionato.toString();
         var idAcquirenteStr = this.idAcquirenteSelezionato == 0 ? "" : this.idAcquirenteSelezionato.toString();
         var idDestinatarioStr = this.idDestinatarioSelezionato == 0 ? "" : this.idDestinatarioSelezionato.toString();
-        this.loadPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, (prelievi: PrelievoLatte[]) => {
+        this.loadPrelievi(idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, (prelievi: PrelievoLatte[]) => {
             for (let prelievo of this.prelievi) {
                 this.totale_prelievi_kg += prelievo.Quantita;
                 this.totale_prelievi_lt += prelievo.QuantitaLitri;
@@ -257,6 +265,17 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     }
 
+    // caricamento tipi latte
+    private loadTipiLatte(): void {
+
+        this.tipiLatteService.index()
+            .then(response => {
+                if (response.data != null) {
+                    this.tipiLatte = response.data;
+                }
+            });
+    }
+
     // caricamento trasportatori
     private loadTrasportatori() {
         this.trasporatoriService.getTrasportatori()
@@ -287,8 +306,8 @@ export default class PrelieviLatteIndexPage extends Vue {
             });
     }
 
-    private loadPrelievi(idAllevatoreStr: string, idTrasportatoreStr: string, idAcquirenteStr: string, idDestinatarioStr: string, done: (prelievi: PrelievoLatte[]) => void) {
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
+    private loadPrelievi(idAllevatoreStr: string, idTipoLatteStr: string, idTrasportatoreStr: string, idAcquirenteStr: string, idDestinatarioStr: string, done: (prelievi: PrelievoLatte[]) => void) {
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
             .then(response => {
                 this.prelievi = response.data;
 
