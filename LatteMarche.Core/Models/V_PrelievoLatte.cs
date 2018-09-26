@@ -23,7 +23,7 @@ namespace LatteMarche.Core.Models
         [ExcelHeader("DATA E ORA PRELIEVO", 6)]
         public string DataPrelievoStr
         {
-            get { return new DateHelper().FormatDate(this.DataPrelievo); }
+            get { return new DateHelper().FormatDateTime(this.DataPrelievo); }
             set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
         }
 
@@ -33,7 +33,7 @@ namespace LatteMarche.Core.Models
         [NotMapped]
         public string DataConsegnaStr
         {
-            get { return new DateHelper().FormatDate(this.DataConsegna); }
+            get { return new DateHelper().FormatDateTime(this.DataConsegna); }
             set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
         }
 
@@ -54,7 +54,7 @@ namespace LatteMarche.Core.Models
         [NotMapped]
         public string DataUltimaMungituraStr
         {
-            get { return new DateHelper().FormatDate(this.DataUltimaMungitura); }
+            get { return new DateHelper().FormatDateTime(this.DataUltimaMungitura); }
             set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
         }
 
