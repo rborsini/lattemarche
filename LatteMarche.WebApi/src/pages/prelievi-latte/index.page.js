@@ -174,8 +174,8 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         this.idDestinatarioSelezionato = 0;
         var today = new Date();
         this.al = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-        var yesterday = this.addDays(today, -1);
-        this.dal = yesterday.getDate() + '/' + (yesterday.getMonth() + 1) + '/' + yesterday.getFullYear();
+        var lastMonth = this.subtractMonth(today);
+        this.dal = lastMonth.getDate() + '/' + (lastMonth.getMonth() + 1) + '/' + lastMonth.getFullYear();
     };
     // caricamento allevatori
     PrelieviLatteIndexPage.prototype.loadAllevatori = function () {
@@ -225,11 +225,37 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
             done(_this.prelievi);
         });
     };
-    PrelieviLatteIndexPage.prototype.addDays = function (date, days) {
-        //console.log('adding ' + days + ' days');
-        //console.log(date);
-        date.setDate(date.getDate() + days);
-        //console.log(date);
+    PrelieviLatteIndexPage.prototype.subtractMonth = function (date) {
+        var days = 0;
+        //get month ritorna un numero da 0 a 11. Dovendo considerare il mese precedente
+        //da sottrarre, per comodità aggiungo un numero al case, considerando quindi lo 0 come dicembre
+        switch (date.getMonth()) {
+            case 4: //Aprile
+            case 6: //Giugno
+            case 9: //Settembre
+            case 11: //Novembre
+                {
+                    days = 30;
+                    break;
+                }
+            case 2: //febbraio
+                {
+                    if (date.getFullYear() % 4 != 0) //anno non bisestile
+                     {
+                        days = 28;
+                    }
+                    else {
+                        days = 29;
+                    }
+                    break;
+                }
+            default: //altri mesi
+                {
+                    days = 31;
+                    break;
+                }
+        }
+        date.setDate(date.getDate() - days);
         return date;
     };
     PrelieviLatteIndexPage = __decorate([
