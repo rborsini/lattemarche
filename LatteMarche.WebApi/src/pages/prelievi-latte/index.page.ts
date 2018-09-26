@@ -200,6 +200,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     private initTable(): void {
         this.columnOptions.push({ data: "DataPrelievoStr" });
         this.columnOptions.push({ data: "DataConsegnaStr" });
+        this.columnOptions.push({ data: "DataUltimaMungituraStr" });
         this.columnOptions.push({ data: "Quantita" });
         this.columnOptions.push({ data: "QuantitaLitri" });
         this.columnOptions.push({ data: "Temperatura" });
@@ -247,9 +248,9 @@ export default class PrelieviLatteIndexPage extends Vue {
         var today = new Date();
         this.al = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 
-        var yesterday = this.addDays(today, -1);
+        var lastMonth = this.subtractMonth(today);
 
-        this.dal = yesterday.getDate() + '/' + (yesterday.getMonth() + 1) + '/' + yesterday.getFullYear();
+        this.dal = lastMonth.getDate() + '/' + (lastMonth.getMonth() + 1) + '/' + lastMonth.getFullYear();
 
     }
 
@@ -315,11 +316,38 @@ export default class PrelieviLatteIndexPage extends Vue {
             });
     }
 
-    private addDays(date: Date, days: number): Date {
-        //console.log('adding ' + days + ' days');
-        //console.log(date);
-        date.setDate(date.getDate() + days);
-        //console.log(date);
+    private subtractMonth(date: Date): Date {
+        var days = 0;
+        //get month ritorna un numero da 0 a 11. Dovendo considerare il mese precedente
+        //da sottrarre, per comodità aggiungo un numero al case, considerando quindi lo 0 come dicembre
+        switch (date.getMonth()) {
+            case 4: //Aprile
+            case 6: //Giugno
+            case 9: //Settembre
+            case 11://Novembre
+                {
+                    days = 30;
+                    break;
+                }
+            case 2: //febbraio
+                {
+                    if (date.getFullYear() % 4 != 0) //anno non bisestile
+                    {
+                        days = 28
+                    }
+                    else
+                    {
+                        days = 29
+                    }
+                    break;
+                }
+            default: //altri mesi
+                {
+                    days = 31;
+                    break;
+                }
+        }
+        date.setDate(date.getDate() - days);
         return date;
     }
 
