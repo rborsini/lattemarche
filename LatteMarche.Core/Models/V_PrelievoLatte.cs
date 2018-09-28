@@ -43,7 +43,7 @@ namespace LatteMarche.Core.Models
 
         [NotMapped]
         [ExcelHeader("QUANTITA (lt)", 8)]
-        public Decimal? QuantitaLitri { get { return Fattore_Conversione is null ? null : Quantita * Fattore_Conversione; } }
+        public Decimal? QuantitaLitri { get { return Fattore_Conversione.HasValue && Quantita.HasValue ? Math.Round(Quantita.Value * Fattore_Conversione.Value) : (decimal?)null; } }
 
         [Column("TEMPERATURA")]
         public Decimal? Temperatura { get; set; }
@@ -91,6 +91,7 @@ namespace LatteMarche.Core.Models
         [Column("ID_TRASPORTATORE")]
         public int? IdTrasportatore { get; set; }
 
+
         [Column("TRASPORTATORE")]
         [ExcelHeader("TRASPORTATORE", 4)]
         public string Trasportatore { get; set; }
@@ -115,6 +116,15 @@ namespace LatteMarche.Core.Models
 
         [Column("FATTORE_CONVERSIONE")]
         public decimal? Fattore_Conversione { get; set; }
+
+        [Column("ID_TIPO_LATTE")]
+        public int? IdTipoLatte { get; set; }
+
+        [Column("DESCR_LATTE")]
+        public string DescrizioneLatte { get; set; }
+
+        [Column("SIGLA_LATTE")]
+        public string SiglaLatte { get; set; }
 
         public V_PrelievoLatte()
         {

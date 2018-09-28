@@ -11,6 +11,9 @@
     public IdDestinatario: number = 0;
     public IdLabAnalisi: number = 0;
     public IdTrasportatore: number = 0;
+    public IdTipoLatte: number = 0;
+    public DescrizioneLatte: string = "";
+    public SiglaLatte: string = "";
     public LastChange: string = "";
     public LastOperation: number = 0;
     public LottoConsegna: string = "";

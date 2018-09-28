@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201808071352216_AggiuntoCampoDuration.Designer.cs">
       <DependentUpon>201808071352216_AggiuntoCampoDuration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809280656427_Aggiornato_V_PrelieviLatte.cs" />
+    <Compile Include="Migrations\201809280656427_Aggiornato_V_PrelieviLatte.Designer.cs">
+      <DependentUpon>201809280656427_Aggiornato_V_PrelieviLatte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -278,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808071352216_AggiuntoCampoDuration.resx">
       <DependentUpon>201808071352216_AggiuntoCampoDuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809280656427_Aggiornato_V_PrelieviLatte.resx">
+      <DependentUpon>201809280656427_Aggiornato_V_PrelieviLatte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

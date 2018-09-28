@@ -19,7 +19,11 @@ SELECT
 	prelievi.NUMERO_MUNGITURE,
 	prelievi.SCOMPARTO,
 	prelievi.LOTTO_CONSEGNA,
-	prelievi.CODICE_SITRA	
+	prelievi.CODICE_SITRA,
+	tipo_latte.FATTORE_CONVERSIONE,
+    tipo_latte.ID_TIPO_LATTE,
+    tipo_latte.DESCRIZIONE AS DESCR_LATTE, 
+    tipo_latte.DESCRIZIONE_BREVE AS SIGLA_LATTE
 FROM            
 
 	PRELIEVO_LATTE AS prelievi
@@ -41,3 +45,6 @@ FROM
 	
 	LEFT OUTER JOIN
 	AUTOCISTERNA as autocisterne on prelievi.ID_TRASPORTATORE = autocisterne.ID_TRASPORTATORE
+
+	LEFT OUTER JOIN
+	TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE

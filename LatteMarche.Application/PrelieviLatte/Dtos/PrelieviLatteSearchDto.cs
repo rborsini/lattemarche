@@ -17,6 +17,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public int? idTrasportatore;
         public int? idAcquirente;
         public int? idDestinatario;
+        public int? idTipoLatte;
 
         public bool? InviatoSitra { get; set; }
 

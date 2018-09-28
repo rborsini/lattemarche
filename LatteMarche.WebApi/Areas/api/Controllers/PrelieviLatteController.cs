@@ -262,7 +262,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
         //[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Search(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string dal = "", string al = "")
+        public IHttpActionResult Search(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string idTipoLatte = "", string dal = "", string al = "")
         {
 
             UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
@@ -292,6 +292,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                     idTrasportatore = String.IsNullOrEmpty(idTrasportatore) || idTrasportatore == "undefined" ? (int?)null : Convert.ToInt32(idTrasportatore),
                     idAcquirente = String.IsNullOrEmpty(idAcquirente) || idAcquirente == "undefined" ? (int?)null : Convert.ToInt32(idAcquirente),
                     idDestinatario = String.IsNullOrEmpty(idDestinatario) || idDestinatario == "undefined" ? (int?)null : Convert.ToInt32(idDestinatario),
+                    idTipoLatte = String.IsNullOrEmpty(idTipoLatte) || idTipoLatte == "undefined" ? (int?)null : Convert.ToInt32(idTipoLatte),
                     DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
                     DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
                 }));

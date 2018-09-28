@@ -141,9 +141,7 @@ export default class PrelieviLatteIndexPage extends Vue {
             for (let prelievo of this.prelievi) {
                 this.totale_prelievi_kg += prelievo.Quantita;
                 this.totale_prelievi_lt += prelievo.QuantitaLitri;
-                prelievo.QuantitaLitri = Math.round(prelievo.QuantitaLitri * 100) / 100;
             }
-            this.totale_prelievi_lt = Math.round(this.totale_prelievi_lt * 100) / 100;
         });
 
     }
@@ -208,6 +206,7 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.columnOptions.push({ data: "Acquirente" });
         this.columnOptions.push({ data: "Destinatario" });
         this.columnOptions.push({ data: "Allevamento" });
+        this.columnOptions.push({ data: "DescrizioneLatte" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
@@ -308,7 +307,8 @@ export default class PrelieviLatteIndexPage extends Vue {
     }
 
     private loadPrelievi(idAllevatoreStr: string, idTipoLatteStr: string, idTrasportatoreStr: string, idAcquirenteStr: string, idDestinatarioStr: string, done: (prelievi: PrelievoLatte[]) => void) {
-        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, this.dal, this.al)
+        console.log('tipolatte load', idTipoLatteStr);
+        this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, idTipoLatteStr, this.dal, this.al)
             .then(response => {
                 this.prelievi = response.data;
 

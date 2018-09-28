@@ -185,6 +185,11 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                 query = query.Where(p => p.IdDestinatario == searchDto.idDestinatario);
             }
 
+            if (searchDto.idTipoLatte != null)
+            {
+                query = query.Where(p => p.IdTipoLatte == searchDto.idTipoLatte);
+            }
+
             // Periodo Prelievo
             if (searchDto.DataPeriodoInizio.HasValue || searchDto.DataPeriodoFine.HasValue)
             {
