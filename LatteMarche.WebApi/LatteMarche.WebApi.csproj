@@ -244,8 +244,6 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
-    <None Include="lattemarche-prod - Web Deploy.pubxml" />
-    <None Include="lattemarche-test - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <Content Include="src\pages\acquirenti\edit.vue" />
     <Content Include="src\pages\destinatari\edit.vue" />
@@ -257,6 +255,7 @@
     <Content Include="log4net.release.config" />
     <Content Include="log4net.test.config" />
     <Content Include="log4net.debug.config" />
+    <None Include="lattemarche - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
