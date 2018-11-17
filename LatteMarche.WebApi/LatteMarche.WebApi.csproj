@@ -362,12 +362,14 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
     <Compile Include="Areas\api\Controllers\UtentiController.cs" />
+    <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\SitraResponseVieModel.cs" />
+    <Compile Include="Models\TotaliPerAllevamento.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
