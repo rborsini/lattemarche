@@ -196,6 +196,7 @@
     <Content Include="Content\plugins\bootstrap\bootstrap.min.js" />
     <Content Include="Content\plugins\datatables\css\dataTable.b4.css" />
     <Content Include="Content\plugins\datatables\dataTable.b4.js" />
+    <Content Include="Content\plugins\datatables\dataTables.rowGroup.min.js" />
     <Content Include="Content\plugins\datatables\images\sort_asc.png" />
     <Content Include="Content\plugins\datatables\images\sort_asc_disabled.png" />
     <Content Include="Content\plugins\datatables\images\sort_both.png" />

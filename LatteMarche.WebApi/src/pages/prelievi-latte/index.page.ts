@@ -61,7 +61,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     public destinatariService: DestinatariService;
     public acquirentiService: AcquirentiService;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public allevatori: Allevatore[] = [];
     public tipiLatte: TipoLatte[] = [];
     public trasportatore: Trasportatore[] = [];
@@ -196,24 +196,29 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "DataPrelievoStr" });
-        this.columnOptions.push({ data: "DataConsegnaStr" });
-        this.columnOptions.push({ data: "DataUltimaMungituraStr" });
-        this.columnOptions.push({ data: "Quantita" });
-        this.columnOptions.push({ data: "QuantitaLitri" });
-        this.columnOptions.push({ data: "Temperatura" });
-        this.columnOptions.push({ data: "Trasportatore" });
-        this.columnOptions.push({ data: "Acquirente" });
-        this.columnOptions.push({ data: "Destinatario" });
-        this.columnOptions.push({ data: "Allevamento" });
-        this.columnOptions.push({ data: "DescrizioneLatte" });
+
+        var options: any = {};
+
+        options.columns = [];
+
+        options.columns.push({ data: "Allevamento" });
+        options.columns.push({ data: "DataPrelievoStr" });
+        options.columns.push({ data: "DataConsegnaStr" });
+        options.columns.push({ data: "DataUltimaMungituraStr" });
+        options.columns.push({ data: "Quantita" });
+        options.columns.push({ data: "QuantitaLitri" });
+        options.columns.push({ data: "Temperatura" });
+        options.columns.push({ data: "Trasportatore" });
+        options.columns.push({ data: "Acquirente" });
+        options.columns.push({ data: "Destinatario" });
+        options.columns.push({ data: "DescrizioneLatte" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -233,6 +238,24 @@ export default class PrelieviLatteIndexPage extends Vue {
             });
 
         }
+
+        options.orderFixed = [0, 'asc'];
+
+        options.rowGroup = {
+            startRender: null,
+            endRender: function (rows: any, group: any) {
+
+                return $('<tr/>')
+                    .append('<td colspan="4">Averages for ' + group + '</td>')
+                    .append('<td>0</td>')                                
+                    .append('<td>1</td>')
+                    .append('<td colspan="6" />');
+
+            },
+            dataSrc: 'Allevamento'
+        };
+
+        this.tableOptions = options;
 
     }
 
@@ -307,7 +330,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     }
 
     private loadPrelievi(idAllevatoreStr: string, idTipoLatteStr: string, idTrasportatoreStr: string, idAcquirenteStr: string, idDestinatarioStr: string, done: (prelievi: PrelievoLatte[]) => void) {
-        console.log('tipolatte load', idTipoLatteStr);
+
         this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, idTipoLatteStr, this.dal, this.al)
             .then(response => {
                 this.prelievi = response.data;

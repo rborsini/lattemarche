@@ -208,6 +208,8 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
             }
 
+            query = query.OrderBy(r => r.Allevamento);
+
             return query.ToList();
         }
 

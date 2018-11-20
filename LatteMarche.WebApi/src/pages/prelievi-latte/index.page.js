@@ -36,7 +36,7 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     __extends(PrelieviLatteIndexPage, _super);
     function PrelieviLatteIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.allevatori = [];
         _this.tipiLatte = [];
         _this.trasportatore = [];
@@ -143,21 +143,23 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     PrelieviLatteIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "DataPrelievoStr" });
-        this.columnOptions.push({ data: "DataConsegnaStr" });
-        this.columnOptions.push({ data: "DataUltimaMungituraStr" });
-        this.columnOptions.push({ data: "Quantita" });
-        this.columnOptions.push({ data: "QuantitaLitri" });
-        this.columnOptions.push({ data: "Temperatura" });
-        this.columnOptions.push({ data: "Trasportatore" });
-        this.columnOptions.push({ data: "Acquirente" });
-        this.columnOptions.push({ data: "Destinatario" });
-        this.columnOptions.push({ data: "Allevamento" });
-        this.columnOptions.push({ data: "DescrizioneLatte" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "Allevamento" });
+        options.columns.push({ data: "DataPrelievoStr" });
+        options.columns.push({ data: "DataConsegnaStr" });
+        options.columns.push({ data: "DataUltimaMungituraStr" });
+        options.columns.push({ data: "Quantita" });
+        options.columns.push({ data: "QuantitaLitri" });
+        options.columns.push({ data: "Temperatura" });
+        options.columns.push({ data: "Trasportatore" });
+        options.columns.push({ data: "Acquirente" });
+        options.columns.push({ data: "Destinatario" });
+        options.columns.push({ data: "DescrizioneLatte" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -171,6 +173,19 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        options.orderFixed = [0, 'asc'];
+        options.rowGroup = {
+            startRender: null,
+            endRender: function (rows, group) {
+                return $('<tr/>')
+                    .append('<td colspan="4">Averages for ' + group + '</td>')
+                    .append('<td>0</td>')
+                    .append('<td>1</td>')
+                    .append('<td colspan="6" />');
+            },
+            dataSrc: 'Allevamento'
+        };
+        this.tableOptions = options;
     };
     // inizializzazione parametri di ricerca
     PrelieviLatteIndexPage.prototype.initSearchBox = function () {
@@ -235,7 +250,6 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
     };
     PrelieviLatteIndexPage.prototype.loadPrelievi = function (idAllevatoreStr, idTipoLatteStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, done) {
         var _this = this;
-        console.log('tipolatte load', idTipoLatteStr);
         this.prelieviLatteService.getPrelievi(idAllevatoreStr, idTrasportatoreStr, idAcquirenteStr, idDestinatarioStr, idTipoLatteStr, this.dal, this.al)
             .then(function (response) {
             _this.prelievi = response.data;
