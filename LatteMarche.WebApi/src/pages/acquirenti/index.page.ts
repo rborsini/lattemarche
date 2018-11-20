@@ -46,7 +46,7 @@ export default class AcquirentiIndexPage extends Vue {
     private acquirente: Acquirente;
     private idAcquirenteDaRimuovere: number;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public acquirenti: Acquirente[] = [];
     public canAdd: boolean = false;
     public canEdit: boolean = false;
@@ -118,15 +118,20 @@ export default class AcquirentiIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ "data": "Piva" });
-        this.columnOptions.push({ "data": "RagioneSociale" });
+
+        var options: any = {};
+
+        options.columns = [];
+
+        options.columns.push({ data: "Piva" });
+        options.columns.push({ data: "RagioneSociale" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -146,6 +151,8 @@ export default class AcquirentiIndexPage extends Vue {
             });
 
         }
+
+        this.tableOptions = options;
     }
 
 }
