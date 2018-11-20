@@ -29,7 +29,7 @@ var AllevamentiIndexPage = /** @class */ (function (_super) {
     __extends(AllevamentiIndexPage, _super);
     function AllevamentiIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.allevamenti = [];
         _this.canAdd = false;
         _this.canEdit = false;
@@ -82,14 +82,16 @@ var AllevamentiIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     AllevamentiIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "CUAA" });
-        this.columnOptions.push({ data: "CodiceAsl" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "Id" });
+        options.columns.push({ data: "RagioneSociale" });
+        options.columns.push({ data: "CUAA" });
+        options.columns.push({ data: "CodiceAsl" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -103,6 +105,7 @@ var AllevamentiIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        this.tableOptions = options;
     };
     AllevamentiIndexPage = __decorate([
         Component({
