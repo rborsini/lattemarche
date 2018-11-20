@@ -30,7 +30,7 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
     __extends(DestinatariIndexPage, _super);
     function DestinatariIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.destinatari = [];
         _this.canAdd = false;
         _this.canEdit = false;
@@ -83,12 +83,14 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     DestinatariIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "P_IVA" });
-        this.columnOptions.push({ data: "RagioneSociale" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "P_IVA" });
+        options.columns.push({ data: "RagioneSociale" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -102,6 +104,7 @@ var DestinatariIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        this.tableOptions = options;
     };
     DestinatariIndexPage = __decorate([
         Component({

@@ -12,7 +12,7 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-allevamenti-page" class="container-fluid">
+<div id="index-allevamenti-page" class="container-fluid p-0">
 
     @{
         string canAdd = ViewBag.Tokens["Aggiungi"] != null && Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
@@ -47,7 +47,7 @@
                     :message="'Sei sicuro di voler rimuovere l\'allevamento selezionato?'"
                     v-on:confirmed="onRemove()"></confirm-dialog>
 
-    <data-table :columns="columnOptions" :rows="allevamenti" v-on:data-loaded="onDataLoaded">
+    <data-table :options="tableOptions" :rows="allevamenti" v-on:data-loaded="onDataLoaded">
 
         <!-- Toolbox -->
         <template slot="toolbox" v-if="canAdd">

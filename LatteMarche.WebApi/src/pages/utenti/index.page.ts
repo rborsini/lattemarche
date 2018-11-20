@@ -44,7 +44,7 @@ export default class UtentiIndexPage extends Vue {
     public utente: Utente;
     private idUtente: number;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public utenti: Utente[] = [];
     public canAdd: boolean = false;
     public canEdit: boolean = false;
@@ -118,17 +118,20 @@ export default class UtentiIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "Nome" });
-        this.columnOptions.push({ data: "Cognome" });
-        this.columnOptions.push({ data: "Username" });
+        var options: any = {};
+        options.columns = [];
+
+        options.columns.push({ data: "RagioneSociale" });
+        options.columns.push({ data: "Nome" });
+        options.columns.push({ data: "Cognome" });
+        options.columns.push({ data: "Username" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -148,7 +151,7 @@ export default class UtentiIndexPage extends Vue {
             });
 
         }
-
+        this.tableOptions = options;
     }
 
 }

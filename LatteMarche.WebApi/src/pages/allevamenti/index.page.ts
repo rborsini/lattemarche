@@ -43,7 +43,7 @@ export default class AllevamentiIndexPage extends Vue {
     private allevamento: Allevamento;
     private idAllevamentoDaRimuovere: number;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public allevamenti: Allevamento[] = [];
 
     public canAdd: boolean = false;
@@ -120,17 +120,21 @@ export default class AllevamentiIndexPage extends Vue {
     // inizializzazione tabella
     private initTable(): void {
 
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "CUAA" });
-        this.columnOptions.push({ data: "CodiceAsl" });
+        var options: any = {};
+
+        options.columns = [];
+
+        options.columns.push({ data: "Id" });
+        options.columns.push({ data: "RagioneSociale" });
+        options.columns.push({ data: "CUAA" });
+        options.columns.push({ data: "CodiceAsl" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -150,6 +154,8 @@ export default class AllevamentiIndexPage extends Vue {
             });
 
         }
+
+        this.tableOptions = options;
     }
 
 }

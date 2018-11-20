@@ -12,7 +12,7 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="autocisterne-page" class="container-fluid">
+<div id="autocisterne-page" class="container-fluid p-0">
 
     @{
         string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
@@ -48,7 +48,7 @@
                     v-on:confirmed="onRemove()"></confirm-dialog>
 
     <!-- Tabella -->
-    <data-table :columns="columnOptions" :rows="autocisterne" v-on:data-loaded="onDataLoaded">
+    <data-table :options="tableOptions" :rows="autocisterne" v-on:data-loaded="onDataLoaded">
 
         <!-- Toolbox -->
         <template slot="toolbox" v-if="canAdd">

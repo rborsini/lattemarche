@@ -52,3 +52,33 @@ label {
 .edit-column {
     min-width: 50px;
 }
+
+table.dataTable thead tr {
+    color: #fff;
+    background-color: #593196;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f3ecff;
+}
+
+.group.group-end {
+    background-color: #5e5a65 !important;
+    color: #fff;
+    font-weight: 700;
+}
+
+tfoot {
+    background-color: #593196;
+    color: #fff;
+    font-weight: 700;
+}
+
+#DataTables_Table_0_wrapper {
+    padding: 0;
+}
+
+.c-table-trasportatori thead tr {
+    background-color: #593196;
+    color: #fff;
+}
