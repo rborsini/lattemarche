@@ -177,10 +177,22 @@ var PrelieviLatteIndexPage = /** @class */ (function (_super) {
         options.rowGroup = {
             startRender: null,
             endRender: function (rows, group) {
+                var prelieviSumKg = rows
+                    .data()
+                    .pluck('Quantita')
+                    .reduce(function (a, b) {
+                    return a + b * 1;
+                }, 0);
+                var prelieviSumLitri = rows
+                    .data()
+                    .pluck('QuantitaLitri')
+                    .reduce(function (a, b) {
+                    return a + b * 1;
+                }, 0);
                 return $('<tr/>')
-                    .append('<td colspan="4">Averages for ' + group + '</td>')
-                    .append('<td>0</td>')
-                    .append('<td>1</td>')
+                    .append('<td colspan="4" style="font-weight: bold;">' + group + ' (' + rows.count() + ' prelievi)</td>')
+                    .append('<td style="font-weight: bold;">' + prelieviSumKg.toFixed(0) + ' Kg </td>')
+                    .append('<td style="font-weight: bold;">' + prelieviSumLitri.toFixed(0) + ' l </td>')
                     .append('<td colspan="6" />');
             },
             dataSrc: 'Allevamento'
