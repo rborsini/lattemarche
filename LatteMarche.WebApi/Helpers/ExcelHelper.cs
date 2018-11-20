@@ -30,7 +30,6 @@ namespace LatteMarche.WebApi.Helpers
 
             // raggruppamento
             List<TotalePerAllevamento> groups = prelievi
-                .Where(p => !String.IsNullOrEmpty(p.Allevamento))
                 .GroupBy(p => p.Allevamento)
                 .Select(p => new TotalePerAllevamento()
                 {
