@@ -80,63 +80,8 @@ namespace LatteMarche.WebApi.Controllers
                 DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
             });
 
-            RB.Excel.ExcelMaker maker = new RB.Excel.ExcelMaker();
+            byte[] content = LatteMarche.WebApi.Helpers.ExcelHelper.MakeExcelTot(prelievi);
 
-            byte[] content = maker.Make<V_PrelievoLatte>(prelievi);
-            
-            return File(content, "application/vnd.ms-excel", "prelievi.xls");
-
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult ExcelTot(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string dal = "", string al = "")
-        {
-
-            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
-
-            switch (utente.IdProfilo)
-            {
-                case 3:     // profilo allevatore
-                    idAllevamento = utente.Id.ToString();
-                    break;
-                case 5:     // profilo trasportatore
-                    idTrasportatore = utente.Id.ToString();
-                    break;
-                case 7:     // profilo acquirente
-                    idAcquirente = utente.Id.ToString();
-                    break;
-                case 6:     // profilo destinatario
-                    idDestinatario = utente.Id.ToString();
-                    break;
-            }
-
-            var prelievi = this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
-            {
-                idAllevamento = String.IsNullOrEmpty(idAllevamento) || idAllevamento == "undefined" || idAllevamento == "0" ? (int?)null : Convert.ToInt32(idAllevamento),
-                idTrasportatore = String.IsNullOrEmpty(idTrasportatore) || idTrasportatore == "undefined" || idTrasportatore == "0" ? (int?)null : Convert.ToInt32(idTrasportatore),
-                idAcquirente = String.IsNullOrEmpty(idAcquirente) || idAcquirente == "undefined" || idAcquirente == "0" ? (int?)null : Convert.ToInt32(idAcquirente),
-                idDestinatario = String.IsNullOrEmpty(idDestinatario) || idDestinatario == "undefined" || idDestinatario == "0" ? (int?)null : Convert.ToInt32(idDestinatario),
-                DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
-                DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
-            });
-
-            //byte[] content = LatteMarche.WebApi.Helpers.ExcelHelper.MakeExcelTot(prelievi);
-
-            RB.Excel.ExcelMaker maker = new RB.Excel.ExcelMaker();
-
-            List<TotaliPerAllevamento> totali = prelievi
-                .GroupBy(p => p.Allevamento)
-                .Select(p => new TotaliPerAllevamento()
-                {
-                    Allevamento = p.Key,
-                    Kg = p.Where(r => r.Quantita.HasValue).Sum(r => r.Quantita.Value),
-                    Litri = p.Where(r => r.QuantitaLitri.HasValue).Sum(r => r.QuantitaLitri.Value)
-                })
-                .OrderBy(t => t.Allevamento)
-                .ToList();
-
-            byte[] content = maker.Make<TotaliPerAllevamento>(totali);
 
             return File(content, "application/vnd.ms-excel", "prelievi.xls");
 
