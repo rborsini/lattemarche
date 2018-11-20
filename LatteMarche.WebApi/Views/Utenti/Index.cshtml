@@ -12,7 +12,7 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="utenti-page" class="container-fluid">
+<div id="utenti-page" class="container-fluid p-0">
 
     @{
         string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
