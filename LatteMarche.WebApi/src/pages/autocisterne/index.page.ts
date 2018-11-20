@@ -38,12 +38,12 @@ export default class AutocisterneIndexPage extends Vue {
         confirmDeleteDialog: Vue,
         removedDialog: Vue
     }
-
+    
     private autocisterneService: AutocisterneService;
     private autocisterna: Autocisterna;
     private idAutocisterna: number;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public autocisterne: Autocisterna[] = [];
     public canAdd: boolean = false;
     public canEdit: boolean = false;
@@ -117,17 +117,20 @@ export default class AutocisterneIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "Marca" });
-        this.columnOptions.push({ data: "Modello" });
-        this.columnOptions.push({ data: "Targa" });
-        this.columnOptions.push({ data: "Portata" });
+        var options: any = {};
+        options.columns = [];
+
+        options.columns.push({ data: "Marca" });
+        options.columns.push({ data: "Modello" });
+        options.columns.push({ data: "Targa" });
+        options.columns.push({ data: "Portata" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -147,6 +150,8 @@ export default class AutocisterneIndexPage extends Vue {
             });
 
         }
+        this.tableOptions = options;
+
 
     }
 

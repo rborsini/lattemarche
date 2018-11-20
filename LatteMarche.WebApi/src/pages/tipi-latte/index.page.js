@@ -29,7 +29,7 @@ var TipiLatteIndexPage = /** @class */ (function (_super) {
     __extends(TipiLatteIndexPage, _super);
     function TipiLatteIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.tipiLatte = [];
         _this.canAdd = false;
         _this.canEdit = false;
@@ -82,14 +82,16 @@ var TipiLatteIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     TipiLatteIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "Descrizione" });
-        this.columnOptions.push({ data: "DescrizioneBreve" });
-        this.columnOptions.push({ data: "FattoreConversione" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "Id" });
+        options.columns.push({ data: "Descrizione" });
+        options.columns.push({ data: "DescrizioneBreve" });
+        options.columns.push({ data: "FattoreConversione" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -103,6 +105,7 @@ var TipiLatteIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        this.tableOptions = options;
     };
     TipiLatteIndexPage = __decorate([
         Component({
