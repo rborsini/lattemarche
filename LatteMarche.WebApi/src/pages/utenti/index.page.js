@@ -29,7 +29,7 @@ var UtentiIndexPage = /** @class */ (function (_super) {
     __extends(UtentiIndexPage, _super);
     function UtentiIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.utenti = [];
         _this.canAdd = false;
         _this.canEdit = false;
@@ -82,14 +82,16 @@ var UtentiIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     UtentiIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "RagioneSociale" });
-        this.columnOptions.push({ data: "Nome" });
-        this.columnOptions.push({ data: "Cognome" });
-        this.columnOptions.push({ data: "Username" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "RagioneSociale" });
+        options.columns.push({ data: "Nome" });
+        options.columns.push({ data: "Cognome" });
+        options.columns.push({ data: "Username" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -103,6 +105,7 @@ var UtentiIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        this.tableOptions = options;
     };
     UtentiIndexPage = __decorate([
         Component({

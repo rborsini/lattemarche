@@ -43,7 +43,7 @@ export default class TipiLatteIndexPage extends Vue {
     public tipoLatte: TipoLatte;
     private idTipoLatte: number;
 
-    public columnOptions: any[] = [];
+    public tableOptions: any = {};
     public tipiLatte: TipoLatte[] = [];
     public canAdd: boolean = false;
     public canEdit: boolean = false;
@@ -117,17 +117,20 @@ export default class TipiLatteIndexPage extends Vue {
 
     // inizializzazione tabella
     private initTable(): void {
-        this.columnOptions.push({ data: "Id" });
-        this.columnOptions.push({ data: "Descrizione" });
-        this.columnOptions.push({ data: "DescrizioneBreve" });
-        this.columnOptions.push({ data: "FattoreConversione" });
+        var options: any = {};
+        options.columns = [];
+
+        options.columns.push({ data: "Id" });
+        options.columns.push({ data: "Descrizione" });
+        options.columns.push({ data: "DescrizioneBreve" });
+        options.columns.push({ data: "FattoreConversione" });
 
         var ce = this.canEdit;
         var cr = this.canRemove;
 
         if (ce || cr) {
 
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
@@ -147,6 +150,7 @@ export default class TipiLatteIndexPage extends Vue {
             });
 
         }
+        this.tableOptions = options;
 
     }
 

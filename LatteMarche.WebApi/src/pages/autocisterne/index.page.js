@@ -29,7 +29,7 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
     __extends(AutocisterneIndexPage, _super);
     function AutocisterneIndexPage() {
         var _this = _super.call(this) || this;
-        _this.columnOptions = [];
+        _this.tableOptions = {};
         _this.autocisterne = [];
         _this.canAdd = false;
         _this.canEdit = false;
@@ -82,14 +82,16 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
     };
     // inizializzazione tabella
     AutocisterneIndexPage.prototype.initTable = function () {
-        this.columnOptions.push({ data: "Marca" });
-        this.columnOptions.push({ data: "Modello" });
-        this.columnOptions.push({ data: "Targa" });
-        this.columnOptions.push({ data: "Portata" });
+        var options = {};
+        options.columns = [];
+        options.columns.push({ data: "Marca" });
+        options.columns.push({ data: "Modello" });
+        options.columns.push({ data: "Targa" });
+        options.columns.push({ data: "Portata" });
         var ce = this.canEdit;
         var cr = this.canRemove;
         if (ce || cr) {
-            this.columnOptions.push({
+            options.columns.push({
                 render: function (data, type, row) {
                     var html = '<div class="text-center">';
                     if (ce)
@@ -103,6 +105,7 @@ var AutocisterneIndexPage = /** @class */ (function (_super) {
                 orderable: false
             });
         }
+        this.tableOptions = options;
     };
     AutocisterneIndexPage = __decorate([
         Component({
