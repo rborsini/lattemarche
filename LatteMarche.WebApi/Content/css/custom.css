@@ -6218,12 +6218,17 @@ label {
 
 table.dataTable thead tr {
   color: #fff;
-  background: #593196; }
+  background-color: #593196; }
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: #f3ecff; }
 
 .group.group-end {
-  background-color: #593196 !important;
+  background-color: #5e5a65 !important;
+  color: #fff;
+  font-weight: 700; }
+
+tfoot {
+  background-color: #593196;
   color: #fff;
   font-weight: 700; }
