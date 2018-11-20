@@ -260,9 +260,9 @@ export default class PrelieviLatteIndexPage extends Vue {
                     }, 0);
 
                 return $('<tr/>')
-                    .append('<td colspan="4" style="font-weight: bold;">' + group + ' (' + rows.count() + ' prelievi)</td>')
-                    .append('<td style="font-weight: bold;">' + prelieviSumKg.toFixed(0) + ' Kg </td>')
-                    .append('<td style="font-weight: bold;">' + prelieviSumLitri.toFixed(0) + ' l </td>')
+                    .append('<td colspan="4">' + group + ' (' + rows.count() + ' prelievi)</td>')
+                    .append('<td>' + prelieviSumKg.toFixed(0) + ' Kg </td>')
+                    .append('<td>' + prelieviSumLitri.toFixed(0) + ' l </td>')
                     .append('<td colspan="6" />');
 
             },
