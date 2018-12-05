@@ -38,6 +38,8 @@ namespace LatteMarche.WebApi
                 AllowInsecureHttp = true
             };
 
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
 
