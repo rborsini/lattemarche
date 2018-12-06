@@ -57,11 +57,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [ViewItem(nameof(Details), "Utenti", "Dettaglio")]
         [HttpGet]
-        public IHttpActionResult Details(int id)
+        public IHttpActionResult Details(string username="", int id = 0)
         {
             try
             {
-                return Ok(this.utentiService.Details(id));
+                if(!String.IsNullOrEmpty(username))
+                    return Ok(this.utentiService.Details(username));
+                else
+                    return Ok(this.utentiService.Details(id));
             }
             catch (Exception exc)
             {
