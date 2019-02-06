@@ -58,7 +58,7 @@ namespace LatteMarche.Core.Models
         public string Cellulare { get; set; }
 
         [Column("ID_COMUNE")]
-        public int IdComune { get; set; }
+        public int? IdComune { get; set; }
 
         [Column("SESSO")]
         public string Sesso { get; set; }
