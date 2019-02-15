@@ -15,6 +15,8 @@ namespace LatteMarche.Application.Destinatari.Services
     {
         #region Fields
 
+        private IRepository<UtenteXDestinatario, int> utentiDestinatarioRepository;
+
         private IComuniService comuniService;
 
         #endregion
@@ -24,6 +26,7 @@ namespace LatteMarche.Application.Destinatari.Services
         public DestinatariService(IUnitOfWork uow, IComuniService comuniService)
             : base(uow)
         {
+            this.utentiDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
             this.comuniService = comuniService;
         }
 
@@ -44,6 +47,16 @@ namespace LatteMarche.Application.Destinatari.Services
             }
 
             return dto;
+        }
+
+        public DestinatarioDto GetByIdUtente(long idUtente)
+        {
+            var utenteXDestinatario = this.utentiDestinatarioRepository.FindBy(u => u.Id == idUtente);
+
+            if (utenteXDestinatario == null)
+                return null;
+
+            return this.Details(utenteXDestinatario.IdDestinatario);
         }
 
         protected override Destinatario UpdateProperties(Destinatario viewEntity, Destinatario dbEntity)

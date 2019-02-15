@@ -89,6 +89,8 @@
     <Compile Include="Models\RuoloUtente.cs" />
     <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Synch.cs" />
+    <Compile Include="Models\UtenteXAcquirente.cs" />
+    <Compile Include="Models\UtenteXDestinatario.cs" />
     <Compile Include="Models\V_Allevamento.cs" />
     <Compile Include="Models\V_PrelievoLatte.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />

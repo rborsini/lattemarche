@@ -15,6 +15,7 @@ namespace LatteMarche.Application.Acquirenti.Services
 		#region Fields
 
 		private IRepository<Acquirente, int> acquirentiRepository;
+        private IRepository<UtenteXAcquirente, int> utentiAcquirenteRepository;
 
         private IComuniService comuniService;
 
@@ -26,6 +27,7 @@ namespace LatteMarche.Application.Acquirenti.Services
 			: base(uow)
 		{
 			this.acquirentiRepository = this.uow.Get<Acquirente, int>();
+            this.utentiAcquirenteRepository = this.uow.Get<UtenteXAcquirente, int>();
             this.comuniService = comuniService;
 		}
 
@@ -46,6 +48,16 @@ namespace LatteMarche.Application.Acquirenti.Services
             }
 
             return dto;
+        }
+
+        public AcquirenteDto GetByIdUtente(long idUtente)
+        {
+            var utenteXAcquirente = this.utentiAcquirenteRepository.FindBy(u => u.Id == idUtente);
+
+            if (utenteXAcquirente == null)
+                return null;
+
+            return this.Details(utenteXAcquirente.IdAcquirente);
         }
 
         protected override Acquirente UpdateProperties(Acquirente viewEntity, Acquirente dbEntity)

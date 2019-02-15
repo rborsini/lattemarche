@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201809280656427_Aggiornato_V_PrelieviLatte.Designer.cs">
       <DependentUpon>201809280656427_Aggiornato_V_PrelieviLatte.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.cs" />
+    <Compile Include="Migrations\201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.Designer.cs">
+      <DependentUpon>201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -285,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809280656427_Aggiornato_V_PrelieviLatte.resx">
       <DependentUpon>201809280656427_Aggiornato_V_PrelieviLatte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.resx">
+      <DependentUpon>201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

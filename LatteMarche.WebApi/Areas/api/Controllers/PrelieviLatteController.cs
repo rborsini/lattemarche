@@ -21,6 +21,8 @@ using LatteMarche.Application.Logs.Interfaces;
 using Newtonsoft.Json;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Acquirenti.Interfaces;
+using LatteMarche.Application.Destinatari.Interfaces;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
@@ -34,6 +36,8 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         #region Fields
 
         private IPrelieviLatteService prelieviLatteService;
+        private IAcquirentiService acquirentiService;
+        private IDestinatariService destinatariService;
         private ISynchService synchService;
         private ISitraService sitraService;
         private ILottiService lottiService;
@@ -49,9 +53,11 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         #region Constructors
 
-        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
+        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService, IAcquirentiService acquirentiService, IDestinatariService destinatariService)
         {
             this.prelieviLatteService = prelieviLatteService;
+            this.acquirentiService = acquirentiService;
+            this.destinatariService = destinatariService;
             this.synchService = synchService;
             this.sitraService = sitraService;
             this.lottiService = lottiService;
@@ -276,10 +282,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                     idTrasportatore = utente.Id.ToString();
                     break;
                 case 7:     // profilo acquirente
-                    idAcquirente = utente.Id.ToString();
+                    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
+                    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
                     break;
                 case 6:     // profilo destinatario
-                    idDestinatario = utente.Id.ToString();
+                    var destinatario = this.destinatariService.GetByIdUtente(utente.Id);
+                    idDestinatario = destinatario != null ? destinatario.Id.ToString() : "";
                     break;
             }
 

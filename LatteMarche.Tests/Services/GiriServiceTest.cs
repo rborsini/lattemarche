@@ -101,34 +101,6 @@ namespace LatteMarche.Tests.Services
             Assert.AreEqual(0, giro.Items.Count(i => i.Priorita.HasValue));
         }
 
-        [TestMethod]
-        public void GiriService_Update_PrioritaModificate_RecordAggiornati()
-        {
-            this.SeedAllevatori(9);
-            this.SeedGiri(1);
-            this.SeedAllevamentiXGiro(9, 1, 2);
-
-            GiroDto giro = this.giriService.Details(1);
-
-            Assert.AreEqual(1, giro.Items[0].Priorita);
-            Assert.AreEqual(2, giro.Items[1].Priorita);
-            Assert.AreEqual(3, giro.Items[2].Priorita);
-            Assert.AreEqual(4, giro.Items[3].Priorita);
-
-            giro.Items[0].Priorita = 4;
-            giro.Items[1].Priorita = 3;
-            giro.Items[2].Priorita = 2;
-            giro.Items[3].Priorita = 1;
-
-            giro = this.giriService.Update(giro);
-
-            Assert.AreEqual(4, giro.Items[0].Priorita);
-            Assert.AreEqual(3, giro.Items[1].Priorita);
-            Assert.AreEqual(2, giro.Items[2].Priorita);
-            Assert.AreEqual(1, giro.Items[3].Priorita);
-
-
-        }
 
         private void SeedAllevatori(int length)
         {
