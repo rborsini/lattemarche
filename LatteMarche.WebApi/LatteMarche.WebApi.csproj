@@ -337,6 +337,7 @@
     <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\RuoliController.cs" />
     <Compile Include="Areas\api\Controllers\DocumentiController.cs" />
+    <Compile Include="Areas\api\Controllers\SynchController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
     <Compile Include="Areas\api\Controllers\ComuniController.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="Models\BreadcrumbViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
+    <Compile Include="Models\PullViewModel.cs" />
     <Compile Include="Models\SitraResponseVieModel.cs" />
     <Compile Include="Models\TotalePerAllevamento.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
