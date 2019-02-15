@@ -3,6 +3,7 @@ using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
+using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Models;
@@ -75,6 +76,13 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
                 return InternalServerError(exc);
             }
 
+        }
+
+        [ViewItem(nameof(Push), "Synch", "Push")]
+        [HttpPost]
+        public IHttpActionResult Push([FromBody] List<PrelievoLatteDto> prelievi)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
