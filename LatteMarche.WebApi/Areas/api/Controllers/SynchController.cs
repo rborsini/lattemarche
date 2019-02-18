@@ -1,9 +1,12 @@
-﻿using LatteMarche.Application.Acquirenti.Interfaces;
+﻿using AutoMapper;
+using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
 using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Models;
@@ -27,18 +30,20 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         private IAcquirentiService acquirentiService;
         private IDestinatariService destinatariService;
         private IAllevamentiService allevamentiService;
+        private IPrelieviLatteService prelieviLatteService;
 
         #endregion
 
         #region Constructors
 
-        public SynchController(ILaboratoriAnalisiService laboratoriAnalisiService, IGiriService giriService, IAcquirentiService acquirentiService, IDestinatariService destinatariService, IAllevamentiService allevamentiService)
+        public SynchController(ILaboratoriAnalisiService laboratoriAnalisiService, IGiriService giriService, IAcquirentiService acquirentiService, IDestinatariService destinatariService, IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService)
         {
             this.laboratoriAnalisiService = laboratoriAnalisiService;
             this.giriService = giriService;
             this.acquirentiService = acquirentiService;
             this.destinatariService = destinatariService;
             this.allevamentiService = allevamentiService;
+            this.prelieviLatteService = prelieviLatteService;
         }
 
         #endregion
@@ -80,9 +85,17 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [ViewItem(nameof(Push), "Synch", "Push")]
         [HttpPost]
-        public IHttpActionResult Push([FromBody] List<PrelievoLatteDto> prelievi)
+        public IHttpActionResult Push([FromBody] List<PrelievoLatteDto> prelieviDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<PrelievoLatte> prelievi = prelieviDto.Select(p => Mapper.Map<PrelievoLatte>(p)).ToList();   
+                return Ok(this.prelieviLatteService.Push(prelievi));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
         }
 
         #endregion
