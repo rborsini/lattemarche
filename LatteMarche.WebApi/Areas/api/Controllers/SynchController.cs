@@ -85,12 +85,12 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [ViewItem(nameof(Push), "Synch", "Push")]
         [HttpPost]
-        public IHttpActionResult Push([FromBody] List<PrelievoLatteDto> prelieviDto)
+        public IHttpActionResult Push([FromBody] List<PrelievoLatteDto> prelievi)
         {
             try
             {
-                List<PrelievoLatte> prelievi = prelieviDto.Select(p => Mapper.Map<PrelievoLatte>(p)).ToList();   
-                return Ok(this.prelieviLatteService.Push(prelievi));
+                List<PrelievoLatte> prelieviList = prelievi.Select(p => Mapper.Map<PrelievoLatte>(p)).ToList();   
+                return Ok(this.prelieviLatteService.Push(prelieviList));
             }
             catch (Exception exc)
             {
