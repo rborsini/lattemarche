@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "curl", "curl", "{6E1DBB9D-8
 		curl\jq.exe = curl\jq.exe
 		curl\response.txt = curl\response.txt
 		curl\synch_azure_dev.bat = curl\synch_azure_dev.bat
+		curl\synch_azure_prod.bat = curl\synch_azure_prod.bat
 		curl\synch_localhost.bat = curl\synch_localhost.bat
 	EndProjectSection
 EndProject
