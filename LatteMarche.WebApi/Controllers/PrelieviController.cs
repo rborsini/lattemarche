@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.PrelieviLatte.Dtos;
+﻿using LatteMarche.Application.Acquirenti.Interfaces;
+using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
@@ -25,12 +26,13 @@ namespace LatteMarche.WebApi.Controllers
 
         private IPrelieviLatteService prelieviLatteService;
         private IUtentiService utentiService;
+        private IAcquirentiService acquirentiService;
 
-
-        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService)
+        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService, IAcquirentiService acquirentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
             this.utentiService = utentiService;
+            this.acquirentiService = acquirentiService;
         }
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
@@ -63,7 +65,8 @@ namespace LatteMarche.WebApi.Controllers
                     idTrasportatore = utente.Id.ToString();
                     break;
                 case 7:     // profilo acquirente
-                    idAcquirente = utente.Id.ToString();
+                    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
+                    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
                     break;
                 case 6:     // profilo destinatario
                     idDestinatario = utente.Id.ToString();
