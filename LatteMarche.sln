@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.WebApi", "LatteMarche.WebApi\LatteMarche.WebApi.csproj", "{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}"
 EndProject
@@ -31,6 +31,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Utils", "LatteMarche.Utils\LatteMarche.Utils.csproj", "{EDC79AC8-16C0-4F80-A81C-BD2BC6AF87F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.PasswordSniffer", "LatteMarche.PasswordSniffer\LatteMarche.PasswordSniffer.csproj", "{116D4642-9E70-4C11-BD74-26F815A1747C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.AssamParserConsole", "LatteMarche.AssamParserConsole\LatteMarche.AssamParserConsole.csproj", "{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,12 @@ Global
 		{116D4642-9E70-4C11-BD74-26F815A1747C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{116D4642-9E70-4C11-BD74-26F815A1747C}.TEST|Any CPU.ActiveCfg = Release|Any CPU
 		{116D4642-9E70-4C11-BD74-26F815A1747C}.TEST|Any CPU.Build.0 = Release|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.TEST|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}.TEST|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
