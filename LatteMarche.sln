@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.PasswordSniffer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.AssamParserConsole", "LatteMarche.AssamParserConsole\LatteMarche.AssamParserConsole.csproj", "{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{53C1AD00-4B7B-4D7F-80AB-DAD51584EF34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6CB3860D-4709-406D-B239-65FCA6915E7C} = {53C1AD00-4B7B-4D7F-80AB-DAD51584EF34}
+		{C1DFF44E-B839-4F4D-9A51-A1248A6B5ADE} = {53C1AD00-4B7B-4D7F-80AB-DAD51584EF34}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6A4AEC1-A4A5-44F5-BC32-F95A5ECA2F4F}
