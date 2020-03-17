@@ -4,9 +4,9 @@ using System.Text;
 
 namespace LatteMarche.Xamarin.Models
 {
-    public class Prelievo
+    public class Prelievo : Entity<string>
     {
-        public string Id { get; set; }
+        public override string Id { get; set; }
         public DateTime? DataPrelievo { get; set; }
         public string Scomparto { get; set; }
         public decimal? Quantita { get; set; }

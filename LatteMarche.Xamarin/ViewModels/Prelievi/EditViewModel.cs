@@ -1,4 +1,5 @@
-﻿using LatteMarche.Xamarin.Models;
+﻿using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Models;
 using LatteMarche.Xamarin.Services;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #region Fields
 
         private INavigation navigation;
-        private IDataStore<Prelievo> dataStore => DependencyService.Get<IDataStore<Prelievo>>();
+        private IDataStore<Prelievo, string> dataStore => DependencyService.Get<IDataStore<Prelievo, string>>();
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public EditViewModel(INavigation navigation, Prelievo item = null)
         {
-            base.Title = item?.Scomparto;
+            this.Title = item?.Scomparto;
             this.Item = item;
             this.navigation = navigation;
 

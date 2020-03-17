@@ -12,7 +12,10 @@ namespace LatteMarche.Xamarin
         {
             InitializeComponent();
 
+            DependencyService.Register<AllevamentiDataStore>();
             DependencyService.Register<PrelieviDataStore>();
+
+            DependencyService.Register<RestService>();
 
             MainPage = new MainPage();
         }

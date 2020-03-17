@@ -1,4 +1,5 @@
-﻿using LatteMarche.Xamarin.Models;
+﻿using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Models;
 using LatteMarche.Xamarin.Services;
 using LatteMarche.Xamarin.Views.Prelievi;
 using System;
@@ -16,7 +17,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Fields
 
-        private IDataStore<Prelievo> dataStore => DependencyService.Get<IDataStore<Prelievo>>();
+        private IDataStore<Prelievo, string> dataStore => DependencyService.Get<IDataStore<Prelievo, string>>();
 
         #endregion
 

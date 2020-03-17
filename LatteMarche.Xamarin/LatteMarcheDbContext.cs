@@ -11,10 +11,11 @@ namespace LatteMarche.Xamarin
     public class LatteMarcheDbContext : DbContext
     {
 		public DbSet<Prelievo> Prelievi { get; set; }
+		public DbSet<Allevamento> Allevamenti { get; set; }
 
 		private const string databaseName = "database.db";
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
+		{		
 			String databasePath = "";
 			switch (Device.RuntimePlatform)
 			{
