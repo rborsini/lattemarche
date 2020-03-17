@@ -12,7 +12,8 @@ namespace LatteMarche.Xamarin
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<PrelieviDataStore>();
+
             MainPage = new MainPage();
         }
 
