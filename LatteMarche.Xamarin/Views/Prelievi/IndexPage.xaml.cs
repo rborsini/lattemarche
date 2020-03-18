@@ -26,7 +26,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new IndexViewModel();
+            BindingContext = viewModel = new IndexViewModel(Navigation, this);
         }
 
         #endregion
@@ -39,7 +39,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, item)));
+            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;

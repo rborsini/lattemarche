@@ -9,22 +9,53 @@ using Xamarin.Forms;
 
 namespace LatteMarche.Xamarin.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
 
-        bool isBusy = false;
+        #region Fields
+
+        protected Page page;
+        protected INavigation navigation;
+
+        private bool isBusy = false;
+        private string title = string.Empty;
+
+        #endregion
+
+        #region Properties
+
         public bool IsBusy
         {
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
 
-        string title = string.Empty;
+
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
         }
+
+        #endregion
+
+        #region Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Constructor
+
+        public BaseViewModel(INavigation navigation, Page page)
+        {
+            this.navigation = navigation;
+            this.page = page;            
+        }
+
+        #endregion
+
+        #region Methods
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = "",
@@ -39,8 +70,6 @@ namespace LatteMarche.Xamarin.ViewModels
             return true;
         }
 
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
@@ -49,6 +78,7 @@ namespace LatteMarche.Xamarin.ViewModels
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }

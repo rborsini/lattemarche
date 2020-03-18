@@ -18,9 +18,9 @@ namespace LatteMarche.Tests.Mail
         [Test]
         public void DownloadMail_Test()
         {
-            //var hostname = "we-code.it";
-            //var username = "lattemarche@we-code.it";
-            //var password = "Lattemarche123";
+            var hostname = "we-code.it";
+            var username = "lattemarche@we-code.it";
+            var password = "Lattemarche123";
 
             using (ImapClient client = new ImapClient(hostname, 993, username, password, AuthMethod.Login, true))
             {

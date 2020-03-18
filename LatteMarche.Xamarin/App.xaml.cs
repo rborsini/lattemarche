@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Xamarin.Services;
 using LatteMarche.Xamarin.Views;
+using LatteMarche.Xamarin.Zebra;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,6 +17,7 @@ namespace LatteMarche.Xamarin
             DependencyService.Register<PrelieviDataStore>();
 
             DependencyService.Register<RestService>();
+            DependencyService.Register<Printer>();
 
             MainPage = new MainPage();
         }

@@ -31,7 +31,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Constructor
 
-        public IndexViewModel()
+        public IndexViewModel(INavigation navigation, Page page)
+            : base(navigation, page)
         {
             this.Title = "Browse";
             this.Items = new ObservableCollection<Prelievo>();

@@ -8,6 +8,7 @@ namespace LatteMarche.Xamarin.Enums
     {
         Prelievi,
         Synch,
+        Impostazioni,
         Login
     }
 }

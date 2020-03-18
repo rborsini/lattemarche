@@ -19,9 +19,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         private IRestService restService => DependencyService.Get<IRestService>();
         private IDataStore<Allevamento, int> allevamentiDataStore => DependencyService.Get<IDataStore<Allevamento, int>>();
 
-        private INavigation navigation;
-        private Page page;
-
         #endregion
 
         #region Properties
@@ -33,6 +30,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         #region Constructor
 
         public IndexViewModel(INavigation navigation, Page page)
+            : base(navigation, page)
         {
             this.navigation = navigation;
             this.page = page;
@@ -50,8 +48,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             try
             {
                 await this.allevamentiDataStore.DeleteAllItemsAsync();
-                await this.allevamentiDataStore.AddItemAsync(allevamenti[0]);
-                //await this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
+                await this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
                 await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
             }
             catch(Exception exc)

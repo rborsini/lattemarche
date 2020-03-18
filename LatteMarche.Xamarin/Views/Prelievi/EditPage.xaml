@@ -8,6 +8,7 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Stampa" Command="{Binding PrintCommand}" />
         <ToolbarItem Text="Salva" Command="{Binding SaveItemCommand}" />
         <ToolbarItem Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>

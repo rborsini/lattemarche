@@ -17,9 +17,6 @@ namespace LatteMarche.Xamarin.ViewModels.Login
 
         private IRestService restService => DependencyService.Get<IRestService>();
 
-        private INavigation navigation;
-        private Page page;
-
         #endregion
 
         #region Properties
@@ -35,6 +32,7 @@ namespace LatteMarche.Xamarin.ViewModels.Login
         #region Constructor
 
         public IndexViewModel(INavigation navigation, Page page)
+            : base(navigation, page)
         {
             this.navigation = navigation;
             this.page = page;
