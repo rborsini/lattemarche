@@ -36,8 +36,10 @@ var AnalisiLatteIndexPage = /** @class */ (function (_super) {
         return _this;
     }
     AnalisiLatteIndexPage.prototype.mounted = function () {
-        this.params.CodiceProduttore = "A0530010";
+        this.params.CodiceProduttore = "";
+        this.params.Campione = "20201138-001";
     };
+    // Click bottone cerca
     AnalisiLatteIndexPage.prototype.onCercaClick = function () {
         var _this = this;
         this.analisiService.search(this.params)
@@ -46,10 +48,13 @@ var AnalisiLatteIndexPage = /** @class */ (function (_super) {
             _this.analisiTable = _this.bindTable(response.data);
         });
     };
+    // Click bottone annulla
     AnalisiLatteIndexPage.prototype.onAnnullaClick = function () {
         this.params.CodiceProduttore = "";
         this.params.CodiceAsl = "";
+        this.params.Campione = "";
     };
+    // Click bottone synch
     AnalisiLatteIndexPage.prototype.onSynchClick = function () {
         var _this = this;
         this.$refs.waiter.open();
@@ -59,9 +64,11 @@ var AnalisiLatteIndexPage = /** @class */ (function (_super) {
             _this.onCercaClick();
         })
             .catch(function (error) {
+            _this.$refs.waiter.close();
             alert("errore");
         });
     };
+    // Popolamento tabella
     AnalisiLatteIndexPage.prototype.bindTable = function (result) {
         var table = new AnalisiTable();
         table.Cols = this.bindCols(result);
@@ -84,6 +91,7 @@ var AnalisiLatteIndexPage = /** @class */ (function (_super) {
         }
         return table;
     };
+    // estrapolazione colonne tabella
     AnalisiLatteIndexPage.prototype.bindCols = function (result) {
         var cols = [];
         cols.push(new AnalisiCol("Codice Produttore", ""));

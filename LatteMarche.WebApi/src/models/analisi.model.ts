@@ -23,6 +23,7 @@ export class ValoreAnalisi {
 export class AnalisiSearchModel {
     public CodiceProduttore: string = "";
     public CodiceAsl: string = "";
+    public Campione: string = "";
 }
 
 export class AnalisiTable {

@@ -13,6 +13,9 @@ namespace LatteMarche.Core.Models
         [Column("ID")]
         public override long Id { get; set; }
 
+        //[Column("ID_ANALISI")]
+        //public string IdAnalisi { get; set; }
+
         [Column("NOME")]
         public string Nome { get; set; }
 

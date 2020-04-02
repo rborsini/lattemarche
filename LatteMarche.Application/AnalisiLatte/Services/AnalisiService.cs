@@ -38,6 +38,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         #region Fields
 
+        private IRepository<ValoreAnalisi, long> valoriRepository;
+
         private IAssamService assamService;
         private IAllevamentiService allevamentiService;
 
@@ -48,6 +50,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         public AnalisiService(IUnitOfWork uow, IAssamService assamService, IAllevamentiService allevamentiService)
             : base(uow)
         {
+            this.valoriRepository = this.uow.Get<ValoreAnalisi, long>();
+
             this.assamService = assamService;
             this.allevamentiService = allevamentiService;
         }
@@ -59,6 +63,10 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         public List<AnalisiDto> Search(AnalisiSearchDto searchDto)
         {
             var query = this.repository.GetAll();
+
+            // Campione
+            if (!String.IsNullOrEmpty(searchDto.Campione))
+                query = query.Where(a => a.Id == searchDto.Campione);
 
             // IdProduttore
             if (searchDto.IdProduttore.HasValue)
@@ -77,6 +85,33 @@ namespace LatteMarche.Application.AnalisiLatte.Services
                 query = query.Where(a => a.CodiceASL == searchDto.CodiceAsl);
 
             return ConvertToDtoList(query.ToList());
+        }
+
+        public override AnalisiDto Update(AnalisiDto model)
+        {
+            var analisi = this.repository.GetById(model.Id);
+            var viewValori = Mapper.Map<List<ValoreAnalisi>>(model.Valori);
+            var dbValori = analisi != null ? analisi.Valori : new List<ValoreAnalisi>();
+            UpdateValori(viewValori, dbValori);
+
+            return base.Update(model);
+        }
+
+        private void UpdateValori(List<ValoreAnalisi> viewValori, List<ValoreAnalisi> dbValori)
+        {
+            foreach(var viewItem in viewValori)
+            {
+                var existingItem = dbValori.FirstOrDefault(v => v.Nome == viewItem.Nome);
+                if(existingItem != null)
+                {
+                    existingItem.Valore = viewItem.Valore;
+                    existingItem.FuoriSoglia = viewItem.FuoriSoglia;
+
+                    this.valoriRepository.Update(existingItem);
+                }
+            }
+
+            this.uow.SaveChanges();
         }
 
         public void Synch()
@@ -106,7 +141,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         private void Save(Report report)
         {
             
-            var analisiList = Mapper.Map<List<AnalisiDto>>(report.Analisi);
+            var analisiList = Mapper.Map<List<AnalisiDto>>(report.Analisi.Where(a => !String.IsNullOrEmpty(a.Campione)));
 
             foreach (var analisi in analisiList)
             {
@@ -134,7 +169,6 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
 
         }
-
 
         private int? GetIdProduttore(string codiceProduttore, string codiceAsl)
         {
@@ -188,9 +222,6 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
             return dbEntity;
         }
-
-
-
 
 
         #endregion

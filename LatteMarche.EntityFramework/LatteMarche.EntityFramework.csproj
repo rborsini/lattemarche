@@ -176,37 +176,13 @@
     <Compile Include="Migrations\201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.Designer.cs">
       <DependentUpon>201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004011344564_AggiunteTabelle_AnalisiLatte.cs" />
-    <Compile Include="Migrations\202004011344564_AggiunteTabelle_AnalisiLatte.Designer.cs">
-      <DependentUpon>202004011344564_AggiunteTabelle_AnalisiLatte.cs</DependentUpon>
+    <Compile Include="Migrations\202004020929598_AggiuntoCodiceProduttore_V_Allevamento.cs" />
+    <Compile Include="Migrations\202004020929598_AggiuntoCodiceProduttore_V_Allevamento.Designer.cs">
+      <DependentUpon>202004020929598_AggiuntoCodiceProduttore_V_Allevamento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004011351527_AggiuntoNullableValoreAnalisi.cs" />
-    <Compile Include="Migrations\202004011351527_AggiuntoNullableValoreAnalisi.Designer.cs">
-      <DependentUpon>202004011351527_AggiuntoNullableValoreAnalisi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011358376_AggiuntoCampoIdAllevamento.cs" />
-    <Compile Include="Migrations\202004011358376_AggiuntoCampoIdAllevamento.Designer.cs">
-      <DependentUpon>202004011358376_AggiuntoCampoIdAllevamento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011518394_AggiuntoCampiRelazioneAnalisiLatte.cs" />
-    <Compile Include="Migrations\202004011518394_AggiuntoCampiRelazioneAnalisiLatte.Designer.cs">
-      <DependentUpon>202004011518394_AggiuntoCampiRelazioneAnalisiLatte.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011519589_AggiuntoCodiceAllevatore_V_Allevamenti.cs" />
-    <Compile Include="Migrations\202004011519589_AggiuntoCodiceAllevatore_V_Allevamenti.Designer.cs">
-      <DependentUpon>202004011519589_AggiuntoCodiceAllevatore_V_Allevamenti.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004011540040_ModificatoTipoValoreAnalisi.cs" />
-    <Compile Include="Migrations\202004011540040_ModificatoTipoValoreAnalisi.Designer.cs">
-      <DependentUpon>202004011540040_ModificatoTipoValoreAnalisi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004020655431_AggiuntoCampo_NomeProduttore.cs" />
-    <Compile Include="Migrations\202004020655431_AggiuntoCampo_NomeProduttore.Designer.cs">
-      <DependentUpon>202004020655431_AggiuntoCampo_NomeProduttore.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004020927117_SostituitaChiaveAnalisi.cs" />
-    <Compile Include="Migrations\202004020927117_SostituitaChiaveAnalisi.Designer.cs">
-      <DependentUpon>202004020927117_SostituitaChiaveAnalisi.cs</DependentUpon>
+    <Compile Include="Migrations\202004020931173_AggiuntaAnalisiLatte.cs" />
+    <Compile Include="Migrations\202004020931173_AggiuntaAnalisiLatte.Designer.cs">
+      <DependentUpon>202004020931173_AggiuntaAnalisiLatte.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -325,29 +301,11 @@
     <EmbeddedResource Include="Migrations\201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.resx">
       <DependentUpon>201902151008270_AggiunteTabelle_UtenteXAcquirente_UtenteXDestinatario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011344564_AggiunteTabelle_AnalisiLatte.resx">
-      <DependentUpon>202004011344564_AggiunteTabelle_AnalisiLatte.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004020929598_AggiuntoCodiceProduttore_V_Allevamento.resx">
+      <DependentUpon>202004020929598_AggiuntoCodiceProduttore_V_Allevamento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011351527_AggiuntoNullableValoreAnalisi.resx">
-      <DependentUpon>202004011351527_AggiuntoNullableValoreAnalisi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011358376_AggiuntoCampoIdAllevamento.resx">
-      <DependentUpon>202004011358376_AggiuntoCampoIdAllevamento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011518394_AggiuntoCampiRelazioneAnalisiLatte.resx">
-      <DependentUpon>202004011518394_AggiuntoCampiRelazioneAnalisiLatte.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011519589_AggiuntoCodiceAllevatore_V_Allevamenti.resx">
-      <DependentUpon>202004011519589_AggiuntoCodiceAllevatore_V_Allevamenti.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011540040_ModificatoTipoValoreAnalisi.resx">
-      <DependentUpon>202004011540040_ModificatoTipoValoreAnalisi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004020655431_AggiuntoCampo_NomeProduttore.resx">
-      <DependentUpon>202004020655431_AggiuntoCampo_NomeProduttore.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004020927117_SostituitaChiaveAnalisi.resx">
-      <DependentUpon>202004020927117_SostituitaChiaveAnalisi.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004020931173_AggiuntaAnalisiLatte.resx">
+      <DependentUpon>202004020931173_AggiuntaAnalisiLatte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

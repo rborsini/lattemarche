@@ -10,9 +10,7 @@ namespace LatteMarche.Application.Assam.Models
     {
         public string Nome { get; set; }
         public string Uom { get; set; }
-
         public string Valore { get; set; }
-
         public bool FuoriSoglia { get; set; }
     }
 }

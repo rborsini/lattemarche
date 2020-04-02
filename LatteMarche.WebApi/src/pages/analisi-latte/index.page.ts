@@ -44,10 +44,12 @@ export default class AnalisiLatteIndexPage extends Vue {
 
     public mounted() {
 
-        this.params.CodiceProduttore = "A0530010";
+        this.params.CodiceProduttore = "";
+        this.params.Campione = "20201138-001";
 
     }
 
+    // Click bottone cerca
     public onCercaClick() {
 
         this.analisiService.search(this.params)
@@ -58,11 +60,14 @@ export default class AnalisiLatteIndexPage extends Vue {
 
     }
 
+    // Click bottone annulla
     public onAnnullaClick() {
         this.params.CodiceProduttore = "";
         this.params.CodiceAsl = "";
+        this.params.Campione = "";
     }
 
+    // Click bottone synch
     public onSynchClick() {
         this.$refs.waiter.open();
         this.analisiService.synch()
@@ -71,10 +76,12 @@ export default class AnalisiLatteIndexPage extends Vue {
                 this.onCercaClick();
             })
             .catch(error => {
+                this.$refs.waiter.close();
                 alert("errore");
             });
     }
 
+    // Popolamento tabella
     public bindTable(result: Analisi[]): AnalisiTable {
         var table = new AnalisiTable();
 
@@ -108,6 +115,7 @@ export default class AnalisiLatteIndexPage extends Vue {
         return table;
     }
 
+    // estrapolazione colonne tabella
     public bindCols(result: Analisi[]): AnalisiCol[] {
 
         var cols: AnalisiCol[] = [];

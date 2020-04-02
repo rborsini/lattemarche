@@ -16,5 +16,7 @@ namespace LatteMarche.Application.AnalisiLatte.Dtos
 
         public string CodiceAsl { get; set; }
 
+        public string Campione { get; set; }
+
     }
 }

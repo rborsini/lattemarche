@@ -28,6 +28,7 @@ var AnalisiSearchModel = /** @class */ (function () {
     function AnalisiSearchModel() {
         this.CodiceProduttore = "";
         this.CodiceAsl = "";
+        this.Campione = "";
     }
     return AnalisiSearchModel;
 }());

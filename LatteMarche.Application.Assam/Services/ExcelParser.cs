@@ -3,6 +3,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -78,16 +79,21 @@ namespace LatteMarche.Application.Assam.Services
         private static List<Cell> GetTipiAnalisi(ISheet sheet, int sheetIndex)
         {
             var cells = new List<Cell>();
-
+            var previousCellIsEmpty = false;
+            var currentCellIsEmpty = false;
             var cell = new Cell(GetCellaTipiAnalisiRif(sheetIndex));
             cell.ReadText(sheet);
 
-            while (!String.IsNullOrEmpty(cell.TextValue))
+            while (!(previousCellIsEmpty && currentCellIsEmpty))
             {
-                cells.Add(cell);
+                if(!currentCellIsEmpty)
+                    cells.Add(cell);
 
                 cell = new Cell() { RowIndex = cell.RowIndex, ColIndex = cell.ColIndex + 1 };
                 cell.ReadText(sheet);
+
+                previousCellIsEmpty = currentCellIsEmpty;
+                currentCellIsEmpty = String.IsNullOrEmpty(cell.TextValue);
             }
 
             return cells;
@@ -116,6 +122,13 @@ namespace LatteMarche.Application.Assam.Services
 
                     misura.Nome = tipoAnalisiCell.TextValue;
                     misura.Valore = new Cell(cell.RowIndex, tipoAnalisiCell.ColIndex).ReadText(sheet);
+
+                    if(misura.Valore.StartsWith("(#)"))
+                    {
+                        misura.Valore = misura.Valore.Replace("(#)", "").Trim();
+                        misura.FuoriSoglia = true;
+                    }
+                    
 
                     analisi.Valori.Add(misura);
                 }
@@ -190,7 +203,18 @@ namespace LatteMarche.Application.Assam.Services
                 {
                     var cell = row.GetCell(this.colIndex);
                     if (cell != null)
-                        text = cell.StringCellValue;
+                    {
+                        switch(cell.CellType)
+                        {
+                            case CellType.String:
+                                text = cell.StringCellValue;
+                                break;
+                            case CellType.Numeric:
+                                text = cell.NumericCellValue.ToString(CultureInfo.CreateSpecificCulture("it-IT"));
+                                break;
+                        }
+                    }
+                        
                 }
 
                 this.TextValue = text;
