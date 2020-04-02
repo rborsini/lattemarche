@@ -42,9 +42,19 @@ namespace LatteMarche.Application.Allevamenti.Services
             return ConvertToDtoList(this.repository.FilterBy(a => !String.IsNullOrEmpty(a.CUAA)).ToList());
         }
 
-        public List<V_Allevamento> Search()
+        public List<V_Allevamento> Search(AllevamentiSearchDto searchDto)
         {
-            return this.v_allevamentiRepository.GetAll().ToList();
+            var query = this.v_allevamentiRepository.GetAll();
+
+            // Codice Allevatore
+            if (!String.IsNullOrEmpty(searchDto.CodiceAllevatore))
+                query = query.Where(a => a.CodiceAllevatore == searchDto.CodiceAllevatore);
+
+            // Codice ASL
+            if (!String.IsNullOrEmpty(searchDto.CodiceAsl))
+                query = query.Where(a => a.CodiceAsl == searchDto.CodiceAsl);
+
+            return query.ToList();
         }
 
         public override AllevamentoDto Details(int key)

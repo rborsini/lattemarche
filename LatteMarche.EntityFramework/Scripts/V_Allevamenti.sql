@@ -1,6 +1,7 @@
 ﻿SELECT 
 	allevamenti.ID_ALLEVAMENTO,
 	allevamenti.CODICE_ASL,
+	utenti.CODICE_ALLEVATORE,
 	allevamenti.CUAA,
 	allevamenti.ID_COMUNE,
 	allevamenti.INDIRIZZO_ALLEVAMENTO,

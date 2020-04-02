@@ -39,7 +39,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
         {
             try
             {
-                return Ok(this.allevamentiService.Search());
+                return Ok(this.allevamentiService.Search(new AllevamentiSearchDto()));
             }
             catch (Exception exc)
             {

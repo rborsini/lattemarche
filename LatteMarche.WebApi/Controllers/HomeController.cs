@@ -59,6 +59,12 @@ namespace LatteMarche.WebApi.Controllers
             
             model.Add(gestione);
 
+            MenuItemViewModel analisi = new MenuItemViewModel("Analisi");
+
+            analisi.Items.Add(MakeViewModel("Analisi latte", "Index", "AnalisiLatte"));
+
+            model.Add(analisi);
+
             MenuItemViewModel amministrazione = new MenuItemViewModel("Amministrazione");
             amministrazione.Items.Add(MakeViewModel("Azioni", "Index", "Azioni"));
             amministrazione.Items.Add(MakeViewModel("Ruoli", "Index", "Ruoli"));

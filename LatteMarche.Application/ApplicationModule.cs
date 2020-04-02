@@ -38,6 +38,9 @@ using LatteMarche.Application.Ruoli.Interfaces;
 using LatteMarche.Application.Autocisterne.Interfaces;
 using LatteMarche.Application.Logs.Interfaces;
 using LatteMarche.Application.Logs.Services;
+using LatteMarche.Application.Assam;
+using LatteMarche.Application.AnalisiLatte.Interfaces;
+using LatteMarche.Application.AnalisiLatte.Services;
 
 namespace LatteMarche.Application
 {
@@ -61,13 +64,15 @@ namespace LatteMarche.Application
 			if (this.isWeb)
 			{
 				builder.RegisterModule(new DataModule());
+                builder.RegisterModule(new AssamModule());
 
-				builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
+                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
 
                 builder.RegisterType<AutocisterneService>().As<IAutocisterneService>().InstancePerRequest();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>().InstancePerRequest();
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>().InstancePerRequest();
                 builder.RegisterType<AllevatoriService>().As<IAllevatoriService>().InstancePerRequest();
+                builder.RegisterType<AnalisiService>().As<IAnalisiService>().InstancePerRequest();
                 builder.RegisterType<AutorizzazioniService>().As<IAutorizzazioniService>().InstancePerRequest();
                 builder.RegisterType<AzioniService>().As<IAzioniService>().InstancePerRequest();
                 builder.RegisterType<ComuniService>().As<IComuniService>().InstancePerRequest();
@@ -97,6 +102,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>();
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
                 builder.RegisterType<AllevatoriService>().As<IAllevatoriService>();
+                builder.RegisterType<AnalisiService>().As<IAnalisiService>();
                 builder.RegisterType<ComuniService>().As<IComuniService>();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>();
                 builder.RegisterType<DocumentiService>().As<IDocumentiService>();

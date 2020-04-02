@@ -14,6 +14,9 @@ namespace LatteMarche.Core.Models
         [Column("CODICE_ASL")]
         public string CodiceAsl { get; set; }
 
+        [Column("CODICE_ALLEVATORE")]
+        public string CodiceAllevatore { get; set; }
+
         [Column("INDIRIZZO_ALLEVAMENTO")]
         public string IndirizzoAllevamento { get; set; }
 

@@ -11,7 +11,7 @@ namespace LatteMarche.Application.Allevamenti.Interfaces
 	{
 	    List<AllevamentoDto> GetAllevamentiSitra();
 
-        List<V_Allevamento> Search();
+        List<V_Allevamento> Search(AllevamentiSearchDto searchDto);
 
 	}
 

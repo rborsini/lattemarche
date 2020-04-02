@@ -18,6 +18,7 @@ using LatteMarche.Application.Lotti.Dtos;
 using LatteMarche.Application.Ruoli.Dtos;
 using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Application.Logs.Dtos;
+using LatteMarche.Application.AnalisiLatte.Dtos;
 
 namespace LatteMarche.Application
 {
@@ -30,6 +31,7 @@ namespace LatteMarche.Application
 		{
 
             AcquirentiMappings.Configure();
+            AnalisiMappings.Configure();
             AutocisternaMappings.Configure();
             AllevamentiMappings.Configure();
             AllevatoriMappings.Configure();

@@ -72,7 +72,7 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
                 model.Acquirenti = this.acquirentiService.Index();
                 model.Destinatari = this.destinatariService.Index();
-                model.Allevamenti = this.allevamentiService.Search();
+                model.Allevamenti = this.allevamentiService.Search(new Application.Allevamenti.Dtos.AllevamentiSearchDto());
 
                 return Ok(model);
             }

@@ -15,6 +15,8 @@ namespace LatteMarche.EntityFramework
         public DbSet<Autocisterna> Autocisterne { get; set; }
         public DbSet<Autorizzazione> Autorizzazioni { get; set; }
         public DbSet<Azione> Azioni { get; set; }
+        public DbSet<Analisi> Analisi { get; set; }
+        public DbSet<ValoreAnalisi> ValoriAnalisi { get; set; }
         public DbSet<Utente> Utenti { get; set; }
         public DbSet<Comune> Comuni { get; set; }
         public DbSet<Documento> Documenti { get; set; }
