@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Microsoft.CSharp;
 using LatteMarche.Xamarin.Interfaces;
+using System.Threading;
 
 namespace LatteMarche.Xamarin.Services
 {
@@ -26,6 +27,8 @@ namespace LatteMarche.Xamarin.Services
 
         public async Task<List<Allevamento>> GetAllevamenti()
         {
+            await Task.Delay(3000);
+
             var client = new RestClient($"{API_ENDPOINT}/api/Allevamenti");
             client.Timeout = -1;
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(this.Token, "Bearer");

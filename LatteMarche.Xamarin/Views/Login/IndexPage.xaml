@@ -7,6 +7,7 @@
              x:Class="LatteMarche.Xamarin.Views.Login.IndexPage">
     <ContentPage.Content>
         <StackLayout>
+            <!--<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />-->
             <Label Text="Username" FontSize="Medium" />
             <Entry Text="{Binding Username}" d:Text="Username" FontSize="Small" />
             <Label Text="Quantità" FontSize="Medium" />

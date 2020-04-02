@@ -43,20 +43,24 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private async Task ExecuteSynchCommand()
         {
-            var allevamenti = await this.restService.GetAllevamenti();
-
             try
             {
+                this.IsBusy = true;
+
+                var allevamenti = await this.restService.GetAllevamenti();
+
                 await this.allevamentiDataStore.DeleteAllItemsAsync();
                 await this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
+
+                this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
+                this.IsBusy = false;
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
             }
 
-            
         }
 
         #endregion
