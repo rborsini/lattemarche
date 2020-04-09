@@ -7,8 +7,6 @@ namespace LatteMarche.Xamarin.Interfaces
 {
     public interface ILabelMaker
     {
-        string MakeLabel(RegistroConsegna registro);
-
-        string MakeLabel(RegistroRaccolta registro);
+        string MakeLabel(Registro registro);
     }
 }

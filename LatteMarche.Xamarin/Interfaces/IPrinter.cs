@@ -11,8 +11,7 @@ namespace LatteMarche.Xamarin.Interfaces
     {
         string MacAddress { get; set; }
 
-        Task PrintLabel(RegistroConsegna registro);
+        Task PrintLabel(Registro registro);
 
-        Task PrintLabel(RegistroRaccolta registro);
     }
 }

@@ -60,18 +60,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             var printer = DependencyService.Get<IPrinter>();
             printer.MacAddress = "00:03:7A:30:B0:4D";
 
-            var registroRaccolta = new RegistroRaccolta();
-
-            registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
-            registroRaccolta.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
-            registroRaccolta.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
-            registroRaccolta.Giro = new Giro() { Nome = "PESARO-ANCONA" };
-            registroRaccolta.Data = DateTime.Now;
-            registroRaccolta.Lotto = new Lotto() { Codice = "P10302200920" };
+            var registroConsegna = new RegistroConsegna();
 
             try
             {
-                await printer.PrintLabel(registroRaccolta);
+                await printer.PrintLabel(registroConsegna);
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
@@ -88,8 +81,15 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecuteSaveItemCommand()
         {
-            await dataStore.UpdateItemAsync(Item);
-            await navigation.PopAsync();
+            try
+            {
+                await dataStore.UpdateItemAsync(Item);
+                await navigation.PopAsync();
+            }
+            catch(Exception exc)
+            {
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
         }
 
         /// <summary>

@@ -8,6 +8,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+        <ToolbarItem Text="Stampa" Command="{Binding PrintCommand}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

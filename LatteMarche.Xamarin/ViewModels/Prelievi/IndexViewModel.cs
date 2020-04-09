@@ -27,6 +27,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command LoadItemsCommand { get; set; }
 
+        public Command PrintCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -38,6 +40,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.Items = new ObservableCollection<Prelievo>();
 
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            this.PrintCommand = new Command(async () => await ExecutePrintCommand());
 
             MessagingCenter.Subscribe<NewPage, Prelievo>(this, "AddItem", async (obj, item) =>
             {
@@ -49,6 +52,66 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #endregion
 
         #region Methods
+
+        private async Task ExecutePrintCommand()
+        {
+            Debug.WriteLine("Print Command");
+
+            var printer = DependencyService.Get<IPrinter>();
+            printer.MacAddress = "00:03:7A:30:B0:4D";
+u
+            var registroRaccolta = new RegistroRaccolta();
+
+            registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
+            registroRaccolta.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
+            registroRaccolta.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
+            registroRaccolta.Giro = new Giro() { Nome = "PESARO-ANCONA" };
+            registroRaccolta.Data = DateTime.Now;
+            registroRaccolta.Lotto = new Lotto()
+            {
+                Codice = "P10302200920",
+                Prelievi = new List<Prelievo>()
+                {
+                    new Prelievo()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        DataConsegna = DateTime.Today.AddDays(1),
+                        DataPrelievo = DateTime.Today,
+                        DataUltimaMungitura = DateTime.Today.AddDays(-1),
+                        NumeroMungiture = 1,
+                        Quantita = Convert.ToDecimal(5.5),
+                        Scomparto = "1",
+                        Temperatura = Convert.ToDecimal(26.7),
+                        Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
+                        TipoLatte = new TipoLatte() { Descrizione = "QM-AQ" }
+                    },
+                    new Prelievo()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        DataConsegna = DateTime.Today.AddDays(1),
+                        DataPrelievo = DateTime.Today,
+                        DataUltimaMungitura = DateTime.Today.AddDays(-1),
+                        NumeroMungiture = 3,
+                        Quantita = Convert.ToDecimal(4.4),
+                        Scomparto = "2",
+                        Temperatura = Convert.ToDecimal(32.3),
+                        Allevamento = new Allevamento() { RagioneSociale = "SOCIETA' AGR. MARINELLI FABRIZIO E LUCA", P_IVA = "00398130435", Prov = "MC" },
+                        TipoLatte = new TipoLatte() { Descrizione = "QM-AQ" }
+                    }
+                }
+            };
+
+            try
+            {
+                await printer.PrintLabel(registroRaccolta);
+                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
+            }
+            catch (Exception exc)
+            {
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+
+        }
 
         private async Task ExecuteLoadItemsCommand()
         {

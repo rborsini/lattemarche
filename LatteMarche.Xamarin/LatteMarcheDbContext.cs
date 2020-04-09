@@ -12,6 +12,7 @@ namespace LatteMarche.Xamarin
     {
 		public DbSet<Prelievo> Prelievi { get; set; }
 		public DbSet<Allevamento> Allevamenti { get; set; }
+		public DbSet<TipoLatte> TipiLatte { get; set; }
 
 		private const string databaseName = "database.db";
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

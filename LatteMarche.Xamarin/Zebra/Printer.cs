@@ -29,7 +29,7 @@ namespace LatteMarche.Xamarin.Zebra
 
         #region Methods
 
-        public Task PrintLabel(RegistroConsegna registro)
+        public Task PrintLabel(Registro registro)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace LatteMarche.Xamarin.Zebra
                 this.Connect();
                 Debug.WriteLine("Connected");
 
-                var labelMaker = this.GetLabelMaker();
+                var labelMaker = this.MakeLabelMaker(registro);
                 Debug.WriteLine("Label maked done");
 
                 var labelDefinition = labelMaker.MakeLabel(registro);
@@ -60,43 +60,12 @@ namespace LatteMarche.Xamarin.Zebra
             return Task.FromResult(true);
         }
 
-        public Task PrintLabel(RegistroRaccolta registro)
-        {
-            try
-            {
-                Debug.WriteLine("Connecting");
-                this.Connect();
-                Debug.WriteLine("Connected");
-
-                var labelMaker = this.GetLabelMaker();
-                Debug.WriteLine("Label maked done");
-
-                var labelDefinition = labelMaker.MakeLabel(registro);
-                Debug.WriteLine($"Label definition: {labelDefinition}");
-
-                this.PrintLabel(labelDefinition);                
-            }
-            catch(Exception exc)
-            {
-                Debug.WriteLine($"Print error {exc.Message}");
-                throw exc;
-            }
-            finally
-            {
-                Debug.WriteLine($"Disconnecting");
-                this.Disconnect();
-                Debug.WriteLine($"Disconnected");
-            }
-
-            return Task.FromResult(true);
-        }
-
         /// <summary>
         /// Factory label maker
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        private ILabelMaker GetLabelMaker()
+        private ILabelMaker MakeLabelMaker(Registro registro)
         {
             //Debug.WriteLine($"Disconnecting");
             //var printerLanguage = ZebraPrinterFactory.GetInstance(this.connection).PrinterControlLanguage;
@@ -104,7 +73,13 @@ namespace LatteMarche.Xamarin.Zebra
             //if (printerLanguage == PrinterLanguage.ZPL)
             //    return new ZplLabelMaker();
             //else
-                return new CpclLabelMaker();
+            if(registro is RegistroConsegna)
+                return new CPCL.RegistroConsegnaMaker();
+
+            if (registro is RegistroRaccolta)
+                return new CPCL.RegistroRaccoltaMaker();
+
+            return null;
         }
 
         /// <summary>
