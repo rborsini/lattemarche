@@ -1,5 +1,4 @@
-﻿using LatteMarche.Xamarin.Models;
-using LatteMarche.Xamarin.ViewModels.Prelievi;
+﻿using LatteMarche.Xamarin.ViewModels.Lotti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace LatteMarche.Xamarin.Views.Prelievi
+namespace LatteMarche.Xamarin.Views.Lotti
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewPage : ContentPage
@@ -20,7 +19,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public NewPage(NewViewModel viewModel)
         {

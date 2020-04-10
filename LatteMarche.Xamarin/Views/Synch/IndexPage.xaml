@@ -10,6 +10,7 @@
 
             <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
                 <Button Margin="0,10,0,0" Text="Synch" Command="{Binding SynchCommand}"  />
+                <Button Margin="0,10,0,0" Text="Export" Command="{Binding ExportCommand}"  />
             </StackLayout>
 
             <AbsoluteLayout IsVisible="{Binding IsBusy}"

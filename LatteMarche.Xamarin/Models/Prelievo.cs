@@ -19,6 +19,11 @@ namespace LatteMarche.Xamarin.Models
         public DateTime? DataConsegna { get; set; }
         public DateTime? DataUltimaMungitura { get; set; }
 
+        [ForeignKey("Lotto")]
+        public string IdLotto { get; set; }
+
+        public virtual Lotto Lotto { get; set; }
+
         [ForeignKey("Allevamento")]
         public int? IdAllevamento { get; set; } 
 

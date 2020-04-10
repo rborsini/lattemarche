@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:views="clr-namespace:LatteMarche.Xamarin.Views"
-             xmlns:prelieviViews="clr-namespace:LatteMarche.Xamarin.Views.Prelievi"
+             xmlns:lottiViews="clr-namespace:LatteMarche.Xamarin.Views.Lotti"
              x:Class="LatteMarche.Xamarin.Views.MainPage">
 
     <MasterDetailPage.Master>
@@ -20,7 +20,7 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <prelieviViews:IndexPage />
+                <lottiViews:IndexPage />
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

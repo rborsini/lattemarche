@@ -4,11 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="LatteMarche.Xamarin.Views.Prelievi.IndexPage">
+             x:Class="LatteMarche.Xamarin.Views.Lotti.IndexPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddCommand}" />
-        <ToolbarItem Text="Stampa" Command="{Binding PrintCommand}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -26,16 +25,11 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="10">
-                                <Label Text="{Binding Scomparto}" 
+                                <Label Text="{Binding Codice}" 
                                 d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
                                 FontSize="16" />
-                                <Label Text="{Binding Quantita}" 
-                                d:Text="Item descripton"
-                                LineBreakMode="NoWrap"
-                                Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

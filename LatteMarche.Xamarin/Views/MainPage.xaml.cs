@@ -20,7 +20,7 @@ namespace LatteMarche.Xamarin.Views
         {
             InitializeComponent();
 
-            MenuPages.Add((int)MenuItemType.Prelievi, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Lotti, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)

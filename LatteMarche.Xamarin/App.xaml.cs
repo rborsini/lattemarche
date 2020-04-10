@@ -14,6 +14,7 @@ namespace LatteMarche.Xamarin
             InitializeComponent();
 
             DependencyService.Register<AllevamentiDataStore>();
+            DependencyService.Register<LottiDataStore>();
             DependencyService.Register<PrelieviDataStore>();
 
             DependencyService.Register<RestService>();

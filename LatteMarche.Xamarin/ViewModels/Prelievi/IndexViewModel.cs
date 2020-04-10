@@ -17,6 +17,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Fields
 
+        private Lotto lotto;
+
         private IDataStore<Prelievo, string> dataStore => DependencyService.Get<IDataStore<Prelievo, string>>();
 
         #endregion
@@ -27,18 +29,22 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command LoadItemsCommand { get; set; }
 
+        public Command AddCommand { get; set; }
+
         public Command PrintCommand { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public IndexViewModel(INavigation navigation, Page page)
+        public IndexViewModel(INavigation navigation, Page page, Lotto lotto)
             : base(navigation, page)
         {
             this.Title = "Browse";
             this.Items = new ObservableCollection<Prelievo>();
+            this.lotto = lotto;
 
+            this.AddCommand = new Command(async () => await ExecuteAddCommand());
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
 
@@ -138,6 +144,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 this.IsBusy = false;
             }
+        }
+
+        private async Task ExecuteAddCommand()
+        {
+            await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page, this.lotto)));
         }
 
         #endregion

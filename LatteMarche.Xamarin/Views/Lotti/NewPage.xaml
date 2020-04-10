@@ -4,18 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="LatteMarche.Xamarin.Views.Prelievi.NewPage">
+             x:Class="LatteMarche.Xamarin.Views.Lotti.NewPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salva" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Scomparto" FontSize="Medium" />
-            <Entry Text="{Binding Item.Scomparto}" d:Text="Scomparto" FontSize="Small" />
-            <Label Text="Quantità" FontSize="Medium" />
-            <Editor Text="{Binding Item.Quantita}" d:Text="Quantità" FontSize="Small" Margin="0" />
+        <StackLayout>
+            <Label Text="Codice" FontSize="Medium" />
+            <Entry Text="{Binding Item.Codice}" d:Text="Codice" FontSize="Small" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

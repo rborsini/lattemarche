@@ -1,5 +1,5 @@
 ﻿using LatteMarche.Xamarin.Models;
-using LatteMarche.Xamarin.ViewModels.Prelievi;
+using LatteMarche.Xamarin.ViewModels.Lotti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace LatteMarche.Xamarin.Views.Prelievi
+namespace LatteMarche.Xamarin.Views.Lotti
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IndexPage : ContentPage
@@ -22,11 +22,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         #region Constructor
 
-        public IndexPage(IndexViewModel viewModel)
+        public IndexPage()
         {
             InitializeComponent();
 
-            BindingContext = this.viewModel = viewModel;
+            BindingContext = this.viewModel = new IndexViewModel(Navigation, this);
         }
 
         #endregion
@@ -35,11 +35,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Prelievo;
+            var item = args.SelectedItem as Lotto;
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item)));
+            await Navigation.PushAsync(new Prelievi.IndexPage(new ViewModels.Prelievi.IndexViewModel(Navigation, this, item)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
