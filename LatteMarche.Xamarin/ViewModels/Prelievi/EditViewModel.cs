@@ -62,6 +62,29 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             var registroConsegna = new RegistroConsegna();
 
+            registroConsegna.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
+            registroConsegna.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
+            registroConsegna.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
+            registroConsegna.Giro = new Giro() { Nome = "PESARO-ANCONA" };
+            registroConsegna.Data = DateTime.Now;
+
+            registroConsegna.Prelievo = new Prelievo()
+            {
+                Id = Guid.NewGuid().ToString(),
+                DataConsegna = DateTime.Today.AddDays(1),
+                DataPrelievo = DateTime.Today,
+                DataUltimaMungitura = DateTime.Today.AddDays(-1),
+                NumeroMungiture = 1,
+                Quantita_kg = Convert.ToDecimal(5.5),
+                Quantita_lt = Convert.ToDecimal(6.6),
+                Scomparto = "1",
+                Temperatura = Convert.ToDecimal(26.7),
+                Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
+                TipoLatte = new TipoLatte() { Codice = "QM-AQ", Descrizione = "QM-ALTA QUALITA'" }
+            };
+
+            registroConsegna.Comunicazione = "Comunicazione di prova lorem ipsum";
+
             try
             {
                 await printer.PrintLabel(registroConsegna);

@@ -22,7 +22,10 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             cmd += MakeHeader(registroRaccolta, ref y);
 
             // titolo
-            cmd += MakerTitle(registroRaccolta, ref y);
+            cmd += MakeTitle(registroRaccolta, ref y);
+
+            // sotto titolo
+            cmd += MakeSubTitle(registroRaccolta, ref y);
 
             // linea separatrice
             cmd += MakeLine(ref y);
@@ -38,6 +41,9 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             // linea separatrice
             cmd += MakeLine(ref y);
+
+            // data e giro
+            cmd += MakeDataSection(registroRaccolta, ref y);
 
             // lotto 
             cmd += MakeLottoSection(registroRaccolta, ref y);
@@ -70,85 +76,18 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
         }
 
-        private string MakeAcquirenteDestinatarioSection(Registro registro, ref int y)
-        {
-            var cmd = "";
-
-            int sxColWidth = WIDTH / 2;
-            int lineSpacing = 30;
-
-            // intestazione
-            var headerAcq = PadRight("Acquirente", sxColWidth);
-            var headerDest = PadRight("Destinatario", sxColWidth);
-            y += 20;
-            cmd += $"TEXT {p} {x} {y} {headerAcq} {headerDest}\r\n";
-
-            // ragioni sociali
-            var rsAcq = PadRight(registro.Acquirente.RagioneSociale, sxColWidth);
-            var rsDest = PadRight(registro.Destinatario.RagioneSociale, sxColWidth);
-            y += lineSpacing;
-            cmd += $"TEXT {p} {x} {y} {rsAcq} {rsDest}\r\n";
-
-            // indirizzi
-            var indAcq = PadRight(registro.Acquirente.Indirizzo, sxColWidth);
-            var indDest = PadRight(registro.Destinatario.Indirizzo, sxColWidth);
-            y += lineSpacing;
-            cmd += $"TEXT {p} {x} {y} {indAcq} {indDest}\r\n";
-
-            // cap / comune / prov
-            var comAcq = PadRight($"{registro.Acquirente.CAP} {registro.Acquirente.Comune} ({registro.Acquirente.Provincia})", sxColWidth);
-            var comDest = PadRight($"{registro.Destinatario.CAP} {registro.Destinatario.Comune} ({registro.Destinatario.Provincia})", sxColWidth);
-            y += lineSpacing;
-            cmd += $"TEXT {p} {x} {y} {comAcq} {comDest}\r\n";
-
-            // P IVA
-            var pivaAcq = PadRight($"P.IVA {registro.Acquirente.P_IVA}", sxColWidth);
-            var pivaDest = PadRight($"P.IVA {registro.Destinatario.P_IVA}", sxColWidth);
-            y += lineSpacing;
-            cmd += $"TEXT {p} {x} {y} {pivaAcq} {pivaDest}\r\n";
-
-            y += lineSpacing;
-
-            return cmd;
-        }
-
-        private string MakeTrasportatoreSection(Registro registro, ref int y)
-        {
-            var cmd = "";
-
-            int lineSpacing = 30;
-
-            // Targa
-            cmd += $"TEXT {p} {x} {y} Targa automezzo: {registro.Trasportatore.TargaAutomezzo}\r\n";
-            y += lineSpacing;
-
-            // Trasportatore
-            cmd += $"TEXT {p} {x} {y} Trasportatore: {registro.Trasportatore.RagioneSociale}\r\n";
-            y += lineSpacing;
-
-            // Indirizzo
-            cmd += $"TEXT {p} {x} {y} {registro.Trasportatore.Indirizzo}\r\n";
-            y += lineSpacing;
-
-            // P IVA
-            cmd += $"TEXT {p} {x} {y} P.IVA: {registro.Trasportatore.P_IVA}\r\n";
-            y += lineSpacing;
-
-            return cmd;
-        }
-
+        /// <summary>
+        /// Sezione lotto
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private string MakeLottoSection(RegistroRaccolta registro, ref int y)
         {
             var cmd = "";
 
             int sxColWidth = 25;
             int lineSpacing = 50;
-
-            // Data / Giro
-            var data = PadRight($"Data: {registro.Data.ToString("dd/MM/yyyy")}", sxColWidth);
-            var giro = PadRight($"Giro: {registro.Giro.Nome}", sxColWidth);
-            cmd += $"TEXT {h1} {x} {y} {data} {giro}\r\n";
-            y += lineSpacing;
 
             // Ora / Lotto
             var ora = PadRight($"Ora: {registro.Data.ToString("HH:mm")}", sxColWidth);
@@ -159,6 +98,12 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return cmd;
         }
 
+        /// <summary>
+        /// Sezione scomparto
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private string MakeScompartoSection(RegistroRaccolta registro, ref int y)
         {
             var cmd = "";
@@ -181,6 +126,12 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return cmd;
         }
 
+        /// <summary>
+        /// Tabella produttori
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private string MakeTabellaSection(RegistroRaccolta registro, ref int y)
         {
             var cmd = "";
@@ -199,12 +150,12 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
                 var scomparto = prelievo.Scomparto;
                 var ragioneSociale = prelievo.Allevamento.RagioneSociale;
                 var pIvaProv = $"{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Prov}";
-                var tipo = prelievo.TipoLatte.Descrizione;
-                var qta = prelievo.Quantita.ToString();
+                var tipo = prelievo.TipoLatte.Codice;
+                var qta = prelievo.Quantita_kg.ToString();
                 var ora = prelievo.DataPrelievo.Value.ToString("HH:mm");
                 var data = prelievo.DataPrelievo.Value.ToString("dd/MM/yyyy");
 
-                qtaTot += prelievo.Quantita.HasValue ? prelievo.Quantita.Value : 0;
+                qtaTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
 
                 cmd += $"TEXT {p} {x} {y} {PadRight(scomparto, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(qta, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
@@ -220,11 +171,6 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             return cmd;
         }
-
-
-
-
-
 
     }
 }

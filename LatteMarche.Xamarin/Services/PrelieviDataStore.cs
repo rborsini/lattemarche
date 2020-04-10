@@ -17,7 +17,7 @@ namespace LatteMarche.Xamarin.Services
         protected override Prelievo UpdateProperties(Prelievo entityItem, Prelievo viewItem)
         {
             entityItem.Scomparto = viewItem.Scomparto;
-            entityItem.Quantita = viewItem.Quantita;
+            entityItem.Quantita_kg = viewItem.Quantita_kg;
 
             return entityItem;
         }

@@ -19,5 +19,9 @@ namespace LatteMarche.Xamarin.Models
         public string Prov { get; set; }
         public string RagioneSociale { get; set; }
         public string P_IVA { get; set; }
+
+        public string CAP { get; set; }
+
+        public string Comune { get; set; }
     }
 }

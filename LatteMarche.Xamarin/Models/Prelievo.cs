@@ -12,7 +12,8 @@ namespace LatteMarche.Xamarin.Models
         public override string Id { get; set; }
         public DateTime? DataPrelievo { get; set; }
         public string Scomparto { get; set; }
-        public decimal? Quantita { get; set; }
+        public decimal? Quantita_kg { get; set; }
+        public decimal? Quantita_lt { get; set; }
         public decimal? Temperatura { get; set; }
         public int? NumeroMungiture { get; set; }
         public DateTime? DataConsegna { get; set; }

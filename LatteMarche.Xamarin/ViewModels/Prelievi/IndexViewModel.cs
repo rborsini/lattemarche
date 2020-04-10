@@ -59,7 +59,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             var printer = DependencyService.Get<IPrinter>();
             printer.MacAddress = "00:03:7A:30:B0:4D";
-u
+
             var registroRaccolta = new RegistroRaccolta();
 
             registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
@@ -79,11 +79,11 @@ u
                         DataPrelievo = DateTime.Today,
                         DataUltimaMungitura = DateTime.Today.AddDays(-1),
                         NumeroMungiture = 1,
-                        Quantita = Convert.ToDecimal(5.5),
+                        Quantita_kg = Convert.ToDecimal(5.5),
                         Scomparto = "1",
                         Temperatura = Convert.ToDecimal(26.7),
                         Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
-                        TipoLatte = new TipoLatte() { Descrizione = "QM-AQ" }
+                        TipoLatte = new TipoLatte() { Codice = "QM-AQ" }
                     },
                     new Prelievo()
                     {
@@ -92,11 +92,11 @@ u
                         DataPrelievo = DateTime.Today,
                         DataUltimaMungitura = DateTime.Today.AddDays(-1),
                         NumeroMungiture = 3,
-                        Quantita = Convert.ToDecimal(4.4),
+                        Quantita_kg = Convert.ToDecimal(4.4),
                         Scomparto = "2",
                         Temperatura = Convert.ToDecimal(32.3),
                         Allevamento = new Allevamento() { RagioneSociale = "SOCIETA' AGR. MARINELLI FABRIZIO E LUCA", P_IVA = "00398130435", Prov = "MC" },
-                        TipoLatte = new TipoLatte() { Descrizione = "QM-AQ" }
+                        TipoLatte = new TipoLatte() { Codice = "QM-AQ" }
                     }
                 }
             };

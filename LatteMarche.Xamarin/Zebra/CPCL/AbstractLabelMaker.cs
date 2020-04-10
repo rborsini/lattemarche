@@ -6,32 +6,167 @@ using System.Text;
 
 namespace LatteMarche.Xamarin.Zebra.CPCL
 {
+    /// <summary>
+    /// Classe base per la generazione delle ricevute di consegna e raccolta latte
+    /// </summary>
     public abstract class AbstractLabelMaker : ILabelMaker
     {
-        protected const int WIDTH = 95;
+        protected const int WIDTH = 95;         // Larghezza ricevuta in caratteri
 
-        protected int quantity = 1;           // numero copie
-        protected int offset = 0;             // offset sx label
-        protected int x = 30;                 // margine sx singola riga
-        protected string h1 = "7 1";          // H1 => font 7 size 1
-        protected string p = "0 2";           // P  => font 0 size 2
+        protected int quantity = 1;             // numero copie
+        protected int offset = 0;               // offset sx label
+        protected int x = 30;                   // margine sx singola riga
+        protected string h1 = "7 1";            // H1 => font 7 size 1
+        protected string p = "0 2";             // P  => font 0 size 2
 
+        /// <summary>
+        /// Generazione comando CPCL
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <returns></returns>
         public abstract string MakeLabel(Registro registro);
 
+        /// <summary>
+        /// Intestazione ricevuta
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         protected string MakeHeader(Registro registro, ref int y)
         {
             var cmd = "";
 
             cmd += $"TEXT {h1} {x} 0 {registro.Header_1} \r\n";         // latte marche
-            cmd += $"TEXT {p} {x} 50 {registro.Header_2} \r\n";         // Organizzazione Produttori
-            cmd += $"TEXT {h1} {x} 100 {registro.Titolo} \r\n";         // Registro raccolta latte bovino
+            cmd += $"TEXT {p} {x} 50 {registro.Header_2} \r\n";         // Organizzazione Produttori            
 
             y = 150;
 
             return cmd;
         }
 
-        protected string MakerTitle(Registro registro, ref int y)
+        /// <summary>
+        /// Titolo
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeTitle(Registro registro, ref int y)
+        {
+            var cmd = "";
+
+            cmd += $"TEXT {h1} {x} 100 {registro.Titolo} \r\n";         // Registro raccolta latte bovino o Registro consegna latte bovino
+
+            return cmd;
+        }
+
+        /// <summary>
+        /// Sezione Acquirente / Destinatario
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeAcquirenteDestinatarioSection(Registro registro, ref int y)
+        {
+            var cmd = "";
+
+            int sxColWidth = WIDTH / 2;
+            int lineSpacing = 30;
+
+            // intestazione
+            var headerAcq = PadRight("Acquirente", sxColWidth);
+            var headerDest = PadRight("Destinatario", sxColWidth);
+            y += 20;
+            cmd += $"TEXT {p} {x} {y} {headerAcq} {headerDest}\r\n";
+
+            // ragioni sociali
+            var rsAcq = PadRight(registro.Acquirente.RagioneSociale, sxColWidth);
+            var rsDest = PadRight(registro.Destinatario.RagioneSociale, sxColWidth);
+            y += lineSpacing;
+            cmd += $"TEXT {p} {x} {y} {rsAcq} {rsDest}\r\n";
+
+            // indirizzi
+            var indAcq = PadRight(registro.Acquirente.Indirizzo, sxColWidth);
+            var indDest = PadRight(registro.Destinatario.Indirizzo, sxColWidth);
+            y += lineSpacing;
+            cmd += $"TEXT {p} {x} {y} {indAcq} {indDest}\r\n";
+
+            // cap / comune / prov
+            var comAcq = PadRight($"{registro.Acquirente.CAP} {registro.Acquirente.Comune} ({registro.Acquirente.Provincia})", sxColWidth);
+            var comDest = PadRight($"{registro.Destinatario.CAP} {registro.Destinatario.Comune} ({registro.Destinatario.Provincia})", sxColWidth);
+            y += lineSpacing;
+            cmd += $"TEXT {p} {x} {y} {comAcq} {comDest}\r\n";
+
+            // P IVA
+            var pivaAcq = PadRight($"P.IVA {registro.Acquirente.P_IVA}", sxColWidth);
+            var pivaDest = PadRight($"P.IVA {registro.Destinatario.P_IVA}", sxColWidth);
+            y += lineSpacing;
+            cmd += $"TEXT {p} {x} {y} {pivaAcq} {pivaDest}\r\n";
+
+            y += lineSpacing;
+
+            return cmd;
+        }
+
+        /// <summary>
+        /// Sezione 
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeTrasportatoreSection(Registro registro, ref int y)
+        {
+            var cmd = "";
+
+            int lineSpacing = 30;
+
+            // Targa
+            cmd += $"TEXT {p} {x} {y} Targa automezzo: {registro.Trasportatore.TargaAutomezzo}\r\n";
+            y += lineSpacing;
+
+            // Trasportatore
+            cmd += $"TEXT {p} {x} {y} Trasportatore: {registro.Trasportatore.RagioneSociale}\r\n";
+            y += lineSpacing;
+
+            // Indirizzo
+            cmd += $"TEXT {p} {x} {y} {registro.Trasportatore.Indirizzo}\r\n";
+            y += lineSpacing;
+
+            // P IVA
+            cmd += $"TEXT {p} {x} {y} P.IVA: {registro.Trasportatore.P_IVA}\r\n";
+            y += lineSpacing;
+
+            return cmd;
+        }
+
+        /// <summary>
+        /// Data e giro
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeDataSection(Registro registro, ref int y)
+        {
+            var cmd = "";
+
+            int sxColWidth = 25;
+            int lineSpacing = 50;
+
+            // Data / Giro
+            var data = PadRight($"Data: {registro.Data.ToString("dd/MM/yyyy")}", sxColWidth);
+            var giro = PadRight($"Giro: {registro.Giro.Nome}", sxColWidth);
+            cmd += $"TEXT {h1} {x} {y} {data} {giro}\r\n";
+            y += lineSpacing;
+
+            return cmd;
+        }
+
+        /// <summary>
+        /// Sotto titolo
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeSubTitle(Registro registro, ref int y)
         {
             var cmd = "";
 
@@ -48,6 +183,13 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return cmd;
         }
 
+        /// <summary>
+        /// Sezione firme
+        /// </summary>
+        /// <param name="firmaSx"></param>
+        /// <param name="firmaDx"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         protected string MakeFirmeSection(string firmaSx, string firmaDx, ref int y)
         {
             var cmd = "";
@@ -66,6 +208,11 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return cmd;
         }
 
+        /// <summary>
+        /// Linea spaziatrice
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
         protected string MakeLine(ref int y)
         {
             var cmd = $"LINE 0 {y} 800 {y} 2 \r\n";
@@ -74,6 +221,12 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return cmd;
         }
 
+        /// <summary>
+        /// Divide una stringa in n-parti di lunghezza parti al chunkSize
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="chunkSize"></param>
+        /// <returns></returns>
         protected List<string> SplitInLine(string str, int chunkSize)
         {
             var lines = new List<string>();
@@ -93,6 +246,13 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             return lines;
         }
 
+        /// <summary>
+        /// Adatta la lunghezza della stringa in input (taglia se troppo lunga, aggiunge caratteri in fondo se troppo corta)
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="length"></param>
+        /// <param name="paddingChar"></param>
+        /// <returns></returns>
         protected string PadRight(string source, int length, char paddingChar = ' ')
         {
             var result = String.Empty;
