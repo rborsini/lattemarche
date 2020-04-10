@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -18,17 +19,20 @@ namespace LatteMarche.Xamarin.Droid
 {
     public class FileSystemImplementation : IFileSystem
     {
-        public string GetExternalStorage()
+        public void ExportDb(string dbFilePath)
         {
-            //Context context = Android.App.Application.Context;
-            //var filePath = context.GetExternalFilesDir("");
 
-            //var filePath = context.GetExternalFilesDir(Android.OS.Environment.DirectoryDownloads);
+            var bytes = System.IO.File.ReadAllBytes(dbFilePath);
 
-            //return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            var folderPath = GetExternalStorage();
+            var fileCopyName = Path.Combine(folderPath, $"Database_{DateTime.Now:dd-MM-yyyy_HH-mm-ss-tt}.db");
+
+            System.IO.File.WriteAllBytes(fileCopyName, bytes);
+        }
+
+        private string GetExternalStorage()
+        {
             return Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).Path;
-
-            //return filePath.Path;
         }
     }
 }

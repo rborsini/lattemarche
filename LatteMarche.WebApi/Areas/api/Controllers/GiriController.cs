@@ -35,11 +35,14 @@ namespace LatteMarche.WebApi.Areas.api.Controllers
 
         [ViewItem(nameof(Index), "Giri", "Lista")]
         [HttpGet]
-        public IHttpActionResult Index(int idTrasportatore)
+        public IHttpActionResult Index(int idTrasportatore = -1)
         {
             try
             {
-                return Ok(this.giriService.GetGiriTrasportatore(idTrasportatore));
+                if(idTrasportatore != -1)
+                    return Ok(this.giriService.GetGiriTrasportatore(idTrasportatore));
+                else
+                    return Ok(this.giriService.Index());
             }
             catch(Exception exc)
             {

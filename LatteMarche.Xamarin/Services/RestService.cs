@@ -25,21 +25,6 @@ namespace LatteMarche.Xamarin.Services
             set { Application.Current.Properties["token"] = value; }
         }
 
-        public async Task<List<Allevamento>> GetAllevamenti()
-        {
-            await Task.Delay(3000);
-
-            var client = new RestClient($"{API_ENDPOINT}/api/Allevamenti");
-            client.Timeout = -1;
-            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(this.Token, "Bearer");
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
-
-            var list = JsonConvert.DeserializeObject<List<Allevamento>>(response.Content);
-
-            return await Task.FromResult<List<Allevamento>>(list);
-        }
-
         public async Task<bool> GetToken(string username, string password)
         {
             try
@@ -66,5 +51,57 @@ namespace LatteMarche.Xamarin.Services
                 return await Task.FromResult<bool>(false);
             }
         }
+
+        public async Task<List<Acquirente>> GetAcquirenti()
+        {
+            return await GetRecords<Acquirente>("Acquirenti");
+        }
+
+        public async Task<List<Allevamento>> GetAllevamenti()
+        {
+            return await GetRecords<Allevamento>("Allevamenti");
+        }
+
+        public async Task<List<AutoCisterna>> GetAutoCisterne()
+        {
+            return await GetRecords<AutoCisterna>("autocisterne");
+        }
+
+        public async Task<List<Destinatario>> GetDestinatari()
+        {
+            return await GetRecords<Destinatario>("Destinatari");
+        }
+
+        public async Task<List<Giro>> GetGiri()
+        {
+            return await GetRecords<Giro>("Giri");
+        }
+
+        public async Task<List<TipoLatte>> GetTipiLatte()
+        {
+            return await GetRecords<TipoLatte>("tipiLatte");
+        }
+
+        public async Task<List<Trasportatore>> GetTrasportatori()
+        {
+            return await GetRecords<Trasportatore>("trasportatori");
+        }
+
+
+
+        private async Task<List<TDto>> GetRecords<TDto>(string dtoName)
+            where TDto : class
+        {
+            var client = new RestClient($"{API_ENDPOINT}/api/{dtoName}");
+            client.Timeout = -1;
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(this.Token, "Bearer");
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            var list = JsonConvert.DeserializeObject<List<TDto>>(response.Content);
+
+            return await Task.FromResult<List<TDto>>(list);
+        }
+
     }
 }

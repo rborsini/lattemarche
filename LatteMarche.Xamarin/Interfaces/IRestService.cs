@@ -8,7 +8,19 @@ namespace LatteMarche.Xamarin.Interfaces
     {
         Task<bool> GetToken(string username, string password);
 
+        Task<List<Acquirente>> GetAcquirenti();
+
         Task<List<Allevamento>> GetAllevamenti();
+
+        Task<List<AutoCisterna>> GetAutoCisterne();
+
+        Task<List<Destinatario>> GetDestinatari();
+
+        Task<List<Giro>> GetGiri();
+
+        Task<List<TipoLatte>> GetTipiLatte();
+
+        Task<List<Trasportatore>> GetTrasportatori();
 
     }
 }

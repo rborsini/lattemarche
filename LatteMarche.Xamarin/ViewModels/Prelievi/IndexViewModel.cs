@@ -19,7 +19,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Lotto lotto;
 
-        private IDataStore<Prelievo, string> dataStore => DependencyService.Get<IDataStore<Prelievo, string>>();
+        private PrelieviDataStore dataStore => DependencyService.Get<IDataStore<Prelievo, string>>() as PrelieviDataStore;
 
         #endregion
 
@@ -68,10 +68,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             var registroRaccolta = new RegistroRaccolta();
 
-            registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
-            registroRaccolta.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
+            registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", Piva = "00100010446" };
+            registroRaccolta.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
             registroRaccolta.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
-            registroRaccolta.Giro = new Giro() { Nome = "PESARO-ANCONA" };
+            registroRaccolta.Giro = new Giro() { Denominazione = "PESARO-ANCONA" };
             registroRaccolta.Data = DateTime.Now;
             registroRaccolta.Lotto = new Lotto()
             {
@@ -89,7 +89,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         Scomparto = "1",
                         Temperatura = Convert.ToDecimal(26.7),
                         Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
-                        TipoLatte = new TipoLatte() { Codice = "QM-AQ" }
+                        TipoLatte = new TipoLatte() { DescrizioneBreve = "QM-AQ" }
                     },
                     new Prelievo()
                     {
@@ -102,7 +102,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         Scomparto = "2",
                         Temperatura = Convert.ToDecimal(32.3),
                         Allevamento = new Allevamento() { RagioneSociale = "SOCIETA' AGR. MARINELLI FABRIZIO E LUCA", P_IVA = "00398130435", Prov = "MC" },
-                        TipoLatte = new TipoLatte() { Codice = "QM-AQ" }
+                        TipoLatte = new TipoLatte() { DescrizioneBreve = "QM-AQ" }
                     }
                 }
             };
@@ -130,7 +130,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 this.Items.Clear();
 
-                var items = await this.dataStore.GetItemsAsync(true);
+                var items = await this.dataStore.GetItemsAsync(this.lotto.Id);
                 foreach (var item in items)
                 {
                     this.Items.Add(item);

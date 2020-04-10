@@ -60,7 +60,7 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
             try
             {
                 this.Items.Clear();
-                var items = await this.dataStore.GetItemsAsync(true);
+                var items = await this.dataStore.GetItemsAsync();
                 foreach (var item in items)
                 {
                     this.Items.Add(item);

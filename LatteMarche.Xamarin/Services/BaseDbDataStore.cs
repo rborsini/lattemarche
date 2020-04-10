@@ -62,7 +62,7 @@ namespace LatteMarche.Xamarin.Services
             }
         }
 
-        public async Task<IEnumerable<TEntity>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<TEntity>> GetItemsAsync()
         {
             using (var context = CrateContext())
             {
@@ -88,7 +88,10 @@ namespace LatteMarche.Xamarin.Services
             }
         }
 
-        protected abstract TEntity UpdateProperties(TEntity entityItem, TEntity viewItem);
+        protected virtual TEntity UpdateProperties(TEntity entityItem, TEntity viewItem)
+        {
+            return entityItem;
+        }
 
         protected LatteMarcheDbContext CrateContext()
         {

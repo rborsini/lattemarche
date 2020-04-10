@@ -6,6 +6,9 @@ namespace LatteMarche.Xamarin.Interfaces
 {
     public interface IFileSystem
     {
-        string GetExternalStorage();
+        /// <summary>
+        /// Esporta il file del database nella cartella download
+        /// </summary>
+        void ExportDb(string dbFilePath);
     }
 }

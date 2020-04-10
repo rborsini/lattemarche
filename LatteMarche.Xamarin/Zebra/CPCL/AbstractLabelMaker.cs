@@ -91,13 +91,13 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             cmd += $"TEXT {p} {x} {y} {indAcq} {indDest}\r\n";
 
             // cap / comune / prov
-            var comAcq = PadRight($"{registro.Acquirente.CAP} {registro.Acquirente.Comune} ({registro.Acquirente.Provincia})", sxColWidth);
-            var comDest = PadRight($"{registro.Destinatario.CAP} {registro.Destinatario.Comune} ({registro.Destinatario.Provincia})", sxColWidth);
+            var comAcq = PadRight($"{registro.Acquirente.CAP} {registro.Acquirente.Comune} ({registro.Acquirente.SiglaProvincia})", sxColWidth);
+            var comDest = PadRight($"{registro.Destinatario.CAP} {registro.Destinatario.Comune} ({registro.Destinatario.SiglaProvincia})", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {comAcq} {comDest}\r\n";
 
             // P IVA
-            var pivaAcq = PadRight($"P.IVA {registro.Acquirente.P_IVA}", sxColWidth);
+            var pivaAcq = PadRight($"P.IVA {registro.Acquirente.Piva}", sxColWidth);
             var pivaDest = PadRight($"P.IVA {registro.Destinatario.P_IVA}", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {pivaAcq} {pivaDest}\r\n";
@@ -153,7 +153,7 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             // Data / Giro
             var data = PadRight($"Data: {registro.Data.ToString("dd/MM/yyyy")}", sxColWidth);
-            var giro = PadRight($"Giro: {registro.Giro.Nome}", sxColWidth);
+            var giro = PadRight($"Giro: {registro.Giro.Denominazione}", sxColWidth);
             cmd += $"TEXT {h1} {x} {y} {data} {giro}\r\n";
             y += lineSpacing;
 

@@ -13,6 +13,6 @@ namespace LatteMarche.Xamarin.Interfaces
         Task<bool> DeleteItemAsync(TPrimaryKey id);
         Task<bool> DeleteAllItemsAsync();
         Task<TEntity> GetItemAsync(TPrimaryKey id);
-        Task<IEnumerable<TEntity>> GetItemsAsync(bool forceRefresh = false);
+        Task<IEnumerable<TEntity>> GetItemsAsync();
     }
 }

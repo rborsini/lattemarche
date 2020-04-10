@@ -143,7 +143,7 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             // Temp   -   Tipo Latte
             var temp = $"{registroConsegna.Prelievo.Temperatura.Value:.0}";
-            var tipoLatte = $"{registroConsegna.Prelievo.TipoLatte.Codice} - {registroConsegna.Prelievo.TipoLatte.Descrizione}";
+            var tipoLatte = $"{registroConsegna.Prelievo.TipoLatte.DescrizioneBreve} - {registroConsegna.Prelievo.TipoLatte.Descrizione}";
 
             cmd += $"TEXT {p} {x} {y} {PadRight("Temp. : ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatte} \r\n";
 

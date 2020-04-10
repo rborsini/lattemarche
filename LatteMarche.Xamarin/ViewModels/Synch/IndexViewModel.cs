@@ -21,6 +21,12 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private IRestService restService => DependencyService.Get<IRestService>();
         private IDataStore<Allevamento, int> allevamentiDataStore => DependencyService.Get<IDataStore<Allevamento, int>>();
+        private IDataStore<AutoCisterna, int> autocisterneDataStore => DependencyService.Get<IDataStore<AutoCisterna, int>>();
+        private IDataStore<Acquirente, int> acquirentiDataStore => DependencyService.Get<IDataStore<Acquirente, int>>();
+        private IDataStore<Destinatario, int> destinatariDataStore => DependencyService.Get<IDataStore<Destinatario, int>>();
+        private IDataStore<Giro, int> giriDataStore => DependencyService.Get<IDataStore<Giro, int>>();
+        private IDataStore<TipoLatte, int> tipiLatteDataStore => DependencyService.Get<IDataStore<TipoLatte, int>>();
+        private IDataStore<Trasportatore, int> trasportatoriDataStore => DependencyService.Get<IDataStore<Trasportatore, int>>();
 
         #endregion
 
@@ -53,10 +59,41 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             {
                 this.IsBusy = true;
 
-                var allevamenti = await this.restService.GetAllevamenti();
+                // autocisterne
+                var autocisterne = await this.restService.GetAutoCisterne();
+                await this.autocisterneDataStore.DeleteAllItemsAsync();
+                await this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
 
+                // trasportatori
+                var trasportatori = await this.restService.GetTrasportatori();
+                await this.trasportatoriDataStore.DeleteAllItemsAsync();
+                await this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
+
+                // allevamenti
+                var allevamenti = await this.restService.GetAllevamenti();
                 await this.allevamentiDataStore.DeleteAllItemsAsync();
                 await this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
+
+                // tipi latte
+                var tipiLatte = await this.restService.GetTipiLatte();
+                await this.tipiLatteDataStore.DeleteAllItemsAsync();
+                await this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
+
+                // acquirenti
+                var acquirenti = await this.restService.GetAcquirenti();
+                await this.acquirentiDataStore.DeleteAllItemsAsync();
+                await this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
+
+                // destinatari
+                var destinatari = await this.restService.GetDestinatari();
+                await this.destinatariDataStore.DeleteAllItemsAsync();
+                await this.destinatariDataStore.AddRangeItemAsync(destinatari);
+
+                // giri
+                var giri = await this.restService.GetGiri();
+                await this.giriDataStore.DeleteAllItemsAsync();
+                await this.giriDataStore.AddRangeItemAsync(giri);
+
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
@@ -76,15 +113,10 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 this.IsBusy = true;
 
                 var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
-                var bytes = System.IO.File.ReadAllBytes(internalFile);
-                
-                var folderPath = DependencyService.Get<IFileSystem>().GetExternalStorage();
-                var fileCopyName = Path.Combine(folderPath, $"Database_{DateTime.Now:dd-MM-yyyy_HH-mm-ss-tt}.db");
-
-                System.IO.File.WriteAllBytes(fileCopyName, bytes);
+                DependencyService.Get<IFileSystem>().ExportDb(internalFile);
 
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
+                await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");
             }
             catch (Exception exc)
             {

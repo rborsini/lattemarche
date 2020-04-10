@@ -62,10 +62,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             var registroConsegna = new RegistroConsegna();
 
-            registroConsegna.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", P_IVA = "00100010446" };
-            registroConsegna.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", Provincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
+            registroConsegna.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", Piva = "00100010446" };
+            registroConsegna.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
             registroConsegna.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
-            registroConsegna.Giro = new Giro() { Nome = "PESARO-ANCONA" };
+            registroConsegna.Giro = new Giro() { Denominazione = "PESARO-ANCONA" };
             registroConsegna.Data = DateTime.Now;
 
             registroConsegna.Prelievo = new Prelievo()
@@ -80,7 +80,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 Scomparto = "1",
                 Temperatura = Convert.ToDecimal(26.7),
                 Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
-                TipoLatte = new TipoLatte() { Codice = "QM-AQ", Descrizione = "QM-ALTA QUALITA'" }
+                TipoLatte = new TipoLatte() { DescrizioneBreve = "QM-AQ", Descrizione = "QM-ALTA QUALITA'" }
             };
 
             registroConsegna.Comunicazione = "Comunicazione di prova lorem ipsum";

@@ -10,8 +10,10 @@ namespace LatteMarche.Xamarin.Models
         [Key]
         public override int Id { get; set; }
 
-        public string Codice { get; set; }
+        public string DescrizioneBreve { get; set; }
 
         public string Descrizione { get; set; }
+
+        public decimal? FattoreConversione { get; set; }
     }
 }

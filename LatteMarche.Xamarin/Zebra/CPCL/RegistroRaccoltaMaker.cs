@@ -150,7 +150,7 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
                 var scomparto = prelievo.Scomparto;
                 var ragioneSociale = prelievo.Allevamento.RagioneSociale;
                 var pIvaProv = $"{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Prov}";
-                var tipo = prelievo.TipoLatte.Codice;
+                var tipo = prelievo.TipoLatte.DescrizioneBreve;
                 var qta = prelievo.Quantita_kg.ToString();
                 var ora = prelievo.DataPrelievo.Value.ToString("HH:mm");
                 var data = prelievo.DataPrelievo.Value.ToString("dd/MM/yyyy");

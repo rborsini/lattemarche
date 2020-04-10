@@ -5,8 +5,7 @@ using System.Text;
 
 namespace LatteMarche.Xamarin.Services
 {
-    public class AllevamentiDataStore : BaseDbDataStore<Allevamento, int>
+    public class TrasportatoriDataStore : BaseDbDataStore<Trasportatore, int>
     {
-
     }
 }
