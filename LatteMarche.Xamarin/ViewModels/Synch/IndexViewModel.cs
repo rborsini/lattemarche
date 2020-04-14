@@ -66,6 +66,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 // trasportatori
                 var trasportatori = await this.restService.GetTrasportatori();
+                trasportatori[0].Selezionato = true;
                 await this.trasportatoriDataStore.DeleteAllItemsAsync();
                 await this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
 

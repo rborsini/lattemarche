@@ -13,5 +13,7 @@ namespace LatteMarche.Xamarin.Models
         public string RagioneSociale { get; set; }
         public string Indirizzo { get; set; }
         public string P_IVA { get; set; }
+        public bool Selezionato { get; set; }
+
     }
 }

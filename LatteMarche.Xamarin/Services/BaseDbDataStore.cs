@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace LatteMarche.Xamarin.Services
 {
@@ -67,6 +69,17 @@ namespace LatteMarche.Xamarin.Services
             using (var context = CrateContext())
             {
                 return await context.Set<TEntity>()
+                                    .AsNoTracking()
+                                    .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<TEntity>> GetItemsAsync(Func<TEntity, bool> whereFunc)
+        {
+            using (var context = CrateContext())
+            {
+                return await context.Set<TEntity>()
+                                    .Where(i => whereFunc(i))
                                     .AsNoTracking()
                                     .ToListAsync();
             }

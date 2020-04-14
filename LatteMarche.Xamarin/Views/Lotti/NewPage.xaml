@@ -12,8 +12,12 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Codice" FontSize="Medium" />
-            <Entry Text="{Binding Item.Codice}" d:Text="Codice" FontSize="Small" />
+            <Picker x:Name="picker"
+                    Title="Seleziona giro"
+                    ItemDisplayBinding="{Binding Denominazione}"
+                    ItemsSource="{Binding Giri}"
+                    SelectedItem="{Binding GiroSelezionato}"
+                    />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

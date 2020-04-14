@@ -2,10 +2,12 @@
 using LatteMarche.Xamarin.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace LatteMarche.Xamarin.ViewModels.Lotti
 {
@@ -13,13 +15,19 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
     {
         #region Fields
 
-        private IDataStore<Lotto, string> dataStore => DependencyService.Get<IDataStore<Lotto, string>>();
+        private IDataStore<Lotto, string> lottiDataStore => DependencyService.Get<IDataStore<Lotto, string>>();
+        private ITrasportatoriService trasportatoriDataStore => DependencyService.Get<ITrasportatoriService>();
+        private IGiriService giriDataStore => DependencyService.Get<IGiriService>();
 
         #endregion
 
         #region Properties
 
         public Lotto Item { get; set; }
+
+        public ObservableCollection<Giro> Giri { get; set; }
+
+        public Giro GiroSelezionato { get; set; }
 
         public Command SaveCommand { get; set; }
 
@@ -34,7 +42,11 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
 
             this.Item = new Lotto();
             this.Item.Id = Guid.NewGuid().ToString();
-            this.Item.Codice = $"M1{DateTime.Now:ddMMyyyyHHmm}"; 
+
+            var trasportatore = this.trasportatoriDataStore.GetSelected().Result;
+            var giriList = this.giriDataStore.GetGiriTrasportatore(trasportatore.Id).Result;
+
+            this.Giri = new ObservableCollection<Giro>(giriList);
 
             this.SaveCommand = new Command(async () => await ExecuteSaveCommand());
         }
@@ -47,7 +59,9 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
         {
             try
             {
-                await dataStore.AddItemAsync(Item);
+                this.Item.Codice = $"{this.GiroSelezionato.CodiceGiro}{DateTime.Now:ddMMyyyyHHmm}";
+
+                await lottiDataStore.AddItemAsync(this.Item);
                 Debug.WriteLine("Lotto salvato");
                 await navigation.PopAsync();
             }
