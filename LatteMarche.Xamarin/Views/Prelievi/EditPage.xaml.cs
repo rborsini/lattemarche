@@ -22,5 +22,9 @@ namespace LatteMarche.Xamarin.Views.Prelievi
             BindingContext = this.viewModel = viewModel;
         }
 
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            this.viewModel.LoadCommand.Execute(null);
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace LatteMarche.Xamarin.Services
             }
         }
 
-        public async Task<TEntity> GetItemAsync(TPrimaryKey id)
+        public virtual async Task<TEntity> GetItemAsync(TPrimaryKey id)
         {
             using (var context = CrateContext())
             {
@@ -95,6 +95,8 @@ namespace LatteMarche.Xamarin.Services
                 {
                     existingPrelievo = UpdateProperties(existingPrelievo, item);
                 }
+
+                context.Update<TEntity>(existingPrelievo);
 
                 await context.SaveChangesAsync();
                 return await Task.FromResult(true);

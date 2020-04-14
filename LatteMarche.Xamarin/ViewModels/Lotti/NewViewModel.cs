@@ -60,6 +60,7 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
             try
             {
                 this.Item.Codice = $"{this.GiroSelezionato.CodiceGiro}{DateTime.Now:ddMMyyyyHHmm}";
+                this.Item.IdGiro = this.GiroSelezionato.Id;
 
                 await lottiDataStore.AddItemAsync(this.Item);
                 Debug.WriteLine("Lotto salvato");

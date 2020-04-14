@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface ITrasportatoriService 
+    public interface IGiroItemsService
     {
-        Task<Trasportatore> GetSelected();
+        Task<IEnumerable<GiroItem>> GetItems(int idGiro);
+
+
     }
 }

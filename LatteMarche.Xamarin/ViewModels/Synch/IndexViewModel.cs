@@ -25,6 +25,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         private IDataStore<Acquirente, int> acquirentiDataStore => DependencyService.Get<IDataStore<Acquirente, int>>();
         private IDataStore<Destinatario, int> destinatariDataStore => DependencyService.Get<IDataStore<Destinatario, int>>();
         private IDataStore<Giro, int> giriDataStore => DependencyService.Get<IDataStore<Giro, int>>();
+        private IDataStore<GiroItem, string> giroItemsDataStore => DependencyService.Get<IDataStore<GiroItem, string>>();
         private IDataStore<TipoLatte, int> tipiLatteDataStore => DependencyService.Get<IDataStore<TipoLatte, int>>();
         private IDataStore<Trasportatore, int> trasportatoriDataStore => DependencyService.Get<IDataStore<Trasportatore, int>>();
 
@@ -94,6 +95,15 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 var giri = await this.restService.GetGiri();
                 await this.giriDataStore.DeleteAllItemsAsync();
                 await this.giriDataStore.AddRangeItemAsync(giri);
+
+                // giro items
+                var giroItems = await this.restService.GetGiro(giri[0].Id);
+                await this.giroItemsDataStore.DeleteAllItemsAsync();
+
+                foreach (var item in giroItems)
+                    item.Id = Guid.NewGuid().ToString();
+
+                await this.giroItemsDataStore.AddRangeItemAsync(giroItems);
 
 
                 this.IsBusy = false;

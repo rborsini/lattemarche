@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using Microsoft.CSharp;
 using LatteMarche.Xamarin.Interfaces;
 using System.Threading;
+using System.Linq;
 
 namespace LatteMarche.Xamarin.Services
 {
@@ -87,7 +88,21 @@ namespace LatteMarche.Xamarin.Services
             return await GetRecords<Trasportatore>("trasportatori");
         }
 
+        public async Task<List<GiroItem>> GetGiro(int idGiro)
+        {
+            var client = new RestClient($"{API_ENDPOINT}/api/giri/details?id={idGiro}");
+            client.Timeout = -1;
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(this.Token, "Bearer");
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
 
+            var itemsJson = JObject.Parse(response.Content).SelectToken("Items").ToString();
+            var list = JsonConvert.DeserializeObject<List<GiroItem>>(itemsJson);
+
+            list = list.Where(item => item.Priorita.HasValue).ToList();
+
+            return await Task.FromResult<List<GiroItem>>(list);
+        }
 
         private async Task<List<TDto>> GetRecords<TDto>(string dtoName)
             where TDto : class
@@ -102,6 +117,7 @@ namespace LatteMarche.Xamarin.Services
 
             return await Task.FromResult<List<TDto>>(list);
         }
+
 
     }
 }

@@ -11,11 +11,13 @@ namespace LatteMarche.Xamarin
     public class LatteMarcheDbContext : DbContext
     {
 		public DbSet<Acquirente> Acquirenti { get; set; }
+		public DbSet<Allevamento> Allevamenti { get; set; }
 		public DbSet<AutoCisterna> AutoCisterne { get; set; }
 		public DbSet<Destinatario> Destinatario { get; set; }
+		public DbSet<GiroItem> GiroItems { get; set; }
 		public DbSet<Giro> Giri { get; set; }
-		public DbSet<Prelievo> Prelievi { get; set; }
-		public DbSet<Allevamento> Allevamenti { get; set; }
+		public DbSet<Lotto> Lotti { get; set; }
+		public DbSet<Prelievo> Prelievi { get; set; }		
 		public DbSet<TipoLatte> TipiLatte { get; set; }
 		public DbSet<Trasportatore> Trasportatori { get; set; }
 

@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             mc:Ignorable="d"             
              x:Class="LatteMarche.Xamarin.Views.Prelievi.EditPage"
+             Appearing="ContentPage_Appearing"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
@@ -13,12 +14,37 @@
         <ToolbarItem Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
+    <AbsoluteLayout>
+
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+            <DatePicker Date="{Binding DataPrelievo, Mode=TwoWay}" />
+            <TimePicker Time="{Binding OraPrelievo, Mode=TwoWay}" />
+            <Picker Title="Seleziona allevamento"
+                    ItemDisplayBinding="{Binding RagioneSociale}"
+                    ItemsSource="{Binding Allevamenti}"
+                    SelectedItem="{Binding AllevamentoSelezionato, Mode=TwoWay}"
+                    />
             <Label Text="Scomparto" FontSize="Medium" />
-            <Entry Text="{Binding Item.Scomparto}" d:Text="Scomparto" FontSize="Small" />
-            <Label Text="Quantità" FontSize="Medium" />
-            <Editor Text="{Binding Item.Quantita}" d:Text="Quantità" FontSize="Small" Margin="0" />
+            <Entry Text="{Binding Scomparto, Mode=TwoWay}" d:Text="Scomparto" FontSize="Small" />
+            <Label Text="kg" FontSize="Medium" />
+            <Editor Text="{Binding Kg, Mode=TwoWay}" d:Text="kg" FontSize="Small" Margin="0" />
+            <Label Text="lt" FontSize="Medium" />
+            <Editor Text="{Binding Lt, Mode=TwoWay}" d:Text="lt" FontSize="Small" Margin="0" />
         </StackLayout>
-    </ContentPage.Content>
+
+        <AbsoluteLayout IsVisible="{Binding IsBusy}"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags= "All" 
+                BackgroundColor="#70383838">
+
+            <ActivityIndicator 
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    Color="Gray"
+                    AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
+                    AbsoluteLayout.LayoutFlags= "All" />
+
+        </AbsoluteLayout>
+    </AbsoluteLayout>
+
 </ContentPage>

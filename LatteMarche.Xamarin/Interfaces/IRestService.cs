@@ -18,6 +18,8 @@ namespace LatteMarche.Xamarin.Interfaces
 
         Task<List<Giro>> GetGiri();
 
+        Task<List<GiroItem>> GetGiro(int idGiro);
+
         Task<List<TipoLatte>> GetTipiLatte();
 
         Task<List<Trasportatore>> GetTrasportatori();

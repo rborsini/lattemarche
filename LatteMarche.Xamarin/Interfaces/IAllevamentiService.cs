@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface ITrasportatoriService 
+    public interface IAllevamentiService
     {
-        Task<Trasportatore> GetSelected();
+
     }
 }

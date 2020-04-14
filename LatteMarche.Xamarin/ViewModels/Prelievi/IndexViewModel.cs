@@ -19,7 +19,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Lotto lotto;
 
-        private PrelieviDataStore dataStore => DependencyService.Get<IDataStore<Prelievo, string>>() as PrelieviDataStore;
+        private ILottiService lottiService => DependencyService.Get<ILottiService>();
 
         #endregion
 
@@ -48,11 +48,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
 
-            MessagingCenter.Subscribe<NewPage, Prelievo>(this, "AddItem", async (obj, item) =>
-            {
-                this.Items.Add(item as Prelievo);
-                await this.dataStore.AddItemAsync(item);
-            });
         }
 
         #endregion
@@ -130,8 +125,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 this.Items.Clear();
 
-                var items = await this.dataStore.GetItemsAsync(this.lotto.Id);
-                foreach (var item in items)
+                var lotto = await this.lottiService.GetItemAsync(this.lotto.Id);
+                foreach (var item in lotto.Prelievi)
                 {
                     this.Items.Add(item);
                 }

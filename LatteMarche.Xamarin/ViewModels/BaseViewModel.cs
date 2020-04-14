@@ -17,7 +17,7 @@ namespace LatteMarche.Xamarin.ViewModels
         protected Page page;
         protected INavigation navigation;
 
-        private bool isBusy = false;
+        protected bool isBusy = false;
         private string title = string.Empty;
 
         #endregion

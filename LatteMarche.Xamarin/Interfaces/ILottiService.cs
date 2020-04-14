@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface ITrasportatoriService 
+    public interface ILottiService : IDataStore<Lotto, string>
     {
-        Task<Trasportatore> GetSelected();
     }
 }

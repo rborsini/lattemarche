@@ -17,6 +17,7 @@ namespace LatteMarche.Xamarin
             DependencyService.Register<AllevamentiDataStore>();
             DependencyService.Register<AutoCisterneDataStore>();
             DependencyService.Register<DestinatariDataStore>();
+            DependencyService.Register<GiroItemsDataStore>();
             DependencyService.Register<GiriDataStore>();
             DependencyService.Register<TrasportatoriDataStore>();
             DependencyService.Register<LottiDataStore>();

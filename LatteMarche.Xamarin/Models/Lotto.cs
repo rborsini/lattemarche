@@ -9,10 +9,9 @@ namespace LatteMarche.Xamarin.Models
     {
         [Key]
         public override string Id { get; set; }
-
         public string Codice { get; set; }
-
         public virtual List<Prelievo> Prelievi { get; set; }
+        public int IdGiro { get; set; }
 
         public Lotto()
         {

@@ -35,6 +35,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.Item = new Prelievo();
             this.Item.Id = Guid.NewGuid().ToString();
             this.Item.IdLotto = lotto.Id;
+            this.Item.DataPrelievo = DateTime.Now;
 
             this.SaveCommand = new Command(async () => await ExecuteSaveCommand());
         }
