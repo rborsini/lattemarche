@@ -39,7 +39,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.Id)));
+            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.IdLotto, item.Id)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;

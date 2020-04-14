@@ -143,7 +143,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private async Task ExecuteAddCommand()
         {
-            await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page, this.lotto)));
+            await this.navigation.PushAsync(new EditPage(new EditViewModel(this.navigation, this.page, this.lotto.Id, "")));
         }
 
         #endregion

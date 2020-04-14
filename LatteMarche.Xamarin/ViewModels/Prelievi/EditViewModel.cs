@@ -22,7 +22,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Prelievo prelievo;
 
+        private bool isNew = false;
+
         private string id;
+        private string idLotto;
         private int? idAllevamento;
         private GiroItem allevamentoSelezionato;
         private DateTime dataPrelievo;
@@ -108,13 +111,16 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Constructor
 
-        public EditViewModel(INavigation navigation, Page page, string idPrelievo)
+        public EditViewModel(INavigation navigation, Page page, string idLotto, string idPrelievo)
             : base(navigation, page)
         {
             this.navigation = navigation;
             this.page = page;
 
-            this.Id = idPrelievo;
+            this.isNew = String.IsNullOrEmpty(idPrelievo);
+
+            this.idLotto = idLotto;
+            this.Id = isNew ? Guid.NewGuid().ToString() : idPrelievo;
             this.Title = "";
 
             this.IsBusy = true;
@@ -129,13 +135,30 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Methods
 
+        /// <summary>
+        /// Comando caricamento dati singolo prelievo e tabelle lookup
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteLoadCommand()
         {
             try
             {
-                this.prelievo = await this.prelieviService.GetItemAsync(this.Id);
-                this.prelievo.Lotto = await this.lottiService.GetItemAsync(this.prelievo.IdLotto);
-                var allevamenti = await this.giroItemsService.GetItems(this.prelievo.Lotto.IdGiro);
+                if(isNew)
+                {
+                    this.prelievo = new Prelievo() 
+                    {
+                        Id = this.Id,
+                        IdLotto = this.idLotto,
+                        DataPrelievo = DateTime.Now
+                    };
+                }
+                else
+                {
+                    this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
+                }
+                
+                var lotto = await this.lottiService.GetItemAsync(this.prelievo.IdLotto);
+                var allevamenti = await this.giroItemsService.GetItems(lotto.IdGiro);
                
                 // Data prelievo
                 this.DataPrelievo = GetDateWhitoutTime(this.prelievo.DataPrelievo);
@@ -168,6 +191,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         }
 
+        /// <summary>
+        /// Comando stampa ricevuta consegna
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
             Debug.WriteLine("Print Command");
@@ -225,8 +252,13 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 this.prelievo.Scomparto = this.Scomparto;
                 this.prelievo.Quantita_kg = this.Kg;
                 this.prelievo.Quantita_lt = this.Lt;
+                this.prelievo.IdLotto = this.idLotto;
 
-                await prelieviService.UpdateItemAsync(this.prelievo);
+                if(this.isNew)
+                    await prelieviService.AddItemAsync(this.prelievo);
+                else
+                    await prelieviService.UpdateItemAsync(this.prelievo);
+
                 await navigation.PopAsync();
             }
             catch(Exception exc)

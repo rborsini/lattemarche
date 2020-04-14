@@ -18,7 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Prelievi\NewViewModel.cs" />
+    <Compile Remove="Views\Prelievi\NewPage.xaml.cs" />
     <Compile Remove="Zebra\CpclLabelMaker.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Prelievi\NewPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +41,6 @@
   <ItemGroup>
     <Compile Update="Views\Lotti\IndexPage.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Prelievi\NewPage.xaml.cs">
-      <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -58,9 +61,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Prelievi\IndexPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Prelievi\NewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Synch\IndexPage.xaml">
