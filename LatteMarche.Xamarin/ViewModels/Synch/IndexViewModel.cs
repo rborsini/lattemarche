@@ -60,51 +60,53 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             {
                 this.IsBusy = true;
 
-                // autocisterne
-                var autocisterne = await this.restService.GetAutoCisterne();
-                await this.autocisterneDataStore.DeleteAllItemsAsync();
-                await this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
+                await Task.Run(() =>
+                {
+                    // trasportatori
+                    var trasportatori = this.restService.GetTrasportatori().Result;
+                    trasportatori[0].Selezionato = true;
+                    this.trasportatoriDataStore.DeleteAllItemsAsync();
+                    this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
 
-                // trasportatori
-                var trasportatori = await this.restService.GetTrasportatori();
-                trasportatori[0].Selezionato = true;
-                await this.trasportatoriDataStore.DeleteAllItemsAsync();
-                await this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
+                    // autocisterne
+                    var autocisterne = this.restService.GetAutoCisterne().Result;
+                    this.autocisterneDataStore.DeleteAllItemsAsync();
+                    this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
 
-                // allevamenti
-                var allevamenti = await this.restService.GetAllevamenti();
-                await this.allevamentiDataStore.DeleteAllItemsAsync();
-                await this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
+                    // allevamenti
+                    var allevamenti = this.restService.GetAllevamenti().Result;
+                    this.allevamentiDataStore.DeleteAllItemsAsync();
+                    this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
 
-                // tipi latte
-                var tipiLatte = await this.restService.GetTipiLatte();
-                await this.tipiLatteDataStore.DeleteAllItemsAsync();
-                await this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
+                    // tipi latte
+                    var tipiLatte = this.restService.GetTipiLatte().Result;
+                    this.tipiLatteDataStore.DeleteAllItemsAsync();
+                    this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
 
-                // acquirenti
-                var acquirenti = await this.restService.GetAcquirenti();
-                await this.acquirentiDataStore.DeleteAllItemsAsync();
-                await this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
+                    // acquirenti
+                    var acquirenti = this.restService.GetAcquirenti().Result;
+                    this.acquirentiDataStore.DeleteAllItemsAsync();
+                    this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
 
-                // destinatari
-                var destinatari = await this.restService.GetDestinatari();
-                await this.destinatariDataStore.DeleteAllItemsAsync();
-                await this.destinatariDataStore.AddRangeItemAsync(destinatari);
+                    // destinatari
+                    var destinatari = this.restService.GetDestinatari().Result;
+                    this.destinatariDataStore.DeleteAllItemsAsync();
+                    this.destinatariDataStore.AddRangeItemAsync(destinatari);
 
-                // giri
-                var giri = await this.restService.GetGiri();
-                await this.giriDataStore.DeleteAllItemsAsync();
-                await this.giriDataStore.AddRangeItemAsync(giri);
+                    // giri
+                    var giri = this.restService.GetGiri().Result;
+                    this.giriDataStore.DeleteAllItemsAsync();
+                    this.giriDataStore.AddRangeItemAsync(giri);
 
-                // giro items
-                var giroItems = await this.restService.GetGiro(giri[0].Id);
-                await this.giroItemsDataStore.DeleteAllItemsAsync();
+                    // giro items
+                    var giroItems = this.restService.GetGiro(giri[0].Id).Result;
+                    this.giroItemsDataStore.DeleteAllItemsAsync();
 
-                foreach (var item in giroItems)
-                    item.Id = Guid.NewGuid().ToString();
+                    foreach (var item in giroItems)
+                        item.Id = Guid.NewGuid().ToString();
 
-                await this.giroItemsDataStore.AddRangeItemAsync(giroItems);
-
+                    this.giroItemsDataStore.AddRangeItemAsync(giroItems);
+                });
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
@@ -123,8 +125,11 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             {
                 this.IsBusy = true;
 
-                var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
-                DependencyService.Get<IFileSystem>().ExportDb(internalFile);
+                await Task.Run(() =>
+                {
+                    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
+                    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
+                });
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");

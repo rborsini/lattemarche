@@ -194,6 +194,10 @@
     <Compile Include="Migrations\202004020931173_AggiuntaAnalisiLatte.Designer.cs">
       <DependentUpon>202004020931173_AggiuntaAnalisiLatte.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004151320481_AggiuntiCampi_V_Trasportatori.cs" />
+    <Compile Include="Migrations\202004151320481_AggiuntiCampi_V_Trasportatori.Designer.cs">
+      <DependentUpon>202004151320481_AggiuntiCampi_V_Trasportatori.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020931173_AggiuntaAnalisiLatte.resx">
       <DependentUpon>202004020931173_AggiuntaAnalisiLatte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151320481_AggiuntiCampi_V_Trasportatori.resx">
+      <DependentUpon>202004151320481_AggiuntiCampi_V_Trasportatori.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

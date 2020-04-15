@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface IGiriService 
+    public interface IGiriService : IDataStore<Giro, int>
     {
         Task<IEnumerable<Giro>> GetGiriTrasportatore(int idTrasportatore);
     }

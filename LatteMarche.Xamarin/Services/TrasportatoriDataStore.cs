@@ -15,7 +15,10 @@ namespace LatteMarche.Xamarin.Services
         {
             using (var context = CrateContext())
             {
-                return await context.Set<Trasportatore>().FirstOrDefaultAsync(i => i.Selezionato);
+                return await context
+                    .Set<Trasportatore>()
+                    .Include(t => t.AutoCisterne)
+                    .FirstOrDefaultAsync(i => i.Selezionato);
             }
         }
     }

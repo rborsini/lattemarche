@@ -8,12 +8,18 @@ namespace LatteMarche.Xamarin.Models
     public class Trasportatore : Entity<int>
     {
         [Key]
-        public override int Id { get; set; }
-        public string TargaAutomezzo { get; set; }
+        public override int Id { get; set; }        
         public string RagioneSociale { get; set; }
         public string Indirizzo { get; set; }
         public string P_IVA { get; set; }
         public bool Selezionato { get; set; }
+
+        public virtual List<AutoCisterna> AutoCisterne { get; set; }
+
+        public Trasportatore()
+        {
+            this.AutoCisterne = new List<AutoCisterna>();
+        }
 
     }
 }

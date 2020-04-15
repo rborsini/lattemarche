@@ -10,7 +10,6 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
     public class RegistroRaccoltaMaker : AbstractLabelMaker
     {
 
-
         public override string MakeLabel(Registro registro)
         {
             var registroRaccolta = registro as RegistroRaccolta;
@@ -91,7 +90,7 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             // Ora / Lotto
             var ora = PadRight($"Ora: {registro.Data.ToString("HH:mm")}", sxColWidth);
-            var lotto = PadRight($"Lotto: {registro.Lotto.Codice}", sxColWidth);
+            var lotto = PadRight($"Lotto: {registro.CodiceLotto}", sxColWidth);
             cmd += $"TEXT {h1} {x} {y} {ora} {lotto}\r\n";
             y += lineSpacing + (lineSpacing / 2);       // interlinea 1.5 
 
@@ -143,17 +142,20 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             cmd += $"TEXT {p} {x} {y} {PadRight("PARTO", 7, ' ')} {PadRight("P.IVA-PROV.", 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight("", 11, ' ')} {PadRight("Prod\\Del", 16, ' ')} {PadRight("Conducente", 16, ' ')} \r\n";
 
             decimal qtaTot = 0;
-            foreach (var prelievo in registro.Lotto.Prelievi.OrderBy(p => p.Scomparto))
+            foreach (var prelievo in registro.Items.OrderBy(p => p.Scomparto))
             {
                 y += 40;
 
-                var scomparto = prelievo.Scomparto;
-                var ragioneSociale = prelievo.Allevamento.RagioneSociale;
-                var pIvaProv = $"{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Prov}";
-                var tipo = prelievo.TipoLatte.DescrizioneBreve;
-                var qta = prelievo.Quantita_kg.ToString();
-                var ora = prelievo.DataPrelievo.Value.ToString("HH:mm");
-                var data = prelievo.DataPrelievo.Value.ToString("dd/MM/yyyy");
+                var allevamento = prelievo.Allevamento;
+                var tipoLatte = prelievo.TipoLatte;
+
+                var scomparto = $"{prelievo.Scomparto}";
+                var ragioneSociale = $"{allevamento?.RagioneSociale}";
+                var pIvaProv = $"{allevamento?.P_IVA}-{allevamento?.Prov}";
+                var tipo = $"{tipoLatte?.DescrizioneBreve}";
+                var qta = $"{prelievo.Quantita_kg}";
+                var ora = $"{prelievo.DataPrelievo:HH:mm}";
+                var data = $"{prelievo.DataPrelievo:dd/MM/yyyy}";
 
                 qtaTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
 

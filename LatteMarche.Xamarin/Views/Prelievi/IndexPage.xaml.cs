@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Xamarin.Models;
+using LatteMarche.Xamarin.ViewModels;
 using LatteMarche.Xamarin.ViewModels.Prelievi;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Prelievo;
+            var item = args.SelectedItem as ItemViewModel;
             if (item == null)
                 return;
 

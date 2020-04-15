@@ -4,20 +4,41 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="LatteMarche.Xamarin.Views.Lotti.NewPage">
+             x:Class="LatteMarche.Xamarin.Views.Lotti.NewPage"
+             Appearing="ContentPage_Appearing"
+             >
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salva" Command="{Binding SaveCommand}" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
-        <StackLayout>
-            <Picker x:Name="picker"
+    <ScrollView>
+        <AbsoluteLayout>
+
+            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+                <Picker x:Name="picker"
                     Title="Seleziona giro"
                     ItemDisplayBinding="{Binding Denominazione}"
                     ItemsSource="{Binding Giri}"
                     SelectedItem="{Binding GiroSelezionato}"
                     />
-        </StackLayout>
-    </ContentPage.Content>
+            </StackLayout>
+
+            <AbsoluteLayout IsVisible="{Binding IsBusy}"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags= "All" 
+                    BackgroundColor="#70383838">
+
+                <ActivityIndicator 
+                        IsVisible="{Binding IsBusy}"
+                        IsRunning="{Binding IsBusy}"
+                        Color="Gray"
+                        AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
+                        AbsoluteLayout.LayoutFlags= "All" />
+
+            </AbsoluteLayout>
+
+        </AbsoluteLayout>
+
+    </ScrollView>
 </ContentPage>

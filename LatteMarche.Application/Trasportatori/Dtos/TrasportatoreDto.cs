@@ -16,6 +16,8 @@ namespace LatteMarche.Application.Trasportatori.Dtos
         public string Cellulare { get; set; }
         public string Comune { get; set; }       
         public string Provincia { get; set; }
+        public string P_IVA { get; set; }
+        public string RagioneSociale { get; set; }
 
         public List<GiroDto> Giri { get; set; }
 
@@ -34,6 +36,8 @@ namespace LatteMarche.Application.Trasportatori.Dtos
                 .ForMember(dest => dest.Cellulare, opts => opts.MapFrom(src => src.Cellulare.Trim()))
                 .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
                 .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))
+                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
+                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 ;
             Mapper.CreateMap<TrasportatoreDto, V_Trasportatore>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
@@ -44,6 +48,8 @@ namespace LatteMarche.Application.Trasportatori.Dtos
                 .ForMember(dest => dest.Cellulare, opts => opts.MapFrom(src => src.Cellulare.Trim()))
                 .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
                 .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))
+                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
+                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 ;
         }
     }

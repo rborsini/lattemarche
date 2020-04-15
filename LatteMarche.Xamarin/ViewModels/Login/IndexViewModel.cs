@@ -51,12 +51,16 @@ namespace LatteMarche.Xamarin.ViewModels.Login
             try
             {
                 this.IsBusy = true;
-
-                var isLogged = await this.restService.GetToken(USER, PWD);
-                var msg = isLogged ? "Accesso riuscito!" : "Username o password errati";
-                await this.page.DisplayAlert("Info", msg, "OK");
+                
+                var msg = "";
+                await Task.Run(() =>
+                {
+                    var isLogged = this.restService.GetToken(USER, PWD).Result;
+                    msg = isLogged ? "Accesso riuscito!" : "Username o password errati";
+                });
 
                 this.IsBusy = false;
+                await this.page.DisplayAlert("Info", msg, "OK");                
             }
             catch(Exception exc)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface ITrasportatoriService 
+    public interface ITrasportatoriService : IDataStore<Trasportatore, int>
     {
         Task<Trasportatore> GetSelected();
     }

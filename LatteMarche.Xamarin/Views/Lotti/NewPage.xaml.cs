@@ -30,5 +30,9 @@ namespace LatteMarche.Xamarin.Views.Lotti
 
         #endregion
 
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            this.viewModel.LoadItemsCommand.Execute(null);
+        }
     }
 }

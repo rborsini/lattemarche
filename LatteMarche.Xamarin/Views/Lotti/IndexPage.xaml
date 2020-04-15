@@ -10,31 +10,49 @@
         <ToolbarItem Text="Add" Command="{Binding AddCommand}" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="ItemsListView"
+    <ScrollView>
+        <AbsoluteLayout>
+
+            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+                <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
                 ItemSelected="OnItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Codice}" 
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Codice}" 
                                 d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
                                 FontSize="16" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <AbsoluteLayout IsVisible="{Binding IsBusy}"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags= "All" 
+                    BackgroundColor="#70383838">
+
+                <ActivityIndicator 
+                        IsVisible="{Binding IsBusy}"
+                        IsRunning="{Binding IsBusy}"
+                        Color="Gray"
+                        AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
+                        AbsoluteLayout.LayoutFlags= "All" />
+
+            </AbsoluteLayout>            
+            
+        </AbsoluteLayout>
+        
+    </ScrollView>
 </ContentPage>

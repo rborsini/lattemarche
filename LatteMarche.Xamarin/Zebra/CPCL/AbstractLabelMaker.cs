@@ -78,27 +78,30 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             y += 20;
             cmd += $"TEXT {p} {x} {y} {headerAcq} {headerDest}\r\n";
 
+            var acq = registro.Acquirente;
+            var dest = registro.Destinatario;
+
             // ragioni sociali
-            var rsAcq = PadRight(registro.Acquirente.RagioneSociale, sxColWidth);
-            var rsDest = PadRight(registro.Destinatario.RagioneSociale, sxColWidth);
+            var rsAcq = PadRight($"{acq?.RagioneSociale}", sxColWidth);
+            var rsDest = PadRight($"{dest?.RagioneSociale}", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {rsAcq} {rsDest}\r\n";
 
             // indirizzi
-            var indAcq = PadRight(registro.Acquirente.Indirizzo, sxColWidth);
-            var indDest = PadRight(registro.Destinatario.Indirizzo, sxColWidth);
+            var indAcq = PadRight($"{acq?.Indirizzo}", sxColWidth);
+            var indDest = PadRight($"{dest?.Indirizzo}", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {indAcq} {indDest}\r\n";
 
             // cap / comune / prov
-            var comAcq = PadRight($"{registro.Acquirente.CAP} {registro.Acquirente.Comune} ({registro.Acquirente.SiglaProvincia})", sxColWidth);
-            var comDest = PadRight($"{registro.Destinatario.CAP} {registro.Destinatario.Comune} ({registro.Destinatario.SiglaProvincia})", sxColWidth);
+            var comAcq = PadRight($"{acq?.CAP} {acq?.Comune} ({acq?.SiglaProvincia})", sxColWidth);
+            var comDest = PadRight($"{dest?.CAP} {dest?.Comune} ({dest?.SiglaProvincia})", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {comAcq} {comDest}\r\n";
 
             // P IVA
-            var pivaAcq = PadRight($"P.IVA {registro.Acquirente.Piva}", sxColWidth);
-            var pivaDest = PadRight($"P.IVA {registro.Destinatario.P_IVA}", sxColWidth);
+            var pivaAcq = PadRight($"P.IVA {acq?.Piva}", sxColWidth);
+            var pivaDest = PadRight($"P.IVA {dest?.P_IVA}", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {pivaAcq} {pivaDest}\r\n";
 
@@ -118,21 +121,23 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
             var cmd = "";
 
             int lineSpacing = 30;
+            var trasp = registro.Trasportatore;
+            var automezzo = trasp != null && trasp.AutoCisterne.Count > 0 ? trasp.AutoCisterne[0] : new AutoCisterna();
 
             // Targa
-            cmd += $"TEXT {p} {x} {y} Targa automezzo: {registro.Trasportatore.TargaAutomezzo}\r\n";
+            cmd += $"TEXT {p} {x} {y} Targa automezzo: {automezzo?.Targa}\r\n";
             y += lineSpacing;
 
             // Trasportatore
-            cmd += $"TEXT {p} {x} {y} Trasportatore: {registro.Trasportatore.RagioneSociale}\r\n";
+            cmd += $"TEXT {p} {x} {y} Trasportatore: {trasp?.RagioneSociale}\r\n";
             y += lineSpacing;
 
             // Indirizzo
-            cmd += $"TEXT {p} {x} {y} {registro.Trasportatore.Indirizzo}\r\n";
+            cmd += $"TEXT {p} {x} {y} {trasp?.Indirizzo}\r\n";
             y += lineSpacing;
 
             // P IVA
-            cmd += $"TEXT {p} {x} {y} P.IVA: {registro.Trasportatore.P_IVA}\r\n";
+            cmd += $"TEXT {p} {x} {y} P.IVA: {trasp?.P_IVA}\r\n";
             y += lineSpacing;
 
             return cmd;
@@ -150,11 +155,12 @@ namespace LatteMarche.Xamarin.Zebra.CPCL
 
             int sxColWidth = 25;
             int lineSpacing = 50;
+            var giro = registro.Giro;
 
             // Data / Giro
             var data = PadRight($"Data: {registro.Data.ToString("dd/MM/yyyy")}", sxColWidth);
-            var giro = PadRight($"Giro: {registro.Giro.Denominazione}", sxColWidth);
-            cmd += $"TEXT {h1} {x} {y} {data} {giro}\r\n";
+            var giroText = PadRight($"Giro: {giro?.Denominazione}", sxColWidth);
+            cmd += $"TEXT {h1} {x} {y} {data} {giroText}\r\n";
             y += lineSpacing;
 
             return cmd;

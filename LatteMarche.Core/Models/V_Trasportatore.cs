@@ -31,5 +31,11 @@ namespace LatteMarche.Core.Models
 
         [Column("CELLULARE")]
         public string Cellulare { get; set; }
+
+        [Column("PIVA_CF")]
+        public string P_IVA { get; set; }
+
+        [Column("RAGIONE_SOCIALE")]
+        public string RagioneSociale { get; set; }
     }
 }

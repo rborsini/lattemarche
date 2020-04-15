@@ -45,11 +45,19 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
 
         #region Methods
 
+        /// <summary>
+        /// Apertura pagina nuovo lotto
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
             await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
         }
 
+        /// <summary>
+        /// Caricamento elenco lotti
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteLoadItemsCommand()
         {
             if (this.IsBusy)
@@ -59,12 +67,15 @@ namespace LatteMarche.Xamarin.ViewModels.Lotti
 
             try
             {
-                this.Items.Clear();
-                var items = await this.dataStore.GetItemsAsync();
-                foreach (var item in items)
+                await Task.Run(() =>
                 {
-                    this.Items.Add(item);
-                }
+                    this.Items.Clear();
+                    var items = this.dataStore.GetItemsAsync().Result;
+                    foreach (var item in items)
+                    {
+                        this.Items.Add(item);
+                    }
+                });
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Xamarin.Interfaces
 {
-    public interface IAllevamentiService
+    public interface IAllevamentiService : IDataStore<Allevamento, int>
     {
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace LatteMarche.Xamarin.Models
@@ -16,7 +17,10 @@ namespace LatteMarche.Xamarin.Models
 
         public string Targa { get; set; }
 
+        [ForeignKey("Trasportatore")]
         public int IdTrasportatore { get; set; }
+
+        public Trasportatore Trasportatore { get; set; }
 
         public int Portata { get; set; }
 

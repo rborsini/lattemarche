@@ -27,8 +27,6 @@ namespace LatteMarche.Xamarin.Models
         public virtual Lotto Lotto { get; set; }
 
         public int? IdAllevamento { get; set; }
-        [NotMapped]
-        public virtual Allevamento Allevamento { get; set; }
 
         [ForeignKey("TipoLatte")]
         public int? IdTipoLatte { get; set; }

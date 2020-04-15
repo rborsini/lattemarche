@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -19,13 +20,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Lotto lotto;
 
+        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ILottiService lottiService => DependencyService.Get<ILottiService>();
+        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<Prelievo> Items { get; set; }
+        public ObservableCollection<ItemViewModel> Items { get; set; }
 
         public Command LoadItemsCommand { get; set; }
 
@@ -40,8 +46,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public IndexViewModel(INavigation navigation, Page page, Lotto lotto)
             : base(navigation, page)
         {
-            this.Title = "Browse";
-            this.Items = new ObservableCollection<Prelievo>();
+            this.Title = "Prelievi";
+            this.Items = new ObservableCollection<ItemViewModel>();
             this.lotto = lotto;
 
             this.AddCommand = new Command(async () => await ExecuteAddCommand());
@@ -54,66 +60,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Methods
 
-        private async Task ExecutePrintCommand()
-        {
-            Debug.WriteLine("Print Command");
-
-            var printer = DependencyService.Get<IPrinter>();
-            printer.MacAddress = "00:03:7A:30:B0:4D";
-
-            var registroRaccolta = new RegistroRaccolta();
-
-            registroRaccolta.Acquirente = new Acquirente() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "ZONA IND.LE PIAN DI CONTRO", RagioneSociale = "SIBILLA SOC.COOP.AGR.", Piva = "00100010446" };
-            registroRaccolta.Destinatario = new Destinatario() { CAP = "63021", Comune = "AMANDOLA", SiglaProvincia = "AP", Indirizzo = "LOC. PIANDICONTRO", RagioneSociale = "FATTORIE MARCHIGIANE CONS.COOP.", P_IVA = "00433920410" };
-            registroRaccolta.Trasportatore = new Trasportatore() { TargaAutomezzo = "CD182ZZ", RagioneSociale = "LATTE MARCHE SOC.COOP.AGR", Indirizzo = "VIA S.TOTTI, 7 - 60100 ANCONA (AN)", P_IVA = "008880425" };
-            registroRaccolta.Giro = new Giro() { Denominazione = "PESARO-ANCONA" };
-            registroRaccolta.Data = DateTime.Now;
-            registroRaccolta.Lotto = new Lotto()
-            {
-                Codice = "P10302200920",
-                Prelievi = new List<Prelievo>()
-                {
-                    new Prelievo()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        DataConsegna = DateTime.Today.AddDays(1),
-                        DataPrelievo = DateTime.Today,
-                        DataUltimaMungitura = DateTime.Today.AddDays(-1),
-                        NumeroMungiture = 1,
-                        Quantita_kg = Convert.ToDecimal(5.5),
-                        Scomparto = "1",
-                        Temperatura = Convert.ToDecimal(26.7),
-                        Allevamento = new Allevamento() { RagioneSociale = "TRIONFI HONORATI ANTONIO S.R.L. (testo per farlo lungo)", P_IVA = "00136660420", Prov = "AN" },
-                        TipoLatte = new TipoLatte() { DescrizioneBreve = "QM-AQ" }
-                    },
-                    new Prelievo()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        DataConsegna = DateTime.Today.AddDays(1),
-                        DataPrelievo = DateTime.Today,
-                        DataUltimaMungitura = DateTime.Today.AddDays(-1),
-                        NumeroMungiture = 3,
-                        Quantita_kg = Convert.ToDecimal(4.4),
-                        Scomparto = "2",
-                        Temperatura = Convert.ToDecimal(32.3),
-                        Allevamento = new Allevamento() { RagioneSociale = "SOCIETA' AGR. MARINELLI FABRIZIO E LUCA", P_IVA = "00398130435", Prov = "MC" },
-                        TipoLatte = new TipoLatte() { DescrizioneBreve = "QM-AQ" }
-                    }
-                }
-            };
-
-            try
-            {
-                await printer.PrintLabel(registroRaccolta);
-                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
-            }
-            catch (Exception exc)
-            {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
-            }
-
-        }
-
+        /// <summary>
+        /// Caricamento elenco prelievi presenti nel lotto
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteLoadItemsCommand()
         {
             if (this.IsBusy)
@@ -123,13 +73,25 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             try
             {
-                this.Items.Clear();
-
-                var lotto = await this.lottiService.GetItemAsync(this.lotto.Id);
-                foreach (var item in lotto.Prelievi)
+                await Task.Run(() =>
                 {
-                    this.Items.Add(item);
-                }
+                    this.Items.Clear();
+
+                    var allevamenti = this.allevamentiService.GetItemsAsync().Result;
+
+                    var lotto = this.lottiService.GetItemAsync(this.lotto.Id).Result;
+                    foreach (var prelievo in lotto.Prelievi)
+                    {
+                        var allevamento = prelievo.IdAllevamento.HasValue ? allevamenti.FirstOrDefault(a => a.Id == prelievo.IdAllevamento.Value) : null;
+
+                        this.Items.Add(new ItemViewModel() 
+                        { 
+                            Id = prelievo.Id,
+                            IdLotto = prelievo.IdLotto,
+                            Title = $"{allevamento?.RagioneSociale}"
+                        });
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -141,9 +103,155 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
+        /// <summary>
+        /// Comando stampa ricevuta raccolta
+        /// </summary>
+        /// <returns></returns>
+        private async Task ExecutePrintCommand()
+        {
+            try
+            {
+                Debug.WriteLine("Print Command");
+                this.IsBusy = true;
+
+                await Task.Run(() =>
+                {
+                    var printer = DependencyService.Get<IPrinter>();
+                    printer.MacAddress = "00:03:7A:30:B0:4D";
+
+                    this.lotto = this.lottiService.GetItemAsync(this.lotto.Id).Result;
+
+                    var registroRaccolta = new RegistroRaccolta();
+
+                    registroRaccolta.Acquirente = GetAcquirente(this.lotto).Result;
+                    registroRaccolta.Destinatario = GetDestinatario(this.lotto).Result;
+                    registroRaccolta.Giro = GetGiro(this.lotto.IdGiro).Result;
+                    registroRaccolta.Trasportatore = GetTrasportatore(registroRaccolta.Giro?.IdTrasportatore).Result;
+
+                    registroRaccolta.Data = DateTime.Now;
+                    registroRaccolta.CodiceLotto = this.lotto.Codice;
+
+                    foreach(var prelievo in this.lotto.Prelievi)
+                    {
+                        registroRaccolta.Items.Add(new RegistroRaccolta.Item()
+                        {
+                            Scomparto = prelievo.Scomparto,
+                            Allevamento = GetAllevamento(prelievo.IdAllevamento).Result,
+                            DataPrelievo = prelievo.DataPrelievo,
+                            Quantita_kg = prelievo.Quantita_kg,
+                            TipoLatte = prelievo.TipoLatte
+                        });
+                    }
+
+                    printer.PrintLabel(registroRaccolta);
+
+                });
+
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+
+        }
+
+        /// <summary>
+        /// Apertura pagina nuovo prelievo
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
             await this.navigation.PushAsync(new EditPage(new EditViewModel(this.navigation, this.page, this.lotto.Id, "")));
+        }
+
+        /// <summary>
+        /// Lookup acquirente
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Acquirente> GetAcquirente(Lotto lotto)
+        {
+            if (lotto.Prelievi.Count(p => p.IdAcquirente.HasValue) > 0)
+            {
+                var idAcquirente = lotto.Prelievi.First(p => p.IdAcquirente.HasValue).IdAcquirente.Value;
+                return await this.acquirentiService.GetItemAsync(idAcquirente);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup destinatario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Destinatario> GetDestinatario(Lotto lotto)
+        {
+            if (lotto.Prelievi.Count(p => p.IdDestinatario.HasValue) > 0)
+            {
+                var idDestinatario = lotto.Prelievi.First(p => p.IdDestinatario.HasValue).IdDestinatario.Value;
+                return await this.destinatariService.GetItemAsync(idDestinatario);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup giro
+        /// </summary>
+        /// <param name="idGiro"></param>
+        /// <returns></returns>
+        private async Task<Giro> GetGiro(int? idGiro)
+        {
+            if (idGiro.HasValue)
+            {
+                return await this.giriService.GetItemAsync(idGiro.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup trasportatore
+        /// </summary>
+        /// <param name="idTrasportatore"></param>
+        /// <returns></returns>
+        private async Task<Trasportatore> GetTrasportatore(int? idTrasportatore)
+        {
+            if (idTrasportatore.HasValue)
+            {
+                return await this.trasportatoriService.GetItemAsync(idTrasportatore.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup allevamento
+        /// </summary>
+        /// <param name="idAllevamento"></param>
+        /// <returns></returns>
+        private async Task<Allevamento> GetAllevamento(int? idAllevamento)
+        {
+            if (idAllevamento.HasValue)
+            {
+                return await this.allevamentiService.GetItemAsync(idAllevamento.Value);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
