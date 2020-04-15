@@ -23,9 +23,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Prelievo prelievo;
 
         private bool isNew = false;
+        private string idLotto;
 
         private string id;
-        private string idLotto;
+
         private int? idAllevamento;
         private GiroItem allevamentoSelezionato;
         private DateTime dataPrelievo;
@@ -33,13 +34,24 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private string scomparto;
         private decimal? kg;
         private decimal? lt;
+        private decimal? temperatura;
+        private int? numeroMungiture;
+        private DateTime dataUltimaMungitura;
+        private TimeSpan oraUltimaMungitura;
+        private int? idAcquirente;
+        private Acquirente acquirenteSelezionato;
+        private int? idDestinatario;
+        private Destinatario destinatarioSelezionato;
+
         private ObservableCollection<GiroItem> allevamenti;
+        private ObservableCollection<Acquirente> acquirenti;
+        private ObservableCollection<Destinatario> destinatari;
 
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
-
         private IGiroItemsService giroItemsService => DependencyService.Get<IGiroItemsService>();
-
         private ILottiService lottiService => DependencyService.Get<ILottiService>();
+        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
 
         #endregion
 
@@ -99,6 +111,66 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             set { SetProperty(ref this.lt, value); }
         }
 
+        public decimal? Temperatura
+        {
+            get { return this.temperatura; }
+            set { SetProperty(ref this.temperatura, value); }
+        }
+
+        public int? NumeroMungiture
+        {
+            get { return this.numeroMungiture; }
+            set { SetProperty(ref this.numeroMungiture, value); }
+        }
+
+        public DateTime DataUltimaMungitura
+        {
+            get { return GetDateWhitoutTime(this.dataUltimaMungitura); }
+            set { SetProperty<DateTime>(ref this.dataUltimaMungitura, value); }
+        }
+
+        public TimeSpan OraUltimaMungitura
+        {
+            get { return this.oraUltimaMungitura; }
+            set { SetProperty<TimeSpan>(ref this.oraUltimaMungitura, value); }
+        }
+
+        public ObservableCollection<Acquirente> Acquirenti
+        {
+            get { return this.acquirenti; }
+            set { SetProperty<ObservableCollection<Acquirente>>(ref this.acquirenti, value); }
+        }
+
+        public int? IdAcquirente
+        {
+            get { return this.idAcquirente; }
+            set { SetProperty(ref this.idAcquirente, value); }
+        }
+
+        public Acquirente AcquirenteSelezionato
+        {
+            get { return this.acquirenteSelezionato; }
+            set { SetProperty<Acquirente>(ref this.acquirenteSelezionato, value); }
+        }
+
+        public ObservableCollection<Destinatario> Destinatari
+        {
+            get { return this.destinatari; }
+            set { SetProperty<ObservableCollection<Destinatario>>(ref this.destinatari, value); }
+        }
+
+        public int? IdDestinatario
+        {
+            get { return this.idDestinatario; }
+            set { SetProperty(ref this.idDestinatario, value); }
+        }
+
+        public Destinatario DestinatarioSelezionato
+        {
+            get { return this.destinatarioSelezionato; }
+            set { SetProperty<Destinatario>(ref this.destinatarioSelezionato, value); }
+        }
+
         public Command LoadCommand { get; set; }
 
         public Command PrintCommand { get; set; }
@@ -114,6 +186,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public EditViewModel(INavigation navigation, Page page, string idLotto, string idPrelievo)
             : base(navigation, page)
         {
+
             this.navigation = navigation;
             this.page = page;
 
@@ -125,10 +198,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.IsBusy = true;
 
-            this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
+            this.LoadCommand = new Command(async () => await Task.Run(() => ExecuteLoadCommand()));
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
             this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand());
-            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());            
+            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());
+
         }
 
         #endregion
@@ -143,9 +217,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         {
             try
             {
-                if(isNew)
+
+                if (isNew)
                 {
-                    this.prelievo = new Prelievo() 
+                    this.prelievo = new Prelievo()
                     {
                         Id = this.Id,
                         IdLotto = this.idLotto,
@@ -154,12 +229,14 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 }
                 else
                 {
-                    this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
+                    this.prelievo = await this.prelieviService.GetItemAsync(this.Id);
                 }
-                
+
                 var lotto = await this.lottiService.GetItemAsync(this.prelievo.IdLotto);
+                var acquirenti = await this.acquirentiService.GetItemsAsync();
+                var destinatari = await this.destinatariService.GetItemsAsync();
                 var allevamenti = await this.giroItemsService.GetItems(lotto.IdGiro);
-               
+
                 // Data prelievo
                 this.DataPrelievo = GetDateWhitoutTime(this.prelievo.DataPrelievo);
 
@@ -180,6 +257,27 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 // Lt
                 this.Lt = this.prelievo.Quantita_lt;
+
+                // temperatura
+                this.Temperatura = this.prelievo.Temperatura;
+
+                // num mungiture
+                this.NumeroMungiture = this.prelievo.NumeroMungiture;
+
+                // data ultima mungitura
+                this.DataUltimaMungitura = GetDateWhitoutTime(this.prelievo.DataUltimaMungitura);
+
+                // Ora ultima mungitura
+                this.OraUltimaMungitura = this.prelievo.DataUltimaMungitura.HasValue ? this.prelievo.DataUltimaMungitura.Value - this.DataPrelievo : new TimeSpan();
+
+                // acquirente
+                this.Acquirenti = new ObservableCollection<Acquirente>(acquirenti);
+                this.AcquirenteSelezionato = this.prelievo.IdAcquirente.HasValue ? this.Acquirenti.FirstOrDefault(a => a.Id == this.prelievo.IdAcquirente.Value) : null;
+
+                // destinatario
+                this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
+                this.DestinatarioSelezionato = this.prelievo.IdDestinatario.HasValue ? this.Destinatari.FirstOrDefault(a => a.Id == this.prelievo.IdDestinatario.Value) : null;
+
 
                 this.IsBusy = false;
             }
@@ -248,20 +346,27 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             try
             {
                 this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
+                this.prelievo.IdLotto = this.idLotto;
+
                 this.prelievo.DataPrelievo = this.DataPrelievo.Add(this.OraPrelievo);
                 this.prelievo.Scomparto = this.Scomparto;
                 this.prelievo.Quantita_kg = this.Kg;
                 this.prelievo.Quantita_lt = this.Lt;
-                this.prelievo.IdLotto = this.idLotto;
 
-                if(this.isNew)
+                this.prelievo.Temperatura = this.Temperatura;
+                this.prelievo.NumeroMungiture = this.NumeroMungiture;
+                this.prelievo.DataUltimaMungitura = this.DataUltimaMungitura.Add(this.OraUltimaMungitura);
+                this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
+                this.prelievo.IdDestinatario = this.DestinatarioSelezionato != null ? this.DestinatarioSelezionato.Id : (int?)null;
+
+                if (this.isNew)
                     await prelieviService.AddItemAsync(this.prelievo);
                 else
                     await prelieviService.UpdateItemAsync(this.prelievo);
 
                 await navigation.PopAsync();
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
             }
@@ -284,7 +389,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private DateTime GetDateWhitoutTime(DateTime? dateTime)
         {
-            return dateTime.HasValue ? new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day) : DateTime.Today; 
+            return dateTime.HasValue ? new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day) : DateTime.Today;
         }
 
         #endregion

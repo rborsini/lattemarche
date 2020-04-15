@@ -34,5 +34,8 @@ namespace LatteMarche.Xamarin.Models
         public int? IdTipoLatte { get; set; }
         public virtual TipoLatte TipoLatte { get; set; }
 
+        public int? IdAcquirente { get; set; }
+        public int? IdDestinatario { get; set; }
+
     }
 }

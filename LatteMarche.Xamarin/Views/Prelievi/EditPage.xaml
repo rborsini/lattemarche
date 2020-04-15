@@ -13,38 +13,74 @@
         <ToolbarItem Text="Salva" Command="{Binding SaveItemCommand}" />
         <ToolbarItem Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
+    
+    <ScrollView>
+        <AbsoluteLayout>
 
-    <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
 
-        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
-            <DatePicker Date="{Binding DataPrelievo, Mode=TwoWay}" />
-            <TimePicker Time="{Binding OraPrelievo, Mode=TwoWay}" />
-            <Picker Title="Seleziona allevamento"
+                 <!--Data prelievo--> 
+                <DatePicker Date="{Binding DataPrelievo, Mode=TwoWay}" />
+                <TimePicker Time="{Binding OraPrelievo, Mode=TwoWay}" />
+
+                 <!--Allevamento--> 
+                <Picker Title="Seleziona allevamento"
                     ItemDisplayBinding="{Binding RagioneSociale}"
                     ItemsSource="{Binding Allevamenti}"
-                    SelectedItem="{Binding AllevamentoSelezionato, Mode=TwoWay}"
-                    />
-            <Label Text="Scomparto" FontSize="Medium" />
-            <Entry Text="{Binding Scomparto, Mode=TwoWay}" d:Text="Scomparto" FontSize="Small" />
-            <Label Text="kg" FontSize="Medium" />
-            <Editor Text="{Binding Kg, Mode=TwoWay}" d:Text="kg" FontSize="Small" Margin="0" />
-            <Label Text="lt" FontSize="Medium" />
-            <Editor Text="{Binding Lt, Mode=TwoWay}" d:Text="lt" FontSize="Small" Margin="0" />
-        </StackLayout>
+                    SelectedItem="{Binding AllevamentoSelezionato, Mode=TwoWay}" />
 
-        <AbsoluteLayout IsVisible="{Binding IsBusy}"
-                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                AbsoluteLayout.LayoutFlags= "All" 
-                BackgroundColor="#70383838">
+                 <!--Scomparto--> 
+                <Label Text="Scomparto" FontSize="Medium" />
+                <Entry Text="{Binding Scomparto, Mode=TwoWay}" d:Text="Scomparto" FontSize="Small" />
 
-            <ActivityIndicator 
-                    IsVisible="{Binding IsBusy}"
-                    IsRunning="{Binding IsBusy}"
-                    Color="Gray"
-                    AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
-                    AbsoluteLayout.LayoutFlags= "All" />
+                 <!--Qta kg--> 
+                <Label Text="kg" FontSize="Medium" />
+                <Editor Text="{Binding Kg, Mode=TwoWay}" d:Text="kg" FontSize="Small" Margin="0" />
 
+                 <!--Qta lt--> 
+                <Label Text="lt" FontSize="Medium" />
+                <Editor Text="{Binding Lt, Mode=TwoWay}" d:Text="lt" FontSize="Small" Margin="0" />
+
+                 <!--Temp--> 
+                <Label Text="Temp" FontSize="Medium" />
+                <Editor Text="{Binding Temperatura, Mode=TwoWay}" d:Text="temp" FontSize="Small" Margin="0" />
+
+                 <!--Num mung--> 
+                <Label Text="Num. mung." FontSize="Medium" />
+                <Editor Text="{Binding NumeroMungiture, Mode=TwoWay}" d:Text="temp" FontSize="Small" Margin="0" />
+
+                 <!--Data ultima mungitura--> 
+                <DatePicker Date="{Binding DataUltimaMungitura, Mode=TwoWay}" />
+                <TimePicker Time="{Binding OraUltimaMungitura, Mode=TwoWay}" />
+
+                 <!--Acquirente--> 
+                <Picker Title="Seleziona acquirente"
+                    ItemDisplayBinding="{Binding RagioneSociale}"
+                    ItemsSource="{Binding Acquirenti}"
+                    SelectedItem="{Binding AcquirenteSelezionato, Mode=TwoWay}" />
+
+                 <!--Destinatario--> 
+                <Picker Title="Seleziona destinatario"
+                    ItemDisplayBinding="{Binding RagioneSociale}"
+                    ItemsSource="{Binding Destinatari}"
+                    SelectedItem="{Binding DestinatarioSelezionato, Mode=TwoWay}" />
+
+           
+            </StackLayout>
+
+            <AbsoluteLayout IsVisible="{Binding IsBusy}"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags= "All" 
+                    BackgroundColor="#70383838">
+
+                <ActivityIndicator 
+                        IsVisible="{Binding IsBusy}"
+                        IsRunning="{Binding IsBusy}"
+                        Color="Gray"
+                        AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
+                        AbsoluteLayout.LayoutFlags= "All" />
+
+            </AbsoluteLayout>
         </AbsoluteLayout>
-    </AbsoluteLayout>
-
+    </ScrollView>
 </ContentPage>
