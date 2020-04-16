@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 
@@ -129,12 +130,13 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 this.IsBusy = true;
 
                 var imei = DependencyService.Get<IDevice>().GetIdentifier();
+                var location = await Geolocation.GetLastKnownLocationAsync();
 
-                //await Task.Run(() =>
-                //{
-                //    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
-                //    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
-                //});
+                await Task.Run(() =>
+                {
+                    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
+                    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
+                });
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");

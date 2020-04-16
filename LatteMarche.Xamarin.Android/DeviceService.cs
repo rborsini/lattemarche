@@ -20,8 +20,7 @@ namespace LatteMarche.Xamarin.Droid
     {
         public string GetIdentifier()
         {
-            return "123";
-            //Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+            return Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
         }
     }
 }

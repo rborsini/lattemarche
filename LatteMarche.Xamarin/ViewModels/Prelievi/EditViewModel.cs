@@ -238,10 +238,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
                     }
 
-                    var lotto = this.lottiService.GetItemAsync(this.prelievo.IdLotto).Result; ;
-                    var acquirenti = this.acquirentiService.GetItemsAsync().Result; ;
-                    var destinatari = this.destinatariService.GetItemsAsync().Result; ;
-                    var allevamenti = this.giroItemsService.GetItems(lotto.IdGiro).Result; ;
+                    var lotto = this.lottiService.GetItemAsync(this.prelievo.IdLotto).Result;
+                    var acquirenti = this.acquirentiService.GetItemsAsync().Result;
+                    var destinatari = this.destinatariService.GetItemsAsync().Result;
+                    var allevamenti = this.giroItemsService.GetItems(lotto.IdGiro).Result;
 
                     // Data prelievo
                     this.DataPrelievo = GetDateWhitoutTime(this.prelievo.DataPrelievo);
