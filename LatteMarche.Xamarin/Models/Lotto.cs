@@ -12,6 +12,7 @@ namespace LatteMarche.Xamarin.Models
         public string Codice { get; set; }
         public virtual List<Prelievo> Prelievi { get; set; }
         public int IdGiro { get; set; }
+        public bool Inviato { get; set; }
 
         public Lotto()
         {

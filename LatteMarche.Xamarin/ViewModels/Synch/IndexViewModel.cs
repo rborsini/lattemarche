@@ -62,6 +62,9 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 await Task.Run(() =>
                 {
+
+
+
                     // trasportatori
                     var trasportatori = this.restService.GetTrasportatori().Result;
                     trasportatori[0].Selezionato = true;
@@ -125,11 +128,13 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             {
                 this.IsBusy = true;
 
-                await Task.Run(() =>
-                {
-                    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
-                    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
-                });
+                var imei = DependencyService.Get<IDevice>().GetIdentifier();
+
+                //await Task.Run(() =>
+                //{
+                //    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
+                //    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
+                //});
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");

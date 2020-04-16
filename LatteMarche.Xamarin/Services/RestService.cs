@@ -18,7 +18,8 @@ namespace LatteMarche.Xamarin.Services
 {
     public class RestService : IRestService
     {
-        private const string API_ENDPOINT = "http://192.168.0.73:81";
+        private const string API_ENDPOINT = "http://robertoborsini.myqnapcloud.com:81";
+        //private const string API_ENDPOINT = "http://192.168.0.73:81";
 
         private string Token
         {
