@@ -41,6 +41,8 @@ using LatteMarche.Application.Logs.Services;
 using LatteMarche.Application.Assam;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Services;
+using LatteMarche.Application.Mobile.Interfaces;
+using LatteMarche.Application.Mobile.Services;
 
 namespace LatteMarche.Application
 {
@@ -90,6 +92,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>().InstancePerRequest();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>().InstancePerRequest();
                 builder.RegisterType<UtentiService>().As<IUtentiService>().InstancePerRequest();
+                builder.RegisterType<MobileService>().As<IMobileService>().InstancePerRequest();
 
             }
             else
@@ -118,6 +121,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>();
                 builder.RegisterType<UtentiService>().As<IUtentiService>();
+                builder.RegisterType<MobileService>().As<IMobileService>();
             }
 
 

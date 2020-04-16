@@ -40,6 +40,8 @@ namespace LatteMarche.EntityFramework
         public DbSet<UtenteXAcquirente> UtentiXAcquirente { get; set; }
         public DbSet<UtenteXDestinatario> UtentiXDestinatario { get; set; }
 
+        public DbSet<DispositivoMobile> DispositiviMobile { get; set; }
+
         public LatteMarcheDbContext()
 			: base("name=LatteMarcheDbContext")
 		{

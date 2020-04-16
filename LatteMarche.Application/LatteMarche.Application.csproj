@@ -125,6 +125,10 @@
     <Compile Include="Lotti\Dtos\LottoDto.cs" />
     <Compile Include="Lotti\Interfaces\ILottiService.cs" />
     <Compile Include="Lotti\Services\LottiService.cs" />
+    <Compile Include="Mobile\Dtos\LocalDbDto.cs" />
+    <Compile Include="Mobile\Dtos\UploadDto.cs" />
+    <Compile Include="Mobile\Interfaces\IMobileService.cs" />
+    <Compile Include="Mobile\Services\MobileService.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelieviLatteSearchDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="Allevamenti\Dtos\AlevamentoDto.cs" />
     <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
     <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
+    <Compile Include="Mobile\Dtos\DeviceInfoDto.cs" />
     <Compile Include="Trasportatori\Dtos\TrasportatoreDto.cs" />
     <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />

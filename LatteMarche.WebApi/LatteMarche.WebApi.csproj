@@ -346,6 +346,7 @@
     <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
     <Compile Include="Areas\api\Controllers\RuoliController.cs" />
     <Compile Include="Areas\api\Controllers\DocumentiController.cs" />
+    <Compile Include="Areas\api\Controllers\MobileController.cs" />
     <Compile Include="Areas\api\Controllers\SynchController.cs" />
     <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
     <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />

@@ -12,7 +12,7 @@ using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {
-    [ApiCustomAuthorize]
+    //[ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class TrasportatoriController : ApiController
