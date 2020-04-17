@@ -1,21 +1,8 @@
-﻿using AutoMapper;
-using LatteMarche.Application.Acquirenti.Interfaces;
-using LatteMarche.Application.Allevamenti.Interfaces;
-using LatteMarche.Application.Destinatari.Interfaces;
-using LatteMarche.Application.Giri.Interfaces;
-using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
-using LatteMarche.Application.Mobile.Dtos;
+﻿using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Application.Mobile.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
-using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
-using LatteMarche.WebApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers

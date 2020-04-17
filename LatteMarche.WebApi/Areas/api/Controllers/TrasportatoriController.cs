@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using LatteMarche.Application.Trasportatori.Interfaces;
-using LatteMarche.Application.Trasportatori.Dtos;
-using LatteMarche.Application.Giri.Interfaces;
-using LatteMarche.Application.Giri.Dtos;
-using LatteMarche.Application.Utenti;
-using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers

@@ -1,24 +1,18 @@
-﻿using LatteMarche.Application.Lotti.Dtos;
-using LatteMarche.Application.Sitra.Interfaces;
+﻿using LatteMarche.Application.Sitra.Interfaces;
 using LatteMarche.Application.Sitra.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
 using System.Configuration;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
-using LatteMarche.Core;
-using LatteMarche.Core.Models;
-using LatteMarche.Application.Lotti.Interfaces;
-using System.Threading;
 using LatteMarche.Application.Logs.Interfaces;
+using LatteMarche.Application.Latte.Interfaces;
+using LatteMarche.Application.Latte.Dtos;
 
 namespace LatteMarche.Application.Sitra.Services
 {

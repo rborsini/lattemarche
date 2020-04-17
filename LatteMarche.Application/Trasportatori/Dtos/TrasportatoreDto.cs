@@ -1,8 +1,4 @@
-﻿using System;
-using AutoMapper;
-using LatteMarche.Core.Models;
-using System.Collections.Generic;
-using LatteMarche.Application.Giri.Dtos;
+﻿using System.Collections.Generic;
 
 namespace LatteMarche.Application.Trasportatori.Dtos
 {
@@ -23,35 +19,6 @@ namespace LatteMarche.Application.Trasportatori.Dtos
 
     }
 
-    public class TrasportatoriMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<V_Trasportatore, TrasportatoreDto>()
-                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
-                .ForMember(dest => dest.Cognome, opts => opts.MapFrom(src => src.Cognome.Trim()))
-                .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
-                .ForMember(dest => dest.Telefono, opts => opts.MapFrom(src => src.Telefono.Trim()))
-                .ForMember(dest => dest.Cellulare, opts => opts.MapFrom(src => src.Cellulare.Trim()))
-                .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
-                .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))
-                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
-                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
-                ;
-            Mapper.CreateMap<TrasportatoreDto, V_Trasportatore>()
-                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
-                .ForMember(dest => dest.Cognome, opts => opts.MapFrom(src => src.Cognome.Trim()))
-                .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
-                .ForMember(dest => dest.Telefono, opts => opts.MapFrom(src => src.Telefono.Trim()))
-                .ForMember(dest => dest.Cellulare, opts => opts.MapFrom(src => src.Cellulare.Trim()))
-                .ForMember(dest => dest.Comune, opts => opts.MapFrom(src => src.Comune.Trim()))
-                .ForMember(dest => dest.Provincia, opts => opts.MapFrom(src => src.Provincia.Trim()))
-                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
-                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
-                ;
-        }
-    }
+
 
 }

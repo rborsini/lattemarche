@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.Ruoli.Interfaces;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.TipiProfilo.Interfaces;
-using LatteMarche.Application.TipiProfilo.Dtos;
-using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using RB.Hash;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Auth.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>LatteMarche.Core</RootNamespace>
     <AssemblyName>LatteMarche.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

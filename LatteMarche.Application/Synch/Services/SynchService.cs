@@ -1,4 +1,4 @@
-﻿using LatteMarche.Application.PrelieviLatte.Interfaces;
+﻿using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.Application.Synch.Interfaces;
 using LatteMarche.Common;
 using LatteMarche.Core;
@@ -7,9 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Synch.Services
 {

@@ -1,13 +1,9 @@
 ﻿using LatteMarche.Application.Acquirenti.Dtos;
-using LatteMarche.Application.Allevamenti.Dtos;
+using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.Destinatari.Dtos;
-using LatteMarche.Application.Giri.Dtos;
-using LatteMarche.Application.LaboratoriAnalisi.Dtos;
+using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace LatteMarche.WebApi.Models
 {

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
 using RB.Date;
 using System.Collections.Generic;
 using LatteMarche.Application.Synch.Interfaces;
-using LatteMarche.Core;
-using LatteMarche.Core.Models;
 using LatteMarche.Application.Sitra.Interfaces;
-using LatteMarche.Application.Lotti.Interfaces;
 using System.Configuration;
 using System.Linq;
 using AutoMapper;
@@ -19,10 +12,12 @@ using LatteMarche.WebApi.Models;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Logs.Interfaces;
 using Newtonsoft.Json;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Destinatari.Interfaces;
+using LatteMarche.Application.Latte.Interfaces;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Latte.Dtos;
+using LatteMarche.Application.Auth.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

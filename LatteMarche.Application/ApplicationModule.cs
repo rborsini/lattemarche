@@ -1,41 +1,22 @@
 ﻿using Autofac;
 using LatteMarche.EntityFramework;
 using LatteMarche.Core;
-using LatteMarche.Application.Utenti.Services;
-using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Comuni.Services;
 using LatteMarche.Application.Comuni.Interfaces;
-using LatteMarche.Application.TipiLatte.Services;
-using LatteMarche.Application.TipiLatte.Interfaces;
-using LatteMarche.Application.TipiProfilo.Services;
-using LatteMarche.Application.TipiProfilo.Interfaces;
-using LatteMarche.Application.Allevatori.Services;
-using LatteMarche.Application.Allevatori.Interfaces;
 using LatteMarche.Application.Allevamenti.Services;
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Trasportatori.Services;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Documenti.Interfaces;
 using LatteMarche.Application.Documenti.Services;
-using LatteMarche.Application.Giri.Services;
-using LatteMarche.Application.Giri.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Services;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
-using LatteMarche.Application.LaboratoriAnalisi.Services;
-using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
 using LatteMarche.Application.Acquirenti.Services;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Destinatari.Services;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Synch.Services;
 using LatteMarche.Application.Synch.Interfaces;
-using LatteMarche.Application.Lotti.Services;
-using LatteMarche.Application.Lotti.Interfaces;
 using LatteMarche.Application.Sitra.Services;
 using LatteMarche.Application.Sitra.Interfaces;
-using LatteMarche.Application.Ruoli.Services;
-using LatteMarche.Application.Ruoli.Interfaces;
-using LatteMarche.Application.Autocisterne.Interfaces;
 using LatteMarche.Application.Logs.Interfaces;
 using LatteMarche.Application.Logs.Services;
 using LatteMarche.Application.Assam;
@@ -43,6 +24,10 @@ using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Services;
 using LatteMarche.Application.Mobile.Interfaces;
 using LatteMarche.Application.Mobile.Services;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Latte.Interfaces;
+using LatteMarche.Application.Auth.Services;
+using LatteMarche.Application.Latte.Services;
 
 namespace LatteMarche.Application
 {
@@ -61,7 +46,6 @@ namespace LatteMarche.Application
 
 		protected override void Load(ContainerBuilder builder)
 		{
-			AutomapperConfig.Configure();
 
 			if (this.isWeb)
 			{

@@ -15,13 +15,4 @@ namespace LatteMarche.Application.Allevamenti.Dtos
         public string CUAA { get; set; }
     }
 
-    public class AllevamentiMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<Allevamento, AllevamentoDto>();
-            Mapper.CreateMap<AllevamentoDto, Allevamento>();
-        }
-    }
-
 }

@@ -1,13 +1,7 @@
-﻿using LatteMarche.WebApi.Models;
-using LatteMarche.Application.Ruoli.Interfaces;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Application.Utenti.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.WebApi.Models;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers

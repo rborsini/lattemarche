@@ -25,14 +25,6 @@ namespace LatteMarche.Application.Logs.Dtos
         public decimal Duration { get; set; }
     }
 
-    public class LogsMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<LogRecord, LogRecordDto>();
 
-            Mapper.CreateMap<LogRecordDto, LogRecord>();
-        }
-    }
 
 }

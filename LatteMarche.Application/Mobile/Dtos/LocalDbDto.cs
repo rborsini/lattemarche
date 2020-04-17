@@ -1,15 +1,9 @@
 ﻿using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Application.Allevamenti.Dtos;
-using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Application.Destinatari.Dtos;
-using LatteMarche.Application.Giri.Dtos;
-using LatteMarche.Application.TipiLatte.Dtos;
+using LatteMarche.Application.Latte.Dtos;
 using LatteMarche.Application.Trasportatori.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Mobile.Dtos
 {

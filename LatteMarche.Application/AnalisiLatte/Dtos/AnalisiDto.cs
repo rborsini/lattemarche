@@ -43,23 +43,6 @@ namespace LatteMarche.Application.AnalisiLatte.Dtos
 
     }
 
-    public class AnalisiMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<Assam.Models.Misura, ValoreAnalisiDto>();
 
-            Mapper.CreateMap<Assam.Models.AnalisiLatte, AnalisiDto>()
-                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Campione.Trim()))
-                ;
-
-            Mapper.CreateMap<Analisi, AnalisiDto>();
-            Mapper.CreateMap<ValoreAnalisi, ValoreAnalisiDto>();
-
-            Mapper.CreateMap<AnalisiDto, Analisi>();
-            Mapper.CreateMap<ValoreAnalisiDto, ValoreAnalisi>();
-
-        }
-    }
 
 }

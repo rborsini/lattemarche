@@ -1,15 +1,9 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Web.Http;
-using System.Linq;
-using LatteMarche.Application.TipiLatte.Interfaces;
-using LatteMarche.Application.TipiLatte.Dtos;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
-using LatteMarche.Application.Ruoli.Interfaces;
-using LatteMarche.Application.Ruoli.Dtos;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Auth.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

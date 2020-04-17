@@ -1,12 +1,9 @@
-﻿using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Application.Utenti.Services;
+﻿using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Auth.Services;
 using LatteMarche.EntityFramework;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LatteMarche.Identity

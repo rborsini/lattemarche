@@ -8,6 +8,7 @@ using LatteMarche.Application.Comuni.Dtos;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

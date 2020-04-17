@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>LatteMarche.Application</RootNamespace>
     <AssemblyName>LatteMarche.Application</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,8 +48,8 @@
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="DateHelper, Version=1.0.6492.17801, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DateHelper.1.0.6492.17801\lib\net45\DateHelper.dll</HintPath>
@@ -86,8 +86,8 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -100,19 +100,28 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquirenti\AcquirentiMappings.cs" />
     <Compile Include="Acquirenti\Dtos\AcquirenteDto.cs" />
     <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
+    <Compile Include="Allevamenti\AllevamentiMappings.cs" />
     <Compile Include="Allevamenti\Dtos\AllevamentiSearchDto.cs" />
+    <Compile Include="AnalisiLatte\AnalisiMappings.cs" />
     <Compile Include="AnalisiLatte\Dtos\AnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Dtos\AnalisiSearchDto.cs" />
     <Compile Include="AnalisiLatte\Dtos\ValoreAnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Interfaces\IAnalisiService.cs" />
     <Compile Include="AnalisiLatte\Services\AnalisiService.cs" />
-    <Compile Include="Autocisterne\Dtos\AutocisternaDto.cs" />
-    <Compile Include="Autocisterne\Interfaces\IAutocisterneService.cs" />
-    <Compile Include="Autocisterne\Services\AutocisterneService.cs" />
-    <Compile Include="Comuni\Dtos\DropDownDto.cs" />
+    <Compile Include="Auth\AuthMappings.cs" />
+    <Compile Include="Comuni\ComuniMappings.cs" />
+    <Compile Include="Destinatari\DestinatariMappings.cs" />
+    <Compile Include="Documenti\DocumentiMappings.cs" />
+    <Compile Include="Logs\LogsMappings.cs" />
+    <Compile Include="Latte\PrelieviLatteMappings.cs" />
+    <Compile Include="Trasportatori\Dtos\AutocisternaDto.cs" />
+    <Compile Include="Trasportatori\Interfaces\IAutocisterneService.cs" />
+    <Compile Include="Trasportatori\Services\AutocisterneService.cs" />
+    <Compile Include="Common\Dto\DropDownDto.cs" />
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
@@ -122,48 +131,48 @@
     <Compile Include="Logs\Dtos\LogRecordDto.cs" />
     <Compile Include="Logs\Interfaces\ILogsServices.cs" />
     <Compile Include="Logs\Services\LogsService.cs" />
-    <Compile Include="Lotti\Dtos\LottoDto.cs" />
-    <Compile Include="Lotti\Interfaces\ILottiService.cs" />
-    <Compile Include="Lotti\Services\LottiService.cs" />
+    <Compile Include="Latte\Dtos\LottoDto.cs" />
+    <Compile Include="Latte\Interfaces\ILottiService.cs" />
+    <Compile Include="Latte\Services\LottiService.cs" />
     <Compile Include="Mobile\Dtos\LocalDbDto.cs" />
     <Compile Include="Mobile\Dtos\UploadDto.cs" />
     <Compile Include="Mobile\Interfaces\IMobileService.cs" />
     <Compile Include="Mobile\Services\MobileService.cs" />
-    <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
-    <Compile Include="PrelieviLatte\Dtos\PrelieviLatteSearchDto.cs" />
-    <Compile Include="PrelieviLatte\Interfaces\IPrelieviLatteService.cs" />
-    <Compile Include="PrelieviLatte\Services\PrelieviLatteService.cs" />
-    <Compile Include="Allevatori\Dtos\AllevatoreDto.cs" />
-    <Compile Include="Allevatori\Interfaces\IAllevatoriService.cs" />
-    <Compile Include="Allevatori\Services\AllevatoriService.cs" />
+    <Compile Include="Latte\Dtos\PrelievoLatteDto.cs" />
+    <Compile Include="Latte\Dtos\PrelieviLatteSearchDto.cs" />
+    <Compile Include="Latte\Interfaces\IPrelieviLatteService.cs" />
+    <Compile Include="Latte\Services\PrelieviLatteService.cs" />
+    <Compile Include="Allevamenti\Dtos\AllevatoreDto.cs" />
+    <Compile Include="Allevamenti\Interfaces\IAllevatoriService.cs" />
+    <Compile Include="Allevamenti\Services\AllevatoriService.cs" />
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="Comuni\Dtos\ComuniSearchDto.cs" />
-    <Compile Include="Giri\Dtos\GiroItemDto.cs" />
-    <Compile Include="Ruoli\Dtos\AzioneDto.cs" />
-    <Compile Include="Ruoli\Dtos\RuoloDto.cs" />
-    <Compile Include="Ruoli\Interfaces\IAutorizzazioniService.cs" />
-    <Compile Include="Ruoli\Interfaces\IAzioniService.cs" />
-    <Compile Include="Ruoli\Interfaces\IRuoliService.cs" />
-    <Compile Include="Ruoli\Services\AutorizzazioniService.cs" />
-    <Compile Include="Ruoli\Services\AzioniService.cs" />
-    <Compile Include="Ruoli\Services\RuoliService.cs" />
+    <Compile Include="Trasportatori\Dtos\GiroItemDto.cs" />
+    <Compile Include="Auth\Dtos\AzioneDto.cs" />
+    <Compile Include="Auth\Dtos\RuoloDto.cs" />
+    <Compile Include="Auth\Interfaces\IAutorizzazioniService.cs" />
+    <Compile Include="Auth\Interfaces\IAzioniService.cs" />
+    <Compile Include="Auth\Interfaces\IRuoliService.cs" />
+    <Compile Include="Auth\Services\AutorizzazioniService.cs" />
+    <Compile Include="Auth\Services\AzioniService.cs" />
+    <Compile Include="Auth\Services\RuoliService.cs" />
     <Compile Include="Sitra\Interfaces\ISitraService.cs" />
     <Compile Include="Sitra\Services\SitraService.cs" />
     <Compile Include="Sitra\Dtos\SitraDto.cs" />
     <Compile Include="Synch\Interfaces\ISynchService.cs" />
     <Compile Include="Synch\Services\SynchService.cs" />
-    <Compile Include="TipiLatte\Dtos\TipoLatteDto.cs" />
-    <Compile Include="TipiLatte\Interfaces\ITipiLatteService.cs" />
-    <Compile Include="TipiLatte\Services\TipiLatteService.cs" />
-    <Compile Include="Giri\Dtos\GiroDto.cs" />
-    <Compile Include="Giri\Interfaces\IGiriService.cs" />
-    <Compile Include="Giri\Services\GiriService.cs" />
-    <Compile Include="LaboratoriAnalisi\Dtos\LaboratorioAnalisiDto.cs" />
-    <Compile Include="LaboratoriAnalisi\Interfaces\ILaboratoriAnalisiService.cs" />
-    <Compile Include="LaboratoriAnalisi\Services\LaboratoriAnalisiService.cs" />
-    <Compile Include="TipiProfilo\Dtos\TipoProfiloDto.cs" />
-    <Compile Include="TipiProfilo\Interfaces\ITipiProfiloService.cs" />
-    <Compile Include="TipiProfilo\Services\TipiProfiloService.cs" />
+    <Compile Include="Latte\Dtos\TipoLatteDto.cs" />
+    <Compile Include="Latte\Interfaces\ITipiLatteService.cs" />
+    <Compile Include="Latte\Services\TipiLatteService.cs" />
+    <Compile Include="Trasportatori\Dtos\GiroDto.cs" />
+    <Compile Include="Trasportatori\Interfaces\IGiriService.cs" />
+    <Compile Include="Trasportatori\Services\GiriService.cs" />
+    <Compile Include="AnalisiLatte\Dtos\LaboratorioAnalisiDto.cs" />
+    <Compile Include="AnalisiLatte\Interfaces\ILaboratoriAnalisiService.cs" />
+    <Compile Include="AnalisiLatte\Services\LaboratoriAnalisiService.cs" />
+    <Compile Include="Auth\Dtos\TipoProfiloDto.cs" />
+    <Compile Include="Auth\Interfaces\ITipiProfiloService.cs" />
+    <Compile Include="Auth\Services\TipiProfiloService.cs" />
     <Compile Include="Comuni\Dtos\ComuneDto.cs" />
     <Compile Include="Comuni\Interfaces\IComuniService.cs" />
     <Compile Include="Comuni\Services\ComuniService.cs" />
@@ -173,16 +182,17 @@
     <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
     <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
     <Compile Include="Mobile\Dtos\DeviceInfoDto.cs" />
+    <Compile Include="Trasportatori\TrasportatoriMappings.cs" />
     <Compile Include="Trasportatori\Dtos\TrasportatoreDto.cs" />
     <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
-    <Compile Include="Utenti\Dtos\UtentiSearchDto.cs" />
-    <Compile Include="Utenti\Dtos\UtenteDto.cs" />
+    <Compile Include="Auth\Dtos\UtentiSearchDto.cs" />
+    <Compile Include="Auth\Dtos\UtenteDto.cs" />
     <Compile Include="EntityDto.cs" />
     <Compile Include="EntityReadOnlyService.cs" />
     <Compile Include="EntityService.cs" />
-    <Compile Include="Utenti\Interfaces\IUtentiService.cs" />
-    <Compile Include="Utenti\Services\UtentiService.cs" />
+    <Compile Include="Auth\Interfaces\IUtentiService.cs" />
+    <Compile Include="Auth\Services\UtentiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteMarche.Application.Assam\LatteMarche.Application.Assam.csproj">

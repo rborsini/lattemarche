@@ -1,11 +1,6 @@
-﻿using System;
+﻿using LatteMarche.Application.Allevamenti.Interfaces;
+using System;
 using System.Web.Http;
-using LatteMarche.Application.Allevatori.Interfaces;
-using LatteMarche.Application.Allevatori.Dtos;
-using LatteMarche.Application.Allevatori;
-using Newtonsoft.Json.Linq;
-using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

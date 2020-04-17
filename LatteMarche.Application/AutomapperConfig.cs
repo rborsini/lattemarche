@@ -1,24 +1,17 @@
 ﻿using System;
 using AutoMapper;
 using System.Linq.Expressions;
-using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Comuni.Dtos;
-using LatteMarche.Application.TipiLatte.Dtos;
-using LatteMarche.Application.TipiProfilo.Dtos;
-using LatteMarche.Application.Allevatori.Dtos;
-using LatteMarche.Application.Allevamenti.Dtos;
-using LatteMarche.Application.Trasportatori.Dtos;
-using LatteMarche.Application.Giri.Dtos;
-using LatteMarche.Application.Documenti.Dtos;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Application.LaboratoriAnalisi.Dtos;
-using LatteMarche.Application.Acquirenti.Dtos;
-using LatteMarche.Application.Destinatari.Dtos;
-using LatteMarche.Application.Lotti.Dtos;
-using LatteMarche.Application.Ruoli.Dtos;
-using LatteMarche.Application.Autocisterne.Dtos;
-using LatteMarche.Application.Logs.Dtos;
-using LatteMarche.Application.AnalisiLatte.Dtos;
+using AutoMapper.Configuration;
+using LatteMarche.Application.Acquirenti;
+using LatteMarche.Application.AnalisiLatte;
+using LatteMarche.Application.Trasportatori;
+using LatteMarche.Application.Allevamenti;
+using LatteMarche.Application.Auth;
+using LatteMarche.Application.Comuni;
+using LatteMarche.Application.Destinatari;
+using LatteMarche.Application.Documenti;
+using LatteMarche.Application.Logs;
+using LatteMarche.Application.PrelieviLatte;
 
 namespace LatteMarche.Application
 {
@@ -27,28 +20,21 @@ namespace LatteMarche.Application
     /// </summary>
     public static class AutomapperConfig
 	{
-		public static void Configure()
+		public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
 		{
 
-            AcquirentiMappings.Configure();
-            AnalisiMappings.Configure();
-            AutocisternaMappings.Configure();
-            AllevamentiMappings.Configure();
-            AllevatoriMappings.Configure();
-            AzioneMappings.Configure();
-            ComuniMappings.Configure();
-            DestinatarioMappings.Configure();
-            DocumentiMappings.Configure();
-            GiriMappings.Configure();
-            LaboratoriAnalisiMappings.Configure();
-            LogsMappings.Configure();
-            LottiMappings.Configure();
-            PrelieviLatteMappings.Configure();
-            RuoloMappings.Configure();
-            TipiLatteMappings.Configure();
-            TipiProfiloMappings.Configure();
-            TrasportatoriMappings.Configure();
-            UtentiMappings.Configure();
+            mappings = AcquirentiMappings.Configure(mappings);
+            mappings = AllevamentiMappings.Configure(mappings);
+            mappings = AnalisiMappings.Configure(mappings);
+            mappings = AuthMappings.Configure(mappings);
+            mappings = ComuniMappings.Configure(mappings);
+            mappings = DestinatarioMappings.Configure(mappings);
+            mappings = DocumentiMappings.Configure(mappings);
+            mappings = LogsMappings.Configure(mappings);
+            mappings = PrelieviLatteMappings.Configure(mappings);
+            mappings = TrasportatoriMappings.Configure(mappings);
+
+            return mappings;
             
         }
 	}

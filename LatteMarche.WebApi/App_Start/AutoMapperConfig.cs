@@ -1,11 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using LatteMarche.Application.Utenti.Dtos;
-
+using AutoMapper.Configuration;
 
 namespace LatteMarche.WebApi.App_Start
 {
@@ -13,15 +7,13 @@ namespace LatteMarche.WebApi.App_Start
 	{
 		public static void Configure()
 		{
-			UsersConfig();
+			var mappings = new MapperConfigurationExpression();
+
+			mappings = LatteMarche.Application.AutomapperConfig.Configure(mappings);
+
+			Mapper.Reset();
+			Mapper.Initialize(mappings);
 		}
-
-		private static void UsersConfig()
-		{
-
-
-		}
-
 
 	}
 }

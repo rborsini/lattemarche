@@ -26,12 +26,5 @@ namespace LatteMarche.Application.Destinatari.Dtos
 
     }
 
-    public class DestinatarioMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<Destinatario, DestinatarioDto>();
-            Mapper.CreateMap<DestinatarioDto, Destinatario>();
-        }
-    }
+
 }

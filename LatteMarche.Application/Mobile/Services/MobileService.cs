@@ -1,20 +1,14 @@
 ﻿using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Allevamenti.Interfaces;
-using LatteMarche.Application.Autocisterne.Interfaces;
 using LatteMarche.Application.Destinatari.Interfaces;
-using LatteMarche.Application.Giri.Interfaces;
-using LatteMarche.Application.Lotti.Interfaces;
+using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Application.Mobile.Interfaces;
-using LatteMarche.Application.TipiLatte.Interfaces;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Mobile.Services
 {

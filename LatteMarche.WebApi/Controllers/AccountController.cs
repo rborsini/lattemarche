@@ -1,17 +1,12 @@
-﻿using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.WebApi.Attributes;
+﻿using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.WebApi.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using System.Web.Security;
 using System.Web.UI;
 

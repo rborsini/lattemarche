@@ -13,13 +13,4 @@ namespace LatteMarche.Application.Documenti.Dtos
         public DateTime? DataInserimento { get; set; }
     }
 
-    public class DocumentiMappings
-    {
-        public static void Configure()
-        {
-            Mapper.CreateMap<Documento, DocumentoDto>();
-            Mapper.CreateMap<DocumentoDto, Documento>();
-        }
-    }
-
 }

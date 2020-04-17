@@ -1,12 +1,6 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Web.Http;
-using System.Linq;
-using LatteMarche.Application.LaboratoriAnalisi.Interfaces;
-using LatteMarche.Application.LaboratoriAnalisi.Dtos;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.WebApi.Filters;

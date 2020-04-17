@@ -1,20 +1,13 @@
 ﻿using LatteMarche.Application.Acquirenti.Interfaces;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using LatteMarche.Application.PrelieviLatte.Interfaces;
-using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.Core.Models;
+using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Latte.Dtos;
+using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
-using LatteMarche.WebApi.Models;
 using RB.Date;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers
 {

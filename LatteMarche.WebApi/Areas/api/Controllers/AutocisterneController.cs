@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.Acquirenti.Interfaces;
-using LatteMarche.Application.Acquirenti.Dtos;
-using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
-using LatteMarche.Application.Autocisterne.Interfaces;
-using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Trasportatori.Dtos;
+using LatteMarche.Application.Trasportatori.Interfaces;
 
 namespace LatteMarche.WebApi.Areas.api.Controllers
 {

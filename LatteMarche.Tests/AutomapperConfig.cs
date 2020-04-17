@@ -13,7 +13,12 @@ namespace LatteMarche.Tests
         public static void Configure()
         {
 
-            LatteMarche.Application.AutomapperConfig.Configure();
+            var mappings = new MapperConfigurationExpression();
+
+            mappings = LatteMarche.Application.AutomapperConfig.Configure(mappings);
+
+            Mapper.Reset();
+            Mapper.Initialize(mappings);
 
 
         }

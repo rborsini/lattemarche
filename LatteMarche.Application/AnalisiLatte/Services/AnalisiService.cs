@@ -6,16 +6,12 @@ using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.Assam.Interfaces;
 using LatteMarche.Application.Assam.Models;
 using LatteMarche.Application.Assam.Services;
-using LatteMarche.Application.Utenti.Dtos;
-using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Application.AnalisiLatte.Services
 {

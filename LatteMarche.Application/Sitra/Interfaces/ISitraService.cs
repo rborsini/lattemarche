@@ -1,10 +1,5 @@
-﻿using LatteMarche.Application.Lotti.Dtos;
-using LatteMarche.Application.PrelieviLatte.Dtos;
-using System;
+﻿using LatteMarche.Application.Latte.Dtos;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Sitra.Interfaces
 {
