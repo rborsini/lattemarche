@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -45,8 +46,14 @@ namespace LatteMarche.EntityFramework
         public LatteMarcheDbContext()
 			: base("name=LatteMarcheDbContext")
 		{
-			Database.SetInitializer<LatteMarcheDbContext>(null);
-		}
+			//Database.SetInitializer<LatteMarcheDbContext>(null);
+
+            if (ConfigurationManager.AppSettings["dropDatabase"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["dropDatabase"]))
+                Database.SetInitializer<LatteMarcheDbContext>(new DropCreateDatabaseAlwaysDbInitializer());
+            else
+                Database.SetInitializer<LatteMarcheDbContext>(new CreateIfNotExistsDbInitializer());
+
+        }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

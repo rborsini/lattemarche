@@ -23,6 +23,13 @@ namespace LatteMarche.EntityFramework
 		protected IContext dataContext;
 		protected readonly IDbSet<TEntity> dbset;
 
+		public IQueryable<TEntity> Query
+		{
+			get { return dbset.AsQueryable<TEntity>(); }
+		}
+
+		public IDbSet<TEntity> DbSet => this.dbset;
+
 		public Repository(IContext context)
 		{
 			this.dataContext = context;
@@ -62,6 +69,12 @@ namespace LatteMarche.EntityFramework
 			{
 				Delete(GetById(key));
 			}
+		}
+
+		public void CleanUp()
+		{
+			foreach (var entity in dbset)
+				dbset.Remove(entity);
 		}
 
 		public IQueryable<TEntity> FilterBy(Expression<Func<TEntity, bool>> where)

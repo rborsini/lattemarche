@@ -7,13 +7,13 @@ namespace LatteMarche.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AggiuntoCodiceProduttore_V_Allevamento : IMigrationMetadata
+    public sealed partial class FirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AggiuntoCodiceProduttore_V_Allevamento));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004020929598_AggiuntoCodiceProduttore_V_Allevamento"; }
+            get { return "202004171513467_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -13,8 +14,8 @@ namespace LatteMarche.Core
 	public interface IRepository<TEntity, TPrimaryKey>
 		where TEntity : class
 	{
-
-        TEntity Add(TEntity entity);
+		IDbSet<TEntity> DbSet { get; }
+		TEntity Add(TEntity entity);
 		void Add(IEnumerable<TEntity> entities);
 		void Update(TEntity entity);
 		void Update(IEnumerable<TEntity> entities);
@@ -25,6 +26,7 @@ namespace LatteMarche.Core
 		TEntity FindBy(Expression<Func<TEntity, bool>> expression);
 		IQueryable<TEntity> GetAll();
 		IQueryable<TEntity> FilterBy(Expression<Func<TEntity, bool>> where);
-
+		IQueryable<TEntity> Query { get; }
+		void CleanUp();
 	}
 }

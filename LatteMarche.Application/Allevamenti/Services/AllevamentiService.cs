@@ -44,6 +44,9 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         public List<V_Allevamento> Search(AllevamentiSearchDto searchDto)
         {
+            if (searchDto == null)
+                searchDto = new AllevamentiSearchDto();
+
             var query = this.v_allevamentiRepository.GetAll();
 
             // Codice Allevatore
