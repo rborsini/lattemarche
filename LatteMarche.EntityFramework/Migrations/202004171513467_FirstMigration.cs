@@ -315,6 +315,15 @@ namespace LatteMarche.EntityFramework.Migrations
                 })
                 .PrimaryKey(t => t.ID_TIPO_LATTE);
 
+            Sql("SET IDENTITY_INSERT TIPO_LATTE ON");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (1, N'QM-Alta Qualità', N'QM-AQ', CAST(1.030 AS Decimal(18, 3)), 1)");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (2, N'Alta Qualità', N'AQ', CAST(1.030 AS Decimal(18, 3)), 0)");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (3, N'Fresco Alimentare', N'FA', CAST(1.030 AS Decimal(18, 3)), 0)");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (4, N'Caseificazione', N'CAS', CAST(1.030 AS Decimal(18, 3)), 0)");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (6, N'Latte di Pecora', N'PEC', CAST(1.037 AS Decimal(18, 3)), 0)");
+            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (7, N'Jersey', N'JE', CAST(1.035 AS Decimal(18, 3)), 0)");
+            Sql("SET IDENTITY_INSERT TIPO_LATTE OFF");
+
             CreateTable(
                 "dbo.PROFILO",
                 c => new
@@ -323,6 +332,16 @@ namespace LatteMarche.EntityFramework.Migrations
                     DESCRIZIONE_PROFILO = c.String(),
                 })
                 .PrimaryKey(t => t.ID_PROFILO);
+
+            Sql("SET IDENTITY_INSERT PROFILO ON");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (1, N'Admin     ')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (2, N'Redatore')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (3, N'Allevatore       ')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (4, N'Laboratorio')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (5, N'Trasportatore')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (6, N'Destinatario')");
+            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (7, N'Acquirente')");
+            Sql("SET IDENTITY_INSERT PROFILO OFF");
 
             CreateTable(
                 "dbo.UTENTE_X_ACQUIRENTE",
