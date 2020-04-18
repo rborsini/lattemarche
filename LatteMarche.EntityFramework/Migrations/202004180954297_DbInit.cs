@@ -378,7 +378,6 @@ namespace LatteMarche.EntityFramework.Migrations
 
 
             Sql(Seeder.V_Allevatori_Schema());
-            Sql(Seeder.V_Allevamenti_Schema());
             Sql(Seeder.V_PrelieviLatte_Schema());
             Sql(Seeder.V_Trasportatori_Schema());
 
@@ -420,7 +419,6 @@ namespace LatteMarche.EntityFramework.Migrations
             DropIndex("dbo.ANAGRAFE_ALLEVAMENTO", new[] { "ID_UTENTE" });
             DropIndex("dbo.ANAGRAFE_ACQUIRENTE", new[] { "ID_COMUNE" });
             DropTable("dbo.V_PrelieviLatte");
-            DropTable("dbo.V_Allevamenti");
             DropTable("dbo.UTENTE_X_DESTINATARIO");
             DropTable("dbo.UTENTE_X_ACQUIRENTE");
             DropTable("dbo.V_Trasportatori");

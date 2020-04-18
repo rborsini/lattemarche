@@ -104,7 +104,6 @@
     <Compile Include="Models\UtenteXAcquirente.cs" />
     <Compile Include="Models\UtenteXDestinatario.cs" />
     <Compile Include="Models\ValoreAnalisi.cs" />
-    <Compile Include="Models\V_Allevamento.cs" />
     <Compile Include="Models\V_PrelievoLatte.cs" />
     <Compile Include="Models\V_Trasportatore.cs" />
     <Compile Include="Models\V_Allevatore.cs" />

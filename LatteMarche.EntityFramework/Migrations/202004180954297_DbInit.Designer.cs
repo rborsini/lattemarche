@@ -13,7 +13,7 @@ namespace LatteMarche.EntityFramework.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202004180834582_DbInit"; }
+            get { return "202004180954297_DbInit"; }
         }
         
         string IMigrationMetadata.Source

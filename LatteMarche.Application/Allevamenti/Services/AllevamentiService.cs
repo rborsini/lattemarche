@@ -6,6 +6,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
+using AutoMapper;
 
 namespace LatteMarche.Application.Allevamenti.Services
 {
@@ -16,7 +17,6 @@ namespace LatteMarche.Application.Allevamenti.Services
         #region Fields
 
         private IRepository<Allevamento, int> allevamentiRepository;
-        private IRepository<V_Allevamento, int> v_allevamentiRepository;
 
         private IComuniService comuniService;
 
@@ -28,7 +28,6 @@ namespace LatteMarche.Application.Allevamenti.Services
             : base(uow)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
-            this.v_allevamentiRepository = this.uow.Get<V_Allevamento, int>();
 
             this.comuniService = comuniService;
         }
@@ -39,25 +38,30 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         public List<AllevamentoDto> GetAllevamentiSitra()
         {
-            return ConvertToDtoList(this.repository.FilterBy(a => !String.IsNullOrEmpty(a.CUAA)).ToList());
+            return this.repository
+                .FilterBy(a => !String.IsNullOrEmpty(a.CUAA))
+                .ProjectToList<AllevamentoDto>();
         }
 
-        public List<V_Allevamento> Search(AllevamentiSearchDto searchDto)
+
+        public List<AllevamentoRowDto> Search(AllevamentiSearchDto searchDto)
         {
             if (searchDto == null)
                 searchDto = new AllevamentiSearchDto();
 
-            var query = this.v_allevamentiRepository.GetAll();
+            var query = this.allevamentiRepository.GetAll();
 
             // Codice Allevatore
             if (!String.IsNullOrEmpty(searchDto.CodiceAllevatore))
-                query = query.Where(a => a.CodiceAllevatore == searchDto.CodiceAllevatore);
+                query = query.Where(a => a.Utente != null && a.Utente.CodiceAllevatore == searchDto.CodiceAllevatore);
 
             // Codice ASL
             if (!String.IsNullOrEmpty(searchDto.CodiceAsl))
                 query = query.Where(a => a.CodiceAsl == searchDto.CodiceAsl);
 
-            return query.ToList();
+            var list = query.ToList();
+
+            return query.ProjectToList<AllevamentoRowDto>();
         }
 
         public override AllevamentoDto Details(int key)
@@ -81,6 +85,8 @@ namespace LatteMarche.Application.Allevamenti.Services
             dbEntity.IndirizzoAllevamento = viewEntity.IndirizzoAllevamento;
             dbEntity.IdComune = viewEntity.IdComune;
             dbEntity.CUAA = viewEntity.CUAA;
+
+            dbEntity.Utente.IdTipoLatte = viewEntity.Utente.IdTipoLatte;
 
             return dbEntity;
         }
