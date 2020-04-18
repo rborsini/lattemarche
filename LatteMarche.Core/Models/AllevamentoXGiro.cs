@@ -8,11 +8,17 @@ namespace LatteMarche.Core.Models
     public class AllevamentoXGiro : BaseEntity
     {
 
+        [ForeignKey(nameof(Giro))]
         [Key, Column("ID_GIRO", Order = 0)]
         public int IdGiro { get; set; }
 
+        public virtual Giro Giro { get; set; }
+
+        [ForeignKey(nameof(Allevamento))]
         [Key, Column("ID_ALLEVAMENTO", Order = 1)]
         public int IdAllevamento { get; set; }
+
+        public virtual Allevamento Allevamento { get; set; }
 
         [Column("PRIORITA")]
         public int? Priorita { get; set; }

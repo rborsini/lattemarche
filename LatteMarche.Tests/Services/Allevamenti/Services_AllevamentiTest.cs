@@ -16,6 +16,13 @@ namespace LatteMarche.Tests.Services.Allevamenti
     [TestFixture]
     public class Services_AllevamentiTest
     {
+        #region Constants
+
+        private const int ID_COMUNE = 252;      // Filottrano (unico comune presente in test)
+        private const int ID_PROFILO = 1;       // Admin
+
+        #endregion
+
         #region Fields
 
         private ILifetimeScope scope;
@@ -23,10 +30,13 @@ namespace LatteMarche.Tests.Services.Allevamenti
         private IUnitOfWork uow;
 
         private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Utente, int> utentiRepository;
 
         private IAllevamentiService allevamentiService;
 
         private DbCleaner dbCleaner;
+
+        private Utente utente;
 
         #endregion
 
@@ -43,6 +53,7 @@ namespace LatteMarche.Tests.Services.Allevamenti
             this.dbCleaner = new DbCleaner(uow);
 
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+            this.utentiRepository = this.uow.Get<Utente, int>();
 
             this.allevamentiService = this.scope.Resolve<IAllevamentiService>();
 
@@ -55,7 +66,14 @@ namespace LatteMarche.Tests.Services.Allevamenti
         [SetUp]
         public void Init()
         {
+            this.utente = Builder<Utente>
+                .CreateNew()
+                    .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.IdProfilo = ID_PROFILO)
+                .Build();
 
+            this.utente = this.utentiRepository.Add(utente);
+            this.uow.SaveChanges();
         }
 
         [TearDown]
@@ -73,6 +91,8 @@ namespace LatteMarche.Tests.Services.Allevamenti
             var allevamenti = Builder<Allevamento>
                 .CreateListOfSize(size)
                 .All()
+                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdComune = ID_COMUNE)
                 .Build();
 
             this.allevamentiRepository.Add(allevamenti);
@@ -94,6 +114,8 @@ namespace LatteMarche.Tests.Services.Allevamenti
             var allevamenti = Builder<Allevamento>
                 .CreateListOfSize(size)
                 .All()
+                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdComune = ID_COMUNE)
                     .TheFirst(allevamentiNonSitra)
                         .With(a => a.CUAA = "")
                 .Build();
@@ -111,6 +133,8 @@ namespace LatteMarche.Tests.Services.Allevamenti
         {
             var allevamentoDto = Builder<AllevamentoDto>
                 .CreateNew()
+                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdComune = ID_COMUNE)    
                 .Build();
 
             allevamentoDto = this.allevamentiService.Create(allevamentoDto);
@@ -123,6 +147,8 @@ namespace LatteMarche.Tests.Services.Allevamenti
         {
             var allevamento = Builder<Allevamento>
                 .CreateNew()
+                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdComune = ID_COMUNE)
                 .Build();
 
             this.allevamentiRepository.Add(allevamento);
@@ -141,6 +167,8 @@ namespace LatteMarche.Tests.Services.Allevamenti
         {
             var allevamento = Builder<Allevamento>
                 .CreateNew()
+                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdComune = ID_COMUNE)
                 .Build();
 
             this.allevamentiRepository.Add(allevamento);

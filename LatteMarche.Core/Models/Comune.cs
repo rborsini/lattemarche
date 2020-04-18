@@ -21,5 +21,8 @@ namespace LatteMarche.Core.Models
         [StringLength(5)]
         [Column("CAP")]
         public string CAP { get; set; }
+
+        [StringLength(6)]
+        public string ISTAT6 { get; set; }
     }
 }

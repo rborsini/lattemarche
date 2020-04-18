@@ -1,12 +1,19 @@
 namespace LatteMarche.EntityFramework.Migrations
 {
     using System;
+    using System.Configuration;
     using System.Data.Entity.Migrations;
 
-    public partial class FirstMigration : DbMigration
+    public partial class DbInit : DbMigration
     {
+        private bool IsTestEnv => ConfigurationManager.ConnectionStrings["LatteMarcheDbContext"].ConnectionString.Contains("TEST");
+
         public override void Up()
         {
+
+            if (!this.IsTestEnv)
+                return;
+
             CreateTable(
                 "dbo.ANAGRAFE_ACQUIRENTE",
                 c => new
@@ -15,10 +22,26 @@ namespace LatteMarche.EntityFramework.Migrations
                     RAG_SOC_ACQUIRENTE = c.String(),
                     PIVA_ACQUIRENTE = c.String(),
                     INDIRIZZO_ACQUIRENTE = c.String(),
-                    ID_COMUNE = c.Int(nullable: false),
+                    ID_COMUNE = c.Int(),
                     IDSITRA_ACQUIRENTE = c.Int(),
                 })
-                .PrimaryKey(t => t.ID_ACQUIRENTE);
+                .PrimaryKey(t => t.ID_ACQUIRENTE)
+                .ForeignKey("dbo.COMUNI", t => t.ID_COMUNE)
+                .Index(t => t.ID_COMUNE);
+
+            CreateTable(
+                "dbo.COMUNI",
+                c => new
+                {
+                    ID_COMUNE = c.Int(nullable: false, identity: true),
+                    DESCRIZIONE = c.String(),
+                    PROVINCIA = c.String(maxLength: 2),
+                    CAP = c.String(maxLength: 5),
+                    ISTAT6 = c.String(maxLength: 6),
+                })
+                .PrimaryKey(t => t.ID_COMUNE);
+
+            Sql(Seeder.Comuni_Data());
 
             CreateTable(
                 "dbo.ANAGRAFE_ALLEVAMENTO",
@@ -28,11 +51,68 @@ namespace LatteMarche.EntityFramework.Migrations
                     CODICE_ASL = c.String(),
                     INDIRIZZO_ALLEVAMENTO = c.String(),
                     ID_UTENTE = c.Int(),
-                    ID_COMUNE = c.Int(nullable: false),
-                    IDSITRA_STABILIMENTO_ALLEVAMENTO = c.Int(),
+                    ID_COMUNE = c.Int(),
                     CUAA = c.String(),
+                    IDSITRA_STABILIMENTO_ALLEVAMENTO = c.Int(),
                 })
-                .PrimaryKey(t => t.ID_ALLEVAMENTO);
+                .PrimaryKey(t => t.ID_ALLEVAMENTO)
+                .ForeignKey("dbo.COMUNI", t => t.ID_COMUNE)
+                .ForeignKey("dbo.UTENTI", t => t.ID_UTENTE)
+                .Index(t => t.ID_UTENTE)
+                .Index(t => t.ID_COMUNE);
+
+            CreateTable(
+                "dbo.UTENTI",
+                c => new
+                {
+                    ID_UTENTE = c.Int(nullable: false, identity: true),
+                    NOME = c.String(),
+                    COGNOME = c.String(),
+                    PIVA_CF = c.String(),
+                    INDIRIZZO = c.String(),
+                    LOGIN = c.String(),
+                    PASSWORD_NEW = c.String(),
+                    ID_PROFILO = c.Int(nullable: false),
+                    ABILITATO = c.Boolean(nullable: false),
+                    VISIBILE = c.Boolean(nullable: false),
+                    RAGIONE_SOCIALE = c.String(),
+                    CODICE_ALLEVATORE = c.String(),
+                    QUANTITA_LATTE = c.Int(nullable: false),
+                    TELEFONO = c.String(),
+                    CELLULARE = c.String(),
+                    ID_COMUNE = c.Int(),
+                    SESSO = c.String(),
+                    ID_TIPO_LATTE = c.Int(nullable: false),
+                    NUMERO_COMUNICAZIONE = c.String(),
+                    NOTE = c.String(),
+                })
+                .PrimaryKey(t => t.ID_UTENTE)
+                .ForeignKey("dbo.COMUNI", t => t.ID_COMUNE)
+                .Index(t => t.ID_COMUNE);
+
+            CreateTable(
+                "dbo.RUOLI_UTENTE",
+                c => new
+                {
+                    Id = c.Long(nullable: false, identity: true),
+                    IdRuolo = c.Long(),
+                    Username = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.RUOLI", t => t.IdRuolo)
+                .ForeignKey("dbo.UTENTI", t => t.Username, cascadeDelete: true)
+                .Index(t => t.IdRuolo)
+                .Index(t => t.Username);
+
+            CreateTable(
+                "dbo.RUOLI",
+                c => new
+                {
+                    Id = c.Long(nullable: false, identity: true),
+                    Ruolo = c.String(maxLength: 50),
+                    Descrizione = c.String(maxLength: 50),
+                })
+                .PrimaryKey(t => t.Id);
 
             CreateTable(
                 "dbo.ALLEVAMENTO_X_GIRO",
@@ -42,7 +122,24 @@ namespace LatteMarche.EntityFramework.Migrations
                     ID_ALLEVAMENTO = c.Int(nullable: false),
                     PRIORITA = c.Int(),
                 })
-                .PrimaryKey(t => new { t.ID_GIRO, t.ID_ALLEVAMENTO });
+                .PrimaryKey(t => new { t.ID_GIRO, t.ID_ALLEVAMENTO })
+                .ForeignKey("dbo.ANAGRAFE_ALLEVAMENTO", t => t.ID_ALLEVAMENTO, cascadeDelete: true)
+                .ForeignKey("dbo.GIRO", t => t.ID_GIRO, cascadeDelete: true)
+                .Index(t => t.ID_GIRO)
+                .Index(t => t.ID_ALLEVAMENTO);
+
+            CreateTable(
+                "dbo.GIRO",
+                c => new
+                {
+                    ID_GIRO = c.Int(nullable: false, identity: true),
+                    DENOMINAZIONE = c.String(),
+                    CODICE_GIRO = c.String(),
+                    ID_TRASPORTATORE = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.ID_GIRO)
+                .ForeignKey("dbo.UTENTI", t => t.ID_TRASPORTATORE, cascadeDelete: true)
+                .Index(t => t.ID_TRASPORTATORE);
 
             CreateTable(
                 "dbo.ANALISI_LATTE",
@@ -89,7 +186,9 @@ namespace LatteMarche.EntityFramework.Migrations
                     PORTATA = c.Int(),
                     NUMERO_SCOMPARTI = c.Int(),
                 })
-                .PrimaryKey(t => t.ID_VEICOLO);
+                .PrimaryKey(t => t.ID_VEICOLO)
+                .ForeignKey("dbo.UTENTI", t => t.ID_TRASPORTATORE)
+                .Index(t => t.ID_TRASPORTATORE);
 
             CreateTable(
                 "dbo.AUTORIZZAZIONI",
@@ -118,68 +217,6 @@ namespace LatteMarche.EntityFramework.Migrations
                     Nome = c.String(),
                 })
                 .PrimaryKey(t => t.Id);
-
-            CreateTable(
-                "dbo.RUOLI",
-                c => new
-                {
-                    Id = c.Long(nullable: false, identity: true),
-                    Ruolo = c.String(maxLength: 50),
-                    Descrizione = c.String(maxLength: 50),
-                })
-                .PrimaryKey(t => t.Id);
-
-            CreateTable(
-                "dbo.RUOLI_UTENTE",
-                c => new
-                {
-                    Id = c.Long(nullable: false, identity: true),
-                    IdRuolo = c.Long(),
-                    Username = c.Int(nullable: false),
-                })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.RUOLI", t => t.IdRuolo)
-                .ForeignKey("dbo.UTENTI", t => t.Username, cascadeDelete: true)
-                .Index(t => t.IdRuolo)
-                .Index(t => t.Username);
-
-            CreateTable(
-                "dbo.UTENTI",
-                c => new
-                {
-                    ID_UTENTE = c.Int(nullable: false, identity: true),
-                    NOME = c.String(),
-                    COGNOME = c.String(),
-                    PIVA_CF = c.String(),
-                    INDIRIZZO = c.String(),
-                    LOGIN = c.String(),
-                    PASSWORD_NEW = c.String(),
-                    ID_PROFILO = c.Int(nullable: false),
-                    ABILITATO = c.Boolean(nullable: false),
-                    VISIBILE = c.Boolean(nullable: false),
-                    RAGIONE_SOCIALE = c.String(),
-                    CODICE_ALLEVATORE = c.String(),
-                    QUANTITA_LATTE = c.Int(nullable: false),
-                    TELEFONO = c.String(),
-                    CELLULARE = c.String(),
-                    ID_COMUNE = c.Int(),
-                    SESSO = c.String(),
-                    ID_TIPO_LATTE = c.Int(nullable: false),
-                    NUMERO_COMUNICAZIONE = c.String(),
-                    NOTE = c.String(),
-                })
-                .PrimaryKey(t => t.ID_UTENTE);
-
-            CreateTable(
-                "dbo.COMUNI",
-                c => new
-                {
-                    ID_COMUNE = c.Int(nullable: false, identity: true),
-                    DESCRIZIONE = c.String(),
-                    PROVINCIA = c.String(maxLength: 2),
-                    CAP = c.String(maxLength: 5),
-                })
-                .PrimaryKey(t => t.ID_COMUNE);
 
             CreateTable(
                 "dbo.ANAGRAFE_DESTINATARIO",
@@ -223,17 +260,6 @@ namespace LatteMarche.EntityFramework.Migrations
                     DATA_INSERIMENTO = c.DateTime(),
                 })
                 .PrimaryKey(t => t.ID_DOCUMENTO);
-
-            CreateTable(
-                "dbo.GIRO",
-                c => new
-                {
-                    ID_GIRO = c.Int(nullable: false, identity: true),
-                    DENOMINAZIONE = c.String(),
-                    CODICE_GIRO = c.String(),
-                    ID_TRASPORTATORE = c.Int(nullable: false),
-                })
-                .PrimaryKey(t => t.ID_GIRO);
 
             CreateTable(
                 "dbo.LaboratoriAnalisi",
@@ -315,14 +341,7 @@ namespace LatteMarche.EntityFramework.Migrations
                 })
                 .PrimaryKey(t => t.ID_TIPO_LATTE);
 
-            Sql("SET IDENTITY_INSERT TIPO_LATTE ON");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (1, N'QM-Alta Qualità', N'QM-AQ', CAST(1.030 AS Decimal(18, 3)), 1)");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (2, N'Alta Qualità', N'AQ', CAST(1.030 AS Decimal(18, 3)), 0)");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (3, N'Fresco Alimentare', N'FA', CAST(1.030 AS Decimal(18, 3)), 0)");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (4, N'Caseificazione', N'CAS', CAST(1.030 AS Decimal(18, 3)), 0)");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (6, N'Latte di Pecora', N'PEC', CAST(1.037 AS Decimal(18, 3)), 0)");
-            Sql("INSERT [dbo].[TIPO_LATTE] ([ID_TIPO_LATTE], [DESCRIZIONE], [DESCRIZIONE_BREVE], [FATTORE_CONVERSIONE], [FLAG_INVIO_SITRA]) VALUES (7, N'Jersey', N'JE', CAST(1.035 AS Decimal(18, 3)), 0)");
-            Sql("SET IDENTITY_INSERT TIPO_LATTE OFF");
+            Sql(Seeder.TipoLatte_Data());
 
             CreateTable(
                 "dbo.PROFILO",
@@ -333,182 +352,73 @@ namespace LatteMarche.EntityFramework.Migrations
                 })
                 .PrimaryKey(t => t.ID_PROFILO);
 
-            Sql("SET IDENTITY_INSERT PROFILO ON");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (1, N'Admin     ')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (2, N'Redatore')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (3, N'Allevatore       ')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (4, N'Laboratorio')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (5, N'Trasportatore')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (6, N'Destinatario')");
-            Sql("INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (7, N'Acquirente')");
-            Sql("SET IDENTITY_INSERT PROFILO OFF");
+            Sql(Seeder.Profilo_Data());
 
             CreateTable(
                 "dbo.UTENTE_X_ACQUIRENTE",
                 c => new
                 {
-                    ID_UTENTE = c.Int(nullable: false, identity: true),
+                    ID_UTENTE = c.Int(nullable: false),
                     ID_ACQUIRENTE = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.ID_UTENTE);
+                .PrimaryKey(t => t.ID_UTENTE)
+                .ForeignKey("dbo.UTENTI", t => t.ID_UTENTE)
+                .Index(t => t.ID_UTENTE);
 
             CreateTable(
                 "dbo.UTENTE_X_DESTINATARIO",
                 c => new
                 {
-                    ID_UTENTE = c.Int(nullable: false, identity: true),
+                    ID_UTENTE = c.Int(nullable: false),
                     ID_DESTINATARIO = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.ID_UTENTE);
+                .PrimaryKey(t => t.ID_UTENTE)
+                .ForeignKey("dbo.UTENTI", t => t.ID_UTENTE)
+                .Index(t => t.ID_UTENTE);
 
-            // V_Allevatori
-            Sql(@"
-                CREATE VIEW V_Allevatori AS
-                SELECT        
-	                dbo.ANAGRAFE_ALLEVAMENTO.ID_ALLEVAMENTO, 
-	                dbo.ANAGRAFE_ALLEVAMENTO.ID_UTENTE, 
-	                dbo.ANAGRAFE_ALLEVAMENTO.INDIRIZZO_ALLEVAMENTO, 
-	                dbo.ANAGRAFE_ALLEVAMENTO.ID_COMUNE, 
-                    dbo.UTENTI.RAGIONE_SOCIALE, 	
-	                dbo.UTENTI.NOME, 
-	                dbo.UTENTI.COGNOME, 
-	                dbo.UTENTI.ID_TIPO_LATTE,
-	                dbo.ANAGRAFE_ALLEVAMENTO.IDSITRA_STABILIMENTO_ALLEVAMENTO, 
-	                dbo.ANAGRAFE_ALLEVAMENTO.CODICE_ASL,
-	                dbo.COMUNI.PROVINCIA, 
-                    dbo.COMUNI.DESCRIZIONE
-                FROM            
 
-	                dbo.ANAGRAFE_ALLEVAMENTO 
-	
-	                INNER JOIN
-                    dbo.UTENTI ON dbo.ANAGRAFE_ALLEVAMENTO.ID_UTENTE = dbo.UTENTI.ID_UTENTE 
-	
-	                INNER JOIN
-                    dbo.COMUNI ON dbo.ANAGRAFE_ALLEVAMENTO.ID_COMUNE = dbo.COMUNI.ID_COMUNE  
-            ");
-
-            // V_Allevamenti
-            Sql(@"
-                CREATE VIEW V_Allevamenti AS
-                SELECT 
-                 allevamenti.ID_ALLEVAMENTO,
-                 allevamenti.CODICE_ASL,
-                 utenti.CODICE_ALLEVATORE,
-                 allevamenti.CUAA,
-                 allevamenti.ID_COMUNE,
-                 allevamenti.INDIRIZZO_ALLEVAMENTO,
-                 allevamenti.ID_UTENTE,
-                 utenti.RAGIONE_SOCIALE
-                FROM            
-                 ANAGRAFE_ALLEVAMENTO as allevamenti
-
-                 left outer join UTENTI as utenti
-                 on allevamenti.ID_UTENTE = utenti.ID_UTENTE
-            ");
-
-            // V_PrelieviLatte
-            Sql(@"
-                CREATE VIEW V_PrelieviLatte AS
-                SELECT        
-                 prelievi.ID_PRELIEVO,
-                 prelievi.DATA_PRELIEVO,
-                 prelievi.DATA_CONSEGNA,
-                 prelievi.QUANTITA,
-                 prelievi.TEMPERATURA,
-                 prelievi.DATA_ULTIMA_MUNGITURA,
-                 prelievi.ID_ALLEVAMENTO,
-                 trim(utenti_allevamento.COGNOME) + ' ' + trim(utenti_allevamento.NOME)  as DESCR_ALLEVAMENTO,
-                 utenti_allevamento.PIVA_CF as PIVA_ALLEVAMENTO,
-                 prelievi.ID_DESTINATARIO,
-                 destinatari.RAG_SOC_DESTINATARIO,
-                 prelievi.ID_ACQUIRENTE,
-                 acquirenti.RAG_SOC_ACQUIRENTE,
-                 prelievi.ID_LABANALISI,
-                 prelievi.ID_TRASPORTATORE,
-                 trasportatori.RAGIONE_SOCIALE as TRASPORTATORE,
-                 autocisterne.TARGA_MEZZO,
-                 prelievi.NUMERO_MUNGITURE,
-                 prelievi.SCOMPARTO,
-                 prelievi.LOTTO_CONSEGNA,
-                 prelievi.CODICE_SITRA,
-                 tipo_latte.FATTORE_CONVERSIONE,
-                    tipo_latte.ID_TIPO_LATTE,
-                    tipo_latte.DESCRIZIONE AS DESCR_LATTE, 
-                    tipo_latte.DESCRIZIONE_BREVE AS SIGLA_LATTE
-                FROM            
-
-                 PRELIEVO_LATTE AS prelievi
-
-                 LEFT OUTER JOIN
-                 ANAGRAFE_ALLEVAMENTO as allevamenti on prelievi.ID_ALLEVAMENTO = allevamenti.ID_ALLEVAMENTO
-
-                 LEFT OUTER JOIN
-                 UTENTI as utenti_allevamento on allevamenti.ID_UTENTE = utenti_allevamento.ID_UTENTE
-
-                 LEFT OUTER JOIN
-                 ANAGRAFE_DESTINATARIO as destinatari on prelievi.ID_DESTINATARIO = destinatari.ID_DESTINATARIO
-
-                 LEFT OUTER JOIN
-                 ANAGRAFE_ACQUIRENTE as acquirenti on prelievi.ID_ACQUIRENTE = acquirenti.ID_ACQUIRENTE
-
-                 LEFT OUTER JOIN
-                 UTENTI as trasportatori on prelievi.ID_TRASPORTATORE = trasportatori.ID_UTENTE
-
-                 LEFT OUTER JOIN
-                 AUTOCISTERNA as autocisterne on prelievi.ID_TRASPORTATORE = autocisterne.ID_TRASPORTATORE
-
-                 LEFT OUTER JOIN
-                 TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
-            ");
-
-            // V_Trasportatori
-            Sql(@"
-                CREATE VIEW V_Trasportatori AS
-                SELECT DISTINCT 
-
-                 dbo.UTENTI.NOME, 
-                 dbo.UTENTI.COGNOME, 
-                 dbo.UTENTI.INDIRIZZO, 
-                 dbo.UTENTI.TELEFONO,
-                 dbo.UTENTI.CELLULARE, 
-                 dbo.UTENTI.ID_UTENTE, 
-                 dbo.UTENTI.PIVA_CF,
-                 dbo.UTENTI.RAGIONE_SOCIALE,
-                 dbo.COMUNI.DESCRIZIONE, 
-                 dbo.COMUNI.PROVINCIA
-
-                FROM            
-
-                 dbo.UTENTI 
-
-                 INNER JOIN
-                    dbo.COMUNI ON dbo.UTENTI.ID_COMUNE = dbo.COMUNI.ID_COMUNE 
-
-                 INNER JOIN
-                    dbo.PROFILO ON dbo.UTENTI.ID_PROFILO = dbo.PROFILO.ID_PROFILO 
-
-                 CROSS JOIN
-                    dbo.PROFILO AS PROFILO_1
-
-                WHERE        
-                 (dbo.PROFILO.DESCRIZIONE_PROFILO = 'Trasportatore')
-            ");
+            Sql(Seeder.V_Allevatori_Schema());
+            Sql(Seeder.V_Allevamenti_Schema());
+            Sql(Seeder.V_PrelieviLatte_Schema());
+            Sql(Seeder.V_Trasportatori_Schema());
 
         }
 
         public override void Down()
         {
+            if (!this.IsTestEnv)
+                return;
+
+            DropForeignKey("dbo.UTENTE_X_DESTINATARIO", "ID_UTENTE", "dbo.UTENTI");
+            DropForeignKey("dbo.UTENTE_X_ACQUIRENTE", "ID_UTENTE", "dbo.UTENTI");
             DropForeignKey("dbo.AUTORIZZAZIONI", "IdRuolo", "dbo.RUOLI");
+            DropForeignKey("dbo.AUTORIZZAZIONI", "Azione", "dbo.AZIONI");
+            DropForeignKey("dbo.AUTOCISTERNA", "ID_TRASPORTATORE", "dbo.UTENTI");
+            DropForeignKey("dbo.ANALISI_LATTE_VALORI", "Analisi_Id", "dbo.ANALISI_LATTE");
+            DropForeignKey("dbo.ALLEVAMENTO_X_GIRO", "ID_GIRO", "dbo.GIRO");
+            DropForeignKey("dbo.GIRO", "ID_TRASPORTATORE", "dbo.UTENTI");
+            DropForeignKey("dbo.ALLEVAMENTO_X_GIRO", "ID_ALLEVAMENTO", "dbo.ANAGRAFE_ALLEVAMENTO");
+            DropForeignKey("dbo.ANAGRAFE_ALLEVAMENTO", "ID_UTENTE", "dbo.UTENTI");
             DropForeignKey("dbo.RUOLI_UTENTE", "Username", "dbo.UTENTI");
             DropForeignKey("dbo.RUOLI_UTENTE", "IdRuolo", "dbo.RUOLI");
-            DropForeignKey("dbo.AUTORIZZAZIONI", "Azione", "dbo.AZIONI");
-            DropForeignKey("dbo.ANALISI_LATTE_VALORI", "Analisi_Id", "dbo.ANALISI_LATTE");
-            DropIndex("dbo.RUOLI_UTENTE", new[] { "Username" });
-            DropIndex("dbo.RUOLI_UTENTE", new[] { "IdRuolo" });
+            DropForeignKey("dbo.UTENTI", "ID_COMUNE", "dbo.COMUNI");
+            DropForeignKey("dbo.ANAGRAFE_ALLEVAMENTO", "ID_COMUNE", "dbo.COMUNI");
+            DropForeignKey("dbo.ANAGRAFE_ACQUIRENTE", "ID_COMUNE", "dbo.COMUNI");
+            DropIndex("dbo.UTENTE_X_DESTINATARIO", new[] { "ID_UTENTE" });
+            DropIndex("dbo.UTENTE_X_ACQUIRENTE", new[] { "ID_UTENTE" });
             DropIndex("dbo.AUTORIZZAZIONI", new[] { "Azione" });
             DropIndex("dbo.AUTORIZZAZIONI", new[] { "IdRuolo" });
+            DropIndex("dbo.AUTOCISTERNA", new[] { "ID_TRASPORTATORE" });
             DropIndex("dbo.ANALISI_LATTE_VALORI", new[] { "Analisi_Id" });
+            DropIndex("dbo.GIRO", new[] { "ID_TRASPORTATORE" });
+            DropIndex("dbo.ALLEVAMENTO_X_GIRO", new[] { "ID_ALLEVAMENTO" });
+            DropIndex("dbo.ALLEVAMENTO_X_GIRO", new[] { "ID_GIRO" });
+            DropIndex("dbo.RUOLI_UTENTE", new[] { "Username" });
+            DropIndex("dbo.RUOLI_UTENTE", new[] { "IdRuolo" });
+            DropIndex("dbo.UTENTI", new[] { "ID_COMUNE" });
+            DropIndex("dbo.ANAGRAFE_ALLEVAMENTO", new[] { "ID_COMUNE" });
+            DropIndex("dbo.ANAGRAFE_ALLEVAMENTO", new[] { "ID_UTENTE" });
+            DropIndex("dbo.ANAGRAFE_ACQUIRENTE", new[] { "ID_COMUNE" });
             DropTable("dbo.V_PrelieviLatte");
             DropTable("dbo.V_Allevamenti");
             DropTable("dbo.UTENTE_X_DESTINATARIO");
@@ -520,22 +430,22 @@ namespace LatteMarche.EntityFramework.Migrations
             DropTable("dbo.LOTTI");
             DropTable("dbo.Logs");
             DropTable("dbo.LaboratoriAnalisi");
-            DropTable("dbo.GIRO");
             DropTable("dbo.DOCUMENTI");
             DropTable("dbo.DISPOSITIVI_MOBILI");
             DropTable("dbo.ANAGRAFE_DESTINATARIO");
-            DropTable("dbo.COMUNI");
-            DropTable("dbo.UTENTI");
-            DropTable("dbo.RUOLI_UTENTE");
-            DropTable("dbo.RUOLI");
             DropTable("dbo.AZIONI");
             DropTable("dbo.AUTORIZZAZIONI");
             DropTable("dbo.AUTOCISTERNA");
             DropTable("dbo.ANALISI_LATTE_VALORI");
             DropTable("dbo.ANALISI_LATTE");
             DropTable("dbo.V_Allevatori");
+            DropTable("dbo.GIRO");
             DropTable("dbo.ALLEVAMENTO_X_GIRO");
+            DropTable("dbo.RUOLI");
+            DropTable("dbo.RUOLI_UTENTE");
+            DropTable("dbo.UTENTI");
             DropTable("dbo.ANAGRAFE_ALLEVAMENTO");
+            DropTable("dbo.COMUNI");
             DropTable("dbo.ANAGRAFE_ACQUIRENTE");
         }
     }

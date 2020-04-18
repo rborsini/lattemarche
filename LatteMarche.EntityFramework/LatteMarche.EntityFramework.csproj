@@ -64,13 +64,14 @@
     <Compile Include="CreateIfNotExistsDbInitializer.cs" />
     <Compile Include="DataModule.cs" />
     <Compile Include="DropCreateDatabaseAlwaysDbInitializer.cs" />
-    <Compile Include="Migrations\202004171513467_FirstMigration.cs" />
-    <Compile Include="Migrations\202004171513467_FirstMigration.Designer.cs">
-      <DependentUpon>202004171513467_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202004180834582_DbInit.cs" />
+    <Compile Include="Migrations\202004180834582_DbInit.Designer.cs">
+      <DependentUpon>202004180834582_DbInit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
+    <Compile Include="Seeder.cs" />
     <Compile Include="ViewMigration.cs" />
     <Content Include="Scripts\V_Allevamenti.sql" />
     <Compile Include="UnitOfWork.cs" />
@@ -92,8 +93,8 @@
     <Content Include="Scripts\V_Allevatori.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004171513467_FirstMigration.resx">
-      <DependentUpon>202004171513467_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004180834582_DbInit.resx">
+      <DependentUpon>202004180834582_DbInit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

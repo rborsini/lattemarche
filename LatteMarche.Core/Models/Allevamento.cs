@@ -17,11 +17,17 @@ namespace LatteMarche.Core.Models
         [Column("INDIRIZZO_ALLEVAMENTO")]
         public string IndirizzoAllevamento { get; set; }
 
+        [ForeignKey(nameof(Utente))]
         [Column("ID_UTENTE")]
         public int? IdUtente { get; set; }
 
+        public virtual Utente Utente { get; set; }
+
+        [ForeignKey(nameof(Comune))]
         [Column("ID_COMUNE")]
-        public int IdComune { get; set; }
+        public int? IdComune { get; set; }
+
+        public virtual Comune Comune { get; set; }
 
         public string CUAA { get; set; }
 

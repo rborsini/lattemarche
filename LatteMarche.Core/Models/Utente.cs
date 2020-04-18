@@ -27,9 +27,6 @@ namespace LatteMarche.Core.Models
         [Column("LOGIN")]
         public string Username { get; set; }
 
-        //[Column("PASSWORD")]
-        //public string Password { get; set; }
-
         [Column("PASSWORD_NEW")]
         public string Password { get; set; }
 
@@ -57,8 +54,11 @@ namespace LatteMarche.Core.Models
         [Column("CELLULARE")]
         public string Cellulare { get; set; }
 
+        [ForeignKey(nameof(Comune))]
         [Column("ID_COMUNE")]
         public int? IdComune { get; set; }
+
+        public virtual Comune Comune { get; set; }
 
         [Column("SESSO")]
         public string Sesso { get; set; }

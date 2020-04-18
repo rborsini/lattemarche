@@ -21,8 +21,11 @@ namespace LatteMarche.Core.Models
         [Column("TARGA_MEZZO")]
         public string Targa { get; set; }
 
+        [ForeignKey(nameof(Trasportatore))]
         [Column("ID_TRASPORTATORE")]
         public int? IdTrasportatore { get; set; }
+
+        public virtual Utente Trasportatore { get; set; }
 
         [Column("PORTATA")]
         public int? Portata { get; set; }

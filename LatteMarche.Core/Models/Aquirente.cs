@@ -20,8 +20,11 @@ namespace LatteMarche.Core.Models
         [Column("INDIRIZZO_ACQUIRENTE")]
         public string Indirizzo { get; set; }
 
+        [ForeignKey(nameof(Comune))]
         [Column("ID_COMUNE")]
-        public int IdComune { get; set; }
+        public int? IdComune { get; set; }
+
+        public virtual Comune Comune { get; set; }
 
         [Column("IDSITRA_ACQUIRENTE")]
         public int? IdSitra { get; set; }

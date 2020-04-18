@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,7 +18,17 @@ namespace LatteMarche.Core.Models
         [Column("CODICE_GIRO")]
         public string CodiceGiro { get; set; }
 
+        [ForeignKey(nameof(Trasportatore))]
         [Column("ID_TRASPORTATORE")]
         public int IdTrasportatore { get; set; }
+
+        public virtual Utente Trasportatore { get; set; }
+
+        public virtual List<AllevamentoXGiro> Allevamenti { get; set; }
+
+        public Giro()
+        {
+            this.Allevamenti = new List<AllevamentoXGiro>();
+        }
     }
 }

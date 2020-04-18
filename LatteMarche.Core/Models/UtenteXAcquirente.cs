@@ -10,8 +10,11 @@ namespace LatteMarche.Core.Models
     [Table("UTENTE_X_ACQUIRENTE")]
     public class UtenteXAcquirente : Entity<int>
     {
+        [ForeignKey(nameof(Utente))]
         [Column("ID_UTENTE")]
         public override int Id { get; set; }
+
+        public virtual Utente Utente { get; set; }
 
         [Column("ID_ACQUIRENTE")]
         public int IdAcquirente { get; set; }
