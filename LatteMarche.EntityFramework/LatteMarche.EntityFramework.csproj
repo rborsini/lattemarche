@@ -68,6 +68,10 @@
     <Compile Include="Migrations\202004180954297_DbInit.Designer.cs">
       <DependentUpon>202004180954297_DbInit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004181014272_ModificaTabella_DISPOSITIVI_MOBILI.cs" />
+    <Compile Include="Migrations\202004181014272_ModificaTabella_DISPOSITIVI_MOBILI.Designer.cs">
+      <DependentUpon>202004181014272_ModificaTabella_DISPOSITIVI_MOBILI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -95,6 +99,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004180954297_DbInit.resx">
       <DependentUpon>202004180954297_DbInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181014272_ModificaTabella_DISPOSITIVI_MOBILI.resx">
+      <DependentUpon>202004181014272_ModificaTabella_DISPOSITIVI_MOBILI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

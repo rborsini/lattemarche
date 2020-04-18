@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Application.Latte.Dtos;
+using System.Collections.Generic;
 
 namespace LatteMarche.Application.Mobile.Dtos
 {
@@ -6,7 +7,7 @@ namespace LatteMarche.Application.Mobile.Dtos
     {
         public string IMEI { get; set; }
 
-        public LottoDto Lotto { get; set; }
+        public List<LottoDto> Lotti { get; set; }
 
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }

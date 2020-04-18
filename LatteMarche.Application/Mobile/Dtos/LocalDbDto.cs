@@ -13,7 +13,7 @@ namespace LatteMarche.Application.Mobile.Dtos
 
         public AutocisternaDto Autocisterna { get; set; }
 
-        public GiroDto Giro { get; set; }
+        public List<GiroDto> Giri { get; set; }
 
         public List<AllevamentoDto> Allevamenti { get; set; }
 
@@ -28,6 +28,7 @@ namespace LatteMarche.Application.Mobile.Dtos
             this.Allevamenti = new List<AllevamentoDto>();
             this.Acquirenti = new List<AcquirenteDto>();
             this.Destinatari = new List<DestinatarioDto>();
+            this.Giri = new List<GiroDto>();
             this.TipiLatte = new List<TipoLatteDto>();
         }
 

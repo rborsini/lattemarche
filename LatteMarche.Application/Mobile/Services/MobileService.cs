@@ -97,15 +97,26 @@ namespace LatteMarche.Application.Mobile.Services
                 db.Acquirenti = this.acquirentiService.Index();
                 db.Destinatari = this.destinatariService.Index();
 
-                if(dispositivo.IdGiro.HasValue)
+                if(dispositivo.IdTrasportatore.HasValue)
                 {
-                    db.Giro = this.giriService.Details(dispositivo.IdGiro.Value);
-                    db.Giro.Items = db.Giro.Items.Where(i => i.Priorita.HasValue).ToList(); // prendo solo gli items con priorità
-                    db.Trasportatore = this.trasportatoriService.Details(db.Giro.IdTrasportatore);
-                    db.Trasportatore.Giri.Clear();
-                    db.Autocisterna = this.autocisterneService.Index().FirstOrDefault(a => a.IdTrasportatore == db.Giro.IdTrasportatore);
+                    var idTrasportatore = dispositivo.IdTrasportatore.Value;
 
-                    var idAllevamenti = db.Giro.Items.Select(a => a.IdAllevamento).ToList();
+                    var giri = this.giriService.GetGiriTrasportatore(idTrasportatore);
+
+                    foreach(var idGiro in giri.Select(g => g.Id))
+                    {
+                        var giro = this.giriService.Details(idGiro);
+
+                        giro.Items = giro.Items.Where(i => i.Priorita.HasValue).ToList(); // prendo solo gli items con priorità
+                        db.Giri.Add(giro);
+                    }
+                        
+
+                    db.Trasportatore = this.trasportatoriService.Details(idTrasportatore);
+                    db.Trasportatore.Giri.Clear();
+                    db.Autocisterna = this.autocisterneService.Index().FirstOrDefault(a => a.IdTrasportatore == idTrasportatore);
+
+                    var idAllevamenti = db.Giri.SelectMany(g => g.Items.Select(a => a.IdAllevamento)).ToList();
 
                     db.Allevamenti = this.allevamentiService.Index().Where(a => idAllevamenti.Contains(a.Id)).ToList();
                 }
@@ -124,7 +135,8 @@ namespace LatteMarche.Application.Mobile.Services
 
             if(dispositivo != null && dispositivo.Attivo)
             {
-                this.lottiService.Create(uploadDto.Lotto);
+                foreach(var lotto in uploadDto.Lotti)
+                    this.lottiService.Create(lotto);
 
                 dispositivo.Latitudine = uploadDto.Lat;
                 dispositivo.Longitudine = uploadDto.Lng;

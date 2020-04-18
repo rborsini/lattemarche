@@ -15,9 +15,6 @@ namespace LatteMarche.Core.Models
         [Column("IMEI")]
         public override string Id { get; set; }
 
-        [Column("USERNAME")]
-        public string Username { get; set; }
-
         [Column("ATTIVO")]
         public bool Attivo { get; set; }
 
@@ -39,8 +36,8 @@ namespace LatteMarche.Core.Models
         [Column("LONGITUDINE")]
         public decimal? Longitudine { get; set; }
 
-        [Column("ID_GIRO")]
-        public int? IdGiro { get; set; }
+        [Column("ID_TRASPORTATORE")]
+        public int? IdTrasportatore { get; set; }
 
     }
 }
