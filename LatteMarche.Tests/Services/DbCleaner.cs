@@ -14,7 +14,11 @@ namespace LatteMarche.Tests.Services
 
         private IUnitOfWork uow;
 
+        private IRepository<DispositivoMobile, string> dispositiviRepository;
+
         private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Lotto, long> lottiRepository;
+        private IRepository<PrelievoLatte, int> prelieviRepository;
         private IRepository<Utente, int> utentiRepository;
 
         #endregion
@@ -25,7 +29,10 @@ namespace LatteMarche.Tests.Services
         {
             this.uow = uow;
 
+            this.dispositiviRepository = this.uow.Get<DispositivoMobile, string>();
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+            this.lottiRepository = this.uow.Get<Lotto, long>();
+            this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
             this.utentiRepository = this.uow.Get<Utente, int>();
         }
 
@@ -35,6 +42,10 @@ namespace LatteMarche.Tests.Services
 
         public void CleanUp()
         {
+            this.prelieviRepository.CleanUp();
+            this.lottiRepository.CleanUp();
+
+            this.dispositiviRepository.CleanUp();
             this.allevamentiRepository.CleanUp();
             this.utentiRepository.CleanUp();
 

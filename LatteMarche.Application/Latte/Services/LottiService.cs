@@ -12,14 +12,24 @@ namespace LatteMarche.Application.Latte.Services
 {
     public class LottiService : EntityService<Lotto, long, LottoDto>, ILottiService
     {
-        //private IRepository<V_Allevamento, int> allevamentiRepository;
+
+        #region Fields
+
         private IAllevamentiService allevamentiService;
+
+        #endregion
+
+        #region Constructor
 
         public LottiService(IUnitOfWork uow, IAllevamentiService allevamentiService)
             : base(uow)
         {
             this.allevamentiService = allevamentiService;
         }
+
+        #endregion
+
+        #region Methods
 
         public LottoDto GetByCodiceLotto(string codiceLotto)
         {
@@ -68,5 +78,8 @@ namespace LatteMarche.Application.Latte.Services
         {
             return dbEntity;
         }
+
+        #endregion
+
     }
 }

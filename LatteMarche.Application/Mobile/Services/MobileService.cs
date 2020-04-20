@@ -26,7 +26,7 @@ namespace LatteMarche.Application.Mobile.Services
         private IAcquirentiService acquirentiService;
         private IDestinatariService destinatariService;
         private ITipiLatteService tipiLatteService;
-        private ILottiService lottiService;
+        private IPrelieviLatteService prelieviLatteService;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace LatteMarche.Application.Mobile.Services
             IAcquirentiService acquirentiService,
             IDestinatariService destinatariService,
             ITipiLatteService tipiLatteService,
-            ILottiService lottiService
+            IPrelieviLatteService prelieviLatteService
             )
         {
             this.uow = uow;
@@ -55,7 +55,7 @@ namespace LatteMarche.Application.Mobile.Services
             this.acquirentiService = acquirentiService;
             this.destinatariService = destinatariService;
             this.tipiLatteService = tipiLatteService;
-            this.lottiService = lottiService;
+            this.prelieviLatteService = prelieviLatteService;
 
         }
 
@@ -135,8 +135,10 @@ namespace LatteMarche.Application.Mobile.Services
 
             if(dispositivo != null && dispositivo.Attivo)
             {
-                foreach(var lotto in uploadDto.Lotti)
-                    this.lottiService.Create(lotto);
+                foreach(var prelievo in uploadDto.Prelievi)
+                {
+                    this.prelieviLatteService.Create(prelievo);
+                }                    
 
                 dispositivo.Latitudine = uploadDto.Lat;
                 dispositivo.Longitudine = uploadDto.Lng;

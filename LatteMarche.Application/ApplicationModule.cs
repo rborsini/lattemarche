@@ -85,11 +85,13 @@ namespace LatteMarche.Application
 
 				builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>().InstancePerRequest();
+                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>();
                 builder.RegisterType<AcquirentiService>().As<IAcquirentiService>();
                 builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
                 builder.RegisterType<AllevatoriService>().As<IAllevatoriService>();
                 builder.RegisterType<AnalisiService>().As<IAnalisiService>();
+                builder.RegisterType<AutorizzazioniService>().As<IAutorizzazioniService>();
+                builder.RegisterType<AzioniService>().As<IAzioniService>();
                 builder.RegisterType<ComuniService>().As<IComuniService>();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>();
                 builder.RegisterType<DocumentiService>().As<IDocumentiService>();
@@ -98,7 +100,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<LogsService>().As<ILogsService>();
                 builder.RegisterType<LottiService>().As<ILottiService>();
                 builder.RegisterType<PrelieviLatteService>().As<IPrelieviLatteService>();
-                builder.RegisterType<RuoliService>().As<IRuoliService>().InstancePerRequest();
+                builder.RegisterType<RuoliService>().As<IRuoliService>();
                 builder.RegisterType<SitraService>().As<ISitraService>();
                 builder.RegisterType<SynchService>().As<ISynchService>();
                 builder.RegisterType<TipiLatteService>().As<ITipiLatteService>();
