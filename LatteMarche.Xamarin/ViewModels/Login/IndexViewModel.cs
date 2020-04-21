@@ -1,5 +1,5 @@
 ﻿using LatteMarche.Xamarin.Interfaces;
-using LatteMarche.Xamarin.Services;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,11 +53,11 @@ namespace LatteMarche.Xamarin.ViewModels.Login
                 this.IsBusy = true;
                 
                 var msg = "";
-                await Task.Run(() =>
-                {
-                    var isLogged = this.restService.GetToken(USER, PWD).Result;
-                    msg = isLogged ? "Accesso riuscito!" : "Username o password errati";
-                });
+                //await Task.Run(() =>
+                //{
+                //    var isLogged = this.restService.GetToken(USER, PWD).Result;
+                //    msg = isLogged ? "Accesso riuscito!" : "Username o password errati";
+                //});
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", msg, "OK");                

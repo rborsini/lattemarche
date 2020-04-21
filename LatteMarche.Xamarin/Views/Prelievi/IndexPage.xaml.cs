@@ -1,5 +1,4 @@
-﻿using LatteMarche.Xamarin.Models;
-using LatteMarche.Xamarin.ViewModels;
+﻿using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.ViewModels.Prelievi;
 using System;
 using System.Collections.Generic;
@@ -36,11 +35,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as ItemViewModel;
+            var item = args.SelectedItem as Prelievo;
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.IdLotto, item.Id)));
+            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.IdGiro.Value, item.Id)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;

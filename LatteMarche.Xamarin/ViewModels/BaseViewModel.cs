@@ -1,6 +1,4 @@
-﻿using LatteMarche.Xamarin.Models;
-using LatteMarche.Xamarin.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

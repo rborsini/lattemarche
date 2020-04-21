@@ -1,15 +1,15 @@
-﻿using LatteMarche.Xamarin.Interfaces;
-using LatteMarche.Xamarin.Models;
-using LatteMarche.Xamarin.Services;
+﻿using AutoMapper;
+using LatteMarche.Xamarin.Db;
+using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace LatteMarche.Xamarin.ViewModels.Synch
 {
@@ -20,21 +20,25 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         #region Fields
 
+        private IDevice device = DependencyService.Get<IDevice>();
         private IRestService restService => DependencyService.Get<IRestService>();
-        private IDataStore<Allevamento, int> allevamentiDataStore => DependencyService.Get<IDataStore<Allevamento, int>>();
-        private IDataStore<AutoCisterna, int> autocisterneDataStore => DependencyService.Get<IDataStore<AutoCisterna, int>>();
-        private IDataStore<Acquirente, int> acquirentiDataStore => DependencyService.Get<IDataStore<Acquirente, int>>();
-        private IDataStore<Destinatario, int> destinatariDataStore => DependencyService.Get<IDataStore<Destinatario, int>>();
-        private IDataStore<Giro, int> giriDataStore => DependencyService.Get<IDataStore<Giro, int>>();
-        private IDataStore<GiroItem, string> giroItemsDataStore => DependencyService.Get<IDataStore<GiroItem, string>>();
-        private IDataStore<TipoLatte, int> tipiLatteDataStore => DependencyService.Get<IDataStore<TipoLatte, int>>();
-        private IDataStore<Trasportatore, int> trasportatoriDataStore => DependencyService.Get<IDataStore<Trasportatore, int>>();
+        private IEntityService<Allevamento, int> allevamentiService => DependencyService.Get<IEntityService<Allevamento, int>>();
+        private IEntityService<AutoCisterna, int> autocisterneService => DependencyService.Get<IEntityService<AutoCisterna, int>>();
+        private IEntityService<Acquirente, int> acquirentiService => DependencyService.Get<IEntityService<Acquirente, int>>();
+        private IEntityService<Destinatario, int> destinatariService => DependencyService.Get<IEntityService<Destinatario, int>>();
+        private IEntityService<TipoLatte, int> tipiLatteService => DependencyService.Get<IEntityService<TipoLatte, int>>();
+        private IEntityService<Trasportatore, int> trasportatoriService => DependencyService.Get<IEntityService<Trasportatore, int>>();
+        private IEntityService<TemplateGiro, int> templateGiriService => DependencyService.Get<IEntityService<TemplateGiro, int>>();
 
         #endregion
 
         #region Properties
 
         public Command SynchCommand { get; set; }
+
+        public Command DownloadCommand { get; set; }
+
+        public Command UploadCommand { get; set; }
 
         public Command ExportCommand { get; set; }
 
@@ -48,12 +52,96 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             this.navigation = navigation;
             this.page = page;
             this.SynchCommand = new Command(async () => await ExecuteSynchCommand());
+            this.DownloadCommand = new Command(async () => await ExecuteDownloadCommand());
+            this.UploadCommand = new Command(async () => await ExecuteUploadCommand());
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
         }
 
         #endregion
 
         #region Methods
+
+
+        private async Task ExecuteDownloadCommand()
+        {
+            try
+            {
+                this.IsBusy = true;
+
+                await Task.Run(() =>
+                {
+                    var dto = this.restService.Download(this.device.GetIdentifier()).Result;
+
+                    // pulizia database
+                    this.allevamentiService.DeleteAllItemsAsync().Wait();
+                    this.templateGiriService.DeleteAllItemsAsync().Wait();
+                    this.autocisterneService.DeleteAllItemsAsync().Wait();
+                    this.tipiLatteService.DeleteAllItemsAsync().Wait();
+                    this.acquirentiService.DeleteAllItemsAsync().Wait();
+                    this.destinatariService.DeleteAllItemsAsync().Wait();
+                    
+
+                    // trasportatore
+                    var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
+                    this.trasportatoriService.UpdateItemAsync(trasportatore).Wait();
+
+                    // autocisterna
+                    var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
+                    this.autocisterneService.AddItemAsync(autocisterna).Wait();
+
+                    // tipi latte
+                    var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
+                    this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
+
+                    // acquirenti
+                    var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
+                    this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
+
+                    // destinatari
+                    var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
+                    this.destinatariService.AddRangeItemAsync(destinatari).Wait();
+
+                    // template giro
+                    var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
+
+                    giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
+                    this.templateGiriService.AddRangeItemAsync(giri).Wait();
+
+
+                });
+
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Info", "Download avvenuto con successo", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+
+        }
+
+        private async Task ExecuteUploadCommand()
+        {
+            try
+            {
+                this.IsBusy = true;
+
+                await Task.Run(() =>
+                {
+
+                });
+
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Info", "Upload avvenuto con successo", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+
+        }
 
         private async Task ExecuteSynchCommand()
         {
@@ -66,50 +154,50 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
 
 
-                    // trasportatori
-                    var trasportatori = this.restService.GetTrasportatori().Result;
-                    trasportatori[0].Selezionato = true;
-                    this.trasportatoriDataStore.DeleteAllItemsAsync();
-                    this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
+                    //// trasportatori
+                    //var trasportatori = this.restService.GetTrasportatori().Result;
+                    //trasportatori[0].Selezionato = true;
+                    //this.trasportatoriDataStore.DeleteAllItemsAsync();
+                    //this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
 
-                    // autocisterne
-                    var autocisterne = this.restService.GetAutoCisterne().Result;
-                    this.autocisterneDataStore.DeleteAllItemsAsync();
-                    this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
+                    //// autocisterne
+                    //var autocisterne = this.restService.GetAutoCisterne().Result;
+                    //this.autocisterneDataStore.DeleteAllItemsAsync();
+                    //this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
 
-                    // allevamenti
-                    var allevamenti = this.restService.GetAllevamenti().Result;
-                    this.allevamentiDataStore.DeleteAllItemsAsync();
-                    this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
+                    //// allevamenti
+                    //var allevamenti = this.restService.GetAllevamenti().Result;
+                    //this.allevamentiDataStore.DeleteAllItemsAsync();
+                    //this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
 
-                    // tipi latte
-                    var tipiLatte = this.restService.GetTipiLatte().Result;
-                    this.tipiLatteDataStore.DeleteAllItemsAsync();
-                    this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
+                    //// tipi latte
+                    //var tipiLatte = this.restService.GetTipiLatte().Result;
+                    //this.tipiLatteDataStore.DeleteAllItemsAsync();
+                    //this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
 
-                    // acquirenti
-                    var acquirenti = this.restService.GetAcquirenti().Result;
-                    this.acquirentiDataStore.DeleteAllItemsAsync();
-                    this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
+                    //// acquirenti
+                    //var acquirenti = this.restService.GetAcquirenti().Result;
+                    //this.acquirentiDataStore.DeleteAllItemsAsync();
+                    //this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
 
-                    // destinatari
-                    var destinatari = this.restService.GetDestinatari().Result;
-                    this.destinatariDataStore.DeleteAllItemsAsync();
-                    this.destinatariDataStore.AddRangeItemAsync(destinatari);
+                    //// destinatari
+                    //var destinatari = this.restService.GetDestinatari().Result;
+                    //this.destinatariDataStore.DeleteAllItemsAsync();
+                    //this.destinatariDataStore.AddRangeItemAsync(destinatari);
 
-                    // giri
-                    var giri = this.restService.GetGiri().Result;
-                    this.giriDataStore.DeleteAllItemsAsync();
-                    this.giriDataStore.AddRangeItemAsync(giri);
+                    //// giri
+                    //var giri = this.restService.GetGiri().Result;
+                    //this.giriDataStore.DeleteAllItemsAsync();
+                    //this.giriDataStore.AddRangeItemAsync(giri);
 
-                    // giro items
-                    var giroItems = this.restService.GetGiro(giri[0].Id).Result;
-                    this.giroItemsDataStore.DeleteAllItemsAsync();
+                    //// giro items
+                    //var giroItems = this.restService.GetGiro(giri[0].Id).Result;
+                    //this.giroItemsDataStore.DeleteAllItemsAsync();
 
-                    foreach (var item in giroItems)
-                        item.Id = Guid.NewGuid().ToString();
+                    //foreach (var item in giroItems)
+                    //    item.Id = Guid.NewGuid().ToString();
 
-                    this.giroItemsDataStore.AddRangeItemAsync(giroItems);
+                    //this.giroItemsDataStore.AddRangeItemAsync(giroItems);
                 });
 
                 this.IsBusy = false;

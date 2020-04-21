@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Xamarin.Enums;
+using LatteMarche.Xamarin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,14 +15,24 @@ namespace LatteMarche.Xamarin.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : MasterDetailPage
     {
-        Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+        #region Fields
+
+        private Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+
+        #endregion
+
+        #region Constructor
 
         public MainPage()
         {
             InitializeComponent();
 
-            MenuPages.Add((int)MenuItemType.Lotti, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Giri, (NavigationPage)Detail);
         }
+
+        #endregion
+
+        #region Methods
 
         public async Task NavigateFromMenu(int id)
         {
@@ -53,6 +64,8 @@ namespace LatteMarche.Xamarin.Views
                 IsPresented = false;
             }
         }
+
+        #endregion
 
     }
 }

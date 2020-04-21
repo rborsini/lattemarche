@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Zebra;
+using LatteMarche.Xamarin.Zebra.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

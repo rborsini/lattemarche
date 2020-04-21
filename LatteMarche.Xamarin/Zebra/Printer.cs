@@ -1,5 +1,6 @@
-﻿using LatteMarche.Xamarin.Interfaces;
-using LatteMarche.Xamarin.Models;
+﻿using LatteMarche.Xamarin.Zebra.Interfaces;
+using LatteMarche.Xamarin.Zebra.Makers.CPCL;
+using LatteMarche.Xamarin.Zebra.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -74,10 +75,10 @@ namespace LatteMarche.Xamarin.Zebra
             //    return new ZplLabelMaker();
             //else
             if(registro is RegistroConsegna)
-                return new CPCL.RegistroConsegnaMaker();
+                return new RegistroConsegnaMaker();
 
             if (registro is RegistroRaccolta)
-                return new CPCL.RegistroRaccoltaMaker();
+                return new RegistroRaccoltaMaker();
 
             return null;
         }

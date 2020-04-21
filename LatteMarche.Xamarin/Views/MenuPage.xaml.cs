@@ -1,5 +1,4 @@
 ﻿using LatteMarche.Xamarin.Enums;
-using LatteMarche.Xamarin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace LatteMarche.Xamarin.Views
 
             this.Items = new List<SideMenuItem>
             {
-                new SideMenuItem {Id = MenuItemType.Lotti, Title="Lotti" },
+                new SideMenuItem {Id = MenuItemType.Giri, Title="Giri" },
                 new SideMenuItem {Id = MenuItemType.Synch, Title="Sincronizzazione" },
                 new SideMenuItem {Id = MenuItemType.Impostazioni, Title="Impostazioni" },
                 new SideMenuItem {Id = MenuItemType.Login, Title="Login" }

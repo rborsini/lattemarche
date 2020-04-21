@@ -1,7 +1,11 @@
-﻿using LatteMarche.Xamarin.Services;
+﻿using LatteMarche.Xamarin.Db.Interfaces;
+using LatteMarche.Xamarin.Db.Services;
+using LatteMarche.Xamarin.Rest.Services;
 using LatteMarche.Xamarin.Views;
+using LatteMarche.Xamarin.Views.Synch;
 using LatteMarche.Xamarin.Zebra;
 using System;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,21 +17,29 @@ namespace LatteMarche.Xamarin
         {
             InitializeComponent();
 
-            DependencyService.Register<AcquirentiDataStore>();
-            DependencyService.Register<AllevamentiDataStore>();
-            DependencyService.Register<AutoCisterneDataStore>();
-            DependencyService.Register<DestinatariDataStore>();
-            DependencyService.Register<GiroItemsDataStore>();
-            DependencyService.Register<GiriDataStore>();
-            DependencyService.Register<TrasportatoriDataStore>();
-            DependencyService.Register<LottiDataStore>();
-            DependencyService.Register<PrelieviDataStore>();
-            DependencyService.Register<TipiLatteDataStore>();
+            DependencyService.Register<AcquirentiService>();
+            DependencyService.Register<AllevamentiService>();
+            DependencyService.Register<AutoCisterneService>();
+            DependencyService.Register<DestinatariService>();
+            DependencyService.Register<GiriService>();
+            DependencyService.Register<PrelieviService>();
+            DependencyService.Register<SincronizzazioneService>();
+            DependencyService.Register<TemplateGiroService>();
+            DependencyService.Register<TipiLatteService>();
+            DependencyService.Register<TrasportatoriService>();
+
 
             DependencyService.Register<RestService>();
             DependencyService.Register<Printer>();
 
-            MainPage = new MainPage();
+            AutomapperConfig.Configure();
+
+            var trasporatori = DependencyService.Get<ITrasportatoriService>().GetItemsAsync().Result.Count();
+
+            if (trasporatori > 0)
+                MainPage = new MainPage();
+            else
+                MainPage = new RegisterPage();
         }
 
         protected override void OnStart()

@@ -6,7 +6,7 @@ namespace LatteMarche.Xamarin.Enums
 {
     public enum MenuItemType
     {
-        Lotti,
+        Giri,
         Synch,
         Impostazioni,
         Login

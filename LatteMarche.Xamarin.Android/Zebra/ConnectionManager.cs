@@ -12,6 +12,7 @@ using Android.Widget;
 using LatteMarche.Xamarin.Droid.Zebra;
 using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Zebra;
+using LatteMarche.Xamarin.Zebra.Interfaces;
 using Xamarin.Forms;
 using Zebra.Sdk.Comm;
 using Zebra.Sdk.Printer.Discovery;
