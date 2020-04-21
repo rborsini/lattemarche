@@ -28,13 +28,9 @@ namespace LatteMarche.Xamarin.Db.Models
         public virtual Giro Giro { get; set; }
         public int? IdAllevamento { get; set; }
 
-        [ForeignKey(nameof(Acquirente))]
         public int? IdAcquirente { get; set; }
-        public Acquirente Acquirente { get; set; }
 
-        [ForeignKey(nameof(Destinatario))]
         public int? IdDestinatario { get; set; }
-        public Destinatario Destinatario { get; set; }
 
     }
 }

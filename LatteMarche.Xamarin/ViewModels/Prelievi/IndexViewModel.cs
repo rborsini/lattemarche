@@ -28,6 +28,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
+        private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
 
         private ObservableCollection<Prelievo> prelievi;
 
@@ -124,7 +125,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
                     registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
-                    registroRaccolta.Giro = this.giro.TemplateGiro;
+                    registroRaccolta.Giro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
                     registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
 
                     registroRaccolta.Data = DateTime.Now;
@@ -238,6 +239,24 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             if (idAllevamento.HasValue)
             {
                 return await this.allevamentiService.GetItemAsync(idAllevamento.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Lookup template giro
+        /// </summary>
+        /// <param name="idTemplateGiro"></param>
+        /// <returns></returns>
+        private async Task<TemplateGiro> GetTemplateGiro(int? idTemplateGiro)
+        {
+            if (idTemplateGiro.HasValue)
+            {
+                return await this.templateGiroService.GetItemAsync(idTemplateGiro.Value);
             }
             else
             {

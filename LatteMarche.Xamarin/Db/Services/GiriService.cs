@@ -20,7 +20,6 @@ namespace LatteMarche.Xamarin.Db.Services
             using (var context = CrateContext())
             {
                 return await context.Set<Giro>()
-                    .Include(l => l.TemplateGiro)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(p => p.Id.Equals(id));
             }

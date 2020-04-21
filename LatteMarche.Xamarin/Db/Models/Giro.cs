@@ -11,10 +11,7 @@ namespace LatteMarche.Xamarin.Db.Models
         [Key]
         public override int Id { get; set; }
 
-        [ForeignKey(nameof(TemplateGiro))]
         public int? IdTemplateGiro { get; set; }
-
-        public virtual TemplateGiro TemplateGiro { get; set; }
 
         public string Titolo { get; set; }
 

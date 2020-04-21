@@ -33,8 +33,6 @@ namespace LatteMarche.Xamarin.Db.Services
             using (var context = CrateContext())
             {
                 return await context.Set<Prelievo>()
-                    .Include(l => l.Acquirente)
-                    .Include(l => l.Destinatario)
                     .Include(l => l.Giro)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(p => p.Id.Equals(id));

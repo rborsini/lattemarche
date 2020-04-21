@@ -69,41 +69,43 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 {
                     var dto = this.restService.Download(this.device.GetIdentifier()).Result;
 
-                    // pulizia database
-                    this.allevamentiService.DeleteAllItemsAsync().Wait();
-                    this.templateGiriService.DeleteAllItemsAsync().Wait();
-                    this.autocisterneService.DeleteAllItemsAsync().Wait();
-                    this.tipiLatteService.DeleteAllItemsAsync().Wait();
-                    this.acquirentiService.DeleteAllItemsAsync().Wait();
-                    this.destinatariService.DeleteAllItemsAsync().Wait();
-                    
+                    if(dto != null)
+                    {
+                        // pulizia database
+                        this.allevamentiService.DeleteAllItemsAsync().Wait();
+                        this.templateGiriService.DeleteAllItemsAsync().Wait();
+                        this.autocisterneService.DeleteAllItemsAsync().Wait();
+                        this.tipiLatteService.DeleteAllItemsAsync().Wait();
+                        this.acquirentiService.DeleteAllItemsAsync().Wait();
+                        this.destinatariService.DeleteAllItemsAsync().Wait();
 
-                    // trasportatore
-                    var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
-                    this.trasportatoriService.UpdateItemAsync(trasportatore).Wait();
 
-                    // autocisterna
-                    var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
-                    this.autocisterneService.AddItemAsync(autocisterna).Wait();
+                        // trasportatore
+                        var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
+                        this.trasportatoriService.UpdateItemAsync(trasportatore).Wait();
 
-                    // tipi latte
-                    var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
-                    this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
+                        // autocisterna
+                        var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
+                        this.autocisterneService.AddItemAsync(autocisterna).Wait();
 
-                    // acquirenti
-                    var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
-                    this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
+                        // tipi latte
+                        var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
+                        this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
 
-                    // destinatari
-                    var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
-                    this.destinatariService.AddRangeItemAsync(destinatari).Wait();
+                        // acquirenti
+                        var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
+                        this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
 
-                    // template giro
-                    var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
+                        // destinatari
+                        var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
+                        this.destinatariService.AddRangeItemAsync(destinatari).Wait();
 
-                    giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
-                    this.templateGiriService.AddRangeItemAsync(giri).Wait();
+                        // template giro
+                        var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
 
+                        giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
+                        this.templateGiriService.AddRangeItemAsync(giri).Wait();
+                    }
 
                 });
 

@@ -52,6 +52,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
+        private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
 
         #endregion
@@ -385,9 +386,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     var registroConsegna = new RegistroConsegna();
 
-                    registroConsegna.Acquirente = this.prelievo.Acquirente;
-                    registroConsegna.Destinatario = this.prelievo.Destinatario;
-                    registroConsegna.Giro =  this.giriService.GetItemAsync(this.idGiro).Result.TemplateGiro;
+                    var giro = this.giriService.GetItemAsync(this.idGiro).Result;
+
+                    registroConsegna.Acquirente = GetAcquirente(this.prelievo.IdAcquirente).Result;
+                    registroConsegna.Destinatario = GetDestinatario(this.prelievo.IdDestinatario).Result;
+                    registroConsegna.Giro = GetTemplateGiro(giro?.IdTemplateGiro).Result;
                     registroConsegna.Trasportatore = this.trasportatoriService.GetCurrent().Result;
                     
                     registroConsegna.Allevamento = GetAllevamento(this.prelievo.IdAllevamento).Result;
@@ -426,6 +429,40 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         }
 
         /// <summary>
+        /// Lookup acquirente
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Acquirente> GetAcquirente(int? idAcquirente)
+        {
+            if (idAcquirente.HasValue)
+            {
+                return await this.acquirentiService.GetItemAsync(idAcquirente.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup destinatario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Destinatario> GetDestinatario(int? idDestinatario)
+        {
+            if (idDestinatario.HasValue)
+            {
+                return await this.destinatariService.GetItemAsync(idDestinatario.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Lookup allevamento
         /// </summary>
         /// <param name="idAllevamento"></param>
@@ -435,6 +472,23 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             if (idAllevamento.HasValue)
             {
                 return await this.allevamentiService.GetItemAsync(idAllevamento.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup template giro
+        /// </summary>
+        /// <param name="idTemplateGiro"></param>
+        /// <returns></returns>
+        private async Task<TemplateGiro> GetTemplateGiro(int? idTemplateGiro)
+        {
+            if (idTemplateGiro.HasValue)
+            {
+                return await this.templateGiroService.GetItemAsync(idTemplateGiro.Value);
             }
             else
             {
