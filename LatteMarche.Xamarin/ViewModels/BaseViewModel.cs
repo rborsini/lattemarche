@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace LatteMarche.Xamarin.ViewModels
@@ -21,6 +22,8 @@ namespace LatteMarche.Xamarin.ViewModels
         #endregion
 
         #region Properties
+
+        public bool IsOnline => Connectivity.NetworkAccess != NetworkAccess.None;
 
         public bool IsBusy
         {

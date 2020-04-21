@@ -49,21 +49,30 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         {
             this.navigation = navigation;
             this.page = page;
-            this.DownloadCommand = new Command(async () => await ExecuteDownloadCommand());
-            this.UploadCommand = new Command(async () => await ExecuteUploadCommand());
+            this.DownloadCommand = new Command(execute: async () => await ExecuteDownloadCommand(), canExecute: () => { return this.IsOnline; });
+            this.UploadCommand = new Command(async () => await ExecuteUploadCommand(), canExecute: () => { return this.IsOnline; });
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
+
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+
         }
+
 
         #endregion
 
         #region Methods
 
+        private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            (this.DownloadCommand as Command).ChangeCanExecute();
+            (this.UploadCommand as Command).ChangeCanExecute();
+        }
 
         private async Task ExecuteDownloadCommand()
         {
             try
             {
-                this.IsBusy = true;
+                this.IsBusy = true;                
 
                 await Task.Run(() =>
                 {

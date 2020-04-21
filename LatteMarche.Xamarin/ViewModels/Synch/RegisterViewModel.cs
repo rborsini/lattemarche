@@ -38,12 +38,20 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         {
             this.navigation = navigation;
             this.page = page;
-            this.RegisterCommand = new Command(async () => await ExecuteRegisterCommand());
+            this.RegisterCommand = new Command(async () => await ExecuteRegisterCommand(), canExecute: () => { return this.IsOnline; });
+
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
         #endregion
 
         #region Methods
+
+        private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            (this.RegisterCommand as Command).ChangeCanExecute();
+        }
+
 
         private async Task ExecuteRegisterCommand()
         {
