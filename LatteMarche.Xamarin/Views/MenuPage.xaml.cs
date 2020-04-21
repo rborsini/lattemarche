@@ -26,8 +26,7 @@ namespace LatteMarche.Xamarin.Views
             {
                 new SideMenuItem {Id = MenuItemType.Giri, Title="Giri" },
                 new SideMenuItem {Id = MenuItemType.Synch, Title="Sincronizzazione" },
-                new SideMenuItem {Id = MenuItemType.Impostazioni, Title="Impostazioni" },
-                new SideMenuItem {Id = MenuItemType.Login, Title="Login" }
+                new SideMenuItem {Id = MenuItemType.Impostazioni, Title="Impostazioni" }
             };
             
             this.ListViewMenu.ItemsSource = this.Items;

@@ -46,9 +46,6 @@ namespace LatteMarche.Xamarin.Views
                     case (int)MenuItemType.Impostazioni:
                         MenuPages.Add(id, new NavigationPage(new Impostazioni.IndexPage()));
                         break;
-                    case (int)MenuItemType.Login:
-                        MenuPages.Add(id, new NavigationPage(new Login.IndexPage()));
-                        break;
                 }
             }
 

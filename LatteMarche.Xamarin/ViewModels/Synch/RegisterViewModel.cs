@@ -4,7 +4,6 @@ using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views;
-using LatteMarche.Xamarin.Views.Login;
 using System;
 using System.Collections.Generic;
 using System.Text;

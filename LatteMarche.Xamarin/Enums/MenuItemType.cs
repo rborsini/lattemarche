@@ -8,7 +8,6 @@ namespace LatteMarche.Xamarin.Enums
     {
         Giri,
         Synch,
-        Impostazioni,
-        Login
+        Impostazioni
     }
 }

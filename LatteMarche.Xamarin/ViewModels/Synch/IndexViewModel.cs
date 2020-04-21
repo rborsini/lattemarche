@@ -34,8 +34,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         #region Properties
 
-        public Command SynchCommand { get; set; }
-
         public Command DownloadCommand { get; set; }
 
         public Command UploadCommand { get; set; }
@@ -51,7 +49,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         {
             this.navigation = navigation;
             this.page = page;
-            this.SynchCommand = new Command(async () => await ExecuteSynchCommand());
             this.DownloadCommand = new Command(async () => await ExecuteDownloadCommand());
             this.UploadCommand = new Command(async () => await ExecuteUploadCommand());
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
@@ -134,74 +131,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Upload avvenuto con successo", "OK");
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
-            }
-
-        }
-
-        private async Task ExecuteSynchCommand()
-        {
-            try
-            {
-                this.IsBusy = true;
-
-                await Task.Run(() =>
-                {
-
-
-
-                    //// trasportatori
-                    //var trasportatori = this.restService.GetTrasportatori().Result;
-                    //trasportatori[0].Selezionato = true;
-                    //this.trasportatoriDataStore.DeleteAllItemsAsync();
-                    //this.trasportatoriDataStore.AddRangeItemAsync(trasportatori);
-
-                    //// autocisterne
-                    //var autocisterne = this.restService.GetAutoCisterne().Result;
-                    //this.autocisterneDataStore.DeleteAllItemsAsync();
-                    //this.autocisterneDataStore.AddRangeItemAsync(autocisterne);
-
-                    //// allevamenti
-                    //var allevamenti = this.restService.GetAllevamenti().Result;
-                    //this.allevamentiDataStore.DeleteAllItemsAsync();
-                    //this.allevamentiDataStore.AddRangeItemAsync(allevamenti);
-
-                    //// tipi latte
-                    //var tipiLatte = this.restService.GetTipiLatte().Result;
-                    //this.tipiLatteDataStore.DeleteAllItemsAsync();
-                    //this.tipiLatteDataStore.AddRangeItemAsync(tipiLatte);
-
-                    //// acquirenti
-                    //var acquirenti = this.restService.GetAcquirenti().Result;
-                    //this.acquirentiDataStore.DeleteAllItemsAsync();
-                    //this.acquirentiDataStore.AddRangeItemAsync(acquirenti);
-
-                    //// destinatari
-                    //var destinatari = this.restService.GetDestinatari().Result;
-                    //this.destinatariDataStore.DeleteAllItemsAsync();
-                    //this.destinatariDataStore.AddRangeItemAsync(destinatari);
-
-                    //// giri
-                    //var giri = this.restService.GetGiri().Result;
-                    //this.giriDataStore.DeleteAllItemsAsync();
-                    //this.giriDataStore.AddRangeItemAsync(giri);
-
-                    //// giro items
-                    //var giroItems = this.restService.GetGiro(giri[0].Id).Result;
-                    //this.giroItemsDataStore.DeleteAllItemsAsync();
-
-                    //foreach (var item in giroItems)
-                    //    item.Id = Guid.NewGuid().ToString();
-
-                    //this.giroItemsDataStore.AddRangeItemAsync(giroItems);
-                });
-
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Info", "Sincronizzazione avvenuta con successo", "OK");
             }
             catch (Exception exc)
             {
