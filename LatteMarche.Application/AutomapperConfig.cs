@@ -12,6 +12,7 @@ using LatteMarche.Application.Destinatari;
 using LatteMarche.Application.Documenti;
 using LatteMarche.Application.Logs;
 using LatteMarche.Application.PrelieviLatte;
+using LatteMarche.Application.Dispositivi;
 
 namespace LatteMarche.Application
 {
@@ -29,6 +30,7 @@ namespace LatteMarche.Application
             mappings = AuthMappings.Configure(mappings);
             mappings = ComuniMappings.Configure(mappings);
             mappings = DestinatarioMappings.Configure(mappings);
+            mappings = DispositiviMappings.Configure(mappings);
             mappings = DocumentiMappings.Configure(mappings);
             mappings = LogsMappings.Configure(mappings);
             mappings = PrelieviLatteMappings.Configure(mappings);

@@ -42,14 +42,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    <Reference Include="Autofac.Integration.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.5.0.0\lib\net461\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi, Version=4.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.WebApi2.4.2.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
@@ -80,6 +80,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
@@ -118,6 +121,7 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -126,7 +130,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -190,6 +200,7 @@
     <Content Include="build\analisi_latte_index_page.js" />
     <Content Include="build\autocisterne_index_page.js" />
     <Content Include="build\destinatari_index_page.js" />
+    <Content Include="build\dispositivi_index_page.js" />
     <Content Include="build\prelievi_latte_edit.js" />
     <Content Include="build\prelievi_latte_index_page.js" />
     <Content Include="build\ruoli_edit_page.js" />
@@ -230,7 +241,9 @@
     <Content Include="src\pages\azioni\index.page.js" />
     <Content Include="src\pages\documenti\index.page.js" />
     <TypeScriptCompile Include="src\models\analisi.model.ts" />
+    <TypeScriptCompile Include="src\models\dispositivo.model.ts" />
     <TypeScriptCompile Include="src\pages\analisi-latte\index.page.ts" />
+    <TypeScriptCompile Include="src\pages\dispositivi\index.page.ts" />
     <TypeScriptCompile Include="src\pages\tipi-latte\index.page.ts" />
     <Content Include="src\pages\ruoli\index.page.js" />
     <TypeScriptCompile Include="src\pages\utenti\index.page.ts" />
@@ -275,6 +288,7 @@
     <None Include="lattemarche - Web Deploy.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
+    <Content Include="Views\Dispositivi\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,44 +351,46 @@
   <ItemGroup>
     <Compile Include="App_Start\LoggerConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\api\Controllers\AnalisiController.cs" />
-    <Compile Include="Areas\api\Controllers\AutocisterneController.cs" />
-    <Compile Include="Areas\api\Controllers\AcquirentiController.cs" />
-    <Compile Include="Areas\api\Controllers\AllevamentiController.cs" />
-    <Compile Include="Areas\api\Controllers\AzioniController.cs" />
-    <Compile Include="Areas\api\Controllers\DestinatariController.cs" />
-    <Compile Include="Areas\api\Controllers\LaboratoriAnalisiController.cs" />
-    <Compile Include="Areas\api\Controllers\RuoliController.cs" />
-    <Compile Include="Areas\api\Controllers\DocumentiController.cs" />
-    <Compile Include="Areas\api\Controllers\MobileController.cs" />
-    <Compile Include="Areas\api\Controllers\SynchController.cs" />
-    <Compile Include="Areas\api\Controllers\TipiProfiloController.cs" />
-    <Compile Include="Areas\api\Controllers\TipiLatteController.cs" />
-    <Compile Include="Areas\api\Controllers\ComuniController.cs" />
-    <Compile Include="Areas\api\Controllers\AllevatoriController.cs" />
-    <Compile Include="Areas\api\Controllers\PrelieviLatteController.cs" />
-    <Compile Include="Areas\api\Controllers\TrasportatoriController.cs" />
-    <Compile Include="Areas\api\Controllers\GiriController.cs" />
+    <Compile Include="Controllers_Api\AnalisiController.cs" />
+    <Compile Include="Controllers_Api\AutocisterneController.cs" />
+    <Compile Include="Controllers_Api\AcquirentiController.cs" />
+    <Compile Include="Controllers_Api\AllevamentiController.cs" />
+    <Compile Include="Controllers_Api\AzioniController.cs" />
+    <Compile Include="Controllers_Api\DestinatariController.cs" />
+    <Compile Include="Controllers_Api\LaboratoriAnalisiController.cs" />
+    <Compile Include="Controllers_Api\DispositiviController.cs" />
+    <Compile Include="Controllers_Api\RuoliController.cs" />
+    <Compile Include="Controllers_Api\DocumentiController.cs" />
+    <Compile Include="Controllers_Api\MobileController.cs" />
+    <Compile Include="Controllers_Api\SynchController.cs" />
+    <Compile Include="Controllers_Api\TipiProfiloController.cs" />
+    <Compile Include="Controllers_Api\TipiLatteController.cs" />
+    <Compile Include="Controllers_Api\ComuniController.cs" />
+    <Compile Include="Controllers_Api\AllevatoriController.cs" />
+    <Compile Include="Controllers_Api\PrelieviLatteController.cs" />
+    <Compile Include="Controllers_Api\TrasportatoriController.cs" />
+    <Compile Include="Controllers_Api\GiriController.cs" />
     <Compile Include="Attributes\ApiCustomAuthorize.cs" />
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
-    <Compile Include="Controllers\AnalisiLatteController.cs" />
-    <Compile Include="Controllers\AllevatoriController.cs" />
-    <Compile Include="Controllers\AutocisterneController.cs" />
-    <Compile Include="Controllers\LaboratorioAnalisiController.cs" />
-    <Compile Include="Controllers\RuoliController.cs" />
-    <Compile Include="Controllers\AzioniController.cs" />
-    <Compile Include="Controllers\DocumentiController.cs" />
-    <Compile Include="Controllers\SitraController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DestinatariController.cs" />
-    <Compile Include="Controllers\AcquirentiController.cs" />
-    <Compile Include="Controllers\PrelieviController.cs" />
-    <Compile Include="Controllers\TipiLatteController.cs" />
-    <Compile Include="Controllers\TrasportatoriController.cs" />
-    <Compile Include="Controllers\AllevamentiController.cs" />
-    <Compile Include="Controllers\UtentiController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
+    <Compile Include="Controllers_Web\AllevatoriController.cs" />
+    <Compile Include="Controllers_Web\AutocisterneController.cs" />
+    <Compile Include="Controllers_Web\DispositiviController.cs" />
+    <Compile Include="Controllers_Web\LaboratorioAnalisiController.cs" />
+    <Compile Include="Controllers_Web\RuoliController.cs" />
+    <Compile Include="Controllers_Web\AzioniController.cs" />
+    <Compile Include="Controllers_Web\DocumentiController.cs" />
+    <Compile Include="Controllers_Web\SitraController.cs" />
+    <Compile Include="Controllers_Web\AccountController.cs" />
+    <Compile Include="Controllers_Web\DestinatariController.cs" />
+    <Compile Include="Controllers_Web\AcquirentiController.cs" />
+    <Compile Include="Controllers_Web\PrelieviController.cs" />
+    <Compile Include="Controllers_Web\TipiLatteController.cs" />
+    <Compile Include="Controllers_Web\TrasportatoriController.cs" />
+    <Compile Include="Controllers_Web\AllevamentiController.cs" />
+    <Compile Include="Controllers_Web\UtentiController.cs" />
+    <Compile Include="Controllers_Web\HomeController.cs" />
     <Compile Include="Filters\ApiActionFilter.cs" />
     <Compile Include="Filters\ApiExceptionFilter.cs" />
     <Compile Include="Filters\MvcActionFilter.cs" />
@@ -386,7 +402,7 @@
     <Compile Include="App_Start\AutoFacConfig.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
-    <Compile Include="Areas\api\Controllers\UtentiController.cs" />
+    <Compile Include="Controllers_Api\UtentiController.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
@@ -410,6 +426,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LatteMarche.Application.Mobile\LatteMarche.Application.Mobile.csproj">
+      <Project>{d52ab32e-1432-4b28-9438-c74d25e70f35}</Project>
+      <Name>LatteMarche.Application.Mobile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Application\LatteMarche.Application.csproj">
       <Project>{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}</Project>
       <Name>LatteMarche.Application</Name>
@@ -443,6 +463,7 @@
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
     <TypeScriptCompile Include="src\services\destinatari.service.ts" />
+    <TypeScriptCompile Include="src\services\dispositivi.service.ts" />
     <TypeScriptCompile Include="src\services\giri.service.ts" />
     <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
     <TypeScriptCompile Include="src\services\profili.service.ts" />

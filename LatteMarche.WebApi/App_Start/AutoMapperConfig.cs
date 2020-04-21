@@ -10,6 +10,7 @@ namespace LatteMarche.WebApi.App_Start
 			var mappings = new MapperConfigurationExpression();
 
 			mappings = LatteMarche.Application.AutomapperConfig.Configure(mappings);
+			mappings = LatteMarche.Application.Mobile.AutomapperConfig.Configure(mappings);
 
 			Mapper.Reset();
 			Mapper.Initialize(mappings);

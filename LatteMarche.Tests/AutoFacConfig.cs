@@ -18,6 +18,7 @@ namespace LatteMarche.Tests
             ContainerBuilder builder = new ContainerBuilder();
 
             builder.RegisterModule(new ApplicationModule(false));
+            builder.RegisterModule(new LatteMarche.Application.Mobile.ApplicationModule(false));
 
             Container = builder.Build();
         }

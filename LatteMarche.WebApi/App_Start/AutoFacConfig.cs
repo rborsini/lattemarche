@@ -28,6 +28,7 @@ namespace LatteMarche.WebApi.App_Start
 
 			// Registro i db context e unit of work
 			builder.RegisterModule(new ApplicationModule());
+			builder.RegisterModule(new LatteMarche.Application.Mobile.ApplicationModule(false));
 
 			builder.RegisterFilterProvider();
 			builder.RegisterWebApiFilterProvider(config);

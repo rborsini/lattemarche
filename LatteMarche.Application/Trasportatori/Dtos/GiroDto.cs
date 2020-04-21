@@ -21,12 +21,4 @@ namespace LatteMarche.Application.Trasportatori.Dtos
 
     }
 
-    public class GiriMappings
-    {
-        public static void Configure()
-        {
-
-        }
-    }
-
 }

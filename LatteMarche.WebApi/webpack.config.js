@@ -10,6 +10,7 @@ module.exports = {
         analisi_latte_index_page: './src/pages/analisi-latte/index.page.js',
         autocisterne_index_page: './src/pages/autocisterne/index.page.js',
         destinatari_index_page: './src/pages/destinatari/index.page.js',
+        dispositivi_index_page: './src/pages/dispositivi/index.page.js',
         utenti_index_page: './src/pages/utenti/index.page.js',
         tipi_latte_index_page: './src/pages/tipi-latte/index.page.js',
         trasportatori_edit_page: './src/pages/trasportatori/edit.page.js',

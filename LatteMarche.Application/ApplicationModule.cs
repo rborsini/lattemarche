@@ -22,12 +22,12 @@ using LatteMarche.Application.Logs.Services;
 using LatteMarche.Application.Assam;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Services;
-using LatteMarche.Application.Mobile.Interfaces;
-using LatteMarche.Application.Mobile.Services;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.Application.Auth.Services;
 using LatteMarche.Application.Latte.Services;
+using LatteMarche.Application.Dispositivi.Interfaces;
+using LatteMarche.Application.Dispositivi.Services;
 
 namespace LatteMarche.Application
 {
@@ -63,6 +63,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<AzioniService>().As<IAzioniService>().InstancePerRequest();
                 builder.RegisterType<ComuniService>().As<IComuniService>().InstancePerRequest();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>().InstancePerRequest();
+                builder.RegisterType<DispositiviService>().As<IDispositiviService>().InstancePerRequest();
                 builder.RegisterType<DocumentiService>().As<IDocumentiService>().InstancePerRequest();
                 builder.RegisterType<GiriService>().As<IGiriService>().InstancePerRequest();
                 builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>().InstancePerRequest();
@@ -76,7 +77,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>().InstancePerRequest();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>().InstancePerRequest();
                 builder.RegisterType<UtentiService>().As<IUtentiService>().InstancePerRequest();
-                builder.RegisterType<MobileService>().As<IMobileService>().InstancePerRequest();
+                //builder.RegisterType<MobileService>().As<IMobileService>().InstancePerRequest();
 
             }
             else
@@ -94,6 +95,7 @@ namespace LatteMarche.Application
                 builder.RegisterType<AzioniService>().As<IAzioniService>();
                 builder.RegisterType<ComuniService>().As<IComuniService>();
                 builder.RegisterType<DestinatariService>().As<IDestinatariService>();
+                builder.RegisterType<DispositiviService>().As<IDispositiviService>();
                 builder.RegisterType<DocumentiService>().As<IDocumentiService>();
                 builder.RegisterType<GiriService>().As<IGiriService>();
                 builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>();
@@ -107,7 +109,6 @@ namespace LatteMarche.Application
                 builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>();
                 builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>();
                 builder.RegisterType<UtentiService>().As<IUtentiService>();
-                builder.RegisterType<MobileService>().As<IMobileService>();
             }
 
 

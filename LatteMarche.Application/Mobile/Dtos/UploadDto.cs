@@ -7,7 +7,7 @@ namespace LatteMarche.Application.Mobile.Dtos
     {
         public string IMEI { get; set; }
 
-        public List<PrelievoLatteDto> Prelievi { get; set; }
+        public List<PrelievoDto> Prelievi { get; set; }
 
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }

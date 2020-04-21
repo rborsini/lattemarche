@@ -36,8 +36,11 @@ namespace LatteMarche.Core.Models
         [Column("LONGITUDINE")]
         public decimal? Longitudine { get; set; }
 
+        [ForeignKey(nameof(Trasportatore))]
         [Column("ID_TRASPORTATORE")]
         public int? IdTrasportatore { get; set; }
+
+        public virtual Utente Trasportatore { get; set; }
 
     }
 }
