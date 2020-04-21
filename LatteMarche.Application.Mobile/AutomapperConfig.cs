@@ -18,11 +18,15 @@ namespace LatteMarche.Application.Mobile
             mappings.CreateMap<DispositivoDto, DispositivoMobile>();
 
             mappings.CreateMap<V_Trasportatore, TrasportatoreDto>()
-                .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Trim()));
+                .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Trim()))
             ;
+
             mappings.CreateMap<Autocisterna, AutocisternaDto>();
             mappings.CreateMap<Giro, TemplateGiroDto>()
-                .ForMember(dest => dest.Allevamenti, opt => opt.Ignore());
+                .ForMember(dest => dest.Allevamenti, opt => opt.Ignore())
+                .ForMember(dest => dest.Codice, opt => opt.MapFrom(src => src.CodiceGiro))
+                .ForMember(dest => dest.Descrizione, opt => opt.MapFrom(src => src.Denominazione))
+                ;
 
             mappings.CreateMap<TipoLatte, TipoLatteDto>();
 

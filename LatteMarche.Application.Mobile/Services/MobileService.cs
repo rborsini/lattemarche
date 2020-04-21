@@ -103,7 +103,7 @@ namespace LatteMarche.Application.Mobile.Services
 
                             giro.Allevamenti.Add(new AllevamentoDto()
                             {
-                                Id = allevamento.Id,
+                                IdAllevamento = allevamento.Id,
                                 IdTemplateGiro = giro.Id,
                                 IdTipoLatte = utente != null ? utente.IdTipoLatte : (int?)null,
                                 Indirizzo = allevamento != null ? allevamento.IndirizzoAllevamento.Trim() : "",

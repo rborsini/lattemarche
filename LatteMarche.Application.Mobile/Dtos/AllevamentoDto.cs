@@ -8,7 +8,7 @@ namespace LatteMarche.Application.Mobile.Dtos
 {
     public class AllevamentoDto
     {
-        public int Id { get; set; }
+        public int IdAllevamento { get; set; }
         public string RagioneSociale { get; set; }
         public string P_IVA { get; set; }
         public string Indirizzo { get; set; }

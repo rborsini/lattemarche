@@ -9,8 +9,8 @@ namespace LatteMarche.Application.Mobile.Dtos
     public class TemplateGiroDto
     {
         public int Id { get; set; }
-        public string Denominazione { get; set; }
-        public string CodiceGiro { get; set; }
+        public string Codice { get; set; }
+        public string Descrizione { get; set; }
 
         public List<AllevamentoDto> Allevamenti { get; set; }
 
