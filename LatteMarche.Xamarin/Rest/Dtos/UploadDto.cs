@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LatteMarche.Xamarin.Dtos
+namespace LatteMarche.Xamarin.Rest.Dtos
 {
     public class UploadDto
     {
@@ -13,6 +13,11 @@ namespace LatteMarche.Xamarin.Dtos
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }
         public string VersioneApp { get; set; }
+
+        public UploadDto()
+        {
+            this.Prelievi = new List<PrelievoLatteDto>();
+        }
 
     }
 }

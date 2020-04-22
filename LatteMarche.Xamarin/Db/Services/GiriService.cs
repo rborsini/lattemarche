@@ -15,6 +15,18 @@ namespace LatteMarche.Xamarin.Db.Services
     public class GiriService : BaseEntityService<Giro, int>, IGiriService
     {
 
+        public async Task<IEnumerable<Giro>> GetGiriApertiAsync()
+        {
+            using (var context = CrateContext())
+            {
+                return await context.Set<Giro>()
+                    .Where(g => !g.DataUpload.HasValue)
+                    .Include(g => g.Prelievi)
+                    .AsNoTracking()
+                    .ToListAsync();
+            }
+        }
+
         public async override Task<Giro> GetItemAsync(int id)
         {
             using (var context = CrateContext())
@@ -39,6 +51,17 @@ namespace LatteMarche.Xamarin.Db.Services
                 return await Task.FromResult(true);
             }
         }
+
+        protected override Giro UpdateProperties(Giro entityItem, Giro viewItem)
+        {
+            entityItem.CodiceLotto = viewItem.CodiceLotto;
+            entityItem.Titolo = viewItem.Titolo;
+            entityItem.DataConsegna = viewItem.DataConsegna;
+            entityItem.DataUpload = viewItem.DataUpload;
+
+            return entityItem;
+        }
+
 
     }
 }

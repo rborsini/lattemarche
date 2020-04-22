@@ -23,6 +23,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private ITrasportatoriService trasportatoriService = DependencyService.Get<ITrasportatoriService>();
 
+        private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+
         #endregion
 
         #region Properties
@@ -85,6 +87,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                             Id = dispositivo.IdTrasportatore.Value
                         }).Wait();
                     }
+
+                    this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
 
                 });
 

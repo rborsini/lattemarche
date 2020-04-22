@@ -75,6 +75,7 @@
     <Compile Include="Dtos\DestinatarioDto.cs" />
     <Compile Include="Dtos\DispositivoDto.cs" />
     <Compile Include="Dtos\DownloadDto.cs" />
+    <Compile Include="Dtos\PrelievoLatteDto.cs" />
     <Compile Include="Dtos\TemplateGiroDto.cs" />
     <Compile Include="Dtos\TipoLatteDto.cs" />
     <Compile Include="Dtos\TrasportatoreDto.cs" />

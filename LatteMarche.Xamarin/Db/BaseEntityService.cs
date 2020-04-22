@@ -72,17 +72,6 @@ namespace LatteMarche.Xamarin.Db
             }
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetItemsAsync(Func<TEntity, bool> whereFunc)
-        {
-            using (var context = CrateContext())
-            {
-                return await context.Set<TEntity>()
-                                    .Where(i => whereFunc(i))
-                                    .AsNoTracking()
-                                    .ToListAsync();
-            }
-        }
-
         public virtual async Task<bool> UpdateItemAsync(TEntity item)
         {
             using (var context = CrateContext())

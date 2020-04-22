@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Configuration;
 using LatteMarche.Application.Mobile.Dtos;
+using LatteMarche.Common;
 using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,11 @@ namespace LatteMarche.Application.Mobile
             mappings.CreateMap<Destinatario, DestinatarioDto>()
                 .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Descrizione.Trim()))
                 .ForMember(dest => dest.Provincia, opt => opt.MapFrom(src => src.Comune.Provincia.Trim()))
+                ;
+
+            mappings.CreateMap<PrelievoLatteDto, PrelievoLatte>()
+                .ForMember(dest => dest.LastChange, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.LastOperation, opt => opt.MapFrom(src => OperationEnum.Added))
                 ;
 
             return mappings;

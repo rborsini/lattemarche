@@ -130,42 +130,46 @@ namespace LatteMarche.Tests.Services.Mobile
 
         }
 
-        //[Test]
-        //public void MobileService_Upload()
-        //{
-        //    var imei = "ABCD";
+        [Test]
+        public void MobileService_Upload()
+        {
+            var imei = "ABCD";
 
-        //    var deviceEntity = Builder<DispositivoMobile>
-        //        .CreateNew()
-        //            .With(d => d.Id = imei)
-        //            .With(d => d.Attivo = true)
-        //            .With(d => d.IdTrasportatore = this.utente.Id)
-        //        .Build();
+            var deviceEntity = Builder<DispositivoMobile>
+                .CreateNew()
+                    .With(d => d.Id = imei)
+                    .With(d => d.Attivo = true)
+                    .With(d => d.IdTrasportatore = this.utente.Id)
+                .Build();
 
-        //    this.deviceRepository.Add(deviceEntity);
-        //    this.uow.SaveChanges();
+            this.deviceRepository.Add(deviceEntity);
+            this.uow.SaveChanges();
 
-        //    var uploadDto = new UploadDto()
-        //    {
-        //        IMEI = imei,
-        //        Lat = 12,
-        //        Lng = 42,
-        //        VersioneApp = "0.1"
-        //    };
+            var uploadDto = new UploadDto()
+            {
+                IMEI = imei,
+                Lat = 12,
+                Lng = 42,
+                VersioneApp = "0.1"
+            };
 
-        //    uploadDto.Prelievi = Builder<PrelievoLatteDto>
-        //        .CreateListOfSize(3)
-        //        .Build()
-        //        .ToList();
+            uploadDto.Prelievi = Builder<Application.Mobile.Dtos.PrelievoLatteDto>
+                .CreateListOfSize(3)
+                    .All()
+                        .With(p => p.DataConsegna = DateTime.Now)
+                        .With(p => p.DataPrelievo = DateTime.Now)
+                        .With(p => p.DataUltimaMungitura = DateTime.Now)
+                .Build()
+                .ToList();
 
-        //    this.mobileService.Upload(uploadDto);
+            this.mobileService.Upload(uploadDto);
 
-        //    var prelievi = this.prelieviRepository.GetAll().ToList();
-        //    Assert.AreEqual(3, prelievi.Count);
+            var prelievi = this.prelieviRepository.GetAll().ToList();
+            Assert.AreEqual(3, prelievi.Count);
 
-        //    deviceEntity = this.deviceRepository.GetById(imei);
-        //    Assert.IsTrue(deviceEntity.DataUltimoUpload.HasValue);
-        //}
+            deviceEntity = this.deviceRepository.GetById(imei);
+            Assert.IsTrue(deviceEntity.DataUltimoUpload.HasValue);
+        }
 
         #endregion
     }

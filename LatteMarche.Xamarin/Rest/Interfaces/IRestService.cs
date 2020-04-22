@@ -11,6 +11,6 @@ namespace LatteMarche.Xamarin.Rest.Interfaces
 
         Task<DownloadDto> Download(string imei);
 
-
+        Task<bool> Upload(UploadDto dto);
     }
 }

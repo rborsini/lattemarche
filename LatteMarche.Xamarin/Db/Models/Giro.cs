@@ -17,7 +17,13 @@ namespace LatteMarche.Xamarin.Db.Models
 
         public string TitoloEsteso => $"{this.Titolo} - {this.DataCreazione:dd/MM/yyyy}";
 
+        public string CodiceLotto { get; set; }
+
         public DateTime DataCreazione { get; set; }
+
+        public DateTime? DataConsegna { get; set; }
+
+        public DateTime? DataUpload { get; set; }
 
         public virtual List<Prelievo> Prelievi { get; set; }
 

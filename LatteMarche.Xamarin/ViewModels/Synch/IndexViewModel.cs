@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using LatteMarche.Xamarin.Db;
+using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Enums;
 using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,20 +18,22 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 {
     public class IndexViewModel : BaseViewModel
     {
-        private const string USER = "02102002";
-        private const string PWD = "giorgia2";
+
 
         #region Fields
 
         private IDevice device = DependencyService.Get<IDevice>();
         private IRestService restService => DependencyService.Get<IRestService>();
-        private IEntityService<Allevamento, int> allevamentiService => DependencyService.Get<IEntityService<Allevamento, int>>();
-        private IEntityService<AutoCisterna, int> autocisterneService => DependencyService.Get<IEntityService<AutoCisterna, int>>();
-        private IEntityService<Acquirente, int> acquirentiService => DependencyService.Get<IEntityService<Acquirente, int>>();
-        private IEntityService<Destinatario, int> destinatariService => DependencyService.Get<IEntityService<Destinatario, int>>();
-        private IEntityService<TipoLatte, int> tipiLatteService => DependencyService.Get<IEntityService<TipoLatte, int>>();
-        private IEntityService<Trasportatore, int> trasportatoriService => DependencyService.Get<IEntityService<Trasportatore, int>>();
-        private IEntityService<TemplateGiro, int> templateGiriService => DependencyService.Get<IEntityService<TemplateGiro, int>>();
+        private IAllevamentiService allevamentiService => DependencyService.Get< IAllevamentiService > ();
+        private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
+        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private IGiriService giriService => DependencyService.Get<IGiriService>();
+        private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
+        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
+        private ITemplateGiroService templateGiriService => DependencyService.Get<ITemplateGiroService>();
+
+        private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
 
         #endregion
 
@@ -114,6 +119,9 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                         giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
                         this.templateGiriService.AddRangeItemAsync(giri).Wait();
+
+                        this.sincronizzazioneService.AddAsync(SynchType.Download).Wait();
+
                     }
 
                 });
@@ -134,9 +142,44 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             try
             {
                 this.IsBusy = true;
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                VersionTracking.Track();
+                var appVersion = VersionTracking.CurrentVersion;
 
                 await Task.Run(() =>
                 {
+                    var giri = this.giriService.GetGiriApertiAsync().Result;
+                    var prelievi = giri.SelectMany(g => g.Prelievi).ToList();
+
+                    var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
+
+                    var uploadDto = new UploadDto()
+                    {
+                        IMEI = this.device.GetIdentifier(),
+                        Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
+                        Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
+                        VersioneApp = appVersion,
+                        Prelievi = Mapper.Map<List<PrelievoLatteDto>>(prelievi)
+                    };
+
+                    // chiamata REST upload dati
+                    if(this.restService.Upload(uploadDto).Result)
+                    {
+                        // chiusura giri 
+                        foreach (var giro in giri)
+                        {
+                            giro.DataUpload = DateTime.Now;
+                            this.giriService.UpdateItemAsync(giro).Wait();
+                        }
+
+                        // aggiornamento tabella sincronizzazioni
+                        this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
+                    }
+                    else
+                    {
+                        throw new Exception("Errore di sincronizzazione con il server");
+                    }
+
 
                 });
 

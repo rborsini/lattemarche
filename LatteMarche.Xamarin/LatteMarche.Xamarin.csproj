@@ -23,7 +23,6 @@
     <Compile Remove="Db\Services\GiroItemsDataStore.cs" />
     <Compile Remove="Db\Services\LottiDataStore.cs" />
     <Compile Remove="Rest\Dtos\GiroItemDto.cs" />
-    <Compile Remove="Rest\Dtos\UploadDto.cs" />
     <Compile Remove="ViewModels\Prelievi\NewViewModel.cs" />
     <Compile Remove="Views\Prelievi\NewPage.xaml.cs" />
     <Compile Remove="Zebra\CpclLabelMaker.cs" />

@@ -30,6 +30,12 @@ namespace LatteMarche.Xamarin
 			
 			mappings.CreateMap<GiroDto, TemplateGiro>();
 
+			mappings.CreateMap<Prelievo, PrelievoLatteDto>()
+				.ForMember(dest => dest.LottoConsegna, opt => opt.MapFrom(src => src.Giro.CodiceLotto))
+				.ForMember(dest => dest.DataConsegna, opt => opt.MapFrom(src => src.Giro.DataConsegna))
+				.ForMember(dest => dest.Quantita, opt => opt.MapFrom(src => src.Quantita_kg))
+				.ForMember(dest => dest.IdLabAnalisi, opt => opt.MapFrom(src => 2))		// LAB ANALISI ASSAM
+				;
 			#endregion
 
 

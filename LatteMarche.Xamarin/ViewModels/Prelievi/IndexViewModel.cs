@@ -120,14 +120,20 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     printer.MacAddress = "00:03:7A:30:B0:4D";
 
                     this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
+                    var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
+
+                    // Salvataggio codice lotto
+                    this.giro.DataConsegna = DateTime.Now;
+                    this.giro.CodiceLotto = $"{templateGiro?.Codice}{this.giro.DataConsegna:ddMMyyHHmm}";
+                    this.giriService.UpdateItemAsync(this.giro).Wait();
 
                     var registroRaccolta = new RegistroRaccolta();
 
                     registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
                     registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
-                    registroRaccolta.Giro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
+                    registroRaccolta.Giro = templateGiro;
                     registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
-
+                    registroRaccolta.CodiceLotto = this.giro.CodiceLotto;
                     registroRaccolta.Data = DateTime.Now;
 
                     foreach (var prelievo in this.giro.Prelievi)
@@ -144,7 +150,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         });
                     }
 
-                    printer.PrintLabel(registroRaccolta);
+                    //printer.PrintLabel(registroRaccolta);
 
                 });
 

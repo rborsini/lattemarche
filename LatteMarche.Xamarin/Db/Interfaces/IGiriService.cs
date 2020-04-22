@@ -9,6 +9,6 @@ namespace LatteMarche.Xamarin.Db.Interfaces
 {
     public interface IGiriService : IEntityService<Giro, int>
     {
-        
+        Task<IEnumerable<Giro>> GetGiriApertiAsync();
     }
 }

@@ -53,6 +53,22 @@ namespace LatteMarche.Xamarin.Rest.Services
             return dto;
         }
 
+        public async Task<bool> Upload(UploadDto dto)
+        {
+            var url = $"{API_ENDPOINT}/api/Mobile/Upload";
+
+            var client = new RestClient(url);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+
+            var json = JsonConvert.SerializeObject(dto);
+
+            request.AddParameter("application/json,text/plain", json, ParameterType.RequestBody);
+            IRestResponse response = await client.ExecuteAsync(request);
+
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
 
     }
 }

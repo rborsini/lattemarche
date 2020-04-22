@@ -7,7 +7,7 @@ namespace LatteMarche.Xamarin.Zebra.Models
 {
     public class RegistroRaccolta : Registro
     {
-        public string CodiceLotto => $"{this.Giro.Codice}{DateTime.Now:ddMMyyyyHHmm}";
+        public string CodiceLotto { get; set; }
 
         public string Comunicazioni { get; set; }
 

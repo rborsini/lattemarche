@@ -14,7 +14,6 @@ namespace LatteMarche.Application.Mobile.Services
     public class MobileService : IMobileService
     {
 
-
         #region Fields
 
         private IUnitOfWork uow;
@@ -26,6 +25,7 @@ namespace LatteMarche.Application.Mobile.Services
         private IRepository<TipoLatte, int> tipiLatteRepository;
         private IRepository<Acquirente, int> acquirentiRepository;
         private IRepository<Destinatario, int> destinataryRepository;
+        private IRepository<PrelievoLatte, int> prelieviRepository;
 
         #endregion
 
@@ -44,6 +44,7 @@ namespace LatteMarche.Application.Mobile.Services
             this.tipiLatteRepository = this.uow.Get<TipoLatte, int>();
             this.acquirentiRepository = this.uow.Get<Acquirente, int>();
             this.destinataryRepository = this.uow.Get<Destinatario, int>();
+            this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
 
         }
 
@@ -51,7 +52,11 @@ namespace LatteMarche.Application.Mobile.Services
 
         #region Methods
 
-
+        /// <summary>
+        /// Registrazione device
+        /// </summary>
+        /// <param name="dispostivo"></param>
+        /// <returns></returns>
         public DispositivoDto Register(DispositivoDto deviceInfo)
         {
             if (String.IsNullOrEmpty(deviceInfo.Id))
@@ -72,6 +77,11 @@ namespace LatteMarche.Application.Mobile.Services
             return Mapper.Map<DispositivoDto>(this.dispositiviRepository.GetById(deviceInfo.Id));
         }
 
+        /// <summary>
+        /// Scaricamento dati di anagrafica e lookup
+        /// </summary>
+        /// <param name="imei"></param>
+        /// <returns></returns>
         public DownloadDto Download(string imei)
         {
             DownloadDto db = null;
@@ -130,25 +140,30 @@ namespace LatteMarche.Application.Mobile.Services
             return db;
         }
 
+        /// <summary>
+        /// Caricamento dati prelievi latte
+        /// </summary>
+        /// <param name="dow"></param>
         public void Upload(UploadDto uploadDto)
         {
-            //    var dispositivo = this.dispositiviRepository.GetById(uploadDto.IMEI);
+            var dispositivo = this.dispositiviRepository.GetById(uploadDto.IMEI);
 
-            //    if (dispositivo != null && dispositivo.Attivo)
-            //    {
-            //        foreach (var prelievo in uploadDto.Prelievi)
-            //        {
-            //            this.prelieviLatteService.Create(prelievo);
-            //        }
+            if (dispositivo != null && dispositivo.Attivo)
+            {
+                foreach (var prelievoDto in uploadDto.Prelievi)
+                {
+                    var prelievo = Mapper.Map<PrelievoLatte>(prelievoDto);
+                    this.prelieviRepository.Add(prelievo);
+                }
 
-            //        dispositivo.Latitudine = uploadDto.Lat;
-            //        dispositivo.Longitudine = uploadDto.Lng;
-            //        dispositivo.DataUltimoUpload = DateTime.Now;
-            //        dispositivo.VersioneApp = uploadDto.VersioneApp;
+                dispositivo.Latitudine = uploadDto.Lat;
+                dispositivo.Longitudine = uploadDto.Lng;
+                dispositivo.DataUltimoUpload = DateTime.Now;
+                dispositivo.VersioneApp = uploadDto.VersioneApp;
 
-            //        this.dispositiviRepository.Update(dispositivo);
-            //        this.uow.SaveChanges();
-            //    }
+                this.dispositiviRepository.Update(dispositivo);
+                this.uow.SaveChanges();
+            }
         }
 
         #endregion
