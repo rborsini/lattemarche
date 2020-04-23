@@ -9,9 +9,9 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Stampa" Command="{Binding PrintCommand}" />
-        <ToolbarItem Text="Salva" Command="{Binding SaveItemCommand}" />
-        <ToolbarItem Text="Elimina" Command="{Binding DeleteItemCommand}" />
+        <ToolbarItem Order="Secondary" Text="Stampa" Command="{Binding PrintCommand}" />
+        <ToolbarItem Order="Secondary" Text="Salva" Command="{Binding SaveItemCommand}" />
+        <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
     
     <ScrollView>

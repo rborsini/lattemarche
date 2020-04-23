@@ -7,9 +7,10 @@
              x:Class="LatteMarche.Xamarin.Views.Prelievi.IndexPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Aggiungi" Command="{Binding AddCommand}" />
-        <ToolbarItem Text="Elimina" Command="{Binding RemoveCommand}" />
-        <ToolbarItem Text="Stampa" Command="{Binding PrintCommand}" />
+        <ToolbarItem Order="Secondary" Text="Aggiungi" Command="{Binding AddCommand}" />
+        <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding RemoveCommand}" />
+        <ToolbarItem Order="Secondary" Text="Chiudi" Command="{Binding CloseCommand}" />
+        <ToolbarItem Order="Secondary" Text="Stampa" Command="{Binding PrintCommand}" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>

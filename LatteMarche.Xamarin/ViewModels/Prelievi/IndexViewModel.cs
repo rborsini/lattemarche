@@ -51,6 +51,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command PrintCommand { get; set; }
 
+        public Command CloseCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -65,6 +67,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.AddCommand = new Command(async () => await ExecuteAddCommand());
             this.RemoveCommand = new Command(async () => await ExecuteRemoveCommand());
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            this.CloseCommand = new Command(async () => await ExecuteCloseCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
 
         }
@@ -74,7 +77,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #region Methods
 
         /// <summary>
-        /// Caricamento elenco prelievi presenti nel lotto
+        /// Caricamento elenco prelievi presenti nel giro
         /// </summary>
         /// <returns></returns>
         private async Task ExecuteLoadItemsCommand()
@@ -91,6 +94,39 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Prelievi.Clear();
                     var prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result;
                     this.Prelievi = new ObservableCollection<Prelievo>(prelievi.ToList());
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Chiusura giro
+        /// </summary>
+        /// <returns></returns>
+        private async Task ExecuteCloseCommand()
+        {
+            if (this.IsBusy)
+                return;
+
+            this.IsBusy = true;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
+
+                    // Salvataggio codice lotto
+                    this.giro.DataConsegna = DateTime.Now;
+                    this.giro.CodiceLotto = $"{templateGiro?.Codice}{this.giro.DataConsegna:ddMMyyHHmm}";
+                    this.giriService.UpdateItemAsync(this.giro).Wait();
                 });
             }
             catch (Exception ex)
@@ -122,11 +158,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
                     var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
 
-                    // Salvataggio codice lotto
-                    this.giro.DataConsegna = DateTime.Now;
-                    this.giro.CodiceLotto = $"{templateGiro?.Codice}{this.giro.DataConsegna:ddMMyyHHmm}";
-                    this.giriService.UpdateItemAsync(this.giro).Wait();
-
                     var registroRaccolta = new RegistroRaccolta();
 
                     registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
@@ -150,7 +181,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         });
                     }
 
-                    //printer.PrintLabel(registroRaccolta);
+                    printer.PrintLabel(registroRaccolta);
 
                 });
 
