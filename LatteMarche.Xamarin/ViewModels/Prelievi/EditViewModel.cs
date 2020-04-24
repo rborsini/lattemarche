@@ -196,7 +196,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.idGiro = idGiro;
             this.Id = isNew ? Guid.NewGuid().ToString() : idPrelievo;
-            this.Title = "";
+            this.Title = "Nuovo Prelievo";
 
             this.IsBusy = true;
 
@@ -252,7 +252,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
                     this.AllevamentoSelezionato = this.prelievo.IdAllevamento.HasValue ? this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == this.prelievo.IdAllevamento.Value) : null;
 
-                    this.Title = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.RagioneSociale : "";
+                    this.Title = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.RagioneSociale : "Nuovo Prelievo";
 
                     // Scomparto
                     this.Scomparto = this.prelievo.Scomparto;

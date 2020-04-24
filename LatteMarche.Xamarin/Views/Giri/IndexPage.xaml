@@ -3,39 +3,63 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:LatteMarche.Xamarin.Converters"
              mc:Ignorable="d"
-             x:Class="LatteMarche.Xamarin.Views.Giri.IndexPage">
-
+             x:Class="LatteMarche.Xamarin.Views.Giri.IndexPage"
+             Title="Giri">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InvertBooleanConverter x:Key="invertBoolean" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Aggiungi" Command="{Binding AddCommand}" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
+    <ScrollView VerticalOptions="Fill">
         <AbsoluteLayout>
-
-            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Margin="10">
                 <ListView x:Name="ItemsListView"
+                IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
-                HasUnevenRows="true"
                 RefreshCommand="{Binding LoadItemsCommand}"
-                IsPullToRefreshEnabled="true"
                 CachingStrategy="RecycleElement"
-                ItemSelected="OnItemSelected">
+                ItemSelected="OnItemSelected"
+                SeparatorColor="Black" HasUnevenRows="True"                         
+                >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="10">
-                                    <Label Text="{Binding TitoloEsteso}" 
-                                d:Text="{Binding .}"
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
+                                <StackLayout
+                                        Orientation="Vertical" >
+                                        <Label Text="{Binding Titolo}" FontSize="Title" Margin="0,20,0,0" TextColor="#000"/>
+                                        <Label Text="{Binding DataCreazione}"
+                                            TextColor="#AAA" FontSize="Subtitle" Margin="0,0,0,10" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </StackLayout>
+            
+            <StackLayout IsVisible="{Binding NoData}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="Center"
+                VerticalOptions="Fill"
+                Orientation="Vertical"
+                Padding="0,60"
+            >
+
+                <Image Source="empty_drawer.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                <Label FontSize="Medium" TextColor="#373737" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"  WidthRequest="300" Margin="0,25" TextType="Html" HorizontalTextAlignment="Center">
+                    <Label.Text>
+                        <![CDATA[
+                        Non ci sono <strong>giri</strong> memorizzati, premi <br/><strong>AGGIUNGI</strong><br/>per aggiungerne uno nuovo
+                        ]]>
+                        
+                    </Label.Text>
+                </Label>
+                <Button Command="{Binding AddCommand}" Text="Aggiungi" VerticalOptions="CenterAndExpand"></Button>
             </StackLayout>
 
             <AbsoluteLayout IsVisible="{Binding IsBusy}"
@@ -50,9 +74,9 @@
                         AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
                         AbsoluteLayout.LayoutFlags= "All" />
 
-            </AbsoluteLayout>            
-            
+            </AbsoluteLayout>
+
         </AbsoluteLayout>
-        
+
     </ScrollView>
 </ContentPage>

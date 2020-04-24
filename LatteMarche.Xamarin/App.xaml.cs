@@ -15,6 +15,11 @@ namespace LatteMarche.Xamarin
     {
         public App()
         {
+            
+        }
+
+        protected override async void OnStart()
+        {
             InitializeComponent();
 
             DependencyService.Register<AcquirentiService>();
@@ -34,16 +39,12 @@ namespace LatteMarche.Xamarin
 
             AutomapperConfig.Configure();
 
-            var trasporatori = DependencyService.Get<ITrasportatoriService>().GetItemsAsync().Result.Count();
+            var trasporatori = await DependencyService.Get<ITrasportatoriService>().GetItemsAsync();
 
-            if (trasporatori > 0)
+            if (trasporatori.Count() > 0)
                 MainPage = new MainPage();
             else
                 MainPage = new RegisterPage();
-        }
-
-        protected override void OnStart()
-        {
         }
 
         protected override void OnSleep()

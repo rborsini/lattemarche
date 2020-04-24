@@ -86,6 +86,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 return;
 
             this.IsBusy = true;
+            this.NoData = false;
 
             try
             {
@@ -94,6 +95,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Prelievi.Clear();
                     var prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result;
                     this.Prelievi = new ObservableCollection<Prelievo>(prelievi.ToList());
+
+                    if (this.Prelievi.Count == 0)
+                    {
+                        this.NoData = true;
+                    }
                 });
             }
             catch (Exception ex)

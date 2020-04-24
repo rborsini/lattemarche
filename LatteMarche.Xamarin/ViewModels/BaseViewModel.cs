@@ -17,6 +17,8 @@ namespace LatteMarche.Xamarin.ViewModels
         protected INavigation navigation;
 
         protected bool isBusy = false;
+        protected bool noData = false;
+
         private string title = string.Empty;
 
         #endregion
@@ -31,6 +33,11 @@ namespace LatteMarche.Xamarin.ViewModels
             set { SetProperty(ref isBusy, value); }
         }
 
+        public bool NoData
+        {
+            get { return noData; }
+            set { SetProperty(ref noData, value); }
+        }
 
         public string Title
         {

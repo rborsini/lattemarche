@@ -42,7 +42,7 @@ namespace LatteMarche.Xamarin.Views.Giri
             await Navigation.PushAsync(new Prelievi.IndexPage(new ViewModels.Prelievi.IndexViewModel(Navigation, this, item)));
 
             // Manually deselect item.
-            ItemsListView.SelectedItem = null;
+            //ItemsListView.SelectedItem = null;
         }
 
         protected override void OnAppearing()

@@ -34,7 +34,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         {
             this.Title = "Giri";
             this.Items = new ObservableCollection<Giro>();
-
+            this.NoData = true;
             this.AddCommand = new Command(async () => await ExecuteAddCommand());
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
         }
@@ -62,7 +62,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 return;
 
             this.IsBusy = true;
-
+            this.NoData = false;
             try
             {
                 await Task.Run(() =>
@@ -72,6 +72,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     foreach (var item in items)
                     {
                         this.Items.Add(item);
+                    }
+
+                    if (this.Items.Count == 0)
+                    {
+                        this.NoData = true;
                     }
                 });
             }
