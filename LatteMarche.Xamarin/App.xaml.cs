@@ -4,10 +4,11 @@ using LatteMarche.Xamarin.Rest.Services;
 using LatteMarche.Xamarin.Views;
 using LatteMarche.Xamarin.Views.Synch;
 using LatteMarche.Xamarin.Zebra;
-using System;
 using System.Linq;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Application = Xamarin.Forms.Application;
 
 namespace LatteMarche.Xamarin
 {
@@ -41,6 +42,8 @@ namespace LatteMarche.Xamarin
 
             var trasporatori = await DependencyService.Get<ITrasportatoriService>().GetItemsAsync();
 
+            Current.On<Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+            
             if (trasporatori.Count() > 0)
                 MainPage = new MainPage();
             else
