@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 using Zebra.Sdk.Comm;
 using Zebra.Sdk.Printer;
 
@@ -201,14 +202,13 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.IsBusy = true;
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
-            this.PrintCommand = new Command(async () => await ExecutePrintCommand()); 
-            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand()); 
-            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand()); 
-
+            this.PrintCommand = new Command(async () => await ExecutePrintCommand());
+            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand());
+            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());
         }
 
         #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -217,10 +217,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecuteLoadCommand()
         {
+            this.IsBusy = true;
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento", lottieAnimation: "LottieLogo1.json");
             try
             {
-                this.IsBusy = true;
-
                 await Task.Run(() =>
                 {
                     if (isNew)
@@ -285,12 +285,15 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 });
 
-                this.IsBusy = false;
             }
             catch (Exception exc)
             {
-                this.IsBusy = false;
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+            finally
+            {
+                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
             }
 
         }
@@ -357,7 +360,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 this.IsBusy = false;
                 await navigation.PopAsync();
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
@@ -392,7 +395,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     registroConsegna.Destinatario = GetDestinatario(this.prelievo.IdDestinatario).Result;
                     registroConsegna.Giro = GetTemplateGiro(giro?.IdTemplateGiro).Result;
                     registroConsegna.Trasportatore = this.trasportatoriService.GetCurrent().Result;
-                    
+
                     registroConsegna.Allevamento = GetAllevamento(this.prelievo.IdAllevamento).Result;
                     registroConsegna.Data = this.prelievo.DataConsegna.Value;
 

@@ -17,7 +17,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="Fill">
-        <AbsoluteLayout>
+        <StackLayout>
             <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Margin="10">
                 <ListView x:Name="ItemsListView"
                 IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}"
@@ -61,22 +61,7 @@
                 </Label>
                 <Button Command="{Binding AddCommand}" Text="Aggiungi" VerticalOptions="CenterAndExpand"></Button>
             </StackLayout>
-
-            <AbsoluteLayout IsVisible="{Binding IsBusy}"
-                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                    AbsoluteLayout.LayoutFlags= "All" 
-                    BackgroundColor="#70383838">
-
-                <ActivityIndicator 
-                        IsVisible="{Binding IsBusy}"
-                        IsRunning="{Binding IsBusy}"
-                        Color="Gray"
-                        AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
-                        AbsoluteLayout.LayoutFlags= "All" />
-
-            </AbsoluteLayout>
-
-        </AbsoluteLayout>
+        </StackLayout>
 
     </ScrollView>
 </ContentPage>

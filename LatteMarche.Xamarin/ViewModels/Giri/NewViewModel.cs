@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Linq;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Db.Interfaces;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Giri
 {
@@ -68,7 +69,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 return;
 
             this.IsBusy = true;
-
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento", lottieAnimation: "LottieLogo1.json");
             try
             {
                 await Task.Run(() =>
@@ -85,6 +86,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             finally
             {
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
             }
         }
 

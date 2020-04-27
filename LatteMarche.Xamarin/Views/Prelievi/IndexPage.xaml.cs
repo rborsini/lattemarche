@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.Views.Prelievi
 {
@@ -39,8 +40,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.IdGiro.Value, item.Id)));
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento", lottieAnimation: "LottieLogo1.json");
 
+            await Navigation.PushAsync(new EditPage(new EditViewModel(Navigation, this, item.IdGiro.Value, item.Id)));
+            
+            await loadingDialog.DismissAsync();
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }

@@ -16,7 +16,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -73,6 +73,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>4.5.0.657</Version>
+    </PackageReference>
+    <PackageReference Include="XF.Material">
+      <Version>1.6.3</Version>
     </PackageReference>
     <PackageReference Include="Zebra.Printer.SDK">
       <Version>2.15.2634</Version>

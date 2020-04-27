@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Prelievi
 {
@@ -88,6 +89,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.IsBusy = true;
             this.NoData = false;
 
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Prelievi in caricamento", lottieAnimation: "LottieLogo1.json");
+
             try
             {
                 await Task.Run(() =>
@@ -108,6 +111,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
             finally
             {
+                await loadingDialog.DismissAsync();
                 this.IsBusy = false;
             }
         }

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"             
              x:Class="LatteMarche.Xamarin.Views.Prelievi.EditPage"
              Appearing="ContentPage_Appearing"
@@ -15,72 +17,125 @@
     </ContentPage.ToolbarItems>
     
     <ScrollView>
-        <AbsoluteLayout>
-
-            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
-
-                 <!--Data prelievo--> 
-                <DatePicker Date="{Binding DataPrelievo, Mode=TwoWay}" />
-                <TimePicker Time="{Binding OraPrelievo, Mode=TwoWay}" />
-
-                 <!--Allevamento--> 
-                <Picker Title="Seleziona allevamento"
-                    ItemDisplayBinding="{Binding RagioneSociale}"
-                    ItemsSource="{Binding Allevamenti}"
-                    SelectedItem="{Binding AllevamentoSelezionato, Mode=TwoWay}" />
-
-                 <!--Scomparto--> 
-                <Label Text="Scomparto" FontSize="Medium" />
-                <Entry Text="{Binding Scomparto, Mode=TwoWay}" d:Text="Scomparto" FontSize="Small" />
-
-                 <!--Qta kg--> 
-                <Label Text="kg" FontSize="Medium" />
-                <Editor Text="{Binding Kg, Mode=TwoWay}" d:Text="kg" FontSize="Small" Margin="0" />
-
-                 <!--Qta lt--> 
-                <Label Text="lt" FontSize="Medium" />
-                <Editor Text="{Binding Lt, Mode=TwoWay}" d:Text="lt" FontSize="Small" Margin="0" />
-
-                 <!--Temp--> 
-                <Label Text="Temp" FontSize="Medium" />
-                <Editor Text="{Binding Temperatura, Mode=TwoWay}" d:Text="temp" FontSize="Small" Margin="0" />
-
-                 <!--Num mung--> 
-                <Label Text="Num. mung." FontSize="Medium" />
-                <Editor Text="{Binding NumeroMungiture, Mode=TwoWay}" d:Text="temp" FontSize="Small" Margin="0" />
-
-                 <!--Data ultima mungitura--> 
-                <DatePicker Date="{Binding DataUltimaMungitura, Mode=TwoWay}" />
-                <TimePicker Time="{Binding OraUltimaMungitura, Mode=TwoWay}" />
-
-                 <!--Acquirente--> 
-                <Picker Title="Seleziona acquirente"
-                    ItemDisplayBinding="{Binding RagioneSociale}"
-                    ItemsSource="{Binding Acquirenti}"
-                    SelectedItem="{Binding AcquirenteSelezionato, Mode=TwoWay}" />
-
-                 <!--Destinatario--> 
-                <Picker Title="Seleziona destinatario"
-                    ItemDisplayBinding="{Binding RagioneSociale}"
-                    ItemsSource="{Binding Destinatari}"
-                    SelectedItem="{Binding DestinatarioSelezionato, Mode=TwoWay}" />
-
-           
+        <StackLayout Padding="16" Spacing="16" >
+            <!--Data prelievo-->
+            <Label>Data e ora</Label>
+            <StackLayout Orientation="Horizontal">
+                <material:MaterialDatePicker 
+                    Date="{Binding DataPrelievo, Mode=TwoWay}" 
+                    HorizontalOptions="Start"
+                    BackgroundColor="Transparent"
+                    InputTransparent="True"
+                />
+                <material:MaterialTimePicker
+                    Time="{Binding OraPrelievo, Mode=TwoWay}"
+                    HorizontalOptions="EndAndExpand"
+                />
+            </StackLayout>
+            <!--Allevamento-->
+            <material:MaterialTextField Placeholder="Allevamento"
+                InputType="Choice"
+                SelectedChoice="{Binding AllevamentoSelezionato, Mode=TwoWay}"
+                Choices="{Binding Allevamenti}"
+                ChoicesBindingName="RagioneSociale"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+            />
+            <!--Scomparto--> 
+            <material:MaterialTextField 
+                ShouldAnimateUnderline="True"
+                Placeholder="Scomparto" 
+                Text="{Binding Scomparto, Mode=TwoWay}"
+                InputType="Default"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+             />
+            <!--Qta kg--> 
+            <material:MaterialTextField 
+                ShouldAnimateUnderline="True"
+                Placeholder="Peso"
+                HelperText="Valore in Kg"
+                Text="{Binding Kg, Mode=TwoWay}"
+                InputType="Numeric"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+             />
+            
+            <!--Qta lt--> 
+            <material:MaterialTextField 
+                ShouldAnimateUnderline="True"
+                Placeholder="Quantità" 
+                Text="{Binding Lt, Mode=TwoWay}"
+                HelperText="Valore in Litri"
+                InputType="Numeric"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+             />
+            
+            <!--Temp--> 
+            <material:MaterialTextField 
+                ShouldAnimateUnderline="True"
+                Placeholder="Temperatura" 
+                Text="{Binding Temperatura, Mode=TwoWay}"
+                HelperText="Valore in °C"
+                InputType="Numeric"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+             />
+                
+            <!--Num mung--> 
+            <material:MaterialTextField 
+                ShouldAnimateUnderline="True"
+                Placeholder="Numero Mungiture" 
+                Text="{Binding NumeroMungiture, Mode=TwoWay}"
+                InputType="Numeric"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+             />
+            
+             <!--Data ultima mungitura-->
+            <Label>Ultima mungitura</Label>
+            <StackLayout Orientation="Horizontal">
+                <material:MaterialDatePicker 
+                    Date="{Binding DataUltimaMungitura, Mode=TwoWay}" 
+                    HorizontalOptions="Start"
+                    BackgroundColor="Transparent"
+                    InputTransparent="True"
+                />
+                <material:MaterialTimePicker
+                    Time="{Binding OraUltimaMungitura, Mode=TwoWay}"
+                    HorizontalOptions="EndAndExpand"
+                />
             </StackLayout>
 
-            <AbsoluteLayout IsVisible="{Binding IsBusy}"
-                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                    AbsoluteLayout.LayoutFlags= "All" 
-                    BackgroundColor="#70383838">
+            <!--Acquirente-->
+            <material:MaterialTextField Placeholder="Acquirente"
+                InputType="Choice"
+                SelectedChoice="{Binding AcquirenteSelezionato, Mode=TwoWay}"
+                Choices="{Binding Acquirenti}"
+                ChoicesBindingName="RagioneSociale"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+            />
 
-                <ActivityIndicator 
-                        IsVisible="{Binding IsBusy}"
-                        IsRunning="{Binding IsBusy}"
-                        Color="Gray"
-                        AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
-                        AbsoluteLayout.LayoutFlags= "All" />
-
-            </AbsoluteLayout>
-        </AbsoluteLayout>
+            <!--Destinatario--> 
+            <material:MaterialTextField Placeholder="Destinatario"
+                InputType="Choice"
+                SelectedChoice="{Binding DestinatarioSelezionato, Mode=TwoWay}"
+                Choices="{Binding Destinatari}"
+                ChoicesBindingName="RagioneSociale"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+            />
+        </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Giri
 {
@@ -32,9 +33,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         public IndexViewModel(INavigation navigation, Page page)
             : base(navigation, page)
         {
-            this.Title = "Giri";
             this.Items = new ObservableCollection<Giro>();
-            this.NoData = true;
+            this.NoData = false;
             this.AddCommand = new Command(async () => await ExecuteAddCommand());
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
         }
@@ -62,11 +62,15 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 return;
 
             this.IsBusy = true;
+
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Giri in caricamento", lottieAnimation: "LottieLogo1.json");
             this.NoData = false;
+            
             try
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
+                   await loadingDialog.DismissAsync();
                     this.Items.Clear();
                     var items = this.giriService.GetItemsAsync().Result;
                     foreach (var item in items)
@@ -76,7 +80,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                     if (this.Items.Count == 0)
                     {
-                        this.NoData = true;
+                        //this.NoData = true;
                     }
                 });
             }
@@ -86,6 +90,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
             finally
             {
+               
                 this.IsBusy = false;
             }
         }
