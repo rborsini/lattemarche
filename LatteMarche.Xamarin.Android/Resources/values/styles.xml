@@ -28,15 +28,7 @@
    <item name="android:cacheColorHint">@android:color/transparent</item>
   
   </style>
-
-  <style name="ListView" parent="@android:style/Widget.ListView">
-      <item name="android:background">@android:color/holo_red_dark</item>
-      <item name="android:cacheColorHint">@android:color/holo_red_dark</item>
-      <item name="android:divider">@android:color/holo_red_dark</item>
-      <item name="android:dividerHeight">0dp</item>
-      <item name="android:listSelector">@android:color/holo_red_dark</item>
-  </style>
-      
+  
   <style name="MainTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@drawable/splash_screen</item>
     <item name="android:windowNoTitle">true</item>
@@ -56,5 +48,13 @@
     <!--<item name="android:numbersTextColor">#ff000000</item>-->
     <item name="android:numbersSelectorColor">#593196</item>
     <!--<item name="android:numbersBackgroundColor">#ffdddddd</item>-->
+  </style>
+
+  <style name="ListViewStyle" parent="@android:style/Widget.ListView">
+      <item name="android:background">@android:color/holo_red_dark</item>
+      <item name="android:cacheColorHint">@android:color/holo_red_dark</item>
+      <item name="android:divider">@android:color/holo_red_dark</item>
+      <item name="android:dividerHeight">0dp</item>
+      <item name="android:listSelector">@android:color/holo_red_dark</item>
   </style>
 </resources>

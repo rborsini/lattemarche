@@ -13546,7 +13546,7 @@ namespace LatteMarche.Xamarin.Droid
 			public const int collectionViewStyle = 2131689983;
 			
 			// aapt resource value: 0x7F0F00C7
-			public const int ListView = 2131689671;
+			public const int ListViewStyle = 2131689671;
 			
 			// aapt resource value: 0x7F0F00C8
 			public const int MainTheme = 2131689672;

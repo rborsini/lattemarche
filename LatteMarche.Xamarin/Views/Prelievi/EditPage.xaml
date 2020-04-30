@@ -79,7 +79,7 @@
                 <material:MaterialTextField 
                     Grid.Row="0" Grid.Column="0"
                     ShouldAnimateUnderline="True"
-                    Placeholder="KG"
+                    Placeholder="Kg"
                     Text="{Binding Kg, Mode=TwoWay}"
                     InputType="Numeric"
                     BackgroundColor="Transparent"
