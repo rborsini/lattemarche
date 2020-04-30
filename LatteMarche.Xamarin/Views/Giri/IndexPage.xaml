@@ -13,12 +13,19 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Aggiungi" Command="{Binding AddCommand}" />
+        <ToolbarItem  Command="{Binding AddCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF11EC;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="Fill">
         <StackLayout>
-            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All" Margin="10">
+            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" Margin="10,0,10,10">
                 <ListView x:Name="ItemsListView"
                 IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}"
                 ItemsSource="{Binding Items}"
@@ -33,9 +40,9 @@
                             <ViewCell>
                                 <StackLayout
                                         Orientation="Vertical" >
-                                        <Label Text="{Binding Titolo}" FontSize="Title" Margin="0,20,0,0" TextColor="#000"/>
+                                        <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,20,0,0" TextColor="#000"/>
                                         <Label Text="{Binding DataCreazione}"
-                                            TextColor="#AAA" FontSize="Subtitle" Margin="0,0,0,10" />
+                                            TextColor="#AAA" FontSize="Medium" Margin="0,0,0,10" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -43,7 +50,7 @@
                 </ListView>
             </StackLayout>
             
-            <StackLayout IsVisible="{Binding NoData}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All"
+            <StackLayout IsVisible="{Binding NoData}"
                 HorizontalOptions="Center"
                 VerticalOptions="Fill"
                 Orientation="Vertical"

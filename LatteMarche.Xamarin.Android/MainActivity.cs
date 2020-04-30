@@ -12,16 +12,15 @@ using Forms = Xamarin.Forms;
 
 namespace LatteMarche.Xamarin.Droid
 {
-    [Activity(Label = "LatteMarche.Xamarin", Icon = "@mipmap/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    // Per le icone https://easyappicon.com/
+    [Activity(Label = "LatteMarche.Xamarin", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            var a = Resources.Configuration.Locale;
             base.OnCreate(savedInstanceState);
 
             Platform.Init(this, savedInstanceState);

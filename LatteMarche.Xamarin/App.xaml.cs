@@ -22,7 +22,7 @@ namespace LatteMarche.Xamarin
         protected override async void OnStart()
         {
             InitializeComponent();
-            XF.Material.Forms.Material.Init(this);
+            XF.Material.Forms.Material.Init(this, "Material.Configuration");
 
             DependencyService.Register<AcquirentiService>();
             DependencyService.Register<AllevamentiService>();

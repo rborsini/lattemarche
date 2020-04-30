@@ -11,25 +11,40 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Secondary" Text="Stampa" Command="{Binding PrintCommand}" />
-        <ToolbarItem Order="Secondary" Text="Salva" Command="{Binding SaveItemCommand}" />
+        <ToolbarItem  Command="{Binding PrintCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF042A;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem  Command="{Binding SaveItemCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF0193;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
         <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
     
     <ScrollView>
         <StackLayout Padding="16" Spacing="16" >
             <!--Data prelievo-->
-            <Label>Data e ora</Label>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label VerticalOptions="Center">Data e ora</Label>
                 <material:MaterialDatePicker 
-                    Date="{Binding DataPrelievo, Mode=TwoWay}" 
-                    HorizontalOptions="Start"
+                    Date="{Binding DataPrelievo, Mode=TwoWay}"
+                    HorizontalOptions="EndAndExpand"
                     BackgroundColor="Transparent"
-                    InputTransparent="True"
+                    FontSize="Body"
                 />
                 <material:MaterialTimePicker
                     Time="{Binding OraPrelievo, Mode=TwoWay}"
-                    HorizontalOptions="EndAndExpand"
+                    HorizontalOptions="End"
+                    FontSize="Body"
                 />
             </StackLayout>
             <!--Allevamento-->
@@ -53,61 +68,83 @@
                 AlwaysShowUnderline="True"
                 BackgroundColor="Transparent"
              />
-            <!--Qta kg--> 
-            <material:MaterialTextField 
-                ShouldAnimateUnderline="True"
-                Placeholder="Peso"
-                HelperText="Valore in Kg"
-                Text="{Binding Kg, Mode=TwoWay}"
-                InputType="Numeric"
-                AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-             />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+                <material:MaterialTextField 
+                    Grid.Row="0" Grid.Column="0"
+                    ShouldAnimateUnderline="True"
+                    Placeholder="KG"
+                    Text="{Binding Kg, Mode=TwoWay}"
+                    InputType="Numeric"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="FillAndExpand"
+                    AlwaysShowUnderline="True"
+                 />
+
+                <!--Qta lt-->
+                <material:MaterialTextField 
+                    Grid.Row="0" Grid.Column="1"
+                    ShouldAnimateUnderline="True"
+                    Placeholder="Litri" 
+                    Text="{Binding Lt, Mode=TwoWay}"
+                    InputType="Numeric"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="FillAndExpand"
+                    AlwaysShowUnderline="True"
+                 />
+            </Grid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+
+                <!--Temp-->
+                <material:MaterialTextField 
+                    Grid.Row="0" Grid.Column="0"
+                    ShouldAnimateUnderline="True"
+                    Placeholder="Temp °C" 
+                    Text="{Binding Temperatura, Mode=TwoWay}"
+                    InputType="Numeric"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                 />
+
+                <!--Num mung-->
+                <material:MaterialTextField
+                    Grid.Row="0" Grid.Column="1"
+                    ShouldAnimateUnderline="True"
+                    Placeholder="Num. Mung." 
+                    Text="{Binding NumeroMungiture, Mode=TwoWay}"
+                    InputType="Numeric"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                 />
+            </Grid>
             
-            <!--Qta lt--> 
-            <material:MaterialTextField 
-                ShouldAnimateUnderline="True"
-                Placeholder="Quantità" 
-                Text="{Binding Lt, Mode=TwoWay}"
-                HelperText="Valore in Litri"
-                InputType="Numeric"
-                AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-             />
-            
-            <!--Temp--> 
-            <material:MaterialTextField 
-                ShouldAnimateUnderline="True"
-                Placeholder="Temperatura" 
-                Text="{Binding Temperatura, Mode=TwoWay}"
-                HelperText="Valore in °C"
-                InputType="Numeric"
-                AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-             />
-                
-            <!--Num mung--> 
-            <material:MaterialTextField 
-                ShouldAnimateUnderline="True"
-                Placeholder="Numero Mungiture" 
-                Text="{Binding NumeroMungiture, Mode=TwoWay}"
-                InputType="Numeric"
-                AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-             />
             
              <!--Data ultima mungitura-->
-            <Label>Ultima mungitura</Label>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Label  VerticalOptions="Center" Padding="10,0,0,0">Ultima mungitura</Label>
                 <material:MaterialDatePicker 
+                    HorizontalOptions="EndAndExpand"
                     Date="{Binding DataUltimaMungitura, Mode=TwoWay}" 
-                    HorizontalOptions="Start"
-                    BackgroundColor="Transparent"
-                    InputTransparent="True"
+                    FontSize="Body"
                 />
                 <material:MaterialTimePicker
                     Time="{Binding OraUltimaMungitura, Mode=TwoWay}"
-                    HorizontalOptions="EndAndExpand"
+                    HorizontalOptions="End"
+                    FontSize="Body"
                 />
             </StackLayout>
 

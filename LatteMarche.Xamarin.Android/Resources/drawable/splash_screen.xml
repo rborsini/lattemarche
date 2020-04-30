@@ -3,10 +3,11 @@
   <item>
     <color android:color="@color/splash_background"/>
   </item>
-  <item>
+  <item android:right="50dp" android:left="50dp" >
     <bitmap
-        android:src="@drawable/splash_logo"
+        android:src="@drawable/logo_latte_marche"
         android:tileMode="disabled"
-        android:gravity="center"/>
+        android:gravity="fill_horizontal"
+        />
   </item>
 </layer-list>

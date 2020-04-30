@@ -13,15 +13,36 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Secondary" Text="Aggiungi" Command="{Binding AddCommand}" />
+        <ToolbarItem  Command="{Binding CloseCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF1184;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem  Command="{Binding PrintCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF042A;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem  Command="{Binding AddCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF11EC;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
         <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding RemoveCommand}" />
-        <ToolbarItem Order="Secondary" Text="Chiudi" Command="{Binding CloseCommand}" />
-        <ToolbarItem Order="Secondary" Text="Stampa" Command="{Binding PrintCommand}" />
     </ContentPage.ToolbarItems>
 
     <StackLayout>
         <ScrollView>
-            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" Margin="10">
+            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" Margin="10,0,10,10">
                 <ListView x:Name="ItemsListView"
                 IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}"
                 ItemsSource="{Binding Prelievi}"
@@ -36,7 +57,7 @@
                             <ViewCell>
                                 <StackLayout
                                         Orientation="Vertical" >
-                                    <Label Text="{Binding Titolo}" FontSize="Title" Margin="0,20,0,0" TextColor="#000"/>
+                                    <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,20,0,0" TextColor="#000"/>
                                     <Label Text="{Binding DataPrelievo}"
                                             TextColor="#AAA" FontSize="Subtitle" Margin="0,0,0,10" />
                                 </StackLayout>

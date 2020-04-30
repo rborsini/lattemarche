@@ -33,9 +33,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private DateTime dataPrelievo;
         private TimeSpan oraPrelievo;
         private string scomparto;
-        private decimal? kg;
-        private decimal? lt;
-        private decimal? temperatura;
+        private string kg;
+        private string lt;
+        private string temperatura;
         private int? numeroMungiture;
         private DateTime dataUltimaMungitura;
         private TimeSpan oraUltimaMungitura;
@@ -102,19 +102,19 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             set { SetProperty(ref this.scomparto, value); }
         }
 
-        public decimal? Kg
+        public string Kg
         {
             get { return this.kg; }
             set { SetProperty(ref this.kg, value); }
         }
 
-        public decimal? Lt
+        public string Lt
         {
             get { return this.lt; }
             set { SetProperty(ref this.lt, value); }
         }
 
-        public decimal? Temperatura
+        public string Temperatura
         {
             get { return this.temperatura; }
             set { SetProperty(ref this.temperatura, value); }
@@ -189,7 +189,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public EditViewModel(INavigation navigation, Page page, int idGiro, string idPrelievo)
             : base(navigation, page)
         {
-
+            
             this.navigation = navigation;
             this.page = page;
 
@@ -197,7 +197,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.idGiro = idGiro;
             this.Id = isNew ? Guid.NewGuid().ToString() : idPrelievo;
-            this.Title = "Nuovo Prelievo";
+            this.Title = String.Empty;
 
             this.IsBusy = true;
 
@@ -252,19 +252,19 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
                     this.AllevamentoSelezionato = this.prelievo.IdAllevamento.HasValue ? this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == this.prelievo.IdAllevamento.Value) : null;
 
-                    this.Title = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.RagioneSociale : "Nuovo Prelievo";
+                    this.Title = this.AllevamentoSelezionato != null ? "Modifica Prelievo" : "Nuovo Prelievo";
 
                     // Scomparto
                     this.Scomparto = this.prelievo.Scomparto;
 
                     // Kg
-                    this.Kg = this.prelievo.Quantita_kg;
+                    this.Kg = this.prelievo.Quantita_kg?.ToString();
 
                     // Lt
-                    this.Lt = this.prelievo.Quantita_lt;
+                    this.Lt = this.prelievo.Quantita_lt?.ToString();
 
                     // temperatura
-                    this.Temperatura = this.prelievo.Temperatura;
+                    this.Temperatura = this.prelievo.Temperatura?.ToString();
 
                     // num mungiture
                     this.NumeroMungiture = this.prelievo.NumeroMungiture;
@@ -304,10 +304,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecuteSaveItemCommand()
         {
+                this.IsBusy = true;
+                var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
-                this.IsBusy = true;
-
                 await Task.Run(() =>
                 {
                     this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
@@ -315,10 +315,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     this.prelievo.DataPrelievo = this.DataPrelievo.Add(this.OraPrelievo);
                     this.prelievo.Scomparto = this.Scomparto;
-                    this.prelievo.Quantita_kg = this.Kg;
-                    this.prelievo.Quantita_lt = this.Lt;
+                    this.prelievo.Quantita_kg = Convert.ToDecimal(this.Kg);
+                    this.prelievo.Quantita_lt = Convert.ToDecimal(this.Lt);
 
-                    this.prelievo.Temperatura = this.Temperatura;
+                    this.prelievo.Temperatura = Convert.ToDecimal(this.Temperatura);
                     this.prelievo.NumeroMungiture = this.NumeroMungiture;
                     this.prelievo.DataUltimaMungitura = this.DataUltimaMungitura.Add(this.OraUltimaMungitura);
                     this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
@@ -339,6 +339,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+            finally
+            {
+                await loadingDialog.DismissAsync();
             }
         }
 

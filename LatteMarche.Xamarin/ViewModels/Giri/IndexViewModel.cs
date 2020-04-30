@@ -80,7 +80,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                     if (this.Items.Count == 0)
                     {
-                        //this.NoData = true;
+                        this.NoData = true;
                     }
                 });
             }
