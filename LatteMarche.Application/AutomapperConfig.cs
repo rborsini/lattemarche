@@ -41,20 +41,6 @@ namespace LatteMarche.Application
         }
 	}
 
-	public static class MappingExpressionExtensions
-	{
-		public static IMappingExpression<TSource, TDest> IgnoreAllUnmapped<TSource, TDest>(this IMappingExpression<TSource, TDest> expression)
-		{
-			expression.ForAllMembers(opt => opt.Ignore());
-			return expression;
-		}
-
-		public static IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(this IMappingExpression<TSource, TDestination> map, Expression<Func<TDestination, object>> selector)
-		{
-			map.ForMember(selector, config => config.Ignore());
-			return map;
-		}
-	}
 
 
 
