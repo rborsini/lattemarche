@@ -37,6 +37,7 @@ namespace LatteMarche.Xamarin
             DependencyService.Register<GiriService>();
             DependencyService.Register<PrelieviService>();
             DependencyService.Register<SincronizzazioneService>();
+            DependencyService.Register<StampantiService>();
             DependencyService.Register<TemplateGiroService>();
             DependencyService.Register<TipiLatteService>();
             DependencyService.Register<TrasportatoriService>();

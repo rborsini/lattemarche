@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LatteMarche.Xamarin.Db.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -24,27 +25,38 @@ namespace LatteMarche.Xamarin.Zebra
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<string> OnDiscoveryError;
+        public event EventHandler OnDiscoveryFinished;
+        public event EventHandler<Stampante> OnFoundPrinter;
+
+        #endregion
+
         #region Methods
 
         public void DiscoveryError(string message)
         {
-            Device.BeginInvokeOnMainThread(async () => {
-                await this.page.DisplayAlert("Discovery Error", message, "OK");
-            });
+            if(this.OnDiscoveryError != null)
+            {
+                this.OnDiscoveryError(this, message);
+            }
         }
 
         public void DiscoveryFinished()
         {
-            Device.BeginInvokeOnMainThread(async () => {
-                await this.page.DisplayAlert("Discovery", "Finished", "OK");
-            });
+            if (this.OnDiscoveryFinished != null)
+            {
+                this.OnDiscoveryFinished(this, null);
+            }
         }
 
         public void FoundPrinter(DiscoveredPrinter printer)
         {
-            Device.BeginInvokeOnMainThread(async () => {
-                await this.page.DisplayAlert("Printer found", printer.Address, "OK");
-            });
+            if (this.OnFoundPrinter != null)
+            {
+                this.OnFoundPrinter(this, new Stampante() { MacAddress = printer.Address, Nome = printer.DiscoveryDataMap["FRIENDLY_NAME"] });
+            }
         }
 
         #endregion

@@ -21,5 +21,11 @@ namespace LatteMarche.Xamarin.Views.Impostazioni
 
             BindingContext = this.viewModel = new IndexViewModel(Navigation, this);
         }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            this.viewModel.LoadCommand.Execute(null);
+        }
+
     }
 }

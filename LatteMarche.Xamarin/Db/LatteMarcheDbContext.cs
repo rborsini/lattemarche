@@ -17,6 +17,7 @@ namespace LatteMarche.Xamarin.Db
 		public DbSet<Giro> Giri { get; set; }
 		public DbSet<Prelievo> Prelievi { get; set; }
 		public DbSet<Sincronizzazione> Sincronizzazioni { get; set; }
+		public DbSet<Stampante> Stampanti { get; set; }
 		public DbSet<TemplateGiro> TemplateGiri { get; set; }
 		public DbSet<TipoLatte> TipiLatte { get; set; }
 		public DbSet<Trasportatore> Trasportatori { get; set; }

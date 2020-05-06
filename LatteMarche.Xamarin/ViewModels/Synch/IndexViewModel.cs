@@ -19,7 +19,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
     public class IndexViewModel : BaseViewModel
     {
 
-
         #region Fields
 
         private IDevice device = DependencyService.Get<IDevice>();

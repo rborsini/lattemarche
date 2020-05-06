@@ -30,6 +30,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
         private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
+        private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
         private ObservableCollection<Prelievo> prelievi;
 
@@ -162,8 +163,13 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 await Task.Run(() =>
                 {
+                    var stampante = this.stampantiService.GetDefaultAsync().Result;
+
+                    if (stampante == null)
+                        throw new Exception("Nessuna stampante associata");
+
                     var printer = DependencyService.Get<IPrinter>();
-                    printer.MacAddress = "00:03:7A:30:B0:4D";
+                    printer.MacAddress = stampante.MacAddress;
 
                     this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
                     var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;

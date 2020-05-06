@@ -3,12 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+            xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"
-             x:Class="LatteMarche.Xamarin.Views.Impostazioni.IndexPage">
+             x:Class="LatteMarche.Xamarin.Views.Impostazioni.IndexPage"
+            Appearing="ContentPage_Appearing"
+             Title="Stampanti"
+             >
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  Command="{Binding DiscoveryCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF0068;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Button Margin="0,10,0,0" Text="Ricerca stampanti"
-                        Command="{Binding DiscoveryCommand}"  />
-        </StackLayout>
+
+        <AbsoluteLayout>
+
+            <StackLayout Padding="16" Spacing="16" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+
+                <!---->
+                
+                <!-- Stampanti -->
+                <material:MaterialTextField Placeholder="Stampante"
+                    InputType="Choice"
+                    SelectedChoice="{Binding StampanteSelezionata, Mode=TwoWay}"
+                    Choices="{Binding Stampanti}"
+                    ChoicesBindingName="Nome"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                    matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                    matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                    matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+                />
+
+                <Button Margin="0,10,0,0" Text="Imposta predefinita"  Command="{Binding SetDefaultCommand}"  />
+                <!--<Button Margin="0,10,0,0" Text="Ricerca stampanti"  Command="{Binding DiscoveryCommand}"  />-->
+            </StackLayout>
+
+            <AbsoluteLayout IsVisible="{Binding IsBusy}"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags= "All" 
+                BackgroundColor="#70383838">
+
+                <ActivityIndicator 
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    Color="Gray"
+                    AbsoluteLayout.LayoutBounds="0.45, 0.5, 0.55, 0.2"
+                    AbsoluteLayout.LayoutFlags= "All" />
+
+            </AbsoluteLayout>
+        </AbsoluteLayout>
+
     </ContentPage.Content>
 </ContentPage>
