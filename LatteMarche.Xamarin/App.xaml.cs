@@ -9,6 +9,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Application = Xamarin.Forms.Application;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace LatteMarche.Xamarin
 {
@@ -22,6 +25,9 @@ namespace LatteMarche.Xamarin
         protected override async void OnStart()
         {
             InitializeComponent();
+
+            AppCenter.Start("android=2676a594-ff4a-483a-8178-ca2377f493d2;", typeof(Analytics), typeof(Crashes));
+
             XF.Material.Forms.Material.Init(this, "Material.Configuration");
 
             DependencyService.Register<AcquirentiService>();
