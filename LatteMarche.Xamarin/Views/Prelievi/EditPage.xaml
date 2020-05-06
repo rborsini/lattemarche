@@ -8,7 +8,7 @@
              mc:Ignorable="d"             
              x:Class="LatteMarche.Xamarin.Views.Prelievi.EditPage"
              Appearing="ContentPage_Appearing"
-             Title="{Binding Title}">
+             Title="Info Prelievo">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem  Command="{Binding PrintCommand}">

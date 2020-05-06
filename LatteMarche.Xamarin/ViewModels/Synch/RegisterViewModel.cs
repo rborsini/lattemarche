@@ -86,6 +86,9 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                         {
                             Id = dispositivo.IdTrasportatore.Value
                         }).Wait();
+
+                        var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
+                        this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
                     }
 
                     this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
@@ -98,7 +101,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 if (isActive)
                 {
                     Application.Current.MainPage = new MainPage();
-                    await (Application.Current.MainPage as MainPage).NavigateFromMenu((int)MenuItemType.Synch);
+                    await (Application.Current.MainPage as MainPage).NavigateFromMenu((int)MenuItemType.Giri);
                 }
                     
 

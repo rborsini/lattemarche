@@ -8,13 +8,21 @@
              mc:Ignorable="d"
              x:Class="LatteMarche.Xamarin.Views.Giri.NewPage"
              Appearing="ContentPage_Appearing"
-             Title="Nuovo giro"
+             Title="Scelta giro"
              >
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Salva" Command="{Binding SaveCommand}" />
+        <!--<ToolbarItem Text="Salva" Command="{Binding SaveCommand}" />-->
+        <ToolbarItem  Command="{Binding SaveCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF0193;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>        
     </ContentPage.ToolbarItems>
     <StackLayout Padding="16" Spacing="16" >
-        <material:MaterialTextField Placeholder="Nuovo Giro"
+        <material:MaterialTextField Placeholder="Seleziona Giro"
             InputType="Choice"
             SelectedChoice="{Binding ModelloSelezionato}"
             Choices="{Binding Modelli}"
