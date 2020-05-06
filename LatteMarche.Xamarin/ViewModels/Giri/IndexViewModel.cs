@@ -1,7 +1,10 @@
 ﻿using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Views.Giri;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -49,6 +52,23 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
+
+
+            try
+            {
+                Analytics.TrackEvent("My custom event");
+                Crashes.GenerateTestCrash();
+                // your code here.
+            }
+            catch (Exception exception)
+            {
+                var properties = new Dictionary<string, string> {
+                    { "Category", "Music" },
+                    { "Wifi", "On" }
+                };
+                Crashes.TrackError(exception, properties);
+            }
+
             await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
         }
 
@@ -65,12 +85,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Giri in caricamento", lottieAnimation: "LottieLogo1.json");
             this.NoData = false;
-            
+
             try
             {
                 await Task.Run(async () =>
                 {
-                   await loadingDialog.DismissAsync();
+                    await loadingDialog.DismissAsync();
                     this.Items.Clear();
                     var items = this.giriService.GetItemsAsync().Result;
                     foreach (var item in items)
@@ -90,7 +110,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
             finally
             {
-               
+
                 this.IsBusy = false;
             }
         }
