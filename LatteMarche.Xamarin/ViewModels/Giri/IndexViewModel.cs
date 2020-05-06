@@ -54,20 +54,20 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         {
 
 
-            try
-            {
-                Analytics.TrackEvent("My custom event");
-                Crashes.GenerateTestCrash();
-                // your code here.
-            }
-            catch (Exception exception)
-            {
-                var properties = new Dictionary<string, string> {
-                    { "Category", "Music" },
-                    { "Wifi", "On" }
-                };
-                Crashes.TrackError(exception, properties);
-            }
+            //try
+            //{
+            //    Analytics.TrackEvent("My custom event");
+            //    Crashes.GenerateTestCrash();
+            //    // your code here.
+            //}
+            //catch (Exception exception)
+            //{
+            //    var properties = new Dictionary<string, string> {
+            //        { "Category", "Music" },
+            //        { "Wifi", "On" }
+            //    };
+            //    Crashes.TrackError(exception, properties);
+            //}
 
             await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
         }

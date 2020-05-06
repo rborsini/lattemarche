@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.WebApi.Models;
+using log4net;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -8,6 +9,9 @@ namespace LatteMarche.WebApi.Controllers_Web
 {
     public class HomeController : Controller
     {
+        private static ILog log = LogManager.GetLogger(typeof(HomeController));
+
+
         private IAutorizzazioniService autorizzazioniService;
         private IUtentiService utentiService;
 
@@ -20,6 +24,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
+            log.Info("Home index");
             return View();
         }
 

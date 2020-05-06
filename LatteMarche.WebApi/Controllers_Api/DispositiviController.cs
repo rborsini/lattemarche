@@ -2,6 +2,7 @@
 using LatteMarche.Application.Dispositivi.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
+using log4net;
 using System;
 using System.Web.Http;
 
@@ -15,6 +16,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IDispositiviService dispositiviService;
+
+        private static ILog log = LogManager.GetLogger(typeof(DispositiviController));
 
         #endregion
 
@@ -35,6 +38,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         {
             try
             {
+                log.Info("Dispositivi index");
                 var list = this.dispositiviService.Index();
                 return Ok(list);
             }
