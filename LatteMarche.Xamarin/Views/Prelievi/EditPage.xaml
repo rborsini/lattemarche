@@ -59,15 +59,17 @@
                 matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
                 matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
             />
-            <!--Scomparto--> 
-            <material:MaterialTextField 
-                ShouldAnimateUnderline="True"
-                Placeholder="Scomparto" 
-                Text="{Binding Scomparto, Mode=TwoWay}"
-                InputType="Default"
+            <!--Scomparto-->
+            <material:MaterialTextField Placeholder="Scomparto"
+                InputType="Choice"
+                SelectedChoice="{Binding Scomparto, Mode=TwoWay}"
+                Choices="{Binding ElencoScomparti}"
                 AlwaysShowUnderline="True"
                 BackgroundColor="Transparent"
-             />
+                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+            />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

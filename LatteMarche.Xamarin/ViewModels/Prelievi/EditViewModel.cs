@@ -103,6 +103,15 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             set { SetProperty(ref this.scomparto, value); }
         }
 
+        public IList<string> ElencoScomparti => new List<string>
+        {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+        };
+
         public string Kg
         {
             get { return this.kg; }
