@@ -3,6 +3,7 @@ using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Views.Giri;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,6 +53,21 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
+
+            using (SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587"))
+            {
+                SentrySdk.CaptureMessage("primo messaggio", Sentry.Protocol.SentryLevel.Info);
+
+                try
+                {
+                    throw null;
+                }
+                catch (Exception e)
+                {
+                    SentrySdk.CaptureException(e);
+                }
+            }
+
             await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
         }
 
