@@ -1,6 +1,8 @@
 ﻿using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Trasportatori.Interfaces
 {

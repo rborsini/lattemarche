@@ -7,7 +7,7 @@ using RB.Excel;
 
 namespace LatteMarche.Application.Latte.Dtos
 {
-    public class PrelievoLatteDto : EntityDto
+    public class PrelievoLatteDto 
     {
         private DateHelper dateHelper;
 

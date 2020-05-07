@@ -4,7 +4,7 @@ using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Acquirenti.Dtos
 {
-    public class AcquirenteDto : EntityDto
+    public class AcquirenteDto
     {
         public int Id { get; set; }
         public string RagioneSociale { get; set; }

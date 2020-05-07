@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Tests.Services.Mobile
 {
@@ -164,7 +165,7 @@ namespace LatteMarche.Tests.Services.Mobile
 
             this.mobileService.Upload(uploadDto);
 
-            var prelievi = this.prelieviRepository.GetAll().ToList();
+            var prelievi = this.prelieviRepository.Query.ToList();
             Assert.AreEqual(3, prelievi.Count);
 
             deviceEntity = this.deviceRepository.GetById(imei);

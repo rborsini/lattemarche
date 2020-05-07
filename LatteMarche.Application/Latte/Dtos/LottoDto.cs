@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LatteMarche.Application.Latte.Dtos
 {
-    public class LottoDto : EntityDto
+    public class LottoDto 
     {
         public long Id { get; set; }
 

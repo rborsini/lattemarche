@@ -5,6 +5,7 @@ using LatteMarche.EntityFramework;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Threading.Tasks;
+using WeCode.Data;
 
 namespace LatteMarche.Identity
 {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Auth.Services
 {
@@ -187,10 +188,10 @@ namespace LatteMarche.Application.Auth.Services
 
             if (!String.IsNullOrEmpty(username))
             {
-                List<Azione> azioni = azioniRepository.GetAll().ToList();
-                List<Autorizzazione> autorizzazioni = autorizzazioniRepository.GetAll().ToList();
+                List<Azione> azioni = azioniRepository.Query.ToList();
+                List<Autorizzazione> autorizzazioni = autorizzazioniRepository.Query.ToList();
                 List<long> ruoli = utentiRepository
-                    .FindBy(u => u.Username == username)
+                    .Query.FirstOrDefault(u => u.Username == username)
                     .RuoliUtente
                     .Where(r => r.IdRuolo.HasValue)
                     .Select(r => r.IdRuolo.Value)

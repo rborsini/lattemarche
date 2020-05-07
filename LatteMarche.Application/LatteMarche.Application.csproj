@@ -120,6 +120,12 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="WeCode.Application">
+      <HintPath>..\Libs\WeCode.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="WeCode.Data">
+      <HintPath>..\Libs\WeCode.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acquirenti\AcquirentiMappings.cs" />
@@ -210,9 +216,6 @@
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
     <Compile Include="Auth\Dtos\UtentiSearchDto.cs" />
     <Compile Include="Auth\Dtos\UtenteDto.cs" />
-    <Compile Include="EntityDto.cs" />
-    <Compile Include="EntityReadOnlyService.cs" />
-    <Compile Include="EntityService.cs" />
     <Compile Include="Auth\Interfaces\IUtentiService.cs" />
     <Compile Include="Auth\Services\UtentiService.cs" />
   </ItemGroup>

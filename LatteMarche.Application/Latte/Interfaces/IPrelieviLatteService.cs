@@ -3,6 +3,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using LatteMarche.Application.Latte.Dtos;
+using WeCode.Application.Interfaces;
 
 namespace LatteMarche.Application.Latte.Interfaces
 {

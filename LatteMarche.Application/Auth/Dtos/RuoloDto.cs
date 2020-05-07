@@ -2,7 +2,7 @@
 
 namespace LatteMarche.Application.Auth.Dtos
 {
-    public class RuoloDto : EntityDto
+    public class RuoloDto
     {
         public long Id { get; set; }
         public string Codice { get; set; }

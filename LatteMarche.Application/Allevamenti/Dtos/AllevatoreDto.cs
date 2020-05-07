@@ -4,7 +4,7 @@ using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Allevamenti.Dtos
 {
-    public class AllevatoreDto : EntityDto
+    public class AllevatoreDto
     {
         public int Id { get; set; }
         public string CodiceAsl { get; set; }

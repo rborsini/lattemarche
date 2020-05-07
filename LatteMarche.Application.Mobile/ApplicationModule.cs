@@ -5,9 +5,12 @@ using LatteMarche.Core;
 using LatteMarche.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeCode.Data;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Mobile
 {
@@ -22,27 +25,21 @@ namespace LatteMarche.Application.Mobile
 
         protected override void Load(ContainerBuilder builder)
         {
+            RegisterService<LatteMarcheDbContext, DbContext>(builder);
+            RegisterService<UnitOfWork, IUnitOfWork>(builder);
 
-            if (this.isWeb)
-            {
-                builder.RegisterModule(new DataModule());
-
-                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
-
-                builder.RegisterType<MobileService>().As<IMobileService>().InstancePerRequest();
-
-            }
-            else
-            {
-                builder.RegisterModule(new DataModule(false));
-
-                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-
-                builder.RegisterType<MobileService>().As<IMobileService>();
-            }
-
+            RegisterService<MobileService, IMobileService>(builder);
 
             base.Load(builder);
         }
+
+        private void RegisterService<TService, TInterface>(ContainerBuilder builder)
+        {
+            var registration = builder.RegisterType<TService>().As<TInterface>();
+
+            if (this.isWeb)
+                registration.InstancePerRequest();
+        }
+
     }
 }

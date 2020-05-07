@@ -8,6 +8,8 @@ using AutoMapper;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Dispositivi.Services
 {
@@ -30,7 +32,7 @@ namespace LatteMarche.Application.Dispositivi.Services
 
         public override List<DispositivoMobileDto> Index()
         {
-            return this.repository.GetAll().ProjectToList<DispositivoMobileDto>();
+            return this.repository.Query.ProjectToList<DispositivoMobileDto>();
         }
 
         protected override DispositivoMobile UpdateProperties(DispositivoMobile viewEntity, DispositivoMobile dbEntity)

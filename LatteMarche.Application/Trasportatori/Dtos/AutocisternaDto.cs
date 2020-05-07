@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Trasportatori.Dtos
 {
-    public class AutocisternaDto : EntityDto
+    public class AutocisternaDto
     {
         public int Id { get; set; }
 

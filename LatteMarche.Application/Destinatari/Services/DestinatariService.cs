@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Destinatari.Services
 {
@@ -51,7 +53,7 @@ namespace LatteMarche.Application.Destinatari.Services
 
         public DestinatarioDto GetByIdUtente(long idUtente)
         {
-            var utenteXDestinatario = this.utentiDestinatarioRepository.FindBy(u => u.Id == idUtente);
+            var utenteXDestinatario = this.utentiDestinatarioRepository.Query.FirstOrDefault(u => u.Id == idUtente);
 
             if (utenteXDestinatario == null)
                 return null;

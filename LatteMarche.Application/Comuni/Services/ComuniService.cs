@@ -6,8 +6,8 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Comuni.Services
 {
@@ -40,7 +40,7 @@ namespace LatteMarche.Application.Comuni.Services
         /// <returns></returns>
         public List<ComuneDto> Search(ComuniSearchDto searchDto)
         {
-            IQueryable<Comune> query = this.comuniRepository.GetAll();
+            IQueryable<Comune> query = this.comuniRepository.Query;
 
             // Sigla Provincia
             if(!String.IsNullOrEmpty(searchDto.SiglaProvincia))
@@ -58,7 +58,7 @@ namespace LatteMarche.Application.Comuni.Services
         public List<string> GetProvince()
         {
             return this.repository
-                .GetAll()
+                .Query
                 .Where(p => !String.IsNullOrEmpty(p.Provincia))
                 .Select(p => p.Provincia)
                 .Distinct()

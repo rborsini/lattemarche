@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Destinatari.Dtos
 {
-    public class DestinatarioDto : EntityDto
+    public class DestinatarioDto 
     {
         public int Id { get; set; }
 

@@ -2,6 +2,7 @@
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.Application.Interfaces;
 
 namespace LatteMarche.Application.Acquirenti.Interfaces
 {

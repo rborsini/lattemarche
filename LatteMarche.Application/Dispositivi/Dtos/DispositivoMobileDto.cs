@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Dispositivi.Dtos
 {
-    public class DispositivoMobileDto : EntityDto
+    public class DispositivoMobileDto 
     {
-
-        #region Properties
-
         public string Id { get; set; }
 
         public bool Attivo { get; set; }
@@ -29,6 +26,5 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string Trasportatore_RagioneSociale { get; set; }
 
-        #endregion
     }
 }

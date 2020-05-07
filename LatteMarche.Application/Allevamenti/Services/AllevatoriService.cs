@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti.Interfaces;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Allevamenti.Services
 {
@@ -31,7 +33,7 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         public override List<AllevatoreDto> Index()
         {
-            return ConvertToDtoList(this.repository.GetAll().OrderBy(a => a.RagioneSociale).ToList());
+            return ConvertToDtoList(this.repository.Query.OrderBy(a => a.RagioneSociale).ToList());
         }
 
         #endregion

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Auth.Dtos
 {
-    public class AzioneDto : EntityDto
+    public class AzioneDto 
     {
         public string Id { get; set; }
         public string Type { get; set; }

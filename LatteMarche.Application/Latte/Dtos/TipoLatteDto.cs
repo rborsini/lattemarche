@@ -4,7 +4,7 @@ using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Latte.Dtos
 {
-    public class TipoLatteDto : EntityDto
+    public class TipoLatteDto 
     {
         public int Id { get; set; }
         public string Descrizione { get; set; }

@@ -9,6 +9,8 @@ using LatteMarche.Application.Comuni.Services;
 using LatteMarche.Application.Comuni.Dtos;
 using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Auth.Services
 {
@@ -49,7 +51,7 @@ namespace LatteMarche.Application.Auth.Services
             if (String.IsNullOrEmpty(username))
                 return utenteDto;
 
-            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+            Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
 
             if(utente != null)
             {
@@ -96,7 +98,7 @@ namespace LatteMarche.Application.Auth.Services
         {
             string passwordHash = new HashHelper().HashPassword(password);
 
-            Utente utente = this.utentiRepository.FindBy(u => u.Username == username && u.Password == passwordHash);
+            Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username && u.Password == passwordHash);
             return utente != null;
         }
 
@@ -107,7 +109,7 @@ namespace LatteMarche.Application.Auth.Services
         /// <param name="passwordHash"></param>
         public void SetPasswordHash(string username, string passwordHash)
         {
-            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+            Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
             if (utente != null)
             {
                 utente.Password = passwordHash;
@@ -135,7 +137,7 @@ namespace LatteMarche.Application.Auth.Services
                 string passwordHash = new HashHelper().HashPassword(oldPassword);
                 string newPasswordHash = new HashHelper().HashPassword(password);
 
-                Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+                Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
 
                 if (utente == null)
                 {
@@ -172,7 +174,7 @@ namespace LatteMarche.Application.Auth.Services
         /// <returns></returns>
         public List<UtenteDto> Search(UtentiSearchDto searchDto)
         {
-            IQueryable<Utente> query = this.utentiRepository.GetAll();
+            IQueryable<Utente> query = this.utentiRepository.Query;
 
             // Tipo profilo
             if (searchDto.IdProfilo != null)
@@ -209,7 +211,7 @@ namespace LatteMarche.Application.Auth.Services
 
         public UtenteDto GetByUsername(string username)
         {
-            Utente utente = this.utentiRepository.FindBy(u => u.Username == username);
+            Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
 
             return ConvertToDto(utente);
         }

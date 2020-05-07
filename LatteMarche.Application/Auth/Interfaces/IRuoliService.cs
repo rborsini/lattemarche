@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.Application.Interfaces;
 
 namespace LatteMarche.Application.Auth.Interfaces
 {

@@ -2,7 +2,7 @@
 
 namespace LatteMarche.Application.Trasportatori.Dtos
 {
-    public class TrasportatoreDto : EntityDto
+    public class TrasportatoreDto
     {
         public int Id { get; set; }
         public string Nome { get; set; }

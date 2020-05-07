@@ -5,6 +5,8 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Auth.Services
 {
@@ -18,7 +20,7 @@ namespace LatteMarche.Application.Auth.Services
         public void Synch(List<AzioneDto> azioniReflectionDto)
         {
             List<Azione> azioniReflection = Mapper.Map<List<Azione>>(azioniReflectionDto);
-            List<Azione> azioniDb = this.repository.GetAll().ToList();
+            List<Azione> azioniDb = this.repository.Query.ToList();
 
             foreach (Azione azione in azioniReflection)
             {

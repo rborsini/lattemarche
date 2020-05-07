@@ -4,7 +4,7 @@ using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Auth.Dtos
 {
-    public class UtenteDto : EntityDto
+    public class UtenteDto 
     {
         public int Id { get; set; }
         public string Nome { get; set; }

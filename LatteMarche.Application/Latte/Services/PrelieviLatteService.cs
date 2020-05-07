@@ -8,6 +8,8 @@ using LatteMarche.Application.Logs.Interfaces;
 using LatteMarche.Application.Latte.Dtos;
 using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.Common;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -77,7 +79,7 @@ namespace LatteMarche.Application.Latte.Services
         {
             List<PrelievoLatte> result = new List<PrelievoLatte>();
 
-            var query = this.repository.FilterBy(p => p.LastOperation != OperationEnum.Synched);
+            var query = this.repository.Query.Where(p => p.LastOperation != OperationEnum.Synched);
 
             query = query.Where(p => p.LastChange > timestamp);
 
@@ -110,7 +112,7 @@ namespace LatteMarche.Application.Latte.Services
             {
                 try
                 {
-                    var prelievoDb = repository.FindBy(p =>
+                    var prelievoDb = repository.Query.FirstOrDefault(p =>
                             p.IdAllevamento == item.IdAllevamento &&
                             p.IdTrasportatore == item.IdTrasportatore &&
                             p.DataPrelievo == item.DataPrelievo);
@@ -163,7 +165,7 @@ namespace LatteMarche.Application.Latte.Services
         /// <returns></returns>
         public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto)
         {
-            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.GetAll();
+            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.Query;
 
             // Allevamento
             if (searchDto.idAllevamento != null)

@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.AnalisiLatte.Services
 {
@@ -58,7 +60,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         public List<AnalisiDto> Search(AnalisiSearchDto searchDto)
         {
-            var query = this.repository.GetAll();
+            var query = this.repository.Query;
 
             // Campione
             if (!String.IsNullOrEmpty(searchDto.Campione))

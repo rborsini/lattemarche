@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Logs.Dtos
 {
-    public class LogRecordDto : EntityDto
+    public class LogRecordDto 
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }

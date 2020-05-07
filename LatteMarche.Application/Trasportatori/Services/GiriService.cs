@@ -7,6 +7,9 @@ using LatteMarche.Application.Trasportatori.Dtos;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti.Interfaces;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
+using LatteMarche.EntityFramework;
 
 namespace LatteMarche.Application.Trasportatori.Services
 {
@@ -44,7 +47,7 @@ namespace LatteMarche.Application.Trasportatori.Services
             GiroDto dto = base.Details(key);
 
             List<AllevatoreDto> allevatori = this.allevatoriService.Index().ToList();
-            List<AllevamentoXGiro> allevamentiGiro = this.uow.Context.AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
+            List<AllevamentoXGiro> allevamentiGiro = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == key).ToList();
 
             foreach (AllevatoreDto allevatore in allevatori)
             {
@@ -73,7 +76,7 @@ namespace LatteMarche.Application.Trasportatori.Services
         /// <returns></returns>
         public List<GiroDto> GetGiriTrasportatore(int idTrasportatore)
         {
-            return ConvertToDtoList(this.giriRepository.FilterBy(g => g.IdTrasportatore == idTrasportatore).ToList());
+            return ConvertToDtoList(this.giriRepository.Query.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace LatteMarche.Application.Trasportatori.Services
         /// <returns></returns>
         public override GiroDto Update(GiroDto model)
         {            
-            List<AllevamentoXGiro> allevamentiDb = this.uow.Context.AllevamentiXGiro.Where(a => a.IdGiro == model.Id).ToList();
+            List<AllevamentoXGiro> allevamentiDb = (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Where(a => a.IdGiro == model.Id).ToList();
 
             List<AllevamentoXGiro> allevamentiDaEliminare = new List<AllevamentoXGiro>();
 
@@ -105,7 +108,7 @@ namespace LatteMarche.Application.Trasportatori.Services
                 // insert
                 if(allevamentoDb == null && item.Priorita.HasValue)
                 {
-                    this.uow.Context.AllevamentiXGiro.Add(new AllevamentoXGiro()
+                    (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.Add(new AllevamentoXGiro()
                     {
                         IdGiro = model.Id,
                         IdAllevamento = item.IdAllevamento,
@@ -122,7 +125,7 @@ namespace LatteMarche.Application.Trasportatori.Services
                 if (item == null)
                     allevamentiDaEliminare.Add(allevamentoDb);
             }
-            this.uow.Context.AllevamentiXGiro.RemoveRange(allevamentiDaEliminare);
+            (this.uow.Context as LatteMarcheDbContext).AllevamentiXGiro.RemoveRange(allevamentiDaEliminare);
 
             this.uow.SaveChanges();
 

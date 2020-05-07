@@ -6,6 +6,8 @@ using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Auth.Services
 {
@@ -32,8 +34,8 @@ namespace LatteMarche.Application.Auth.Services
             {
                 dto = ConvertToDto(ruolo);
 
-                List<Azione> azioni = azioniRepository.GetAll().ToList();
-                List<Autorizzazione> autorizzazioni = autorizzazioniRepository.FilterBy(a => a.IdRuolo == key).ToList();
+                List<Azione> azioni = azioniRepository.Query.ToList();
+                List<Autorizzazione> autorizzazioni = autorizzazioniRepository.Query.Where(a => a.IdRuolo == key).ToList();
 
                 dto.Pagine_MVC = GetPagine(azioni, autorizzazioni, "MVC");
                 dto.Pagine_API = GetPagine(azioni, autorizzazioni, "API");
@@ -77,7 +79,7 @@ namespace LatteMarche.Application.Auth.Services
             Ruolo ruolo = Mapper.Map<Ruolo>(model);
 
             // pulizia vecchie autorizzazioni
-            List<Autorizzazione> autorizzazioniToRemove = autorizzazioniRepository.FilterBy(a => a.IdRuolo == model.Id).ToList();
+            List<Autorizzazione> autorizzazioniToRemove = autorizzazioniRepository.Query.Where(a => a.IdRuolo == model.Id).ToList();
             autorizzazioniRepository.Delete(autorizzazioniToRemove);
 
             // inserimento nuove autorizzazioni
@@ -96,7 +98,7 @@ namespace LatteMarche.Application.Auth.Services
         /// <param name="role"></param>
         public void UpdateUserRole(int userId, long role)
         {
-            var ruoliUtente = this.ruoliUtenteRepository.FilterBy(ru => ru.Username == userId).ToList();
+            var ruoliUtente = this.ruoliUtenteRepository.Query.Where(ru => ru.Username == userId).ToList();
 
             if(ruoliUtente.Count == 1 && ruoliUtente[0].IdRuolo == role)
                 return; // non c'è bisogno di fare niente perché il ruolo non è cambiato
@@ -113,7 +115,7 @@ namespace LatteMarche.Application.Auth.Services
 
         private List<Autorizzazione> ConvertToAutorizzazioni(long idRuolo, string type, List<RuoloDto.Pagina> pagine)
         {
-            List<Azione> azioni = this.azioniRepository.GetAll().ToList();
+            List<Azione> azioni = this.azioniRepository.Query.ToList();
             List<Autorizzazione> autorizzazioni = new List<Autorizzazione>();
 
 

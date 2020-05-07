@@ -2,8 +2,9 @@
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
-
-
+using System.Linq;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Auth.Services
 {
@@ -31,7 +32,7 @@ namespace LatteMarche.Application.Auth.Services
 
         public int GetIdProfilo(string DescrizioneProfilo)
         {
-            return this.tipiProfiloRepository.FindBy(t => t.Descrizione == DescrizioneProfilo).Id;
+            return this.tipiProfiloRepository.Query.FirstOrDefault(t => t.Descrizione == DescrizioneProfilo).Id;
         }
 
         #endregion

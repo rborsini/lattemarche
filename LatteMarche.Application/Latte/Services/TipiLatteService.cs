@@ -2,6 +2,8 @@
 using LatteMarche.Application.Latte.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Latte.Services
 {

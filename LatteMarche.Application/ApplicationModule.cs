@@ -28,6 +28,10 @@ using LatteMarche.Application.Auth.Services;
 using LatteMarche.Application.Latte.Services;
 using LatteMarche.Application.Dispositivi.Interfaces;
 using LatteMarche.Application.Dispositivi.Services;
+using Autofac.Core;
+using WeCode.Data;
+using WeCode.Data.Interfaces;
+using System.Data.Entity;
 
 namespace LatteMarche.Application
 {
@@ -46,73 +50,44 @@ namespace LatteMarche.Application
 
 		protected override void Load(ContainerBuilder builder)
 		{
+            builder.RegisterModule(new AssamModule());
 
-			if (this.isWeb)
-			{
-				builder.RegisterModule(new DataModule());
-                builder.RegisterModule(new AssamModule());
+            RegisterService<LatteMarcheDbContext, DbContext>(builder);
+            RegisterService<UnitOfWork, IUnitOfWork>(builder);
 
-                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
-
-                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>().InstancePerRequest();
-                builder.RegisterType<AcquirentiService>().As<IAcquirentiService>().InstancePerRequest();
-                builder.RegisterType<AllevamentiService>().As<IAllevamentiService>().InstancePerRequest();
-                builder.RegisterType<AllevatoriService>().As<IAllevatoriService>().InstancePerRequest();
-                builder.RegisterType<AnalisiService>().As<IAnalisiService>().InstancePerRequest();
-                builder.RegisterType<AutorizzazioniService>().As<IAutorizzazioniService>().InstancePerRequest();
-                builder.RegisterType<AzioniService>().As<IAzioniService>().InstancePerRequest();
-                builder.RegisterType<ComuniService>().As<IComuniService>().InstancePerRequest();
-                builder.RegisterType<DestinatariService>().As<IDestinatariService>().InstancePerRequest();
-                builder.RegisterType<DispositiviService>().As<IDispositiviService>().InstancePerRequest();
-                builder.RegisterType<DocumentiService>().As<IDocumentiService>().InstancePerRequest();
-                builder.RegisterType<GiriService>().As<IGiriService>().InstancePerRequest();
-                builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>().InstancePerRequest();
-                builder.RegisterType<LogsService>().As<ILogsService>().InstancePerRequest();
-                builder.RegisterType<LottiService>().As<ILottiService>().InstancePerRequest();
-                builder.RegisterType<PrelieviLatteService>().As<IPrelieviLatteService>().InstancePerRequest();
-                builder.RegisterType<RuoliService>().As<IRuoliService>().InstancePerRequest();
-                builder.RegisterType<SitraService>().As<ISitraService>().InstancePerRequest();
-                builder.RegisterType<SynchService>().As<ISynchService>().InstancePerRequest();
-                builder.RegisterType<TipiLatteService>().As<ITipiLatteService>().InstancePerRequest();
-                builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>().InstancePerRequest();
-                builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>().InstancePerRequest();
-                builder.RegisterType<UtentiService>().As<IUtentiService>().InstancePerRequest();
-                //builder.RegisterType<MobileService>().As<IMobileService>().InstancePerRequest();
-
-            }
-            else
-			{
-				builder.RegisterModule(new DataModule(false));
-
-				builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-
-                builder.RegisterType<AutocisterneService>().As<IAutocisterneService>();
-                builder.RegisterType<AcquirentiService>().As<IAcquirentiService>();
-                builder.RegisterType<AllevamentiService>().As<IAllevamentiService>();
-                builder.RegisterType<AllevatoriService>().As<IAllevatoriService>();
-                builder.RegisterType<AnalisiService>().As<IAnalisiService>();
-                builder.RegisterType<AutorizzazioniService>().As<IAutorizzazioniService>();
-                builder.RegisterType<AzioniService>().As<IAzioniService>();
-                builder.RegisterType<ComuniService>().As<IComuniService>();
-                builder.RegisterType<DestinatariService>().As<IDestinatariService>();
-                builder.RegisterType<DispositiviService>().As<IDispositiviService>();
-                builder.RegisterType<DocumentiService>().As<IDocumentiService>();
-                builder.RegisterType<GiriService>().As<IGiriService>();
-                builder.RegisterType<LaboratoriAnalisiService>().As<ILaboratoriAnalisiService>();
-                builder.RegisterType<LogsService>().As<ILogsService>();
-                builder.RegisterType<LottiService>().As<ILottiService>();
-                builder.RegisterType<PrelieviLatteService>().As<IPrelieviLatteService>();
-                builder.RegisterType<RuoliService>().As<IRuoliService>();
-                builder.RegisterType<SitraService>().As<ISitraService>();
-                builder.RegisterType<SynchService>().As<ISynchService>();
-                builder.RegisterType<TipiLatteService>().As<ITipiLatteService>();
-                builder.RegisterType<TipiProfiloService>().As<ITipiProfiloService>();
-                builder.RegisterType<TrasportatoriService>().As<ITrasportatoriService>();
-                builder.RegisterType<UtentiService>().As<IUtentiService>();
-            }
-
+            RegisterService<AutocisterneService, IAutocisterneService>(builder);
+            RegisterService<AcquirentiService, IAcquirentiService>(builder);
+            RegisterService<AllevamentiService, IAllevamentiService>(builder);
+            RegisterService<AllevatoriService, IAllevatoriService>(builder);
+            RegisterService<AnalisiService, IAnalisiService>(builder);
+            RegisterService<AutorizzazioniService, IAutorizzazioniService>(builder);
+            RegisterService<AzioniService, IAzioniService>(builder);
+            RegisterService<ComuniService, IComuniService>(builder);
+            RegisterService<DestinatariService, IDestinatariService>(builder);
+            RegisterService<DispositiviService, IDispositiviService>(builder);
+            RegisterService<DocumentiService, IDocumentiService>(builder);
+            RegisterService<GiriService, IGiriService>(builder);
+            RegisterService<LaboratoriAnalisiService, ILaboratoriAnalisiService>(builder);
+            RegisterService<LogsService, ILogsService>(builder);
+            RegisterService<LottiService, ILottiService>(builder);
+            RegisterService<PrelieviLatteService, IPrelieviLatteService>(builder);
+            RegisterService<RuoliService, IRuoliService>(builder);
+            RegisterService<SitraService, ISitraService>(builder);
+            RegisterService<SynchService, ISynchService>(builder);
+            RegisterService<TipiLatteService, ITipiLatteService>(builder);
+            RegisterService<TipiProfiloService, ITipiProfiloService>(builder);
+            RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
+            RegisterService<UtentiService, IUtentiService>(builder);
 
             base.Load(builder);
 		}
-	}
+
+        private void RegisterService<TService, TInterface>(ContainerBuilder builder)
+        {
+            var registration = builder.RegisterType<TService>().As<TInterface>();
+
+            if (this.isWeb)
+                registration.InstancePerRequest();
+        }
+    }
 }

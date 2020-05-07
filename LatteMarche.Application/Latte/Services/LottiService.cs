@@ -7,6 +7,8 @@ using System.Linq;
 using AutoMapper;
 using LatteMarche.Application.Latte.Dtos;
 using LatteMarche.Application.Latte.Interfaces;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -33,7 +35,7 @@ namespace LatteMarche.Application.Latte.Services
 
         public LottoDto GetByCodiceLotto(string codiceLotto)
         {
-            var lotti = this.repository.FilterBy(l => l.Codice == codiceLotto && !String.IsNullOrEmpty(l.CodiceSitra));
+            var lotti = this.repository.Query.Where(l => l.Codice == codiceLotto && !String.IsNullOrEmpty(l.CodiceSitra));
 
             if (lotti != null && lotti.Count() > 0)
                 return ConvertToDto(lotti.First());

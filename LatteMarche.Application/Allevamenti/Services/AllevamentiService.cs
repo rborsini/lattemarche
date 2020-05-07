@@ -7,6 +7,8 @@ using LatteMarche.Core.Models;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
 using AutoMapper;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Allevamenti.Services
 {
@@ -38,8 +40,8 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         public List<AllevamentoDto> GetAllevamentiSitra()
         {
-            return this.repository
-                .FilterBy(a => !String.IsNullOrEmpty(a.CUAA))
+            return this.repository.Query
+                .Where(a => !String.IsNullOrEmpty(a.CUAA))
                 .ProjectToList<AllevamentoDto>();
         }
 
@@ -49,7 +51,7 @@ namespace LatteMarche.Application.Allevamenti.Services
             if (searchDto == null)
                 searchDto = new AllevamentiSearchDto();
 
-            var query = this.allevamentiRepository.GetAll();
+            var query = this.allevamentiRepository.Query;
 
             // Codice Allevatore
             if (!String.IsNullOrEmpty(searchDto.CodiceAllevatore))

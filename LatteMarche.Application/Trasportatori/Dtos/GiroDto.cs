@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace LatteMarche.Application.Trasportatori.Dtos
 {
-    public class GiroDto : EntityDto
+    public class GiroDto 
     {
         public int Id { get; set; }
         public string Denominazione { get; set; }

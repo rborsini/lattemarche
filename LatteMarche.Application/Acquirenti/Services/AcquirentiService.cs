@@ -1,10 +1,12 @@
 ﻿using System;
-
+using System.Linq;
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.Application;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Acquirenti.Services
 {
@@ -52,7 +54,7 @@ namespace LatteMarche.Application.Acquirenti.Services
 
         public AcquirenteDto GetByIdUtente(long idUtente)
         {
-            var utenteXAcquirente = this.utentiAcquirenteRepository.FindBy(u => u.Id == idUtente);
+            var utenteXAcquirente = this.utentiAcquirenteRepository.Query.FirstOrDefault(u => u.Id == idUtente);
 
             if (utenteXAcquirente == null)
                 return null;

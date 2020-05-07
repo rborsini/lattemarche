@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
+using WeCode.EntityFramework;
 
 namespace LatteMarche.EntityFramework
 {
-	public class LatteMarcheDbContext : DbContext, IContext
+	public class LatteMarcheDbContext : DbContext
 	{
         public DbSet<Autocisterna> Autocisterne { get; set; }
         public DbSet<Autorizzazione> Autorizzazioni { get; set; }
@@ -45,12 +46,11 @@ namespace LatteMarche.EntityFramework
         public LatteMarcheDbContext()
 			: base("name=LatteMarcheDbContext")
 		{
-			//Database.SetInitializer<LatteMarcheDbContext>(null);
 
             if (ConfigurationManager.AppSettings["dropDatabase"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["dropDatabase"]))
-                Database.SetInitializer<LatteMarcheDbContext>(new DropCreateDatabaseAlwaysDbInitializer());
+                Database.SetInitializer<LatteMarcheDbContext>(new DropCreateDatabaseAlwaysDbInitializer<LatteMarcheDbContext>());
             else
-                Database.SetInitializer<LatteMarcheDbContext>(new CreateIfNotExistsDbInitializer());
+                Database.SetInitializer<LatteMarcheDbContext>(new CreateIfNotExistsDbInitializer<LatteMarcheDbContext>());
 
         }
 

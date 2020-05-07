@@ -52,6 +52,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{C892F85C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Application.Mobile", "LatteMarche.Application.Mobile\LatteMarche.Application.Mobile.csproj", "{D52AB32E-1432-4B28-9438-C74D25E70F35}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B7A81D8E-7860-49E9-9401-9E800F7F4E8F}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\WeCode.Application.dll = Libs\WeCode.Application.dll
+		Libs\WeCode.Application.dll.config = Libs\WeCode.Application.dll.config
+		Libs\WeCode.Application.pdb = Libs\WeCode.Application.pdb
+		Libs\WeCode.Data.dll = Libs\WeCode.Data.dll
+		Libs\WeCode.Data.dll.config = Libs\WeCode.Data.dll.config
+		Libs\WeCode.Data.pdb = Libs\WeCode.Data.pdb
+		Libs\WeCode.EntityFramework.dll = Libs\WeCode.EntityFramework.dll
+		Libs\WeCode.EntityFramework.dll.config = Libs\WeCode.EntityFramework.dll.config
+		Libs\WeCode.EntityFramework.pdb = Libs\WeCode.EntityFramework.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

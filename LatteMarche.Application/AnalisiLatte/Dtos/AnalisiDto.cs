@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.AnalisiLatte.Dtos
 {
-    public class AnalisiDto : EntityDto
+    public class AnalisiDto
     {
         public string Id { get; set; }
 

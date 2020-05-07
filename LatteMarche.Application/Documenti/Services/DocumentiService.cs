@@ -5,6 +5,8 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
+using WeCode.Data.Interfaces;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Documenti.Services
 {

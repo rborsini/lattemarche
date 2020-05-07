@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Mobile.Services
 {
@@ -126,9 +127,9 @@ namespace LatteMarche.Application.Mobile.Services
                         }
                     }
 
-                    db.TipiLatte = Mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.GetAll());
-                    db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.GetAll().ToList());
-                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinataryRepository.GetAll().ToList());
+                    db.TipiLatte = Mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
+                    db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.ToList());
+                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinataryRepository.Query.ToList());
 
                 }
 
