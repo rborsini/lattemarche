@@ -60,10 +60,5 @@ namespace LatteMarche.EntityFramework
             modelBuilder.Entity<TipoLatte>().Property(x => x.FattoreConversione).HasPrecision(18, 3);
 		}
 
-        public void SetModified(object entity)
-        {
-            Entry(entity).State = EntityState.Modified;
-        }
-
     }
 }

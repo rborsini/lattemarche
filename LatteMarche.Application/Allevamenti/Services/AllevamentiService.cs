@@ -18,7 +18,7 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         #region Fields
 
-        private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Utente, int> utentiRepository;
 
         private IComuniService comuniService;
 
@@ -29,8 +29,7 @@ namespace LatteMarche.Application.Allevamenti.Services
         public AllevamentiService(IUnitOfWork uow, IComuniService comuniService)
             : base(uow)
         {
-            this.allevamentiRepository = this.uow.Get<Allevamento, int>();
-
+            this.utentiRepository = this.uow.Get<Utente, int>();
             this.comuniService = comuniService;
         }
 
@@ -51,7 +50,7 @@ namespace LatteMarche.Application.Allevamenti.Services
             if (searchDto == null)
                 searchDto = new AllevamentiSearchDto();
 
-            var query = this.allevamentiRepository.Query;
+            var query = this.repository.Query;
 
             // Codice Allevatore
             if (!String.IsNullOrEmpty(searchDto.CodiceAllevatore))
@@ -81,6 +80,23 @@ namespace LatteMarche.Application.Allevamenti.Services
             return dto;
         }
 
+        public override AllevamentoDto Update(AllevamentoDto model)
+        {
+            // Update utente
+            var utente = this.utentiRepository.GetById(model.IdUtente.Value);
+
+            if(utente.IdTipoLatte != model.Utente_IdTipoLatte)
+            {
+                utente.IdTipoLatte = model.Utente_IdTipoLatte.Value;
+                this.utentiRepository.Update(utente);
+                this.uow.SaveChanges();
+            }
+
+            base.Update(model);
+
+            return this.Details(model.Id);
+        }
+
         protected override Allevamento UpdateProperties(Allevamento viewEntity, Allevamento dbEntity)
         {
             dbEntity.CodiceAsl = viewEntity.CodiceAsl;
@@ -88,7 +104,7 @@ namespace LatteMarche.Application.Allevamenti.Services
             dbEntity.IdComune = viewEntity.IdComune;
             dbEntity.CUAA = viewEntity.CUAA;
 
-            dbEntity.Utente.IdTipoLatte = viewEntity.Utente.IdTipoLatte;
+            //dbEntity.Utente.IdTipoLatte = viewEntity.Utente.IdTipoLatte;
 
             return dbEntity;
         }
