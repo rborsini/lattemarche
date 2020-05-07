@@ -104,7 +104,8 @@ namespace LatteMarche.Application.Allevamenti.Services
             dbEntity.IdComune = viewEntity.IdComune;
             dbEntity.CUAA = viewEntity.CUAA;
 
-            //dbEntity.Utente.IdTipoLatte = viewEntity.Utente.IdTipoLatte;
+            dbEntity.Latitudine = viewEntity.Latitudine;
+            dbEntity.Longitudine = viewEntity.Longitudine;
 
             return dbEntity;
         }

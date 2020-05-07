@@ -14,6 +14,10 @@ namespace LatteMarche.Application.Allevamenti.Dtos
         public int IdComune { get; set; }
         public string CUAA { get; set; }
         public int? Utente_IdTipoLatte { get; set; }
+
+        public double? Latitudine { get; set; }
+
+        public double? Longitudine { get; set; }
     }
 
 }

@@ -35,5 +35,11 @@ namespace LatteMarche.Core.Models
         [Column("IDSITRA_STABILIMENTO_ALLEVAMENTO")]
         public int? IdSitraStabilimentoAllevamento { get; set; }
 
+        [Column("LATITUDINE")]
+        public double? Latitudine { get; set; }
+
+        [Column("LONGITUDINE")]
+        public double? Longitudine { get; set; }
+
     }
 }
