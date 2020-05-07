@@ -8,6 +8,11 @@ namespace LatteMarche.Xamarin.Rest.Dtos
     {
         public string Id { get; set; }
 
+        public string Modello { get; set; }
+        public string Marca { get; set; }
+        public string VersioneOS { get; set; }
+        public string Nome { get; set; }
+
         public bool Attivo { get; set; }
         public DateTime DataRegistrazione { get; set; }
         public DateTime? DataUltimoDownload { get; set; }

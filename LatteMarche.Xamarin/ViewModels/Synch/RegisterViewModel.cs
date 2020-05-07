@@ -73,7 +73,11 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                         Id = this.device.GetIdentifier(),
                         Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
                         Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
-                        VersioneApp = appVersion
+                        VersioneApp = appVersion,
+                        VersioneOS = DeviceInfo.VersionString,
+                        Marca = DeviceInfo.Manufacturer,
+                        Modello = DeviceInfo.Model,
+                        Nome = DeviceInfo.Name
                     };
 
                     var dispositivo = this.restService.Register(dto).Result;

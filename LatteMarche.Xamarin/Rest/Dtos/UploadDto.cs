@@ -13,6 +13,10 @@ namespace LatteMarche.Xamarin.Rest.Dtos
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }
         public string VersioneApp { get; set; }
+        public string Modello { get; set; }
+        public string Marca { get; set; }
+        public string VersioneOS { get; set; }
+        public string Nome { get; set; }
 
         public UploadDto()
         {

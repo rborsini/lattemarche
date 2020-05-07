@@ -97,7 +97,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 this.IsBusy = true;
                 var location = await Geolocation.GetLastKnownLocationAsync();
                 VersionTracking.Track();
-                var appVersion = VersionTracking.CurrentVersion;
 
                 await Task.Run(() =>
                 {
@@ -111,7 +110,11 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                         IMEI = this.device.GetIdentifier(),
                         Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
                         Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
-                        VersioneApp = appVersion,
+                        VersioneApp = VersionTracking.CurrentVersion,
+                        VersioneOS = DeviceInfo.VersionString,
+                        Marca = DeviceInfo.Manufacturer,
+                        Modello = DeviceInfo.Model,
+                        Nome = DeviceInfo.Name,
                         Prelievi = Mapper.Map<List<PrelievoLatteDto>>(prelievi)
                     };
 

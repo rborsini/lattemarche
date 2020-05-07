@@ -161,6 +161,10 @@ namespace LatteMarche.Application.Mobile.Services
                 dispositivo.Longitudine = uploadDto.Lng;
                 dispositivo.DataUltimoUpload = DateTime.Now;
                 dispositivo.VersioneApp = uploadDto.VersioneApp;
+                dispositivo.VersioneOS = uploadDto.VersioneOS;
+                dispositivo.Marca = uploadDto.Marca;
+                dispositivo.Modello = uploadDto.Modello;
+                dispositivo.Nome = uploadDto.Nome;
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();

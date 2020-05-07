@@ -90,6 +90,10 @@
     <Compile Include="Migrations\202004210658131_AggiuntaRelazione_Dispositivi_Utenti.Designer.cs">
       <DependentUpon>202004210658131_AggiuntaRelazione_Dispositivi_Utenti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005070830599_AggiuntiCampiDispositivoMobile.cs" />
+    <Compile Include="Migrations\202005070830599_AggiuntiCampiDispositivoMobile.Designer.cs">
+      <DependentUpon>202005070830599_AggiuntiCampiDispositivoMobile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004210658131_AggiuntaRelazione_Dispositivi_Utenti.resx">
       <DependentUpon>202004210658131_AggiuntaRelazione_Dispositivi_Utenti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005070830599_AggiuntiCampiDispositivoMobile.resx">
+      <DependentUpon>202005070830599_AggiuntiCampiDispositivoMobile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -16,6 +16,18 @@ namespace LatteMarche.Core.Models
         [Column("IMEI")]
         public override string Id { get; set; }
 
+        [Column("MODELLO")]
+        public string Modello { get; set; }
+
+        [Column("MARCA")]
+        public string Marca { get; set; }
+
+        [Column("VERSIONE_OS")]
+        public string VersioneOS { get; set; }
+
+        [Column("NOME")]
+        public string Nome { get; set; }
+
         [Column("ATTIVO")]
         public bool Attivo { get; set; }
 
