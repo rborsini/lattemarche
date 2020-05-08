@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 using Zebra.Sdk.Comm;
@@ -43,6 +44,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Acquirente acquirenteSelezionato;
         private int? idDestinatario;
         private Destinatario destinatarioSelezionato;
+        private TipoLatte tipoLatte;
 
         private ObservableCollection<Allevamento> allevamenti;
         private ObservableCollection<Acquirente> acquirenti;
@@ -55,6 +57,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
         private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
+        private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
 
         #endregion
@@ -121,7 +124,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public string Lt
         {
             get { return this.lt; }
-            set { SetProperty(ref this.lt, value); }
+            set { SetProperty(ref this.lt, value);  }
         }
 
         public string Temperatura
@@ -184,6 +187,21 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             set { SetProperty<Destinatario>(ref this.destinatarioSelezionato, value); }
         }
 
+        public TipoLatte TipoLatte
+        {
+            get
+            {
+                if(this.AllevamentoSelezionato != null &&
+                    this.AllevamentoSelezionato.IdTipoLatte.HasValue && 
+                    (this.tipoLatte == null || this.tipoLatte.Id != this.AllevamentoSelezionato.IdTipoLatte))
+                {
+                    this.tipoLatte = this.tipiLatteService.GetItemAsync(this.AllevamentoSelezionato.IdTipoLatte.Value).Result;
+                }
+
+                return this.tipoLatte;
+            }
+        }
+
         public Command LoadCommand { get; set; }
 
         public Command PrintCommand { get; set; }
@@ -222,6 +240,27 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #region Methods
 
         /// <summary>
+        /// Evento selezione quantità in kg
+        /// </summary>
+        /// <param name="kg"></param>
+        public void OnKgChanged(string kg)
+        {
+            this.Kg = kg;
+            //this.Lt = kg == "1" ? "2" : "1";
+            this.Lt = ConvertToLt(kg);
+        }
+
+        /// <summary>
+        /// Evento selezione quantità in lt
+        /// </summary>
+        /// <param name="lt"></param>
+        public void OnLtChanged(string lt)
+        {
+            this.Lt = lt;
+            this.Kg = ConvertToKg(lt);
+        }
+
+        /// <summary>
         /// Comando caricamento dati singolo prelievo e tabelle lookup
         /// </summary>
         /// <returns></returns>
@@ -253,14 +292,14 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
 
                     // Data prelievo
-                    this.DataPrelievo = GetDateWhitoutTime(this.prelievo.DataPrelievo);
+                    this.DataPrelievo = GetDateWhitoutTime(prelievo.DataPrelievo);
 
                     // Ora prelievo
                     this.OraPrelievo = this.prelievo.DataPrelievo.HasValue ? this.prelievo.DataPrelievo.Value - this.DataPrelievo : new TimeSpan();
 
                     // Allevamento
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
-                    this.AllevamentoSelezionato = this.prelievo.IdAllevamento.HasValue ? this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == this.prelievo.IdAllevamento.Value) : null;
+                    this.AllevamentoSelezionato = GetAllevamentoSelezionato(Geolocation.GetLastKnownLocationAsync().Result);
 
                     this.Title = this.AllevamentoSelezionato != null ? "Modifica Prelievo" : "Nuovo Prelievo";
 
@@ -280,18 +319,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.NumeroMungiture = this.prelievo.NumeroMungiture;
 
                     // data ultima mungitura
-                    this.DataUltimaMungitura = GetDateWhitoutTime(this.prelievo.DataUltimaMungitura);
+                    this.DataUltimaMungitura = GetDateWhitoutTime(prelievo.DataUltimaMungitura);
 
                     // Ora ultima mungitura
                     this.OraUltimaMungitura = this.prelievo.DataUltimaMungitura.HasValue ? this.prelievo.DataUltimaMungitura.Value - this.DataPrelievo : new TimeSpan();
 
                     // acquirente
                     this.Acquirenti = new ObservableCollection<Acquirente>(acquirenti);
-                    this.AcquirenteSelezionato = this.prelievo.IdAcquirente.HasValue ? this.Acquirenti.FirstOrDefault(a => a.Id == this.prelievo.IdAcquirente.Value) : null;
+                    this.AcquirenteSelezionato = GetAcquirenteSelezionato();
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
-                    this.DestinatarioSelezionato = this.prelievo.IdDestinatario.HasValue ? this.Destinatari.FirstOrDefault(a => a.Id == this.prelievo.IdDestinatario.Value) : null;
+                    this.DestinatarioSelezionato = GetDestinatarioSelezionato(); ;
 
                 });
 
@@ -516,6 +555,122 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Recupero acquirente selezionato o di default
+        /// </summary>
+        /// <returns></returns>
+        private Acquirente GetAcquirenteSelezionato()
+        {
+            if (this.prelievo.IdAcquirente.HasValue)
+                return this.Acquirenti.FirstOrDefault(a => a.Id == this.prelievo.IdAcquirente.Value);
+
+            if(this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
+            {
+                return this.Acquirenti.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdAcquirenteDefault.Value);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Recupero destinatario selezionato o di default
+        /// </summary>
+        /// <returns></returns>
+        private Destinatario GetDestinatarioSelezionato()
+        {
+            if (this.prelievo.IdDestinatario.HasValue)
+                return this.Destinatari.FirstOrDefault(a => a.Id == this.prelievo.IdDestinatario.Value);
+
+            if (this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdDestinatarioDefault.HasValue)
+            {
+                return this.Destinatari.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdDestinatarioDefault.Value);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Recupero dell'allevamento selezionato o quello più vicino
+        /// </summary>
+        /// <returns></returns>
+        private Allevamento GetAllevamentoSelezionato(Location location)
+        {
+            // allevamento presente nel prelievo
+            if (this.prelievo.IdAllevamento.HasValue)
+                return this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == this.prelievo.IdAllevamento.Value);
+
+            if (this.isNew)
+            {
+                var distanze = this.Allevamenti
+                    .Where(a => a.Latitudine.HasValue && a.Longitudine.HasValue)
+                    .Select(a => new { Id = a.IdAllevamento, Distance = GetDistance(a, location) })
+                    .ToList();
+
+                if (distanze.Count > 0)
+                {
+                    var idAllevamento = distanze.OrderBy(d => d.Distance).FirstOrDefault().Id;
+                    return this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == idAllevamento);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Conversione quantità da kg a litri
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string ConvertToLt(string value)
+        {
+            if (!String.IsNullOrEmpty(value) &&
+                this.TipoLatte != null &&
+                this.TipoLatte.FattoreConversione.HasValue &&
+                this.TipoLatte.FattoreConversione.Value != 0)
+            {
+                var kg = Convert.ToDecimal(value);
+
+                var lt = kg * this.TipoLatte.FattoreConversione.Value;
+
+                return $"{lt:#.00}";
+            }
+
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// Conversione quantità da litri a kg
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string ConvertToKg(string value)
+        {
+            if (!String.IsNullOrEmpty(value) &&
+                this.TipoLatte != null &&
+                this.TipoLatte.FattoreConversione.HasValue &&
+                this.TipoLatte.FattoreConversione.Value != 0)
+            {
+                var lt = Convert.ToDecimal(value);
+
+                var kg = lt / this.TipoLatte.FattoreConversione;
+
+                return $"{kg:#.00}";
+            }
+
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// Calcolo della distanza tra la posizione attuale e l'allevamento
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        private double GetDistance(Allevamento a, Location location)
+        {
+            return Math.Sqrt(Math.Pow(a.Latitudine.Value - location.Latitude, 2) + Math.Pow(a.Longitudine.Value - location.Longitude, 2));
         }
 
         #endregion

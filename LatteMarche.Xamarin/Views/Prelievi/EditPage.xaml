@@ -7,7 +7,7 @@
              xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"             
              x:Class="LatteMarche.Xamarin.Views.Prelievi.EditPage"
-             Appearing="ContentPage_Appearing"
+             Appearing="ContentPage_Appearing"                
              Title="Info Prelievo">
 
     <ContentPage.ToolbarItems>
@@ -83,6 +83,7 @@
                     ShouldAnimateUnderline="True"
                     Placeholder="Kg"
                     Text="{Binding Kg, Mode=TwoWay}"
+                    Unfocused="Kg_Unfocused"
                     InputType="Numeric"
                     BackgroundColor="Transparent"
                     HorizontalOptions="FillAndExpand"
@@ -95,6 +96,7 @@
                     ShouldAnimateUnderline="True"
                     Placeholder="Litri" 
                     Text="{Binding Lt, Mode=TwoWay}"
+                    Unfocused="Lt_Unfocused"
                     InputType="Numeric"
                     BackgroundColor="Transparent"
                     HorizontalOptions="FillAndExpand"

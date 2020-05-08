@@ -107,6 +107,8 @@ namespace LatteMarche.Application.Allevamenti.Services
             dbEntity.Latitudine = viewEntity.Latitudine;
             dbEntity.Longitudine = viewEntity.Longitudine;
 
+            dbEntity.IdAcquirenteDefault = viewEntity.IdAcquirenteDefault;
+
             return dbEntity;
         }
 

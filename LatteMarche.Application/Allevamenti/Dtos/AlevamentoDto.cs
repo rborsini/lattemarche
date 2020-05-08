@@ -16,8 +16,9 @@ namespace LatteMarche.Application.Allevamenti.Dtos
         public int? Utente_IdTipoLatte { get; set; }
 
         public double? Latitudine { get; set; }
-
         public double? Longitudine { get; set; }
+
+        public int? IdAcquirenteDefault { get; set; }
     }
 
 }

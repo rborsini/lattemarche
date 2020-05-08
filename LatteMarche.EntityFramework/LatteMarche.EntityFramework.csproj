@@ -98,6 +98,10 @@
     <Compile Include="Migrations\202005071310567_AggiunteCoordinateAllevamenti.Designer.cs">
       <DependentUpon>202005071310567_AggiunteCoordinateAllevamenti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005071510086_AggiuntiValoriDefaultAllevamenti.cs" />
+    <Compile Include="Migrations\202005071510086_AggiuntiValoriDefaultAllevamenti.Designer.cs">
+      <DependentUpon>202005071510086_AggiuntiValoriDefaultAllevamenti.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005071310567_AggiunteCoordinateAllevamenti.resx">
       <DependentUpon>202005071310567_AggiunteCoordinateAllevamenti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071510086_AggiuntiValoriDefaultAllevamenti.resx">
+      <DependentUpon>202005071510086_AggiuntiValoriDefaultAllevamenti.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -167,7 +167,6 @@ Global
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.TEST|Any CPU.ActiveCfg = Release|Any CPU
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.TEST|Any CPU.Build.0 = Release|Any CPU
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.Xamarin Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D52AB32E-1432-4B28-9438-C74D25E70F35}.Xamarin Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

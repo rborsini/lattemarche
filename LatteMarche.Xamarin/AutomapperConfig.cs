@@ -38,9 +38,6 @@ namespace LatteMarche.Xamarin
 				;
 			#endregion
 
-
-
-
 			Mapper.Reset();
 			Mapper.Initialize(mappings);
 		}

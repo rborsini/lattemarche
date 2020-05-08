@@ -30,5 +30,19 @@ namespace LatteMarche.Xamarin.Db.Models
         public int? IdTipoLatte { get; set; }
         public TipoLatte TipoLatte { get; set; }
 
+        public double? Latitudine { get; set; }
+        public double? Longitudine { get; set; }
+
+        public int? IdAcquirenteDefault { get; set; }
+        public int? IdDestinatarioDefault { get; set; }
+
+        public decimal? Quantita_Min { get; set; }
+        public decimal? Quantita_Max { get; set; }
+
+        public decimal? Temperatura_Min { get; set; }
+        public decimal? Temperatura_Max { get; set; }
+
+
+
     }
 }

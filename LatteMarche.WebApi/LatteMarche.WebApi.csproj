@@ -308,7 +308,7 @@
     <Content Include="src\pages\allevamenti\edit.vue" />
     <Content Include="Views\Allevatori\Index.cshtml" />
     <Content Include="src\pages\utenti\edit.vue" />
-    <None Include="lattemarche - Web Deploy.pubxml" />
+    <None Include="lattemarche - PROD.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />

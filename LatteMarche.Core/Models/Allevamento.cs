@@ -41,5 +41,8 @@ namespace LatteMarche.Core.Models
         [Column("LONGITUDINE")]
         public double? Longitudine { get; set; }
 
+        [Column("ID_ACQUIRENTE_DEFAULT")]
+        public int? IdAcquirenteDefault { get; set; }
+
     }
 }

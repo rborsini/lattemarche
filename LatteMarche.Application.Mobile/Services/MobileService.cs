@@ -112,6 +112,10 @@ namespace LatteMarche.Application.Mobile.Services
                             var utente = allevamento != null ? allevamento.Utente : null;
                             var comune = utente != null ? utente.Comune : null;
 
+                            var prelievi = GetPrelievi(allevamento.Id, 100);
+                            var temperature = prelievi.Where(p => p.Temperatura.HasValue).Select(p => p.Temperatura.Value).ToArray();
+                            var quantita = prelievi.Where(p => p.Quantita.HasValue).Select(p => p.Quantita.Value).ToArray();
+
                             giro.Allevamenti.Add(new AllevamentoDto()
                             {
                                 IdAllevamento = allevamento.Id,
@@ -122,7 +126,15 @@ namespace LatteMarche.Application.Mobile.Services
                                 Provincia = comune != null ? comune.Provincia : "",
                                 Priorita = axg.Priorita,
                                 P_IVA = utente != null ? utente.PivaCF.Trim() : "",
-                                RagioneSociale = utente != null ? utente.RagioneSociale.Trim() : ""
+                                RagioneSociale = utente != null ? utente.RagioneSociale.Trim() : "",
+                                Latitudine = allevamento?.Latitudine,
+                                Longitudine = allevamento?.Longitudine,
+                                IdAcquirenteDefault = GetAcquirenteDefault(prelievi),
+                                IdDestinatarioDefault = GetDestinatarioDefault(prelievi),
+                                Temperatura_Min = GetPercentile(temperature, 5),
+                                Temperatura_Max = GetPercentile(temperature, 95),
+                                Quantita_Min = GetPercentile(quantita, 5),
+                                Quantita_Max = GetPercentile(quantita, 95)
                             });
                         }
                     }
@@ -168,6 +180,68 @@ namespace LatteMarche.Application.Mobile.Services
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Recupera l'acquirente più frequente
+        /// </summary>
+        /// <param name="prelievi"></param>
+        /// <returns></returns>
+        private int? GetAcquirenteDefault(List<PrelievoLatte> prelievi)
+        {
+            return prelievi
+                .Where(p => p.IdAcquirente.HasValue)
+                .GroupBy(p => p.IdAcquirente)
+                .OrderByDescending(gp => gp.Count())
+                .Select(g => g.Key)
+                .FirstOrDefault();
+
+        }
+
+        /// <summary>
+        /// Recupera il destinatario più frequente
+        /// </summary>
+        /// <param name="prelievi"></param>
+        /// <returns></returns>
+        private int? GetDestinatarioDefault(List<PrelievoLatte> prelievi)
+        {
+            return prelievi
+                .Where(p => p.IdDestinatario.HasValue)
+                .GroupBy(p => p.IdDestinatario)
+                .OrderByDescending(gp => gp.Count())
+                .Select(g => g.Key)
+                .FirstOrDefault();
+        }
+
+        private List<PrelievoLatte> GetPrelievi(int idAllevamento, int size)
+        {
+            return this.prelieviRepository
+                .Query
+                .Where(p => p.IdAllevamento == idAllevamento)
+                .OrderByDescending(p => p.DataConsegna)
+                .ToList();
+        }
+
+        public decimal GetPercentile(decimal[] sequence, decimal excelPercentile)
+        {
+            if (sequence.Length == 0)
+                return 0;
+
+            if (excelPercentile > 100)
+                excelPercentile = 100;
+
+            Array.Sort(sequence);
+            int N = sequence.Length;
+            decimal n = (N - 1) * (excelPercentile / 100) + 1;
+            // Another method: double n = (N + 1) * excelPercentile;
+            if (n == 1) return sequence[0];
+            else if (n == N) return sequence[N - 1];
+            else
+            {
+                int k = (int)n;
+                decimal d = n - k;
+                return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
             }
         }
 
