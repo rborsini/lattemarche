@@ -1,9 +1,17 @@
 ﻿using AutoMapper;
 using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Enums;
+using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Dtos;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Prelievi;
 using LatteMarche.Xamarin.Zebra.Interfaces;
 using LatteMarche.Xamarin.Zebra.Models;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -39,6 +48,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Properties
 
+        public bool IsReadOnly => this.giro != null && this.giro.DataConsegna.HasValue;
+
         public ObservableCollection<Prelievo> Prelievi 
         {
             get { return this.prelievi; }
@@ -49,13 +60,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command AddCommand { get; set; }
 
-        public Command RemoveCommand { get; set; }
-
         public Command PrintCommand { get; set; }
 
-        public Command SendCommand { get; set; }
-
-        public Command CloseCommand { get; set; }
 
         #endregion
 
@@ -68,12 +74,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.Prelievi = new ObservableCollection<Prelievo>();
             this.giro = giro;
 
-            this.AddCommand = new Command(async () => await ExecuteAddCommand());
-            this.RemoveCommand = new Command(async () => await ExecuteRemoveCommand());
+            this.AddCommand = new Command(async () => await ExecuteAddCommand(), canExecute: () => { return !this.IsReadOnly; });
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            this.CloseCommand = new Command(async () => await ExecuteCloseCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
-            this.SendCommand = new Command(async () => await ExecuteSendCommand());
 
         }
 
@@ -107,48 +110,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     {
                         this.NoData = true;
                     }
+
+                    (this.AddCommand as Command).ChangeCanExecute();
                 });
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Debug.WriteLine(ex);
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
             }
             finally
             {
                 await loadingDialog.DismissAsync();
-                this.IsBusy = false;
-            }
-        }
-
-        /// <summary>
-        /// Chiusura giro
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteCloseCommand()
-        {
-            if (this.IsBusy)
-                return;
-
-            this.IsBusy = true;
-
-            try
-            {
-                await Task.Run(() =>
-                {
-                    var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
-
-                    // Salvataggio codice lotto
-                    this.giro.DataConsegna = DateTime.Now;
-                    this.giro.CodiceLotto = $"{templateGiro?.Codice}{this.giro.DataConsegna:ddMMyyHHmm}";
-                    this.giriService.UpdateItemAsync(this.giro).Wait();
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
                 this.IsBusy = false;
             }
         }
@@ -205,43 +178,23 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+
+                Analytics.TrackEvent("Stampa ricevuta consegna");
+                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
+
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
-        }
-
-        /// <summary>
-        /// Comando invio lotto
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteSendCommand()
-        {
-            try
-            {
-                Debug.WriteLine("Send Command");
-                this.IsBusy = true;
-
-                await Task.Run(() =>
-                {
-
-
-                });
-
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Info", "Invio effettuato", "OK");
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
-            }
-
-        }
+        }    
 
         /// <summary>
         /// Apertura pagina nuovo prelievo
@@ -250,31 +203,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private async Task ExecuteAddCommand()
         {
             await this.navigation.PushAsync(new EditPage(new EditViewModel(this.navigation, this.page, this.giro.Id, "")));
-        }
-
-        /// <summary>
-        /// Rimozione giro
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteRemoveCommand()
-        {
-            try
-            {
-                this.IsBusy = true;
-
-                await Task.Run(() =>
-                {
-                    this.giriService.DeleteItemAsync(this.giro.Id).Wait();
-                });
-
-                this.IsBusy = false;
-                await navigation.PopAsync();
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
-            }
         }
 
         /// <summary>

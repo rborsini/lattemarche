@@ -25,14 +25,10 @@ namespace LatteMarche.Xamarin
 {
     public partial class App : Application
     {
+        #region Constants
 
-        #region Fields
-
-        private IDevice device = DependencyService.Get<IDevice>();
-        private IRestService restService => DependencyService.Get<IRestService>();
-        private IGiriService giriService => DependencyService.Get<IGiriService>();
-
-        private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+        private const long MinSecondsToRefreshDb = 60 * 60 * 24;
+        //private const long MinSecondsToRefreshDb = 0;
 
         #endregion
 
@@ -72,14 +68,14 @@ namespace LatteMarche.Xamarin
 
             AutomapperConfig.Configure();
 
-            //var trasporatori = await DependencyService.Get<ITrasportatoriService>().GetItemsAsync();
+            var trasporatori = await DependencyService.Get<ITrasportatoriService>().GetItemsAsync();
 
             Current.On<Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
-            
-            //if (trasporatori.Count() > 0)
+
+            if (trasporatori.Count() > 0)
                 MainPage = new MainPage();
-            //else
-            //    MainPage = new RegisterPage();
+            else
+                MainPage = new RegisterPage();
         }
 
         protected override void OnSleep()
@@ -88,27 +84,33 @@ namespace LatteMarche.Xamarin
 
         protected override void OnResume()
         {
-            //Task.Run(() =>
-            //{
-            //    try
-            //    {
-            //        var ultimoDownload = this.sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
-            //        if ((ultimoDownload.Timestamp - DateTime.Now).TotalDays > 1)
-            //        {
-            //            var dto = this.restService.Download(this.device.GetIdentifier()).Result;
-            //            this.sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
 
-            //            Analytics.TrackEvent("Download avvenuto", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
-            //            SentrySdk.CaptureMessage("Download avvenuto", Sentry.Protocol.SentryLevel.Info);
-            //        }
-            //    }
-            //    catch(Exception exc)
-            //    {
-            //        SentrySdk.CaptureException(exc);
-            //        Crashes.TrackError(exc);
-            //    }
+            var device = DependencyService.Get<IDevice>();
+            var restService = DependencyService.Get<IRestService>();
+            var giriService = DependencyService.Get<IGiriService>();
+            var sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
 
-            //});
+            Task.Run(() =>
+                {
+                    try
+                    {
+                        var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
+                        if ((DateTime.Now - ultimoDownload.Timestamp).TotalSeconds > MinSecondsToRefreshDb)
+                        {
+                            var dto = restService.Download(device.GetIdentifier()).Result;
+                            sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
+
+                            Analytics.TrackEvent("Download avvenuto", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
+                            SentrySdk.CaptureMessage("Download avvenuto", Sentry.Protocol.SentryLevel.Info);
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        SentrySdk.CaptureException(exc);
+                        Crashes.TrackError(exc);
+                    }
+
+                });
         }
 
         #endregion

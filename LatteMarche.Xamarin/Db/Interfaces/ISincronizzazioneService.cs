@@ -14,7 +14,7 @@ namespace LatteMarche.Xamarin.Db.Interfaces
 
         Task<bool> UpdateDatabaseSync(DownloadDto dbDto);
 
-        //Task<Sincronizzazione> GetLastAysnc(SynchType tipo);
+        Task<Sincronizzazione> GetLastAysnc(SynchType tipo);
 
     }
 }

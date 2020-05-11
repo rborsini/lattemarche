@@ -3,8 +3,10 @@ using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Zebra;
 using LatteMarche.Xamarin.Zebra.Interfaces;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +20,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
     public class IndexViewModel : BaseViewModel
     {
         #region Fields
+
+        private IMaterialModalPage loadingDialog;
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
@@ -82,8 +86,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         private async Task ExecuteLoadCommand()
         {
-            this.IsBusy = true;
-            
+            this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento elenco stampanti", lottieAnimation: "LottieLogo1.json");
+
             try
             {
                 await Task.Run(() =>
@@ -96,11 +100,16 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             }
             catch (Exception exc)
             {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
             finally
             {
-                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
             }
 
         }
@@ -110,7 +119,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
-                this.IsBusy = true;
+                this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Ricerca stampanti in corso", lottieAnimation: "LottieLogo1.json");
 
                 DiscoveryHandlerImplementation discoveryHandler = new DiscoveryHandlerImplementation(this.page);
 
@@ -122,7 +131,10 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             }
             catch (Exception exc)
             {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
         }
 
@@ -130,18 +142,23 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
-                this.IsBusy = true;
+                this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
 
                 await Task.Run(() =>
                 {
                     this.stampantiService.SetDefaultAsync(this.stampanteSelezionata.MacAddress).Wait();
                 });
 
-                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
             }
             catch (Exception exc)
             {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
         }
 
@@ -151,23 +168,32 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             {
                 this.StampantiPresenti = true;
                 this.stampantiService.InsertOrUpdateAsync(stampante).Wait();
+
+                Analytics.TrackEvent("Stampante associata");
+                SentrySdk.CaptureMessage("Stampante associata", Sentry.Protocol.SentryLevel.Info);
             }
             catch(Exception exc)
             {
-                var properties = new Dictionary<string, string> {{ "stampante", JsonConvert.SerializeObject(stampante) }};
-                Crashes.TrackError(exc, properties);
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
         }
 
-        private void DiscoveryHandler_OnDiscoveryFinished(object sender, EventArgs e)
+        private async void DiscoveryHandler_OnDiscoveryFinished(object sender, EventArgs e)
         {
-            this.IsBusy = false;
+            await loadingDialog.DismissAsync(); 
         }
 
         private void DiscoveryHandler_OnDiscoveryError(object sender, string errorMessage)
         {
-            this.IsBusy = false;
-            this.page.DisplayAlert("Error", errorMessage, "OK");
+            loadingDialog.DismissAsync().Wait();
+
+            SentrySdk.CaptureException(new Exception(errorMessage));
+            Crashes.TrackError(new Exception(errorMessage));
+
+            this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
         }
 
         #endregion

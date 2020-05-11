@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Synch
 {
@@ -59,10 +60,10 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private async Task ExecuteRegisterCommand()
         {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Registrazione in corso", lottieAnimation: "LottieLogo1.json");
+
             try
             {
-                this.IsBusy = true;
-
                 var location = await Geolocation.GetLastKnownLocationAsync();
                 VersionTracking.Track();
                 var appVersion = VersionTracking.CurrentVersion;
@@ -87,17 +88,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                     if (isActive)
                     {
-                        //this.trasportatoriService.DeleteAllItemsAsync().Wait();
-                        //this.trasportatoriService.AddItemAsync(new Db.Models.Trasportatore()
-                        //{
-                        //    Id = dispositivo.IdTrasportatore.Value
-                        //}).Wait();
-
-                        var stampantiService = DependencyService.Get<IStampantiService>();
-                        var service = DependencyService.Get<ISincronizzazioneService>();
-
                         var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
-                        //this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
+                        this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
                     }
 
                     this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
@@ -107,7 +99,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 });
 
-                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Info", "Registrazione inviata con successo", "OK");
 
                 if (isActive)
@@ -120,12 +112,12 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             }
             catch (Exception exc)
             {
-                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
 
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);
 
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
         }

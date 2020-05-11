@@ -74,8 +74,21 @@ namespace LatteMarche.Application.Mobile.Services
                 this.dispositiviRepository.Add(dispositivo);
                 this.uow.SaveChanges();
             }
+            else
+            {
+                dispositivo.VersioneApp = deviceInfo.VersioneApp;
+                dispositivo.VersioneOS = deviceInfo.VersioneOS;
+                dispositivo.Latitudine = deviceInfo.Lat;
+                dispositivo.Longitudine = deviceInfo.Lng;
+                dispositivo.Marca = deviceInfo.Marca;
+                dispositivo.Modello = deviceInfo.Modello;
+                dispositivo.Nome = deviceInfo.Nome;
 
-            return Mapper.Map<DispositivoDto>(this.dispositiviRepository.GetById(deviceInfo.Id));
+                this.dispositiviRepository.Update(dispositivo);
+                this.uow.SaveChanges();
+            }
+
+            return Mapper.Map<DispositivoDto>(this.uow.Get<DispositivoMobile,string>().GetById(deviceInfo.Id));
         }
 
         /// <summary>

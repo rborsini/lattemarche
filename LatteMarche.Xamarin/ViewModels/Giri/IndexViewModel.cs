@@ -1,15 +1,25 @@
-﻿using LatteMarche.Xamarin.Db.Interfaces;
+﻿using AutoMapper;
+using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Enums;
+using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Dtos;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Giri;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using XF.Material.Forms.Models;
 using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Giri
@@ -18,13 +28,22 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
     {
         #region Fields
 
+        private IDevice device = DependencyService.Get<IDevice>();
+        private ITemplateGiroService templateService => DependencyService.Get<ITemplateGiroService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
+        private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
+        private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
+        private IRestService restService => DependencyService.Get<IRestService>();
+
+        private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+
+        private List<TemplateGiro> templateList;
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<Giro> Items { get; set; }
+        public ObservableCollection<ItemViewModel> Items { get; set; }
 
         public Command AddCommand { get; set; }
 
@@ -37,7 +56,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         public IndexViewModel(INavigation navigation, Page page)
             : base(navigation, page)
         {
-            this.Items = new ObservableCollection<Giro>();
+            this.Items = new ObservableCollection<ItemViewModel>();
             this.NoData = false;
             this.AddCommand = new Command(async () => await ExecuteAddCommand());
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -53,22 +72,57 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
+            var result = await MaterialDialog.Instance.SelectChoiceAsync(title: "Seleziona giro", choices: templateList.Select(t => t.Descrizione).ToArray());
 
-            //using (SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587"))
-            //{
-            //    SentrySdk.CaptureMessage("primo messaggio", Sentry.Protocol.SentryLevel.Info);
+            if (result < 0)
+                return;
 
-            //    try
-            //    {
-            //        throw null;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        SentrySdk.CaptureException(e);
-            //    }
-            //}
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
 
-            await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var giro = new Giro()
+                    {
+                        IdTemplateGiro = this.templateList[result].Id,
+                        DataCreazione = DateTime.Now,
+                        Titolo = this.templateList[result].Descrizione
+                    };
+
+                    this.giriService.AddItemAsync(giro).Wait();
+
+                    var item = Mapper.Map<ItemViewModel>(giro);
+
+                    item.OnItem_Closing += Item_OnItem_Closing;
+                    item.OnItem_Opening += Item_OnItem_Opening;
+                    item.OnItem_Printing += Item_OnItem_Printing;
+                    item.OnItem_Sending += Item_OnItem_Sending;
+                    item.OnItem_Deleting += Item_OnItem_Deleting;
+
+                    this.Items.Add(item);
+
+                    Analytics.TrackEvent("Nuovo giro", new Dictionary<string, string>() {
+                        { "giro", JsonConvert.SerializeObject(giro) },
+                        { "device", DependencyService.Get<IDevice>().GetIdentifier() }
+                    });
+                    SentrySdk.CaptureMessage("Nuovo giro", Sentry.Protocol.SentryLevel.Info);
+
+                });
+
+                await loadingDialog.DismissAsync();
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+            }
+
         }
 
         /// <summary>
@@ -82,35 +136,245 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             this.IsBusy = true;
 
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Giri in caricamento", lottieAnimation: "LottieLogo1.json");
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento giri", lottieAnimation: "LottieLogo1.json");
             this.NoData = false;
 
             try
             {
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
-                    await loadingDialog.DismissAsync();
                     this.Items.Clear();
-                    var items = this.giriService.GetItemsAsync().Result;
-                    foreach (var item in items)
+                    var giri = this.giriService.GetGiriApertiAsync().Result;
+                    foreach (var giro in giri)
                     {
+                        var item = Mapper.Map<ItemViewModel>(giro);
+
+                        item.OnItem_Closing += Item_OnItem_Closing;
+                        item.OnItem_Opening += Item_OnItem_Opening;
+                        item.OnItem_Printing += Item_OnItem_Printing;
+                        item.OnItem_Sending += Item_OnItem_Sending;
+                        item.OnItem_Deleting += Item_OnItem_Deleting;
+
                         this.Items.Add(item);
                     }
 
-                    if (this.Items.Count == 0)
-                    {
-                        this.NoData = true;
-                    }
+                    this.templateList = this.templateService.GetItemsAsync().Result.ToList();
+                    this.NoData = this.Items.Count == 0;                    
                 });
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Debug.WriteLine(ex);
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
             }
             finally
             {
-
+                await loadingDialog.DismissAsync();
                 this.IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Evento chiusura giro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Item_OnItem_Closing(object sender, EventArgs e)
+        {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Chiusura giro", lottieAnimation: "LottieLogo1.json");
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var item = sender as ItemViewModel;
+                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+
+                    // Salvataggio codice lotto
+                    var giro = this.giriService.GetItemAsync(item.Id).Result;
+                    giro.DataConsegna = DateTime.Now;
+                    giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+                    this.giriService.UpdateItemAsync(giro).Wait();
+                });
+
+                Analytics.TrackEvent("Giro chiuso", new Dictionary<string, string>());
+                SentrySdk.CaptureMessage("Giro chiuso", Sentry.Protocol.SentryLevel.Info);
+
+                await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Giro chiuso", "OK");
+                await ExecuteLoadItemsCommand();
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+            }
+
+        }
+
+        /// <summary>
+        /// Evento ri-apertura giro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Item_OnItem_Opening(object sender, EventArgs e)
+        {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Riapertura giro", lottieAnimation: "LottieLogo1.json");
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var item = sender as ItemViewModel;
+                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+
+                    // Salvataggio codice lotto
+                    var giro = this.giriService.GetItemAsync(item.Id).Result;
+                    giro.DataConsegna = (DateTime?)null;
+                    giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+                    this.giriService.UpdateItemAsync(giro).Wait();
+                });
+
+                await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Giro riaperto", "OK");
+                await ExecuteLoadItemsCommand();
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+            }
+
+        }
+
+        /// <summary>
+        /// Rimozione giro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Item_OnItem_Deleting(object sender, EventArgs e)
+        {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione giro", lottieAnimation: "LottieLogo1.json");
+            try
+            {
+                bool reply = await this.page.DisplayAlert("Attenzione", $"Sei sicuro di voler eliminare il giro selezionato?", "Si", "No");
+                if (reply == false)
+                    return;
+
+                await Task.Run(() =>
+                {                   
+                    var item = sender as ItemViewModel;
+                    this.giriService.DeleteItemAsync(item.Id).Wait();
+                    this.Items.Remove(item);
+                });
+
+                await loadingDialog.DismissAsync();
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
+            }
+        }
+
+        /// <summary>
+        /// Invio giro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Item_OnItem_Sending(object sender, EventArgs e)
+        {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Invio giro", lottieAnimation: "LottieLogo1.json");
+
+            try
+            {
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                VersionTracking.Track();
+
+                await Task.Run(() =>
+                {
+                    var item = sender as ItemViewModel;
+                    var prelievi = this.prelieviService.GetByGiro(item.Id).Result;
+
+                    var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
+
+                    var uploadDto = new UploadDto()
+                    {
+                        IMEI = this.device.GetIdentifier(),
+                        Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
+                        Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
+                        VersioneApp = VersionTracking.CurrentVersion,
+                        VersioneOS = DeviceInfo.VersionString,
+                        Marca = DeviceInfo.Manufacturer,
+                        Modello = DeviceInfo.Model,
+                        Nome = DeviceInfo.Name,
+                        Prelievi = prelieviDto
+                    };
+
+                    // chiamata REST upload dati
+                    if (this.restService.Upload(uploadDto).Result)
+                    {
+                        var giro = this.giriService.GetItemAsync(item.Id).Result;
+                        giro.DataUpload = DateTime.Now;
+                        this.giriService.UpdateItemAsync(giro).Wait();
+
+                        // aggiornamento tabella sincronizzazioni
+                        this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
+                    }
+                    else
+                    {
+                        throw new Exception("Errore di sincronizzazione con il server");
+                    }
+
+                });
+
+                await loadingDialog.DismissAsync();
+
+                Analytics.TrackEvent("Invio lotto");
+                SentrySdk.CaptureMessage("Invio lotto", Sentry.Protocol.SentryLevel.Info);
+
+                await this.page.DisplayAlert("Info", "Invio effettuato con successo", "OK");
+                await ExecuteLoadItemsCommand();
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+            }
+
+        }
+
+        private void Item_OnItem_Printing(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Lookup template giro
+        /// </summary>
+        /// <param name="idTemplateGiro"></param>
+        /// <returns></returns>
+        private async Task<TemplateGiro> GetTemplateGiro(int? idTemplateGiro)
+        {
+            if (idTemplateGiro.HasValue)
+            {
+                return await this.templateGiroService.GetItemAsync(idTemplateGiro.Value);
+            }
+            else
+            {
+                return null;
             }
         }
 

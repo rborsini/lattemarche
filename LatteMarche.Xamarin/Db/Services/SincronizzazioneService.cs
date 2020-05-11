@@ -17,13 +17,13 @@ namespace LatteMarche.Xamarin.Db.Services
     {
         #region Fields
 
-        //private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
-        //private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
-        //private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
-        //private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
-        //private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
-        //private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
-        //private ITemplateGiroService templateGiriService => DependencyService.Get<ITemplateGiroService>();
+        private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
+        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
+        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
+        private ITemplateGiroService templateGiriService => DependencyService.Get<ITemplateGiroService>();
 
         #endregion
 
@@ -45,61 +45,61 @@ namespace LatteMarche.Xamarin.Db.Services
             }
         }
 
-        //public async Task<Sincronizzazione> GetLastAysnc(SynchType tipo)
-        //{
-        //    using (var context = CrateContext())
-        //    {
-        //        return await context.Set<Sincronizzazione>()
-        //            .Where(s => s.Tipo == tipo.ToString())
-        //            .OrderBy(s => s.Timestamp)
-        //            .LastOrDefaultAsync();
-        //    }
-        //}
+        public async Task<Sincronizzazione> GetLastAysnc(SynchType tipo)
+        {
+            using (var context = CrateContext())
+            {
+                return await context.Set<Sincronizzazione>()
+                    .Where(s => s.Tipo == tipo.ToString())
+                    .OrderBy(s => s.Timestamp)
+                    .LastOrDefaultAsync();
+            }
+        }
 
         public async Task<bool> UpdateDatabaseSync(DownloadDto dto)
         {
-            //if (dto != null)
-            //{
-            //    // pulizia database
-            //    this.allevamentiService.DeleteAllItemsAsync().Wait();
-            //    this.templateGiriService.DeleteAllItemsAsync().Wait();
-            //    this.autocisterneService.DeleteAllItemsAsync().Wait();
-            //    this.tipiLatteService.DeleteAllItemsAsync().Wait();
-            //    this.acquirentiService.DeleteAllItemsAsync().Wait();
-            //    this.destinatariService.DeleteAllItemsAsync().Wait();
+            if (dto != null)
+            {
+                // pulizia database
+                this.allevamentiService.DeleteAllItemsAsync().Wait();
+                this.templateGiriService.DeleteAllItemsAsync().Wait();
+                this.autocisterneService.DeleteAllItemsAsync().Wait();
+                this.tipiLatteService.DeleteAllItemsAsync().Wait();
+                this.acquirentiService.DeleteAllItemsAsync().Wait();
+                this.destinatariService.DeleteAllItemsAsync().Wait();
+                this.trasportatoriService.DeleteAllItemsAsync().Wait();
 
+                // trasportatore
+                var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
+                this.trasportatoriService.AddItemAsync(trasportatore).Wait();
 
-            //    // trasportatore
-            //    var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
-            //    this.trasportatoriService.UpdateItemAsync(trasportatore).Wait();
+                // autocisterna
+                var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
+                this.autocisterneService.AddItemAsync(autocisterna).Wait();
 
-            //    // autocisterna
-            //    var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
-            //    this.autocisterneService.AddItemAsync(autocisterna).Wait();
+                // tipi latte
+                var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
+                this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
 
-            //    // tipi latte
-            //    var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
-            //    this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
+                // acquirenti
+                var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
+                this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
 
-            //    // acquirenti
-            //    var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
-            //    this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
+                // destinatari
+                var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
+                this.destinatariService.AddRangeItemAsync(destinatari).Wait();
 
-            //    // destinatari
-            //    var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
-            //    this.destinatariService.AddRangeItemAsync(destinatari).Wait();
+                // template giro
+                var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
 
-            //    // template giro
-            //    var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
+                giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
+                this.templateGiriService.AddRangeItemAsync(giri).Wait();
 
-            //    giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
-            //    this.templateGiriService.AddRangeItemAsync(giri).Wait();
+                this.AddAsync(SynchType.Download).Wait();
 
-            //    this.AddAsync(SynchType.Download).Wait();
+                return await Task.FromResult(true);
 
-            //    return await Task.FromResult(true);
-
-            //}
+            }
 
             return await Task.FromResult(false);
         }

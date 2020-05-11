@@ -2,6 +2,9 @@
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Zebra.Interfaces;
 using LatteMarche.Xamarin.Zebra.Models;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,6 +66,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #endregion
 
         #region Properties
+
+        public bool IsEditable { get; set; }
 
         public string Id
         {
@@ -231,7 +236,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
-            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand());
+            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand(), canExecute: () => { return this.IsEditable; });
             this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());
         }
 
@@ -246,7 +251,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public void OnKgChanged(string kg)
         {
             this.Kg = kg;
-            //this.Lt = kg == "1" ? "2" : "1";
             this.Lt = ConvertToLt(kg);
         }
 
@@ -287,6 +291,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     }
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
+
+                    this.IsEditable = !giro.DataConsegna.HasValue;
+
                     var acquirenti = this.acquirentiService.GetItemsAsync().Result;
                     var destinatari = this.destinatariService.GetItemsAsync().Result;
                     var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
@@ -330,14 +337,16 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
-                    this.DestinatarioSelezionato = GetDestinatarioSelezionato(); ;
+                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();
+
+                    (this.SaveItemCommand as Command).ChangeCanExecute();
 
                 });
 
             }
             catch (Exception exc)
             {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
             finally
             {
@@ -353,8 +362,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecuteSaveItemCommand()
         {
-                this.IsBusy = true;
-                var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
+            this.IsBusy = true;
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
 
@@ -369,9 +378,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 var warningMsg = "";
                 if (!AllFieldsInThreshold(out warningMsg))
                 {
-                    bool answer = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
+                    bool reply = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
                     
-                    if(answer == false)
+                    if(reply == false)
                         return;
                 }
 
@@ -392,7 +401,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
                     this.prelievo.IdDestinatario = this.DestinatarioSelezionato != null ? this.DestinatarioSelezionato.Id : (int?)null;
 
-                    this.prelievo.Titolo = $"{this.AllevamentoSelezionato?.RagioneSociale} - {this.prelievo.DataPrelievo:HH:mm}";
+                    this.prelievo.Titolo = this.AllevamentoSelezionato?.RagioneSociale;
 
                     if (this.isNew)
                         prelieviService.AddItemAsync(this.prelievo).Wait();
@@ -406,7 +415,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
             finally
             {
@@ -519,7 +532,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
         }
 
@@ -572,12 +589,20 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+
+                Analytics.TrackEvent("Stampa ricevuta raccolta");
+                SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
+
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
         }

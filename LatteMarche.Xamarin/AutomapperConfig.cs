@@ -2,6 +2,7 @@
 using AutoMapper.Configuration;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Rest.Dtos;
+using LatteMarche.Xamarin.ViewModels.Giri;
 using LatteMarche.Xamarin.ViewModels.Prelievi;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,16 @@ namespace LatteMarche.Xamarin
 				.ForMember(dest => dest.Quantita, opt => opt.MapFrom(src => src.Quantita_kg))
 				.ForMember(dest => dest.IdLabAnalisi, opt => opt.MapFrom(src => 2))		// LAB ANALISI ASSAM
 				;
+
 			#endregion
 
-			Mapper.Reset();
+			#region ViewModels
+
+			mappings.CreateMap<Giro, ItemViewModel>();
+
+            #endregion
+
+            Mapper.Reset();
 			Mapper.Initialize(mappings);
 		}
 	}

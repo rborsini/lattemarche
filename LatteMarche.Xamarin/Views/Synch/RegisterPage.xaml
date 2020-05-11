@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"
              x:Class="LatteMarche.Xamarin.Views.Synch.RegisterPage">
     <ContentPage.Content>
@@ -14,6 +16,8 @@
                 Margin="0,100,0,0"
                 >
 
+                <Image Source="logo_latte_marche_pink.png" Margin="40,0,40,20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                
                 <Image Source="cow.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
 
                 <Label FontSize="Medium" TextColor="#373737" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"  WidthRequest="300" Margin="0,25" TextType="Html" HorizontalTextAlignment="Center">
@@ -24,7 +28,9 @@
 
                     </Label.Text>
                 </Label>
-                <Button Margin="50,10,50,100" HeightRequest="100" Text="Registrazione dispositivo" Command="{Binding RegisterCommand}"  />
+
+                <material:MaterialButton Margin="10,10,10,100" HeightRequest="70" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Registrazione dispositivo" Command="{Binding RegisterCommand}" TextColor="Black" VerticalOptions="Center" />
+
             </StackLayout>
 
             <AbsoluteLayout IsVisible="{Binding IsBusy}"
