@@ -21,6 +21,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
+        private bool stampantiPresenti;
+
         private Stampante stampanteSelezionata;
 
         private ObservableCollection<Stampante> stampanti;
@@ -33,6 +35,12 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             get { return this.stampanti; }
             set { SetProperty<ObservableCollection<Stampante>>(ref this.stampanti, value); }
+        }
+
+        public bool StampantiPresenti
+        {
+            get { return this.stampantiPresenti; }
+            set { SetProperty(ref this.stampantiPresenti, value); }
         }
 
         public Stampante StampanteSelezionata
@@ -82,7 +90,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 {
                     var stampanti = this.stampantiService.GetItemsAsync().Result;
                     this.Stampanti = new ObservableCollection<Stampante>(stampanti);
-
+                    this.StampantiPresenti = this.Stampanti.Count > 0;
                 });
 
             }
@@ -141,6 +149,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
+                this.StampantiPresenti = true;
                 this.stampantiService.InsertOrUpdateAsync(stampante).Wait();
             }
             catch(Exception exc)

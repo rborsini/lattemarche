@@ -29,6 +29,14 @@
                     />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
+        <ToolbarItem  Command="{Binding SendCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="{StaticResource IconFont}"
+                    Glyph="&#xF048A;"
+                    />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
         <ToolbarItem  Command="{Binding AddCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource

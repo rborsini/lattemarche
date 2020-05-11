@@ -357,6 +357,25 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
+
+                // validazione campi obbligatori
+                if(!MandatoryFieldsAreFilled())
+                {
+                    await this.page.DisplayAlert("Attenzione", "E' necessario compilare tutti i valori indicati.", "OK");
+                    return;
+                }
+
+                // warning campi fuori soglia
+                var warningMsg = "";
+                if (!AllFieldsInThreshold(out warningMsg))
+                {
+                    bool answer = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
+                    
+                    if(answer == false)
+                        return;
+                }
+
+
                 await Task.Run(() =>
                 {
                     this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
@@ -393,6 +412,90 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 await loadingDialog.DismissAsync();
             }
+        }
+
+
+        /// <summary>
+        /// Verifica compilazione campi obbligatori
+        /// </summary>
+        /// <returns></returns>
+        private bool MandatoryFieldsAreFilled()
+        {
+            var result = true;
+
+            if (this.AllevamentoSelezionato == null)
+                return false;
+
+            if (String.IsNullOrEmpty(this.Scomparto))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Kg))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Lt))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Temperatura))
+                return false;
+
+            if (!this.NumeroMungiture.HasValue)
+                return false;
+
+            if (this.AcquirenteSelezionato == null)
+                return false;
+
+            if (this.DestinatarioSelezionato == null)
+                return false;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Verifica campi fuori soglia
+        /// </summary>
+        /// <returns></returns>
+        private bool AllFieldsInThreshold(out string message)
+        {
+            var result = true;
+            message = "";
+
+            var allevamento = this.AllevamentoSelezionato;
+            var kg = Convert.ToDecimal(this.Kg);
+            var lt = Convert.ToDecimal(this.Lt);
+
+            // quantità
+            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue)
+            {
+                if (kg < allevamento.Quantita_Min)
+                {
+                    message += $"Qta < {allevamento.Quantita_Min:#.0} kg (5% percentile) \n";
+                    result = false;
+                }
+
+                if (kg > allevamento.Quantita_Max)
+                {
+                    message += $"Qta > {allevamento.Quantita_Max:#.0} kg (95% percentile) \n";
+                    result = false;
+                }
+            }
+
+            // temperatura
+            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue)
+            {
+                if (lt < allevamento.Temperatura_Min)
+                {
+                    message += $"Temp. < {allevamento.Temperatura_Min:#.0} °C (5% percentile) \n";
+                    result = false;
+                }
+
+                if (lt > allevamento.Temperatura_Max)
+                {
+                    message += $"Temp. > {allevamento.Temperatura_Max:#.0} °C (95% percentile) \n";
+                    result = false;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>

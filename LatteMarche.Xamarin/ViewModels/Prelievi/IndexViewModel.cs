@@ -53,6 +53,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command PrintCommand { get; set; }
 
+        public Command SendCommand { get; set; }
+
         public Command CloseCommand { get; set; }
 
         #endregion
@@ -71,6 +73,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             this.CloseCommand = new Command(async () => await ExecuteCloseCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
+            this.SendCommand = new Command(async () => await ExecuteSendCommand());
 
         }
 
@@ -213,6 +216,34 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         }
 
         /// <summary>
+        /// Comando invio lotto
+        /// </summary>
+        /// <returns></returns>
+        private async Task ExecuteSendCommand()
+        {
+            try
+            {
+                Debug.WriteLine("Send Command");
+                this.IsBusy = true;
+
+                await Task.Run(() =>
+                {
+
+
+                });
+
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Info", "Invio effettuato", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Error", exc.Message, "OK");
+            }
+
+        }
+
+        /// <summary>
         /// Apertura pagina nuovo prelievo
         /// </summary>
         /// <returns></returns>
@@ -298,7 +329,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 return null;
             }
         }
-
 
         /// <summary>
         /// Lookup template giro

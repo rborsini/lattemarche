@@ -27,11 +27,10 @@
         <AbsoluteLayout>
 
             <StackLayout Padding="16" Spacing="16" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
-
-                <!---->
                 
                 <!-- Stampanti -->
                 <material:MaterialTextField Placeholder="Stampante"
+                    IsEnabled="{Binding StampantiPresenti }"
                     InputType="Choice"
                     SelectedChoice="{Binding StampanteSelezionata, Mode=TwoWay}"
                     Choices="{Binding Stampanti}"
@@ -41,7 +40,7 @@
                     matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
                     matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
                     matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
-                />
+                /> 
 
                 <Button Margin="0,10,0,0" Text="Imposta predefinita"  Command="{Binding SetDefaultCommand}"  />
                 <!--<Button Margin="0,10,0,0" Text="Ricerca stampanti"  Command="{Binding DiscoveryCommand}"  />-->

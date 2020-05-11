@@ -54,19 +54,19 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private async Task ExecuteAddCommand()
         {
 
-            using (SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587"))
-            {
-                SentrySdk.CaptureMessage("primo messaggio", Sentry.Protocol.SentryLevel.Info);
+            //using (SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587"))
+            //{
+            //    SentrySdk.CaptureMessage("primo messaggio", Sentry.Protocol.SentryLevel.Info);
 
-                try
-                {
-                    throw null;
-                }
-                catch (Exception e)
-                {
-                    SentrySdk.CaptureException(e);
-                }
-            }
+            //    try
+            //    {
+            //        throw null;
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        SentrySdk.CaptureException(e);
+            //    }
+            //}
 
             await this.navigation.PushAsync(new NewPage(new NewViewModel(this.navigation, this.page)));
         }

@@ -4,6 +4,10 @@ using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,8 +24,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
         private IDevice device = DependencyService.Get<IDevice>();
 
         private IRestService restService = DependencyService.Get<IRestService>();
-
-        private ITrasportatoriService trasportatoriService = DependencyService.Get<ITrasportatoriService>();
 
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
 
@@ -85,17 +87,23 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                     if (isActive)
                     {
-                        this.trasportatoriService.DeleteAllItemsAsync().Wait();
-                        this.trasportatoriService.AddItemAsync(new Db.Models.Trasportatore()
-                        {
-                            Id = dispositivo.IdTrasportatore.Value
-                        }).Wait();
+                        //this.trasportatoriService.DeleteAllItemsAsync().Wait();
+                        //this.trasportatoriService.AddItemAsync(new Db.Models.Trasportatore()
+                        //{
+                        //    Id = dispositivo.IdTrasportatore.Value
+                        //}).Wait();
+
+                        var stampantiService = DependencyService.Get<IStampantiService>();
+                        var service = DependencyService.Get<ISincronizzazioneService>();
 
                         var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
-                        this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
+                        //this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
                     }
 
                     this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
+
+                    Analytics.TrackEvent("Registrazione inviata con successo", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
+                    SentrySdk.CaptureMessage("Registrazione inviata con successo", Sentry.Protocol.SentryLevel.Info);
 
                 });
 
@@ -113,6 +121,10 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             catch (Exception exc)
             {
                 this.IsBusy = false;
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
                 await this.page.DisplayAlert("Error", exc.Message, "OK");
             }
 
