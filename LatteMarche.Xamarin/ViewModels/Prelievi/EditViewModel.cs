@@ -28,6 +28,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Prelievo prelievo;
 
         private bool isNew = false;
+        private bool isEditable = false;
         private int idGiro;
 
         private string id;
@@ -67,7 +68,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Properties
 
-        public bool IsEditable { get; set; }
+        public bool IsEditable
+        {
+            get { return this.isEditable; }
+            set { SetProperty(ref this.isEditable, value); }
+        }
 
         public string Id
         {
@@ -211,8 +216,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command PrintCommand { get; set; }
 
-        public Command DeleteItemCommand { get; set; }
-
         public Command SaveItemCommand { get; set; }
 
         #endregion
@@ -237,7 +240,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
             this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand(), canExecute: () => { return this.IsEditable; });
-            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());
         }
 
         #endregion
@@ -337,15 +339,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
-                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();
-
-                    (this.SaveItemCommand as Command).ChangeCanExecute();
+                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();                    
 
                 });
+
+                (this.SaveItemCommand as Command).ChangeCanExecute();
 
             }
             catch (Exception exc)
             {
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
             finally
@@ -509,35 +514,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Eliminazione prelievo
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteDeleteItemCommand()
-        {
-            try
-            {
-                this.IsBusy = true;
-
-                await Task.Run(() =>
-                {
-                    prelieviService.DeleteItemAsync(this.Id);
-                });
-
-                this.IsBusy = false;
-                await navigation.PopAsync();
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-
-                SentrySdk.CaptureException(exc);
-                Crashes.TrackError(exc);
-
-                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
-            }
         }
 
         /// <summary>

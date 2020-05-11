@@ -36,7 +36,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Prelievo;
+            var item = args.SelectedItem as ItemViewModel;
             if (item == null)
                 return;
 

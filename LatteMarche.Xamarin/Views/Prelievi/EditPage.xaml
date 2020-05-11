@@ -27,7 +27,6 @@
                     />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
-        <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
     
     <ScrollView>

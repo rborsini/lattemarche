@@ -42,11 +42,13 @@ namespace LatteMarche.Xamarin
 
 			#region ViewModels
 
-			mappings.CreateMap<Giro, ItemViewModel>();
+			mappings.CreateMap<Giro, ViewModels.Giri.ItemViewModel>();
 
-            #endregion
+			mappings.CreateMap<Prelievo, ViewModels.Prelievi.ItemViewModel>();
 
-            Mapper.Reset();
+			#endregion
+
+			Mapper.Reset();
 			Mapper.Initialize(mappings);
 		}
 	}

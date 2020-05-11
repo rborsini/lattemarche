@@ -7,7 +7,8 @@
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              mc:Ignorable="d"
              x:Class="LatteMarche.Xamarin.Views.Prelievi.IndexPage"
-            BackgroundColor="#EAEAEA"
+             BackgroundColor="#EAEAEA"
+             x:Name="PrelieviIndexPage"
              Title="Prelievi">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -50,19 +51,22 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <material:MaterialCard Margin="0, 5, 0, 5" CornerRadius="5" Elevation="1" HeightRequest="60" HorizontalOptions="FillAndExpand" >
-                                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
-                                            <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
-                                            <Label Text="{Binding DataPrelievo}" TextColor="#AAA" FontSize="Small" Margin="0,0,0,10" />
-                                        </StackLayout>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90*" />
+                                                <ColumnDefinition Width="10*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+                                                <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
+                                                <Label Text="{Binding DataPrelievo}" TextColor="#AAA" FontSize="Small" Margin="0,0,0,10" />
+                                            </StackLayout>
+                                            <material:MaterialMenuButton IsVisible="{ Binding Source={x:Reference PrelieviIndexPage}, Path=BindingContext.IsEditable }" Grid.Row="0" Grid.Column="1" Image="icon_more.png" TintColor="Black" ButtonType="Text" CornerRadius="24" Choices="{Binding Actions }" Command="{ Binding MenuCommand }" />
+                                        </Grid>
                                     </material:MaterialCard>
-                                </ViewCell.View>                                
-                                
-                                <!--<StackLayout
-                                        Orientation="Vertical" >
-                                    <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,20,0,0" TextColor="#000"/>
-                                    <Label Text="{Binding DataPrelievo}"
-                                            TextColor="#AAA" FontSize="Subtitle" Margin="0,0,0,10" />
-                                </StackLayout>-->
+                                </ViewCell.View>                                                               
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
