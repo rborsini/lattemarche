@@ -1,9 +1,17 @@
 ﻿using AutoMapper;
 using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Enums;
+using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Dtos;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Prelievi;
 using LatteMarche.Xamarin.Zebra.Interfaces;
 using LatteMarche.Xamarin.Zebra.Models;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +19,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using XF.Material.Forms.Models;
 using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Prelievi
@@ -32,28 +42,29 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
-        private ObservableCollection<Prelievo> prelievi;
+        private ObservableCollection<ItemViewModel> prelievi;
 
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<Prelievo> Prelievi 
+        public bool IsReadOnly => this.giro != null && this.giro.DataConsegna.HasValue;
+
+        public bool IsEditable => !this.IsReadOnly;
+
+        public ObservableCollection<ItemViewModel> Prelievi 
         {
             get { return this.prelievi; }
-            set { SetProperty<ObservableCollection<Prelievo>>(ref this.prelievi, value); }
+            set { SetProperty<ObservableCollection<ItemViewModel>>(ref this.prelievi, value); }
         }
 
         public Command LoadItemsCommand { get; set; }
 
         public Command AddCommand { get; set; }
 
-        public Command RemoveCommand { get; set; }
-
         public Command PrintCommand { get; set; }
 
-        public Command CloseCommand { get; set; }
 
         #endregion
 
@@ -63,13 +74,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             : base(navigation, page)
         {
             this.Title = "Prelievi";
-            this.Prelievi = new ObservableCollection<Prelievo>();
+            this.Prelievi = new ObservableCollection<ItemViewModel>();
             this.giro = giro;
 
-            this.AddCommand = new Command(async () => await ExecuteAddCommand());
-            this.RemoveCommand = new Command(async () => await ExecuteRemoveCommand());
+            this.AddCommand = new Command(async () => await ExecuteAddCommand(), canExecute: () => { return !this.IsReadOnly; });
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            this.CloseCommand = new Command(async () => await ExecuteCloseCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
 
         }
@@ -98,17 +107,24 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 {
                     this.Prelievi.Clear();
                     var prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result;
-                    this.Prelievi = new ObservableCollection<Prelievo>(prelievi.ToList());
+                    var items = Mapper.Map<List<ItemViewModel>>(prelievi.ToList());
+                    this.Prelievi = new ObservableCollection<ItemViewModel>(items);
 
-                    if (this.Prelievi.Count == 0)
+                    this.NoData = this.Prelievi.Count == 0;
+
+                    foreach(var item in items)
                     {
-                        this.NoData = true;
+                        item.OnItem_Deleting += Item_OnItem_Deleting;
                     }
+
+
+                    (this.AddCommand as Command).ChangeCanExecute();
                 });
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Debug.WriteLine(ex);
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
             }
             finally
             {
@@ -117,36 +133,32 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
-        /// <summary>
-        /// Chiusura giro
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteCloseCommand()
+        private async void Item_OnItem_Deleting(object sender, EventArgs e)
         {
-            if (this.IsBusy)
-                return;
-
-            this.IsBusy = true;
-
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione prelievo", lottieAnimation: "LottieLogo1.json");
             try
             {
+                bool reply = await this.page.DisplayAlert("Attenzione", $"Sei sicuro di voler eliminare il prelievo selezionato?", "Si", "No");
+                if (reply == false)
+                    return;
+
                 await Task.Run(() =>
                 {
-                    var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
-
-                    // Salvataggio codice lotto
-                    this.giro.DataConsegna = DateTime.Now;
-                    this.giro.CodiceLotto = $"{templateGiro?.Codice}{this.giro.DataConsegna:ddMMyyHHmm}";
-                    this.giriService.UpdateItemAsync(this.giro).Wait();
+                    var item = sender as ItemViewModel;
+                    this.prelieviService.DeleteItemAsync(item.Id).Wait();
+                    this.Prelievi.Remove(item);
                 });
+
+                await loadingDialog.DismissAsync();
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
         }
 
@@ -202,15 +214,23 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+
+                Analytics.TrackEvent("Stampa ricevuta consegna");
+                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
+
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
-        }
+        }    
 
         /// <summary>
         /// Apertura pagina nuovo prelievo
@@ -219,31 +239,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private async Task ExecuteAddCommand()
         {
             await this.navigation.PushAsync(new EditPage(new EditViewModel(this.navigation, this.page, this.giro.Id, "")));
-        }
-
-        /// <summary>
-        /// Rimozione giro
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecuteRemoveCommand()
-        {
-            try
-            {
-                this.IsBusy = true;
-
-                await Task.Run(() =>
-                {
-                    this.giriService.DeleteItemAsync(this.giro.Id).Wait();
-                });
-
-                this.IsBusy = false;
-                await navigation.PopAsync();
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
-            }
         }
 
         /// <summary>
@@ -298,7 +293,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 return null;
             }
         }
-
 
         /// <summary>
         /// Lookup template giro

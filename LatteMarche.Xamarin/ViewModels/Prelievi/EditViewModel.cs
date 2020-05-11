@@ -2,6 +2,9 @@
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Zebra.Interfaces;
 using LatteMarche.Xamarin.Zebra.Models;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +28,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Prelievo prelievo;
 
         private bool isNew = false;
+        private bool isEditable = false;
         private int idGiro;
 
         private string id;
@@ -63,6 +67,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         #endregion
 
         #region Properties
+
+        public bool IsEditable
+        {
+            get { return this.isEditable; }
+            set { SetProperty(ref this.isEditable, value); }
+        }
 
         public string Id
         {
@@ -206,8 +216,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command PrintCommand { get; set; }
 
-        public Command DeleteItemCommand { get; set; }
-
         public Command SaveItemCommand { get; set; }
 
         #endregion
@@ -231,8 +239,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
-            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand());
-            this.DeleteItemCommand = new Command(async () => await ExecuteDeleteItemCommand());
+            this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand(), canExecute: () => { return this.IsEditable; });
         }
 
         #endregion
@@ -246,7 +253,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public void OnKgChanged(string kg)
         {
             this.Kg = kg;
-            //this.Lt = kg == "1" ? "2" : "1";
             this.Lt = ConvertToLt(kg);
         }
 
@@ -287,6 +293,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     }
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
+
+                    this.IsEditable = !giro.DataConsegna.HasValue;
+
                     var acquirenti = this.acquirentiService.GetItemsAsync().Result;
                     var destinatari = this.destinatariService.GetItemsAsync().Result;
                     var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
@@ -330,14 +339,19 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
-                    this.DestinatarioSelezionato = GetDestinatarioSelezionato(); ;
+                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();                    
 
                 });
+
+                (this.SaveItemCommand as Command).ChangeCanExecute();
 
             }
             catch (Exception exc)
             {
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
             finally
             {
@@ -353,10 +367,29 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecuteSaveItemCommand()
         {
-                this.IsBusy = true;
-                var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
+            this.IsBusy = true;
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
+
+                // validazione campi obbligatori
+                if(!MandatoryFieldsAreFilled())
+                {
+                    await this.page.DisplayAlert("Attenzione", "E' necessario compilare tutti i valori indicati.", "OK");
+                    return;
+                }
+
+                // warning campi fuori soglia
+                var warningMsg = "";
+                if (!AllFieldsInThreshold(out warningMsg))
+                {
+                    bool reply = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
+                    
+                    if(reply == false)
+                        return;
+                }
+
+
                 await Task.Run(() =>
                 {
                     this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
@@ -373,7 +406,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
                     this.prelievo.IdDestinatario = this.DestinatarioSelezionato != null ? this.DestinatarioSelezionato.Id : (int?)null;
 
-                    this.prelievo.Titolo = $"{this.AllevamentoSelezionato?.RagioneSociale} - {this.prelievo.DataPrelievo:HH:mm}";
+                    this.prelievo.Titolo = this.AllevamentoSelezionato?.RagioneSociale;
 
                     if (this.isNew)
                         prelieviService.AddItemAsync(this.prelievo).Wait();
@@ -387,7 +420,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
             finally
             {
@@ -395,29 +432,88 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
+
         /// <summary>
-        /// Eliminazione prelievo
+        /// Verifica compilazione campi obbligatori
         /// </summary>
         /// <returns></returns>
-        private async Task ExecuteDeleteItemCommand()
+        private bool MandatoryFieldsAreFilled()
         {
-            try
-            {
-                this.IsBusy = true;
+            var result = true;
 
-                await Task.Run(() =>
+            if (this.AllevamentoSelezionato == null)
+                return false;
+
+            if (String.IsNullOrEmpty(this.Scomparto))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Kg))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Lt))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Temperatura))
+                return false;
+
+            if (!this.NumeroMungiture.HasValue)
+                return false;
+
+            if (this.AcquirenteSelezionato == null)
+                return false;
+
+            if (this.DestinatarioSelezionato == null)
+                return false;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Verifica campi fuori soglia
+        /// </summary>
+        /// <returns></returns>
+        private bool AllFieldsInThreshold(out string message)
+        {
+            var result = true;
+            message = "";
+
+            var allevamento = this.AllevamentoSelezionato;
+            var kg = Convert.ToDecimal(this.Kg);
+            var lt = Convert.ToDecimal(this.Lt);
+
+            // quantità
+            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue)
+            {
+                if (kg < allevamento.Quantita_Min)
                 {
-                    prelieviService.DeleteItemAsync(this.Id);
-                });
+                    message += $"Qta < {allevamento.Quantita_Min:#.0} kg (5% percentile) \n";
+                    result = false;
+                }
 
-                this.IsBusy = false;
-                await navigation.PopAsync();
+                if (kg > allevamento.Quantita_Max)
+                {
+                    message += $"Qta > {allevamento.Quantita_Max:#.0} kg (95% percentile) \n";
+                    result = false;
+                }
             }
-            catch (Exception exc)
+
+            // temperatura
+            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue)
             {
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                if (lt < allevamento.Temperatura_Min)
+                {
+                    message += $"Temp. < {allevamento.Temperatura_Min:#.0} °C (5% percentile) \n";
+                    result = false;
+                }
+
+                if (lt > allevamento.Temperatura_Max)
+                {
+                    message += $"Temp. > {allevamento.Temperatura_Max:#.0} °C (95% percentile) \n";
+                    result = false;
+                }
             }
+
+            return result;
         }
 
         /// <summary>
@@ -469,12 +565,20 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+
+                Analytics.TrackEvent("Stampa ricevuta raccolta");
+                SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
+
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
         }

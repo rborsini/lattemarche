@@ -6,6 +6,7 @@ using LatteMarche.Xamarin.Rest.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -20,7 +21,6 @@ namespace LatteMarche.Xamarin.Db.Services
         private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
-        private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private ITemplateGiroService templateGiriService => DependencyService.Get<ITemplateGiroService>();
@@ -45,6 +45,17 @@ namespace LatteMarche.Xamarin.Db.Services
             }
         }
 
+        public async Task<Sincronizzazione> GetLastAysnc(SynchType tipo)
+        {
+            using (var context = CrateContext())
+            {
+                return await context.Set<Sincronizzazione>()
+                    .Where(s => s.Tipo == tipo.ToString())
+                    .OrderBy(s => s.Timestamp)
+                    .LastOrDefaultAsync();
+            }
+        }
+
         public async Task<bool> UpdateDatabaseSync(DownloadDto dto)
         {
             if (dto != null)
@@ -56,11 +67,11 @@ namespace LatteMarche.Xamarin.Db.Services
                 this.tipiLatteService.DeleteAllItemsAsync().Wait();
                 this.acquirentiService.DeleteAllItemsAsync().Wait();
                 this.destinatariService.DeleteAllItemsAsync().Wait();
-
+                this.trasportatoriService.DeleteAllItemsAsync().Wait();
 
                 // trasportatore
                 var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
-                this.trasportatoriService.UpdateItemAsync(trasportatore).Wait();
+                this.trasportatoriService.AddItemAsync(trasportatore).Wait();
 
                 // autocisterna
                 var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);

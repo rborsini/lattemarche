@@ -1,4 +1,5 @@
-﻿using LatteMarche.Xamarin.Db.Models;
+﻿using LatteMarche.Xamarin.Db.Interfaces;
+using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.ViewModels.Giri;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace LatteMarche.Xamarin.Views.Giri
         #region Fields
 
         private IndexViewModel viewModel;
+        private IGiriService giriService => DependencyService.Get<IGiriService>();
 
         #endregion
 
@@ -35,11 +37,13 @@ namespace LatteMarche.Xamarin.Views.Giri
 
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Giro;
+            var item = args.SelectedItem as ItemViewModel;
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new Prelievi.IndexPage(new ViewModels.Prelievi.IndexViewModel(Navigation, this, item)));
+            var giro = this.giriService.GetItemAsync(item.Id).Result;
+
+            await Navigation.PushAsync(new Prelievi.IndexPage(new ViewModels.Prelievi.IndexViewModel(Navigation, this, giro)));
 
             // Manually deselect item.
             //ItemsListView.SelectedItem = null;

@@ -85,7 +85,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
 
         }
@@ -121,12 +121,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                     // chiamata REST upload dati
                     if(this.restService.Upload(uploadDto).Result)
                     {
-                        // chiusura giri 
-                        foreach (var giro in giri)
-                        {
-                            giro.DataUpload = DateTime.Now;
-                            this.giriService.UpdateItemAsync(giro).Wait();
-                        }
 
                         // aggiornamento tabella sincronizzazioni
                         this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
@@ -145,7 +139,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
 
         }
@@ -171,7 +165,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await this.page.DisplayAlert("Error", exc.Message, "OK");
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
 
         }

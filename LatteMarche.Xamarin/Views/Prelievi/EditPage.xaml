@@ -27,7 +27,6 @@
                     />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
-        <ToolbarItem Order="Secondary" Text="Elimina" Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
     
     <ScrollView>
@@ -36,12 +35,14 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                 <Label VerticalOptions="Center">Data e ora</Label>
                 <material:MaterialDatePicker 
+                    IsEnabled="{ Binding IsEditable }"
                     Date="{Binding DataPrelievo, Mode=TwoWay}"
                     HorizontalOptions="EndAndExpand"
                     BackgroundColor="Transparent"
                     FontSize="Body"
                 />
                 <material:MaterialTimePicker
+                    IsEnabled="{ Binding IsEditable }"
                     Time="{Binding OraPrelievo, Mode=TwoWay}"
                     HorizontalOptions="End"
                     FontSize="Body"
@@ -50,6 +51,7 @@
             <!--Allevamento-->
             <material:MaterialTextField Placeholder="Allevamento"
                 InputType="Choice"
+                IsEnabled="{ Binding IsEditable }"
                 SelectedChoice="{Binding AllevamentoSelezionato, Mode=TwoWay}"
                 Choices="{Binding Allevamenti}"
                 ChoicesBindingName="RagioneSociale"
@@ -62,6 +64,7 @@
             <!--Scomparto-->
             <material:MaterialTextField Placeholder="Scomparto"
                 InputType="Choice"
+                IsEnabled="{ Binding IsEditable }"
                 SelectedChoice="{Binding Scomparto, Mode=TwoWay}"
                 Choices="{Binding ElencoScomparti}"
                 AlwaysShowUnderline="True"
@@ -82,6 +85,7 @@
                     Grid.Row="0" Grid.Column="0"
                     ShouldAnimateUnderline="True"
                     Placeholder="Kg"
+                    IsEnabled="{ Binding IsEditable }"
                     Text="{Binding Kg, Mode=TwoWay}"
                     Unfocused="Kg_Unfocused"
                     InputType="Numeric"
@@ -95,6 +99,7 @@
                     Grid.Row="0" Grid.Column="1"
                     ShouldAnimateUnderline="True"
                     Placeholder="Litri" 
+                    IsEnabled="{ Binding IsEditable }"
                     Text="{Binding Lt, Mode=TwoWay}"
                     Unfocused="Lt_Unfocused"
                     InputType="Numeric"
@@ -118,6 +123,7 @@
                     Grid.Row="0" Grid.Column="0"
                     ShouldAnimateUnderline="True"
                     Placeholder="Temp °C" 
+                    IsEnabled="{ Binding IsEditable }"
                     Text="{Binding Temperatura, Mode=TwoWay}"
                     InputType="Numeric"
                     AlwaysShowUnderline="True"
@@ -129,6 +135,7 @@
                     Grid.Row="0" Grid.Column="1"
                     ShouldAnimateUnderline="True"
                     Placeholder="Num. Mung." 
+                    IsEnabled="{ Binding IsEditable }"
                     Text="{Binding NumeroMungiture, Mode=TwoWay}"
                     InputType="Numeric"
                     AlwaysShowUnderline="True"
@@ -141,11 +148,13 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                 <Label  VerticalOptions="Center" Padding="10,0,0,0">Ultima mungitura</Label>
                 <material:MaterialDatePicker 
+                    IsEnabled="{ Binding IsEditable }"
                     HorizontalOptions="EndAndExpand"
                     Date="{Binding DataUltimaMungitura, Mode=TwoWay}" 
                     FontSize="Body"
                 />
                 <material:MaterialTimePicker
+                    IsEnabled="{ Binding IsEditable }"
                     Time="{Binding OraUltimaMungitura, Mode=TwoWay}"
                     HorizontalOptions="End"
                     FontSize="Body"
@@ -156,6 +165,7 @@
             <material:MaterialTextField Placeholder="Acquirente"
                 InputType="Choice"
                 SelectedChoice="{Binding AcquirenteSelezionato, Mode=TwoWay}"
+                IsEnabled="{ Binding IsEditable }"
                 Choices="{Binding Acquirenti}"
                 ChoicesBindingName="RagioneSociale"
                 AlwaysShowUnderline="True"
@@ -168,6 +178,7 @@
             <!--Destinatario--> 
             <material:MaterialTextField Placeholder="Destinatario"
                 InputType="Choice"
+                IsEnabled="{ Binding IsEditable }"
                 SelectedChoice="{Binding DestinatarioSelezionato, Mode=TwoWay}"
                 Choices="{Binding Destinatari}"
                 ChoicesBindingName="RagioneSociale"
