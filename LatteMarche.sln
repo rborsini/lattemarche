@@ -65,6 +65,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B7A81D8E-7
 		Libs\WeCode.EntityFramework.pdb = Libs\WeCode.EntityFramework.pdb
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZebraPrinterlConsole", "ZebraPrinterlConsole\ZebraPrinterlConsole.csproj", "{7C922B9C-1E3B-46D5-AD69-684BF126C572}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,14 @@ Global
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.TEST|Any CPU.ActiveCfg = Release|Any CPU
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.TEST|Any CPU.Build.0 = Release|Any CPU
 		{D52AB32E-1432-4B28-9438-C74D25E70F35}.Xamarin Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.TEST|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.TEST|Any CPU.Build.0 = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Xamarin Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572}.Xamarin Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,6 +195,7 @@ Global
 		{474152B6-EC99-4CB5-82D8-DB440154DE49} = {100377B7-A6EA-465D-80F1-684AD1C24F43}
 		{A07CE647-5734-4F4C-B14A-6146CE4F61AD} = {1825B45F-C18F-4554-8A72-FC433B258C35}
 		{D52AB32E-1432-4B28-9438-C74D25E70F35} = {1825B45F-C18F-4554-8A72-FC433B258C35}
+		{7C922B9C-1E3B-46D5-AD69-684BF126C572} = {100377B7-A6EA-465D-80F1-684AD1C24F43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6A4AEC1-A4A5-44F5-BC32-F95A5ECA2F4F}
