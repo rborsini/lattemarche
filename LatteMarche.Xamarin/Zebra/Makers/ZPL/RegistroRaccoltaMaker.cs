@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Xamarin.Zebra.Models;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
@@ -9,13 +10,23 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
     {
         public override string MakeLabel(Registro registro)
         {
-            return @"^XA
-                    ^FO17,16
-                    ^GB379,371,8^FS
-                    ^FT65,255
-                    ^A0N,135,134
-                    ^FDTEST^FS
-                    ^XZ";
+            var registroRaccolta = registro as RegistroRaccolta;
+
+            var cmd = "";
+
+            // Apro il file con "^XA"
+            cmd += this.start_print;
+
+            // Header
+            cmd += MakeHeader();
+
+            // Linea
+            cmd += MakeLine();
+
+            // Chiudo il file con "^XZ"
+            cmd += this.end_print;
+
+            return cmd;
         }
     }
 }
