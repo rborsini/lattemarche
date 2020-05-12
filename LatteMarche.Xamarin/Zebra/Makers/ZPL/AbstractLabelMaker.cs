@@ -28,14 +28,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5;
         }        
 
-        protected string MakeLine(ref int y)
+        protected string MakeLine(int y)
         {
-            y += 220;
             var cmd = $"^FO{leftOffset},{y}^GB700,1,1^FS";
             return cmd;
         }
 
-        protected string MakeAcquirenteSection(Registro registro, ref int y)
+        protected string MakeAcquirenteSection(Registro registro, int y)
         {
             var cmd = "";
 
@@ -48,25 +47,25 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.CAP} {registro.Acquirente.Comune} {registro.Acquirente.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.P_IVA}^FS"; // P.Iva
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.Iva: {registro.Acquirente.P_IVA}^FS"; // P.Iva
 
             return cmd;
         }       
         
-        protected string MakeDestinatarioSection(Registro registro, ref int y)
+        protected string MakeDestinatarioSection(Registro registro, int y)
         {
             var cmd = "";
             
             var leftOffsetDestinatario = 450; // Spazio sx della colonna Destinatario
             cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},240^FDDestinatario^FS"; // Stringa fissa Destinatario
-            y -= 90;
+            y += 60;
             cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FD{registro.Destinatario.RagioneSociale}^FS"; // Ragione sociale     
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FD{registro.Destinatario.Indirizzo}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FD{registro.Destinatario.CAP} {registro.Destinatario.Comune} {registro.Destinatario.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FD{registro.Acquirente.P_IVA}^FS"; // P.Iva
+            cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FDP.Iva: {registro.Acquirente.P_IVA}^FS"; // P.Iva
 
             return cmd;
         }

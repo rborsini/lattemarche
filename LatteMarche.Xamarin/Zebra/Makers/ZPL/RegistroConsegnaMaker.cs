@@ -22,13 +22,16 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeHeader();
 
             // Linea
-            cmd += MakeLine(ref y);
+            cmd += MakeLine(220);
 
             // Colonna sx Acquirente
-            cmd += MakeAcquirenteSection(registroConsegna, ref y);
+            cmd += MakeAcquirenteSection(registroConsegna, 210);
 
             // Colonna dx Destinatario
-            cmd += MakeDestinatarioSection(registroConsegna, ref y);
+            cmd += MakeDestinatarioSection(registroConsegna, 210);
+
+            // Linea
+            cmd += MakeLine(410);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
