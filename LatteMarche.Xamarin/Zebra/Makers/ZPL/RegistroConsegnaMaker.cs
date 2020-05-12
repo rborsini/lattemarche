@@ -39,10 +39,41 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Linea
             cmd += MakeLine(560);
 
+            // Dati giro
+            cmd += MakeDatiGiro(registroConsegna, 580);
+
+            // Linea
+            cmd += MakeLine(620);
+
+            // Dati produttore
+            cmd += MakeDatiProduttore(registroConsegna, 640);
+
+            // Linea
+            cmd += MakeLine(710);
+
+            // Dati latte prima sezione colonna SX
+            cmd += MakeDatiLattePrimaSezioneSX(registroConsegna, 730);
+
+            // Dati latte prima sezione colonna DX
+            cmd += MakeDatiLattePrimaSezioneDX(registroConsegna, 730);
+
+            // Linea
+            cmd += MakeLine(830);
+
+            // Dati latte prima sezione colonna SX
+            cmd += MakeDatiLatteSecondaSezioneSX(registroConsegna, 850);
+
+            // Dati latte prima sezione colonna DX
+            cmd += MakeDatiLatteSecondaSezioneDX(registroConsegna, 850);
+
+            // Linea
+            cmd += MakeLine(1010);
+
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
 
             return cmd;
         }
+
     }
 }

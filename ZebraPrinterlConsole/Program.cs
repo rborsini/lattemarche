@@ -38,6 +38,15 @@ namespace ZebraPrinterlConsole
                         Targa = "12RTY56",
                     },
                 },
+                Allevamento = new LatteMarche.Xamarin.Db.Models.Allevamento()
+                {
+                    CAP = "60024",
+                    Comune = "Filottrano",
+                    Indirizzo = "Via Montepulciano",
+                    Provincia = "AN",
+                    P_IVA = "1232135",
+                    RagioneSociale = "SIBILLA SOC. COOP. AGR."
+                },
                 DataPrelievo = DateTime.Today
             };
 
