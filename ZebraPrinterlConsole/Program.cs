@@ -19,10 +19,14 @@ namespace ZebraPrinterlConsole
                     P_IVA = "1232135",
                     RagioneSociale = "SIBILLA SOC. COOP. AGR."
                 },
-                Allevamento = new LatteMarche.Xamarin.Db.Models.Allevamento()
+                Destinatario = new LatteMarche.Xamarin.Db.Models.Destinatario()
                 {
                     CAP = "60024",
-                    Comune = "Filottrano"
+                    Comune = "Filottrano",
+                    Indirizzo = "Via Montepulciano",
+                    Provincia = "AN",
+                    P_IVA = "1232135",
+                    RagioneSociale = "SIBILLA SOC. COOP. AGR."
                 },
                 DataPrelievo = DateTime.Today
             };
