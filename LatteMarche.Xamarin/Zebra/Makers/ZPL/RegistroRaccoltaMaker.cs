@@ -21,7 +21,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeHeader();
 
             // Linea
-            cmd += MakeLine();
+            //cmd += MakeLine();
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
