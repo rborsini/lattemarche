@@ -12,7 +12,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var registroConsegna = registro as RegistroConsegna;
 
-            int y = 0;
+            //int y = 0;
             var cmd = "";
 
             // Apro il file con "^XA"
@@ -60,14 +60,35 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Linea
             cmd += MakeLine(830);
 
-            // Dati latte prima sezione colonna SX
+            // Dati latte seconda sezione colonna SX
             cmd += MakeDatiLatteSecondaSezioneSX(registroConsegna, 850);
 
-            // Dati latte prima sezione colonna DX
+            // Dati latte seconda sezione colonna DX
             cmd += MakeDatiLatteSecondaSezioneDX(registroConsegna, 850);
 
             // Linea
             cmd += MakeLine(1010);
+
+            // Dati latte terza sezione colonna SX
+            cmd += MakeDatiLatteTerzaSezioneSX(registroConsegna, 1030);
+
+            // Dati latte terza sezione colonna DX
+            cmd += MakeDatiLatteTerzaSezioneDX(registroConsegna, 1030);
+
+            // Linea
+            cmd += MakeLine(1190);
+
+            // Informazioni
+            cmd += MakeInformazioni(registroConsegna, 1210);
+
+            // Linea
+            cmd += MakeLine(1300);
+
+            // Sezione firma produttore/delegato
+            cmd += MakeFirmaProduttoreDelegato(1320);
+
+            // Sezione firma trasportatore
+            cmd += MakeFirmaTrasportatore(1320);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;

@@ -10,7 +10,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
     public abstract class AbstractLabelMaker : ILabelMaker
     {
         public int leftOffset = 50;
-        public int leftOffsetColonnaDX = 450;
+        public int leftOffsetColonnaDX = 400;
         public int h2 = 22;
         public int h3 = 14;
         public int h6 = 12;
@@ -19,6 +19,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
         public abstract string MakeLabel(Registro registro);
 
+        // Intestazione
         protected string MakeHeader()
         {
             var header_line_1 = $"^CFA,{h2}^FO{leftOffset},50^FDLatte Marche^FS";
@@ -30,12 +31,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5;
         }        
 
+        // Linea
         protected string MakeLine(int y)
         {
             var cmd = $"^FO{leftOffset},{y}^GB700,1,1^FS";
             return cmd;
         }
 
+        // Sezione acquirente/destinatario (colonna SX)
         protected string MakeAcquirenteSection(Registro registro, int y)
         {
             var cmd = "";
@@ -54,6 +57,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }       
         
+        // Sezione acquirente/destinatario (colonna DX)
         protected string MakeDestinatarioSection(Registro registro, int y)
         {
             var cmd = "";
@@ -71,6 +75,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati trasporatore
         protected string MakeDatiTrasportatore(Registro registro, int y)
         {
             var cmd = "";
@@ -86,6 +91,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }    
         
+        // Sezione dati giro
         protected string MakeDatiGiro(Registro registro, int y)
         {
             var cmd = "";
@@ -96,6 +102,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati produttore
         protected string MakeDatiProduttore(Registro registro, int y)
         {
             var cmd = "";
@@ -107,6 +114,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati latte (prima sezione colonna SX)
         protected string MakeDatiLattePrimaSezioneSX(Registro registro, int y)
         {
             var cmd = "";
@@ -120,6 +128,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati latte (prima sezione colonna DX)
         protected string MakeDatiLattePrimaSezioneDX(Registro registro, int y)
         {
             var cmd = "";
@@ -133,6 +142,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati latte (seconda sezione colonna SX)
         protected string MakeDatiLatteSecondaSezioneSX(Registro registro, int y)
         {
             var cmd = "";
@@ -148,6 +158,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        // Sezione dati latte (prima sezione colonna DX)
         protected string MakeDatiLatteSecondaSezioneDX(Registro registro, int y)
         {
             var cmd = "";
@@ -161,6 +172,70 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDC.B.T. ufc/ml: ^FS"; // C.B.T.
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDC.S./ml: ^FS"; // C.S.
+
+            return cmd;
+        }
+
+        // Sezione dati latte (terza sezione colonna SX)
+        protected string MakeDatiLatteTerzaSezioneSX(Registro registro, int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDMedia trim: ^FS"; // Media Trim.
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDGrasso % p/v: ^FS"; // Grasso
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProteine % p/v: ^FS"; // Proteine
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDC.B.T. ufc/ml: ^FS"; // C.B.T.
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDC.S./ml: ^FS"; // C.S.
+
+            return cmd;
+        }
+
+        // Sezione dati latte (terza sezione colonna SX)
+        protected string MakeDatiLatteTerzaSezioneDX(Registro registro, int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDPremi/Penal. €/1000lt: ^FS"; // Premi/Penali
+
+            return cmd;
+        }
+
+        // Sezione informazioni
+        protected string MakeInformazioni(Registro registro, int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDInformazioni: ^FS"; // Informazioni
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD^FS"; // Contenuto delle informazioni
+
+            return cmd;
+        }
+
+        // Sezione firma produttore (colonna SX)
+        protected string MakeFirmaProduttoreDelegato(int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Produttore/Delegato ^FS"; // Firma produttore/delegato
+            y += 100;
+            cmd += $"^FO{leftOffset},{y}^GB250,1,1^FS";
+
+            return cmd;
+        }
+
+        // Sezione firma trasportatore (colonna DX)
+        protected string MakeFirmaTrasportatore(int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Trasportatore ^FS"; // Firma trasportatore
+            y += 100;
+            cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
         }
