@@ -28,6 +28,16 @@ namespace ZebraPrinterlConsole
                     P_IVA = "1232135",
                     RagioneSociale = "SIBILLA SOC. COOP. AGR."
                 },
+                Trasportatore = new LatteMarche.Xamarin.Db.Models.Trasportatore()
+                {
+                    RagioneSociale = "SIBILLA SOC. COOP. AGR.",
+                    Indirizzo = "Via Montepulciano",
+                    P_IVA = "1232135",
+                    AutoCisterna = new LatteMarche.Xamarin.Db.Models.AutoCisterna()
+                    {
+                        Targa = "12RTY56",
+                    },
+                },
                 DataPrelievo = DateTime.Today
             };
 

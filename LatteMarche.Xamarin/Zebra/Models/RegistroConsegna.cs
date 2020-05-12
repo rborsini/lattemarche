@@ -7,6 +7,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
 {
     public class RegistroConsegna : Registro
     {
+        public AutoCisterna AutoCisterna;
+
         public DateTime? DataPrelievo { get; set; }
 
         // Produttore

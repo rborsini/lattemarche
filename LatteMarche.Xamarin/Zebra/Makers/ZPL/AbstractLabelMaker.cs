@@ -2,6 +2,7 @@
 using LatteMarche.Xamarin.Zebra.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
@@ -65,7 +66,23 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FD{registro.Destinatario.CAP} {registro.Destinatario.Comune} {registro.Destinatario.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FDP.Iva: {registro.Acquirente.P_IVA}^FS"; // P.Iva
+            cmd += $"^CFA,{h3}^FO{leftOffsetDestinatario},{y}^FDP.IVA: {registro.Acquirente.P_IVA}^FS"; // P.Iva
+
+            return cmd;
+        }
+
+        protected string MakeDatiTrasportatore(Registro registro, int y)
+        {
+
+            var cmd = "";
+
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTarga automezzo: {registro.Trasportatore.AutoCisterna.Targa}^FS"; // Targa automezzo
+            y += 30;
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTrasportatore: {registro.Trasportatore.RagioneSociale}^FS"; // Ragione sociale
+            y += 30;
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Trasportatore.Indirizzo}^FS"; // Indirizzo
+            y += 30;
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.IVA: {registro.Trasportatore.P_IVA}^FS"; // Indirizzo
 
             return cmd;
         }

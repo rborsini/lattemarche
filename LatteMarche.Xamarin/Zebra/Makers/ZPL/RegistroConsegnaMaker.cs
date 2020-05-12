@@ -29,9 +29,15 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             // Colonna dx Destinatario
             cmd += MakeDestinatarioSection(registroConsegna, 210);
-
+            
             // Linea
             cmd += MakeLine(410);
+
+            // Dati trasportatore
+            cmd += MakeDatiTrasportatore(registroConsegna, 430);
+
+            // Linea
+            cmd += MakeLine(560);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
