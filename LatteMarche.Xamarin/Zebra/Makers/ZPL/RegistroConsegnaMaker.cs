@@ -24,11 +24,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Linea
             cmd += MakeLine(220);
 
-            // Colonna sx Acquirente
-            cmd += MakeAcquirenteSection(registroConsegna, 210);
-
-            // Colonna dx Destinatario
-            cmd += MakeDestinatarioSection(registroConsegna, 210);
+            // Sezione acquirente/destinatario
+            cmd += MakeAcquirenteDestinatarioSection(registroConsegna, 210);
             
             // Linea
             cmd += MakeLine(410);

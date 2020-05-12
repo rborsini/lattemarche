@@ -38,12 +38,12 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
-        // Sezione acquirente/destinatario (colonna SX)
-        protected string MakeAcquirenteSection(Registro registro, int y)
+        // Sezione acquirente/destinatario
+        protected string MakeAcquirenteDestinatarioSection(Registro registro, int y)
         {
             var cmd = "";
 
-            // Blocco sx colonna Acquirente
+            // Colonna acquirente
             cmd += $"^CFA,{h3}^FO{leftOffset},240^FDAcquirente^FS"; // Stringa fissa Acquirente
             y += 60;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.RagioneSociale}^FS"; // Ragione sociale       
@@ -54,16 +54,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.Iva: {registro.Acquirente.P_IVA}^FS"; // P.Iva
 
-            return cmd;
-        }       
-        
-        // Sezione acquirente/destinatario (colonna DX)
-        protected string MakeDestinatarioSection(Registro registro, int y)
-        {
-            var cmd = "";
-            
+            // Colonna destinatario
+            y -= 120;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},240^FDDestinatario^FS"; // Stringa fissa Destinatario
-            y += 60;
+            y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.RagioneSociale}^FS"; // Ragione sociale     
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.Indirizzo}^FS"; // Indirizzo
@@ -73,7 +67,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FDP.IVA: {registro.Acquirente.P_IVA}^FS"; // P.Iva
 
             return cmd;
-        }
+        }       
 
         // Sezione dati trasporatore
         protected string MakeDatiTrasportatore(Registro registro, int y)
@@ -109,7 +103,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProduttore:^FS"; // Produttore
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDdjadkjahkdjhakdhaskjdhaksjdhkjashkjd^FS"; // Nome produttore
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD^FS"; // Nome produttore
 
             return cmd;
         }
@@ -119,7 +113,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita': ^FS"; // Quantità
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita' Kg: ^FS"; // Quantità
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDN. Munte: ^FS"; // Numero munte
             y += 30;
