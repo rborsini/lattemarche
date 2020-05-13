@@ -73,7 +73,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeLine(1300);
 
             // Sezione firme
-            cmd += MakeFirmeSection(registro, 1320);
+            cmd += MakeFirmeSection(1320);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
@@ -187,6 +187,24 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDInformazioni: ^FS"; // Informazioni
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Comunicazione}^FS"; // Contenuto delle informazioni
+
+            return cmd;
+        }
+
+        protected string MakeFirmeSection(int y)
+        {
+            var cmd = "";
+
+            // Colonna SX
+                cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Produttore/Delegato ^FS"; // Firma produttore/delegato
+            y += 100;
+            cmd += $"^FO{leftOffset},{y}^GB250,1,1^FS";
+
+            // Colonna DX
+            y -= 100;
+                cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Trasportatore ^FS"; // Firma trasportatore
+            y += 100;
+            cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
         }

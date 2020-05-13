@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Xamarin.Zebra.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
@@ -100,40 +101,77 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         private string MakeTabellaSection(RegistroRaccolta registro, int y)
         {
             var cmd = "";
-            var tableFont = 15;
+            var tableFontSize = 15;
 
-            //// Header
-            // Scomparto
-            cmd += $"^CFA,{tableFont}^FO{leftOffset},{y}^FDSCOM^FS";
+            // HEADER
+            cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FDSCOM^FS";
             y += 20;
-            cmd += $"^CFA,{tableFont}^FO{leftOffset},{y}^FDPARTO^FS";
+            cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FDPARTO^FS"; // Scomparto
 
-            // Produttore/P.IVA-Prov.
             y -= 20;
-            cmd += $"^CFA,{tableFont}^FO150,{y}^FDPRODUTTORE^FS";
+            cmd += $"^CFA,{tableFontSize}^FO110,{y}^FDPRODUTTORE^FS";
             y += 20;
-            cmd += $"^CFA,{tableFont}^FO150,{y}^FDP.IVA-PROV.^FS";
+            cmd += $"^CFA,{tableFontSize}^FO110,{y}^FDP.IVA-PROV.^FS"; // Produttore/P.IVA-Prov.
 
-            // Tipo
             y -= 20;
-            cmd += $"^CFA,{tableFont}^FO350,{y}^FDTIPO^FS";
+            cmd += $"^CFA,{tableFontSize}^FO350,{y}^FDTIPO^FS"; // Tipo
+            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FDKG^FS"; // Kg
+            cmd += $"^CFA,{tableFontSize}^FO490,{y}^FDORA^FS"; // Ora
 
-            // Kg
-            cmd += $"^CFA,{tableFont}^FO440,{y}^FDKG^FS";
-
-            // Ora
-            cmd += $"^CFA,{tableFont}^FO490,{y}^FDORA^FS";
-
-            // Firma prod/del
-            cmd += $"^CFA,{tableFont}^FO580,{y}^FDFirma^FS";
+            cmd += $"^CFA,{tableFontSize}^FO580,{y}^FDFirma^FS";
             y += 20;
-            cmd += $"^CFA,{tableFont}^FO580,{y}^FDProd/Del^FS";
+            cmd += $"^CFA,{tableFontSize}^FO580,{y}^FDProd/Del^FS"; // Firma prod/del
 
-            // Firma conducente
             y -= 20;
-            cmd += $"^CFA,{tableFont}^FO710,{y}^FDFirma^FS";
+            cmd += $"^CFA,{tableFontSize}^FO710,{y}^FDFirma^FS";
             y += 20;
-            cmd += $"^CFA,{tableFont}^FO710,{y}^FDConduc.^FS";
+            cmd += $"^CFA,{tableFontSize}^FO710,{y}^FDConduc.^FS"; // Firma conducente
+
+            y += 40;
+            cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
+
+            // CONTENUTO TABELLA
+            decimal quantitaTotale = 0;
+            foreach (var prelievo in registro.Items.OrderBy(p => p.Scomparto))
+            {
+
+                y += 20;
+                cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento}^FS"; // Nome produttore
+                y += 20;
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
+                y -= 20;
+                cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte}^FS"; // Tipo
+                cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{prelievo.Quantita_kg}^FS"; // Kg
+                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo}^FS"; // Ora
+                y += 20;
+                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD03/02/2020^FS"; // Data
+                y += 40;
+                cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
+
+                quantitaTotale += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
+            }
+
+            // TOTALI
+            y += 20;
+            cmd += $"^CFA,{tableFontSize}^FO110,{y}^FDTOTALI^FS";
+            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{quantitaTotale.ToString("#0.00")}^FS";
+            y += 40;
+            cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
+
+            y += 40;
+
+            // FIRME
+            // Colonna SX
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Acquirente/Delegato ^FS"; // Firma acquirente/delegato
+            y += 100;
+            cmd += $"^FO{leftOffset},{y}^GB250,1,1^FS";
+
+            // Colonna DX
+            y -= 100;
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Destinatario ^FS"; // Firma destinatario
+            y += 100;
+            cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
         }

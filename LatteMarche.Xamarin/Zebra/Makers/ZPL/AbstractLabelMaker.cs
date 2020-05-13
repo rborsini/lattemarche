@@ -87,37 +87,5 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }    
 
-        // Sezione firme
-        protected string MakeFirmeSection(Registro registro, int y)
-        {
-
-            var cmd = "";
-
-            // Colonna SX
-            if (registro is RegistroConsegna)
-            {
-                cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Produttore/Delegato ^FS"; // Firma produttore/delegato
-            } else
-            {
-                cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Acquirente/Delegato ^FS"; // Firma acquirente/delegato
-            }
-            y += 100;
-            cmd += $"^FO{leftOffset},{y}^GB250,1,1^FS";
-
-            // Colonna DX
-            y -= 100;
-            if (registro is RegistroConsegna)
-            {
-                cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Trasportatore ^FS"; // Firma trasportatore
-            } else
-            {
-                cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Destinatario ^FS"; // Firma destinatario
-            }
-            y += 100;
-            cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
-
-            return cmd;
-        }
-
     }
 }
