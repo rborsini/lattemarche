@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
@@ -44,6 +45,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Linea
             cmd += MakeLine(650);
 
+            // Sezione scomparti
+            cmd += MakeScompartiSection(registroRaccolta, 690);
+
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
 
@@ -51,7 +55,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         }
 
         // Sezione dati giro
-        protected string MakeDatiGiro(RegistroRaccolta registro, int y)
+        private string MakeDatiGiro(RegistroRaccolta registro, int y)
         {
             var cmd = "";
 
@@ -68,5 +72,24 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             return cmd;
         }
+
+        // Sezione scomparti
+        private string MakeScompartiSection(RegistroRaccolta registro, int y)
+        {
+            var cmd = "";
+
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte bovino crudo convenzionale scomparto N°: 1 2 3 4 ^FS";
+            y += 60;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte crudo destinato alla produzione di latte fresco^FS";
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDpastorizzato di Alta Qualità in possesso dei requisiti^FS";
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDdi composizione igienico-sanitari previsti dal DM 185/91^FS";
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDscomparto N°: 1 2 3 4^FS";
+
+            return cmd;
+        }
+
     }
 }

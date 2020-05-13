@@ -16,6 +16,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         public int h6 = 12;
         public string start_print = "^XA";
         public string end_print = "^XZ";
+        
 
         public abstract string MakeLabel(Registro registro);
 
@@ -84,150 +85,33 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             return cmd;
         }    
-        
-        // Sezione dati giro
-        protected string MakeDatiGiro(Registro registro, int y)
+
+        // Sezione firme
+        protected string MakeFirmeSection(Registro registro, int y)
         {
+
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data}^FS"; // Data
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registro.Giro}^FS"; // Giro
-
-            return cmd;
-        }
-
-        // Sezione dati produttore
-        protected string MakeDatiProduttore(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProduttore:^FS"; // Produttore
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD^FS"; // Nome produttore
-
-            return cmd;
-        }
-
-        // Sezione dati latte (prima sezione colonna SX)
-        protected string MakeDatiLattePrimaSezioneSX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita' Kg: ^FS"; // Quantità
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDN. Munte: ^FS"; // Numero munte
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDN. Temp. °C: ^FS"; // Temperatura
-
-            return cmd;
-        }
-
-        // Sezione dati latte (prima sezione colonna DX)
-        protected string MakeDatiLattePrimaSezioneDX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDLitri: ^FS"; // Litri
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDOra: ^FS"; // Ora
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDTipo latte: ^FS"; // Tipo latte
-
-            return cmd;
-        }
-
-        // Sezione dati latte (seconda sezione colonna SX)
-        protected string MakeDatiLatteSecondaSezioneSX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota latte: ^FS"; // Quota latte
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita': ^FS"; // Quantità
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProd. Rett. (%Gr): ^FS"; // Prod. Rett.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota Res.: ^FS"; // Quota Res
-
-            return cmd;
-        }
-
-        // Sezione dati latte (prima sezione colonna DX)
-        protected string MakeDatiLatteSecondaSezioneDX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDAnalisi qualita': ^FS"; // Analisi qualità
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGrasso % p/v: ^FS"; // Grasso
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDProteine % p/v: ^FS"; // Proteine
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDC.B.T. ufc/ml: ^FS"; // C.B.T.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDC.S./ml: ^FS"; // C.S.
-
-            return cmd;
-        }
-
-        // Sezione dati latte (terza sezione colonna SX)
-        protected string MakeDatiLatteTerzaSezioneSX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDMedia trim: ^FS"; // Media Trim.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDGrasso % p/v: ^FS"; // Grasso
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProteine % p/v: ^FS"; // Proteine
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDC.B.T. ufc/ml: ^FS"; // C.B.T.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDC.S./ml: ^FS"; // C.S.
-
-            return cmd;
-        }
-
-        // Sezione dati latte (terza sezione colonna SX)
-        protected string MakeDatiLatteTerzaSezioneDX(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDPremi/Penal. €/1000lt: ^FS"; // Premi/Penali
-
-            return cmd;
-        }
-
-        // Sezione informazioni
-        protected string MakeInformazioni(Registro registro, int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDInformazioni: ^FS"; // Informazioni
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD^FS"; // Contenuto delle informazioni
-
-            return cmd;
-        }
-
-        // Sezione firma produttore (colonna SX)
-        protected string MakeFirmaProduttoreDelegato(int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Produttore/Delegato ^FS"; // Firma produttore/delegato
+            // Colonna SX
+            if (registro is RegistroConsegna)
+            {
+                cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Produttore/Delegato ^FS"; // Firma produttore/delegato
+            } else
+            {
+                cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDFirma Acquirente/Delegato ^FS"; // Firma acquirente/delegato
+            }
             y += 100;
             cmd += $"^FO{leftOffset},{y}^GB250,1,1^FS";
 
-            return cmd;
-        }
-
-        // Sezione firma trasportatore (colonna DX)
-        protected string MakeFirmaTrasportatore(int y)
-        {
-            var cmd = "";
-
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Trasportatore ^FS"; // Firma trasportatore
+            // Colonna DX
+            y -= 100;
+            if (registro is RegistroConsegna)
+            {
+                cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Trasportatore ^FS"; // Firma trasportatore
+            } else
+            {
+                cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDFirma Destinatario ^FS"; // Firma destinatario
+            }
             y += 100;
             cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
