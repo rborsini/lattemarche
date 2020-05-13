@@ -9,8 +9,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 {
     public abstract class AbstractLabelMaker : ILabelMaker
     {
-        public int leftOffset = 50;
+        public int leftOffset = 35;
         public int leftOffsetColonnaDX = 400;
+        public int lineWidth = 745;
         public int h2 = 22;
         public int h3 = 14;
         public int h6 = 12;
@@ -35,7 +36,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         // Linea
         protected string MakeLine(int y)
         {
-            var cmd = $"^FO{leftOffset},{y}^GB700,1,1^FS";
+            var cmd = $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS";
             return cmd;
         }
 

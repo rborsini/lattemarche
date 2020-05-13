@@ -48,6 +48,12 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Sezione scomparti
             cmd += MakeScompartiSection(registroRaccolta, 690);
 
+            // Linea
+            cmd += MakeLine(890);
+
+            // Tabella
+            cmd += MakeTabellaSection(registroRaccolta, 910);
+
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
 
@@ -87,6 +93,47 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDdi composizione igienico-sanitari previsti dal DM 185/91^FS";
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDscomparto N°: 1 2 3 4^FS";
+
+            return cmd;
+        }
+
+        private string MakeTabellaSection(RegistroRaccolta registro, int y)
+        {
+            var cmd = "";
+            var tableFont = 15;
+
+            //// Header
+            // Scomparto
+            cmd += $"^CFA,{tableFont}^FO{leftOffset},{y}^FDSCOM^FS";
+            y += 20;
+            cmd += $"^CFA,{tableFont}^FO{leftOffset},{y}^FDPARTO^FS";
+
+            // Produttore/P.IVA-Prov.
+            y -= 20;
+            cmd += $"^CFA,{tableFont}^FO150,{y}^FDPRODUTTORE^FS";
+            y += 20;
+            cmd += $"^CFA,{tableFont}^FO150,{y}^FDP.IVA-PROV.^FS";
+
+            // Tipo
+            y -= 20;
+            cmd += $"^CFA,{tableFont}^FO350,{y}^FDTIPO^FS";
+
+            // Kg
+            cmd += $"^CFA,{tableFont}^FO440,{y}^FDKG^FS";
+
+            // Ora
+            cmd += $"^CFA,{tableFont}^FO490,{y}^FDORA^FS";
+
+            // Firma prod/del
+            cmd += $"^CFA,{tableFont}^FO580,{y}^FDFirma^FS";
+            y += 20;
+            cmd += $"^CFA,{tableFont}^FO580,{y}^FDProd/Del^FS";
+
+            // Firma conducente
+            y -= 20;
+            cmd += $"^CFA,{tableFont}^FO710,{y}^FDFirma^FS";
+            y += 20;
+            cmd += $"^CFA,{tableFont}^FO710,{y}^FDConduc.^FS";
 
             return cmd;
         }
