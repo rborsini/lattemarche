@@ -85,7 +85,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.IVA: {registro.Trasportatore.P_IVA}^FS"; // Indirizzo
 
             return cmd;
-        }    
+        }
 
     }
 }

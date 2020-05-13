@@ -1,4 +1,5 @@
-﻿using LatteMarche.Xamarin.Zebra.Models;
+﻿using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Zebra.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,15 +138,15 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
-                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento}^FS"; // Nome produttore
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.ToString(), 28, ' ')}^FS"; // Nome produttore
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
                 y -= 20;
                 cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte}^FS"; // Tipo
                 cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{prelievo.Quantita_kg}^FS"; // Kg
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo}^FS"; // Ora
+                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:HH:mm}^FS"; // Ora
                 y += 20;
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD03/02/2020^FS"; // Data
+                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:dd/MM/yy}^FS"; // Data
                 y += 40;
                 cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
@@ -174,6 +175,20 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
+        }
+
+        // Metodo per gestire la lunghezza della stringa del nome produttore nella tabella
+        protected string PadRight(string source, int length, char paddingChar = ' ')
+        {
+            var result = String.Empty;
+
+            if (source.Length > length)
+                result = source.Substring(0, length);
+
+            if (source.Length < length)
+                result = source.PadRight(length, ' ');
+
+            return result;
         }
 
     }
