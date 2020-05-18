@@ -65,7 +65,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B7A81D8E-7
 		Libs\WeCode.EntityFramework.pdb = Libs\WeCode.EntityFramework.pdb
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZebraPrinterlConsole", "ZebraPrinterlConsole\ZebraPrinterlConsole.csproj", "{7C922B9C-1E3B-46D5-AD69-684BF126C572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZebraPrinterlConsole", "ZebraPrinterlConsole\ZebraPrinterlConsole.csproj", "{7C922B9C-1E3B-46D5-AD69-684BF126C572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,7 +76,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}.TEST|Any CPU.ActiveCfg = TEST|Any CPU
@@ -138,6 +137,7 @@ Global
 		{116D4642-9E70-4C11-BD74-26F815A1747C}.TEST|Any CPU.Build.0 = Release|Any CPU
 		{116D4642-9E70-4C11-BD74-26F815A1747C}.Xamarin Debug|Any CPU.ActiveCfg = Xamarin Debug|Any CPU
 		{C9D2E0AE-A971-4E2E-A897-C8DF4AB7B8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D2E0AE-A971-4E2E-A897-C8DF4AB7B8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D2E0AE-A971-4E2E-A897-C8DF4AB7B8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D2E0AE-A971-4E2E-A897-C8DF4AB7B8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9D2E0AE-A971-4E2E-A897-C8DF4AB7B8C8}.TEST|Any CPU.ActiveCfg = Debug|Any CPU

@@ -17,13 +17,13 @@ namespace ZebraPrinterlConsole
                     Indirizzo = "Via Montepulciano",
                     Provincia = "AN",
                     P_IVA = "1232135",
-                    RagioneSociale = "SIBILLA SOC. COOP. AGR."
+                    RagioneSociale = "SIBILLA SOC. COOP. AGRICOLANIONIO NIOJMIO MIOPèMO"
                 },
                 Destinatario = new LatteMarche.Xamarin.Db.Models.Destinatario()
                 {
                     CAP = "60024",
                     Comune = "Filottrano",
-                    Indirizzo = "Via Montepulciano",
+                    Indirizzo = "Via Montepulciano molto molto molto ma moltissismissimo lungo",
                     Provincia = "AN",
                     P_IVA = "1232135",
                     RagioneSociale = "SIBILLA SOC. COOP. AGR."
@@ -56,10 +56,10 @@ namespace ZebraPrinterlConsole
                 {
                     CAP = "60024",
                     Comune = "Filottrano",
-                    Indirizzo = "Via Montepulciano",
+                    Indirizzo = "Via Montepulciano molto molto molto ma moltissismissimo lungo",
                     Provincia = "AN",
                     P_IVA = "1232135",
-                    RagioneSociale = "SIBILLA SOC. COOP. AGR."
+                    RagioneSociale = "SIBILLA SOC. COOP. AGRICOLANIONIO NIOJMIO MIOPèMO."
                 },
                 Destinatario = new LatteMarche.Xamarin.Db.Models.Destinatario()
                 {
@@ -80,13 +80,37 @@ namespace ZebraPrinterlConsole
                         Targa = "12RTY56",
                     },
                 },
+                Giro = new LatteMarche.Xamarin.Db.Models.TemplateGiro()
+                {
+                    Descrizione = "PESARO-ANCONA"
+                },
+                CodiceLotto = "P10302200920",
+                Items = new System.Collections.Generic.List<RegistroRaccolta.Item>()
+                {
+                    new RegistroRaccolta.Item()
+                    {
+                        Scomparto = "1",
+                        Allevamento = new LatteMarche.Xamarin.Db.Models.Allevamento() { RagioneSociale = "TRIONFI HONORATI S.R.L." },
+                        DataPrelievo = DateTime.Now,
+                        Quantita_kg = Convert.ToDecimal(1.324),
+                        TipoLatte = new LatteMarche.Xamarin.Db.Models.TipoLatte(){ Codice = "QM-AQ"}
+                    },
+                    new RegistroRaccolta.Item()
+                    {
+                        Scomparto = "2",
+                        Allevamento = new LatteMarche.Xamarin.Db.Models.Allevamento() { RagioneSociale = "TRIONFI HONORATI S.R.L. ARCADIA SPA" },
+                        DataPrelievo = DateTime.Now,
+                        Quantita_kg = Convert.ToDecimal(1.324),
+                        TipoLatte = new LatteMarche.Xamarin.Db.Models.TipoLatte(){ Codice = "QM-AQ"}
+                    }
+                }
             };
 
-            var cpclMaker = new LatteMarche.Xamarin.Zebra.Makers.CPCL.RegistroConsegnaMaker();
+            //var cpclMaker = new LatteMarche.Xamarin.Zebra.Makers.CPCL.RegistroConsegnaMaker();
             var zplMaker = new LatteMarche.Xamarin.Zebra.Makers.ZPL.RegistroConsegnaMaker();
             var zplMakerRegRaccolta = new LatteMarche.Xamarin.Zebra.Makers.ZPL.RegistroRaccoltaMaker();
 
-            var cpcl = cpclMaker.MakeLabel(registroConsegna);
+            //var cpcl = cpclMaker.MakeLabel(registroConsegna);
             var zpl = zplMaker.MakeLabel(registroConsegna);
             var zplRegRaccolta = zplMakerRegRaccolta.MakeLabel(registroRaccolta);
 
