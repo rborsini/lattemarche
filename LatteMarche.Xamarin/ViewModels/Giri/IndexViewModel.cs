@@ -111,6 +111,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 });
 
                 await loadingDialog.DismissAsync();
+                await ExecuteLoadItemsCommand();
             }
             catch (Exception exc)
             {

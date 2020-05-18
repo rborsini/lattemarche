@@ -12,6 +12,7 @@
                 <Button Margin="0,10,0,0" Text="Download" Command="{Binding DownloadCommand}"  />
                 <Button Margin="0,10,0,0" Text="Upload" Command="{Binding UploadCommand}"  />
                 <Button Margin="0,10,0,0" Text="Esporta" Command="{Binding ExportCommand}"  />
+                <Button Margin="0,10,0,0" Text="Reset" Command="{Binding ResetCommand}"  />
             </StackLayout>
 
             <AbsoluteLayout IsVisible="{Binding IsBusy}"

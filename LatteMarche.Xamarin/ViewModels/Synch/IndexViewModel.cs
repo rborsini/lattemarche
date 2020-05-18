@@ -6,6 +6,7 @@ using LatteMarche.Xamarin.Enums;
 using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
+using LatteMarche.Xamarin.Views.Synch;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         public Command ExportCommand { get; set; }
 
+        public Command ResetCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -49,6 +52,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             this.DownloadCommand = new Command(execute: async () => await ExecuteDownloadCommand(), canExecute: () => { return this.IsOnline; });
             this.UploadCommand = new Command(async () => await ExecuteUploadCommand(), canExecute: () => { return this.IsOnline; });
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
+            this.ResetCommand = new Command(async () => await ExecuteResetCommand());
 
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
 
@@ -161,6 +165,32 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 this.IsBusy = false;
                 await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
+            }
+
+        }
+
+        private async Task ExecuteResetCommand()
+        {
+            try
+            {
+                this.IsBusy = true;
+
+                await Task.Run(() =>
+                {
+                    this.sincronizzazioneService.ResetAsync().Wait();
+                });
+
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Info", "Reset avvenuto con successo", "OK");
+
+                App.Current.MainPage = new RegisterPage();
+                await this.page.Navigation.PopToRootAsync();
+
             }
             catch (Exception exc)
             {

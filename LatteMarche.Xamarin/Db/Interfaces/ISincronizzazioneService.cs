@@ -16,5 +16,7 @@ namespace LatteMarche.Xamarin.Db.Interfaces
 
         Task<Sincronizzazione> GetLastAysnc(SynchType tipo);
 
+        Task<bool> ResetAsync();
+
     }
 }
