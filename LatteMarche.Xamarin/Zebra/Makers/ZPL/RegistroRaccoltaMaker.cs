@@ -114,7 +114,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y -= 20;
             cmd += $"^CFA,{tableFontSize}^FO350,{y}^FDTIPO^FS"; // Tipo
             cmd += $"^CFA,{tableFontSize}^FO440,{y}^FDKG^FS"; // Kg
-            cmd += $"^CFA,{tableFontSize}^FO490,{y}^FDORA^FS"; // Ora
+            cmd += $"^CFA,{tableFontSize}^FO510,{y}^FDORA^FS"; // Ora
 
             cmd += $"^CFA,{tableFontSize}^FO580,{y}^FDFirma^FS";
             y += 20;
@@ -135,15 +135,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
-                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.ToString(), 28, ' ')}^FS"; // Nome produttore
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.RagioneSociale.ToString(), 16, ' ')}...^FS"; // Nome produttore
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
                 y -= 20;
-                cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte}^FS"; // Tipo
+                cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte.Codice}^FS"; // Tipo
                 cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{prelievo.Quantita_kg}^FS"; // Kg
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:HH:mm}^FS"; // Ora
-                y += 20;
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:dd/MM/yy}^FS"; // Data
+                cmd += $"^CFA,{tableFontSize}^FO510,{y}^FD{prelievo.DataPrelievo:HH:mm}^FS"; // Ora
                 y += 40;
                 cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
