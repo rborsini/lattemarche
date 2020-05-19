@@ -48,9 +48,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Colonna acquirente
             cmd += $"^CFA,{h3}^FO{leftOffset},240^FDAcquirente^FS"; // Stringa fissa Acquirente
             y += 60;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.RagioneSociale}^FS"; // Ragione sociale       
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{PadRight(registro.Acquirente.RagioneSociale, 28, ' ')}^FS"; // Ragione sociale       
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.Indirizzo}^FS"; // Indirizzo
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{PadRight(registro.Acquirente.Indirizzo, 28, ' ')}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.CAP} {registro.Acquirente.Comune} {registro.Acquirente.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
@@ -60,9 +60,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y -= 120;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},240^FDDestinatario^FS"; // Stringa fissa Destinatario
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.RagioneSociale}^FS"; // Ragione sociale     
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{PadRight(registro.Destinatario.RagioneSociale, 28, ' ')}^FS"; // Ragione sociale     
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.Indirizzo}^FS"; // Indirizzo
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{PadRight(registro.Destinatario.Indirizzo, 28, ' ')}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.CAP} {registro.Destinatario.Comune} {registro.Destinatario.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
@@ -85,6 +85,20 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.IVA: {registro.Trasportatore.P_IVA}^FS"; // Indirizzo
 
             return cmd;
+        }
+
+        // Metodo per gestire la lunghezza delle stringhe
+        protected string PadRight(string source, int length, char paddingChar = ' ')
+        {
+            var result = String.Empty;
+
+            if (source.Length > length)
+                result = source.Substring(0, length);
+
+            if (source.Length < length)
+                result = source.PadRight(length, ' ');
+
+            return result;
         }
 
     }

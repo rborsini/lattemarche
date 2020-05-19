@@ -135,7 +135,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
-                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.RagioneSociale.ToString(), 16, ' ')}...^FS"; // Nome produttore
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.RagioneSociale.ToString(), 16, ' ')}^FS"; // Nome produttore
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
                 y -= 20;
@@ -170,20 +170,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
-        }
-
-        // Metodo per gestire la lunghezza della stringa del nome produttore nella tabella
-        protected string PadRight(string source, int length, char paddingChar = ' ')
-        {
-            var result = String.Empty;
-
-            if (source.Length > length)
-                result = source.Substring(0, length);
-
-            if (source.Length < length)
-                result = source.PadRight(length, ' ');
-
-            return result;
         }
 
     }
