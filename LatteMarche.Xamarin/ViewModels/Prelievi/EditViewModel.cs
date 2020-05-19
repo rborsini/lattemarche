@@ -736,7 +736,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 var kg = Convert.ToDecimal(value);
 
-                var lt = kg * this.TipoLatte.FattoreConversione.Value;
+                var lt = kg / this.TipoLatte.FattoreConversione.Value;
 
                 return $"{lt:#.00}";
             }
@@ -758,7 +758,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 var lt = Convert.ToDecimal(value);
 
-                var kg = lt / this.TipoLatte.FattoreConversione;
+                var kg = lt * this.TipoLatte.FattoreConversione;
 
                 return $"{kg:#.00}";
             }

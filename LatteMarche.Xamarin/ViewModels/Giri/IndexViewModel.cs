@@ -72,7 +72,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
-            var result = await MaterialDialog.Instance.SelectChoiceAsync(title: "Seleziona giro", choices: templateList.Select(t => t.Descrizione).ToArray());
+            var result = await MaterialDialog.Instance.SelectChoiceAsync(title: "Seleziona giro", dismissiveText: "Annulla", choices: templateList.Select(t => t.Descrizione).ToArray());
 
             if (result < 0)
                 return;
