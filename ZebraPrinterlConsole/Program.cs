@@ -111,7 +111,7 @@ namespace ZebraPrinterlConsole
             var zplMakerRegRaccolta = new LatteMarche.Xamarin.Zebra.Makers.ZPL.RegistroRaccoltaMaker();
 
             //var cpcl = cpclMaker.MakeLabel(registroConsegna);
-            var zpl = zplMaker.MakeLabel(registroConsegna);
+            var zplRegConsegna = zplMaker.MakeLabel(registroConsegna);
             var zplRegRaccolta = zplMakerRegRaccolta.MakeLabel(registroRaccolta);
 
         }
