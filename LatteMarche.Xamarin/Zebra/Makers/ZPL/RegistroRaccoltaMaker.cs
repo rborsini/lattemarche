@@ -45,13 +45,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeLine(650);
 
             // Sezione scomparti
-            cmd += MakeScompartiSection(registroRaccolta, 690);
+            //cmd += MakeScompartiSection(registroRaccolta, 690);
 
             // Linea
-            cmd += MakeLine(820);
+            //cmd += MakeLine(820 690);
 
             // Tabella
-            cmd += MakeTabellaSection(registroRaccolta, 840);
+            cmd += MakeTabellaSection(registroRaccolta, 680);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
@@ -66,14 +66,18 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             // Colonna SX
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data:dd/MM/yyyy}^FS"; // Data
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y + 1}^FDData: {registro.Data:dd/MM/yyyy}^FS"; // Duplico linea per l'effetto bold
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDOra: {registro.Data:HH:mm}^FS"; // Ora
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y + 1}^FDOra: {registro.Data:HH:mm}^FS"; // Duplico linea per l'effetto bold
 
             y -= 30;
             // Colonna DX
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registro.Giro}^FS"; // Giro
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registro.Giro.Codice}^FS"; // Giro
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDGiro: {registro.Giro.Codice}^FS"; // Duplico linea per l'effetto bold
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDLotto: {registro.CodiceLotto}^FS"; // Lotto
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDLotto: {registro.CodiceLotto}^FS"; // Duplico linea per l'effetto bold
 
             return cmd;
         }
