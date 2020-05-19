@@ -61,18 +61,16 @@
                 matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
                 matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
             />
+            
             <!--Scomparto-->
             <material:MaterialTextField Placeholder="Scomparto"
-                InputType="Choice"
                 IsEnabled="{ Binding IsEditable }"
-                SelectedChoice="{Binding Scomparto, Mode=TwoWay}"
-                Choices="{Binding ElencoScomparti}"
+                Text="{Binding Scomparto, Mode=TwoWay}"
                 AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
-                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
-                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+                BackgroundColor="Transparent"            
+                Focused="Scomparto_Focused"
             />
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

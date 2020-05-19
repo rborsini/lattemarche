@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XF.Material.Forms.UI;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.Views.Prelievi
 {
@@ -37,5 +38,40 @@ namespace LatteMarche.Xamarin.Views.Prelievi
         {
             this.viewModel.OnLtChanged((sender as MaterialTextField).Text);
         }
+
+        private async void Scomparto_Focused(object sender, FocusEventArgs e)
+        {
+            try
+            {
+                var ElencoScomparti = new List<string> { "1", "2", "3", "4", "5", "6" };
+
+                (sender as MaterialTextField).Unfocus();
+
+                var scompartiSelezionati = this.viewModel.Scomparto.Split('-');
+                var indiciSelezionati = new List<int>();
+
+                foreach (var scomparto in this.viewModel.Scomparto.Split('-'))
+                {
+                    indiciSelezionati.Add(ElencoScomparti.IndexOf(scomparto));
+                }
+
+                var result = await MaterialDialog.Instance.SelectChoicesAsync(title: "Seleziona scomparto", selectedIndices: indiciSelezionati, dismissiveText: "Annulla", choices: ElencoScomparti.ToArray());
+
+                var scomparti = new List<string>();
+
+                foreach (var index in result)
+                {
+                    scomparti.Add(ElencoScomparti[index]);
+                }
+
+                this.viewModel.Scomparto = String.Join("-", scomparti);
+            }
+            catch(Exception exc)
+            {
+                throw exc;
+            }
+
+        }
+
     }
 }
