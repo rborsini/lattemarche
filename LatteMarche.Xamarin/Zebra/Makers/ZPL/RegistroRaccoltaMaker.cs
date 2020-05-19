@@ -73,8 +73,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             y -= 30;
             // Colonna DX
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registro.Giro.Codice}^FS"; // Giro
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDGiro: {registro.Giro.Codice}^FS"; // Duplico linea per l'effetto bold
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registro.Giro.Descrizione}^FS"; // Giro
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDGiro: {registro.Giro.Descrizione}^FS"; // Duplico linea per l'effetto bold
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDLotto: {registro.CodiceLotto}^FS"; // Lotto
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDLotto: {registro.CodiceLotto}^FS"; // Duplico linea per l'effetto bold
