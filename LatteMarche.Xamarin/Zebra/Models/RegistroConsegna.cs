@@ -27,6 +27,9 @@ namespace LatteMarche.Xamarin.Zebra.Models
         public decimal? QuotaLatte_Qta_Tct { get; set; }
         public decimal? QuotaLatte_Prod_Rett { get; set; }
         public decimal? QuotaLatte_Qta_Res { get; set; }
+        public decimal? Progressivo_Conferimenti { get; set; }
+        public decimal? Mensile { get; set; }
+        public decimal? Annuale { get; set; }
 
         // Analisi qualità
         public decimal? AnalisiQualita_Grasso { get; set; }

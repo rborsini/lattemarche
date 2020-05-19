@@ -137,16 +137,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var cmd = "";
 
             // Colonna SX
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota latte: {registroConsegna.QuotaLatte_Prod_Rett}^FS"; // Quota latte
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProgres. conferimenti: {registroConsegna.Progressivo_Conferimenti}^FS"; // Progressivo conferimenti
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantità Tct: {registroConsegna.QuotaLatte_Qta_Tct}^FS"; // Quantità
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDMensile: {registroConsegna.Mensile}^FS"; // Mensile
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProd. Rett. (%Gr): {registroConsegna.QuotaLatte_Qta_Res}^FS"; // Prod. Rett.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota Res.: {registroConsegna.QuotaLatte_Qta_Res}^FS"; // Quota Res
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDAnnuale: {registroConsegna.Annuale}^FS"; // Annuale
 
             // Colonna DX
-            y -= 90;
+            y -= 60;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDAnalisi qualita': {registroConsegna.AnalisiQualita_CBT_Ufc}^FS"; // Analisi qualità
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGrasso % p/v: {registroConsegna.AnalisiQualita_Grasso}^FS"; // Grasso
