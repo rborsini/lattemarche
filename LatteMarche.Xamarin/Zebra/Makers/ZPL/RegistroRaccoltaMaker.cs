@@ -23,9 +23,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Header
             cmd += MakeHeader("raccolta");
 
-            // Header
-            //cmd += MakeHeader()
-
             // Linea
             cmd += MakeLine(220);
 
@@ -68,9 +65,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var cmd = "";
 
             // Colonna SX
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data}^FS"; // Data
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data:dd/MM/yyyy}^FS"; // Data
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDOra: {registro.Data}^FS"; // Ora
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDOra: {registro.Data:HH:mm}^FS"; // Ora
 
             y -= 30;
             // Colonna DX

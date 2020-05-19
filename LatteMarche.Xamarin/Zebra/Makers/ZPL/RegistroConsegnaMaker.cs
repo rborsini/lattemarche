@@ -86,7 +86,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registroConsegna.Data}^FS"; // Data
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registroConsegna.Data:dd/MM/yyyy}^FS"; // Data
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registroConsegna.Giro}^FS"; // Giro
 
             return cmd;
