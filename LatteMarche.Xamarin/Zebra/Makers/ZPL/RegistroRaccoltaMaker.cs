@@ -48,10 +48,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeScompartiSection(registroRaccolta, 690);
 
             // Linea
-            cmd += MakeLine(890);
+            cmd += MakeLine(820);
 
             // Tabella
-            cmd += MakeTabellaSection(registroRaccolta, 910);
+            cmd += MakeTabellaSection(registroRaccolta, 840);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
@@ -83,8 +83,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte bovino crudo convenzionale scomparto N°: 1 2 3 4 ^FS";
-            y += 60;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte crudo destinato alla produzione di latte fresco^FS";
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDpastorizzato di Alta Qualità in possesso dei requisiti^FS";
@@ -151,7 +149,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // TOTALI
             y += 20;
             cmd += $"^CFA,{tableFontSize}^FO110,{y}^FDTOTALI^FS";
-            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{quantitaTotale.ToString("#0.00")}^FS";
+            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{quantitaTotale:#0}^FS";
             y += 40;
             cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
