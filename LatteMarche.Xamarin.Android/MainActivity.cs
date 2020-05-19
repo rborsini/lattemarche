@@ -13,7 +13,7 @@ using Forms = Xamarin.Forms;
 namespace LatteMarche.Xamarin.Droid
 {
     // Per le icone https://easyappicon.com/
-    [Activity(Label = "LatteMarche.Xamarin", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "LatteMarche.Xamarin", ScreenOrientation = ScreenOrientation.Portrait, Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
