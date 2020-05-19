@@ -19,7 +19,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += this.start_print;
 
             // Header
-            cmd += MakeHeader();
+            cmd += MakeHeader("consegna");
 
             // Linea
             cmd += MakeLine(220);
@@ -46,34 +46,34 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeDatiProduttore(registroConsegna, 640);
 
             // Linea
-            cmd += MakeLine(710);
+            cmd += MakeLine(730);
 
             // Dati latte prima sezione
-            cmd += MakeDatiLatteFirstSection(registroConsegna, 730);
+            cmd += MakeDatiLatteFirstSection(registroConsegna, 750);
 
             // Linea
-            cmd += MakeLine(830);
+            cmd += MakeLine(850);
 
             // Dati latte seconda sezione
-            cmd += MakeDatiLatteSecondSection(registroConsegna, 850);
+            cmd += MakeDatiLatteSecondSection(registroConsegna, 870);
 
             // Linea
-            cmd += MakeLine(1010);
+            cmd += MakeLine(1030);
 
             // Dati latte terza sezione
-            cmd += MakeDatiLatteThirdSection(registroConsegna, 1030);
+            //cmd += MakeDatiLatteThirdSection(registroConsegna, 1030);
 
             // Linea
-            cmd += MakeLine(1190);
+            //cmd += MakeLine(1190);
 
             // Informazioni
-            cmd += MakeInformazioni(registroConsegna, 1210);
+            //cmd += MakeInformazioni(registroConsegna, 1210);
 
             // Linea
-            cmd += MakeLine(1300);
+            //cmd += MakeLine(1030);
 
             // Sezione firme
-            cmd += MakeFirmeSection(1320);
+            cmd += MakeFirmeSection(1050);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
@@ -86,7 +86,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registroConsegna.Data}^FS"; // Data
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registroConsegna.Data:dd/MM/yyyy}^FS"; // Data
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registroConsegna.Giro}^FS"; // Giro
 
             return cmd;
@@ -99,7 +99,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProduttore:^FS"; // Produttore
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Allevamento}^FS"; // Nome produttore
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Allevamento.RagioneSociale}^FS"; // Nome produttore
+            y += 30;
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Allevamento.CAP} {registroConsegna.Allevamento.Comune} {registroConsegna.Allevamento.Provincia}^FS"; // Cap + indirizzo + prov.
 
             return cmd;
         }
@@ -111,6 +113,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             // Colonna SX
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita' Kg: {registroConsegna.Quantita_kg}^FS"; // Quantità
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y + 1}^FDQuantita' Kg: {registroConsegna.Quantita_kg}^FS"; // Ripeto linea per il bold
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDN. Munte: {registroConsegna.NumeroMungiture}^FS"; // Numero munte
             y += 30;
@@ -119,8 +122,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Colonna DX
             y -= 60;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDLitri: {registroConsegna.Quantita_lt}^FS"; // Litri
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDLitri: {registroConsegna.Quantita_lt}^FS"; // Ripeto linea per il bold
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDOra: {registroConsegna.DataPrelievo}^FS"; // Ora
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDOra: {registroConsegna.DataPrelievo:HH:mm}^FS"; // Ora
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDTipo latte: {registroConsegna.TipoLatte}^FS"; // Tipo latte
 
@@ -133,16 +137,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var cmd = "";
 
             // Colonna SX
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota latte: {registroConsegna.QuotaLatte_Prod_Rett}^FS"; // Quota latte
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProgres. conferimenti: {registroConsegna.Progressivo_Conferimenti}^FS"; // Progressivo conferimenti
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantità Tct: {registroConsegna.QuotaLatte_Qta_Tct}^FS"; // Quantità
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDMensile: {registroConsegna.Mensile}^FS"; // Mensile
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProd. Rett. (%Gr): {registroConsegna.QuotaLatte_Qta_Res}^FS"; // Prod. Rett.
-            y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuota Res.: {registroConsegna.QuotaLatte_Qta_Res}^FS"; // Quota Res
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDAnnuale: {registroConsegna.Annuale}^FS"; // Annuale
 
             // Colonna DX
-            y -= 90;
+            y -= 60;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDAnalisi qualita': {registroConsegna.AnalisiQualita_CBT_Ufc}^FS"; // Analisi qualità
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGrasso % p/v: {registroConsegna.AnalisiQualita_Grasso}^FS"; // Grasso

@@ -22,15 +22,17 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         public abstract string MakeLabel(Registro registro);
 
         // Intestazione
-        protected string MakeHeader()
+        protected string MakeHeader(string tipoRegistro)
         {
             var header_line_1 = $"^CFA,{h2}^FO{leftOffset},50^FDLatte Marche^FS";
             var header_line_2 = $"^CFA,{h6}^FO{leftOffset},80^FDOrganizzazione Produttori^FS";
-            var header_line_3 = $"^CFA,{h2}^FO{leftOffset},120^FDRegistro consegna latte bovino^FS";
+            var header_line_3 = $"^CFA,{h2}^FO{leftOffset},120^FDRegistro {tipoRegistro} latte bovino^FS";
             var header_line_4 = $"^CFA,{h6}^FO{leftOffset},160^FDL. 119/03-D.M. 31/07/03, art.12 - Documentazione raccolta latte - Sistema Informatizzato di registrazione - ^FS";
             var header_line_5 = $"^CFA,{h6}^FO{leftOffset},180^FDAutorizzazione Regione Marche DDS 512/SAR^FS";
+            var header_line_6 = $"^CFA,{h6}^FO{leftOffset},200^FDLATTE CRUDO CONFORME AL REG.CE 853/04^FS";
+            var header_line_6_for_bold = $"^CFA,{h6}^FO{leftOffset},201^FDLATTE CRUDO CONFORME AL REG.CE 853/04^FS";
 
-            return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5;
+            return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5 + header_line_6 + header_line_6_for_bold;
         }        
 
         // Linea
@@ -48,9 +50,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // Colonna acquirente
             cmd += $"^CFA,{h3}^FO{leftOffset},240^FDAcquirente^FS"; // Stringa fissa Acquirente
             y += 60;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.RagioneSociale}^FS"; // Ragione sociale       
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{PadRight(registro.Acquirente.RagioneSociale, 28, ' ')}^FS"; // Ragione sociale       
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.Indirizzo}^FS"; // Indirizzo
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{PadRight(registro.Acquirente.Indirizzo, 28, ' ')}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Acquirente.CAP} {registro.Acquirente.Comune} {registro.Acquirente.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
@@ -60,9 +62,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y -= 120;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},240^FDDestinatario^FS"; // Stringa fissa Destinatario
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.RagioneSociale}^FS"; // Ragione sociale     
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{PadRight(registro.Destinatario.RagioneSociale, 28, ' ')}^FS"; // Ragione sociale     
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.Indirizzo}^FS"; // Indirizzo
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{PadRight(registro.Destinatario.Indirizzo, 28, ' ')}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD{registro.Destinatario.CAP} {registro.Destinatario.Comune} {registro.Destinatario.Provincia}^FS"; // CAP + Comune + Provincia
             y += 30;
@@ -76,15 +78,34 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
+            // Colonna SX
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTarga automezzo: {registro.Trasportatore.AutoCisterna.Targa}^FS"; // Targa automezzo
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTrasportatore: {registro.Trasportatore.RagioneSociale}^FS"; // Ragione sociale
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTrasp.: {registro.Trasportatore.RagioneSociale}^FS"; // Ragione sociale
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Trasportatore.Indirizzo}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.IVA: {registro.Trasportatore.P_IVA}^FS"; // Indirizzo
 
+            y -= 90;
+            // Colonna DX
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD1° cessionario: ^FS"; // Primo cessionario
+
             return cmd;
+        }
+
+        // Metodo per gestire la lunghezza delle stringhe
+        protected string PadRight(string source, int length, char paddingChar = ' ')
+        {
+            var result = String.Empty;
+
+            if (source.Length > length)
+                result = source.Substring(0, length);
+
+            if (source.Length < length)
+                result = source.PadRight(length, ' ');
+
+            return result;
         }
 
     }

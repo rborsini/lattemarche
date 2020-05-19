@@ -21,10 +21,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += this.start_print;
 
             // Header
-            cmd += MakeHeader();
-
-            // Header
-            cmd += MakeHeader();
+            cmd += MakeHeader("raccolta");
 
             // Linea
             cmd += MakeLine(220);
@@ -51,10 +48,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += MakeScompartiSection(registroRaccolta, 690);
 
             // Linea
-            cmd += MakeLine(890);
+            cmd += MakeLine(820);
 
             // Tabella
-            cmd += MakeTabellaSection(registroRaccolta, 910);
+            cmd += MakeTabellaSection(registroRaccolta, 840);
 
             // Chiudo il file con "^XZ"
             cmd += this.end_print;
@@ -68,9 +65,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var cmd = "";
 
             // Colonna SX
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data}^FS"; // Data
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registro.Data:dd/MM/yyyy}^FS"; // Data
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDOra: {registro.Data}^FS"; // Ora
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDOra: {registro.Data:HH:mm}^FS"; // Ora
 
             y -= 30;
             // Colonna DX
@@ -86,8 +83,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte bovino crudo convenzionale scomparto N°: 1 2 3 4 ^FS";
-            y += 60;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDLatte crudo destinato alla produzione di latte fresco^FS";
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDpastorizzato di Alta Qualità in possesso dei requisiti^FS";
@@ -117,7 +112,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y -= 20;
             cmd += $"^CFA,{tableFontSize}^FO350,{y}^FDTIPO^FS"; // Tipo
             cmd += $"^CFA,{tableFontSize}^FO440,{y}^FDKG^FS"; // Kg
-            cmd += $"^CFA,{tableFontSize}^FO490,{y}^FDORA^FS"; // Ora
+            cmd += $"^CFA,{tableFontSize}^FO500,{y}^FDORA^FS"; // Ora
 
             cmd += $"^CFA,{tableFontSize}^FO580,{y}^FDFirma^FS";
             y += 20;
@@ -138,15 +133,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
-                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.ToString(), 28, ' ')}^FS"; // Nome produttore
+                cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.RagioneSociale.ToString(), 16, ' ')}^FS"; // Nome produttore
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
                 y -= 20;
-                cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte}^FS"; // Tipo
-                cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{prelievo.Quantita_kg}^FS"; // Kg
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:HH:mm}^FS"; // Ora
-                y += 20;
-                cmd += $"^CFA,{tableFontSize}^FO490,{y}^FD{prelievo.DataPrelievo:dd/MM/yy}^FS"; // Data
+                cmd += $"^CFA,{tableFontSize}^FO350,{y}^FD{prelievo.TipoLatte.Codice}^FS"; // Tipo
+                cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{prelievo.Quantita_kg:#0}^FS"; // Kg
+                cmd += $"^CFA,{tableFontSize}^FO500,{y}^FD{prelievo.DataPrelievo:HH:mm}^FS"; // Ora
                 y += 40;
                 cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
@@ -156,7 +149,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             // TOTALI
             y += 20;
             cmd += $"^CFA,{tableFontSize}^FO110,{y}^FDTOTALI^FS";
-            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{quantitaTotale.ToString("#0.00")}^FS";
+            cmd += $"^CFA,{tableFontSize}^FO440,{y}^FD{quantitaTotale:#0}^FS";
             y += 40;
             cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
@@ -175,20 +168,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += $"^FO{leftOffsetColonnaDX},{y}^GB250,1,1^FS";
 
             return cmd;
-        }
-
-        // Metodo per gestire la lunghezza della stringa del nome produttore nella tabella
-        protected string PadRight(string source, int length, char paddingChar = ' ')
-        {
-            var result = String.Empty;
-
-            if (source.Length > length)
-                result = source.Substring(0, length);
-
-            if (source.Length < length)
-                result = source.PadRight(length, ' ');
-
-            return result;
         }
 
     }
