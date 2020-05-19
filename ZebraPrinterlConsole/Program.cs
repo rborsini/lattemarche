@@ -38,6 +38,10 @@ namespace ZebraPrinterlConsole
                         Targa = "12RTY56",
                     },
                 },
+                Giro = new LatteMarche.Xamarin.Db.Models.TemplateGiro()
+                {
+                    Descrizione = "PESARO-ANCONA"
+                },
                 Allevamento = new LatteMarche.Xamarin.Db.Models.Allevamento()
                 {
                     CAP = "60024",

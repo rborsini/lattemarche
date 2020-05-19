@@ -87,7 +87,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var cmd = "";
 
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDData: {registroConsegna.Data:dd/MM/yyyy}^FS"; // Data
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registroConsegna.Giro}^FS"; // Giro
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y + 1}^FDData: {registroConsegna.Data:dd/MM/yyyy}^FS"; // Duplico linea per l'effetto bold
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDGiro: {registroConsegna.Giro.Descrizione}^FS"; // Giro
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y + 1}^FDGiro: {registroConsegna.Giro.Descrizione}^FS"; // Duplico linea per l'effetto bold
 
             return cmd;
         }
