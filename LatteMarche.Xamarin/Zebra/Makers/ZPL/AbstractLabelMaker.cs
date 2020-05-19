@@ -29,8 +29,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             var header_line_3 = $"^CFA,{h2}^FO{leftOffset},120^FDRegistro {tipoRegistro} latte bovino^FS";
             var header_line_4 = $"^CFA,{h6}^FO{leftOffset},160^FDL. 119/03-D.M. 31/07/03, art.12 - Documentazione raccolta latte - Sistema Informatizzato di registrazione - ^FS";
             var header_line_5 = $"^CFA,{h6}^FO{leftOffset},180^FDAutorizzazione Regione Marche DDS 512/SAR^FS";
+            var header_line_6 = $"^CFA,{h6}^FO{leftOffset},200^FDLATTE CRUDO CONFORME AL REG.CE 853/04^FS";
+            var header_line_6_for_bold = $"^CFA,{h6}^FO{leftOffset},201^FDLATTE CRUDO CONFORME AL REG.CE 853/04^FS";
 
-            return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5;
+            return header_line_1 + header_line_2 + header_line_3 + header_line_4 + header_line_5 + header_line_6 + header_line_6_for_bold;
         }        
 
         // Linea

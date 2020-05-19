@@ -111,6 +111,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             // Colonna SX
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDQuantita' Kg: {registroConsegna.Quantita_kg}^FS"; // Quantità
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y + 1}^FDQuantita' Kg: {registroConsegna.Quantita_kg}^FS"; // Ripeto linea per il bold
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDN. Munte: {registroConsegna.NumeroMungiture}^FS"; // Numero munte
             y += 30;
