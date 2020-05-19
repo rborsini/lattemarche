@@ -78,13 +78,18 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         {
             var cmd = "";
 
+            // Colonna SX
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTarga automezzo: {registro.Trasportatore.AutoCisterna.Targa}^FS"; // Targa automezzo
             y += 30;
-            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTrasportatore: {registro.Trasportatore.RagioneSociale}^FS"; // Ragione sociale
+            cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDTrasp.: {registro.Trasportatore.RagioneSociale}^FS"; // Ragione sociale
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FD{registro.Trasportatore.Indirizzo}^FS"; // Indirizzo
             y += 30;
             cmd += $"^CFA,{h3}^FO{leftOffset},{y}^FDP.IVA: {registro.Trasportatore.P_IVA}^FS"; // Indirizzo
+
+            y -= 90;
+            // Colonna DX
+            cmd += $"^CFA,{h3}^FO{leftOffsetColonnaDX},{y}^FD1° cessionario: ^FS"; // Primo cessionario
 
             return cmd;
         }
