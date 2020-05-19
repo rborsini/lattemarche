@@ -99,7 +99,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FDProduttore:^FS"; // Produttore
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Allevamento}^FS"; // Nome produttore
+            cmd += $"^CFA,{h2}^FO{leftOffset},{y}^FD{registroConsegna.Allevamento.RagioneSociale}^FS"; // Nome produttore
 
             return cmd;
         }
@@ -120,7 +120,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y -= 60;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDLitri: {registroConsegna.Quantita_lt}^FS"; // Litri
             y += 30;
-            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDOra: {registroConsegna.DataPrelievo}^FS"; // Ora
+            cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDOra: {registroConsegna.DataPrelievo:HH:mm}^FS"; // Ora
             y += 30;
             cmd += $"^CFA,{h2}^FO{leftOffsetColonnaDX},{y}^FDTipo latte: {registroConsegna.TipoLatte}^FS"; // Tipo latte
 
