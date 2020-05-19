@@ -21,10 +21,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             cmd += this.start_print;
 
             // Header
-            cmd += MakeHeader();
+            cmd += MakeHeader("raccolta");
 
             // Header
-            cmd += MakeHeader();
+            //cmd += MakeHeader()
 
             // Linea
             cmd += MakeLine(220);

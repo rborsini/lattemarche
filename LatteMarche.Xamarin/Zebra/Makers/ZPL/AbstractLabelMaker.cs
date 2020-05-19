@@ -22,11 +22,11 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
         public abstract string MakeLabel(Registro registro);
 
         // Intestazione
-        protected string MakeHeader()
+        protected string MakeHeader(string tipoRegistro)
         {
             var header_line_1 = $"^CFA,{h2}^FO{leftOffset},50^FDLatte Marche^FS";
             var header_line_2 = $"^CFA,{h6}^FO{leftOffset},80^FDOrganizzazione Produttori^FS";
-            var header_line_3 = $"^CFA,{h2}^FO{leftOffset},120^FDRegistro consegna latte bovino^FS";
+            var header_line_3 = $"^CFA,{h2}^FO{leftOffset},120^FDRegistro {tipoRegistro} latte bovino^FS";
             var header_line_4 = $"^CFA,{h6}^FO{leftOffset},160^FDL. 119/03-D.M. 31/07/03, art.12 - Documentazione raccolta latte - Sistema Informatizzato di registrazione - ^FS";
             var header_line_5 = $"^CFA,{h6}^FO{leftOffset},180^FDAutorizzazione Regione Marche DDS 512/SAR^FS";
 
