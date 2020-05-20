@@ -1,0 +1,11 @@
+{
+    "env": {
+        "url": "http://localhost:50510/",
+        "username": "pippo",
+        "password": "WeCode01"
+    },
+    "execTimeout":60000,
+    "requestTimeout":60000,
+    "responseTimeout":60000,
+    "pageLoadTimeout":300000
+}
