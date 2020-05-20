@@ -4,8 +4,10 @@ module.exports = {
     pages: {      
         acquirentiIndex: {            
             entry: 'src/pages/acquirenti/index.ts'
+        },
+        allevamentiIndex: {            
+            entry: 'src/pages/allevamenti/index.ts'
         }
-     
     }
 
 

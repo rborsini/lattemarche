@@ -265,6 +265,8 @@
     <Content Include="Content\plugins\select2\select2.full.min.js" />
     <Content Include="dist\acquirentiIndex.html" />
     <Content Include="dist\acquirentiIndex.js" />
+    <Content Include="dist\allevamentiIndex.html" />
+    <Content Include="dist\allevamentiIndex.js" />
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />

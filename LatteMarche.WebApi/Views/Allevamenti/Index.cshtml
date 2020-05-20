@@ -12,64 +12,26 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-allevamenti-page" class="container-fluid p-0">
 
-    @{
-        string canAdd = ViewBag.Tokens["Aggiungi"] != null && Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-        string canEdit = ViewBag.Tokens["Modifica"] != null && Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
-        string canRemove = ViewBag.Tokens["Rimuovi"] != null && Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
-    }
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
 
-    <input hidden id="canAdd" value="@canAdd" />
-    <input hidden id="canEdit" value="@canEdit" />
-    <input hidden id="canRemove" value="@canRemove" />
+@{
+    string canAdd = ViewBag.Tokens["Aggiungi"] != null && Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+    string canEdit = ViewBag.Tokens["Modifica"] != null && Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = ViewBag.Tokens["Rimuovi"] != null && Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+}
 
-    <!-- Pannello editazione dettaglio -->
-    <editazione-allevamento-modal ref="editazioneAllevamentoModal"
-                                 :allevamento="allevamento"
-                                 v-on:salvato="$refs.savedDialog.open()"></editazione-allevamento-modal>
+<input hidden id="canAdd" value="@canAdd" />
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
 
-    <!-- Pannello notifica salvatagggio -->
-    <notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Allevamento salvato correttamente'"
-                         v-on:ok="window.location = '/Allevamenti'"></notification-dialog>
 
-    <!-- Pannello notifica rimozione -->
-    <notification-dialog ref="removedDialog"
-                         :title="'Conferma rimozione'"
-                         :message="'Allevamento rimosso correttamente'"
-                         v-on:ok="window.location = '/Allevamenti'"></notification-dialog>
-
-    <!-- Pannello modale conferma invio Apice richiesta -->
-    <confirm-dialog ref="confirmDeleteDialog"
-                    :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di voler rimuovere l\'allevamento selezionato?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>
-
-    <data-table :options="tableOptions" :rows="allevamenti" v-on:data-loaded="onDataLoaded">
-
-        <!-- Toolbox -->
-        <template slot="toolbox" v-if="canAdd">
-            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
-        </template>
-
-        <template slot="thead">
-            <th>#</th>
-            <th>Ragione sociale</th>
-            <th>CUAA</th>
-            <th>Codice ASL</th>
-            <th v-if="canEdit || canRemove"></th>
-        </template>
-    </data-table>
-
+<div id="app">
 </div>
 
-<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-
-<script type="application/javascript" src="~/build/allevamenti_index_page.js"></script>
+<script src="@Url.Content("~/dist/allevamentiIndex.js")?ver=@version"></script>
 
 
 
