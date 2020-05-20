@@ -35,11 +35,13 @@ namespace LatteMarche.Application.Mobile
                 .ForMember(dest => dest.P_IVA, opt => opt.MapFrom(src => src.Piva.Trim()))
                 .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Descrizione.Trim()))
                 .ForMember(dest => dest.Provincia, opt => opt.MapFrom(src => src.Comune.Provincia.Trim()))
+                .ForMember(dest => dest.CAP, opt => opt.MapFrom(src => src.Comune.CAP.Trim()))
                 ;
 
             mappings.CreateMap<Destinatario, DestinatarioDto>()
                 .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Descrizione.Trim()))
                 .ForMember(dest => dest.Provincia, opt => opt.MapFrom(src => src.Comune.Provincia.Trim()))
+                .ForMember(dest => dest.CAP, opt => opt.MapFrom(src => src.Comune.CAP.Trim()))
                 ;
 
             mappings.CreateMap<PrelievoLatteDto, PrelievoLatte>()

@@ -36,11 +36,13 @@ namespace LatteMarche.Tests.Services.Mobile
         private IUnitOfWork uow;
 
         private IRepository<DispositivoMobile, string> deviceRepository;
-        private IRepository<Lotto, long> lottiRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
         private IRepository<Utente, int> utentiRepository;
         private IRepository<Allevamento, int> allevamentiRepository;
         private IRepository<Giro, int> giriRepository;
+
+        private IRepository<Acquirente, int> acquirentiRepository;
+        private IRepository<Destinatario, int> destinatariRepository;
 
         private IMobileService mobileService;
 
@@ -61,8 +63,7 @@ namespace LatteMarche.Tests.Services.Mobile
 
             this.uow = this.scope.Resolve<IUnitOfWork>();
             this.dbCleaner = new DbCleaner(uow);
-
-            this.lottiRepository = this.uow.Get<Lotto, long>();
+            
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
 
             this.deviceRepository = this.uow.Get<DispositivoMobile, string>();
@@ -70,6 +71,9 @@ namespace LatteMarche.Tests.Services.Mobile
 
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.giriRepository = this.uow.Get<Giro, int>();
+
+            this.acquirentiRepository = this.uow.Get<Acquirente, int>();
+            this.destinatariRepository = this.uow.Get<Destinatario, int>();
 
             this.mobileService = this.scope.Resolve<IMobileService>();
         }
@@ -90,6 +94,22 @@ namespace LatteMarche.Tests.Services.Mobile
                 .Build();
 
             this.trasportatore = this.utentiRepository.Add(trasportatore);
+
+            // acquirente
+            var acquirente = Builder<Acquirente>
+                .CreateNew()
+                    .With(u => u.IdComune = ID_COMUNE)
+                .Build();
+
+            this.acquirentiRepository.Add(acquirente);
+
+            // destinatario
+            var destinatario = Builder<Destinatario>
+                .CreateNew()
+                    .With(u => u.IdComune = ID_COMUNE)
+                .Build();
+
+            this.destinatariRepository.Add(destinatario);
         }
 
         [TearDown]
@@ -204,6 +224,11 @@ namespace LatteMarche.Tests.Services.Mobile
 
             Assert.AreEqual(5.95, allevamentoDto.Temperatura_Min);      // 95° percentile
             Assert.AreEqual(95.05, allevamentoDto.Temperatura_Max);     // 95° percentile
+
+            // cap not null Bug #325926
+            Assert.IsNotNull(localDb.Acquirenti[0].CAP);
+            Assert.IsNotNull(localDb.Destinatari[0].CAP);
+            Assert.IsNotNull(localDb.Giri[0].Allevamenti[0].CAP);
 
             deviceEntity = this.deviceRepository.GetById(imei);
             Assert.IsTrue(deviceEntity.DataUltimoDownload.HasValue);

@@ -135,6 +135,7 @@ namespace LatteMarche.Application.Mobile.Services
                                 IdTemplateGiro = giro.Id,
                                 IdTipoLatte = utente != null ? utente.IdTipoLatte : (int?)null,
                                 Indirizzo = allevamento != null ? allevamento.IndirizzoAllevamento.Trim() : "",
+                                CAP = comune != null ? comune.CAP.Trim() : "",
                                 Comune = comune != null ? comune.Descrizione.Trim() : "",
                                 Provincia = comune != null ? comune.Provincia : "",
                                 Priorita = axg.Priorita,
