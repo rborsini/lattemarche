@@ -16,8 +16,17 @@
     string version = System.Configuration.ConfigurationManager.AppSettings["version"];
 }
 
+@{
+    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+}
+
+<input hidden id="canAdd" value="@canAdd" />
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
+
 <div id="app">
 </div>
 
-<script src="@Url.Content("~/dist/js/acquirentiIndex.js")?ver=@version"></script>
-<script src="@Url.Content("~/dist/js/chunk-vendors.js")?ver=@version"></script>
+<script src="@Url.Content("~/dist/acquirentiIndex.js")?ver=@version"></script>

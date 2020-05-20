@@ -1,19 +1,10 @@
 {
-  "name": "tai-vue",
+  "name": "lattemarche-vue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "cypress:open": "cypress open",
-    "cypress:run-local": "cypress run --env url=http://localhost:50510/,username=pippo,password=WeCode01",
-    "cypress:run-test": "cypress run --env url=http://192.168.0.73:83/,username=pippo,password=WeCode01",
     "build": "vue-cli-service build --mode development --no-clean",
-    "build:watch": "vue-cli-service build --mode development --no-clean --watch",
-
-    "build:all": "npm run build:articles-index && npm run build:attachments-categories-index",
-
-    "build:articles-index": "vue-cli-service build --dest ./../TAI.Web/dist/articles --target lib src/pages/articles/index.ts --name index",
-    "build:attachments-categories-index": "vue-cli-service build --dest ./../TAI.Web/dist/attachmentCategories --target lib src/pages/attachmentCategories/index.ts --name index"
+    "build:watch": "vue-cli-service build --mode development --no-clean --watch"
   },
   "dependencies": {
     "@types/bootstrap": "^4.0.0",
