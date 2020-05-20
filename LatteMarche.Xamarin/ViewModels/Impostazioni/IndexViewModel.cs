@@ -10,6 +10,7 @@ using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -90,12 +91,15 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
             try
             {
-                await Task.Run(() =>
-                {
+                //await Task.Run(() =>
+                //{
                     var stampanti = this.stampantiService.GetItemsAsync().Result;
                     this.Stampanti = new ObservableCollection<Stampante>(stampanti);
+
+                    this.StampanteSelezionata = stampanti.FirstOrDefault(s => s.Selezionata);
+
                     this.StampantiPresenti = this.Stampanti.Count > 0;
-                });
+                //});
 
             }
             catch (Exception exc)
