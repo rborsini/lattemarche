@@ -124,6 +124,7 @@ namespace LatteMarche.Tests.Services.Mobile
             var deviceInfoDto = Builder<DispositivoDto>
                 .CreateNew()
                     .With(d => d.IdTrasportatore = (int?)null)
+                    .With(d => d.IdAutocisterna = (int?)null)
                 .Build();
 
             deviceInfoDto = this.mobileService.Register(deviceInfoDto);
@@ -140,7 +141,7 @@ namespace LatteMarche.Tests.Services.Mobile
         [Test]
         public void MobileService_Download()
         {
-            var imei = "ABCD";
+            var id = "ABCD";
 
             // utente allevatore
             var allevatore = Builder<Utente>
@@ -198,15 +199,16 @@ namespace LatteMarche.Tests.Services.Mobile
 
             var deviceEntity = Builder<DispositivoMobile>
                 .CreateNew()
-                    .With(d => d.Id = imei)
+                    .With(d => d.Id = id)
                     .With(d => d.Attivo = true)
                     .With(d => d.IdTrasportatore = this.trasportatore.Id)
+                    .With(d => d.IdAutocisterna = (int?)null)
                 .Build();
 
             this.deviceRepository.Add(deviceEntity);
             this.uow.SaveChanges();
 
-            var localDb = this.mobileService.Download(imei);
+            var localDb = this.mobileService.Download(id);
             Assert.IsNotNull(localDb);
             Assert.IsNotNull(localDb.Trasportatore);
             Assert.AreEqual(1, localDb.Giri.Count);
@@ -230,7 +232,7 @@ namespace LatteMarche.Tests.Services.Mobile
             Assert.IsNotNull(localDb.Destinatari[0].CAP);
             Assert.IsNotNull(localDb.Giri[0].Allevamenti[0].CAP);
 
-            deviceEntity = this.deviceRepository.GetById(imei);
+            deviceEntity = this.deviceRepository.GetById(id);
             Assert.IsTrue(deviceEntity.DataUltimoDownload.HasValue);
 
         }
@@ -245,6 +247,7 @@ namespace LatteMarche.Tests.Services.Mobile
                     .With(d => d.Id = imei)
                     .With(d => d.Attivo = true)
                     .With(d => d.IdTrasportatore = this.trasportatore.Id)
+                    .With(d => d.IdAutocisterna = (int?)null)
                 .Build();
 
             this.deviceRepository.Add(deviceEntity);

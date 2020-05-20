@@ -12,7 +12,7 @@
 
                     <!-- IMEI -->
                     <div class="row form-group">
-                        <label class="col-3">IMEI</label>
+                        <label class="col-3">Id</label>
                         <div class="col-9">
                             <input type="text" class="form-control" v-model="dispositivo.Id" />
                         </div>
@@ -37,11 +37,27 @@
                                         :options="trasportatori"
                                         :value.sync="idTrasportatoreSelezionato"
                                         :value-field="'Id'"
-                                        :text-field="'NomeCompleto'" />                                
+                                        :text-field="'NomeCompleto'" 
+                                        v-on:value-changed="onTrasporatoreChanged()"
+                                        />                                
                             </div>
                         </div>                        
                     </div>
-                   
+
+                    <!-- Automezzo -->
+                    <div class="row form-group">
+                        <label class="col-3">Automezzo</label>
+                        <div class="col-9">
+                            <div class="form-group ">
+                                <select2 class="form-control"
+                                        :options="autocisterne.Items"
+                                        :value.sync="idAutocisternaSelezionata"
+                                        :value-field="'Value'"
+                                        :text-field="'Text'" />                                
+                            </div>
+                        </div>                        
+                    </div>                   
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
@@ -64,6 +80,7 @@
     import { DispositiviService } from "../../services/dispositivi.service";
     import { TrasportatoriService } from "../../services/trasportatori.service";
     import { Trasportatore } from "../../models/trasportatore.model";
+    import { DropdownService} from "../../services/dropdown.service";
 
 
     @Component({
@@ -78,22 +95,28 @@
         dispositivo!: Dispositivo;
 
         public trasportatori: Trasportatore[] = [];
+        public autocisterne: Dropdown = new Dropdown();
         public attivo: boolean = false;
         public idTrasportatoreSelezionato: number = 0;
+        public idAutocisternaSelezionata: number = 0;
 
         public dispositiviService: DispositiviService;
         public trasportatoriService: TrasportatoriService;    
+        public dropdownService: DropdownService;
 
         constructor() {
             super();
             this.dispositiviService = new DispositiviService();
             this.trasportatoriService = new TrasportatoriService();
+            this.dropdownService = new DropdownService();
         }
 
         @Watch('dispositivo')
         onDispositivoChanged(){
             this.attivo = this.dispositivo.Attivo;
             this.idTrasportatoreSelezionato = this.dispositivo.IdTrasportatore;
+            this.idAutocisternaSelezionata = this.dispositivo.IdAutocisterna;
+            this.loadAutocisterne(this.dispositivo.IdTrasportatore);
         }
 
         mounted() {
@@ -107,10 +130,29 @@
             $(this.$el).modal('show');
         }
 
+        public onTrasporatoreChanged() {
+
+            console.log("trasportatore changed");
+
+            this.loadAutocisterne(this.idTrasportatoreSelezionato);
+        }
+
+        private loadAutocisterne(idTrasportatore?: number) {
+
+            if(idTrasportatore) {
+                this.dropdownService.getAutocisterne(idTrasportatore)
+                    .then(response => {
+                        this.autocisterne = response.data;
+                    });
+            }
+
+        }
+
         public onSave() {
 
             this.dispositivo.Attivo = this.attivo;
             this.dispositivo.IdTrasportatore = this.idTrasportatoreSelezionato;
+            this.dispositivo.IdAutocisterna = this.idAutocisternaSelezionata;
 
             this.dispositiviService.update(this.dispositivo)
                 .then(response => {

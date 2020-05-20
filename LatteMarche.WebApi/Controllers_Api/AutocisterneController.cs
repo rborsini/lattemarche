@@ -45,6 +45,21 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(Dropdown), "Autocisterne", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown(int? idTrasportatore)
+        {
+            try
+            {
+                return Ok(this.autocisterneService.DropDown(idTrasportatore));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
+
         [ViewItem(nameof(Details), "Autocisterne", "Dettaglio")]
         [HttpGet]
         public IHttpActionResult Details(int id)

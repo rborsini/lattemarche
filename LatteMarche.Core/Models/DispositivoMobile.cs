@@ -55,5 +55,11 @@ namespace LatteMarche.Core.Models
 
         public virtual Utente Trasportatore { get; set; }
 
+        [ForeignKey(nameof(Autocisterna))]
+        [Column("ID_AUTOCISTERNA")]
+        public int? IdAutocisterna { get; set; }
+
+        public virtual Autocisterna Autocisterna { get; set; }
+
     }
 }

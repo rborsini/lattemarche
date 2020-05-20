@@ -73,6 +73,7 @@ namespace LatteMarche.Tests.Services.Dispositivi
                                     .CreateListOfSize(10)
                                         .All()
                                             .With(d => d.IdTrasportatore = (int?)null)
+                                            .With(d => d.IdAutocisterna = (int?)null)
                                     .Build();
 
             this.dispositiviRepository.Add(deviceEntities);

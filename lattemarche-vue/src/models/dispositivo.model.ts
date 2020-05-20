@@ -7,6 +7,8 @@ export class Dispositivo {
     public Lat: number = 0;
     public Lng: number = 0;
     public VersioneApp: string = "";
-    public IdTrasportatore: number = 0;
+    public IdTrasportatore: number = 0;    
     public Trasportatore_RagioneSociale: string = "";
+    public IdAutocisterna: number = 0;
+    public Autocisterna_Targa: string = "";
 }

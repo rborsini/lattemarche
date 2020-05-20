@@ -94,12 +94,12 @@ namespace LatteMarche.Application.Mobile.Services
         /// <summary>
         /// Scaricamento dati di anagrafica e lookup
         /// </summary>
-        /// <param name="imei"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public DownloadDto Download(string imei)
+        public DownloadDto Download(string id)
         {
             DownloadDto db = null;
-            var dispositivo = this.dispositiviRepository.GetById(imei);
+            var dispositivo = this.dispositiviRepository.GetById(id);
 
             if (dispositivo != null && dispositivo.Attivo)
             {
@@ -108,9 +108,10 @@ namespace LatteMarche.Application.Mobile.Services
                 if (dispositivo.IdTrasportatore.HasValue)
                 {
                     var idTrasportatore = dispositivo.IdTrasportatore.Value;
+                    var autocisterna = GetAutocisterna(dispositivo);
 
                     db.Trasportatore = Mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
-                    db.Autocisterna = Mapper.Map<AutocisternaDto>(this.autocisterneRepository.DbSet.FirstOrDefault(a => a.IdTrasportatore == idTrasportatore));
+                    db.Autocisterna = Mapper.Map<AutocisternaDto>(autocisterna);
                     db.Giri = Mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
 
                     foreach (var giro in db.Giri)
@@ -165,6 +166,14 @@ namespace LatteMarche.Application.Mobile.Services
             }
 
             return db;
+        }
+
+        private Autocisterna GetAutocisterna(DispositivoMobile dispositivo)
+        {
+            if(dispositivo.IdAutocisterna.HasValue)
+                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.Id == dispositivo.IdAutocisterna.Value);
+            else
+                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value);
         }
 
         /// <summary>

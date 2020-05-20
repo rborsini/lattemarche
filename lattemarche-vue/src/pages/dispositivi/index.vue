@@ -11,8 +11,9 @@
 
             <!-- Colonne -->
             <template slot="thead">
-                <th>IMEI</th>
+                <th>Id</th>
                 <th>Trasportatore</th>
+                <th>Automezzo</th>
                 <th>Attivo</th>
                 <th>Data registrazione</th>
                 <th>Data ultimo download</th>
@@ -93,6 +94,7 @@ import { Component, Vue } from "vue-property-decorator";
 
             options.columns.push({ data: "Id" });
             options.columns.push({ data: "Trasportatore_RagioneSociale" });
+            options.columns.push({ data: "Autocisterna_Targa" });
             options.columns.push({ data: "Attivo" });
             options.columns.push({ data: "DataRegistrazione" });
             options.columns.push({ data: "DataUltimoDownload" });

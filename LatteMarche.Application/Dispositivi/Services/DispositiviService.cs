@@ -39,6 +39,7 @@ namespace LatteMarche.Application.Dispositivi.Services
         {
             dbEntity.Attivo = viewEntity.Attivo;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
+            dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
 
             return dbEntity;
         }

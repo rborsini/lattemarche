@@ -24,6 +24,10 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public int? IdTrasportatore { get; set; }
 
+        public int? IdAutocisterna { get; set; }
+
+        public string Autocisterna_Targa { get; set; }
+
         public string Trasportatore_RagioneSociale { get; set; }
 
     }
