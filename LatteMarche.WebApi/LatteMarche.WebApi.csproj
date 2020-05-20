@@ -267,6 +267,8 @@
     <Content Include="dist\acquirentiIndex.js" />
     <Content Include="dist\allevamentiIndex.html" />
     <Content Include="dist\allevamentiIndex.js" />
+    <Content Include="dist\allevatoriIndex.html" />
+    <Content Include="dist\allevatoriIndex.js" />
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />
@@ -325,7 +327,6 @@
     <Content Include="Views\Autocisterne\Index.cshtml" />
     <Content Include="src\pages\autocisterne\edit.vue" />
     <Content Include="src\pages\allevamenti\edit.vue" />
-    <Content Include="Views\Allevatori\Index.cshtml" />
     <Content Include="src\pages\utenti\edit.vue" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.eot" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
@@ -368,7 +369,6 @@
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
     <TypeScriptCompile Include="src\pages\acquirenti\index.page.ts" />
-    <TypeScriptCompile Include="src\pages\allevatori\index.page.ts" />
     <TypeScriptCompile Include="src\pages\allevamenti\index.page.ts" />
     <TypeScriptCompile Include="src\pages\autocisterne\index.page.ts" />
     <TypeScriptCompile Include="src\pages\destinatari\index.page.ts" />
@@ -381,7 +381,6 @@
     <TypeScriptCompile Include="src\services\allevamenti.service.ts" />
     <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
     <TypeScriptCompile Include="src\services\acquirenti.service.ts" />
-    <TypeScriptCompile Include="src\services\allevatori.service.ts" />
     <Content Include="webpack.config.js" />
     <Content Include="Content\css\custom.scss" />
     <None Include="compilerconfig.json" />
@@ -428,7 +427,6 @@
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
-    <Compile Include="Controllers_Web\AllevatoriController.cs" />
     <Compile Include="Controllers_Web\AutocisterneController.cs" />
     <Compile Include="Controllers_Web\DispositiviController.cs" />
     <Compile Include="Controllers_Web\LaboratorioAnalisiController.cs" />
@@ -513,7 +511,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <TypeScriptCompile Include="src\models\allevatore.model.ts" />
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />
     <TypeScriptCompile Include="src\services\destinatari.service.ts" />
