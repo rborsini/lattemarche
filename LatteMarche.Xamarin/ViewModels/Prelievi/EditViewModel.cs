@@ -523,6 +523,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
+
             try
             {
                 Debug.WriteLine("Print Command");
@@ -566,6 +568,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
 
                 Analytics.TrackEvent("Stampa ricevuta raccolta");
                 SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
@@ -575,6 +578,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             catch (Exception exc)
             {
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
 
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);

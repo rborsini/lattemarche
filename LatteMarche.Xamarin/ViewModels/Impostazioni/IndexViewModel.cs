@@ -166,8 +166,12 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
-                this.StampantiPresenti = true;
+                
                 this.stampantiService.InsertOrUpdateAsync(stampante).Wait();
+
+                var stampanti = this.stampantiService.GetItemsAsync().Result;
+                this.Stampanti = new ObservableCollection<Stampante>(stampanti);
+                this.StampantiPresenti = this.Stampanti.Count > 0;
 
                 Analytics.TrackEvent("Stampante associata");
                 SentrySdk.CaptureMessage("Stampante associata", Sentry.Protocol.SentryLevel.Info);

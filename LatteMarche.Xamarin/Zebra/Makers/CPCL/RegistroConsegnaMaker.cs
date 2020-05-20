@@ -56,23 +56,23 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             // linea separatrice
             cmd += MakeLine(ref y);
 
-            // quota latte
-            cmd += MakerQuotaLatteSection(registroConsegna, ref y);
+            // progressivo conferimenti
+            cmd += MakerProgrConferimentiSection(registroConsegna, ref y);
 
             // linea separatrice
             cmd += MakeLine(ref y);
 
-            // ultima analisi
-            cmd += MakerUltimaAnalisiSection(registroConsegna, ref y);
+            //// ultima analisi
+            //cmd += MakerUltimaAnalisiSection(registroConsegna, ref y);
 
-            // linea separatrice
-            cmd += MakeLine(ref y);
+            //// linea separatrice
+            //cmd += MakeLine(ref y);
 
-            // informazioni
-            cmd += MakeInformazioniSection(registroConsegna, ref y);
+            //// informazioni
+            //cmd += MakeInformazioniSection(registroConsegna, ref y);
 
-            // linea separatrice
-            cmd += MakeLine(ref y);
+            //// linea separatrice
+            //cmd += MakeLine(ref y);
 
             // Firme
             cmd += MakeFirmeSection("Firma Produttore \\ Delegato", "Firma Trasportatore", ref y);
@@ -132,6 +132,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             var qtaLt = $"{registroConsegna.Quantita_lt:.0}";
 
             cmd += $"TEXT {p} {x} {y} {PadRight("Quantita' kg: ", colSxWidth)}{PadRight(qtaKg, colDxStart - colSxWidth)} Litri: {qtaLt} \r\n";
+            y += 1;
+            cmd += $"TEXT {p} {x} {y} {PadRight("Quantita' kg: ", colSxWidth)}{PadRight(qtaKg, colDxStart - colSxWidth)} Litri: {qtaLt} \r\n";
+
             y += lineSpacing;
 
             // Num Munte   -   Ora
@@ -145,7 +148,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             var temp = $"{registroConsegna.Temperatura:.0}";
             var tipoLatteText = $"{tipoLatte?.Codice} - {tipoLatte?.Descrizione}";
 
-            cmd += $"TEXT {p} {x} {y} {PadRight("Temp. : ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatteText} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("Temp. °C: ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatteText} \r\n";
 
             y += (lineSpacing * 2);
 
@@ -158,7 +161,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         /// <param name="registroConsegna"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        private string MakerQuotaLatteSection(RegistroConsegna registroConsegna, ref int y)
+        private string MakerProgrConferimentiSection(RegistroConsegna registroConsegna, ref int y)
         {
             var cmd = "";
 
@@ -166,29 +169,29 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             int colSxWidth = 25;
             int colDxStart = (WIDTH / 2);
 
-            // Quota latte      Analisi qualità:
-            cmd += $"TEXT {p} {x} {y} {PadRight("Quota latte", WIDTH - colDxStart)}Analisi Qualita': \r\n";
+            // Prog. conferimenti      Analisi qualità:
+            cmd += $"TEXT {p} {x} {y} {PadRight("Progr. conferimenti", WIDTH - colDxStart)}Analisi Qualita' \r\n";
             y += lineSpacing;
 
-            // Quantità Tct.    Grasso %
+            // Mensile:    Grasso %
             var tct = $"kg {registroConsegna.QuotaLatte_Qta_Tct}";
             var grasso = $"{registroConsegna.AnalisiQualita_Grasso}";
 
-            cmd += $"TEXT {p} {x} {y} {PadRight("Quantita' Tct.: ", colSxWidth)}{PadRight(tct, colDxStart - colSxWidth)} Grasso % {grasso} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("Mensile: ", colSxWidth)}{PadRight(tct, colDxStart - colSxWidth)} Grasso % {grasso} \r\n";
             y += lineSpacing;
 
-            // Prod. Rett. /%Gr)    Proteine % p/v
+            // Annuale    Proteine % p/v
             var prodRett = $"kg {registroConsegna.QuotaLatte_Prod_Rett}";
             var proteine = $"{registroConsegna.AnalisiQualita_Proteine}";
 
-            cmd += $"TEXT {p} {x} {y} {PadRight("Prod.Rett. (%Gr): ", colSxWidth)}{PadRight(prodRett, colDxStart - colSxWidth)} Proteine % {proteine} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("Annuale: ", colSxWidth)}{PadRight(prodRett, colDxStart - colSxWidth)} Proteine % {proteine} \r\n";
             y += lineSpacing;
 
-            //// Quota res.:          C.B.T. ufc/ml
+            //          C.B.T. ufc/ml
             var quotaRes = $"kg {registroConsegna.QuotaLatte_Qta_Res}";
             var cbt = $"{registroConsegna.AnalisiQualita_CBT_Ufc}";
 
-            cmd += $"TEXT {p} {x} {y} {PadRight("Quota res.: ", colSxWidth)}{PadRight(quotaRes, colDxStart - colSxWidth)} C.B.T. ufc/ml % {cbt} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("", colSxWidth)}{PadRight(quotaRes, colDxStart - colSxWidth)} C.B.T. ufc/ml % {cbt} \r\n";
             y += lineSpacing;
 
             ////                      C.S./ml:

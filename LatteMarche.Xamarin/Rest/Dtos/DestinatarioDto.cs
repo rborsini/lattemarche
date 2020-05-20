@@ -9,6 +9,7 @@ namespace LatteMarche.Xamarin.Rest.Dtos
         public int Id { get; set; }
         public string RagioneSociale { get; set; }
         public string P_IVA { get; set; }
+        public string CAP { get; set; }
         public string Indirizzo { get; set; }
         public string Comune { get; set; }
         public string Provincia { get; set; }

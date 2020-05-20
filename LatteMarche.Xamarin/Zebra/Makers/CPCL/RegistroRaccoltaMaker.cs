@@ -50,11 +50,11 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             // linea separatrice
             cmd += MakeLine(ref y);
 
-            // scomparto
-            cmd += MakeScompartoSection(registroRaccolta, ref y);
+            //// scomparto
+            //cmd += MakeScompartoSection(registroRaccolta, ref y);
 
-            // linea separatrice
-            cmd += MakeLine(ref y);
+            //// linea separatrice
+            //cmd += MakeLine(ref y);
 
             // tabella scomparti
             cmd += MakeTabellaSection(registroRaccolta, ref y);
@@ -153,11 +153,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
                 var ragioneSociale = $"{allevamento?.RagioneSociale}";
                 var pIvaProv = $"{allevamento?.P_IVA}-{allevamento?.Provincia}";
                 var tipo = $"{tipoLatte?.Codice}";
-                var qta = $"{prelievo.Quantita_kg}";
+                var qta = $"{prelievo.Quantita_kg:#}";
                 var ora = $"{prelievo.DataPrelievo:HH:mm}";
                 var data = $"{prelievo.DataPrelievo:dd/MM/yyyy}";
 
                 qtaTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
+
+                var aa = PadRight(scomparto, 7, ' ');
 
                 cmd += $"TEXT {p} {x} {y} {PadRight(scomparto, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(qta, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
@@ -167,7 +169,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // Totali
             y += 40;
-            cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaTot.ToString("#0.00"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaTot.ToString("#"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
             y += 40;
 

@@ -14,6 +14,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
         public string Titolo { get; set; }
         public string SottoTitolo => "L.119/03-D.M. 31/07/03, art.12 - Documentazione raccolta latte - Sistema informatizzato di registrazione - Autorizzazione Regione Marche DDs 512/SAR";
 
+        public string LatteCrudoConforme => "LATTE CRUDO CONFORME AL REG.CE 853/04";
+
         public Acquirente Acquirente { get; set; }
 
         public Destinatario Destinatario { get; set; }

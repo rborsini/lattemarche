@@ -168,6 +168,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
+
             try
             {
                 Debug.WriteLine("Print Command");
@@ -184,6 +186,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     printer.MacAddress = stampante.MacAddress;
 
                     this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
+                    this.giro.Prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result.ToList();
                     var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
 
                     var registroRaccolta = new RegistroRaccolta();
@@ -214,6 +217,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
 
                 Analytics.TrackEvent("Stampa ricevuta consegna");
                 SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
@@ -223,6 +227,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             catch (Exception exc)
             {
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
 
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);

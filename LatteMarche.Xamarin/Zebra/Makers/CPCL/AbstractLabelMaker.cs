@@ -20,6 +20,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         protected int x = 30;                   // margine sx singola riga
         protected string h1 = "7 1";            // H1 => font 7 size 1
         protected string p = "0 2";             // P  => font 0 size 2
+        protected string b = "0 3";             // P  => font 0 size 3
 
         /// <summary>
         /// Generazione comando CPCL
@@ -188,6 +189,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             y += 10;
 
+            cmd += $"TEXT {p} {x} {y} {registro.LatteCrudoConforme} \r\n";
+            y += 1;
+            cmd += $"TEXT {p} {x} {y} {registro.LatteCrudoConforme} \r\n";
+
+
+            y += 25;
+            y += 10;
+
             return cmd;
         }
 
@@ -263,9 +272,11 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         /// <returns></returns>
         protected string PadRight(string source, int length, char paddingChar = ' ')
         {
+            source = source.Replace("à", "a'");
+
             var result = String.Empty;
 
-            if (source.Length > length)
+            if (source.Length >= length)
                 result = source.Substring(0, length);
 
             if (source.Length < length)
