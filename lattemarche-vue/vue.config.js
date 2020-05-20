@@ -19,7 +19,13 @@ module.exports = {
         },
         dispositiviIndex: {            
             entry: 'src/pages/dispositivi/index.ts'
-        }                
+        },
+        prelieviLatteIndex: {            
+            entry: 'src/pages/prelieviLatte/index.ts'
+        },
+        ruoliIndex: {            
+            entry: 'src/pages/ruoli/index.ts'
+        }                                      
     }
 
 

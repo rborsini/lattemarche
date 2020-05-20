@@ -48,163 +48,162 @@
 
 <script lang="ts">
 
-import { Component, Vue } from "vue-property-decorator";
+    import { Component, Vue } from "vue-property-decorator";
 
-import DataTable from "../../components/dataTable.vue";
-import Select2 from "../../components/select2.vue";
-import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
-import NotificationDialog from "../../components/notificationDialog.vue";
-import ConfirmDialog from "../../components/confirmDialog.vue";
+    import DataTable from "../../components/dataTable.vue";
+    import Select2 from "../../components/select2.vue";
+    import EditazioneAcquirenteModal from "../acquirenti/edit.vue";
+    import NotificationDialog from "../../components/notificationDialog.vue";
+    import ConfirmDialog from "../../components/confirmDialog.vue";
 
-import { Acquirente } from "../../models/acquirente.model";
-import { AcquirentiService } from "../../services/acquirenti.service";
-
-
-declare module 'vue/types/vue' {
-    interface Vue {
-        open(): void
-        openAcquirente(acqu: Acquirente): void
-        close(): void
-    }
-}
-
-@Component({
-    components: {
-        Select2,
-        ConfirmDialog,
-        NotificationDialog,
-        EditazioneAcquirenteModal,
-        DataTable
-    }
-})
+    import { Acquirente } from "../../models/acquirente.model";
+    import { AcquirentiService } from "../../services/acquirenti.service";
 
 
-export default class AcquirentiIndexPage extends Vue {
-
-
-    $refs: any = {
-        savedDialog: Vue,
-        removedDialog: Vue,
-        editazioneAcquirenteModal: Vue,
-        confirmDeleteDialog: Vue
+    declare module 'vue/types/vue' {
+        interface Vue {
+            open(): void
+            openAcquirente(acqu: Acquirente): void
+            close(): void
+        }
     }
 
-    private acquirentiService: AcquirentiService;
-    private acquirente: Acquirente;
-    private idAcquirenteDaRimuovere!: number;
+    @Component({
+        components: {
+            Select2,
+            ConfirmDialog,
+            NotificationDialog,
+            EditazioneAcquirenteModal,
+            DataTable
+        }
+    })
 
-    public tableOptions: any = {};
-    public acquirenti: Acquirente[] = [];
-    public canAdd: boolean = false;
-    public canEdit: boolean = false;
-    public canRemove: boolean = false;
 
-    constructor() {
-        super();
+    export default class AcquirentiIndexPage extends Vue {
 
-        this.acquirentiService = new AcquirentiService();
-        this.acquirente = new Acquirente();
 
-        this.canAdd = $('#canAdd').val() == "true";
-        this.canEdit = $('#canEdit').val() == "true";
-        this.canRemove = $('#canRemove').val() == "true";
-    }
+        $refs: any = {
+            savedDialog: Vue,
+            removedDialog: Vue,
+            editazioneAcquirenteModal: Vue,
+            confirmDeleteDialog: Vue
+        }
 
-    public mounted() {
-        this.initTable();
+        private acquirentiService: AcquirentiService;
+        private acquirente: Acquirente;
+        private idAcquirenteDaRimuovere!: number;
 
-        this.acquirentiService.index()
-            .then(response => {
-                this.acquirenti = response.data;
-            });
-    }
+        public tableOptions: any = {};
+        public acquirenti: Acquirente[] = [];
+        public canAdd: boolean = false;
+        public canEdit: boolean = false;
+        public canRemove: boolean = false;
 
-    // Evento fine generazione tabella
-    public onDataLoaded() {
+        constructor() {
+            super();
 
-        $('.edit').click((event) => {
+            this.acquirentiService = new AcquirentiService();
+            this.acquirente = new Acquirente();
 
-            var element = $(event.currentTarget);
-            var rowId = $(element).data("row-id");
+            this.canAdd = $('#canAdd').val() == "true";
+            this.canEdit = $('#canEdit').val() == "true";
+            this.canRemove = $('#canRemove').val() == "true";
+        }
 
-            this.acquirentiService.details(rowId)
+        public mounted() {
+            this.initTable();
+
+            this.acquirentiService.index()
                 .then(response => {
-                    this.acquirente = response.data;
-                    this.$refs.editazioneAcquirenteModal.openAcquirente(this.acquirente);
+                    this.acquirenti = response.data;
                 });
+        }
 
-        });
+        // Evento fine generazione tabella
+        public onDataLoaded() {
 
-        $('.delete').click((event) => {
+            $('.edit').click((event) => {
 
-            var element = $(event.currentTarget);
-            this.idAcquirenteDaRimuovere = $(element).data("row-id");
+                var element = $(event.currentTarget);
+                var rowId = $(element).data("row-id");
 
-            this.$refs.confirmDeleteDialog.open();
+                this.acquirentiService.details(rowId)
+                    .then(response => {
+                        this.acquirente = response.data;
+                        this.$refs.editazioneAcquirenteModal.openAcquirente(this.acquirente);
+                    });
 
-        });
-
-    }
-
-    // nuovo acquirente
-    public onAdd() {
-
-        this.acquirente = new Acquirente();
-        this.$refs.editazioneAcquirenteModal.open();
-
-    }
-
-    // rimozione acquirente
-    public onRemove() {
-
-        this.acquirentiService.delete(this.idAcquirenteDaRimuovere)
-            .then(response => {
-                this.$refs.removedDialog.open();
             });
-    }
 
-    // inizializzazione tabella
-    private initTable(): void {
+            $('.delete').click((event) => {
 
-        var options: any = {};
+                var element = $(event.currentTarget);
+                this.idAcquirenteDaRimuovere = $(element).data("row-id");
 
-        options.columns = [];
+                this.$refs.confirmDeleteDialog.open();
 
-        options.columns.push({ data: "Piva" });
-        options.columns.push({ data: "RagioneSociale" });
-
-        var ce = this.canEdit;
-        var cr = this.canRemove;
-
-        if (ce || cr) {
-
-            options.columns.push({
-                render: function (data: any, type: any, row: any) {
-
-                    var html = '<div class="text-center">';
-
-                    if (ce)
-                        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
-
-                    if (cr)
-                        html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
-
-                    html += '</div>';
-
-                    return html;
-                },
-                className: "edit-column",
-                orderable: false
             });
 
         }
 
-        this.tableOptions = options;
+        // nuovo acquirente
+        public onAdd() {
+
+            this.acquirente = new Acquirente();
+            this.$refs.editazioneAcquirenteModal.open();
+
+        }
+
+        // rimozione acquirente
+        public onRemove() {
+
+            this.acquirentiService.delete(this.idAcquirenteDaRimuovere)
+                .then(response => {
+                    this.$refs.removedDialog.open();
+                });
+        }
+
+        // inizializzazione tabella
+        private initTable(): void {
+
+            var options: any = {};
+
+            options.columns = [];
+
+            options.columns.push({ data: "Piva" });
+            options.columns.push({ data: "RagioneSociale" });
+
+            var ce = this.canEdit;
+            var cr = this.canRemove;
+
+            if (ce || cr) {
+
+                options.columns.push({
+                    render: function (data: any, type: any, row: any) {
+
+                        var html = '<div class="text-center">';
+
+                        if (ce)
+                            html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+
+                        if (cr)
+                            html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+
+                        html += '</div>';
+
+                        return html;
+                    },
+                    className: "edit-column",
+                    orderable: false
+                });
+
+            }
+
+            this.tableOptions = options;
+        }
+
     }
 
-}
 
-let page = new AcquirentiIndexPage();
-Vue.config.devtools = true;
 
 </script>

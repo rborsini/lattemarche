@@ -263,33 +263,6 @@
     <Content Include="Content\plugins\select2\css\select2.min.css" />
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
-    <Content Include="dist\acquirentiIndex.html" />
-    <Content Include="dist\acquirentiIndex.js" />
-    <Content Include="dist\allevamentiIndex.html" />
-    <Content Include="dist\allevamentiIndex.js" />
-    <Content Include="dist\analisiLatteIndex.html" />
-    <Content Include="dist\analisiLatteIndex.js" />
-    <Content Include="dist\autocisterneIndex.html" />
-    <Content Include="dist\autocisterneIndex.js" />
-    <Content Include="dist\css\bootstrap-datepicker.min.css" />
-    <Content Include="dist\css\custom.css" />
-    <Content Include="dist\css\select2.min.css" />
-    <Content Include="dist\destinatariIndex.html" />
-    <Content Include="dist\destinatariIndex.js" />
-    <Content Include="dist\dispositiviIndex.html" />
-    <Content Include="dist\dispositiviIndex.js" />
-    <Content Include="dist\favicon.ico" />
-    <Content Include="dist\plugins\datatables\css\dataTable.b4.css" />
-    <Content Include="dist\plugins\datatables\images\sort_asc.png" />
-    <Content Include="dist\plugins\datatables\images\sort_asc_disabled.png" />
-    <Content Include="dist\plugins\datatables\images\sort_both.png" />
-    <Content Include="dist\plugins\datatables\images\sort_desc.png" />
-    <Content Include="dist\plugins\datatables\images\sort_desc_disabled.png" />
-    <Content Include="dist\plugins\fontawesome\css\all.min.css" />
-    <Content Include="dist\plugins\fontawesome\js\all.min.js" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.svg" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.svg" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.svg" />
     <Content Include="favicon.ico" />
     <Content Include="src\pages\azioni\index.page.js" />
     <TypeScriptCompile Include="src\models\analisi.model.ts" />
@@ -309,7 +282,6 @@
     <Content Include="Views\Ruoli\Edit.cshtml" />
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="src\pages\prelievi-latte\edit.vue" />
     <Content Include="src\components\common\timeEditor.vue" />
     <Content Include="src\components\common\dataTable.vue" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.eot" />
@@ -327,18 +299,6 @@
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <Content Include="Views\Autocisterne\Index.cshtml" />
     <Content Include="src\pages\utenti\edit.vue" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="lattemarche - PROD.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
@@ -367,7 +327,6 @@
     <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
     <TypeScriptCompile Include="src\models\ruolo.model.ts" />
     <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
-    <TypeScriptCompile Include="src\pages\prelievi-latte\index.page.ts" />
     <None Include="src\pages\tipi-latte\edit.vue" />
     <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
     <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
@@ -502,7 +461,9 @@
     <Content Include="Views\Trasportatori\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="dist\" />
+  </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\models\utente.model.ts" />
     <TypeScriptCompile Include="src\services\comuni.service.ts" />

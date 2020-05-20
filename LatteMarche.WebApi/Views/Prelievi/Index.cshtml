@@ -12,207 +12,31 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="index-prelievi-latte-page">
+@{
+    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+    string canSearchAllevatore = Convert.ToBoolean(ViewBag.Tokens["RicercaAllevatore"]) ? "true" : "false";
+    string canSearchTrasportatore = Convert.ToBoolean(ViewBag.Tokens["RicercaTrasportatore"]) ? "true" : "false";
+    string canSearchAcquirente = Convert.ToBoolean(ViewBag.Tokens["RicercaAcquirente"]) ? "true" : "false";
+    string canSearchDestinatario = Convert.ToBoolean(ViewBag.Tokens["RicercaDestinatario"]) ? "true" : "false";
 
-    @{
-        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
-        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
-        string canSearchAllevatore = Convert.ToBoolean(ViewBag.Tokens["RicercaAllevatore"]) ? "true" : "false";
-        string canSearchTrasportatore = Convert.ToBoolean(ViewBag.Tokens["RicercaTrasportatore"]) ? "true" : "false";
-        string canSearchAcquirente = Convert.ToBoolean(ViewBag.Tokens["RicercaAcquirente"]) ? "true" : "false";
-        string canSearchDestinatario = Convert.ToBoolean(ViewBag.Tokens["RicercaDestinatario"]) ? "true" : "false";
+}
 
-    }
+<input hidden id="canAdd" value="@canAdd" />
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
+<input hidden id="canSearchAllevatore" value="@canSearchAllevatore" />
+<input hidden id="canSearchTrasportatore" value="@canSearchTrasportatore" />
+<input hidden id="canSearchAcquirente" value="@canSearchAcquirente" />
+<input hidden id="canSearchDestinatario" value="@canSearchDestinatario" />
 
-    <input hidden id="canAdd" value="@canAdd" />
-    <input hidden id="canEdit" value="@canEdit" />
-    <input hidden id="canRemove" value="@canRemove" />
-    <input hidden id="canSearchAllevatore" value="@canSearchAllevatore" />
-    <input hidden id="canSearchTrasportatore" value="@canSearchTrasportatore" />
-    <input hidden id="canSearchAcquirente" value="@canSearchAcquirente" />
-    <input hidden id="canSearchDestinatario" value="@canSearchDestinatario" />
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
 
-    <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal ref="editazionePrelievoModal"
-                               :prelievo-latte="prelievoSelezionato"
-                               v-on:salvato="$refs.savedDialog.open()"></editazione-prelievo-modal>
-
-
-    <!-- Pannello Salvataggio prelievo-->
-    <notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Il prelievo è stato salvato correttamente'"
-                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
-
-    <!-- Pannello notifica rimozione -->
-    <notification-dialog ref="removedDialog"
-                         :title="'Conferma rimozione'"
-                         :message="'Prelievo rimosso correttamente'"
-                         v-on:ok="window.location = '/Prelievi'"></notification-dialog>
-
-    <!-- Pannello modale conferma eliminazione -->
-    <confirm-dialog ref="confirmDeleteDialog"
-                    :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>
-
-
-    <!-- Box ricerca -->
-    <div class="jumbotron">
-
-        <!-- Campi ricerca -->
-        <!-- Allevatore / dal / al -->
-
-        <div class="row pt-1">
-
-            <label class="col-1" v-if="canSearchAllevatore">Allevatore:</label>
-
-            <div class="col-3" v-if="canSearchAllevatore">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="allevatori"
-                         :value.sync="idAllevatoreSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'RagioneSociale'" />
-            </div>
-
-            <label class="col-1">Dal:</label>
-
-            <div class="col-3">
-                <datepicker class="form-control" :value.sync="dal" />
-            </div>
-
-            <label class="col-1">Al:</label>
-
-            <div class="col-3">
-                <datepicker class="form-control" :value.sync="al" />
-            </div>
-
-        </div>
-
-        <!-- Trasportatore / Acquirente / Destinatario -->
-
-        <div class="row pt-1" v-if="canSearchTrasportatore || canSearchAcquirente || canSearchDestinatario">
-
-            <label class="col-1" v-if="canSearchTrasportatore">Trasportatore:</label>
-
-            <div class="col-3" v-if="canSearchTrasportatore">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="trasportatore"
-                         :value.sync="idTrasportatoreSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'Cognome'" />
-            </div>
-
-            <label class="col-1" v-if="canSearchAcquirente">Acquirente:</label>
-
-            <div class="col-3" v-if="canSearchAcquirente">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="acquirente"
-                         :value.sync="idAcquirenteSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'RagioneSociale'" />
-            </div>
-
-            <label class="col-1" v-if="canSearchDestinatario">Destinatario:</label>
-
-            <div class="col-3" v-if="canSearchDestinatario">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="destinatario"
-                         :value.sync="idDestinatarioSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'RagioneSociale'" />
-            </div>
-
-        </div>
-
-        <div class="row pt-1">
-
-            <label class="col-1">Tipo latte:</label>
-
-            <div class="col-3">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="tipiLatte"
-                         :value.sync="idTipoLatteSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'Descrizione'" />
-            </div>
-
-            @*<label class="col-1">Totali allevatore:</label>
-
-            <div class="col-3">
-                <input type="checkbox" value="totali" />
-            </div>*@
-
-        </div>
-
-        <!-- Bottoni di ricerca -->
-
-        <div class="row pt-1">
-
-            <div class="col-12">
-                <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
-                <button v-on:click="onAnnullaClick" class="float-right btn btn-primary mr-2" href="#" role="button">Annulla</button>
-            </div>
-
-        </div>
-
-
-    </div>
-
-    <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="prelievi" v-on:data-loaded="onDataLoaded">
-
-        <!-- Toolbox -->
-        <template slot="toolbox">
-            <div class="toolbox">
-                <a download v-bind:href="'/prelievi/excel?idAllevamento=' + idAllevatoreSelezionato + '&idTrasportatore=' + idTrasportatoreSelezionato + '&idAcquirente=' + idAcquirenteSelezionato + '&idDestinatario=' + idDestinatarioSelezionato + '&dal=' + dal + '&al=' + al" v-on:click="onExportClick" class="float-right btn btn-primary">Esporta excel</a>
-                <button v-if="canAdd" class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
-            </div>
-        </template>
-
-        <!-- Colonne -->
-        <template slot="thead">
-            <th>Allevamento</th>
-            <th>Data prelievo</th>
-            <th>Data consegna</th>
-            <th>Ultima mungitura</th>
-            <th>Quant. Kg</th>
-            <th>Quant. lt</th>
-            <th>Temp. C°</th>
-            <th>Trasportatore</th>
-            <th>Acquirente</th>
-            <th>Destinatario</th>
-            <th>Tipo Latte</th>
-            <th v-if="canEdit || canRemove"></th>
-        </template>
-
-        <!-- foot -->
-        <template slot="tfoot">
-            <th colspan="4" style="text-align:right">Totale:</th>
-            <th>{{totale_prelievi_kg}} kg</th>
-            <th>{{totale_prelievi_lt}} lt</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th v-if="canEdit || canRemove"></th>
-        </template>
-
-    </data-table>
-
+<div id="app">
 </div>
 
-<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-<script src="~/Content/plugins/datatables/dataTables.rowGroup.min.js"></script>
-
-<script type="application/javascript" src="~/build/prelievi_latte_index_page.js"></script>
+<script src="@Url.Content("~/dist/prelieviLatteIndex.js")?ver=@version"></script>
 
