@@ -7,8 +7,6 @@ using LatteMarche.Application.Allevamenti.Services;
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Trasportatori.Services;
 using LatteMarche.Application.Trasportatori.Interfaces;
-using LatteMarche.Application.Documenti.Interfaces;
-using LatteMarche.Application.Documenti.Services;
 using LatteMarche.Application.Acquirenti.Services;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Destinatari.Services;
@@ -65,7 +63,6 @@ namespace LatteMarche.Application
             RegisterService<ComuniService, IComuniService>(builder);
             RegisterService<DestinatariService, IDestinatariService>(builder);
             RegisterService<DispositiviService, IDispositiviService>(builder);
-            RegisterService<DocumentiService, IDocumentiService>(builder);
             RegisterService<GiriService, IGiriService>(builder);
             RegisterService<LaboratoriAnalisiService, ILaboratoriAnalisiService>(builder);
             RegisterService<LogsService, ILogsService>(builder);

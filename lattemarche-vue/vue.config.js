@@ -7,7 +7,19 @@ module.exports = {
         },
         allevamentiIndex: {            
             entry: 'src/pages/allevamenti/index.ts'
-        }
+        },
+        analisiLatteIndex: {            
+            entry: 'src/pages/analisiLatte/index.ts'
+        },
+        autocisterneIndex: {            
+            entry: 'src/pages/autocisterne/index.ts'
+        },
+        destinatariIndex: {            
+            entry: 'src/pages/destinatari/index.ts'
+        },
+        dispositiviIndex: {            
+            entry: 'src/pages/dispositivi/index.ts'
+        }                
     }
 
 
