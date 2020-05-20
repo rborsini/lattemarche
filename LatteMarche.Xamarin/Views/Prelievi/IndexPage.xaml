@@ -60,7 +60,7 @@
                                                 <ColumnDefinition Width="10*" />
                                             </Grid.ColumnDefinitions>
                                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
-                                                <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
+                                                <Label Text="{Binding Titolo}" FontSize="Medium" LineBreakMode="TailTruncation" Margin="0,0,0,0" TextColor="#000"/>
                                                 <Label Text="{Binding DataPrelievo}" TextColor="#AAA" FontSize="Small" Margin="0,0,0,10" />
                                             </StackLayout>
                                             <material:MaterialMenuButton IsVisible="{ Binding Source={x:Reference PrelieviIndexPage}, Path=BindingContext.IsEditable }" Grid.Row="0" Grid.Column="1" Image="icon_more.png" TintColor="Black" ButtonType="Text" CornerRadius="24" Choices="{Binding Actions }" Command="{ Binding MenuCommand }" />

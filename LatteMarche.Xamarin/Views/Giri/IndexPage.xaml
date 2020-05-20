@@ -55,7 +55,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
-                                                <Label Text="{Binding Titolo}" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
+                                                <Label Text="{Binding Titolo}" LineBreakMode="TailTruncation" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
                                                 <Label Text="{Binding DataCreazione}" TextColor="#AAA" FontSize="Small" Margin="0,0,0,10" />
                                             </StackLayout>
                                             <material:MaterialMenuButton Grid.Row="0" Grid.Column="1" Image="icon_more.png" TintColor="Black" ButtonType="Text" CornerRadius="24" Choices="{ Binding Actions }" Command="{ Binding MenuCommand }" />
