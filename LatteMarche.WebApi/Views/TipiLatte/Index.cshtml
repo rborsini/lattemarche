@@ -12,66 +12,26 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="tipilatte-page" class="container-fluid p-0">
+@{
+    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+}
 
-    @{
-        string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-        string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
-        string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
-    }
+<input hidden id="canAdd" value="@canAdd" />
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
 
-    <input hidden id="canAdd" value="@canAdd" />
-    <input hidden id="canEdit" value="@canEdit" />
-    <input hidden id="canRemove" value="@canRemove" />
 
-    <!-- Pannello editazione dettaglio -->
-    <editazione-tipo-latte-modal ref="editazioneTipoLatteModal"
-                                   :tipo-latte="tipoLatte"
-                                   v-on:salvato="$refs.savedDialog.open()"></editazione-tipo-latte-modal>
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
 
-    <!-- Pannello notifica salvatagggio -->
-    <notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Tipo latte salvato correttamente'"
-                         v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
 
-    <!-- Pannello notifica rimozione -->
-    <notification-dialog ref="removedDialog"
-                         :title="'Conferma rimozione'"
-                         :message="'Tipo latte rimosso correttamente'"
-                         v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
-
-    <!-- Pannello modale conferma eliminazione -->
-    <confirm-dialog ref="confirmDeleteDialog"
-                    :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di voler rimuovere il tipo latte selezionato?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>
-
-    <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="tipiLatte" v-on:data-loaded="onDataLoaded">
-
-        <!-- Toolbox -->
-        <template slot="toolbox" v-if="canAdd">
-            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
-        </template>
-
-        <!-- Colonne -->
-        <template slot="thead">
-            <th>#</th>
-            <th>Descrizione</th>
-            <th>Sigla</th>
-            <th>Fattore conversione LT -> KG</th>
-            <th v-if="canEdit || canRemove"></th>
-        </template>
-
-    </data-table>
+<div id="app">
 </div>
 
-<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-
-<script type="application/javascript" src="~/build/tipi_latte_index_page.js"></script>
+<script src="@Url.Content("~/dist/tipiLatteIndex.js")?ver=@version"></script>
 
 
 

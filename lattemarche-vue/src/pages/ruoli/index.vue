@@ -86,7 +86,7 @@
 
                     var html = '<div class="text-center">';
 
-                    html += '<a class="edit" title="modifica" style="cursor: pointer;" ><i class="far fa-edit"></i></a>';                    
+                    html += '<a class="edit" title="modifica" style="cursor: pointer;" href="/ruoli/edit?id=' + row.Id + '\" ><i class="far fa-edit"></i></a>';                    
 
                     html += '</div>';
 

@@ -25,7 +25,22 @@ module.exports = {
         },
         ruoliIndex: {            
             entry: 'src/pages/ruoli/index.ts'
-        }                                      
+        },
+        ruoliNew: {            
+            entry: 'src/pages/ruoli/new.ts'
+        },
+        ruoliEdit: {            
+            entry: 'src/pages/ruoli/edit.ts'
+        },
+        tipiLatteIndex: {            
+            entry: 'src/pages/tipiLatte/index.ts'
+        },    
+        trasportatoriIndex: {            
+            entry: 'src/pages/trasportatori/index.ts'
+        },                                                               
+        utentiIndex: {            
+            entry: 'src/pages/utenti/index.ts'
+        },                 
     }
 
 

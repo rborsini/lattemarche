@@ -220,22 +220,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="build\acquirenti_index_page.js" />
-    <Content Include="build\allevamenti_index_page.js" />
-    <Content Include="build\allevatori_index_page.js" />
-    <Content Include="build\analisi_latte_index_page.js" />
-    <Content Include="build\autocisterne_index_page.js" />
-    <Content Include="build\destinatari_index_page.js" />
-    <Content Include="build\dispositivi_index_page.js" />
-    <Content Include="build\prelievi_latte_edit.js" />
-    <Content Include="build\prelievi_latte_index_page.js" />
-    <Content Include="build\ruoli_edit_page.js" />
-    <Content Include="build\ruoli_new_page.js" />
-    <Content Include="build\tipilatte_edit_page.js" />
-    <Content Include="build\tipi_latte_index_page.js" />
-    <Content Include="build\trasportatori_edit_page.js" />
-    <Content Include="build\utenti_edit_page.js" />
-    <Content Include="build\utenti_index_page.js" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\custom.min.css" />
     <Content Include="Content\img\hero-cow.jpeg" />
@@ -263,13 +247,46 @@
     <Content Include="Content\plugins\select2\css\select2.min.css" />
     <Content Include="Content\plugins\select2\it.js" />
     <Content Include="Content\plugins\select2\select2.full.min.js" />
+    <Content Include="dist\acquirentiIndex.html" />
+    <Content Include="dist\acquirentiIndex.js" />
+    <Content Include="dist\allevamentiIndex.html" />
+    <Content Include="dist\allevamentiIndex.js" />
+    <Content Include="dist\analisiLatteIndex.html" />
+    <Content Include="dist\analisiLatteIndex.js" />
+    <Content Include="dist\autocisterneIndex.html" />
+    <Content Include="dist\autocisterneIndex.js" />
+    <Content Include="dist\css\bootstrap-datepicker.min.css" />
+    <Content Include="dist\css\custom.css" />
+    <Content Include="dist\css\select2.min.css" />
+    <Content Include="dist\destinatariIndex.html" />
+    <Content Include="dist\destinatariIndex.js" />
+    <Content Include="dist\dispositiviIndex.html" />
+    <Content Include="dist\dispositiviIndex.js" />
+    <Content Include="dist\favicon.ico" />
+    <Content Include="dist\plugins\datatables\css\dataTable.b4.css" />
+    <Content Include="dist\plugins\datatables\images\sort_asc.png" />
+    <Content Include="dist\plugins\datatables\images\sort_asc_disabled.png" />
+    <Content Include="dist\plugins\datatables\images\sort_both.png" />
+    <Content Include="dist\plugins\datatables\images\sort_desc.png" />
+    <Content Include="dist\plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="dist\plugins\fontawesome\css\all.min.css" />
+    <Content Include="dist\plugins\fontawesome\js\all.min.js" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.svg" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.svg" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="dist\prelieviLatteIndex.html" />
+    <Content Include="dist\prelieviLatteIndex.js" />
+    <Content Include="dist\ruoliEdit.html" />
+    <Content Include="dist\ruoliEdit.js" />
+    <Content Include="dist\ruoliIndex.html" />
+    <Content Include="dist\ruoliIndex.js" />
+    <Content Include="dist\ruoliNew.html" />
+    <Content Include="dist\ruoliNew.js" />
+    <Content Include="dist\tipiLatteIndex.html" />
+    <Content Include="dist\tipiLatteIndex.js" />
+    <Content Include="dist\trasportatoriIndex.html" />
+    <Content Include="dist\trasportatoriIndex.js" />
     <Content Include="favicon.ico" />
-    <Content Include="src\pages\azioni\index.page.js" />
-    <TypeScriptCompile Include="src\models\analisi.model.ts" />
-    <TypeScriptCompile Include="src\models\dispositivo.model.ts" />
-    <TypeScriptCompile Include="src\pages\tipi-latte\index.page.ts" />
-    <Content Include="src\pages\ruoli\index.page.js" />
-    <TypeScriptCompile Include="src\pages\utenti\index.page.ts" />
     <Content Include="Views\Utenti\Edit.cshtml" />
     <Content Include="package-lock.json" />
     <Content Include="Views\Acquirenti\Index.cshtml" />
@@ -281,9 +298,6 @@
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
     <Content Include="Views\Ruoli\Edit.cshtml" />
     <Content Include="Views\Ruoli\New.cshtml" />
-    <Content Include="src\pages\trasportatori\components\giroTrasportatoriModal.vue" />
-    <Content Include="src\components\common\timeEditor.vue" />
-    <Content Include="src\components\common\dataTable.vue" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.eot" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.woff" />
@@ -298,7 +312,18 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
     <Content Include="Views\Autocisterne\Index.cshtml" />
-    <Content Include="src\pages\utenti\edit.vue" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="lattemarche - PROD.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
@@ -313,29 +338,6 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <TypeScriptCompile Include="src\models\allevamento.model.ts" />
-    <TypeScriptCompile Include="src\models\autocisterna.model.ts" />
-    <TypeScriptCompile Include="src\models\acquirente.model.ts" />
-    <TypeScriptCompile Include="src\models\comune.model.ts" />
-    <TypeScriptCompile Include="src\models\destinatario.model.ts" />
-    <TypeScriptCompile Include="src\models\dropdown.model.ts" />
-    <TypeScriptCompile Include="src\models\giro.model.ts" />
-    <TypeScriptCompile Include="src\models\laboratorioAnalisi.model.ts" />
-    <TypeScriptCompile Include="src\models\pagina.model.ts" />
-    <TypeScriptCompile Include="src\models\prelievoLatte.model.ts" />
-    <TypeScriptCompile Include="src\models\profilo.model.ts" />
-    <TypeScriptCompile Include="src\models\tipoLatte.model.ts" />
-    <TypeScriptCompile Include="src\models\ruolo.model.ts" />
-    <TypeScriptCompile Include="src\models\trasportatore.model.ts" />
-    <None Include="src\pages\tipi-latte\edit.vue" />
-    <TypeScriptCompile Include="src\pages\ruoli\edit.page.ts" />
-    <TypeScriptCompile Include="src\pages\ruoli\new.page.ts" />
-    <TypeScriptCompile Include="src\pages\trasportatori\edit.page.ts" />
-    <TypeScriptCompile Include="src\services\analisi.service.ts" />
-    <TypeScriptCompile Include="src\services\allevamenti.service.ts" />
-    <TypeScriptCompile Include="src\services\autocisterne.service.ts" />
-    <TypeScriptCompile Include="src\services\acquirenti.service.ts" />
-    <Content Include="webpack.config.js" />
     <Content Include="Content\css\custom.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -344,16 +346,8 @@
     <Content Include="Content\css\_bootswatch.scss" />
     <Content Include="Content\css\_variables.scss" />
     <Content Include="Views\TipiLatte\Index.cshtml" />
-    <Content Include="package.json" />
-    <Content Include="tsconfig.json" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="src\components\common\confirmDialog.vue" />
-    <Content Include="src\components\common\datepicker.vue" />
-    <Content Include="src\components\common\notificationDialog.vue" />
-    <Content Include="src\components\common\select2.vue" />
-    <Content Include="src\components\common\validationDialog.vue" />
-    <Content Include="src\components\common\waiter.vue" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\LoggerConfig.cs" />
@@ -420,7 +414,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\data-ajax.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -461,23 +454,7 @@
     <Content Include="Views\Trasportatori\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="dist\" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="src\models\utente.model.ts" />
-    <TypeScriptCompile Include="src\services\comuni.service.ts" />
-    <TypeScriptCompile Include="src\services\destinatari.service.ts" />
-    <TypeScriptCompile Include="src\services\dispositivi.service.ts" />
-    <TypeScriptCompile Include="src\services\giri.service.ts" />
-    <TypeScriptCompile Include="src\services\prelieviLatte.service.ts" />
-    <TypeScriptCompile Include="src\services\profili.service.ts" />
-    <TypeScriptCompile Include="src\services\tipiLatte.service.ts" />
-    <TypeScriptCompile Include="src\services\ruoli.service.ts" />
-    <TypeScriptCompile Include="src\services\trasportatori.service.ts" />
-    <TypeScriptCompile Include="src\services\utenti.service.ts" />
-    <TypeScriptCompile Include="src\vue-shims.d.ts" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
