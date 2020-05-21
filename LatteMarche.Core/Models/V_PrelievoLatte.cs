@@ -47,7 +47,7 @@ namespace LatteMarche.Core.Models
         public Decimal? Quantita { get; set; }
 
         [NotMapped]
-        public Decimal? QuantitaLitri { get { return Fattore_Conversione.HasValue && Quantita.HasValue ? Math.Round(Quantita.Value * Fattore_Conversione.Value) : (decimal?)null; } }
+        public Decimal? QuantitaLitri { get { return Fattore_Conversione.HasValue && Quantita.HasValue ? Math.Round(Quantita.Value / Fattore_Conversione.Value) : (decimal?)null; } }
 
         [Column("TEMPERATURA")]
         public Decimal? Temperatura { get; set; }

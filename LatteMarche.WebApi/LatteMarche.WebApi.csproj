@@ -324,7 +324,7 @@
     <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
-    <None Include="lattemarche - PROD.pubxml" />
+    <None Include="lattemarche - Web Deploy.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
