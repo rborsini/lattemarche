@@ -376,6 +376,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 // validazione campi obbligatori
                 if(!MandatoryFieldsAreFilled())
                 {
+                    await loadingDialog.DismissAsync();
                     await this.page.DisplayAlert("Attenzione", "E' necessario compilare tutti i valori indicati.", "OK");
                     return;
                 }

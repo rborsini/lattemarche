@@ -21,6 +21,7 @@ namespace LatteMarche.Xamarin.Db.Services
         private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
@@ -60,6 +61,7 @@ namespace LatteMarche.Xamarin.Db.Services
         public async Task<bool> ResetAsync()
         {
             this.prelieviService.DeleteAllItemsAsync().Wait();
+            this.giriService.DeleteAllItemsAsync().Wait();
             this.allevamentiService.DeleteAllItemsAsync().Wait();
             this.templateGiriService.DeleteAllItemsAsync().Wait();
             this.autocisterneService.DeleteAllItemsAsync().Wait();

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace LatteMarche.Xamarin.ViewModels.Synch
 {
@@ -176,6 +177,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private async Task ExecuteResetCommand()
         {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Reset in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
                 this.IsBusy = true;
@@ -186,6 +188,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 });
 
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Info", "Reset avvenuto con successo", "OK");
 
                 App.Current.MainPage = new RegisterPage();
@@ -195,6 +198,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             catch (Exception exc)
             {
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
 
