@@ -133,6 +133,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
+        /// <summary>
+        /// Rimozione prelievo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Item_OnItem_Deleting(object sender, EventArgs e)
         {
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione prelievo", lottieAnimation: "LottieLogo1.json");
