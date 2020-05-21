@@ -20,7 +20,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<IEnumerable<Prelievo>> GetByGiro(int idGiro)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Prelievo>()
                     .Where(g => g.IdGiro.HasValue && g.IdGiro.Value == idGiro)
@@ -30,7 +30,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async override Task<Prelievo> GetItemAsync(string id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Prelievo>()
                     .Include(l => l.Giro)

@@ -47,12 +47,15 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
                 (sender as MaterialTextField).Unfocus();
 
+                this.viewModel.Scomparto = String.IsNullOrEmpty(this.viewModel.Scomparto) ? "" : this.viewModel.Scomparto;
+
                 var scompartiSelezionati = this.viewModel.Scomparto.Split('-');
                 var indiciSelezionati = new List<int>();
 
                 foreach (var scomparto in this.viewModel.Scomparto.Split('-'))
                 {
-                    indiciSelezionati.Add(ElencoScomparti.IndexOf(scomparto));
+                    if(ElencoScomparti.IndexOf(scomparto) > 0)
+                        indiciSelezionati.Add(ElencoScomparti.IndexOf(scomparto));
                 }
 
                 var result = await MaterialDialog.Instance.SelectChoicesAsync(title: "Seleziona scomparto", selectedIndices: indiciSelezionati, dismissiveText: "Annulla", choices: ElencoScomparti.ToArray());

@@ -14,7 +14,7 @@ namespace LatteMarche.Xamarin.Db.Services
     {
         public async Task<IEnumerable<Allevamento>> GetByTemplate(int idTemplateGiro)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Allevamento>()
                     .Where(g => g.IdTemplateGiro.HasValue && g.IdTemplateGiro.Value == idTemplateGiro)
@@ -25,7 +25,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async override Task<Allevamento> GetItemAsync(int id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Allevamento>()
                     .Include(l => l.TipoLatte)

@@ -17,7 +17,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<IEnumerable<Giro>> GetGiriApertiAsync()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Giro>()
                     .Where(g => !g.DataUpload.HasValue)
@@ -29,7 +29,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async override Task<Giro> GetItemAsync(int id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Giro>()
                     .AsNoTracking()
@@ -39,7 +39,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public override async Task<bool> DeleteItemAsync(int id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 var existingPrelievo = context.Set<Giro>()
                     .Include(g => g.Prelievi)

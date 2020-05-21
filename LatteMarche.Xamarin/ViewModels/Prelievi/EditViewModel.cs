@@ -416,6 +416,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 this.IsBusy = false;
+                await loadingDialog.DismissAsync();
                 await navigation.PopAsync();
             }
             catch (Exception exc)
@@ -426,11 +427,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 Crashes.TrackError(exc);
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
-            }
-            finally
-            {
                 await loadingDialog.DismissAsync();
             }
+
         }
 
 

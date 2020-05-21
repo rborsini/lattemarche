@@ -22,6 +22,7 @@ namespace LatteMarche.Xamarin.Db.Services
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
+        private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private ITemplateGiroService templateGiriService => DependencyService.Get<ITemplateGiroService>();
 
@@ -58,6 +59,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<bool> ResetAsync()
         {
+            this.prelieviService.DeleteAllItemsAsync().Wait();
             this.allevamentiService.DeleteAllItemsAsync().Wait();
             this.templateGiriService.DeleteAllItemsAsync().Wait();
             this.autocisterneService.DeleteAllItemsAsync().Wait();
@@ -137,8 +139,8 @@ namespace LatteMarche.Xamarin.Db.Services
         protected LatteMarcheDbContext CrateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
-            databaseContext.Database.EnsureCreated();
-            databaseContext.Database.Migrate();
+            //databaseContext.Database.EnsureCreated();
+            //databaseContext.Database.Migrate();
             return databaseContext;
         }
 
