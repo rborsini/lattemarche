@@ -95,7 +95,7 @@ namespace LatteMarche.Xamarin
                     try
                     {
                         var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
-                        if ((DateTime.Now - ultimoDownload.Timestamp).TotalSeconds > MinSecondsToRefreshDb)
+                        if (ultimoDownload != null && (DateTime.Now - ultimoDownload.Timestamp).TotalSeconds > MinSecondsToRefreshDb)
                         {
                             var dto = restService.Download(device.GetIdentifier()).Result;
                             sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
