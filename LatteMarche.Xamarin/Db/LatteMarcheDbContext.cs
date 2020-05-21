@@ -23,6 +23,12 @@ namespace LatteMarche.Xamarin.Db
 		public DbSet<Trasportatore> Trasportatori { get; set; }
 
 		private const string databaseName = "database.db";
+
+		public LatteMarcheDbContext()
+		{
+			Database.Migrate();
+		}
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{		
 			String databasePath = "";
@@ -41,7 +47,6 @@ namespace LatteMarche.Xamarin.Db
 			// Specify that we will use sqlite and the path of the database here
 			optionsBuilder.UseSqlite($"Filename={databasePath}");
 
-			Database.Migrate();
 		}
 	}
 }

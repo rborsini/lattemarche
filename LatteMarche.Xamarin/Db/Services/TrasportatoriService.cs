@@ -14,7 +14,7 @@ namespace LatteMarche.Xamarin.Db.Services
     {
         public async Task<Trasportatore> GetCurrent()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context
                     .Set<Trasportatore>()

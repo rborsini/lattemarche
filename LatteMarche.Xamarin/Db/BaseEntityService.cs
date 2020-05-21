@@ -13,7 +13,7 @@ namespace LatteMarche.Xamarin.Db
     {
         public virtual async Task<bool> AddRangeItemAsync(IEnumerable<TEntity> items)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 await context.Set<TEntity>().AddRangeAsync(items);
                 await context.SaveChangesAsync();
@@ -23,7 +23,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<bool> AddItemAsync(TEntity item)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 await context.Set<TEntity>().AddAsync(item);
                 await context.SaveChangesAsync();
@@ -33,7 +33,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<bool> DeleteItemAsync(TPrimaryKey id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 var existingPrelievo = context.Set<TEntity>().FirstOrDefaultAsync(p => p.Id.Equals(id)).Result;
                 context.Remove(existingPrelievo);
@@ -44,7 +44,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<bool> DeleteAllItemsAsync()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 context.Set<TEntity>().RemoveRange(context.Set<TEntity>());
                 await context.SaveChangesAsync();
@@ -54,7 +54,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<TEntity> GetItemAsync(TPrimaryKey id)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<TEntity>()
                                     .AsNoTracking()
@@ -64,7 +64,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<IEnumerable<TEntity>> GetItemsAsync()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<TEntity>()
                                     .AsNoTracking()
@@ -74,7 +74,7 @@ namespace LatteMarche.Xamarin.Db
 
         public virtual async Task<bool> UpdateItemAsync(TEntity item)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 var existingPrelievo = context.Set<TEntity>().FirstOrDefaultAsync(p => p.Id.Equals(item.Id)).Result;
 
@@ -95,11 +95,11 @@ namespace LatteMarche.Xamarin.Db
             return entityItem;
         }
 
-        protected LatteMarcheDbContext CrateContext()
+        protected LatteMarcheDbContext CreateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
-            databaseContext.Database.EnsureCreated();
-            databaseContext.Database.Migrate();
+            //databaseContext.Database.EnsureCreated();
+            //databaseContext.Database.Migrate();
             return databaseContext;
         }
 

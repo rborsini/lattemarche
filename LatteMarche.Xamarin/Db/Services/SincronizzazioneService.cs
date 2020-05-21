@@ -137,8 +137,8 @@ namespace LatteMarche.Xamarin.Db.Services
         protected LatteMarcheDbContext CrateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
-            databaseContext.Database.EnsureCreated();
-            databaseContext.Database.Migrate();
+            //databaseContext.Database.EnsureCreated();
+            //databaseContext.Database.Migrate();
             return databaseContext;
         }
 
