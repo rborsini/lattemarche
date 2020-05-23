@@ -69,16 +69,25 @@ namespace LatteMarche.Xamarin.Zebra
         private ILabelMaker MakeLabelMaker(Registro registro)
         {
             //Debug.WriteLine($"Disconnecting");
-            //var printerLanguage = ZebraPrinterFactory.GetInstance(this.connection).PrinterControlLanguage;
+            var printerLanguage = ZebraPrinterFactory.GetInstance(this.connection).PrinterControlLanguage;
 
-            //if (printerLanguage == PrinterLanguage.ZPL)
-            //    return new ZplLabelMaker();
-            //else
-            if(registro is RegistroConsegna)
-                return new RegistroConsegnaMaker();
+            if (printerLanguage == PrinterLanguage.ZPL)
+            {
+                if (registro is RegistroConsegna)
+                    return new Zebra.Makers.ZPL.RegistroConsegnaMaker();
 
-            if (registro is RegistroRaccolta)
-                return new RegistroRaccoltaMaker();
+                if (registro is RegistroRaccolta)
+                    return new Zebra.Makers.ZPL.RegistroRaccoltaMaker();
+            }                
+            else
+            {
+                if (registro is RegistroConsegna)
+                    return new Zebra.Makers.CPCL.RegistroConsegnaMaker();
+
+                if (registro is RegistroRaccolta)
+                    return new Zebra.Makers.CPCL.RegistroRaccoltaMaker();
+            }
+
 
             return null;
         }
