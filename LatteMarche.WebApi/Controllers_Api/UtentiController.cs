@@ -6,6 +6,9 @@ using RB.Hash;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {

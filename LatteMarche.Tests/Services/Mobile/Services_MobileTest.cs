@@ -1,16 +1,12 @@
 ﻿using Autofac;
 using FizzWare.NBuilder;
-using LatteMarche.Application.Latte.Dtos;
 using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Application.Mobile.Interfaces;
-using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Tests.Services.Mobile

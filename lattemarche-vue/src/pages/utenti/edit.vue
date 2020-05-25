@@ -1,358 +1,344 @@
 <template>
-    <div class="modal fade bd-example-modal-lg" id="editazione-utente-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Dettagli utente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body pl-5 pr-5">
+<div>
 
-                    <!-- ragione sociale / username -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Ragione sociale</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.RagioneSociale" />
-                        </div>
-                        <label class="col-sm-2">Username</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Username" />
-                        </div>
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
+
+    <!-- modale errore generico -->
+    <notification-dialog ref="errorDialog" :title="'Errore imprevisto'" :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'" v-on:ok="reload()"></notification-dialog>
+
+    <!-- modale conferma salvataggio -->
+    <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Utente salvato correttamente'" v-on:ok="reload()" ></notification-dialog>
+
+
+    <!-- Pannello modale conferma eliminazione utente -->
+    <confirm-dialog ref="confirmDeleteDialog"
+                    :title="'Conferma eliminazione'"
+                    :message="'Sei sicuro di procedere con l\'eliminazione?'"
+                    v-on:confirmed="onRemove()"></confirm-dialog>        
+
+    <!-- Pannello notifica eliminazione commessa -->
+    <notification-dialog ref="removedDialog"
+                        :title="'Conferma eliminazione'"
+                        :message="'Utente eliminato correttamente'"
+                        v-on:ok="redirect()"></notification-dialog>            
+
+
+    <div>
+        
+        <ul class="nav nav-tabs" id="tabWrapper">
+            <li class="active">
+                <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="dettaglio" class="tab-pane fade show active">
+
+                <!-- tipo profilo -->
+                <div class="row form-group pt-5">
+                    <label class="col-sm-2">Tipo profilo</label>
+                    <div class="col-sm-4">
+                        <select2 class="form-control"
+                                    :disabled="utente.Id != 0"
+                                    :options="profilo.Items"
+                                    :value.sync="utente.IdProfilo"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
                     </div>
 
-                    <!-- nome / cognome -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Nome</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Nome" />
-                        </div>
-                        <label class="col-sm-2">Cognome</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Cognome" />
-                        </div>
+                    <!-- Acquirente -->
+                    <label  v-if="utente.IdProfilo == 7" class="col-sm-2">Acquirente</label>
+                    <div    v-if="utente.IdProfilo == 7" class="col-sm-4">
+                        <select2 class="form-control"
+                                    :options="acquirente.Items"
+                                    :value.sync="utente.IdAcquirente"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
                     </div>
 
-                    <!-- sesso / p.iva/cf -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Sesso</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :placeholder="'-'"
-                                     :options="opzioniSesso"
-                                     :value.sync="utente.Sesso"
-                                     :value-field="'Value'"
-                                     :text-field="'Text'" />
-                        </div>
-                        <label class="col-sm-2">P. Iva / C.F.</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.PivaCF" />
-                        </div>
+
+                </div>   
+
+                <!-- ragione sociale / username -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Ragione sociale</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.RagioneSociale" />
+                    </div>
+                    <label class="col-sm-2">Username</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Username" />
+                    </div>
+                </div>  
+
+                <!-- nome / cognome -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Nome</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Nome" />
+                    </div>
+                    <label class="col-sm-2">Cognome</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Cognome" />
+                    </div>
+                </div>          
+
+                <!-- sesso / p.iva/cf -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Sesso</label>
+                    <div class="col-sm-4">
+                        <select2 class="form-control"
+                                    :placeholder="'-'"
+                                    :options="sesso.Items"
+                                    :value.sync="utente.Sesso"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
+                    </div>
+                    <label class="col-sm-2">P. Iva / C.F.</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.PivaCF" />
+                    </div>
+                </div>        
+
+                <!-- indirizzo / provincia / città -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Indirizzo</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Indirizzo" />
                     </div>
 
-                    <!-- indirizzo / provincia / città -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Indirizzo</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Indirizzo" />
-                        </div>
-
-                        <label class="col-sm-2">Provincia</label>
-                        <div class="col-sm-1">
-                            <select2 class="form-control"
-                                     :options="opzioniProvince"
-                                     :value.sync="utente.SiglaProvincia"
-                                     :value-field="'Value'"
-                                     :text-field="'Text'"
-                                     v-on:value-changed="loadComuni" />
-                        </div>
-                        <div class="col-sm-3">
-                            <select2 class="form-control"
-                                     :options="comuni"
-                                     :value.sync="utente.IdComune"
-                                     :value-field="'Id'"
-                                     :text-field="'Descrizione'"
-                                     v-on:value-changed="onComuneSelezionato" />
-                        </div>
+                    <label class="col-sm-2">Provincia</label>
+                    <div class="col-sm-1">
+                        <select2 class="form-control"
+                                    :options="provincia.Items"
+                                    :value.sync="utente.SiglaProvincia"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'"
+                                    v-on:value-changed="loadComuni" />
                     </div>
-
-                    <!-- telefono / cellulare -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Telefono</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Telefono" />
-                        </div>
-                        <label class="col-sm-2">Cellulare</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.Cellulare" />
-                        </div>
+                    <div class="col-sm-3">
+                        <select2 class="form-control"
+                                    :options="comune.Items"
+                                    :value.sync="utente.IdComune"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
                     </div>
+                </div>       
 
-                    <!-- codice allevatore / tipo di latte -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Codice allevatore</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.CodiceAllevatore" />
-                        </div>
-                        <label class="col-sm-2">Tipo latte</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :options="tipiLatte"
-                                     :value.sync="utente.IdTipoLatte"
-                                     :value-field="'Id'"
-                                     :text-field="'Descrizione'" />
-                        </div>
+                <!-- telefono / cellulare -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Telefono</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Telefono" />
                     </div>
-
-                    <!-- quota del latte / comunicazione quota del latte -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Quota latte(Kg)</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
-                        </div>
-                        <label class="col-sm-2">Quota latte N°</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="utente.NumeroComunicazione" />
-                        </div>
+                    <label class="col-sm-2">Cellulare</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="utente.Cellulare" />
                     </div>
+                </div>                                       
 
-                    <!-- tipo di profilo / comunicazione quota del latte -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Tipo profilo</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :options="ruoli"
-                                     :value.sync="utente.IdProfilo"
-                                     :value-field="'Id'"
-                                     :text-field="'Descrizione'" />
-                        </div>
-                        <label class="col-sm-2">Abilitato</label>
-                        <div class="col-sm-1">
-                            <select2 class="form-control"
-                                     :placeholder="'-'"
-                                     :options="opzioniAbilitato"
-                                     :value.sync="utente.Abilitato"
-                                     :value-field="'Value'"
-                                     :text-field="'Text'" />
-                        </div>
-                        <label class="col-sm-2">Visibile</label>
-                        <div class="col-sm-1">
-                            <select2 class="form-control"
-                                     :placeholder="'-'"
-                                     :options="opzioniVisibile"
-                                     :value.sync="utente.Visibile"
-                                     :value-field="'Value'"
-                                     :text-field="'Text'" />
-                        </div>
-                    </div>
-
-                    <!-- note -->
-                    <div class="row form-group">
-                        <label class="col-sm-2">Note</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- progress bar -->
-                    <div class="row" v-if="progressBarVisible">
-                        <div class="col-sm-4 offset-4 pt-2">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                     role="progressbar"
-                                     aria-valuenow="100"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 offset-4 text-center pt-2">
-                            <h4>Elaborazione in corso...</h4>
-                        </div>
+                <!-- note -->
+                <div class="row form-group">
+                    <label class="col-sm-2">Note</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button class="btn btn-primary" v-on:click="onSave()">Salva</button>
+
+            </div>
+
+            <!-- Annulla / Salva -->
+            <div class="row pt-3">
+                <div class="col-12 text-right">
+                    <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
+                    <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
                 </div>
             </div>
+
         </div>
-    </div>
+    </div>            
+
+</div>
 </template>
 <script lang="ts">
 
-    import Vue from "vue";
-    import Component from "vue-class-component";
-    import { Prop, Watch, Emit } from "vue-property-decorator";
-    import Select2 from "../../components/select2.vue";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import * as jquery from "jquery";
 
-    import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-    import { Utente } from "../../models/utente.model";
-    import { TipoLatte } from "../../models/tipoLatte.model";
-    import { Comune } from "../../models/comune.model";
-    import { Ruolo } from "../../models/ruolo.model";
+import ConfirmDialog from "../../components/confirmDialog.vue";
+import NotificationDialog from "../../components/notificationDialog.vue";
+import Waiter from "../../components/waiter.vue";
+import Select2 from "../../components/select2.vue";
+import { UtentiService } from '@/services/utenti.service';
+import { DropdownService } from '@/services/dropdown.service';
+import { Utente } from '@/models/utente.model';
+import { UrlService } from '@/services/url.service';
+import { PermissionsService } from '@/services/permissions.service';
+import { Dropdown, DropdownItem } from '../../models/dropdown.model';
 
-    import { UtentiService } from "../../services/utenti.service";
-    import { TipiLatteService } from "../../services/tipiLatte.service";
-    import { ComuniService } from "../../services/comuni.service";
-    import { RuoliService } from "../../services/ruoli.service";
+@Component({
+    components: {
+        Select2,
+        ConfirmDialog,     
+        Waiter,
+        NotificationDialog
+    }    
+})
+export default class App extends Vue {
+    $refs: any = {
+        savedDialog: Vue,
+        errorDialog: Vue,
+        waiter: Vue,        
+        confirmDeleteDialog: Vue,
+    };
 
+    public itemNotFound: boolean = false;
+    public isReadOnly: boolean = false;
+    public btnDeleteVisible: boolean = false;
 
-    @Component({
-        components: {
-            Select2
-        }
-    })
+    public utentiService: UtentiService = new UtentiService();
+    public dropdownService: DropdownService = new DropdownService();
 
-    export default class EditazioneUtenteModal extends Vue {
+    public utente: Utente = new Utente();
 
-        @Prop()
-        utente: Utente = new Utente();
+    public profilo: Dropdown = new Dropdown();
+    public sesso: Dropdown = new Dropdown();
+    public provincia: Dropdown = new Dropdown();
+    public comune: Dropdown = new Dropdown();
+    public acquirente: Dropdown = new Dropdown();
 
-        public tipiLatte: TipoLatte[] = [];
-        public comune: Comune;
-        public ruoli: Ruolo[] = [];
+    constructor() {
+        super();
+    }
 
-        public opzioniSesso: DropdownItem[] = [];
-        public opzioniAbilitato: DropdownItem[] = [];
-        public opzioniVisibile: DropdownItem[] = [];
-        public comuni: Comune[] = [];
-        public opzioniProvince: DropdownItem[] = [];
+    public mounted() {
 
-        private comuniService: ComuniService;
-        private tipiLatteService: TipiLatteService;
-        private utentiService: UtentiService;
-        private ruoliService: RuoliService;
+        this.readPermissions();
 
-        public progressBarVisible = false;
+        var id = UrlService.getUrlParameter("id");
+        if(id) {
+            this.load(id);
+        }         
+        this.loadDropdown();  
 
+        this.keepSelectedTabOnRefresh();
+    }
 
-        constructor() {
-            super();
-
-            this.comune = new Comune;
-            this.utente = new Utente();
-            this.comuniService = new ComuniService();
-            this.tipiLatteService = new TipiLatteService();
-            this.utentiService = new UtentiService();
-            this.ruoliService = new RuoliService();
-        }
-
-        mounted() {
-
-            this.comuniService.getProvince()
-                .then(response => {
-                    this.opzioniProvince = response.data;
-                });
-            this.opzioniSesso = this.getOpzioniSessoUtente();
-            this.opzioniAbilitato = this.getOpzioniAbilitato();
-            this.opzioniVisibile = this.getOpzioniAbilitato();
-            this.loadTipiLatte();
-            this.loadProfili();
-
-        }
-
-        public openUtente(utente: Utente): void {
-
-            $(this.$el).modal('show');
-
-            this.loadComuni(utente.SiglaProvincia);
-        }
-
-        public open(): void {
-            $(this.$el).modal('show');            
-        }
-
-        // carica dropdown sesso
-        public getOpzioniSessoUtente(): DropdownItem[] {
-            let opzioniSesso: DropdownItem[] = [];
-            opzioniSesso.push(new DropdownItem("M", "Maschio"));
-            opzioniSesso.push(new DropdownItem("F", "Femmina"));
-            return opzioniSesso;
-        }
-
-        // carica opzioni abilitato
-        public getOpzioniAbilitato(): DropdownItem[] {
-            let opzioniAbilitato: DropdownItem[] = [];
-            opzioniAbilitato.push(new DropdownItem("true", "Si"));
-            opzioniAbilitato.push(new DropdownItem("false", "No"));
-            return opzioniAbilitato;
-        }
-
-        // carica opzioni visibile
-        public getOpzioniVisibile(): DropdownItem[] {
-            let opzioniVisibile: DropdownItem[] = [];
-            opzioniVisibile.push(new DropdownItem("true", "Si"));
-            opzioniVisibile.push(new DropdownItem("false", "No"));
-            return opzioniVisibile;
-        }
-
-        // caricamento tipi latte
-        private loadTipiLatte() {
-            this.tipiLatteService.index()
-                .then(response => {
-                    if (response.data != null) {
-                        this.tipiLatte = response.data;
-                    }
-                });
-        }
-
-        // carica comuni
-        public loadComuni(provincia: string): void {
-            this.comuniService.getComuni(provincia)
-                .then(response => {
-                    if (response.data != null) {
-                        this.comuni = response.data;
-                    }
-                });
-        }
-
-        // carica tipi profilo
-        public loadProfili(): void {
-            this.ruoliService.getRuoli()
-                .then(response => {
-                    if (response.data != null) {
-                        this.ruoli = response.data;
-                    }
-                });
-        }
-
-        // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
-        public onComuneSelezionato(idComune: string): void {
-            if (this.utente.SiglaProvincia == '') {
-                this.comuniService.getComuneDetails(idComune)
-                    .then(response => {
-                        this.utente.SiglaProvincia = response.data.Provincia;
-                    })
+    // caricamento commessa
+    private load(id: string) {
+        this.$refs.waiter.open();
+        this.utentiService.details(id).then(response => {
+        
+            if(response.data != null) {            
+                this.utente = response.data;                        
+                this.loadComuni(this.utente.SiglaProvincia);
+            } else {
+                this.itemNotFound = true;
             }
-        }
 
-        public onSave() {
-            this.progressBarVisible = true;
-            this.utentiService.save(this.utente)
-                .then(response => {
-                    if (response.data != undefined) {
-                        this.$emit("salvato");
-                        this.progressBarVisible = false;
-                        this.close();
-                    } else {
-                        // save KO!!
-                        this.utente = response.data;
-                        // TODO: msg di validazione
-                        //this.$emit("errore");
-                        this.close();
-                    }
-                });
-        }
+            this.$refs.waiter.close();
 
+        });
+    }
 
+    // salvataggio commessa
+    public onSave() {
+        this.$refs.waiter.open();
+    
+        this.utentiService.save(this.utente).then(
+            (response) => {
+                this.utente = response.data;
+                this.$refs.waiter.close();
+                this.$refs.savedDialog.open();
+            },
+            (error) => { 
 
-        public close(): void {
-            $(this.$el).modal('hide');
-        }
+                this.$refs.waiter.close();
+                if(error.response.status == 400){   // Bad Request => messaggi di validazione
+                this.$refs.validationDialog.openDialog(error.response.data.ModelState);
+                } else {
+                this.$refs.errorDialog.open();
+                }
+            }
+        );
+    }
 
+    // caricamento dropdown
+    private loadDropdown() {
+
+        // tipi profilo
+        this.dropdownService.getProfili().then(response => {
+            this.profilo = response.data;
+        });
+
+        // sesso
+        this.sesso.Items.push(new DropdownItem("M", "Maschio"));
+        this.sesso.Items.push(new DropdownItem("F", "Femmina"));        
+
+        // province
+        this.dropdownService.getProvince().then(response => {
+            this.provincia = response.data;
+        });
+
+        // acquirente
+        this.dropdownService.getAcquirenti().then(response => {
+            this.acquirente = response.data;
+        });
 
     }
+
+    public loadComuni(provincia: string): void {
+        this.dropdownService.getComuni(provincia)
+            .then(response => {
+                if (response.data != null) {
+                    this.comune = response.data;
+                }
+            });
+    } 
+
+    // Mantengo la tab selezionata per il refresh della pagina
+    public keepSelectedTabOnRefresh() {
+        $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+            window.location.hash = String($(e.target).attr("href"));
+        });
+
+        $('#tabWrapper a[href="' + window.location.hash + '"]').tab("show");
+    }
+
+    // elimina utente
+    public onRemove() {
+        this.utentiService.delete(this.utente.Id).then(response => {
+            this.$refs.removedDialog.open();
+        });
+    }
+
+    // lettura permessi da jwt
+    private readPermissions() {
+
+        this.isReadOnly = !PermissionsService.isViewItemAuthorized(
+            "Utenti",
+            "Edit",
+            "Edit"
+        );
+        this.btnDeleteVisible = PermissionsService.isViewItemAuthorized(
+            "Utenti",
+            "Edit",
+            "Delete"
+        );
+    }
+
+    // reload della pagina sullo stesso id
+    public reload() {
+        UrlService.reload();
+    }
+
+    public redirect() {
+        UrlService.redirect("/utenti");
+    }    
+
+}
+
 
 </script>

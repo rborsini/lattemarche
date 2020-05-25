@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Web.Http;
+using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
-using LatteMarche.Application.Latte.Interfaces;
-using LatteMarche.Application.Latte.Dtos;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class TipiLatteController : ApiController
@@ -16,14 +17,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private ITipiLatteService tipiLatteService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public TipiLatteController(ITipiLatteService tipiLatteService)
+        public TipiLatteController(ITipiLatteService tipiLatteService, IUtentiService utentiService)
         {
             this.tipiLatteService = tipiLatteService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -52,6 +55,20 @@ namespace LatteMarche.WebApi.Controllers_Api
             try
             {
                 return Ok(this.tipiLatteService.Details(id));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        [ViewItem(nameof(Dropdown), "Tipi latte", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown()
+        {
+            try
+            {
+                return Ok(this.tipiLatteService.DropDown());
             }
             catch (Exception exc)
             {

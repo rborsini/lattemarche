@@ -35,7 +35,7 @@ namespace LatteMarche.Tests.Mail
                 {
                     foreach(var attachment in message.Attachments)
                     {
-                        var fileStream = File.Create(@"C:\tmp\" + attachment.Name);
+                        var fileStream = File.Create(attachment.Name);
                         attachment.ContentStream.Seek(0, SeekOrigin.Begin);
                         attachment.ContentStream.CopyTo(fileStream);
                         fileStream.Close();

@@ -1,5 +1,7 @@
 ﻿using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Models;
 using Newtonsoft.Json;
 using System;

@@ -12,12 +12,10 @@ using LatteMarche.WebApi.Models;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Logs.Interfaces;
 using Newtonsoft.Json;
-using LatteMarche.Application.Acquirenti.Interfaces;
-using LatteMarche.Application.Destinatari.Interfaces;
-using LatteMarche.Application.Latte.Interfaces;
-using LatteMarche.Application.Auth.Interfaces;
-using LatteMarche.Application.Latte.Dtos;
-using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Application.Utenti.Dtos;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -31,8 +29,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IPrelieviLatteService prelieviLatteService;
-        private IAcquirentiService acquirentiService;
-        private IDestinatariService destinatariService;
+        //private IAcquirentiService acquirentiService;
+        //private IDestinatariService destinatariService;
         private ISynchService synchService;
         private ISitraService sitraService;
         private ILottiService lottiService;
@@ -48,11 +46,11 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Constructors
 
-        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService, IAcquirentiService acquirentiService, IDestinatariService destinatariService)
+        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
-            this.acquirentiService = acquirentiService;
-            this.destinatariService = destinatariService;
+            //this.acquirentiService = acquirentiService;
+            //this.destinatariService = destinatariService;
             this.synchService = synchService;
             this.sitraService = sitraService;
             this.lottiService = lottiService;
@@ -276,14 +274,14 @@ namespace LatteMarche.WebApi.Controllers_Api
                 case 5:     // profilo trasportatore
                     idTrasportatore = utente.Id.ToString();
                     break;
-                case 7:     // profilo acquirente
-                    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
-                    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
-                    break;
-                case 6:     // profilo destinatario
-                    var destinatario = this.destinatariService.GetByIdUtente(utente.Id);
-                    idDestinatario = destinatario != null ? destinatario.Id.ToString() : "";
-                    break;
+                //case 7:     // profilo acquirente
+                //    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
+                //    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
+                //    break;
+                //case 6:     // profilo destinatario
+                //    var destinatario = this.destinatariService.GetByIdUtente(utente.Id);
+                //    idDestinatario = destinatario != null ? destinatario.Id.ToString() : "";
+                //    break;
             }
 
             //possibilità di mettere altri parametri come le date periodo prelievo

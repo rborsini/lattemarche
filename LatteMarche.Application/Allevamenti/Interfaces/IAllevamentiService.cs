@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LatteMarche.Application.Allevamenti.Dtos;
+using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using WeCode.Application.Interfaces;
@@ -8,12 +9,10 @@ using WeCode.Application.Interfaces;
 namespace LatteMarche.Application.Allevamenti.Interfaces
 {
 
-    public interface IAllevamentiService : IEntityService<Allevamento, int, AllevamentoDto>
+    public interface IAllevamentiService 
 	{
-	    List<AllevamentoDto> GetAllevamentiSitra();
+        DropDownDto DropDown(int? idUtente = (int?)null);
 
-        List<AllevamentoRowDto> Search(AllevamentiSearchDto searchDto);
-
-	}
+    }
 
 }

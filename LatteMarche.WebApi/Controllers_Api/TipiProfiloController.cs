@@ -4,6 +4,7 @@ using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -54,6 +55,20 @@ namespace LatteMarche.WebApi.Controllers_Api
             try
             {
                 return Ok(this.tipiProfiloService.Details(id));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        [ViewItem(nameof(Dropdown), "Tipi profilo", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown()
+        {
+            try
+            {
+                return Ok(this.tipiProfiloService.DropDown());
             }
             catch (Exception exc)
             {

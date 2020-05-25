@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LatteMarche.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -6,8 +7,6 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LatteMarche.Core;
-using LatteMarche.Core.Models;
 using WeCode.EntityFramework;
 
 namespace LatteMarche.EntityFramework
@@ -16,6 +15,7 @@ namespace LatteMarche.EntityFramework
 	{
         public DbSet<Autocisterna> Autocisterne { get; set; }
         public DbSet<Autorizzazione> Autorizzazioni { get; set; }
+        public DbSet<AziendaTrasportatori> AziendeTrasportatori { get; set; }
         public DbSet<Azione> Azioni { get; set; }
         public DbSet<Analisi> Analisi { get; set; }
         public DbSet<ValoreAnalisi> ValoriAnalisi { get; set; }
@@ -24,9 +24,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<Documento> Documenti { get; set; }
         public DbSet<TipoLatte> TipiLatte { get; set; }
         public DbSet<TipoProfilo> TipiProfilo { get; set; }
-        public DbSet<V_Allevatore> Allevatore { get; set; }
         public DbSet<Allevamento> Allevamenti { get; set; }
-        public DbSet<V_Trasportatore> Trasportatori { get; set; }
         public DbSet<Giro> Giri { get; set; }
         public DbSet<AllevamentoXGiro> AllevamentiXGiro { get; set; }
         public DbSet<LaboratorioAnalisi> LaboratoriAnalisi { get; set; }
@@ -37,6 +35,7 @@ namespace LatteMarche.EntityFramework
         public DbSet<Lotto> Lotti { get; set; }
         public DbSet<Ruolo> Ruoli { get; set; }
         public DbSet<RuoloUtente> RuoliUtente { get; set; }
+        public DbSet<TrasportatoreXAzienda> TrasportatoriXAzienda { get; set; }
         public DbSet<LogRecord> Logs { get; set; }
         public DbSet<UtenteXAcquirente> UtentiXAcquirente { get; set; }
         public DbSet<UtenteXDestinatario> UtentiXDestinatario { get; set; }

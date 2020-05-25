@@ -1,4 +1,4 @@
-﻿using LatteMarche.Application.Latte.Dtos;
+﻿using LatteMarche.Application.PrelieviLatte.Dtos;
 using System.Collections.Generic;
 
 namespace LatteMarche.Application.Sitra.Interfaces

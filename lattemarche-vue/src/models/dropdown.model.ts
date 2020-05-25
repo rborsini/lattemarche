@@ -1,9 +1,9 @@
 export class DropdownItem {
 
-    public Value: string = "";
+    public Value: any;
     public Text: string = "";
 
-    constructor(value: string, text: string) {
+    constructor(value: any, text: string) {
         this.Value = value;
         this.Text = text;
     }

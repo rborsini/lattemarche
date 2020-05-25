@@ -14,7 +14,7 @@
 
 @{
     string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["SolaLettura"]) ? "true" : "false";
     string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
 }
 
@@ -22,57 +22,13 @@
 <input hidden id="canEdit" value="@canEdit" />
 <input hidden id="canRemove" value="@canRemove" />
 
-<div id="utenti-page" class="container-fluid p-0">
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
 
-
-
-    <!-- Pannello editazione dettaglio -->
-    <editazione-utente-modal ref="editazioneUtenteModal"
-                             :utente="utente"
-                             v-on:salvato="$refs.savedDialog.open()"></editazione-utente-modal>
-
-    <!-- Pannello notifica salvatagggio -->
-    <notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Utente salvato correttamente'"
-                         v-on:ok="window.location = '/Utenti'"></notification-dialog>
-
-    <!-- Pannello notifica rimozione -->
-    <notification-dialog ref="removedDialog"
-                         :title="'Conferma rimozione'"
-                         :message="'Utente rimosso correttamente'"
-                         v-on:ok="window.location = '/Utenti'"></notification-dialog>
-
-    <!-- Pannello modale conferma eliminazione -->
-    <confirm-dialog ref="confirmDeleteDialog"
-                    :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di voler rimuovere l\'utente selezionato?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>
-
-    <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="utenti" v-on:data-loaded="onDataLoaded">
-
-        <!-- Toolbox -->
-        <template slot="toolbox" v-if="canAdd">
-            <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
-        </template>
-
-        <!-- Colonne -->
-        <template slot="thead">
-            <th>Ragione sociale</th>
-            <th>Nome</th>
-            <th>Cognome</th>
-            <th>Username</th>
-            <th v-if="canEdit || canRemove"></th>
-        </template>
-
-    </data-table>
+<div id="app">
 </div>
 
-<link rel="stylesheet" href="~/Content/plugins/datatables/css/dataTable.b4.css" />
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="~/Content/plugins/datatables/dataTable.b4.js"></script>
-
-<script type="application/javascript" src="~/build/utenti_index_page.js"></script>
+<script src="@Url.Content("~/dist/utentiIndex.js")?ver=@version"></script>
 
 

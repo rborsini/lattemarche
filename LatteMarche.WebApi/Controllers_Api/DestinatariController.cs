@@ -4,10 +4,11 @@ using LatteMarche.WebApi.Attributes;
 using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class DestinatariController: ApiController
@@ -16,14 +17,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IDestinatariService destinatariService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public DestinatariController(IDestinatariService destinatariService)
+        public DestinatariController(IDestinatariService destinatariService, IUtentiService utentiService)
         {
             this.destinatariService = destinatariService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -52,6 +55,25 @@ namespace LatteMarche.WebApi.Controllers_Api
             try
             {
                 return Ok(this.destinatariService.Details(id));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        [ViewItem(nameof(Dropdown), "Destinatari", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown()
+        {
+            try
+            {
+                var utente = this.utentiService.Details(User.Identity.Name);
+
+                if (utente != null)
+                    return Ok(this.destinatariService.DropDown(utente.Id));
+                else
+                    return Ok();
             }
             catch (Exception exc)
             {

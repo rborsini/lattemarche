@@ -3,11 +3,15 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Net.Http;
 using LatteMarche.Application.Auth.Interfaces;
+using System.Configuration;
+using System;
 
 namespace LatteMarche.WebApi.Attributes
 {
     public class ApiCustomAuthorize : AuthorizeAttribute
     {
+        private bool apiAuthEnabled = Convert.ToBoolean(ConfigurationManager.AppSettings["apiAuthEnabled"]);
+
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             string controllerName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName;
@@ -22,9 +26,8 @@ namespace LatteMarche.WebApi.Attributes
 
             ////https://soabubblog.wordpress.com/2013/07/10/web-api-sessions/
 
-            return service.Authorize(HttpContext.Current.Session, userName, "API", controllerName, actionName);
+            return apiAuthEnabled ? service.Authorize(HttpContext.Current.Session, userName, "API", controllerName, actionName) : true;
 
-            //return HttpContext.Current.User.Identity.IsAuthenticated;
         }
     }
 }

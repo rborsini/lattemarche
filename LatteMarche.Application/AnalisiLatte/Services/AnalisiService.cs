@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using LatteMarche.Application.Allevamenti.Dtos;
-using LatteMarche.Application.Allevamenti.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.Assam.Interfaces;
@@ -36,22 +36,22 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         #region Fields
 
+        private IRepository<Allevamento, int> allevamentiRepository;
         private IRepository<ValoreAnalisi, long> valoriRepository;
 
         private IAssamService assamService;
-        private IAllevamentiService allevamentiService;
-
+        
         #endregion
 
         #region Constructor
 
-        public AnalisiService(IUnitOfWork uow, IAssamService assamService, IAllevamentiService allevamentiService)
+        public AnalisiService(IUnitOfWork uow, IAssamService assamService)
             : base(uow)
         {
+            this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.valoriRepository = this.uow.Get<ValoreAnalisi, long>();
 
-            this.assamService = assamService;
-            this.allevamentiService = allevamentiService;
+            this.assamService = assamService;            
         }
 
         #endregion
@@ -174,19 +174,19 @@ namespace LatteMarche.Application.AnalisiLatte.Services
                 return (int?)null;
 
             // ricerca per doppio campo CodiceAllevatore e CodiceASL
-            var produttori = this.allevamentiService.Search(new AllevamentiSearchDto() { CodiceAllevatore = codiceProduttore, CodiceAsl = codiceAsl });
-            if (produttori.Count == 1)
-                return produttori[0].IdUtente;
+            var produttori = this.allevamentiRepository.DbSet.Where(a => a.Utente.CodiceAllevatore == codiceProduttore && a.CodiceAsl == codiceAsl);
+            if (produttori.Count() == 1)
+                return produttori.First().IdUtente;
 
             // ricerca per codice produttore
-            produttori = this.allevamentiService.Search(new AllevamentiSearchDto() { CodiceAllevatore = codiceProduttore });
-            if (produttori.Count == 1)
-                return produttori[0].IdUtente;
+            produttori = this.allevamentiRepository.DbSet.Where(a => a.Utente.CodiceAllevatore == codiceProduttore);
+            if (produttori.Count() == 1)
+                return produttori.First().IdUtente;
 
             // ricerca per codice asl
-            produttori = this.allevamentiService.Search(new AllevamentiSearchDto() { CodiceAsl = codiceAsl });
-            if (produttori.Count == 1)
-                return produttori[0].IdUtente;
+            produttori = this.allevamentiRepository.DbSet.Where(a => a.CodiceAsl == codiceAsl);
+            if (produttori.Count() == 1)
+                return produttori.First().IdUtente;
 
             return (int?)null;
         }
@@ -196,9 +196,9 @@ namespace LatteMarche.Application.AnalisiLatte.Services
             if (String.IsNullOrEmpty(codiceASL))
                 return (int?)null;
 
-            var allevamenti = this.allevamentiService.Search(new AllevamentiSearchDto() { CodiceAsl = codiceASL });
-            if (allevamenti.Count == 1)
-                return allevamenti[0].Id;
+            var allevamenti = this.allevamentiRepository.DbSet.Where(a => a.CodiceAsl == codiceASL);
+            if (allevamenti.Count() == 1)
+                return allevamenti.First().IdUtente;
 
             return (int?)null;
         }

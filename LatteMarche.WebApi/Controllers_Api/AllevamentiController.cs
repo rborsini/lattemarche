@@ -7,10 +7,11 @@ using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class AllevamentiController : ApiController
@@ -19,82 +20,41 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IAllevamentiService allevamentiService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public AllevamentiController(IAllevamentiService allevamentiService)
+        public AllevamentiController(IAllevamentiService allevamentiService, IUtentiService utentiService)
         {
             this.allevamentiService = allevamentiService;
+            this.utentiService = utentiService;
         }
 
         #endregion
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Allevamenti", "Lista")]
+        [ViewItem(nameof(Dropdown), "Cessionari", "Dropdown")]
         [HttpGet]
-        public IHttpActionResult Index()
+        public IHttpActionResult Dropdown()
         {
             try
             {
-                return Ok(this.allevamentiService.Search(new AllevamentiSearchDto()));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+                var utente = this.utentiService.Details(User.Identity.Name);
 
-        }
-
-        [ViewItem(nameof(Details), "Allevamenti", "Dettaglio")]
-        [HttpGet]
-        public IHttpActionResult Details(int id)
-        {
-            try
-            {
-                return Ok(this.allevamentiService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Save), "Allevamenti", "Aggiornamento")]
-        [HttpPost]
-        public IHttpActionResult Save([FromBody] AllevamentoDto model)
-        {
-            try
-            {
-                if(model.Id == 0)
-                    return Ok(this.allevamentiService.Create(model));
+                if (utente != null)
+                    return Ok(this.allevamentiService.DropDown(utente.Id));
                 else
-                    return Ok(this.allevamentiService.Update(model));
+                    return Ok();
             }
             catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
-
         }
 
-        [ViewItem(nameof(Delete), "Allevamenti", "Rimozione")]
-        [HttpDelete]
-        public IHttpActionResult Delete(int id)
-        {
-            try
-            {
-                this.allevamentiService.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
         #endregion
 
 

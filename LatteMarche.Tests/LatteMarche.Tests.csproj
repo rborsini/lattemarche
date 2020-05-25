@@ -125,13 +125,26 @@
     <Compile Include="AutoFacConfig.cs" />
     <Compile Include="AutomapperConfig.cs" />
     <Compile Include="Mail\DownloadMailTest.cs" />
-    <Compile Include="Mappings\Mappings_AllevamentiTest.cs" />
+    <Compile Include="Mappings\Mappings_AcquirentiTest.cs" />
+    <Compile Include="Mappings\Mappings_AutocisterneTest.cs" />
+    <Compile Include="Mappings\Mappings_AziendeTrasportatoriTest.cs" />
+    <Compile Include="Mappings\Mappings_CessionariTest.cs" />
+    <Compile Include="Mappings\Mappings_DestinatariTest.cs" />
     <Compile Include="Mappings\Mappings_DispositiviTest.cs" />
+    <Compile Include="Mappings\Mappings_UtentiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Allevamenti\Services_AllevamentiTest.cs" />
+    <Compile Include="Services\Acquirenti\Services_AcquirentiTest.cs" />
+    <Compile Include="Services\Autocisterne\Services_AutocisterneTest.cs" />
+    <Compile Include="Services\AziendeTrasportatori\Services_AziendeTrasportatoriTest.cs" />
+    <Compile Include="Services\Cessionari\Services_CessionariTest.cs" />
     <Compile Include="Services\DbCleaner.cs" />
     <Compile Include="Services\Dispositivi\Services_DispositiviTest.cs" />
     <Compile Include="Services\Mobile\Services_MobileTest.cs" />
+    <Compile Include="Services\Utenti\Services_AcquirenteTest.cs" />
+    <Compile Include="Services\Utenti\Services_AziendaTrasportatoriTest.cs" />
+    <Compile Include="Services\Utenti\Services_CessionarioTest.cs" />
+    <Compile Include="Services\Utenti\Services_DestinatarioTest.cs" />
+    <Compile Include="Services\Utenti\Services_UtentiTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

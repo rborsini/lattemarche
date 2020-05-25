@@ -17,7 +17,11 @@ namespace LatteMarche.Core.Models
 
         public virtual Utente Utente { get; set; }
 
+        [ForeignKey(nameof(Acquirente))]
         [Column("ID_ACQUIRENTE")]
         public int IdAcquirente { get; set; }
+
+        public virtual Acquirente Acquirente { get; set; }
+
     }
 }

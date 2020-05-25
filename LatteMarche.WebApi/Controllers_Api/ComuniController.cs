@@ -82,9 +82,22 @@ namespace LatteMarche.WebApi.Controllers_Api
             }
         }
 
+        [ViewItem(nameof(Dropdown), "Comuni", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown(string siglaProvincia)
+        {
+            try
+            {
+                return Ok(this.comuniService.DropDown(siglaProvincia));
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
         [ViewItem(nameof(Province), "Comuni", "Province")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Province()
         {
             try
@@ -95,7 +108,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 {
                     dropDown.Items.Add(new DropDownItem() { Value = prov, Text = prov });
                 }
-                return Ok(dropDown.Items);
+                return Ok(dropDown);
             }
             catch (Exception exc)
             {

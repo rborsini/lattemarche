@@ -12,6 +12,7 @@ namespace LatteMarche.EntityFramework
         {
             return @"
                 SET IDENTITY_INSERT COMUNI ON
+                    INSERT [dbo].[COMUNI] ([ID_COMUNE], [DESCRIZIONE], [PROVINCIA], [CAP], [ISTAT6]) VALUES (1, N'COMUNE 1                                        ', N'AN', N'60024', N'042019')
                     INSERT [dbo].[COMUNI] ([ID_COMUNE], [DESCRIZIONE], [PROVINCIA], [CAP], [ISTAT6]) VALUES (252, N'FILOTTRANO                                        ', N'AN', N'60024', N'042019')
                 SET IDENTITY_INSERT COMUNI OFF
             ";

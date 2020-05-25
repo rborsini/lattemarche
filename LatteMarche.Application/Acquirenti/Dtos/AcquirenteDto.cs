@@ -15,6 +15,4 @@ namespace LatteMarche.Application.Acquirenti.Dtos
         public int? IdSitra { get; set; }
     }
 
-
-
 }

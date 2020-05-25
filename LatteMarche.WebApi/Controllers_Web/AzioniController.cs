@@ -10,6 +10,7 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers_Web
 {
+    [MvcCustomAuthorize]
     [MvcActionFilter]
     [MvcExceptionFilter]
     public class AzioniController : Controller

@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
 using FizzWare.NBuilder;
-using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Dispositivi.Dtos;
-using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Tests.Mappings
 {
@@ -31,13 +24,13 @@ namespace LatteMarche.Tests.Mappings
         [Test]
         public void DispositiviMappings_DispositivoMobile_To_DispositivoMobileDto()
         {
-            var dispositivo = Builder<DispositivoMobile>
+            var entity = Builder<DispositivoMobile>
                 .CreateNew()
                 .Build();
 
-            var dispositivoDto = Mapper.Map<DispositivoMobileDto>(dispositivo);
+            var dto = Mapper.Map<DispositivoMobileDto>(entity);
 
-            Assert.AreEqual(dispositivoDto.Id, dispositivo.Id);
+            Assert.AreEqual(dto.Id, entity.Id);
 
         }
 

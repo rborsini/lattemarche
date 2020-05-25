@@ -34,10 +34,9 @@ namespace LatteMarche.Application.Auth.Services
                 {
                     repository.Add(azione);
                 }
-
+                uow.SaveChanges();
             }
-
-            uow.SaveChanges();
+            
         }
 
         protected override Azione UpdateProperties(Azione viewEntity, Azione dbEntity)

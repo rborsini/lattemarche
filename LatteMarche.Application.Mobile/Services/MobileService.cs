@@ -20,7 +20,7 @@ namespace LatteMarche.Application.Mobile.Services
         private IUnitOfWork uow;
         private IRepository<DispositivoMobile, string> dispositiviRepository;
 
-        private IRepository<V_Trasportatore, int> trasportatoriRepository;
+        private IRepository<Utente, int> trasportatoriRepository;
         private IRepository<Autocisterna, int> autocisterneRepository;
         private IRepository<Giro, int> giriRepository;
         private IRepository<TipoLatte, int> tipiLatteRepository;
@@ -38,7 +38,7 @@ namespace LatteMarche.Application.Mobile.Services
 
             this.dispositiviRepository = this.uow.Get<DispositivoMobile, string>();
 
-            this.trasportatoriRepository = this.uow.Get<V_Trasportatore, int>();
+            this.trasportatoriRepository = this.uow.Get<Utente, int>();
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
             this.giriRepository = this.uow.Get<Giro, int>();
 

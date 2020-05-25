@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.Allevamenti.Interfaces;
-using LatteMarche.Application.Allevamenti.Dtos;
-using LatteMarche.Application.Allevamenti;
-using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
-using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Dtos;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class AnalisiController : ApiController

@@ -6,10 +6,11 @@ using Newtonsoft.Json.Linq;
 using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class AcquirentiController : ApiController
@@ -18,14 +19,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IAcquirentiService acquirentiService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public AcquirentiController(IAcquirentiService acquirentiService)
+        public AcquirentiController(IAcquirentiService acquirentiService, IUtentiService utentiService)
         {
             this.acquirentiService = acquirentiService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -62,6 +65,25 @@ namespace LatteMarche.WebApi.Controllers_Api
                 return InternalServerError(exc);
             }
 
+        }
+
+        [ViewItem(nameof(Dropdown), "Acquirenti", "Dropdown")]
+        [HttpGet]
+        public IHttpActionResult Dropdown()
+        {
+            try
+            {
+                var utente = this.utentiService.Details(User.Identity.Name);
+
+                if(utente != null)
+                    return Ok(this.acquirentiService.DropDown(utente.Id));
+                else
+                    return Ok();
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
         }
 
         [ViewItem(nameof(Save), "Acquirenti", "Salvataggio")]

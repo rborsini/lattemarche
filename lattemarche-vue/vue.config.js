@@ -38,9 +38,12 @@ module.exports = {
         trasportatoriIndex: {            
             entry: 'src/pages/trasportatori/index.ts'
         },                                                               
+        utentiEdit: {            
+            entry: 'src/pages/utenti/edit.ts'
+        },  
         utentiIndex: {            
             entry: 'src/pages/utenti/index.ts'
-        },                 
+        },                         
     }
 
 

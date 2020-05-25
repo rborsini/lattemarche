@@ -1,8 +1,7 @@
-﻿using LatteMarche.Application.Acquirenti.Interfaces;
-using LatteMarche.Application.Auth.Dtos;
-using LatteMarche.Application.Auth.Interfaces;
-using LatteMarche.Application.Latte.Dtos;
-using LatteMarche.Application.Latte.Interfaces;
+﻿using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using RB.Date;
@@ -17,16 +16,24 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class PrelieviController: Controller
     {
 
+        #region Fields
+
         private IPrelieviLatteService prelieviLatteService;
         private IUtentiService utentiService;
-        private IAcquirentiService acquirentiService;
 
-        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService, IAcquirentiService acquirentiService)
+        #endregion
+
+        #region Constructor
+
+        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
             this.utentiService = utentiService;
-            this.acquirentiService = acquirentiService;
         }
+
+        #endregion
+
+        #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
         [ViewItem("Aggiungi", "Prelievi", "Aggiungi")]
@@ -58,8 +65,9 @@ namespace LatteMarche.WebApi.Controllers_Web
                     idTrasportatore = utente.Id.ToString();
                     break;
                 case 7:     // profilo acquirente
-                    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
-                    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
+                    //var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
+                    //idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
+                    idAcquirente = utente.Id.ToString();
                     break;
                 case 6:     // profilo destinatario
                     idDestinatario = utente.Id.ToString();
@@ -83,6 +91,7 @@ namespace LatteMarche.WebApi.Controllers_Web
 
         }
 
+        #endregion
 
     }
 

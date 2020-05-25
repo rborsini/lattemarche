@@ -13,8 +13,22 @@ namespace LatteMarche.Application.Destinatari
     {
         public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
         {
-            mappings.CreateMap<Destinatario, DestinatarioDto>();
-            mappings.CreateMap<DestinatarioDto, Destinatario>();
+            mappings.CreateMap<Destinatario, DestinatarioDto>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
+                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
+                .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
+                .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
+                .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia))
+                ;
+
+            mappings.CreateMap<DestinatarioDto, Destinatario>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
+                .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
+                .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
+                .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
+                ;
 
             return mappings;
         }

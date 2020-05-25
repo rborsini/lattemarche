@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LatteMarche.Application.Utenti.Dtos;
+using System.Collections.Generic;
 
 namespace LatteMarche.Application.Auth.Dtos
 {

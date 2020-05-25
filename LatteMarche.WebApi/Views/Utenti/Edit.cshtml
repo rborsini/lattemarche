@@ -13,180 +13,19 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="utenti-edit" class="container-fluid pr-5 pl-5">
+@{
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+}
 
-    <!-- Pannello modale del caricamento -->
-    <waiter ref="waiter"></waiter>
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
 
-    <!-- Pannelli modali di conferma azioni -->
-    <notification-dialog ref="savedDialog"
-                         :title="'Conferma salvataggio'"
-                         :message="'Utente salvato correttamente'"
-                         v-on:ok="window.location = '/utenti'"></notification-dialog>
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
 
-    <input hidden id="id" value="@Request["id"]" />
-
-    <!-- nome utente -->
-    <div class="row pb-2">
-        <div class="col-12">
-            <h4 class="font-weight-bold">Utente: {{utente.Nome}} {{utente.Cognome}}</h4>
-        </div>
-    </div>
-
-    <!-- ragione sociale / username -->
-    <div class="row form-group">
-        <label class="col-sm-2">Ragione sociale</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.RagioneSociale" />
-        </div>
-        <label class="col-sm-2">Username</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Username" />
-        </div>
-    </div>
-
-    <!-- nome / cognome -->
-    <div class="row form-group">
-        <label class="col-sm-2">Nome</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Nome" />
-        </div>
-        <label class="col-sm-2">Cognome</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Cognome" />
-        </div>
-    </div>
-
-    <!-- sesso / p.iva/cf -->
-    <div class="row form-group">
-        <label class="col-sm-2">Sesso</label>
-        <div class="col-sm-4">
-            <select2 class="form-control"
-                     :placeholder="'-'"
-                     :options="opzioniSesso"
-                     :value.sync="utente.Sesso"
-                     :value-field="'Value'"
-                     :text-field="'Text'" />
-        </div>
-        <label class="col-sm-2">P. Iva / C.F.</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.PivaCF" />
-        </div>
-    </div>
-
-    <!-- indirizzo / provincia / città -->
-    <div class="row form-group">
-        <label class="col-sm-2">Indirizzo</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Indirizzo" />
-        </div>
-
-        <label class="col-sm-2">Provincia</label>
-        <div class="col-sm-1">
-            <select2 class="form-control"
-                     :options="opzioniProvince"
-                     :value.sync="utente.SiglaProvincia"
-                     :value-field="'Value'"
-                     :text-field="'Text'"
-                     v-on:value-changed="loadComuni" />
-        </div>
-        <div class="col-sm-3">
-            <select2 class="form-control"
-                     :options="comuni"
-                     :value.sync="utente.IdComune"
-                     :value-field="'Id'"
-                     :text-field="'Descrizione'"
-                     v-on:value-changed="onComuneSelezionato" />
-        </div>
-    </div>
-
-    <!-- telefono / cellulare -->
-    <div class="row form-group">
-        <label class="col-sm-2">Telefono</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Telefono" />
-        </div>
-        <label class="col-sm-2">Cellulare</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.Cellulare" />
-        </div>
-    </div>
-
-    <!-- codice allevatore / tipo di latte -->
-    <div class="row form-group">
-        <label class="col-sm-2">Codice allevatore</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.CodiceAllevatore" />
-        </div>
-        <label class="col-sm-2">Tipo latte</label>
-        <div class="col-sm-4">
-            <select2 class="form-control"
-                     :options="tipoLatte"
-                     :value.sync="utente.IdTipoLatte"
-                     :value-field="'Id'"
-                     :text-field="'Descrizione'" />
-        </div>
-    </div>
-
-    <!-- quota del latte / comunicazione quota del latte -->
-    <div class="row form-group">
-        <label class="col-sm-2">Quota latte(Kg)</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.QuantitaLatte" />
-        </div>
-        <label class="col-sm-2">Quota latte N°</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="utente.NumeroComunicazione" />
-        </div>
-    </div>
-
-    <!-- tipo di profilo / comunicazione quota del latte -->
-    <div class="row form-group">
-        <label class="col-sm-2">Tipo profilo</label>
-        <div class="col-sm-4">
-            <select2 class="form-control"
-                     :options="ruoli"
-                     :value.sync="utente.IdProfilo"
-                     :value-field="'Id'"
-                     :text-field="'Descrizione'" />
-        </div>
-        <label class="col-sm-2">Abilitato</label>
-        <div class="col-sm-1">
-            <select2 class="form-control"
-                     :placeholder="'-'"
-                     :options="opzioniAbilitato"
-                     :value.sync="utente.Abilitato"
-                     :value-field="'Value'"
-                     :text-field="'Text'" />
-        </div>
-        <label class="col-sm-2">Visibile</label>
-        <div class="col-sm-1">
-            <select2 class="form-control"
-                     :placeholder="'-'"
-                     :options="opzioniVisibile"
-                     :value.sync="utente.Visibile"
-                     :value-field="'Value'"
-                     :text-field="'Text'" />
-        </div>
-    </div>
-
-    <!-- note -->
-    <div class="row form-group">
-        <label class="col-sm-2">Note</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
-        </div>
-    </div>
-
-    <!-- salva -->
-    <div class="row form-group">
-        <div class="col-md-12 text-right">
-            <button class="btn btn-secondary mr-2" v-on:click="window.location = '/utenti'">Annulla</button>
-            <button v-on:click="onSave()" class="btn btn-success">Salva</button>
-        </div>
-    </div>
-
+<div id="app">
 </div>
 
-<script type="application/javascript" src="~/build/utenti_edit_page.js"></script>
-
+<script src="@Url.Content("~/dist/utentiEdit.js")?ver=@version"></script>

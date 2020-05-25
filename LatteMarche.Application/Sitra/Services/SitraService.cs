@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
 using System.Configuration;
-using LatteMarche.Application.Allevamenti.Dtos;
-using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Logs.Interfaces;
-using LatteMarche.Application.Latte.Interfaces;
-using LatteMarche.Application.Latte.Dtos;
+using LatteMarche.Application.PrelieviLatte.Dtos;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Core.Models;
+using WeCode.Data.Interfaces;
 
 namespace LatteMarche.Application.Sitra.Services
 {
@@ -20,7 +20,7 @@ namespace LatteMarche.Application.Sitra.Services
     {
         #region  Fields
 
-        private IAllevamentiService allevamentiService;
+        private IRepository<Allevamento, int> allevamentiRepository;
         private ILottiService lottiService;
         private IPrelieviLatteService prelieviLatteService;
         private ILogsService logsService;
@@ -45,9 +45,9 @@ namespace LatteMarche.Application.Sitra.Services
 
         #region  Constructors
 
-        public SitraService(IAllevamentiService allevamentiService, IPrelieviLatteService prelieviLatteService, ILottiService lottiService, ILogsService logsService)
+        public SitraService(IUnitOfWork uow, IPrelieviLatteService prelieviLatteService, ILottiService lottiService, ILogsService logsService)
         {
-            this.allevamentiService = allevamentiService;
+            this.allevamentiRepository = uow.Get<Allevamento, int>();
             this.prelieviLatteService = prelieviLatteService;
             this.lottiService = lottiService;
             this.logsService = logsService;
@@ -74,7 +74,9 @@ namespace LatteMarche.Application.Sitra.Services
             //this.LogDebug($"accessToken [{accessToken}]");
 
             // recupero allevamenti per cui si deve effettuare l'invio al sitra
-            Dictionary<int, AllevamentoDto> allevamentiSitra = this.allevamentiService.GetAllevamentiSitra().ToDictionary(k => k.Id, k => k);
+            Dictionary<int, Allevamento> allevamentiSitra = this.allevamentiRepository.DbSet
+                .Where(a => !String.IsNullOrEmpty(a.CUAA))
+                .ToDictionary(k => k.Id, k => k);
 
             // invio singoli prelievi 
             foreach (var prelievo in prelievi.Where(p => allevamentiSitra.Keys.Contains(p.IdAllevamento.Value)))
@@ -293,7 +295,7 @@ namespace LatteMarche.Application.Sitra.Services
         /// <param name="prelievo"></param>
         /// <param name="cuaa"></param>
         /// <returns></returns>
-        private SitraDto MakeRoot(PrelievoLatteDto prelievo, AllevamentoDto allevamento)
+        private SitraDto MakeRoot(PrelievoLatteDto prelievo, Allevamento allevamento)
         {
             SitraDto root = new SitraDto();
 

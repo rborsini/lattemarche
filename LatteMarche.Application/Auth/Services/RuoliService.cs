@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System;
@@ -86,6 +87,7 @@ namespace LatteMarche.Application.Auth.Services
             List<Autorizzazione> autorizzazioniToAdd = ConvertToAutorizzazioni(model.Id, "MVC", model.Pagine_MVC);
             autorizzazioniToAdd.AddRange(ConvertToAutorizzazioni(model.Id, "API", model.Pagine_API));
             autorizzazioniRepository.Add(autorizzazioniToAdd);
+            this.uow.SaveChanges();
 
             // aggiornamento campi ruolo
             return base.Update(model);

@@ -9,107 +9,120 @@ using LatteMarche.Application.Comuni.Interfaces;
 using AutoMapper;
 using WeCode.Data.Interfaces;
 using WeCode.Application;
+using LatteMarche.Application.Common.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.Application.Allevamenti.Services
 {
 
-    public class AllevamentiService : EntityService<Allevamento, int, AllevamentoDto>, IAllevamentiService
+    public class AllevamentiService : IAllevamentiService
     {
 
         #region Fields
 
-        private IRepository<Utente, int> utentiRepository;
+        private IUnitOfWork uow;
 
-        private IComuniService comuniService;
+        private IRepository<Allevamento, int> repository;
+        private IRepository<PrelievoLatte, int> prelieviRepository;
+
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public AllevamentiService(IUnitOfWork uow, IComuniService comuniService)
-            : base(uow)
+        public AllevamentiService(IUnitOfWork uow, IUtentiService utentiService)
         {
-            this.utentiRepository = this.uow.Get<Utente, int>();
-            this.comuniService = comuniService;
+            this.repository = this.uow.Get<Allevamento, int>();
+            this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
+            this.utentiService = utentiService;
         }
 
         #endregion
 
         #region Methods
 
-        public List<AllevamentoDto> GetAllevamentiSitra()
+        public DropDownDto DropDown(int? idUtente = null)
         {
-            return this.repository.Query
-                .Where(a => !String.IsNullOrEmpty(a.CUAA))
-                .ProjectToList<AllevamentoDto>();
+            var dropdown = new DropDownDto();
+
+            var query = GetQuery(idUtente);
+
+            dropdown.Items = query
+                .Select(c => new DropDownItem()
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Utente.RagioneSociale
+                })
+                .ToList();
+
+            return dropdown;
         }
 
-
-        public List<AllevamentoRowDto> Search(AllevamentiSearchDto searchDto)
+        private IQueryable<Allevamento> GetQuery(int? idUtente = null)
         {
-            if (searchDto == null)
-                searchDto = new AllevamentiSearchDto();
+            var query = this.repository.DbSet;
 
-            var query = this.repository.Query;
+            if (!idUtente.HasValue)
+                return query;
 
-            // Codice Allevatore
-            if (!String.IsNullOrEmpty(searchDto.CodiceAllevatore))
-                query = query.Where(a => a.Utente != null && a.Utente.CodiceAllevatore == searchDto.CodiceAllevatore);
+            var utente = this.utentiService.Details(idUtente.Value);
+            var allevamentiIds = new List<int?>();
 
-            // Codice ASL
-            if (!String.IsNullOrEmpty(searchDto.CodiceAsl))
-                query = query.Where(a => a.CodiceAsl == searchDto.CodiceAsl);
-
-            var list = query.ToList();
-
-            return query.ProjectToList<AllevamentoRowDto>();
-        }
-
-        public override AllevamentoDto Details(int key)
-        {
-            var dto = base.Details(key);
-
-            if (dto != null && dto.IdComune != 0)
+            switch (utente.IdProfilo)
             {
-                var comuneObj = this.comuniService.Details(dto.IdComune);
+                case 1:     // Admin
+                    return query;
 
-                if (comuneObj != null)
-                    dto.SiglaProvincia = comuneObj.Provincia;
+                case 7:     // Acquirente
+                    allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdAcquirente == utente.IdAcquirente)
+                        .Select(p => p.IdAllevamento)
+                        .Distinct()
+                        .ToList();
+                    return query.Where(a => allevamentiIds.Contains(a.Id));
+
+                case 3:     // Allevamento
+                    return query.Where(a => a.IdUtente == idUtente);
+
+                case 4:     // Laboratorio
+                    allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdLabAnalisi == idUtente.Value)
+                        .Select(p => p.IdAllevamento)
+                        .Distinct()
+                        .ToList();
+                    return query.Where(a => allevamentiIds.Contains(a.Id));
+
+                case 5:     // Trasportatore
+                    allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdTrasportatore == idUtente.Value)
+                        .Select(p => p.IdAllevamento)
+                        .Distinct()
+                        .ToList();
+                    return query.Where(a => allevamentiIds.Contains(a.Id));
+
+                case 6:     // Destinatario
+                    allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdDestinatario == utente.IdDestinatario)
+                        .Select(p => p.IdAllevamento)
+                        .Distinct()
+                        .ToList();
+                    return query.Where(a => allevamentiIds.Contains(a.Id));
+
+                case 8:     // Cessionario
+                    allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdCessionario == utente.IdCessionario)
+                        .Select(p => p.IdAllevamento)
+                        .Distinct()
+                        .ToList();
+                    return query.Where(a => allevamentiIds.Contains(a.Id));
+
+                default:
+                    return query;
+
             }
 
-            return dto;
-        }
 
-        public override AllevamentoDto Update(AllevamentoDto model)
-        {
-            // Update utente
-            var utente = this.utentiRepository.GetById(model.IdUtente.Value);
-
-            if(utente.IdTipoLatte != model.Utente_IdTipoLatte)
-            {
-                utente.IdTipoLatte = model.Utente_IdTipoLatte.Value;
-                this.utentiRepository.Update(utente);
-                this.uow.SaveChanges();
-            }
-
-            base.Update(model);
-
-            return this.Details(model.Id);
-        }
-
-        protected override Allevamento UpdateProperties(Allevamento viewEntity, Allevamento dbEntity)
-        {
-            dbEntity.CodiceAsl = viewEntity.CodiceAsl;
-            dbEntity.IndirizzoAllevamento = viewEntity.IndirizzoAllevamento;
-            dbEntity.IdComune = viewEntity.IdComune;
-            dbEntity.CUAA = viewEntity.CUAA;
-
-            dbEntity.Latitudine = viewEntity.Latitudine;
-            dbEntity.Longitudine = viewEntity.Longitudine;
-
-            dbEntity.IdAcquirenteDefault = viewEntity.IdAcquirenteDefault;
-
-            return dbEntity;
         }
 
         #endregion

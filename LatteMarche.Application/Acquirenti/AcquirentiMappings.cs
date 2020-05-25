@@ -20,6 +20,7 @@ namespace LatteMarche.Application.Acquirenti
                 .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
                 .ForMember(dest => dest.IdSitra, opts => opts.MapFrom(src => src.IdSitra))
+                .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia))
                 ;
             mappings.CreateMap<AcquirenteDto, Acquirente>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))

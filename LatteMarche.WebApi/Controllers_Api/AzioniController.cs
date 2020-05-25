@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    [ApiCustomAuthorize]
+    //[ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class AzioniController : ApiController

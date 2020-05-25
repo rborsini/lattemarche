@@ -74,5 +74,14 @@ namespace LatteMarche.Core.Models
         public string Note { get; set; }
 
         public virtual List<RuoloUtente> RuoliUtente { get; set; }
+
+        public virtual UtenteXAcquirente UtenteXAcquirente { get; set; }
+
+        public virtual UtenteXCessionario UtenteXCessionario { get; set; }
+
+        public virtual UtenteXDestinatario UtenteXDestinatario { get; set; }
+
+        public virtual TrasportatoreXAzienda TrasportatoreXAzienda { get; set; }
+
     }
 }

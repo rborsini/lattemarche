@@ -1,7 +1,11 @@
 ﻿using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Models;
 using log4net;
+using System;
+using System.Configuration;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -11,7 +15,7 @@ namespace LatteMarche.WebApi.Controllers_Web
     {
         private static ILog log = LogManager.GetLogger(typeof(HomeController));
 
-
+        private bool mvcAuthEnabled = Convert.ToBoolean(ConfigurationManager.AppSettings["mvcAuthEnabled"]);
         private IAutorizzazioniService autorizzazioniService;
         private IUtentiService utentiService;
 
@@ -88,7 +92,7 @@ namespace LatteMarche.WebApi.Controllers_Web
 
         private bool IsAuthorized(string controller, string action, string username)
         {
-            return autorizzazioniService.Authorize(Session, username, "MVC", controller, action);
+            return mvcAuthEnabled ? autorizzazioniService.Authorize(Session, username, "MVC", controller, action) : true;
         }
     }
 }

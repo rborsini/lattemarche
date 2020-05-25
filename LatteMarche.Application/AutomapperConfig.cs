@@ -1,17 +1,16 @@
-﻿using System;
-using AutoMapper;
-using System.Linq.Expressions;
-using AutoMapper.Configuration;
-using LatteMarche.Application.Acquirenti;
+﻿using AutoMapper.Configuration;
 using LatteMarche.Application.AnalisiLatte;
-using LatteMarche.Application.Trasportatori;
-using LatteMarche.Application.Allevamenti;
 using LatteMarche.Application.Auth;
 using LatteMarche.Application.Comuni;
-using LatteMarche.Application.Destinatari;
 using LatteMarche.Application.Logs;
 using LatteMarche.Application.PrelieviLatte;
 using LatteMarche.Application.Dispositivi;
+using LatteMarche.Application.Utenti;
+using LatteMarche.Application.Acquirenti;
+using LatteMarche.Application.Destinatari;
+using LatteMarche.Application.Cessionari;
+using LatteMarche.Application.AziendeTrasportatori;
+using LatteMarche.Application.Trasportatori;
 
 namespace LatteMarche.Application
 {
@@ -24,15 +23,19 @@ namespace LatteMarche.Application
 		{
 
             mappings = AcquirentiMappings.Configure(mappings);
-            mappings = AllevamentiMappings.Configure(mappings);
+            //mappings = AllevamentiMappings.Configure(mappings);
             mappings = AnalisiMappings.Configure(mappings);
             mappings = AuthMappings.Configure(mappings);
+            mappings = AutocisterneMappings.Configure(mappings);
+            mappings = AziendeTrasportatoriMappings.Configure(mappings);
+            mappings = CessionariMappings.Configure(mappings);
             mappings = ComuniMappings.Configure(mappings);
             mappings = DestinatarioMappings.Configure(mappings);
             mappings = DispositiviMappings.Configure(mappings);
             mappings = LogsMappings.Configure(mappings);
             mappings = PrelieviLatteMappings.Configure(mappings);
-            mappings = TrasportatoriMappings.Configure(mappings);
+            mappings = UtentiMappings.Configure(mappings);
+            //mappings = TrasportatoriMappings.Configure(mappings);
 
             return mappings;
             

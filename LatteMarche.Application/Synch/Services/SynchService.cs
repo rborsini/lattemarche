@@ -1,4 +1,4 @@
-﻿using LatteMarche.Application.Latte.Interfaces;
+﻿using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Synch.Interfaces;
 using LatteMarche.Common;
 using LatteMarche.Core;

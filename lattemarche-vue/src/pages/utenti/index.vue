@@ -1,17 +1,9 @@
 <template>
 
-    <div id="utenti-page" class="container-fluid p-0">
+    <div class="container-fluid p-0">
 
-        <!-- Pannello editazione dettaglio -->
-        <editazione-utente-modal ref="editazioneUtenteModal"
-                                :utente="utente"
-                                v-on:salvato="$refs.savedDialog.open()"></editazione-utente-modal>
-
-        <!-- Pannello notifica salvatagggio -->
-        <notification-dialog ref="savedDialog"
-                            :title="'Conferma salvataggio'"
-                            :message="'Utente salvato correttamente'"
-                            v-on:ok="window.location = '/Utenti'"></notification-dialog>
+        <!-- waiter -->
+        <waiter ref="waiter"></waiter>
 
         <!-- Pannello notifica rimozione -->
         <notification-dialog ref="removedDialog"
@@ -30,7 +22,7 @@
 
             <!-- Toolbox -->
             <template slot="toolbox" v-if="canAdd">
-                <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+                <a class="toolbox btn btn-primary float-right" href="/utenti/edit">Aggiungi</a>
             </template>
 
             <!-- Colonne -->
@@ -53,27 +45,26 @@
     import { Prop, Watch, Emit } from "vue-property-decorator";
 
     import DataTable from "../../components/dataTable.vue";
-    import EditazioneUtenteModal from "../utenti/edit.vue";
-    import NotificationDialog from "../../components/notificationDialog.vue";
     import ConfirmDialog from "../../components/confirmDialog.vue";
+    import NotificationDialog from "../../components/notificationDialog.vue";
+    import Waiter from "../../components/waiter.vue";
 
     import { Utente } from "../../models/utente.model";
     import { UtentiService } from "../../services/utenti.service";
 
 
-    declare module 'vue/types/vue' {
-        interface Vue {
-            open(): void
-            openUtente(utente: Utente): void
-            close(): void
-        }
-    }
+    // declare module 'vue/types/vue' {
+    //     interface Vue {
+    //         open(): void
+    //         close(): void
+    //     }
+    // }
 
     @Component({
         components: {
-            ConfirmDialog,
             NotificationDialog,
-            EditazioneUtenteModal,
+            ConfirmDialog,
+            Waiter,
             DataTable
         }
     })
@@ -84,8 +75,8 @@
 
         $refs: any = {
             savedDialog: Vue,
-            editazioneUtenteModal: Vue,
             confirmDeleteDialog: Vue,
+            waiter: Vue,   
             removedDialog: Vue
         }
 
@@ -113,27 +104,16 @@
         public mounted() {
             this.initTable();
 
+            this.$refs.waiter.open();
             this.utentiService.index()
                 .then(response => {
                     this.utenti = response.data;
+                    this.$refs.waiter.close();
                 });
         }
 
         // Evento fine generazione tabella
         public onDataLoaded() {
-
-            $('.edit').click((event) => {
-
-                var element = $(event.currentTarget);
-                var rowId = $(element).data("row-id");
-
-                this.utentiService.details(rowId)
-                    .then(response => {
-                        this.utente = response.data;
-                        this.$refs.editazioneUtenteModal.openUtente(this.utente);
-                    });
-
-            });
 
             $('.delete').click((event) => {
 
@@ -186,7 +166,7 @@
                         var html = '<div class="text-center">';
 
                         if (ce)
-                            html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+                            html += '<a class="edit" title="modifica" href="/utenti/edit?id=' + row.Id + '" ><i class="far fa-edit"></i></a>';
 
                         if (cr)
                             html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';

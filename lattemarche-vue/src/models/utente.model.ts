@@ -20,4 +20,8 @@
     public IdComune: number = 0;
     public IdProfilo: number = 0;
     public IdTipoLatte: number = 0;
+
+    public IdAcquirente?: number;
+    public IdDestinatario?: number;
+
 }

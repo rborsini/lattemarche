@@ -4,6 +4,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
 using WeCode.Application.Interfaces;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.Application.Comuni.Interfaces
 {
@@ -23,6 +24,13 @@ namespace LatteMarche.Application.Comuni.Interfaces
         /// </summary>
         /// <returns></returns>
         List<string> GetProvince();
+
+        /// <summary>
+        /// Elenco comuni appartenenti ad una provincia
+        /// </summary>
+        /// <param name="siglaProvincia"></param>
+        /// <returns></returns>
+        DropDownDto DropDown(string siglaProvincia);
 
     }
 

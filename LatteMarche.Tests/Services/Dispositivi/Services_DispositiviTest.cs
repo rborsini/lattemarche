@@ -45,7 +45,6 @@ namespace LatteMarche.Tests.Services.Dispositivi
             this.dbCleaner = new DbCleaner(uow);
 
             this.dispositiviRepository = this.uow.Get<DispositivoMobile, string>();
-
             this.dispositiviService = this.scope.Resolve<IDispositiviService>();
 
         }

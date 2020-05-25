@@ -21,6 +21,18 @@ namespace LatteMarche.Tests.Services
         private IRepository<Lotto, long> lottiRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
         private IRepository<Utente, int> utentiRepository;
+        private IRepository<Acquirente, int> acquirentiRepository;
+        private IRepository<UtenteXAcquirente, int> utenteXAcquirenteRepository;
+        private IRepository<Destinatario, int> destinatariRepository;
+        private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
+        private IRepository<Cessionario, int> cessionariRepository;
+        private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
+
+        private IRepository<AziendaTrasportatori, int> aziendeTrasportatoriRepository;
+        private IRepository<TrasportatoreXAzienda, int> trasportatoriXAziendaRepository;
+        private IRepository<Autocisterna, int> autocisterneRepository;
+
+
 
         #endregion
 
@@ -35,6 +47,16 @@ namespace LatteMarche.Tests.Services
             this.lottiRepository = this.uow.Get<Lotto, long>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
             this.utentiRepository = this.uow.Get<Utente, int>();
+            this.acquirentiRepository = this.uow.Get<Acquirente, int>();
+            this.utenteXAcquirenteRepository = this.uow.Get<UtenteXAcquirente, int>();
+            this.destinatariRepository = this.uow.Get<Destinatario, int>();
+            this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
+            this.cessionariRepository = this.uow.Get<Cessionario, int>();
+            this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
+
+            this.aziendeTrasportatoriRepository = this.uow.Get<AziendaTrasportatori, int>();
+            this.trasportatoriXAziendaRepository = this.uow.Get<TrasportatoreXAzienda, int>();
+            this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
         }
 
         #endregion
@@ -47,8 +69,20 @@ namespace LatteMarche.Tests.Services
             this.lottiRepository.CleanUp();
 
             this.dispositiviRepository.CleanUp();
+
+            this.autocisterneRepository.CleanUp();
+
+            this.utenteXDestinatarioRepository.CleanUp();
+            this.utenteXCessionarioRepository.CleanUp();
+            this.utenteXAcquirenteRepository.CleanUp();
+            this.trasportatoriXAziendaRepository.CleanUp();
+
             this.allevamentiRepository.CleanUp();
             this.utentiRepository.CleanUp();
+            this.destinatariRepository.CleanUp();
+            this.cessionariRepository.CleanUp();
+            this.acquirentiRepository.CleanUp();
+            this.aziendeTrasportatoriRepository.CleanUp();
 
             this.uow.SaveChanges();
         }

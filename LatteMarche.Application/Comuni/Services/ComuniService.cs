@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WeCode.Application;
 using WeCode.Data.Interfaces;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.Application.Comuni.Services
 {
@@ -65,7 +66,23 @@ namespace LatteMarche.Application.Comuni.Services
                 .OrderBy(p => p)
                 .ToList();
         }
-    
+
+        public DropDownDto DropDown(string siglaProvincia)
+        {
+            var dropdown = new DropDownDto();
+
+            dropdown.Items = this.repository.DbSet
+                .Where(c => c.Provincia == siglaProvincia)
+                .Select(c => new DropDownItem()
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Descrizione
+                })
+                .ToList();
+
+            return dropdown;
+        }
+
         #endregion
     }
 

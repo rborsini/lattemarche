@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using FizzWare.NBuilder;
-using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LatteMarche.Tests.Mappings
 {

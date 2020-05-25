@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.Application.Trasportatori.Dtos;
-using LatteMarche.Application.Trasportatori.Interfaces;
+using LatteMarche.Application.Giri.Dtos;
+using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    //[ApiCustomAuthorize]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class GiriController : ApiController

@@ -27,6 +27,8 @@ namespace LatteMarche.Core.Models
 
         [Column("ID_LABANALISI")]
         public int? IdLabAnalisi { get; set; }
+        [Column("ID_CESSIONARIO")]
+        public int? IdCessionario { get; set; }
 
         [Column("DATA_PRELIEVO")]
         public DateTime? DataPrelievo { get; set; }
