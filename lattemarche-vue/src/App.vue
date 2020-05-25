@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <p>TAI</p>  
+    <p>Latte Marche</p>  
   </div>
 </template>
 

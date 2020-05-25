@@ -5,7 +5,8 @@
 
 @import "_variables.scss";
 @import "_bootswatch.scss";
-@import "../../node_modules/bootstrap/scss/bootstrap";
+/*@import "../../node_modules/bootstrap/scss/bootstrap";*/
+@import "../../../lattemarche-vue/node_modules/bootstrap/scss/bootstrap";
 
 html {
     height: 100%;
@@ -34,7 +35,7 @@ body {
     left: 0;
     right: 0;
     width: 100%;
-    background: #f5f5f5;
+    background: $gray-200;
 
     p {
         font-size: 0.8rem;
@@ -54,24 +55,24 @@ label {
 }
 
 table.dataTable thead tr {
-    color: #fff;
-    background-color: #593196;
+    color: $light;
+    background-color: $primary;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f3ecff;
+    background-color: $gray-200;
 }
 
 .group.group-end {
-    background-color: #5e5a65 !important;
-    color: #fff;
-    font-weight: 700;
+    background-color: $gray-700 !important;
+    color: $light;
+    font-weight: $font-weight-bold;
 }
 
 tfoot {
-    background-color: #593196;
-    color: #fff;
-    font-weight: 700;
+    background-color: $primary;
+    color: $light;
+    font-weight: $font-weight-bold;
 }
 
 #DataTables_Table_0_wrapper {
@@ -79,6 +80,6 @@ tfoot {
 }
 
 .c-table-trasportatori thead tr {
-    background-color: #593196;
-    color: #fff;
+    background-color: $primary;
+    color: $light;
 }
