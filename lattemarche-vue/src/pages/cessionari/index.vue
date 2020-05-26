@@ -4,7 +4,6 @@
     <editazione-cessionario-modal
       ref="editazioneCessionarioModal"
       :cessionario="cessionario"
-      v-on:salvato="$refs.savedDialog.open()"
     ></editazione-cessionario-modal>
 
     <!-- Pannello notifica salvatagggio -->
@@ -119,7 +118,7 @@ export default class CessionariIndexPage extends Vue {
 
       this.cessionariService.details(rowId).then(response => {
         this.cessionario = response.data;
-        this.$refs.editazioneAcquirenteModal.openAcquirente(this.cessionario);
+        this.$refs.editazioneCessionarioModal.openCessionario(this.cessionario);
       });
     });
 
@@ -131,13 +130,13 @@ export default class CessionariIndexPage extends Vue {
     });
   }
 
-  // nuovo acquirente
+  // Nuovo cessionario
   public onAdd() {
     this.cessionario = new Cessionario();
-    this.$refs.editazioneAcquirenteModal.open();
+    this.$refs.editazioneCessionarioModal.open();
   }
 
-  // rimozione acquirente
+  // Rimuovi cessionario
   public onRemove() {
     this.cessionariService
       .delete(this.idCessionarioDaRimuovere)
@@ -146,7 +145,7 @@ export default class CessionariIndexPage extends Vue {
       });
   }
 
-  // inizializzazione tabella
+  // Inizializzazione tabella
   private initTable(): void {
     var options: any = {};
 
