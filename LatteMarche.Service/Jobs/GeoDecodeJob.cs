@@ -2,6 +2,7 @@
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Comuni.Interfaces;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core.Models;
 using LatteMarche.Utils.Geo;
 using System;

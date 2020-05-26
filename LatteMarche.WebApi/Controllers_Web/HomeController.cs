@@ -50,14 +50,8 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             MenuItemViewModel gestione = new MenuItemViewModel("Gestione");
 
-            gestione.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
-            gestione.Items.Add(MakeViewModel("Allevamenti", "Index", "Allevamenti"));
-            gestione.Items.Add(MakeViewModel("Autocisterne", "Index", "Autocisterne"));
-            gestione.Items.Add(MakeViewModel("Destinatari", "Index", "Destinatari"));
             gestione.Items.Add(MakeViewModel("Dispositivi mobili", "Index", "Dispositivi"));
-            //gestione.Items.Add(MakeViewModel("Normative", "Index", "Documenti"));
             gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
-            gestione.Items.Add(MakeViewModel("Tipi latte", "Index", "TipiLatte"));
             gestione.Items.Add(MakeViewModel("Trasportatori", "Index", "Trasportatori"));
             gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
             
@@ -68,6 +62,17 @@ namespace LatteMarche.WebApi.Controllers_Web
             analisi.Items.Add(MakeViewModel("Analisi latte", "Index", "AnalisiLatte"));
 
             model.Add(analisi);
+
+            MenuItemViewModel anagrafiche = new MenuItemViewModel("Anagrafiche");
+
+            anagrafiche.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
+            anagrafiche.Items.Add(MakeViewModel("Cessionari", "Index", "Cessionari"));
+            anagrafiche.Items.Add(MakeViewModel("Autocisterne", "Index", "Autocisterne"));
+            anagrafiche.Items.Add(MakeViewModel("Destinatari", "Index", "Destinatari"));
+            anagrafiche.Items.Add(MakeViewModel("Tipi latte", "Index", "TipiLatte"));
+            anagrafiche.Items.Add(MakeViewModel("Trasportatori", "Index", "Trasportatori"));
+
+            model.Add(anagrafiche);
 
             MenuItemViewModel amministrazione = new MenuItemViewModel("Amministrazione");
             amministrazione.Items.Add(MakeViewModel("Azioni", "Index", "Azioni"));
