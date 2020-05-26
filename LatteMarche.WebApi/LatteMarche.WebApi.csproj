@@ -271,6 +271,8 @@
     <Content Include="dist\dispositiviIndex.html" />
     <Content Include="dist\dispositiviIndex.js" />
     <Content Include="dist\favicon.ico" />
+    <Content Include="dist\laboratoriIndex.html" />
+    <Content Include="dist\laboratoriIndex.js" />
     <Content Include="dist\plugins\datatables\css\dataTable.b4.css" />
     <Content Include="dist\plugins\datatables\images\sort_asc.png" />
     <Content Include="dist\plugins\datatables\images\sort_asc_disabled.png" />

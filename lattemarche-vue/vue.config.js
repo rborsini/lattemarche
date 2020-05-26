@@ -8,6 +8,9 @@ module.exports = {
         cessionariIndex: {            
             entry: 'src/pages/cessionari/index.ts'
         },
+        laboratoriIndex: {            
+            entry: 'src/pages/laboratori/index.ts'
+        },
         allevamentiIndex: {            
             entry: 'src/pages/allevamenti/index.ts'
         },
