@@ -1,5 +1,9 @@
 <template>
   <div>
+
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
+
     <!-- Pannello editazione dettaglio -->
     <editazione-cessionario-modal
       ref="editazioneCessionarioModal"
@@ -51,6 +55,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
+import Waiter from "../../components/waiter.vue";
 import EditazioneCessionarioModal from "../cessionari/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
@@ -71,7 +76,8 @@ declare module "vue/types/vue" {
     ConfirmDialog,
     NotificationDialog,
     EditazioneCessionarioModal,
-    DataTable
+    DataTable,
+    Waiter
   }
 })
 export default class CessionariIndexPage extends Vue {
@@ -79,7 +85,8 @@ export default class CessionariIndexPage extends Vue {
     savedDialog: Vue,
     removedDialog: Vue,
     editazioneAcquirenteModal: Vue,
-    confirmDeleteDialog: Vue
+    confirmDeleteDialog: Vue,
+    waiter: Vue
   };
 
   private cessionariService: CessionariService;
@@ -104,9 +111,11 @@ export default class CessionariIndexPage extends Vue {
   }
 
   public mounted() {
+    this.$refs.waiter.open();
     this.initTable();
     this.cessionariService.index().then(response => {
       this.cessionari = response.data;
+      this.$refs.waiter.close();
     });
   }
 
