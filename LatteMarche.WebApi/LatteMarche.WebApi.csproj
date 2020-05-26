@@ -373,6 +373,7 @@
     <Compile Include="Controllers_Api\CessionariController.cs" />
     <Compile Include="Controllers_Api\DestinatariController.cs" />
     <Compile Include="Controllers_Api\DispositiviController.cs" />
+    <Compile Include="Controllers_Api\LaboratoriAnalisiController.cs" />
     <Compile Include="Controllers_Api\RuoliController.cs" />
     <Compile Include="Controllers_Api\MobileController.cs" />
     <Compile Include="Controllers_Api\TipiProfiloController.cs" />
