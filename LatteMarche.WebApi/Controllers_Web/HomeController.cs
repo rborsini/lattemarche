@@ -52,7 +52,7 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             gestione.Items.Add(MakeViewModel("Dispositivi mobili", "Index", "Dispositivi"));
             gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
-            gestione.Items.Add(MakeViewModel("Trasportatori", "Index", "Trasportatori"));
+            gestione.Items.Add(MakeViewModel("Giri", "Index", "Trasportatori"));
             gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
             
             model.Add(gestione);
