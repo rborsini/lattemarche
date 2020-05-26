@@ -261,6 +261,8 @@
     <Content Include="dist\analisiLatteIndex.js" />
     <Content Include="dist\autocisterneIndex.html" />
     <Content Include="dist\autocisterneIndex.js" />
+    <Content Include="dist\cessionariIndex.html" />
+    <Content Include="dist\cessionariIndex.js" />
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />
@@ -337,6 +339,7 @@
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
+    <Content Include="Views\Cessionari\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -380,6 +383,7 @@
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers_Api\AziendeTrasportatoriController.cs" />
     <Compile Include="Controllers_Api\WidgetsController.cs" />
+    <Compile Include="Controllers_Web\CessionariController.cs" />
     <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
     <Compile Include="Controllers_Web\AutocisterneController.cs" />
     <Compile Include="Controllers_Web\DispositiviController.cs" />

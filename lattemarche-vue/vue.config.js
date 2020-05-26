@@ -5,6 +5,9 @@ module.exports = {
         acquirentiIndex: {            
             entry: 'src/pages/acquirenti/index.ts'
         },
+        cessionariIndex: {            
+            entry: 'src/pages/cessionari/index.ts'
+        },
         allevamentiIndex: {            
             entry: 'src/pages/allevamenti/index.ts'
         },
