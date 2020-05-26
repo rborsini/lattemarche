@@ -47,10 +47,10 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-autocisterna-modal'"
-                :options="trasportatori"
+                :options="trasportatori.Items"
                 :value.sync="autocisterna.IdTrasportatore"
-                :value-field="'Id'"
-                :text-field="'Cognome'"
+                :value-field="'Value'"
+                :text-field="'Text'"
               />
             </div>
           </div>
@@ -150,7 +150,6 @@ export default class EditazioneAutocisternaModal extends Vue {
     this.progressBarVisible = true;
     this.autocisterneService.save(this.autocisterna).then(response => {
       if (response.data != undefined) {
-        this.$emit("salvato");
         this.progressBarVisible = false;
         this.close();
       } else {
