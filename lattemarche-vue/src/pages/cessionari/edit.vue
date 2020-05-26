@@ -47,7 +47,7 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-cessionario-modal'"
-                :options="opzioniProvince"
+                :options="provincia.Items"
                 :value.sync="cessionario.SiglaProvincia"
                 :value-field="'Value'"
                 :text-field="'Text'"
@@ -63,11 +63,10 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-cessionario-modal'"
-                :options="comuni"
+                :options="comune.Items"
                 :value.sync="cessionario.IdComune"
-                :value-field="'Id'"
-                :text-field="'Descrizione'"
-                v-on:value-changed="onComuneSelezionato"
+                :value-field="'Value'"
+                :text-field="'Text'"
               />
             </div>
           </div>
@@ -110,6 +109,7 @@ import { Cessionario } from "../../models/cessionario.model";
 import { Comune } from "../../models/comune.model";
 import { CessionariService } from "../../services/cessionari.service";
 import { ComuniService } from "../../services/comuni.service";
+import { DropdownService } from "../../services/dropdown.service";
 
 @Component({
   components: {
@@ -120,27 +120,27 @@ export default class EditazioneCessionarioModal extends Vue {
   @Prop()
   cessionario!: Cessionario;
 
-  public comuni: Comune[] = [];
-  public opzioniProvince: DropdownItem[] = [];
+  public comune: Dropdown = new Dropdown();
+  public provincia: Dropdown = new Dropdown();
 
   public cessionariService: CessionariService;
-  private comuniService: ComuniService;
+  public dropdownService: DropdownService;
 
   public progressBarVisible = false;
 
   constructor() {
     super();
     this.cessionariService = new CessionariService();
-    this.comuniService = new ComuniService();
+    this.dropdownService = new DropdownService();
   }
 
   mounted() {
-    this.comuniService.getProvince().then(response => {
-      this.opzioniProvince = response.data;
+    this.dropdownService.getProvince().then(response => {
+        this.provincia = response.data;
     });
   }
 
-  public openAcquirente(cess: Cessionario): void {
+  public openCessionario(cess: Cessionario): void {
     $(this.$el).modal("show");
     this.loadComuni(cess.SiglaProvincia);
   }
@@ -151,27 +151,17 @@ export default class EditazioneCessionarioModal extends Vue {
 
   // carica comuni
   public loadComuni(provincia: string): void {
-    this.comuniService.getComuni(provincia).then(response => {
+    this.dropdownService.getComuni(provincia).then(response => {
       if (response.data != null) {
-        this.comuni = response.data;
+        this.comune = response.data;
       }
     });
-  }
-
-  // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
-  public onComuneSelezionato(idComune: string): void {
-    if (this.cessionario.SiglaProvincia == "") {
-      this.comuniService.getComuneDetails(idComune).then(response => {
-        this.cessionario.SiglaProvincia = response.data.Provincia;
-      });
-    }
   }
 
   public onSave() {
     this.progressBarVisible = true;
     this.cessionariService.save(this.cessionario).then(response => {
       if (response.data != undefined) {
-        this.$emit("salvato");
         this.progressBarVisible = false;
         this.close();
       } else {

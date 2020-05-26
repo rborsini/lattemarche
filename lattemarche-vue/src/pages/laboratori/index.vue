@@ -1,37 +1,34 @@
 <template>
   <div>
     <!-- Pannello editazione dettaglio -->
-    <editazione-cessionario-modal
-      ref="editazioneCessionarioModal"
-      :cessionario="cessionario"
-    ></editazione-cessionario-modal>
+    <editazione-laboratorio-modal ref="editazioneLaboratorioModal" :laboratorio="laboratorio"></editazione-laboratorio-modal>
 
     <!-- Pannello notifica salvatagggio -->
     <notification-dialog
       ref="savedDialog"
       :title="'Conferma salvataggio'"
-      :message="'Cessionario salvato correttamente'"
-      v-on:ok="window.location = '/Cessionari'"
+      :message="'Laboratorio salvato correttamente'"
+      v-on:ok="window.location = '/laboratori'"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
     <notification-dialog
       ref="removedDialog"
       :title="'Conferma rimozione'"
-      :message="'Acquirente rimosso correttamente'"
-      v-on:ok="window.location = '/Cessionari'"
+      :message="'Laboratorio rimosso correttamente'"
+      v-on:ok="window.location = '/laboratori'"
     ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
     <confirm-dialog
       ref="confirmDeleteDialog"
       :title="'Conferma eliminazione'"
-      :message="'Sei sicuro di voler rimuovere il cessionario selezionato?'"
+      :message="'Sei sicuro di voler rimuovere il laboratorio selezionato?'"
       v-on:confirmed="onRemove()"
     ></confirm-dialog>
 
     <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="cessionari" v-on:data-loaded="onDataLoaded">
+    <data-table :options="tableOptions" :rows="acquirenti" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
       <template slot="toolbox" v-if="canAdd">
         <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
@@ -39,8 +36,8 @@
 
       <!-- Colonne -->
       <template slot="thead">
-        <th>P. IVA</th>
-        <th>Ragione sociale</th>
+        <th>Id</th>
+        <th>Descrizione</th>
         <th v-if="canEdit || canRemove"></th>
       </template>
     </data-table>
@@ -49,18 +46,20 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
-import EditazioneCessionarioModal from "../cessionari/edit.vue";
+import EditazioneLaboratorioModal from "../laboratori/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
-import { Cessionario } from "../../models/cessionario.model";
-import { CessionariService } from "../../services/cessionari.service";
+
+import { LaboratoriService } from '../../services/laboratori.service';
+import { Laboratorio } from '../../models/laboratorio.model';
 
 declare module "vue/types/vue" {
   interface Vue {
     open(): void;
-    openCessionario(cess: Cessionario): void;
+    openLaboratorio(lab: Laboratorio): void;
     close(): void;
   }
 }
@@ -70,24 +69,24 @@ declare module "vue/types/vue" {
     Select2,
     ConfirmDialog,
     NotificationDialog,
-    EditazioneCessionarioModal,
+    EditazioneLaboratorioModal,
     DataTable
   }
 })
-export default class CessionariIndexPage extends Vue {
+export default class LaboratoriIndexPage extends Vue {
   $refs: any = {
     savedDialog: Vue,
     removedDialog: Vue,
-    editazioneAcquirenteModal: Vue,
+    editazioneLaboratorioModal: Vue,
     confirmDeleteDialog: Vue
   };
 
-  private cessionariService: CessionariService;
-  private cessionario: Cessionario;
-  private idCessionarioDaRimuovere!: number;
+  private laboratoriService: LaboratoriService;
+  private laboratorio: Laboratorio;
+  private idLaboratorioDaRimuovere!: number;
 
   public tableOptions: any = {};
-  public cessionari: Cessionario[] = [];
+  public laboratori: Laboratorio[] = [];
   public canAdd: boolean = false;
   public canEdit: boolean = false;
   public canRemove: boolean = false;
@@ -95,8 +94,8 @@ export default class CessionariIndexPage extends Vue {
   constructor() {
     super();
 
-    this.cessionariService = new CessionariService();
-    this.cessionario = new Cessionario();
+    this.laboratoriService = new LaboratoriService();
+    this.laboratorio = new Laboratorio();
 
     this.canAdd = $("#canAdd").val() == "true";
     this.canEdit = $("#canEdit").val() == "true";
@@ -105,8 +104,8 @@ export default class CessionariIndexPage extends Vue {
 
   public mounted() {
     this.initTable();
-    this.cessionariService.index().then(response => {
-      this.cessionari = response.data;
+    this.laboratoriService.index().then(response => {
+      this.laboratori = response.data;
     });
   }
 
@@ -116,43 +115,40 @@ export default class CessionariIndexPage extends Vue {
       var element = $(event.currentTarget);
       var rowId = $(element).data("row-id");
 
-      this.cessionariService.details(rowId).then(response => {
-        this.cessionario = response.data;
-        this.$refs.editazioneCessionarioModal.openCessionario(this.cessionario);
+      this.laboratoriService.details(rowId).then(response => {
+        this.laboratorio = response.data;
+        this.$refs.editazioneAcquirenteModal.openAcquirente(this.laboratorio);
       });
     });
 
     $(".delete").click(event => {
       var element = $(event.currentTarget);
-      this.idCessionarioDaRimuovere = $(element).data("row-id");
-
+      this.idLaboratorioDaRimuovere = $(element).data("row-id");
       this.$refs.confirmDeleteDialog.open();
     });
   }
 
-  // Nuovo cessionario
+  // nuovo acquirente
   public onAdd() {
-    this.cessionario = new Cessionario();
-    this.$refs.editazioneCessionarioModal.open();
+    this.laboratorio = new Laboratorio();
+    this.$refs.editazioneAcquirenteModal.open();
   }
 
-  // Rimuovi cessionario
+  // rimozione acquirente
   public onRemove() {
-    this.cessionariService
-      .delete(this.idCessionarioDaRimuovere)
-      .then(response => {
+    this.laboratoriService.delete(this.idLaboratorioDaRimuovere).then(response => {
         this.$refs.removedDialog.open();
       });
   }
 
-  // Inizializzazione tabella
+  // inizializzazione tabella
   private initTable(): void {
     var options: any = {};
 
     options.columns = [];
 
-    options.columns.push({ data: "Piva" });
-    options.columns.push({ data: "RagioneSociale" });
+    options.columns.push({ data: "Id" });
+    options.columns.push({ data: "Descrizione" });
 
     var ce = this.canEdit;
     var cr = this.canRemove;

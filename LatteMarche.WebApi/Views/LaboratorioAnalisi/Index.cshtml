@@ -1,10 +1,10 @@
-﻿using LatteMarche.WebApi.Models
+﻿@using LatteMarche.WebApi.Models
 @section Breadcrumb
 {
     @{
         BreadcrumbViewModel bm = new BreadcrumbViewModel();
         bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
-        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Laboratori analisi" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Laboratori" });
     }
 
 
@@ -12,9 +12,23 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<div id="laboratorio-analisi-page" class="container">
-    <h1>Laboratorio analisi</h1>
-</div>
+@{
+    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+}
+
+@{
+    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
+    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
+    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
+}
+
+<input hidden id="canAdd" value="@canAdd" />
+<input hidden id="canEdit" value="@canEdit" />
+<input hidden id="canRemove" value="@canRemove" />
+
+<div id="app"></div>
+
+<script src="@Url.Content("~/dist/laboratoriIndex.js")?ver=@version"></script>
 
 
 

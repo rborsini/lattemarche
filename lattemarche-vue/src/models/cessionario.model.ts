@@ -1,8 +1,8 @@
 ﻿export class Cessionario {
     public Id: number = 0;
-    public RagioneSociale: string = "";
     public Piva: string = "";
+    public RagioneSociale: string = "";
     public Indirizzo: string = "";
-    public IdComune: number = 0;
     public SiglaProvincia: string = "";
+    public IdComune: number = 0;
 }

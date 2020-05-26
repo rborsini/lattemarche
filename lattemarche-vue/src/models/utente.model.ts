@@ -23,5 +23,7 @@
 
     public IdAcquirente?: number;
     public IdDestinatario?: number;
+    public IdCessionario?: number;
+    public IdLaboratorio?: number;
 
 }

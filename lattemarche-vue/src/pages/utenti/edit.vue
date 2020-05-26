@@ -1,169 +1,218 @@
 <template>
-<div>
-
+  <div>
     <!-- waiter -->
     <waiter ref="waiter"></waiter>
 
     <!-- modale errore generico -->
-    <notification-dialog ref="errorDialog" :title="'Errore imprevisto'" :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'" v-on:ok="reload()"></notification-dialog>
+    <notification-dialog
+      ref="errorDialog"
+      :title="'Errore imprevisto'"
+      :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
+      v-on:ok="reload()"
+    ></notification-dialog>
 
     <!-- modale conferma salvataggio -->
-    <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Utente salvato correttamente'" v-on:ok="reload()" ></notification-dialog>
-
+    <notification-dialog
+      ref="savedDialog"
+      :title="'Conferma salvataggio'"
+      :message="'Utente salvato correttamente'"
+      v-on:ok="reload()"
+    ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione utente -->
-    <confirm-dialog ref="confirmDeleteDialog"
-                    :title="'Conferma eliminazione'"
-                    :message="'Sei sicuro di procedere con l\'eliminazione?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>        
+    <confirm-dialog
+      ref="confirmDeleteDialog"
+      :title="'Conferma eliminazione'"
+      :message="'Sei sicuro di procedere con l\'eliminazione?'"
+      v-on:confirmed="onRemove()"
+    ></confirm-dialog>
 
     <!-- Pannello notifica eliminazione commessa -->
-    <notification-dialog ref="removedDialog"
-                        :title="'Conferma eliminazione'"
-                        :message="'Utente eliminato correttamente'"
-                        v-on:ok="redirect()"></notification-dialog>            
-
+    <notification-dialog
+      ref="removedDialog"
+      :title="'Conferma eliminazione'"
+      :message="'Utente eliminato correttamente'"
+      v-on:ok="redirect()"
+    ></notification-dialog>
 
     <div>
-        
-        <ul class="nav nav-tabs" id="tabWrapper">
-            <li class="active">
-                <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
-            </li>
-        </ul>
+      <ul class="nav nav-tabs" id="tabWrapper">
+        <li class="active">
+          <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
+        </li>
+      </ul>
 
-        <div class="tab-content">
-
-            <div id="dettaglio" class="tab-pane fade show active">
-
-                <!-- tipo profilo -->
-                <div class="row form-group pt-5">
-                    <label class="col-sm-2">Tipo profilo</label>
-                    <div class="col-sm-4">
-                        <select2 class="form-control"
-                                    :disabled="utente.Id != 0"
-                                    :options="profilo.Items"
-                                    :value.sync="utente.IdProfilo"
-                                    :value-field="'Value'"
-                                    :text-field="'Text'" />
-                    </div>
-
-                    <!-- Acquirente -->
-                    <label  v-if="utente.IdProfilo == 7" class="col-sm-2">Acquirente</label>
-                    <div    v-if="utente.IdProfilo == 7" class="col-sm-4">
-                        <select2 class="form-control"
-                                    :options="acquirente.Items"
-                                    :value.sync="utente.IdAcquirente"
-                                    :value-field="'Value'"
-                                    :text-field="'Text'" />
-                    </div>
-
-
-                </div>   
-
-                <!-- ragione sociale / username -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Ragione sociale</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.RagioneSociale" />
-                    </div>
-                    <label class="col-sm-2">Username</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Username" />
-                    </div>
-                </div>  
-
-                <!-- nome / cognome -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Nome</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Nome" />
-                    </div>
-                    <label class="col-sm-2">Cognome</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Cognome" />
-                    </div>
-                </div>          
-
-                <!-- sesso / p.iva/cf -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Sesso</label>
-                    <div class="col-sm-4">
-                        <select2 class="form-control"
-                                    :placeholder="'-'"
-                                    :options="sesso.Items"
-                                    :value.sync="utente.Sesso"
-                                    :value-field="'Value'"
-                                    :text-field="'Text'" />
-                    </div>
-                    <label class="col-sm-2">P. Iva / C.F.</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.PivaCF" />
-                    </div>
-                </div>        
-
-                <!-- indirizzo / provincia / città -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Indirizzo</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Indirizzo" />
-                    </div>
-
-                    <label class="col-sm-2">Provincia</label>
-                    <div class="col-sm-1">
-                        <select2 class="form-control"
-                                    :options="provincia.Items"
-                                    :value.sync="utente.SiglaProvincia"
-                                    :value-field="'Value'"
-                                    :text-field="'Text'"
-                                    v-on:value-changed="loadComuni" />
-                    </div>
-                    <div class="col-sm-3">
-                        <select2 class="form-control"
-                                    :options="comune.Items"
-                                    :value.sync="utente.IdComune"
-                                    :value-field="'Value'"
-                                    :text-field="'Text'" />
-                    </div>
-                </div>       
-
-                <!-- telefono / cellulare -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Telefono</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Telefono" />
-                    </div>
-                    <label class="col-sm-2">Cellulare</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" v-model="utente.Cellulare" />
-                    </div>
-                </div>                                       
-
-                <!-- note -->
-                <div class="row form-group">
-                    <label class="col-sm-2">Note</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
-                    </div>
-                </div>
-
+      <div class="tab-content">
+        <div id="dettaglio" class="tab-pane fade show active">
+          <!-- tipo profilo -->
+          <div class="row form-group pt-5">
+            <label class="col-sm-2">Tipo profilo</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :disabled="utente.Id != 0"
+                :options="profilo.Items"
+                :value.sync="utente.IdProfilo"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
             </div>
 
-            <!-- Annulla / Salva -->
-            <div class="row pt-3">
-                <div class="col-12 text-right">
-                    <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
-                    <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
-                </div>
+            <!-- Acquirente -->
+            <label v-if="utente.IdProfilo == 7" class="col-sm-2">Acquirente</label>
+            <div v-if="utente.IdProfilo == 7" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="acquirente.Items"
+                :value.sync="utente.IdAcquirente"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
             </div>
 
+            <!-- Cessionario -->
+            <label v-if="utente.IdProfilo == 8" class="col-sm-2">Cessionario</label>
+            <div v-if="utente.IdProfilo == 8" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="cessionario.Items"
+                :value.sync="utente.IdCessionario"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>
+
+            <!-- Laboratorio -->
+            <label v-if="utente.IdProfilo == 4" class="col-sm-2">Laboratorio</label>
+            <div v-if="utente.IdProfilo == 4" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="laboratorio.Items"
+                :value.sync="utente.IdLaboratorio"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>
+
+            <!-- Destinatario -->
+            <label v-if="utente.IdProfilo == 6" class="col-sm-2">Destinatario</label>
+            <div v-if="utente.IdProfilo == 6" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="destinatario.Items"
+                :value.sync="utente.IdDestinatario"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>
+          </div>
+
+          <!-- ragione sociale / username -->
+          <div class="row form-group">
+            <label class="col-sm-2">Ragione sociale</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.RagioneSociale" />
+            </div>
+            <label class="col-sm-2">Username</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Username" />
+            </div>
+          </div>
+
+          <!-- nome / cognome -->
+          <div class="row form-group">
+            <label class="col-sm-2">Nome</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Nome" />
+            </div>
+            <label class="col-sm-2">Cognome</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Cognome" />
+            </div>
+          </div>
+
+          <!-- sesso / p.iva/cf -->
+          <div class="row form-group">
+            <label class="col-sm-2">Sesso</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :placeholder="'-'"
+                :options="sesso.Items"
+                :value.sync="utente.Sesso"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>
+            <label class="col-sm-2">P. Iva / C.F.</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.PivaCF" />
+            </div>
+          </div>
+
+          <!-- indirizzo / provincia / città -->
+          <div class="row form-group">
+            <label class="col-sm-2">Indirizzo</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Indirizzo" />
+            </div>
+
+            <label class="col-sm-2">Provincia</label>
+            <div class="col-sm-1">
+              <select2
+                class="form-control"
+                :options="provincia.Items"
+                :value.sync="utente.SiglaProvincia"
+                :value-field="'Value'"
+                :text-field="'Text'"
+                v-on:value-changed="loadComuni"
+              />
+            </div>
+            <div class="col-sm-3">
+              <select2
+                class="form-control"
+                :options="comune.Items"
+                :value.sync="utente.IdComune"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>
+          </div>
+
+          <!-- telefono / cellulare -->
+          <div class="row form-group">
+            <label class="col-sm-2">Telefono</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Telefono" />
+            </div>
+            <label class="col-sm-2">Cellulare</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="utente.Cellulare" />
+            </div>
+          </div>
+
+          <!-- note -->
+          <div class="row form-group">
+            <label class="col-sm-2">Note</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
+            </div>
+          </div>
         </div>
-    </div>            
 
-</div>
+        <!-- Annulla / Salva -->
+        <div class="row pt-3">
+          <div class="col-12 text-right">
+            <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
+            <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-<script lang="ts">
 
+<script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import * as jquery from "jquery";
 
@@ -171,174 +220,184 @@ import ConfirmDialog from "../../components/confirmDialog.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import Waiter from "../../components/waiter.vue";
 import Select2 from "../../components/select2.vue";
-import { UtentiService } from '@/services/utenti.service';
-import { DropdownService } from '@/services/dropdown.service';
-import { Utente } from '@/models/utente.model';
-import { UrlService } from '@/services/url.service';
-import { PermissionsService } from '@/services/permissions.service';
-import { Dropdown, DropdownItem } from '../../models/dropdown.model';
+import { UtentiService } from "@/services/utenti.service";
+import { DropdownService } from "@/services/dropdown.service";
+import { Utente } from "@/models/utente.model";
+import { UrlService } from "@/services/url.service";
+import { PermissionsService } from "@/services/permissions.service";
+import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 
 @Component({
-    components: {
-        Select2,
-        ConfirmDialog,     
-        Waiter,
-        NotificationDialog
-    }    
+  components: {
+    Select2,
+    ConfirmDialog,
+    Waiter,
+    NotificationDialog
+  }
 })
 export default class App extends Vue {
-    $refs: any = {
-        savedDialog: Vue,
-        errorDialog: Vue,
-        waiter: Vue,        
-        confirmDeleteDialog: Vue,
-    };
+  $refs: any = {
+    savedDialog: Vue,
+    errorDialog: Vue,
+    waiter: Vue,
+    confirmDeleteDialog: Vue
+  };
 
-    public itemNotFound: boolean = false;
-    public isReadOnly: boolean = false;
-    public btnDeleteVisible: boolean = false;
+  public itemNotFound: boolean = false;
+  public isReadOnly: boolean = false;
+  public btnDeleteVisible: boolean = false;
 
-    public utentiService: UtentiService = new UtentiService();
-    public dropdownService: DropdownService = new DropdownService();
+  public utentiService: UtentiService = new UtentiService();
+  public dropdownService: DropdownService = new DropdownService();
 
-    public utente: Utente = new Utente();
+  public utente: Utente = new Utente();
 
-    public profilo: Dropdown = new Dropdown();
-    public sesso: Dropdown = new Dropdown();
-    public provincia: Dropdown = new Dropdown();
-    public comune: Dropdown = new Dropdown();
-    public acquirente: Dropdown = new Dropdown();
+  public profilo: Dropdown = new Dropdown();
+  public sesso: Dropdown = new Dropdown();
+  public provincia: Dropdown = new Dropdown();
+  public comune: Dropdown = new Dropdown();
+  public acquirente: Dropdown = new Dropdown();
+  public cessionario: Dropdown = new Dropdown();
+  public laboratorio: Dropdown = new Dropdown();
+  public destinatario: Dropdown = new Dropdown();
 
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+
+  public mounted() {
+    this.readPermissions();
+
+    var id = UrlService.getUrlParameter("id");
+    if (id) {
+      this.load(id);
     }
+    this.loadDropdown();
 
-    public mounted() {
+    this.keepSelectedTabOnRefresh();
+  }
 
-        this.readPermissions();
+  // caricamento commessa
+  private load(id: string) {
+    this.$refs.waiter.open();
+    this.utentiService.details(id).then(response => {
+      if (response.data != null) {
+        this.utente = response.data;
+        this.loadComuni(this.utente.SiglaProvincia);
+      } else {
+        this.itemNotFound = true;
+      }
 
-        var id = UrlService.getUrlParameter("id");
-        if(id) {
-            this.load(id);
-        }         
-        this.loadDropdown();  
+      this.$refs.waiter.close();
+    });
+  }
 
-        this.keepSelectedTabOnRefresh();
-    }
+  // salvataggio commessa
+  public onSave() {
+    this.$refs.waiter.open();
 
-    // caricamento commessa
-    private load(id: string) {
-        this.$refs.waiter.open();
-        this.utentiService.details(id).then(response => {
-        
-            if(response.data != null) {            
-                this.utente = response.data;                        
-                this.loadComuni(this.utente.SiglaProvincia);
-            } else {
-                this.itemNotFound = true;
-            }
+    this.utentiService.save(this.utente).then(
+      response => {
+        this.utente = response.data;
+        this.$refs.waiter.close();
+        this.$refs.savedDialog.open();
+      },
+      error => {
+        this.$refs.waiter.close();
+        if (error.response.status == 400) {
+          // Bad Request => messaggi di validazione
+          this.$refs.validationDialog.openDialog(
+            error.response.data.ModelState
+          );
+        } else {
+          this.$refs.errorDialog.open();
+        }
+      }
+    );
+  }
 
-            this.$refs.waiter.close();
+  // caricamento dropdown
+  private loadDropdown() {
+    // tipi profilo
+    this.dropdownService.getProfili().then(response => {
+      this.profilo = response.data;
+    });
 
-        });
-    }
+    // sesso
+    this.sesso.Items.push(new DropdownItem("M", "Maschio"));
+    this.sesso.Items.push(new DropdownItem("F", "Femmina"));
 
-    // salvataggio commessa
-    public onSave() {
-        this.$refs.waiter.open();
-    
-        this.utentiService.save(this.utente).then(
-            (response) => {
-                this.utente = response.data;
-                this.$refs.waiter.close();
-                this.$refs.savedDialog.open();
-            },
-            (error) => { 
+    // province
+    this.dropdownService.getProvince().then(response => {
+      this.provincia = response.data;
+    });
 
-                this.$refs.waiter.close();
-                if(error.response.status == 400){   // Bad Request => messaggi di validazione
-                this.$refs.validationDialog.openDialog(error.response.data.ModelState);
-                } else {
-                this.$refs.errorDialog.open();
-                }
-            }
-        );
-    }
+    // acquirente
+    this.dropdownService.getAcquirenti().then(response => {
+      this.acquirente = response.data;
+    });
 
-    // caricamento dropdown
-    private loadDropdown() {
+    // Cesionario
+    this.dropdownService.getCessionari().then(response => {
+      this.cessionario = response.data;
+    });
 
-        // tipi profilo
-        this.dropdownService.getProfili().then(response => {
-            this.profilo = response.data;
-        });
+    // Laboratorio
+    this.dropdownService.getLaboratori().then(response => {
+      this.laboratorio = response.data;
+    });
 
-        // sesso
-        this.sesso.Items.push(new DropdownItem("M", "Maschio"));
-        this.sesso.Items.push(new DropdownItem("F", "Femmina"));        
+    // Destinatario
+    this.dropdownService.getDestinatari().then(response => {
+      this.destinatario = response.data;
+    });
+  }
 
-        // province
-        this.dropdownService.getProvince().then(response => {
-            this.provincia = response.data;
-        });
+  public loadComuni(provincia: string): void {
+    this.dropdownService.getComuni(provincia).then(response => {
+      if (response.data != null) {
+        this.comune = response.data;
+      }
+    });
+  }
 
-        // acquirente
-        this.dropdownService.getAcquirenti().then(response => {
-            this.acquirente = response.data;
-        });
+  // Mantengo la tab selezionata per il refresh della pagina
+  public keepSelectedTabOnRefresh() {
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+      window.location.hash = String($(e.target).attr("href"));
+    });
 
-    }
+    $('#tabWrapper a[href="' + window.location.hash + '"]').tab("show");
+  }
 
-    public loadComuni(provincia: string): void {
-        this.dropdownService.getComuni(provincia)
-            .then(response => {
-                if (response.data != null) {
-                    this.comune = response.data;
-                }
-            });
-    } 
+  // elimina utente
+  public onRemove() {
+    this.utentiService.delete(this.utente.Id).then(response => {
+      this.$refs.removedDialog.open();
+    });
+  }
 
-    // Mantengo la tab selezionata per il refresh della pagina
-    public keepSelectedTabOnRefresh() {
-        $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
-            window.location.hash = String($(e.target).attr("href"));
-        });
+  // lettura permessi da jwt
+  private readPermissions() {
+    this.isReadOnly = !PermissionsService.isViewItemAuthorized(
+      "Utenti",
+      "Edit",
+      "Edit"
+    );
+    this.btnDeleteVisible = PermissionsService.isViewItemAuthorized(
+      "Utenti",
+      "Edit",
+      "Delete"
+    );
+  }
 
-        $('#tabWrapper a[href="' + window.location.hash + '"]').tab("show");
-    }
+  // reload della pagina sullo stesso id
+  public reload() {
+    UrlService.reload();
+  }
 
-    // elimina utente
-    public onRemove() {
-        this.utentiService.delete(this.utente.Id).then(response => {
-            this.$refs.removedDialog.open();
-        });
-    }
-
-    // lettura permessi da jwt
-    private readPermissions() {
-
-        this.isReadOnly = !PermissionsService.isViewItemAuthorized(
-            "Utenti",
-            "Edit",
-            "Edit"
-        );
-        this.btnDeleteVisible = PermissionsService.isViewItemAuthorized(
-            "Utenti",
-            "Edit",
-            "Delete"
-        );
-    }
-
-    // reload della pagina sullo stesso id
-    public reload() {
-        UrlService.reload();
-    }
-
-    public redirect() {
-        UrlService.redirect("/utenti");
-    }    
-
+  public redirect() {
+    UrlService.redirect("/utenti");
+  }
 }
-
-
 </script>
