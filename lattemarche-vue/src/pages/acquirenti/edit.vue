@@ -73,7 +73,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-          <button class="btn btn-primary" v-on:click="onSave()">Salva</button>
+          <button :disabled="acquirente.Piva === '' || acquirente.RagioneSociale === '' ||  acquirente.Indirizzo === '' || acquirente.SiglaProvincia === '' || acquirente.IdComune == 0" class="btn btn-primary" v-on:click="onSave()">Salva</button>
         </div>
       </div>
     </div>
@@ -92,64 +92,64 @@ import { AcquirentiService } from "../../services/acquirenti.service";
 import { DropdownService } from "../../services/dropdown.service";
 
 @Component({
-  components: {
-    Select2
-  }
+    components: {
+        Select2
+    }
 })
 export default class EditazioneAcquirenteModal extends Vue {
-  @Prop()
-  acquirente!: Acquirente;
+    @Prop()
+    acquirente!: Acquirente;
 
-  public comune: Dropdown = new Dropdown();
-  public provincia: Dropdown = new Dropdown();
+    public comune: Dropdown = new Dropdown();
+    public provincia: Dropdown = new Dropdown();
 
-  public acquirentiService: AcquirentiService;
-  private dropdownService: DropdownService;
+    public acquirentiService: AcquirentiService;
+    private dropdownService: DropdownService;
 
-  constructor() {
-    super();
-    this.acquirentiService = new AcquirentiService();
-    this.dropdownService = new DropdownService();
-  }
+    constructor() {
+        super();
+        this.acquirentiService = new AcquirentiService();
+        this.dropdownService = new DropdownService();
+    }
 
-  mounted() {
-    this.dropdownService.getProvince().then(response => {
-      this.provincia = response.data;
-    });
-  }
+    mounted() {
+        this.dropdownService.getProvince().then(response => {
+            this.provincia = response.data;
+        });
+    }
 
-  public openAcquirente(acqu: Acquirente): void {
-    $(this.$el).modal("show");
-    this.loadComuni(acqu.SiglaProvincia);
-  }
+    public openAcquirente(acqu: Acquirente): void {
+        $(this.$el).modal("show");
+        this.loadComuni(acqu.SiglaProvincia);
+    }
 
-  public open(): void {
-    $(this.$el).modal("show");
-  }
+    public open(): void {
+        $(this.$el).modal("show");
+    }
 
-  // carica comuni
-  public loadComuni(provincia: string): void {
-    this.dropdownService.getComuni(provincia).then(response => {
-      if (response.data != null) {
-        this.comune = response.data;
-      }
-    });
-  }
+    // carica comuni
+    public loadComuni(provincia: string): void {
+        this.dropdownService.getComuni(provincia).then(response => {
+            if (response.data != null) {
+                this.comune = response.data;
+            }
+        });
+    }
 
-  public onSave() {
-    this.acquirentiService.save(this.acquirente).then(response => {
-      if (response.data != undefined) {
-        this.$emit("salvato");
-        this.close();
-      } else {
-        this.acquirente = response.data;
-        this.close();
-      }
-    });
-  }
+    public onSave() {
+        this.acquirentiService.save(this.acquirente).then(response => {
+            if (response.data != undefined) {
+                this.$emit("salvato");
+                this.close();
+            } else {
+                this.acquirente = response.data;
+                this.close();
+            }
+        });
+    }
 
-  public close(): void {
-    $(this.$el).modal("hide");
-  }
+    public close(): void {
+        $(this.$el).modal("hide");
+    }
 }
 </script>
