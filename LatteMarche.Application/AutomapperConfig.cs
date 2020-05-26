@@ -11,6 +11,7 @@ using LatteMarche.Application.Destinatari;
 using LatteMarche.Application.Cessionari;
 using LatteMarche.Application.AziendeTrasportatori;
 using LatteMarche.Application.Trasportatori;
+using LatteMarche.Application.Allevamenti;
 
 namespace LatteMarche.Application
 {
@@ -23,7 +24,7 @@ namespace LatteMarche.Application
 		{
 
             mappings = AcquirentiMappings.Configure(mappings);
-            //mappings = AllevamentiMappings.Configure(mappings);
+            mappings = AllevamentiMappings.Configure(mappings);
             mappings = AnalisiMappings.Configure(mappings);
             mappings = AuthMappings.Configure(mappings);
             mappings = AutocisterneMappings.Configure(mappings);

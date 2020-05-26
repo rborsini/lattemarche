@@ -126,6 +126,7 @@
     <Compile Include="AutomapperConfig.cs" />
     <Compile Include="Mail\DownloadMailTest.cs" />
     <Compile Include="Mappings\Mappings_AcquirentiTest.cs" />
+    <Compile Include="Mappings\Mappings_AllevamentiTest.cs" />
     <Compile Include="Mappings\Mappings_AutocisterneTest.cs" />
     <Compile Include="Mappings\Mappings_AziendeTrasportatoriTest.cs" />
     <Compile Include="Mappings\Mappings_CessionariTest.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Services\Dispositivi\Services_DispositiviTest.cs" />
     <Compile Include="Services\Mobile\Services_MobileTest.cs" />
     <Compile Include="Services\Utenti\Services_AcquirenteTest.cs" />
+    <Compile Include="Services\Utenti\Services_AllevatoreTest.cs" />
     <Compile Include="Services\Utenti\Services_AziendaTrasportatoriTest.cs" />
     <Compile Include="Services\Utenti\Services_CessionarioTest.cs" />
     <Compile Include="Services\Utenti\Services_DestinatarioTest.cs" />

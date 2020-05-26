@@ -136,6 +136,10 @@
     <Compile Include="Migrations\202005260732048_Aggiornata_V_Prelievi.Designer.cs">
       <DependentUpon>202005260732048_Aggiornata_V_Prelievi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005260845434_AggiuntaRelazioneAllevamentiUtente.cs" />
+    <Compile Include="Migrations\202005260845434_AggiuntaRelazioneAllevamentiUtente.Designer.cs">
+      <DependentUpon>202005260845434_AggiuntaRelazioneAllevamentiUtente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -193,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005260732048_Aggiornata_V_Prelievi.resx">
       <DependentUpon>202005260732048_Aggiornata_V_Prelievi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005260845434_AggiuntaRelazioneAllevamentiUtente.resx">
+      <DependentUpon>202005260845434_AggiuntaRelazioneAllevamentiUtente.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

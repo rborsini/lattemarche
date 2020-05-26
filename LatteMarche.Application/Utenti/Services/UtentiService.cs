@@ -26,6 +26,7 @@ namespace LatteMarche.Application.Utenti.Services
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
         private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
         private IRepository<TrasportatoreXAzienda, int> trasportatoriXAziendeRepository;
+        private IRepository<Allevamento, int> allevamentiRepository;
 
         private IComuniService comuniService;
 
@@ -42,6 +43,7 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
             this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
             this.trasportatoriXAziendeRepository = this.uow.Get<TrasportatoreXAzienda, int>();
+            this.allevamentiRepository = this.uow.Get<Allevamento, int>();
 
             this.comuniService = new ComuniService(uow);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
 		}
@@ -56,6 +58,10 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXCessionarioRepository.Delete(key);
             this.utenteXDestinatarioRepository.Delete(key);
             this.trasportatoriXAziendeRepository.Delete(key);
+
+            var allevamentiDaRimuovere = this.allevamentiRepository.DbSet.Where(a => a.IdUtente == key).Select(a => a.Id).ToList();            
+            this.allevamentiRepository.Delete(allevamentiDaRimuovere.ToArray());
+
             this.uow.SaveChanges();
 
             base.Delete(key);
@@ -238,8 +244,58 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.UtenteXCessionario = UpdateUtenteXCessionario(dbEntity.UtenteXCessionario, viewEntity.UtenteXCessionario);
             dbEntity.UtenteXDestinatario = UpdateUtenteXDestinatario(dbEntity.UtenteXDestinatario, viewEntity.UtenteXDestinatario);
             dbEntity.TrasportatoreXAzienda = UpdateTrasportatoreXAzienda(dbEntity.TrasportatoreXAzienda, viewEntity.TrasportatoreXAzienda);
+            dbEntity.Allevamenti = UpdateAllevamenti(dbEntity.Allevamenti, viewEntity.Allevamenti);
 
             return dbEntity;
+        }
+
+        private List<Allevamento> UpdateAllevamenti(List<Allevamento> allevamentiDb, List<Allevamento> allevamentiView)
+        {
+            // allevamenti rimossi
+            var allevamentiDaRimuovere = new List<Allevamento>();
+            foreach(var allevamento in allevamentiDb)
+            {
+                if (allevamentiView.FirstOrDefault(a => a.Id == allevamento.Id) == null)
+                    allevamentiDaRimuovere.Add(allevamento);
+            }
+
+            foreach (var allevamento in allevamentiDaRimuovere)
+                this.allevamentiRepository.Delete(allevamento);
+
+            this.uow.SaveChanges();
+
+            // allevamenti aggiunti e modificati
+            foreach (var allevamentoView in allevamentiView)
+            {
+                var allevamentoDb = allevamentiDb.FirstOrDefault(a => a.Id == allevamentoView.Id);
+                if (allevamentoDb == null)
+                {
+                    this.allevamentiRepository.Add(allevamentoView);
+                    this.uow.SaveChanges();
+                }                    
+                else
+                {
+                    allevamentoDb = UpdateAllevamentiProperties(allevamentoDb, allevamentoView);
+                    this.allevamentiRepository.Update(allevamentoDb);
+                    this.uow.SaveChanges();
+                }
+                    
+            }
+            
+            return allevamentiView;
+        }
+
+        private Allevamento UpdateAllevamentiProperties(Allevamento allevamentoDb, Allevamento allevamentoView)
+        {
+            allevamentoDb.CodiceAsl = allevamentoView.CodiceAsl;
+            allevamentoDb.IndirizzoAllevamento = allevamentoView.IndirizzoAllevamento;
+            allevamentoDb.IdComune = allevamentoView.IdComune;
+            allevamentoDb.CUAA = allevamentoView.CUAA;
+            allevamentoDb.IdSitraStabilimentoAllevamento = allevamentoView.IdSitraStabilimentoAllevamento;
+            allevamentoDb.Latitudine = allevamentoView.Latitudine;
+            allevamentoDb.Longitudine = allevamentoView.Longitudine;
+
+            return allevamentoDb;
         }
 
         private TrasportatoreXAzienda UpdateTrasportatoreXAzienda(TrasportatoreXAzienda dbEntity, TrasportatoreXAzienda viewEntity)
@@ -256,6 +312,7 @@ namespace LatteMarche.Application.Utenti.Services
             if (dbEntity != null && viewEntity != null)
             {
                 dbEntity.IdAzienda = viewEntity.IdAzienda;
+                uxa = dbEntity;
                 this.trasportatoriXAziendeRepository.Update(dbEntity);
                 this.uow.SaveChanges();
             }
@@ -277,6 +334,7 @@ namespace LatteMarche.Application.Utenti.Services
             if (dbEntity != null && viewEntity != null)
             {
                 dbEntity.IdDestinatario = viewEntity.IdDestinatario;
+                uxa = dbEntity;
                 this.utenteXDestinatarioRepository.Update(dbEntity);
                 this.uow.SaveChanges();
             }
@@ -298,6 +356,7 @@ namespace LatteMarche.Application.Utenti.Services
             if (dbEntity != null && viewEntity != null)
             {
                 dbEntity.IdCessionario = viewEntity.IdCessionario;
+                uxa = dbEntity;
                 this.utenteXCessionarioRepository.Update(dbEntity);
                 this.uow.SaveChanges();
             }
@@ -319,6 +378,7 @@ namespace LatteMarche.Application.Utenti.Services
             if(dbEntity != null && viewEntity != null)
             {
                 dbEntity.IdAcquirente = viewEntity.IdAcquirente;
+                uxa = dbEntity;
                 this.utenteXAcquirenteRepository.Update(dbEntity);
                 this.uow.SaveChanges();
             }
