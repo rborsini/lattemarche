@@ -141,10 +141,7 @@ export default class EditazioneAcquirenteModal extends Vue {
       if (response.data != undefined) {
         this.close();
       } else {
-        // save KO!!
         this.acquirente = response.data;
-        // TODO: msg di validazione
-        //this.$emit("errore");
         this.close();
       }
     });
