@@ -88,9 +88,7 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 import Select2 from "../../components/select2.vue";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Cessionario } from "../../models/cessionario.model";
-import { Comune } from "../../models/comune.model";
 import { CessionariService } from "../../services/cessionari.service";
-import { ComuniService } from "../../services/comuni.service";
 import { DropdownService } from "../../services/dropdown.service";
 
 @Component({

@@ -33,6 +33,7 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         public AllevamentiService(IUnitOfWork uow, IUtentiService utentiService)
         {
+            this.uow = uow;
             this.repository = this.uow.Get<Allevamento, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
             this.utentiService = utentiService;

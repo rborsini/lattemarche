@@ -13,7 +13,7 @@
                         <div class="row form-group">
                             <label class="col-2">Codice</label>
                             <div class="col-10">
-                                <input type="text" class="form-control" v-model="giro.CodiceGiro">
+                                <input type="text" maxlength="2" class="form-control" v-model="giro.CodiceGiro">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -72,11 +72,6 @@ export default class GiroTrasportatoriModal extends Vue {
 
   public open(): void {
     $(this.$el).modal("show");
-  }
-
-  public openGiro(giro: Giro): void {
-    this.giro = giro;
-    this.open();
   }
 
   public close(): void {

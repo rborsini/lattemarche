@@ -37,16 +37,17 @@
       <!-- Allevatore / dal / al -->
 
       <div class="row pt-1">
-        <!-- <label class="col-1" v-if="canSearchAllevatore">Allevatore:</label> -->
-
-        <!-- <div class="col-3" v-if="canSearchAllevatore">
-                <select2 class="form-control"
-                         :placeholder="'-'"
-                         :options="allevatori"
-                         :value.sync="idAllevatoreSelezionato"
-                         :value-field="'Id'"
-                         :text-field="'RagioneSociale'" />
-        </div>-->
+        <label class="col-1" v-if="canSearchAllevatore">Allevatore:</label>
+        <div class="col-3" v-if="canSearchAllevatore">
+          <select2
+            class="form-control"
+            :placeholder="'-'"
+            :options="allevatori.Items"
+            :value.sync="idAllevatoreSelezionato"
+            :value-field="'Value'"
+            :text-field="'Text'"
+          />
+        </div>
 
         <label class="col-1">Dal:</label>
 
@@ -73,10 +74,10 @@
           <select2
             class="form-control"
             :placeholder="'-'"
-            :options="trasportatore"
+            :options="trasportatore.Items"
             :value.sync="idTrasportatoreSelezionato"
-            :value-field="'Id'"
-            :text-field="'Cognome'"
+            :value-field="'Value'"
+            :text-field="'Text'"
           />
         </div>
 
@@ -86,10 +87,10 @@
           <select2
             class="form-control"
             :placeholder="'-'"
-            :options="acquirente"
+            :options="acquirente.Items"
             :value.sync="idAcquirenteSelezionato"
-            :value-field="'Id'"
-            :text-field="'RagioneSociale'"
+            :value-field="'Value'"
+            :text-field="'Text'"
           />
         </div>
 
@@ -99,10 +100,10 @@
           <select2
             class="form-control"
             :placeholder="'-'"
-            :options="destinatario"
+            :options="destinatario.Items"
             :value.sync="idDestinatarioSelezionato"
-            :value-field="'Id'"
-            :text-field="'RagioneSociale'"
+            :value-field="'Value'"
+            :text-field="'Text'"
           />
         </div>
       </div>
@@ -114,10 +115,10 @@
           <select2
             class="form-control"
             :placeholder="'-'"
-            :options="tipiLatte"
+            :options="tipiLatte.Items"
             :value.sync="idTipoLatteSelezionato"
-            :value-field="'Id'"
-            :text-field="'Descrizione'"
+            :value-field="'Value'"
+            :text-field="'Text'"
           />
         </div>
       </div>
@@ -148,11 +149,7 @@
             v-on:click="onExportClick"
             class="float-right btn btn-primary"
           >Esporta excel</a>
-          <button
-            
-            class="btn btn-primary float-right mr-3"
-            v-on:click="onAdd()"
-          >Aggiungi</button>
+          <button class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
         </div>
       </template>
 
@@ -208,11 +205,14 @@ import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
 
 // import { AllevatoriService } from "../../services/allevatori.service";
-import { TrasportatoriService } from "../../services/trasportatori.service";
-import { AcquirentiService } from "../../services/acquirenti.service";
-import { DestinatariService } from "../../services/destinatari.service";
+// import { TrasportatoriService } from "../../services/trasportatori.service";
+// import { AcquirentiService } from "../../services/acquirenti.service";
+// import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
-import { TipiLatteService } from "../../services/tipiLatte.service";
+// import { TipiLatteService } from "../../services/tipiLatte.service";
+import { DropdownService } from "../../services/dropdown.service";
+
+import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -241,17 +241,19 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   private prelieviLatteService: PrelieviLatteService;
   // private allevatoriService: AllevatoriService;
-  private tipiLatteService: TipiLatteService;
-  public trasporatoriService: TrasportatoriService;
-  public destinatariService: DestinatariService;
-  public acquirentiService: AcquirentiService;
+  // private tipiLatteService: TipiLatteService;
+  // public trasporatoriService: TrasportatoriService;
+  // public destinatariService: DestinatariService;
+  // public acquirentiService: AcquirentiService;
+  public dropdownService: DropdownService;
 
   public tableOptions: any = {};
-  // public allevatori: Allevatore[] = [];
-  public tipiLatte: TipoLatte[] = [];
-  public trasportatore: Trasportatore[] = [];
-  public destinatario: Destinatario[] = [];
-  public acquirente: Acquirente[] = [];
+  public allevatori: Dropdown = new Dropdown();
+  public tipiLatte: Dropdown = new Dropdown();
+  // public tipiLatte: TipoLatte[] = [];
+  public trasportatore: Dropdown = new Dropdown();
+  public destinatario: Dropdown = new Dropdown();
+  public acquirente: Dropdown = new Dropdown();
   public prelievi: PrelievoLatte[] = [];
   private idPrelievoDaEliminare!: number;
 
@@ -280,12 +282,11 @@ export default class PrelieviLatteIndexPage extends Vue {
     super();
 
     this.prelieviLatteService = new PrelieviLatteService();
-    // this.allevatoriService = new AllevatoriService();
-    this.tipiLatteService = new TipiLatteService();
+    // this.tipiLatteService = new TipiLatteService();
     this.prelievoSelezionato = new PrelievoLatte();
-    this.trasporatoriService = new TrasportatoriService();
-    this.destinatariService = new DestinatariService();
-    this.acquirentiService = new AcquirentiService();
+    // this.trasporatoriService = new TrasportatoriService();
+    // this.destinatariService = new DestinatariService();
+    this.dropdownService = new DropdownService();
 
     this.canAdd = $("#canAdd").val() == "true";
     this.canEdit = $("#canEdit").val() == "true";
@@ -398,8 +399,14 @@ export default class PrelieviLatteIndexPage extends Vue {
     (options.columnDefs = [
       {
         targets: [0, 7, 8, 9, 10],
-        createdCell: function(td:any, cellData:any, rowData:any, row:any, col:any) {
-          $(td).attr('title', cellData);
+        createdCell: function(
+          td: any,
+          cellData: any,
+          rowData: any,
+          row: any,
+          col: any
+        ) {
+          $(td).attr("title", cellData);
         }
       }
     ]),
@@ -528,7 +535,11 @@ export default class PrelieviLatteIndexPage extends Vue {
   }
 
   // caricamento allevatori
-  private loadAllevatori(): void {
+  private async loadAllevatori(): Promise<void> {
+    const dd = await this.dropdownService.getAllevamenti();
+    if (dd.data != null) {
+      this.allevatori = dd.data;
+    }
     // this.allevatoriService.getAllevatori()
     //     .then(response => {
     //         if (response.data != null) {
@@ -538,41 +549,54 @@ export default class PrelieviLatteIndexPage extends Vue {
   }
 
   // caricamento tipi latte
-  private loadTipiLatte(): void {
-    this.tipiLatteService
-      .index()
-      .then((response: { data: TipoLatte[] | null }) => {
-        if (response.data != null) {
-          this.tipiLatte = response.data;
-        }
-      });
+  private async loadTipiLatte(): Promise<void> {
+    const dd = await this.dropdownService.getTipiLatte();
+    if (dd.data != null) {
+      this.tipiLatte = dd.data;
+    }
   }
 
   // caricamento trasportatori
-  private loadTrasportatori() {
-    this.trasporatoriService.getTrasportatori().then(response => {
-      if (response.data != null) {
-        this.trasportatore = response.data;
-      }
-    });
+  private async loadTrasportatori() {
+    const dd = await this.dropdownService.getTrasportatori();
+    if (dd.data != null) {
+      this.trasportatore = dd.data;
+    }
+
+    // this.trasporatoriService.getTrasportatori().then(response => {
+    //   if (response.data != null) {
+    //     this.trasportatore = response.data;
+    //   }
+    // });
   }
 
   // caricamento destinatari
-  private loadDestinatari() {
-    this.destinatariService.index().then(response => {
-      if (response.data != null) {
-        this.destinatario = response.data;
-      }
-    });
+  private async loadDestinatari() {
+    const dd = await this.dropdownService.getDestinatari();
+
+    if (dd.data != null) {
+      this.destinatario = dd.data;
+    }
+
+    // this.destinatariService.index().then(response => {
+    //   if (response.data != null) {
+    //     this.destinatario = response.data;
+    //   }
+    // });
   }
 
   // caricamento acquirenti
-  private loadAcquirenti() {
-    this.acquirentiService.index().then(response => {
-      if (response.data != null) {
-        this.acquirente = response.data;
-      }
-    });
+  private async loadAcquirenti() {
+    const dd = await this.dropdownService.getAcquirenti();
+
+    if (dd.data != null) {
+      this.acquirente = dd.data;
+    }
+    // this.acquirentiService.index().then(response => {
+    //   if (response.data != null) {
+    //     this.acquirente = response.data;
+    //   }
+    // });
   }
 
   private loadPrelievi(
@@ -608,11 +632,13 @@ export default class PrelieviLatteIndexPage extends Vue {
       case 4: //Aprile
       case 6: //Giugno
       case 9: //Settembre
-      case 11: { //Novembre
+      case 11: {
+        //Novembre
         days = 30;
         break;
       }
-      case 2: { //febbraio
+      case 2: {
+        //febbraio
         if (date.getFullYear() % 4 != 0) {
           //anno non bisestile
           days = 28;

@@ -96,10 +96,8 @@ import Select2 from "../../components/select2.vue";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Destinatario } from "../../models/destinatario.model";
-import { Comune } from "../../models/comune.model";
 
 import { DestinatariService } from "../../services/destinatari.service";
-import { ComuniService } from "../../services/comuni.service";
 import { DropdownService } from '../../services/dropdown.service';
 
 @Component({

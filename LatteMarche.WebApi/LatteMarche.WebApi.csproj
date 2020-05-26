@@ -344,6 +344,7 @@
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
     <Content Include="Views\Cessionari\Index.cshtml" />
+    <Content Include="Views\AziendeTrasportatori\Index.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -389,6 +390,7 @@
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers_Api\AziendeTrasportatoriController.cs" />
+    <Compile Include="Controllers_Api\TrasportatoriController.cs" />
     <Compile Include="Controllers_Api\WidgetsController.cs" />
     <Compile Include="Controllers_Web\CessionariController.cs" />
     <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
@@ -403,7 +405,8 @@
     <Compile Include="Controllers_Web\AcquirentiController.cs" />
     <Compile Include="Controllers_Web\PrelieviController.cs" />
     <Compile Include="Controllers_Web\TipiLatteController.cs" />
-    <Compile Include="Controllers_Web\TrasportatoriController.cs" />
+    <Compile Include="Controllers_Web\AziendeTrasportatoriController.cs" />
+    <Compile Include="Controllers_Web\GiriController.cs" />
     <Compile Include="Controllers_Web\AllevamentiController.cs" />
     <Compile Include="Controllers_Web\UtentiController.cs" />
     <Compile Include="Controllers_Web\HomeController.cs" />
@@ -469,7 +472,7 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Allevamenti\Index.cshtml" />
-    <Content Include="Views\Trasportatori\Index.cshtml" />
+    <Content Include="Views\Giri\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />

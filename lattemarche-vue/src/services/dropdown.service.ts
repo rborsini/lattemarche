@@ -52,4 +52,8 @@ export class DropdownService {
         return axios.get("/api/trasportatori/dropdown");
     }
 
+    public getGiri(idTrasportatore: string): AxiosPromise<Dropdown> {
+        return axios.get("/api/giri/dropdown?idTrasportatore=" + idTrasportatore);
+    }
+
 }

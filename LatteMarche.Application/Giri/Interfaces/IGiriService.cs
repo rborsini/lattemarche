@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Giri.Dtos;
+﻿using LatteMarche.Application.Common.Dtos;
+using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace LatteMarche.Application.Giri.Interfaces
         /// </summary>
         /// <param name="idTrasportatore"></param>
         /// <returns></returns>
-        List<GiroDto> GetGiriTrasportatore(int idTrasportatore);
+        DropDownDto DropDown(int idTrasportatore);
 
     }
 

@@ -34,10 +34,10 @@
                         <div class="col-9">
                             <div class="form-group ">
                                 <select2 class="form-control"
-                                        :options="trasportatori"
+                                        :options="trasportatori.Items"
                                         :value.sync="idTrasportatoreSelezionato"
-                                        :value-field="'Id'"
-                                        :text-field="'NomeCompleto'" 
+                                        :value-field="'Value'"
+                                        :text-field="'Text'" 
                                         v-on:value-changed="onTrasporatoreChanged()"
                                         />                                
                             </div>
@@ -78,7 +78,6 @@
     import { Dropdown, DropdownItem } from "../../models/dropdown.model";
     import { Dispositivo } from "../../models/dispositivo.model";
     import { DispositiviService } from "../../services/dispositivi.service";
-    import { TrasportatoriService } from "../../services/trasportatori.service";
     import { Trasportatore } from "../../models/trasportatore.model";
     import { DropdownService} from "../../services/dropdown.service";
 
@@ -94,20 +93,18 @@
         @Prop()
         dispositivo!: Dispositivo;
 
-        public trasportatori: Trasportatore[] = [];
+        public trasportatori: Dropdown = new Dropdown();
         public autocisterne: Dropdown = new Dropdown();
         public attivo: boolean = false;
         public idTrasportatoreSelezionato: number = 0;
         public idAutocisternaSelezionata: number = 0;
 
         public dispositiviService: DispositiviService;
-        public trasportatoriService: TrasportatoriService;    
         public dropdownService: DropdownService;
 
         constructor() {
             super();
             this.dispositiviService = new DispositiviService();
-            this.trasportatoriService = new TrasportatoriService();
             this.dropdownService = new DropdownService();
         }
 
@@ -120,7 +117,7 @@
         }
 
         mounted() {
-            this.trasportatoriService.getTrasportatori()
+            this.dropdownService.getTrasportatori()
                 .then(response => {
                     this.trasportatori = response.data;
                 });
@@ -131,9 +128,6 @@
         }
 
         public onTrasporatoreChanged() {
-
-            console.log("trasportatore changed");
-
             this.loadAutocisterne(this.idTrasportatoreSelezionato);
         }
 

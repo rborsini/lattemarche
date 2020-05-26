@@ -12,6 +12,7 @@ using LatteMarche.Application.Cessionari;
 using LatteMarche.Application.AziendeTrasportatori;
 using LatteMarche.Application.Trasportatori;
 using LatteMarche.Application.Allevamenti;
+using LatteMarche.Application.Giri;
 
 namespace LatteMarche.Application
 {
@@ -33,10 +34,10 @@ namespace LatteMarche.Application
             mappings = ComuniMappings.Configure(mappings);
             mappings = DestinatarioMappings.Configure(mappings);
             mappings = DispositiviMappings.Configure(mappings);
+            mappings = GiriMappings.Configure(mappings);
             mappings = LogsMappings.Configure(mappings);
             mappings = PrelieviLatteMappings.Configure(mappings);
             mappings = UtentiMappings.Configure(mappings);
-            //mappings = TrasportatoriMappings.Configure(mappings);
 
             return mappings;
             

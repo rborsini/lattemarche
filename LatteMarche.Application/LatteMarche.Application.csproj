@@ -176,6 +176,7 @@
     <Compile Include="Dispositivi\Dtos\DispositivoMobileDto.cs" />
     <Compile Include="Dispositivi\Interfaces\IDispositiviService.cs" />
     <Compile Include="Dispositivi\Services\DispositiviService.cs" />
+    <Compile Include="Giri\GiriMappings.cs" />
     <Compile Include="Logs\LogsMappings.cs" />
     <Compile Include="PrelieviLatte\PrelieviLatteMappings.cs" />
     <Compile Include="Autocisterne\Dtos\AutocisternaDto.cs" />
@@ -218,6 +219,8 @@
     <Compile Include="AnalisiLatte\Dtos\LaboratorioAnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Interfaces\ILaboratoriAnalisiService.cs" />
     <Compile Include="AnalisiLatte\Services\LaboratoriAnalisiService.cs" />
+    <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
+    <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
     <Compile Include="Utenti\Dtos\LaboratorioDto.cs" />
     <Compile Include="Utenti\Dtos\TipoProfiloDto.cs" />
     <Compile Include="Utenti\Interfaces\ITipiProfiloService.cs" />

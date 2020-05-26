@@ -37,6 +37,8 @@ using LatteMarche.Application.Dashboard.Services;
 using LatteMarche.Application.Dashboard.Interfaces;
 using LatteMarche.Application.Allevamenti.Services;
 using LatteMarche.Application.Allevamenti.Interfaces;
+using LatteMarche.Application.Trasportatori.Interfaces;
+using LatteMarche.Application.Trasportatori.Services;
 
 namespace LatteMarche.Application
 {
@@ -60,7 +62,7 @@ namespace LatteMarche.Application
             RegisterService<LatteMarcheDbContext, DbContext>(builder);
             RegisterService<UnitOfWork, IUnitOfWork>(builder);
 
-            //RegisterService<AutocisterneService, IAutocisterneService>(builder);
+            
             RegisterService<AcquirentiService, IAcquirentiService>(builder);
             RegisterService<AllevamentiService, IAllevamentiService>(builder);
             RegisterService<AnalisiService, IAnalisiService>(builder);
@@ -82,7 +84,7 @@ namespace LatteMarche.Application
             RegisterService<SynchService, ISynchService>(builder);
             RegisterService<TipiLatteService, ITipiLatteService>(builder);
             RegisterService<TipiProfiloService, ITipiProfiloService>(builder);
-            //RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
+            RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
             RegisterService<UtentiService, IUtentiService>(builder);
             RegisterService<WidgetsService, IWidgetsService>(builder);
 

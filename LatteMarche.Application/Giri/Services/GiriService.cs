@@ -7,6 +7,7 @@ using LatteMarche.Application.Giri.Interfaces;
 using WeCode.Data.Interfaces;
 using WeCode.Application;
 using LatteMarche.EntityFramework;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.Application.Giri.Services
 {
@@ -59,6 +60,7 @@ namespace LatteMarche.Application.Giri.Services
                     RagioneSociale = allevamento.Utente.RagioneSociale,
                     Priorita = allevamentoXGiro != null && allevamentoXGiro.Priorita.HasValue ? allevamentoXGiro.Priorita.Value : (int?)null
                 });
+
             }
 
             dto.Items = dto.Items.OrderByDescending(i => i.Priorita.HasValue).ThenBy(i => i.Priorita).ToList();
@@ -71,9 +73,19 @@ namespace LatteMarche.Application.Giri.Services
         /// </summary>
         /// <param name="idTrasportatore"></param>
         /// <returns></returns>
-        public List<GiroDto> GetGiriTrasportatore(int idTrasportatore)
+        public DropDownDto DropDown(int idTrasportatore)
         {
-            return ConvertToDtoList(this.giriRepository.Query.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
+            var dropdown = new DropDownDto();
+
+            dropdown.Items = this.giriRepository.Query.Where(g => g.IdTrasportatore == idTrasportatore)
+                .Select(c => new DropDownItem()
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Denominazione
+                })
+                .ToList();
+
+            return dropdown;
         }
 
         /// <summary>

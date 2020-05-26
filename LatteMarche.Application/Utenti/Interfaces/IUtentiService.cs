@@ -18,14 +18,6 @@ namespace LatteMarche.Application.Utenti.Interfaces
         /// <returns></returns>
         UtenteDto Details(string username);
 
-        ///// <summary>
-        ///// Dropdown per tipo di profilo e filtrato in base all'utente passando per i prelievi latte presenti
-        ///// </summary>
-        ///// <param name="idProfilo"></param>
-        ///// <param name="idUtente"></param>
-        ///// <returns></returns>
-        //DropDownDto DropDown(int idProfilo, int? idUtente = (int?)null);
-
         /// <summary>
         /// Validazione utente lato MVC
         /// </summary>

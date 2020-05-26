@@ -13,9 +13,9 @@ namespace LatteMarche.WebApi.Controllers_Web
     [MvcCustomAuthorize]
     [MvcActionFilter]
     [MvcExceptionFilter]
-    public class TrasportatoriController : Controller
+    public class AziendeTrasportatoriController : Controller
     {
-        [ViewItem(nameof(Index), "Trasportatori", "Lista")]
+        [ViewItem(nameof(Index), "AziendeTrasportatori", "Lista")]
         public ActionResult Index()
         {           
             return View();

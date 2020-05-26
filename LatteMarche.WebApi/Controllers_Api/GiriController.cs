@@ -30,18 +30,33 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Giri", "Lista")]
+        //[ViewItem(nameof(Index), "Giri", "Lista")]
+        //[HttpGet]
+        //public IHttpActionResult Index(int idTrasportatore = -1)
+        //{
+        //    try
+        //    {
+        //        if(idTrasportatore != -1)
+        //            return Ok(this.giriService.GetGiriTrasportatore(idTrasportatore));
+        //        else
+        //            return Ok(this.giriService.Index());
+        //    }
+        //    catch(Exception exc)
+        //    {
+        //        return InternalServerError(exc);
+        //    }
+
+        //}
+
+        [ViewItem(nameof(DropDown), "Giri", "DropDown")]
         [HttpGet]
-        public IHttpActionResult Index(int idTrasportatore = -1)
+        public IHttpActionResult DropDown(int idTrasportatore)
         {
             try
             {
-                if(idTrasportatore != -1)
-                    return Ok(this.giriService.GetGiriTrasportatore(idTrasportatore));
-                else
-                    return Ok(this.giriService.Index());
+                return Ok(this.giriService.DropDown(idTrasportatore));
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
@@ -63,20 +78,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
-        [ViewItem(nameof(Update), "Giri", "Aggiornamento")]
-        [HttpPut]
-        public IHttpActionResult Update([FromBody] GiroDto model)
-        {
-            try
-            {
-                return Ok(this.giriService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-            
-        }
 
         [ViewItem(nameof(Save), "Giri", "Salvataggio")]
         [HttpPost]
@@ -88,21 +89,6 @@ namespace LatteMarche.WebApi.Controllers_Api
                     return Ok(this.giriService.Create(model));
                 else
                     return Ok(this.giriService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Create), "Giri", "Creazione")]
-        [HttpPost]
-        public IHttpActionResult Create([FromBody] GiroDto model)
-        {
-            try
-            {
-                return Ok(this.giriService.Create(model));
             }
             catch (Exception exc)
             {
