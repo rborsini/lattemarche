@@ -41,8 +41,11 @@ module.exports = {
         tipiLatteIndex: {            
             entry: 'src/pages/tipiLatte/index.ts'
         },    
-        trasportatoriIndex: {            
-            entry: 'src/pages/trasportatori/index.ts'
+        giriIndex: {            
+            entry: 'src/pages/giri/index.ts'
+        },                                                               
+        aziendeTrasportatoriIndex: {            
+            entry: 'src/pages/aziendeTrasportatori/index.ts'
         },                                                               
         utentiEdit: {            
             entry: 'src/pages/utenti/edit.ts'
