@@ -40,7 +40,7 @@
                         <div class="col-9">
                             <select2 class="form-control"
                                      :dropdownparent="'#editazione-acquirente-modal'"
-                                     :options="opzioniProvince"
+                                     :options="provincia.Items"
                                      :value.sync="acquirente.SiglaProvincia"
                                      :value-field="'Value'"
                                      :text-field="'Text'"
@@ -55,28 +55,10 @@
                         <div class="col-9">
                             <select2 class="form-control"
                                      :dropdownparent="'#editazione-acquirente-modal'"
-                                     :options="comuni"
+                                     :options="comune.Items"
                                      :value.sync="acquirente.IdComune"
-                                     :value-field="'Id'"
-                                     :text-field="'Descrizione'"
-                                     v-on:value-changed="onComuneSelezionato" />
-                        </div>
-                    </div>
-
-                    <!-- progress bar -->
-                    <div class="row" v-if="progressBarVisible">
-                        <div class="col-sm-4 offset-4 pt-2">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                     role="progressbar"
-                                     aria-valuenow="100"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 offset-4 text-center pt-2">
-                            <h4>Elaborazione in corso...</h4>
+                                     :value-field="'Value'"
+                                     :text-field="'Text'" />
                         </div>
                     </div>
                 </div>
@@ -97,10 +79,9 @@
 
     import { Dropdown, DropdownItem } from "../../models/dropdown.model";
     import { Acquirente } from "../../models/acquirente.model";
-    import { Comune } from "../../models/comune.model";
 
     import { AcquirentiService } from "../../services/acquirenti.service";
-    import { ComuniService } from "../../services/comuni.service";
+    import { DropdownService } from "../../services/dropdown.service";
 
 
     @Component({
@@ -114,26 +95,23 @@
         @Prop()
         acquirente!: Acquirente;
 
-        public comuni: Comune[] = [];
-        public opzioniProvince: DropdownItem[] = [];
+        public comune: Dropdown = new Dropdown();
+        public provincia: Dropdown = new Dropdown();
 
         public acquirentiService: AcquirentiService;
-        private comuniService: ComuniService;
-
-        public progressBarVisible = false;
-
+        private dropdownService: DropdownService;
 
         constructor() {
             super();
             this.acquirentiService = new AcquirentiService();
-            this.comuniService = new ComuniService();
+            this.dropdownService = new DropdownService();
         }
 
         mounted() {
 
-            this.comuniService.getProvince()
+            this.dropdownService.getProvince()
                 .then(response => {
-                    this.opzioniProvince = response.data;
+                    this.provincia = response.data;
                 });
         }
 
@@ -148,31 +126,22 @@
 
         // carica comuni
         public loadComuni(provincia: string): void {
-            this.comuniService.getComuni(provincia)
+
+            this.dropdownService.getComuni(provincia)
                 .then(response => {
                     if (response.data != null) {
-                        this.comuni = response.data;
+                        this.comune = response.data;
                     }
                 });
         }
 
-        // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
-        public onComuneSelezionato(idComune: string): void {
-            if (this.acquirente.SiglaProvincia == '') {
-                this.comuniService.getComuneDetails(idComune)
-                    .then(response => {
-                        this.acquirente.SiglaProvincia = response.data.Provincia;
-                    })
-            }
-        }
+
 
         public onSave() {
-            this.progressBarVisible = true;
+
             this.acquirentiService.save(this.acquirente)
                 .then(response => {
                     if (response.data != undefined) {
-                        this.$emit("salvato");
-                        this.progressBarVisible = false;
                         this.close();
                     } else {
                         // save KO!!

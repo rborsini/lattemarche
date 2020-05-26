@@ -4,8 +4,7 @@
 
         <!-- Pannello editazione dettaglio -->
         <editazione-acquirente-modal ref="editazioneAcquirenteModal"
-                                    :acquirente="acquirente"
-                                    v-on:salvato="$refs.savedDialog.open()"></editazione-acquirente-modal>
+                                    :acquirente="acquirente" ></editazione-acquirente-modal>
 
         <!-- Pannello notifica salvatagggio -->
         <notification-dialog ref="savedDialog"
