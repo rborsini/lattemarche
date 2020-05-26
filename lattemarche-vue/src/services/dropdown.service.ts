@@ -28,6 +28,10 @@ export class DropdownService {
         return axios.get("/api/destinatari/dropdown");
     }
 
+    public getLaboratori(): AxiosPromise<Dropdown> {
+        return axios.get("/api/laboratori/dropdown");
+    }
+
     public getCessionari(): AxiosPromise<Dropdown> {
         return axios.get("/api/cessionari/dropdown");
     }
