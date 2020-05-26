@@ -40,13 +40,19 @@
         <li class="active">
           <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
         </li>
+        <li >
+          <a v-if="utente.IdProfilo == 3" data-toggle="tab" class="nav-link" href="#allevamenti">Allevamenti</a>
+        </li>        
       </ul>
 
       <div class="tab-content">
+
+        <!-- Tab dettaglio -->
         <div id="dettaglio" class="tab-pane fade show active">
+
           <!-- tipo profilo -->
           <div class="row form-group pt-5">
-            <label class="col-sm-2">Tipo profilo</label>
+            <label class="offset-1 col-sm-1">Tipo profilo</label>
             <div class="col-sm-4">
               <select2
                 class="form-control"
@@ -59,7 +65,7 @@
             </div>
 
             <!-- Acquirente -->
-            <label v-if="utente.IdProfilo == 7" class="col-sm-2">Acquirente</label>
+            <label v-if="utente.IdProfilo == 7" class="col-sm-1">Acquirente</label>
             <div v-if="utente.IdProfilo == 7" class="col-sm-4">
               <select2
                 class="form-control"
@@ -71,7 +77,7 @@
             </div>
 
             <!-- Cessionario -->
-            <label v-if="utente.IdProfilo == 8" class="col-sm-2">Cessionario</label>
+            <label v-if="utente.IdProfilo == 8" class="col-sm-1">Cessionario</label>
             <div v-if="utente.IdProfilo == 8" class="col-sm-4">
               <select2
                 class="form-control"
@@ -82,20 +88,8 @@
               />
             </div>
 
-            <!-- Laboratorio -->
-            <label v-if="utente.IdProfilo == 4" class="col-sm-2">Laboratorio</label>
-            <div v-if="utente.IdProfilo == 4" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="laboratorio.Items"
-                :value.sync="utente.IdLaboratorio"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
-
             <!-- Destinatario -->
-            <label v-if="utente.IdProfilo == 6" class="col-sm-2">Destinatario</label>
+            <label v-if="utente.IdProfilo == 6" class="col-sm-1">Destinatario</label>
             <div v-if="utente.IdProfilo == 6" class="col-sm-4">
               <select2
                 class="form-control"
@@ -109,11 +103,11 @@
 
           <!-- ragione sociale / username -->
           <div class="row form-group">
-            <label class="col-sm-2">Ragione sociale</label>
+            <label class="offset-1 col-sm-1">Ragione sociale</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.RagioneSociale" />
             </div>
-            <label class="col-sm-2">Username</label>
+            <label class="col-sm-1">Username</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Username" />
             </div>
@@ -121,11 +115,11 @@
 
           <!-- nome / cognome -->
           <div class="row form-group">
-            <label class="col-sm-2">Nome</label>
+            <label class="offset-1 col-sm-1">Nome</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Nome" />
             </div>
-            <label class="col-sm-2">Cognome</label>
+            <label class="col-sm-1">Cognome</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Cognome" />
             </div>
@@ -133,7 +127,7 @@
 
           <!-- sesso / p.iva/cf -->
           <div class="row form-group">
-            <label class="col-sm-2">Sesso</label>
+            <label class="offset-1 col-sm-1">Sesso</label>
             <div class="col-sm-4">
               <select2
                 class="form-control"
@@ -144,7 +138,7 @@
                 :text-field="'Text'"
               />
             </div>
-            <label class="col-sm-2">P. Iva / C.F.</label>
+            <label class="col-sm-1">P. Iva / C.F.</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.PivaCF" />
             </div>
@@ -152,12 +146,12 @@
 
           <!-- indirizzo / provincia / città -->
           <div class="row form-group">
-            <label class="col-sm-2">Indirizzo</label>
+            <label class="offset-1 col-sm-1">Indirizzo</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Indirizzo" />
             </div>
 
-            <label class="col-sm-2">Provincia</label>
+            <label class="col-sm-1">Provincia</label>
             <div class="col-sm-1">
               <select2
                 class="form-control"
@@ -181,11 +175,11 @@
 
           <!-- telefono / cellulare -->
           <div class="row form-group">
-            <label class="col-sm-2">Telefono</label>
+            <label class="offset-1 col-sm-1">Telefono</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Telefono" />
             </div>
-            <label class="col-sm-2">Cellulare</label>
+            <label class="col-sm-1">Cellulare</label>
             <div class="col-sm-4">
               <input type="text" class="form-control" v-model="utente.Cellulare" />
             </div>
@@ -193,16 +187,59 @@
 
           <!-- note -->
           <div class="row form-group">
-            <label class="col-sm-2">Note</label>
-            <div class="col-sm-10">
+            <label class="offset-1 col-sm-1">Note</label>
+            <div class="col-sm-9">
               <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
             </div>
           </div>
         </div>
 
+        <!-- Tab allevamenti -->
+        <div id="allevamenti" class="tab-pane fade">
+
+          <div class="row">
+              <div class="offset-1 col-sm-10 pt-4">
+
+                <table class="table table-bordered">
+
+                    <thead class="table table-hover table-striped table-bordered">
+                        <tr>
+                            <th scope="rol">Codice ASL</th>
+                            <th scope="rol">Indirizzo</th>
+                            <th scope="rol">CUAA</th>
+                            <th scope="rol"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(allevamento, index) in utente.Allevamenti" :key="index">
+                            <td>
+                                {{allevamento.CodiceAsl}}
+                            </td>
+                            <td>
+                                {{allevamento.IndirizzoAllevamento}}
+                            </td>
+                            <td>
+                                {{allevamento.CUAA}}
+                            </td>          
+                            <td>
+                                <div class="text-center">
+                                    <!-- <a v-bind:href="'/auditors/edit?id=' + auditor.Id " class="edit text-primary" title="modifica" style="cursor: pointer;" ><i class="far fa-edit"></i></a> -->
+                                </div>
+                            </td>            
+                        </tr>
+                    </tbody>
+
+                </table>    
+
+              </div>
+          </div>
+      
+
+        </div>
+
         <!-- Annulla / Salva -->
         <div class="row pt-3">
-          <div class="col-12 text-right">
+          <div class="col-11 text-right">
             <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
             <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
           </div>
@@ -258,7 +295,6 @@ export default class App extends Vue {
   public comune: Dropdown = new Dropdown();
   public acquirente: Dropdown = new Dropdown();
   public cessionario: Dropdown = new Dropdown();
-  public laboratorio: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
 
   constructor() {
@@ -340,11 +376,6 @@ export default class App extends Vue {
     // Cesionario
     this.dropdownService.getCessionari().then(response => {
       this.cessionario = response.data;
-    });
-
-    // Laboratorio
-    this.dropdownService.getLaboratori().then(response => {
-      this.laboratorio = response.data;
     });
 
     // Destinatario

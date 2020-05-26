@@ -29,7 +29,7 @@ export class DropdownService {
     }
 
     public getLaboratori(): AxiosPromise<Dropdown> {
-        return axios.get("/api/laboratori/dropdown");
+        return axios.get("/api/laboratoriAnalisi/dropdown");
     }
 
     public getCessionari(): AxiosPromise<Dropdown> {
