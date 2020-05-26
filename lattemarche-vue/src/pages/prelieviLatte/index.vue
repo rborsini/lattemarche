@@ -149,7 +149,7 @@
             class="float-right btn btn-primary"
           >Esporta excel</a>
           <button
-            v-if="canAdd"
+            
             class="btn btn-primary float-right mr-3"
             v-on:click="onAdd()"
           >Aggiungi</button>

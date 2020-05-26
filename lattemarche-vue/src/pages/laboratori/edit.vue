@@ -16,13 +16,6 @@
           </button>
         </div>
         <div class="modal-body pl-5 pr-5">
-          <!-- Id -->
-          <div class="row form-group">
-            <label class="col-3">Id</label>
-            <div class="col-9">
-              <input type="text" class="form-control" v-model="laboratorio.Id" />
-            </div>
-          </div>
 
           <!-- Descrizione -->
           <div class="row form-group">

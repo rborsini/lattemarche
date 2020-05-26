@@ -4,7 +4,7 @@
     <waiter ref="waiter"></waiter>
 
     <!-- Pannello editazione dettaglio -->
-    <editazione-tipo-latte-modal ref="editazioneTipoLatteModal" :tipo-latte="tipoLatte"></editazione-tipo-latte-modal>
+    <editazione-tipo-latte-modal ref="editazioneTipoLatteModal" :tipo-latte="tipoLatte" v-on:salvato="$refs.savedDialog.open()" ></editazione-tipo-latte-modal>
 
         <!-- Pannello notifica salvatagggio -->
         <notification-dialog ref="savedDialog"
@@ -29,7 +29,7 @@
     <!-- Tabella -->
     <data-table :options="tableOptions" :rows="tipiLatte" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
-      <template slot="toolbox" v-if="canAdd">
+      <template slot="toolbox" >
         <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
       </template>
 
@@ -39,7 +39,7 @@
         <th>Descrizione</th>
         <th>Sigla</th>
         <th>Fattore conversione LT -> KG</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -90,9 +90,6 @@ export default class TipiLatteIndexPage extends Vue {
 
   public tableOptions: any = {};
   public tipiLatte: TipoLatte[] = [];
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
 
   constructor() {
     super();
@@ -100,9 +97,6 @@ export default class TipiLatteIndexPage extends Vue {
     this.tipiLatteService = new TipiLatteService();
     this.tipoLatte = new TipoLatte();
 
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
   }
 
   public mounted() {
@@ -158,21 +152,20 @@ export default class TipiLatteIndexPage extends Vue {
     options.columns.push({ data: "DescrizioneBreve" });
     options.columns.push({ data: "FattoreConversione" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
+
+
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
+
             html +=
               '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' +
               row.Id +
               '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
+
             html +=
               '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' +
               row.Id +
@@ -185,8 +178,14 @@ export default class TipiLatteIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+    
     this.tableOptions = options;
   }
+
+  // reload della pagina sullo stesso id
+  public reload() {
+      UrlService.reload();
+  }
+
 }
 </script>

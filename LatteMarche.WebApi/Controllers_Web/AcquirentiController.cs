@@ -16,10 +16,6 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class AcquirentiController : Controller
     {
         [ViewItem(nameof(Index), "Acquirenti", "Lista")]
-        [ViewItem("Aggiungi", "Acquirenti", "Aggiungi")]
-        [ViewItem("Modifica", "Acquirenti", "Modifica")]
-        [ViewItem("Rimuovi", "Acquirenti", "Rimuovi")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

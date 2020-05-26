@@ -43,7 +43,7 @@
     <data-table :options="tableOptions" :rows="utenti" v-on:data-loaded="onDataLoaded">
 
         <!-- Toolbox -->
-        <template slot="toolbox" v-if="canAdd">
+        <template slot="toolbox" >
             <a class="toolbox btn btn-primary float-right" href="/utenti/edit">Aggiungi</a>
         </template>
 

@@ -30,7 +30,7 @@
         <data-table :options="tableOptions" :rows="allevamenti" v-on:data-loaded="onDataLoaded">
 
             <!-- Toolbox -->
-            <template slot="toolbox" v-if="canAdd">
+            <template slot="toolbox" >
                 <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
             </template>
 
@@ -39,7 +39,7 @@
                 <th>Ragione sociale</th>
                 <th>CUAA</th>
                 <th>Codice ASL</th>
-                <th v-if="canEdit || canRemove"></th>
+                <th></th>
             </template>
         </data-table>
 
@@ -94,9 +94,6 @@ export default class AllevamentiIndexPage extends Vue {
     public tableOptions: any = {};
     public allevamenti: Allevamento[] = [];
 
-    public canAdd: boolean = false;
-    public canEdit: boolean = false;
-    public canRemove: boolean = false;
 
     constructor() {
         super();
@@ -104,9 +101,6 @@ export default class AllevamentiIndexPage extends Vue {
         this.allevamentiService = new AllevamentiService();
         this.allevamento = new Allevamento();
 
-        this.canAdd = $('#canAdd').val() == "true";
-        this.canEdit = $('#canEdit').val() == "true";
-        this.canRemove = $('#canRemove').val() == "true";
     }
 
     public mounted() {
@@ -177,20 +171,19 @@ export default class AllevamentiIndexPage extends Vue {
         options.columns.push({ data: "CUAA" });
         options.columns.push({ data: "CodiceAsl" });
 
-        var ce = this.canEdit;
-        var cr = this.canRemove;
 
-        if (ce || cr) {
+
+  
 
             options.columns.push({
                 render: function (data: any, type: any, row: any) {
 
                     var html = '<div class="text-center">';
 
-                    if (ce)
+
                         html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
 
-                    if (cr)
+    
                         html += '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
 
                     html += '</div>';
@@ -201,7 +194,7 @@ export default class AllevamentiIndexPage extends Vue {
                 orderable: false
             });
 
-        }
+
 
         this.tableOptions = options;
     }

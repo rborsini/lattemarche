@@ -15,9 +15,6 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class TipiLatteController : Controller
     {
         [ViewItem(nameof(Index), "Tipi latte", "Lista")]
-        [ViewItem("Aggiungi", "Tipi latte", "Aggiungi")]
-        [ViewItem("Modifica", "Tipi latte", "Modifica")]
-        [ViewItem("Rimuovi", "Tipi latte", "Rimuovi")]
         public ActionResult Index()
         {
             return View();

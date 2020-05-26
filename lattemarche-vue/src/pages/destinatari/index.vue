@@ -1,8 +1,9 @@
 <template>
     
-    <div id="destinatari-page" class="container-fluid p-0">
+    <div>
 
-
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
 
         <!-- Pannello editazione dettaglio -->
         <editazione-destinatario-modal ref="editazioneDestinatarioModal"
@@ -15,6 +16,7 @@
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Il destinatario è stato salvato correttamente'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
         <!-- Pannello notifica rimozione -->
@@ -34,7 +36,7 @@
     <!-- Tabella -->
     <data-table :options="tableOptions" :rows="destinatari" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
-      <template slot="toolbox" v-if="canAdd">
+      <template slot="toolbox" >
         <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
       </template>
 
@@ -42,7 +44,7 @@
       <template slot="thead">
         <th>P. IVA</th>
         <th>Ragione sociale</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -95,9 +97,6 @@ export default class DestinatariIndexPage extends Vue {
 
   public tableOptions: any = {};
   public destinatari: Destinatario[] = [];
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
 
   constructor() {
     super();
@@ -105,9 +104,6 @@ export default class DestinatariIndexPage extends Vue {
     this.destinatariService = new DestinatariService();
     this.destinatario = new Destinatario();
 
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
   }
 
   public mounted() {
@@ -161,21 +157,19 @@ export default class DestinatariIndexPage extends Vue {
     options.columns.push({ data: "P_IVA" });
     options.columns.push({ data: "RagioneSociale" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
+
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
+
             html +=
               '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' +
               row.Id +
               '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
+
             html +=
               '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' +
               row.Id +
@@ -188,8 +182,14 @@ export default class DestinatariIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+    
     this.tableOptions = options;
   }
+
+  // reload della pagina sullo stesso id
+  public reload() {
+      UrlService.reload();
+  }
+
 }
 </script>

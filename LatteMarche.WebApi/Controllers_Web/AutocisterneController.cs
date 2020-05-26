@@ -16,10 +16,6 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class AutocisterneController : Controller
     {
         [ViewItem(nameof(Index), "Autocisterne", "Lista")]
-        [ViewItem("Aggiungi", "Autocisterne", "Aggiungi")]
-        [ViewItem("Modifica", "Autocisterne", "Modifica")]
-        [ViewItem("Rimuovi", "Autocisterne", "Rimuovi")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

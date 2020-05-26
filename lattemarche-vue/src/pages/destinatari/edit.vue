@@ -120,7 +120,7 @@ export default class EditazioneDestinatarioModal extends Vue {
         constructor() {
             super();
             this.destinatariService = new DestinatariService();
-            this.comuniService = new ComuniService();
+            this.dropdownService = new DropdownService();
         }
 
   mounted() {

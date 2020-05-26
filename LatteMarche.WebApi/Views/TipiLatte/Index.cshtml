@@ -12,15 +12,6 @@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-@{
-    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
-    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
-}
-
-<input hidden id="canAdd" value="@canAdd" />
-<input hidden id="canEdit" value="@canEdit" />
-<input hidden id="canRemove" value="@canRemove" />
 
 
 @{

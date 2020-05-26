@@ -5,19 +5,19 @@ export class LaboratoriService {
     constructor() { }
 
     public index(): AxiosPromise<Laboratorio[]> {
-        return axios.get('/api/labratori');
+        return axios.get('/api/laboratoriAnalisi');
     }
 
     public details(id: number): AxiosPromise<Laboratorio> {
-        return axios.get('/api/labratori/details?id=' + id);
+        return axios.get('/api/laboratoriAnalisi/details?id=' + id);
     }
 
     public save(laboratorio: Laboratorio): AxiosPromise<Laboratorio> {
-        return axios.post('/api/labratori/save', laboratorio);
+        return axios.post('/api/laboratoriAnalisi/save', laboratorio);
     }
 
     public delete(idLaboratorio: number): AxiosPromise<Laboratorio> {
-        return axios.delete('/api/labratori/delete?id=' + idLaboratorio);
+        return axios.delete('/api/laboratoriAnalisi/delete?id=' + idLaboratorio);
     }
 
 }

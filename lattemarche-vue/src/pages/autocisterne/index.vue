@@ -33,7 +33,7 @@
     <!-- Tabella -->
     <data-table :options="tableOptions" :rows="autocisterne" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
-      <template slot="toolbox" v-if="canAdd">
+      <template slot="toolbox" >
         <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
       </template>
 
@@ -43,7 +43,7 @@
         <th>Modello</th>
         <th>Targa</th>
         <th>Portata</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -93,9 +93,6 @@ export default class AutocisterneIndexPage extends Vue {
 
   public tableOptions: any = {};
   public autocisterne: Autocisterna[] = [];
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
 
   constructor() {
     super();
@@ -103,9 +100,6 @@ export default class AutocisterneIndexPage extends Vue {
     this.autocisterneService = new AutocisterneService();
     this.autocisterna = new Autocisterna();
 
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
   }
 
   public mounted() {
@@ -158,21 +152,18 @@ export default class AutocisterneIndexPage extends Vue {
     options.columns.push({ data: "Targa" });
     options.columns.push({ data: "Portata" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
+
             html +=
               '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' +
               row.Id +
               '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
+
             html +=
               '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' +
               row.Id +
@@ -185,7 +176,7 @@ export default class AutocisterneIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+    
     this.tableOptions = options;
   }
 

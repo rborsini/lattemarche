@@ -1,14 +1,18 @@
 <template>
   <div>
+
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
+
     <!-- Pannello editazione dettaglio -->
-    <editazione-laboratorio-modal ref="editazioneLaboratorioModal" :laboratorio="laboratorio"></editazione-laboratorio-modal>
+    <editazione-laboratorio-modal ref="editazioneLaboratorioModal" :laboratorio="laboratorio" v-on:salvato="$refs.savedDialog.open()"></editazione-laboratorio-modal>
 
     <!-- Pannello notifica salvatagggio -->
     <notification-dialog
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Laboratorio salvato correttamente'"
-      v-on:salvato="$refs.savedDialog.open()"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
@@ -28,9 +32,9 @@
     ></confirm-dialog>
 
     <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="acquirenti" v-on:data-loaded="onDataLoaded">
+    <data-table :options="tableOptions" :rows="laboratori" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
-      <template slot="toolbox" v-if="canAdd">
+      <template slot="toolbox" >
         <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
       </template>
 
@@ -38,7 +42,7 @@
       <template slot="thead">
         <th>Id</th>
         <th>Descrizione</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -47,6 +51,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+import Waiter from "../../components/waiter.vue";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
 import EditazioneLaboratorioModal from "../laboratori/edit.vue";
@@ -71,7 +76,8 @@ declare module "vue/types/vue" {
     ConfirmDialog,
     NotificationDialog,
     EditazioneLaboratorioModal,
-    DataTable
+    DataTable,
+    Waiter
   }
 })
 export default class LaboratoriIndexPage extends Vue {
@@ -79,7 +85,8 @@ export default class LaboratoriIndexPage extends Vue {
     savedDialog: Vue,
     removedDialog: Vue,
     editazioneLaboratorioModal: Vue,
-    confirmDeleteDialog: Vue
+    confirmDeleteDialog: Vue,
+    waiter: Vue
   };
 
   private laboratoriService: LaboratoriService;
@@ -88,9 +95,6 @@ export default class LaboratoriIndexPage extends Vue {
 
   public tableOptions: any = {};
   public laboratori: Laboratorio[] = [];
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
 
   constructor() {
     super();
@@ -98,15 +102,14 @@ export default class LaboratoriIndexPage extends Vue {
     this.laboratoriService = new LaboratoriService();
     this.laboratorio = new Laboratorio();
 
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
   }
 
   public mounted() {
     this.initTable();
-    this.laboratoriService.index().then(response => {
+    this.$refs.waiter.open();
+    this.laboratoriService.index().then(response => {      
       this.laboratori = response.data;
+      this.$refs.waiter.close();
     });
   }
 
@@ -118,7 +121,7 @@ export default class LaboratoriIndexPage extends Vue {
 
       this.laboratoriService.details(rowId).then(response => {
         this.laboratorio = response.data;
-        this.$refs.editazioneAcquirenteModal.openAcquirente(this.laboratorio);
+        this.$refs.editazioneLaboratorioModal.openAcquirente(this.laboratorio);
       });
     });
 
@@ -132,7 +135,7 @@ export default class LaboratoriIndexPage extends Vue {
   // nuovo acquirente
   public onAdd() {
     this.laboratorio = new Laboratorio();
-    this.$refs.editazioneAcquirenteModal.open();
+    this.$refs.editazioneLaboratorioModal.open();
   }
 
   // rimozione acquirente
@@ -151,21 +154,17 @@ export default class LaboratoriIndexPage extends Vue {
     options.columns.push({ data: "Id" });
     options.columns.push({ data: "Descrizione" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
+
             html +=
               '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' +
               row.Id +
               '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
             html +=
               '<a class="pl-3 delete" title="elimina" style="cursor: pointer;" data-row-id="' +
               row.Id +
@@ -178,9 +177,15 @@ export default class LaboratoriIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+    
 
     this.tableOptions = options;
   }
+
+  // reload della pagina sullo stesso id
+  public reload() {
+      UrlService.reload();
+  }
+
 }
 </script>
