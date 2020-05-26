@@ -1,4 +1,6 @@
-﻿export class Utente {
+﻿import { Allevamento } from './allevamento.model';
+
+export class Utente {
     public Id: number = 0;
     public Nome: string = "";
     public Cognome: string = "";
@@ -24,6 +26,8 @@
     public IdAcquirente?: number;
     public IdDestinatario?: number;
     public IdCessionario?: number;
-    public IdLaboratorio?: number;
+    public IdAziendaTrasporti?: number;
+
+    public Allevamenti: Allevamento[] = [];
 
 }
