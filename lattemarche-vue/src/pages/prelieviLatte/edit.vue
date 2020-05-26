@@ -1,297 +1,319 @@
 <template>
-    <div class="modal fade bd-example-modal-lg" id="editazione-prelievo-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="max-width:90%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Dettagli prelievo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body pl-5 pr-5">
-
-                    <!-- data/ora prelievo -->
-                    <div class="row form-group">
-                        <label class="col-2">Data prelievo</label>
-                        <div class="col-sm-4">
-                            <datepicker :value.sync="prelievoLatte.DataPrelievoStr" />
-                            <div class="invalid-feedback">
-                                Inserire data prelievo.
-                            </div>
-                        </div>
-                        <label class="col-2">Ora prelievo</label>
-                        <div class="col-sm-4">
-                            <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
-                        </div>
-                    </div>
-
-                    <!-- data/ora ultima mungitura -->
-                    <div class="row form-group">
-                        <label class="col-2">Data ultima mungitura</label>
-                        <div class="col-sm-4">
-                            <datepicker :value.sync="prelievoLatte.DataUltimaMungituraStr" />
-                            <div class="invalid-feedback">
-                                Inserire data ultima mungitura.
-                            </div>
-                        </div>
-                        <label class="col-2">Ora ultima mungitura</label>
-                        <div class="col-sm-4">
-                            <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
-                        </div>
-                    </div>
-
-                    <!-- data/ora consegna -->
-                    <div class="row form-group">
-                        <label class="col-2">Data consegna</label>
-                        <div class="col-sm-4">
-                            <datepicker :value.sync="prelievoLatte.DataConsegnaStr" />
-                            <div class="invalid-feedback">
-                                Inserire data consegna.
-                            </div>
-                        </div>
-                        <label class="col-2">Ora consegna</label>
-                        <div class="col-sm-4">
-                            <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
-                        </div>
-                    </div>
-
-                    <!-- numero mungiture / quantità in kg -->
-                    <div class="row form-group">
-                        <label class="col-2">Numero mungiture</label>
-                        <div class="col-sm-4">
-                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.NumeroMungiture">
-                        </div>
-                        <label class="col-2">Quantità in Kg</label>
-                        <div class="col-sm-4">
-                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita">
-                        </div>
-                    </div>
-
-                    <!-- temperatura C° / trasportatore -->
-                    <div class="row form-group">
-                        <label class="col-2">Temperatura in C°</label>
-                        <div class="col-sm-4">
-                            <input type="number" min="-20" class="form-control" v-model="prelievoLatte.Temperatura">
-                        </div>
-                        <label class="col-2">Trasportatore</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="trasportatore"
-                                     :value.sync="prelievoLatte.IdTrasportatore"
-                                     :value-field="'Id'"
-                                     :text-field="'Cognome'" />
-                        </div>
-                    </div>
-
-                    <!-- acquirente / destinatario -->
-                    <div class="row form-group">
-                        <label class="col-2">Acquirente</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="acquirente"
-                                     :value.sync="prelievoLatte.IdAcquirente"
-                                     :value-field="'Id'"
-                                     :text-field="'RagioneSociale'" />
-                        </div>
-                        <label class="col-2">Destinatario</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="destinatario"
-                                     :value.sync="prelievoLatte.IdDestinatario"
-                                     :value-field="'Id'"
-                                     :text-field="'RagioneSociale'" />
-                        </div>
-                    </div>
-
-                    <!-- laboratorio analisi / seriale laboratorio -->
-                    <div class="row form-group">
-                        <label class="col-2">Laboratorio analisi</label>
-                        <div class="col-sm-4">
-                            <select2 class="form-control"
-                                     :dropdownparent="'#editazione-prelievo-modal'"
-                                     :options="laboratoriAnalisi"
-                                     :value.sync="prelievoLatte.IdLabAnalisi"
-                                     :value-field="'Id'"
-                                     :text-field="'Descrizione'" />
-                        </div>
-                        <label class="col-2">Seriale laboratorio</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="prelievoLatte.SerialeLabAnalisi">
-                        </div>
-                    </div>
-
-                    <!-- scomparto / lotto di consegna -->
-                    <div class="row form-group">
-                        <label class="col-2">Scomparto</label>
-                        <div class="col-sm-4">
-                            <input type="number" min="0" class="form-control" v-model="prelievoLatte.Scomparto">
-                        </div>
-                        <label class="col-2">Lotto di consegna</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" v-model="prelievoLatte.LottoConsegna">
-                        </div>
-                    </div>
-
-                    <!-- progress bar -->
-                    <div class="row" v-if="progressBarSalvaPrelievo">
-                        <div class="col-sm-4 offset-4 pt-2">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                     role="progressbar"
-                                     aria-valuenow="100"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 offset-4 text-center pt-2">
-                            <h4>Elaborazione in corso...</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button class="btn btn-primary" v-on:click="salvaDettaglioPrelievo()">Salva</button>
-                </div>
-            </div>
+  <div
+    class="modal fade bd-example-modal-lg"
+    id="editazione-prelievo-modal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myLargeModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" style="max-width:90%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dettagli prelievo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body pl-5 pr-5">
+          <!-- data/ora prelievo -->
+          <div class="row form-group">
+            <label class="col-2">Data prelievo</label>
+            <div class="col-sm-4">
+              <datepicker :value.sync="prelievoLatte.DataPrelievoStr" />
+              <div class="invalid-feedback">Inserire data prelievo.</div>
+            </div>
+            <label class="col-2">Ora prelievo</label>
+            <div class="col-sm-4">
+              <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
+            </div>
+          </div>
+
+          <!-- data/ora ultima mungitura -->
+          <div class="row form-group">
+            <label class="col-2">Data ultima mungitura</label>
+            <div class="col-sm-4">
+              <datepicker :value.sync="prelievoLatte.DataUltimaMungituraStr" />
+              <div class="invalid-feedback">Inserire data ultima mungitura.</div>
+            </div>
+            <label class="col-2">Ora ultima mungitura</label>
+            <div class="col-sm-4">
+              <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
+            </div>
+          </div>
+
+          <!-- data/ora consegna -->
+          <div class="row form-group">
+            <label class="col-2">Data consegna</label>
+            <div class="col-sm-4">
+              <datepicker :value.sync="prelievoLatte.DataConsegnaStr" />
+              <div class="invalid-feedback">Inserire data consegna.</div>
+            </div>
+            <label class="col-2">Ora consegna</label>
+            <div class="col-sm-4">
+              <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
+            </div>
+          </div>
+
+          <!-- numero mungiture / quantità in kg -->
+          <div class="row form-group">
+            <label class="col-2">Numero mungiture</label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                v-model="prelievoLatte.NumeroMungiture"
+              />
+            </div>
+            <label class="col-2">Quantità in Kg</label>
+            <div class="col-sm-4">
+              <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita" />
+            </div>
+          </div>
+
+          <!-- temperatura C° / trasportatore -->
+          <div class="row form-group">
+            <label class="col-2">Temperatura in C°</label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                min="-20"
+                class="form-control"
+                v-model="prelievoLatte.Temperatura"
+              />
+            </div>
+            <label class="col-2">Trasportatore</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :dropdownparent="'#editazione-prelievo-modal'"
+                :options="trasportatore"
+                :value.sync="prelievoLatte.IdTrasportatore"
+                :value-field="'Id'"
+                :text-field="'Cognome'"
+              />
+            </div>
+          </div>
+
+          <!-- acquirente / destinatario -->
+          <div class="row form-group">
+            <label class="col-2">Acquirente</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :placeholder="'-'"
+                :options="acquirente.Items"
+                :value.sync="prelievoLatte.IdAcquirente"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+              <!-- <select2
+                class="form-control"
+                :dropdownparent="'#editazione-prelievo-modal'"
+                :options="acquirente"
+                :value.sync="prelievoLatte.IdAcquirente"
+                :value-field="'Id'"
+                :text-field="'RagioneSociale'"
+              />-->
+            </div>
+            <label class="col-2">Destinatario</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :dropdownparent="'#editazione-prelievo-modal'"
+                :options="destinatario"
+                :value.sync="prelievoLatte.IdDestinatario"
+                :value-field="'Id'"
+                :text-field="'RagioneSociale'"
+              />
+            </div>
+          </div>
+
+          <!-- laboratorio analisi / seriale laboratorio -->
+          <div class="row form-group">
+            <label class="col-2">Laboratorio analisi</label>
+            <div class="col-sm-4">
+              <select2
+                class="form-control"
+                :dropdownparent="'#editazione-prelievo-modal'"
+                :options="laboratoriAnalisi"
+                :value.sync="prelievoLatte.IdLabAnalisi"
+                :value-field="'Id'"
+                :text-field="'Descrizione'"
+              />
+            </div>
+            <label class="col-2">Seriale laboratorio</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="prelievoLatte.SerialeLabAnalisi" />
+            </div>
+          </div>
+
+          <!-- scomparto / lotto di consegna -->
+          <div class="row form-group">
+            <label class="col-2">Scomparto</label>
+            <div class="col-sm-4">
+              <input type="number" min="0" class="form-control" v-model="prelievoLatte.Scomparto" />
+            </div>
+            <label class="col-2">Lotto di consegna</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" v-model="prelievoLatte.LottoConsegna" />
+            </div>
+          </div>
+
+          <!-- progress bar -->
+          <div class="row" v-if="progressBarSalvaPrelievo">
+            <div class="col-sm-4 offset-4 pt-2">
+              <div class="progress">
+                <div
+                  class="progress-bar progress-bar-striped progress-bar-animated"
+                  role="progressbar"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="width: 100%"
+                ></div>
+              </div>
+            </div>
+            <div class="col-sm-4 offset-4 text-center pt-2">
+              <h4>Elaborazione in corso...</h4>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
+          <button class="btn btn-primary" v-on:click="salvaDettaglioPrelievo()">Salva</button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 <script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop, Watch, Emit } from "vue-property-decorator";
+import Select2 from "../../components/select2.vue";
+import Datepicker from "../../components/datepicker.vue";
+import TimeEditor from "../../components/timeEditor.vue";
 
-    import Vue from "vue";
-    import Component from "vue-class-component";
-    import { Prop, Watch, Emit } from "vue-property-decorator";
-    import Select2 from "../../components/select2.vue";
-    import Datepicker from "../../components/datepicker.vue";
-    import TimeEditor from "../../components/timeEditor.vue";
+import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+import { PrelievoLatte } from "../../models/prelievoLatte.model";
+import { LaboratorioAnalisi } from "../../models/laboratorioAnalisi.model";
+import { Trasportatore } from "../../models/trasportatore.model";
+import { Acquirente } from "../../models/acquirente.model";
+import { Destinatario } from "../../models/destinatario.model";
 
-    import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-    import { PrelievoLatte } from "../../models/prelievoLatte.model";
-    import { LaboratorioAnalisi } from "../../models/laboratorioAnalisi.model";
-    import { Trasportatore } from "../../models/trasportatore.model";
-    import { Acquirente } from "../../models/acquirente.model";
-    import { Destinatario } from "../../models/destinatario.model";
+import { PrelieviLatteService } from "../../services/prelieviLatte.service";
+import { TrasportatoriService } from "../../services/trasportatori.service";
+import { AcquirentiService } from "../../services/acquirenti.service";
+import { DestinatariService } from "../../services/destinatari.service";
+import { DropdownService } from "../../services/dropdown.service";
 
-    import { PrelieviLatteService } from "../../services/prelieviLatte.service";
-    import { TrasportatoriService } from "../../services/trasportatori.service";
-    import { AcquirentiService } from "../../services/acquirenti.service";
-    import { DestinatariService } from "../../services/destinatari.service";
+@Component({
+  components: {
+    Select2,
+    Datepicker,
+    TimeEditor
+  }
+})
+export default class EditazionePrelievoModal extends Vue {
+  @Prop()
+  prelievoLatte: PrelievoLatte = new PrelievoLatte();
 
+  public prelieviLatteService: PrelieviLatteService;
+  public trasporatoriService: TrasportatoriService;
+  public destinatariService: DestinatariService;
+  public acquirentiService: AcquirentiService;
+  public dropdownService: DropdownService;
+  public laboratoriAnalisi: LaboratorioAnalisi[] = [];
+  public trasportatore: Trasportatore[] = [];
+  public destinatario: Destinatario[] = [];
+  public acquirente: Dropdown = new Dropdown();
+  
+  public id: string;
+  public progressBarSalvaPrelievo = false;
 
-    @Component({
-        components: {
-            Select2,
-            Datepicker,
-            TimeEditor
-        }
-    })
+  constructor() {
+    super();
+    this.prelieviLatteService = new PrelieviLatteService();
+    this.trasporatoriService = new TrasportatoriService();
+    this.destinatariService = new DestinatariService();
+    this.acquirentiService = new AcquirentiService();
+    this.dropdownService = new DropdownService();
+    this.id = $("#id").val() as string;
+  }
 
-    export default class EditazionePrelievoModal extends Vue {
+  mounted() {
+    this.loadLaboratoriAnalisi();
+    this.loadTrasportatori();
+    this.loadDestinatari();
+    this.loadAcquirenti();
+  }
 
-        @Prop()
-        prelievoLatte: PrelievoLatte = new PrelievoLatte();
+  // caricamento laboratori analisi
+  public loadLaboratoriAnalisi() {
+    this.prelieviLatteService.getLaboratoriAnalisi().then(response => {
+      if (response.data != null) {
+        this.laboratoriAnalisi = response.data;
+      }
+    });
+  }
 
-        public prelieviLatteService: PrelieviLatteService;
-        public trasporatoriService: TrasportatoriService;
-        public destinatariService: DestinatariService;
-        public acquirentiService: AcquirentiService;
+  // caricamento trasportatori
+  public loadTrasportatori() {
+    this.trasporatoriService.getTrasportatori().then(response => {
+      if (response.data != null) {
+        this.trasportatore = response.data;
+      }
+    });
+  }
 
-        public laboratoriAnalisi: LaboratorioAnalisi[] = [];
-        public trasportatore: Trasportatore[] = [];
-        public destinatario: Destinatario[] = [];
-        public acquirente: Acquirente[] = [];
-        public id: string;
-        public progressBarSalvaPrelievo = false;
+  // caricamento destinatari
+  public loadDestinatari() {
+    this.destinatariService.index().then(response => {
+      if (response.data != null) {
+        this.destinatario = response.data;
+      }
+    });
+  }
 
+  // caricamento acquirenti
+  public async loadAcquirenti() {
+      const dd = await this.dropdownService.getAcquirenti();
 
-        constructor() {
-            super();
-            this.prelieviLatteService = new PrelieviLatteService();
-            this.trasporatoriService = new TrasportatoriService();
-            this.destinatariService = new DestinatariService();
-            this.acquirentiService = new AcquirentiService();
-            this.id = $('#id').val() as string;
-        }
-
-        mounted() {
-            this.loadLaboratoriAnalisi();
-            this.loadTrasportatori();
-            this.loadDestinatari();
-            this.loadAcquirenti();
-
-        }
-
-        // caricamento laboratori analisi
-        public loadLaboratoriAnalisi() {
-            this.prelieviLatteService.getLaboratoriAnalisi()
-                .then(response => {
-                    if (response.data != null) {
-                        this.laboratoriAnalisi = response.data;
-                    }
-                });
-        }
-
-        // caricamento trasportatori
-        public loadTrasportatori() {
-            this.trasporatoriService.getTrasportatori()
-                .then(response => {
-                    if (response.data != null) {
-                        this.trasportatore = response.data;
-                    }
-                });
-        }
-
-        // caricamento destinatari
-        public loadDestinatari() {
-            this.destinatariService.index()
-                .then(response => {
-                    if (response.data != null) {
-                        this.destinatario = response.data;
-                    }
-                });
-        }
-
-        // caricamento acquirenti
-        public loadAcquirenti() {
-            this.acquirentiService.index()
-                .then(response => {
-                    if (response.data != null) {
-                        this.acquirente = response.data;
-                    }
-                });
-        }
-
-        public salvaDettaglioPrelievo() {
-            this.progressBarSalvaPrelievo = true;
-            this.prelieviLatteService.save(this.prelievoLatte)
-                .then(response => {
-                    if (response.data != undefined) {
-                        this.$emit("salvato");
-                        this.progressBarSalvaPrelievo = false;
-                        this.close();
-                    } else {
-                        // save KO!!
-                        this.prelievoLatte = response.data;
-                        // TODO: msg di validazione
-                        //this.$emit("errore");
-                        this.close();
-                    }
-                });
-        }
-
-        public open(): void {
-            $(this.$el).modal('show');
-        }
-
-        public close(): void {
-            $(this.$el).modal('hide');
-        }
-
-
+    if (dd.data != null) {
+      this.acquirente = dd.data;
     }
+    // this.acquirentiService.index().then(response => {
+    //   if (response.data != null) {
+    //     this.acquirente = response.data;
+    //   }
+    // });
+  }
 
+  public salvaDettaglioPrelievo() {
+    this.progressBarSalvaPrelievo = true;
+    this.prelieviLatteService.save(this.prelievoLatte).then(response => {
+      if (response.data != undefined) {
+        this.$emit("salvato");
+        this.progressBarSalvaPrelievo = false;
+        this.close();
+      } else {
+        // save KO!!
+        this.prelievoLatte = response.data;
+        // TODO: msg di validazione
+        //this.$emit("errore");
+        this.close();
+      }
+    });
+  }
+
+  public open(): void {
+    $(this.$el).modal("show");
+  }
+
+  public close(): void {
+    $(this.$el).modal("hide");
+  }
+}
 </script>
