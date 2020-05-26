@@ -20,6 +20,35 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string NomeCompleto => $"{this.Cognome} {this.Nome}";
 
         public int IdProfilo { get; set; }
+
+        public string Profilo
+        {
+            get
+            {
+                switch (this.IdProfilo)
+                {
+                    case 1:
+                        return "Admin";
+                    case 2:
+                        return "Redatore";
+                    case 3:
+                        return "Allevatore";
+                    case 4:
+                        return "Laboratorio";
+                    case 5:
+                        return "Trasportatore";
+                    case 6:
+                        return "Destinatario";
+                    case 7:
+                        return "Acquirente";
+                    case 8:
+                        return "Cessionario";
+                    default:
+                        return "";
+                }
+            }
+        }
+
         public string Sesso { get; set; }
 
         public string PivaCF { get; set; }

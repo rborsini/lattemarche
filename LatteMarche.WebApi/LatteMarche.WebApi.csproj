@@ -369,6 +369,7 @@
     <Compile Include="Controllers_Api\AcquirentiController.cs" />
     <Compile Include="Controllers_Api\AllevamentiController.cs" />
     <Compile Include="Controllers_Api\AnalisiController.cs" />
+    <Compile Include="Controllers_Api\AutocisterneController.cs" />
     <Compile Include="Controllers_Api\AzioniController.cs" />
     <Compile Include="Controllers_Api\CessionariController.cs" />
     <Compile Include="Controllers_Api\DestinatariController.cs" />
