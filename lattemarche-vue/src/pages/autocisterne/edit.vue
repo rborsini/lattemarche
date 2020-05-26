@@ -74,7 +74,8 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-          <button class="btn btn-primary" v-on:click="onSave()">Salva</button>
+          <button :disabled="autocisterna.Marca === '' || autocisterna.Modello === '' ||  autocisterna.Targa === '' || 
+                   autocisterna.IdTrasportatore == 0 || autocisterna.Portata == 0 || autocisterna.NumScomparti == 0" class="btn btn-primary" v-on:click="onSave()">Salva</button>
         </div>
       </div>
     </div>
