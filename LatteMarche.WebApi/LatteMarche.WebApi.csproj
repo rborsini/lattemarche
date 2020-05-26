@@ -379,6 +379,7 @@
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
     <Compile Include="Controllers_Api\AziendeTrasportatoriController.cs" />
+    <Compile Include="Controllers_Api\WidgetsController.cs" />
     <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
     <Compile Include="Controllers_Web\AutocisterneController.cs" />
     <Compile Include="Controllers_Web\DispositiviController.cs" />
