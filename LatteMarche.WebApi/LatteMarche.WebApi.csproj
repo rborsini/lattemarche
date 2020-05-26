@@ -263,6 +263,8 @@
     <Content Include="dist\autocisterneIndex.js" />
     <Content Include="dist\cessionariIndex.html" />
     <Content Include="dist\cessionariIndex.js" />
+    <Content Include="dist\changePassword.html" />
+    <Content Include="dist\changePassword.js" />
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />
@@ -342,6 +344,7 @@
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
     <Content Include="Views\Cessionari\Index.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -418,6 +421,7 @@
     <Compile Include="Controllers_Api\UtentiController.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

@@ -8,6 +8,9 @@ module.exports = {
         cessionariIndex: {            
             entry: 'src/pages/cessionari/index.ts'
         },
+        changePassword: {            
+            entry: 'src/pages/changePassword/index.ts'
+        },         
         laboratoriIndex: {            
             entry: 'src/pages/laboratori/index.ts'
         },

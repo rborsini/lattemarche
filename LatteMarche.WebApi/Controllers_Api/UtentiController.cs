@@ -9,6 +9,7 @@ using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Common.Dtos;
+using LatteMarche.WebApi.Models;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -72,6 +73,24 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(Save), "Utenti", "Cambio Password")]
+        [HttpPost]
+        public IHttpActionResult ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(model.Username))
+                    return BadRequest();
+
+                string result = this.utentiService.ChangePassword(model.Username, model.OldPassword, model.Password, model.RePassword);
+                return Ok(result);
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+
+        }
 
         [ViewItem(nameof(Save), "Utenti", "Salvataggio")]
         [HttpPost]

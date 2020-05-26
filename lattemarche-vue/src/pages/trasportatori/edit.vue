@@ -54,7 +54,6 @@ export default class GiroTrasportatoriModal extends Vue {
   constructor() {
     super();
     this.giriService = new GiriService();
-    this.giro = new Giro();
   }
 
   mounted() {}

@@ -15,7 +15,7 @@
     <confirm-dialog ref="confirmDeleteDialog"
                     :title="'Conferma eliminazione'"
                     :message="'Sei sicuro di voler rimuovere l\'utente selezionato?'"
-                    v-on:confirmed="onRemove()"></confirm-dialog>
+                    v-on:confirmed="onRemove()"></confirm-dialog>        
 
     <!-- Box ricerca -->
     <div class="jumbotron">

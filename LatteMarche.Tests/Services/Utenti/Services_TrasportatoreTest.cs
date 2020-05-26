@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FizzWare.NBuilder;
 using LatteMarche.Application.Allevamenti.Dtos;
+using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core.Models;
@@ -16,8 +17,9 @@ namespace LatteMarche.Tests.Services.Utenti
 {
     [TestFixture]
     [NonParallelizable]
-    public class Services_AllevatoreTest 
+    public class Services_TrasportatoreTest
     {
+
 
         #region Constants
 
@@ -32,18 +34,18 @@ namespace LatteMarche.Tests.Services.Utenti
         private IUnitOfWork uow;
 
         private IRepository<Utente, int> utentiRepository;
-        private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Autocisterna, int> autocisterneRepository;
 
         private IUtentiService utentiService;
 
         private Utente utente;
-        private Allevamento allevamento;
+        private Autocisterna autocisterna;
 
         #endregion
 
         #region Constructor
 
-        public Services_AllevatoreTest()
+        public Services_TrasportatoreTest()
         {
             AutoFacConfig.Configure();
             AutomapperConfig.Configure();
@@ -53,7 +55,7 @@ namespace LatteMarche.Tests.Services.Utenti
             this.uow = this.scope.Resolve<IUnitOfWork>();
 
             this.utentiRepository = this.uow.Get<Utente, int>();
-            this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+            this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
 
             this.utentiService = this.scope.Resolve<IUtentiService>();
         }
@@ -74,13 +76,13 @@ namespace LatteMarche.Tests.Services.Utenti
             this.utentiRepository.Add(utente);
             this.uow.SaveChanges();
 
-            // allevamento
-            this.allevamento = Builder<Allevamento>
+            // autocisterna
+            this.autocisterna = Builder<Autocisterna>
                 .CreateNew()
-                    .With(a => a.IdUtente = this.utente.Id)
+                    .With(a => a.IdTrasportatore = this.utente.Id)
                 .Build();
 
-            this.allevamentiRepository.Add(allevamento);
+            this.autocisterneRepository.Add(autocisterna);
             this.uow.SaveChanges();
         }
 
@@ -95,9 +97,8 @@ namespace LatteMarche.Tests.Services.Utenti
         [Test]
         public void UtentiService_Create()
         {
-            var allevamentoDto = Builder<AllevamentoDto>
+            var autocisternaDto = Builder<AutocisternaDto>
                 .CreateNew()
-                    .With(u => u.IdComune = ID_COMUNE)
                 .Build();
 
             var utenteDto = Builder<UtenteDto>
@@ -107,49 +108,48 @@ namespace LatteMarche.Tests.Services.Utenti
                     .With(u => u.IdCessionario = (int?)null)
                     .With(u => u.IdDestinatario = (int?)null)
                     .With(u => u.IdAziendaTrasporti = (int?)null)
-                    .With(u => u.Allevamenti = new List<AllevamentoDto>() { allevamentoDto })
+                    .With(u => u.Autocisterne = new List<AutocisternaDto>() { autocisternaDto })
                 .Build();
 
             utenteDto = this.utentiService.Create(utenteDto);
 
-            Assert.AreEqual(1, utenteDto.Allevamenti.Count);
+            Assert.AreEqual(1, utenteDto.Autocisterne.Count);
         }
 
         [Test]
         public void UtentiService_Details()
         {
             var utenteDto = this.utentiService.Details(this.utente.Id);
-            Assert.AreEqual(1, utenteDto.Allevamenti.Count);
+            Assert.AreEqual(1, utenteDto.Autocisterne.Count);
         }
 
         [Test]
         public void UtentiService_Update()
         {
-            // aggiunta nuovo allevamento
+            // aggiunta nuova autocisterna
             var utenteDto = this.utentiService.Details(this.utente.Id);
 
-            var allevamentoDto = Builder<AllevamentoDto>
+            var autocisternaDto = Builder<AutocisternaDto>
                 .CreateNew()
                     .With(u => u.Id = 0)
-                    .With(u => u.IdUtente = this.utente.Id)
-                    .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.IdTrasportatore = this.utente.Id)
                 .Build();
 
-            utenteDto.Allevamenti.Add(allevamentoDto);
+            utenteDto.Autocisterne.Add(autocisternaDto);
             utenteDto = this.utentiService.Update(utenteDto);
-            Assert.AreEqual(2, utenteDto.Allevamenti.Count);
+            Assert.AreEqual(2, utenteDto.Autocisterne.Count);
 
-            // editazione allevamento 
-            utenteDto.Allevamenti[0].CodiceAsl = "1234";
-
-            utenteDto = this.utentiService.Update(utenteDto);
-            Assert.AreEqual("1234", utenteDto.Allevamenti[0].CodiceAsl);
-
-            // rimozione allevamento
-            utenteDto.Allevamenti.RemoveAt(0);
+            // editazione autocisterna 
+            utenteDto.Autocisterne[0].Targa = "1234";
 
             utenteDto = this.utentiService.Update(utenteDto);
-            Assert.AreEqual(1, utenteDto.Allevamenti.Count);
+            Assert.AreEqual("1234", utenteDto.Autocisterne[0].Targa);
+
+            // rimozione autocisterna
+            utenteDto.Autocisterne.RemoveAt(0);
+
+            utenteDto = this.utentiService.Update(utenteDto);
+            Assert.AreEqual(1, utenteDto.Autocisterne.Count);
 
         }
 
@@ -158,7 +158,7 @@ namespace LatteMarche.Tests.Services.Utenti
         {
             this.utentiService.Delete(this.utente.Id);
 
-            var count = this.allevamentiRepository.DbSet.Count(uxa => uxa.IdUtente == this.utente.Id);
+            var count = this.autocisterneRepository.DbSet.Count(uxa => uxa.IdTrasportatore == this.utente.Id);
             Assert.AreEqual(0, count);
         }
 

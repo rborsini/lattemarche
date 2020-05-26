@@ -3,12 +3,16 @@
     <!-- waiter -->
     <waiter ref="waiter"></waiter>
 
+    <!-- Pannello editazione allevamento -->
+    <editazione-allevamento-modal ref="editazioneAllevamentoModal" :allevamento="allevamento" v-on:salvato="onAllevamentoSaved"></editazione-allevamento-modal>    
+    
+    <!-- Pannello editazione autocisterna -->
+    <editazione-autocisterna-modal ref="editazioneAutocisternaModal" :autocisterna="autocisterna" v-on:salvato="onAutocisternaSaved"></editazione-autocisterna-modal>    
+
     <!-- modale errore generico -->
-    <notification-dialog
-      ref="errorDialog"
-      :title="'Errore imprevisto'"
-      :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
-      v-on:ok="reload()"
+    <notification-dialog ref="errorDialog" 
+      :title="'Errore imprevisto'" :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
+        v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- modale conferma salvataggio -->
@@ -40,8 +44,11 @@
         <li class="active">
           <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
         </li>
-        <li >
-          <a v-if="utente.IdProfilo == 3" data-toggle="tab" class="nav-link" href="#allevamenti">Allevamenti</a>
+        <li v-if="utente.IdProfilo == 3" >
+          <a data-toggle="tab" class="nav-link" href="#allevamenti">Allevamenti</a>
+        </li>
+        <li v-if="utente.IdProfilo == 5" >
+          <a data-toggle="tab" class="nav-link" href="#autocisterne">Autocisterne</a>
         </li>        
       </ul>
 
@@ -99,6 +106,30 @@
                 :text-field="'Text'"
               />
             </div>
+
+            <!-- Allevatore -->
+            <label v-if="utente.IdProfilo == 3" class="col-sm-1">Tipo latte</label>
+            <div v-if="utente.IdProfilo == 3" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="tipoLatte.Items"
+                :value.sync="utente.IdTipoLatte"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>        
+
+            <!-- Trasportatore -->
+            <label v-if="utente.IdProfilo == 5" class="col-sm-1">Azienda trasporti</label>
+            <div v-if="utente.IdProfilo == 5" class="col-sm-4">
+              <select2
+                class="form-control"
+                :options="aziendaTrasportatore.Items"
+                :value.sync="utente.IdAziendaTrasporti"
+                :value-field="'Value'"
+                :text-field="'Text'"
+              />
+            </div>                       
           </div>
 
           <!-- ragione sociale / username -->
@@ -198,8 +229,11 @@
         <div id="allevamenti" class="tab-pane fade">
 
           <div class="row">
-              <div class="offset-1 col-sm-10 pt-4">
+              <div class="col-sm-11 pt-4">
+                <button v-on:click="onAllevamentoAdd" class="btn btn-primary float-right" >Aggiungi</button>
+              </div>
 
+              <div class="offset-1 col-sm-10 pt-2">
                 <table class="table table-bordered">
 
                     <thead class="table table-hover table-striped table-bordered">
@@ -223,7 +257,55 @@
                             </td>          
                             <td>
                                 <div class="text-center">
-                                    <!-- <a v-bind:href="'/auditors/edit?id=' + auditor.Id " class="edit text-primary" title="modifica" style="cursor: pointer;" ><i class="far fa-edit"></i></a> -->
+                                  <button v-on:click="onAllevamentoEdit(allevamento)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
+                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
+                                </div>
+                            </td>            
+                        </tr>
+                    </tbody>
+
+                </table>    
+
+              </div>
+          </div>
+      
+
+        </div>
+
+        <!-- Tab autocisterne -->
+        <div id="autocisterne" class="tab-pane fade">
+
+          <div class="row">
+              <div class="col-sm-11 pt-4">
+                <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right" >Aggiungi</button>
+              </div>
+
+              <div class="offset-1 col-sm-10 pt-2">
+                <table class="table table-bordered">
+
+                    <thead class="table table-hover table-striped table-bordered">
+                        <tr>
+                            <th scope="rol">Marca</th>
+                            <th scope="rol">Modello</th>
+                            <th scope="rol">Targa</th>
+                            <th scope="rol"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(autocisterna, index) in utente.Autocisterne" :key="index">
+                            <td>
+                                {{autocisterna.Marca}}
+                            </td>
+                            <td>
+                                {{autocisterna.Modello}}
+                            </td>
+                            <td>
+                                {{autocisterna.Targa}}
+                            </td>          
+                            <td>
+                                <div class="text-center">
+                                  <button v-on:click="onAutocisternaEdit(autocisterna)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
+                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
                                 </div>
                             </td>            
                         </tr>
@@ -255,6 +337,8 @@ import * as jquery from "jquery";
 
 import ConfirmDialog from "../../components/confirmDialog.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
+import EditazioneAllevamentoModal from "./editAllevamento.vue";
+import EditazioneAutocisternaModal from "./editAutocisterna.vue";
 import Waiter from "../../components/waiter.vue";
 import Select2 from "../../components/select2.vue";
 import { UtentiService } from "@/services/utenti.service";
@@ -263,13 +347,25 @@ import { Utente } from "@/models/utente.model";
 import { UrlService } from "@/services/url.service";
 import { PermissionsService } from "@/services/permissions.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+import { Allevamento } from '../../models/allevamento.model';
+import { Autocisterna } from '../../models/autocisterna.model';
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        open(): void
+        openAllevamento(allevamento: Allevamento): void
+        close(): void
+    }
+}
 
 @Component({
   components: {
     Select2,
     ConfirmDialog,
     Waiter,
-    NotificationDialog
+    NotificationDialog,
+    EditazioneAllevamentoModal,
+    EditazioneAutocisternaModal
   }
 })
 export default class App extends Vue {
@@ -277,7 +373,8 @@ export default class App extends Vue {
     savedDialog: Vue,
     errorDialog: Vue,
     waiter: Vue,
-    confirmDeleteDialog: Vue
+    confirmDeleteDialog: Vue,
+    editazioneAllevamentoModal: Vue
   };
 
   public itemNotFound: boolean = false;
@@ -288,6 +385,8 @@ export default class App extends Vue {
   public dropdownService: DropdownService = new DropdownService();
 
   public utente: Utente = new Utente();
+  public allevamento: Allevamento = new Allevamento();
+  public autocisterna: Autocisterna = new Autocisterna();
 
   public profilo: Dropdown = new Dropdown();
   public sesso: Dropdown = new Dropdown();
@@ -296,6 +395,8 @@ export default class App extends Vue {
   public acquirente: Dropdown = new Dropdown();
   public cessionario: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
+  public tipoLatte: Dropdown = new Dropdown();
+  public aziendaTrasportatore: Dropdown = new Dropdown();
 
   constructor() {
     super();
@@ -382,6 +483,16 @@ export default class App extends Vue {
     this.dropdownService.getDestinatari().then(response => {
       this.destinatario = response.data;
     });
+
+    // Tipo latte
+    this.dropdownService.getTipiLatte().then(response => {
+      this.tipoLatte = response.data;
+    });  
+    
+    // Azienda trasportatore
+    this.dropdownService.getAziendeTrasportatori().then(response => {
+      this.aziendaTrasportatore = response.data;
+    });      
   }
 
   public loadComuni(provincia: string): void {
@@ -407,6 +518,46 @@ export default class App extends Vue {
       this.$refs.removedDialog.open();
     });
   }
+
+  // popup nuovo allevamento
+  public onAllevamentoAdd() {
+    this.allevamento = new Allevamento();
+    this.allevamento.IdUtente = this.utente.Id;
+    this.$refs.editazioneAllevamentoModal.openAllevamento(this.allevamento);
+  }
+
+  // editazione allevamento
+  public onAllevamentoEdit(allevamento: Allevamento) {
+    this.allevamento = allevamento;
+    this.$refs.editazioneAllevamentoModal.openAllevamento(this.allevamento);
+  }
+
+  // evento conferma salvataggio allevamento
+  public onAllevamentoSaved() {
+    if(this.allevamento.Id == 0) {
+      this.utente.Allevamenti.push(this.allevamento);
+    }
+  }
+
+  // popup nuova autocisterna
+  public onAutocisternaAdd() {
+    this.autocisterna = new Autocisterna();
+    this.autocisterna.IdTrasportatore = this.utente.Id;
+    this.$refs.editazioneAutocisternaModal.open();
+  }
+
+  // editazione autocisterna
+  public onAutocisternaEdit(autocisterna: Autocisterna) {
+    this.autocisterna = autocisterna;
+    this.$refs.editazioneAutocisternaModal.open();
+  }
+
+  // evento conferma salvataggio autocisterna
+  public onAutocisternaSaved() {
+    if(this.autocisterna.Id == 0) {
+      this.utente.Autocisterne.push(this.autocisterna);
+    }
+  }  
 
   // lettura permessi da jwt
   private readPermissions() {

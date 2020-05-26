@@ -40,21 +40,6 @@
             </div>
           </div>
 
-          <!--  Autotrasportatore -->
-          <div class="row form-group">
-            <label class="col-3">Autotrasportatore</label>
-            <div class="col-9">
-              <select2
-                class="form-control"
-                :dropdownparent="'#editazione-autocisterna-modal'"
-                :options="trasportatori.Items"
-                :value.sync="autocisterna.IdTrasportatore"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
-          </div>
-
           <!-- Portata -->
           <div class="row form-group">
             <label class="col-3">Portata</label>
@@ -75,7 +60,7 @@
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
           <button :disabled="autocisterna.Marca === '' || autocisterna.Modello === '' ||  autocisterna.Targa === '' || 
-                   autocisterna.IdTrasportatore == 0 || autocisterna.Portata == 0 || autocisterna.NumScomparti == 0" class="btn btn-primary" v-on:click="onSave()">Salva</button>
+                   autocisterna.Portata == 0 || autocisterna.NumScomparti == 0" class="btn btn-primary" v-on:click="onSave()">Salva</button>
         </div>
       </div>
     </div>
@@ -105,21 +90,13 @@ export default class EditazioneAutocisternaModal extends Vue {
   @Prop()
   autocisterna!: Autocisterna;
 
-  public trasportatori: Dropdown = new Dropdown();
-
-  public autocisterneService: AutocisterneService;
-  private dropdownService: DropdownService;
 
   constructor() {
     super();
-    this.autocisterneService = new AutocisterneService();
-    this.dropdownService = new DropdownService();
   }
 
   mounted() {
-    this.dropdownService.getAziendeTrasportatori().then(response => {
-      this.trasportatori = response.data;
-    });
+
   }
 
   public open(): void {
@@ -127,16 +104,8 @@ export default class EditazioneAutocisternaModal extends Vue {
   }
 
   public onSave() {
-
-    this.autocisterneService.save(this.autocisterna).then(response => {
-      if (response.data != undefined) {
-        this.$emit("salvato");
-        this.close();
-      } else {
-        this.autocisterna = response.data;
-        this.close();
-      }
-    });
+    this.$emit("salvato");
+    this.close();
   }
 
   public close(): void {

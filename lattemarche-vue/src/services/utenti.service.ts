@@ -1,5 +1,6 @@
 ﻿import axios, { AxiosPromise } from 'axios';
 import { Utente } from '../models/utente.model';
+import { ChangePassword } from '@/models/changePassword.model';
 
 export class UtentiService {
     constructor() { }
@@ -22,6 +23,10 @@ export class UtentiService {
 
     public delete(id: number): AxiosPromise<Utente> {
         return axios.delete('/api/utenti/delete?id=' + id);
+    }
+
+    public changePassword(model: ChangePassword): AxiosPromise<string> {
+        return axios.post('/api/users/changepassword', model);
     }
 
 }

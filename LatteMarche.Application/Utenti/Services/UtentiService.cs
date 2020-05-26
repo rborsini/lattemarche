@@ -27,6 +27,7 @@ namespace LatteMarche.Application.Utenti.Services
         private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
         private IRepository<TrasportatoreXAzienda, int> trasportatoriXAziendeRepository;
         private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Autocisterna, int> autocisterneRepository;
 
         private IComuniService comuniService;
 
@@ -44,6 +45,7 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
             this.trasportatoriXAziendeRepository = this.uow.Get<TrasportatoreXAzienda, int>();
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+            this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
 
             this.comuniService = new ComuniService(uow);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
 		}
@@ -58,9 +60,12 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXCessionarioRepository.Delete(key);
             this.utenteXDestinatarioRepository.Delete(key);
             this.trasportatoriXAziendeRepository.Delete(key);
-
+            
             var allevamentiDaRimuovere = this.allevamentiRepository.DbSet.Where(a => a.IdUtente == key).Select(a => a.Id).ToList();            
             this.allevamentiRepository.Delete(allevamentiDaRimuovere.ToArray());
+
+            var autocisterneDaRimuovere = this.autocisterneRepository.DbSet.Where(a => a.IdTrasportatore == key).Select(a => a.Id).ToList();
+            this.autocisterneRepository.Delete(autocisterneDaRimuovere.ToArray());
 
             this.uow.SaveChanges();
 
@@ -216,7 +221,9 @@ namespace LatteMarche.Application.Utenti.Services
                 query = query.Where(u => u.IdProfilo == searchDto.IdProfilo);
             }
 
-            return ConvertToDtoList(query.ToList());
+            var list = query.ToList();
+
+            return ConvertToDtoList(list);
         }
 
 
@@ -245,8 +252,57 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.UtenteXDestinatario = UpdateUtenteXDestinatario(dbEntity.UtenteXDestinatario, viewEntity.UtenteXDestinatario);
             dbEntity.TrasportatoreXAzienda = UpdateTrasportatoreXAzienda(dbEntity.TrasportatoreXAzienda, viewEntity.TrasportatoreXAzienda);
             dbEntity.Allevamenti = UpdateAllevamenti(dbEntity.Allevamenti, viewEntity.Allevamenti);
+            dbEntity.Autocisterne = UpdateAutocisterne(dbEntity.Autocisterne, viewEntity.Autocisterne);
 
             return dbEntity;
+        }
+
+        private List<Autocisterna> UpdateAutocisterne(List<Autocisterna> autocisterneDb, List<Autocisterna> autocisterneView)
+        {
+            // autocisterne rimosse
+            var autocisterneDaRimuovere = new List<Autocisterna>();
+            foreach (var autocisterna in autocisterneDb)
+            {
+                if (autocisterneView.FirstOrDefault(a => a.Id == autocisterna.Id) == null)
+                    autocisterneDaRimuovere.Add(autocisterna);
+            }
+
+            foreach (var autocisterna in autocisterneDaRimuovere)
+                this.autocisterneRepository.Delete(autocisterna);
+
+            this.uow.SaveChanges();
+
+            // autocisterne aggiunte e modificate
+            foreach (var autocisternaView in autocisterneView)
+            {
+                var autocisernaDb = autocisterneDb.FirstOrDefault(a => a.Id == autocisternaView.Id);
+                if (autocisernaDb == null)
+                {
+                    this.autocisterneRepository.Add(autocisternaView);
+                    this.uow.SaveChanges();
+                }
+                else
+                {
+                    autocisernaDb = UpdateAutocisterneProperties(autocisernaDb, autocisternaView);
+                    this.autocisterneRepository.Update(autocisernaDb);
+                    this.uow.SaveChanges();
+                }
+
+            }
+
+            return autocisterneView;
+        }
+
+        private Autocisterna UpdateAutocisterneProperties(Autocisterna autocisernaDb, Autocisterna autocisternaView)
+        {
+            autocisernaDb.Marca = autocisternaView.Marca;
+            autocisernaDb.Modello = autocisternaView.Modello;
+            autocisernaDb.IdTrasportatore = autocisternaView.IdTrasportatore;
+            autocisernaDb.NumScomparti = autocisternaView.NumScomparti;
+            autocisernaDb.Portata = autocisternaView.Portata;
+            autocisernaDb.Targa = autocisternaView.Targa;
+
+            return autocisernaDb;
         }
 
         private List<Allevamento> UpdateAllevamenti(List<Allevamento> allevamentiDb, List<Allevamento> allevamentiView)

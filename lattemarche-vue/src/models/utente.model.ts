@@ -1,4 +1,5 @@
 ﻿import { Allevamento } from './allevamento.model';
+import { Autocisterna } from './autocisterna.model';
 
 export class Utente {
     public Id: number = 0;
@@ -29,5 +30,6 @@ export class Utente {
     public IdAziendaTrasporti?: number;
 
     public Allevamenti: Allevamento[] = [];
+    public Autocisterne: Autocisterna[] = [];
 
 }

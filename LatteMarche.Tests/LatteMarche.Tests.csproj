@@ -146,6 +146,7 @@
     <Compile Include="Services\Utenti\Services_AziendaTrasportatoriTest.cs" />
     <Compile Include="Services\Utenti\Services_CessionarioTest.cs" />
     <Compile Include="Services\Utenti\Services_DestinatarioTest.cs" />
+    <Compile Include="Services\Utenti\Services_TrasportatoreTest.cs" />
     <Compile Include="Services\Utenti\Services_UtentiTest.cs" />
   </ItemGroup>
   <ItemGroup>

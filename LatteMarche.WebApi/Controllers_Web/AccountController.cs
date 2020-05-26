@@ -95,6 +95,11 @@ namespace LatteMarche.WebApi.Controllers_Web
             return View(model);
         }
 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public ActionResult Logout()
         {

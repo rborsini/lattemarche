@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using LatteMarche.Application.Allevamenti.Dtos;
+using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Utenti.Dtos
@@ -58,7 +59,9 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
 
-        
+
+        public int? IdTipoLatte { get; set; }
+
         public string Username { get; set; }
         public string Password { get; set; }
 
@@ -72,9 +75,12 @@ namespace LatteMarche.Application.Utenti.Dtos
 
         public List<AllevamentoDto> Allevamenti { get; set; }
 
+        public List<AutocisternaDto> Autocisterne { get; set; }
+
         public UtenteDto()
         {
             this.Allevamenti = new List<AllevamentoDto>();
+            this.Autocisterne = new List<AutocisternaDto>();
         }
 
     }
