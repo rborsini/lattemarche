@@ -25,43 +25,39 @@
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button v-on:click="onSave()" class="btn btn-success">Salva</button>
-                </div>
-            </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
+          <button v-on:click="onSave()" class="btn btn-success">Salva</button>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop, Watch, Emit } from "vue-property-decorator";
+import { Giro } from "../../models/giro.model";
+import { GiriService } from "../../services/giri.service";
 
-    import Vue from "vue";
-    import Component from "vue-class-component";
-    import { Prop, Watch, Emit } from "vue-property-decorator";
-    import { Giro } from "../../models/giro.model";
-    import { GiriService } from "../../services/giri.service";
+@Component({
+  components: {}
+})
+export default class GiroTrasportatoriModal extends Vue {
+  @Prop()
+  giro!: Giro;
 
-    @Component({
-        components: {}
-    })
+  public giriService: GiriService;
+  public progressBar: boolean = false;
 
-    export default class GiroTrasportatoriModal extends Vue {
+  constructor() {
+    super();
+    this.giriService = new GiriService();
+    this.giro = new Giro();
+  }
 
-        @Prop()
-        giro: Giro;
-
-        public giriService: GiriService;
-
-        constructor() {
-            super();
-            this.giriService = new GiriService();
-            this.giro = new Giro();
-        }
-
-        mounted() {
-            
-        }
+  mounted() {}
 
         public onSave() {
             this.giriService.save(this.giro)
@@ -75,20 +71,17 @@
                 })
         }
 
-        public open(): void {
-            $(this.$el).modal('show');
-        }
+  public open(): void {
+    $(this.$el).modal("show");
+  }
 
-        public openGiro(giro: Giro): void {
-            this.giro = giro;
-            this.open();
-        }
+  public openGiro(giro: Giro): void {
+    this.giro = giro;
+    this.open();
+  }
 
-        public close(): void {
-            $(this.$el).modal('hide');
-        }
-
-
-    }
-
+  public close(): void {
+    $(this.$el).modal("hide");
+  }
+}
 </script>
