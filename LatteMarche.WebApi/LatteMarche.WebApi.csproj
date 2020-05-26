@@ -261,6 +261,8 @@
     <Content Include="dist\analisiLatteIndex.js" />
     <Content Include="dist\autocisterneIndex.html" />
     <Content Include="dist\autocisterneIndex.js" />
+    <Content Include="dist\cessionariIndex.html" />
+    <Content Include="dist\cessionariIndex.js" />
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />
