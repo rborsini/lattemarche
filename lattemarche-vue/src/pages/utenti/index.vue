@@ -17,6 +17,28 @@
                         :message="'Sei sicuro di voler rimuovere l\'utente selezionato?'"
                         v-on:confirmed="onRemove()"></confirm-dialog>
 
+        <!-- Box ricerca -->
+        <div class="jumbotron">
+
+            <div class="row pt-1">
+
+                <label class="col-1">Tipo profilo:</label>
+                <div class="col-3">
+                    <select2
+                        class="form-control"
+                        :placeholder="'-'"
+                        :options="profilo.Items"
+                        :value-field="'Value'"
+                        :text-field="'Text'"
+                        v-on:value-changed="onProfiloValueChanged"
+                    />
+                </div>
+
+            </div>
+
+        </div>
+
+
         <!-- Tabella -->
         <data-table :options="tableOptions" :rows="utenti" v-on:data-loaded="onDataLoaded">
 
@@ -51,6 +73,8 @@
 
     import { Utente } from "../../models/utente.model";
     import { UtentiService } from "../../services/utenti.service";
+import { Dropdown, DropdownItem } from '../../models/dropdown.model';
+import { DropdownService } from '../../services/dropdown.service';
 
 
     // declare module 'vue/types/vue' {
@@ -80,9 +104,13 @@
             removedDialog: Vue
         }
 
+
+        private dropdownService: DropdownService;
         private utentiService: UtentiService;
         public utente: Utente;
         private idUtente!: number;
+
+        public profilo: Dropdown = new Dropdown();
 
         public tableOptions: any = {};
         public utenti: Utente[] = [];
@@ -93,6 +121,7 @@
         constructor() {
             super();
 
+            this.dropdownService = new DropdownService();
             this.utentiService = new UtentiService();
             this.utente = new Utente();
 
@@ -110,6 +139,11 @@
                     this.utenti = response.data;
                     this.$refs.waiter.close();
                 });
+
+            this.dropdownService.getProfili().then(response => {
+                this.profilo = response.data;
+            });
+
         }
 
         // Evento fine generazione tabella
@@ -126,13 +160,10 @@
 
         }
 
+        // selezione profilo di filtro
+        public onProfiloValueChanged(value: string){
 
-        // nuova utente
-        public onAdd() {
-
-            this.utente = new Utente();
-            this.$refs.editazioneUtenteModal.open();
-
+            console.log("profilo selezionato", value);
         }
 
         // rimozione utente
