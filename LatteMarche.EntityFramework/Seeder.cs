@@ -43,6 +43,7 @@ namespace LatteMarche.EntityFramework
                     INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (5, N'Trasportatore')
                     INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (6, N'Destinatario')
                     INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (7, N'Acquirente')
+                    INSERT [dbo].[PROFILO] ([ID_PROFILO], [DESCRIZIONE_PROFILO]) VALUES (8, N'Cessionario')
                 SET IDENTITY_INSERT PROFILO OFF
             ";
         }

@@ -33,6 +33,8 @@ using LatteMarche.Application.Cessionari.Services;
 using LatteMarche.Application.Cessionari.Interfaces;
 using LatteMarche.Application.AziendeTrasportatori.Interfaces;
 using LatteMarche.Application.Autocisterne.Interfaces;
+using LatteMarche.Application.Dashboard.Services;
+using LatteMarche.Application.Dashboard.Interfaces;
 
 namespace LatteMarche.Application
 {
@@ -81,6 +83,7 @@ namespace LatteMarche.Application
             RegisterService<TipiProfiloService, ITipiProfiloService>(builder);
             //RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
             RegisterService<UtentiService, IUtentiService>(builder);
+            RegisterService<WidgetsService, IWidgetsService>(builder);
 
             base.Load(builder);
 		}

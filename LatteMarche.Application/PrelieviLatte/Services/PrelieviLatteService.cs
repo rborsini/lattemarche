@@ -9,6 +9,8 @@ using WeCode.Application;
 using WeCode.Data.Interfaces;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -18,8 +20,9 @@ namespace LatteMarche.Application.Latte.Services
 
         #region Fields
 
-        private IRepository<PrelievoLatte, int> prielieviLatteRepository;
         private IRepository<V_PrelievoLatte, int> v_prelieviLatteRepository;
+        private IRepository<Allevamento, int> allevamentiRepository;
+        private IUtentiService utentiService;
 
         private ILogsService logsService;
 
@@ -27,18 +30,58 @@ namespace LatteMarche.Application.Latte.Services
 
         #region Constructor
 
-        public PrelieviLatteService(IUnitOfWork uow, ILogsService logsService)
+        public PrelieviLatteService(IUnitOfWork uow, ILogsService logsService, IUtentiService utentiService)
             : base(uow)
         {
-            this.prielieviLatteRepository = this.uow.Get<PrelievoLatte, int>();
             this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
+            this.allevamentiRepository = uow.Get<Allevamento, int>();
 
             this.logsService = logsService;
+            this.utentiService = utentiService;
         }
 
         #endregion
 
         #region Methods
+
+        public IQueryable<V_PrelievoLatte> PrelieviAutorizzati(int idUtente)
+        {
+            var query = this.v_prelieviLatteRepository.DbSet;
+            var utente = this.utentiService.Details(idUtente);
+
+            switch (utente.IdProfilo)
+            {
+                case 1:     // Admin
+                    return query;
+
+                case 7:     // Acquirente
+                    return query.Where(a => a.Id == utente.IdAcquirente);
+
+                case 3:
+                    // allevamenti associati all'utente
+                    var allevamentiIds = this.allevamentiRepository.DbSet
+                        .Where(a => a.IdUtente == idUtente)
+                        .Select(a => a.Id).ToList();
+
+                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
+
+                case 4:     // Laboratorio
+                    return query.Where(a => a.IdLabAnalisi == idUtente);
+
+                case 5:     // Trasportatore
+                    return query.Where(a => a.IdTrasportatore == idUtente);
+
+                case 6:     // Destinatario
+                    return query.Where(a => a.IdDestinatario == utente.IdDestinatario);
+
+                case 8:     // Cessionario
+                    return query.Where(a => a.IdCessionario == utente.IdCessionario);
+
+                default:
+                    return query;
+
+            }
+        }
 
         public override PrelievoLatteDto Create(PrelievoLatteDto model)
         {
@@ -111,7 +154,7 @@ namespace LatteMarche.Application.Latte.Services
             {
                 try
                 {
-                    var prelievoDb = repository.Query.FirstOrDefault(p =>
+                    var prelievoDb = base.repository.Query.FirstOrDefault(p =>
                             p.IdAllevamento == item.IdAllevamento &&
                             p.IdTrasportatore == item.IdTrasportatore &&
                             p.DataPrelievo == item.DataPrelievo);

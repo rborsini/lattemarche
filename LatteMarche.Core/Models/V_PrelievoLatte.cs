@@ -86,6 +86,12 @@ namespace LatteMarche.Core.Models
         [Column("RAG_SOC_ACQUIRENTE")]
         public string Acquirente { get; set; }
 
+        [Column("ID_CESSIONARIO")]
+        public int? IdCessionario { get; set; }
+
+        [Column("RAG_SOC_CESSIONARIO")]
+        public string Cessionario { get; set; }
+
         [Column("ID_LABANALISI")]
         public int? IdLabAnalisi { get; set; }
 

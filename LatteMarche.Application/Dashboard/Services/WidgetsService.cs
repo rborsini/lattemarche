@@ -1,5 +1,7 @@
-﻿using LatteMarche.Application.Dashboard.Dtos;
+﻿using LatteMarche.Application.Acquirenti.Interfaces;
+using LatteMarche.Application.Dashboard.Dtos;
 using LatteMarche.Application.Dashboard.Interfaces;
+using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Core.Models;
 using System;
@@ -15,19 +17,19 @@ namespace LatteMarche.Application.Dashboard.Services
     {
         #region Fields
 
-        private IRepository<PrelievoLatte, int> repository;
-        private IRepository<Allevamento, int> allevamentiRepository;
-        private IUtentiService utentiService;
+        private IPrelieviLatteService prelieviService;
+        private IAcquirentiService acquirentiService;
+        private ITipiLatteService tipiLatteService;
 
         #endregion
 
         #region Constructor
 
-        public WidgetsService(IUnitOfWork uow, IUtentiService utentiService)
+        public WidgetsService(IUnitOfWork uow, IPrelieviLatteService prelieviService, IAcquirentiService acquirentiService, ITipiLatteService tipiLatteService)
         {
-            this.repository = uow.Get<PrelievoLatte, int>();
-            this.allevamentiRepository = uow.Get<Allevamento, int>();
-            this.utentiService = utentiService;
+            this.prelieviService = prelieviService;
+            this.acquirentiService = acquirentiService;
+            this.tipiLatteService = tipiLatteService;
         }
 
         #endregion
@@ -38,26 +40,28 @@ namespace LatteMarche.Application.Dashboard.Services
         {
             var widgetDto = new WidgetSommarioDto();
 
-            var query = GetQuery(idUtente);
+            //var dataRiferimento = new DateTime(2018, 1, 1);
+            var dataRiferimento = DateTime.Today;
+            var query = this.prelieviService.PrelieviAutorizzati(idUtente);
 
             // settimana
-            var inizioSettimana = GetInizioSettimana(DateTime.Today);
+            var inizioSettimana = GetInizioSettimana(dataRiferimento);
             var fineSettimana = inizioSettimana.AddDays(7);
             widgetDto.Qta_Settimanale = query
                 .Where(p => inizioSettimana <= p.DataPrelievo && p.DataPrelievo <= fineSettimana)
                 .Sum(p => p.Quantita);
 
             // mese
-            var inizioMese = GetInizioMese(DateTime.Today);
+            var inizioMese = GetInizioMese(dataRiferimento);
             var fineMese = inizioMese.AddMonths(1);
             widgetDto.Qta_Mensile = query
                 .Where(p => inizioMese <= p.DataPrelievo && p.DataPrelievo <= fineMese)
                 .Sum(p => p.Quantita);
 
             // anno
-            var inizioAnno = GetInizioAnno(DateTime.Today);
+            var inizioAnno = GetInizioAnno(dataRiferimento);
             var fineAnno = inizioAnno.AddYears(1);
-            widgetDto.Qta_Mensile = query
+            widgetDto.Qta_Annuale = query
                 .Where(p => inizioAnno <= p.DataPrelievo && p.DataPrelievo <= fineAnno)
                 .Sum(p => p.Quantita);
 
@@ -70,7 +74,50 @@ namespace LatteMarche.Application.Dashboard.Services
         {
             var widgetDto = new WidgetGraficoDto();
 
-            var query = GetQuery(idUtente);
+            var acquirentiAutorizzati = this.acquirentiService.DropDown(idUtente);
+
+            foreach(var item in acquirentiAutorizzati.Items)
+            {
+                widgetDto.Serie.Add(new SerieDto()
+                {
+                    Id = item.Value,
+                    Nome = item.Text
+                });
+            }
+
+
+            var query = this.prelieviService.PrelieviAutorizzati(idUtente);
+
+            //var dataRiferimento = new DateTime(2018, 1, 1);
+            var dataRiferimento = DateTime.Today;
+            var meseCorrente = GetInizioAnno(dataRiferimento);
+            var fineAnno = meseCorrente.AddYears(1);
+
+            while(meseCorrente < fineAnno)
+            {
+
+                widgetDto.ValoriAsseX.Add($"{meseCorrente.Year}-{meseCorrente.Month}");
+
+                var meseSuccessivo = meseCorrente.AddMonths(1);
+
+                var queryMensile = query.Where(p => meseCorrente <= p.DataPrelievo && p.DataPrelievo < meseSuccessivo);
+
+                var result = queryMensile
+                    .GroupBy(p => p.IdAcquirente, (k, c) => new
+                    {
+                        IdAcquirente = k.Value,
+                        Quantita = c.Sum(p => p.Quantita)
+                    })
+                    .ToList();
+
+                foreach(var serie in widgetDto.Serie)
+                {
+                    var valore = result.FirstOrDefault(r => $"{r.IdAcquirente}" == serie.Id);
+                    serie.Valori.Add(valore == null ? (decimal?)null : valore.Quantita);                    
+                }
+
+                meseCorrente = meseSuccessivo;
+            }
 
             return widgetDto;
         }
@@ -79,51 +126,51 @@ namespace LatteMarche.Application.Dashboard.Services
         {
             var widgetDto = new WidgetGraficoDto();
 
-            var query = GetQuery(idUtente);
+            var tipiLatte = this.tipiLatteService.DropDown();
 
-            return widgetDto;
-        }
-
-
-        private IQueryable<PrelievoLatte> GetQuery(int idUtente)
-        {
-            var query = this.repository.DbSet;
-
-            var utente = this.utentiService.Details(idUtente);
-
-            switch (utente.IdProfilo)
+            foreach (var item in tipiLatte.Items)
             {
-                case 1:     // Admin
-                    return query;
-
-                case 7:     // Acquirente
-                    return query.Where(a => a.Id == utente.IdAcquirente);
-
-                case 3:
-                    // allevamenti associati all'utente
-                    var allevamentiIds = this.allevamentiRepository.DbSet
-                        .Where(a => a.IdUtente == idUtente)
-                        .Select(a => a.Id).ToList();
-
-                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
-
-                case 4:     // Laboratorio
-                    return query.Where(a => a.IdLabAnalisi == idUtente);
-
-                case 5:     // Trasportatore
-                    return query.Where(a => a.IdTrasportatore == idUtente);
-
-                case 6:     // Destinatario
-                    return query.Where(a => a.IdDestinatario == utente.IdDestinatario);
-
-                case 8:     // Cessionario
-                    return query.Where(a => a.IdCessionario ==  utente.IdCessionario);
-
-                default:
-                    return query;
-
+                widgetDto.Serie.Add(new SerieDto()
+                {
+                    Id = item.Value,
+                    Nome = item.Text
+                });
             }
 
+            var query = this.prelieviService.PrelieviAutorizzati(idUtente);
+
+            //var dataRiferimento = new DateTime(2018, 1, 1);
+            var dataRiferimento = DateTime.Today;
+            var meseCorrente = GetInizioAnno(dataRiferimento);
+            var fineAnno = meseCorrente.AddYears(1);
+
+            while (meseCorrente < fineAnno)
+            {
+
+                widgetDto.ValoriAsseX.Add($"{meseCorrente.Year}-{meseCorrente.Month}");
+
+                var meseSuccessivo = meseCorrente.AddMonths(1);
+
+                var queryMensile = query.Where(p => meseCorrente <= p.DataPrelievo && p.DataPrelievo < meseSuccessivo);
+
+                var result = queryMensile
+                    .GroupBy(p => p.IdTipoLatte, (k, c) => new
+                    {
+                        IdAcquirente = k.Value,
+                        Quantita = c.Sum(p => p.Quantita)
+                    })
+                    .ToList();
+
+                foreach (var serie in widgetDto.Serie)
+                {
+                    var valore = result.FirstOrDefault(r => $"{r.IdAcquirente}" == serie.Id);
+                    serie.Valori.Add(valore == null ? (decimal?)null : valore.Quantita);
+                }
+
+                meseCorrente = meseSuccessivo;
+            }
+
+            return widgetDto;
         }
 
         private DateTime GetInizioSettimana(DateTime data)
