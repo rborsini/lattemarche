@@ -88,10 +88,10 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-prelievo-modal'"
-                :options="trasportatore"
+                :options="trasportatore.Items"
                 :value.sync="prelievoLatte.IdTrasportatore"
-                :value-field="'Id'"
-                :text-field="'Cognome'"
+                :value-field="'Value'"
+                :text-field="'Text'"
               />
             </div>
           </div>
@@ -122,10 +122,10 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-prelievo-modal'"
-                :options="destinatario"
+                :options="destinatario.Items"
                 :value.sync="prelievoLatte.IdDestinatario"
-                :value-field="'Id'"
-                :text-field="'RagioneSociale'"
+                :value-field="'Value'"
+                :text-field="'Text'"
               />
             </div>
           </div>
@@ -137,10 +137,10 @@
               <select2
                 class="form-control"
                 :dropdownparent="'#editazione-prelievo-modal'"
-                :options="laboratoriAnalisi"
+                :options="laboratoriAnalisi.Items"
                 :value.sync="prelievoLatte.IdLabAnalisi"
-                :value-field="'Id'"
-                :text-field="'Descrizione'"
+                :value-field="'Value'"
+                :text-field="'Text'"
               />
             </div>
             <label class="col-2">Seriale laboratorio</label>
@@ -205,7 +205,7 @@ import { Destinatario } from "../../models/destinatario.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { TrasportatoriService } from "../../services/trasportatori.service";
-import { AcquirentiService } from "../../services/acquirenti.service";
+// import { AcquirentiService } from "../../services/acquirenti.service";
 import { DestinatariService } from "../../services/destinatari.service";
 import { DropdownService } from "../../services/dropdown.service";
 
@@ -221,24 +221,24 @@ export default class EditazionePrelievoModal extends Vue {
   prelievoLatte: PrelievoLatte = new PrelievoLatte();
 
   public prelieviLatteService: PrelieviLatteService;
-  public trasporatoriService: TrasportatoriService;
+//   public trasporatoriService: TrasportatoriService;
   public destinatariService: DestinatariService;
-  public acquirentiService: AcquirentiService;
+//   public acquirentiService: AcquirentiService;
   public dropdownService: DropdownService;
-  public laboratoriAnalisi: LaboratorioAnalisi[] = [];
-  public trasportatore: Trasportatore[] = [];
-  public destinatario: Destinatario[] = [];
+  public laboratoriAnalisi: Dropdown = new Dropdown();
+  public trasportatore: Dropdown = new Dropdown();
+  public destinatario: Dropdown = new Dropdown();
   public acquirente: Dropdown = new Dropdown();
-  
+
   public id: string;
   public progressBarSalvaPrelievo = false;
 
   constructor() {
     super();
     this.prelieviLatteService = new PrelieviLatteService();
-    this.trasporatoriService = new TrasportatoriService();
+    // this.trasporatoriService = new TrasportatoriService();
     this.destinatariService = new DestinatariService();
-    this.acquirentiService = new AcquirentiService();
+    // this.acquirentiService = new AcquirentiService();
     this.dropdownService = new DropdownService();
     this.id = $("#id").val() as string;
   }
@@ -251,35 +251,51 @@ export default class EditazionePrelievoModal extends Vue {
   }
 
   // caricamento laboratori analisi
-  public loadLaboratoriAnalisi() {
-    this.prelieviLatteService.getLaboratoriAnalisi().then(response => {
-      if (response.data != null) {
-        this.laboratoriAnalisi = response.data;
-      }
-    });
+  public async  loadLaboratoriAnalisi() {
+      const dd = await this.dropdownService.getLaboratori();
+
+    if (dd.data != null) {
+      this.laboratoriAnalisi = dd.data;
+    }
+    // this.prelieviLatteService.getLaboratoriAnalisi().then(response => {
+    //   if (response.data != null) {
+    //     this.laboratoriAnalisi = response.data;
+    //   }
+    // });
   }
 
   // caricamento trasportatori
-  public loadTrasportatori() {
-    this.trasporatoriService.getTrasportatori().then(response => {
-      if (response.data != null) {
-        this.trasportatore = response.data;
-      }
-    });
+  public async loadTrasportatori() {
+      const dd = await this.dropdownService.getTrasportatori();
+    if (dd.data != null) {
+      this.trasportatore = dd.data;
+    }
+
+    // this.trasporatoriService.getTrasportatori().then(response => {
+    //   if (response.data != null) {
+    //     this.trasportatore = response.data;
+    //   }
+    // });
   }
 
   // caricamento destinatari
-  public loadDestinatari() {
-    this.destinatariService.index().then(response => {
-      if (response.data != null) {
-        this.destinatario = response.data;
-      }
-    });
+  public async loadDestinatari() {
+      const dd = await this.dropdownService.getDestinatari();
+
+    if (dd.data != null) {
+      this.destinatario = dd.data;
+    }
+
+    // this.destinatariService.index().then(response => {
+    //   if (response.data != null) {
+    //     this.destinatario = response.data;
+    //   }
+    // });
   }
 
   // caricamento acquirenti
   public async loadAcquirenti() {
-      const dd = await this.dropdownService.getAcquirenti();
+    const dd = await this.dropdownService.getAcquirenti();
 
     if (dd.data != null) {
       this.acquirente = dd.data;
