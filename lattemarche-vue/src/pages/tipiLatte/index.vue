@@ -12,13 +12,13 @@
         <notification-dialog ref="savedDialog"
                             :title="'Conferma salvataggio'"
                             :message="'Tipo latte salvato correttamente'"
-                            v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
+                                  v-on:ok="reload()"></notification-dialog>
 
         <!-- Pannello notifica rimozione -->
         <notification-dialog ref="removedDialog"
                             :title="'Conferma rimozione'"
                             :message="'Tipo latte rimosso correttamente'"
-                            v-on:ok="window.location = '/TipiLatte'"></notification-dialog>
+                                  v-on:ok="reload()"></notification-dialog>
 
         <!-- Pannello modale conferma eliminazione -->
         <confirm-dialog ref="confirmDeleteDialog"
@@ -58,6 +58,7 @@
     import NotificationDialog from "../../components/notificationDialog.vue";
     import ConfirmDialog from "../../components/confirmDialog.vue";
 
+import { UrlService } from "@/services/url.service";
     import { TipoLatte } from "../../models/tipoLatte.model";
     import { TipiLatteService } from "../../services/tipiLatte.service";
 

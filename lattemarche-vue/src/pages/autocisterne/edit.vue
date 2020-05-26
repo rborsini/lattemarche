@@ -71,24 +71,6 @@
             </div>
           </div>
 
-          <!-- progress bar -->
-          <div class="row" v-if="progressBarVisible">
-            <div class="col-sm-4 offset-4 pt-2">
-              <div class="progress">
-                <div
-                  class="progress-bar progress-bar-striped progress-bar-animated"
-                  role="progressbar"
-                  aria-valuenow="100"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  style="width: 100%"
-                ></div>
-              </div>
-            </div>
-            <div class="col-sm-4 offset-4 text-center pt-2">
-              <h4>Elaborazione in corso...</h4>
-            </div>
-          </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
@@ -99,6 +81,7 @@
   </div>
 </template>
 <script lang="ts">
+
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
@@ -126,8 +109,6 @@ export default class EditazioneAutocisternaModal extends Vue {
   public autocisterneService: AutocisterneService;
   private dropdownService: DropdownService;
 
-  public progressBarVisible = false;
-
   constructor() {
     super();
     this.autocisterneService = new AutocisterneService();
@@ -145,10 +126,10 @@ export default class EditazioneAutocisternaModal extends Vue {
   }
 
   public onSave() {
-    this.progressBarVisible = true;
+
     this.autocisterneService.save(this.autocisterna).then(response => {
       if (response.data != undefined) {
-        this.progressBarVisible = false;
+        this.$emit("salvato");
         this.close();
       } else {
         this.autocisterna = response.data;

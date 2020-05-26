@@ -8,7 +8,7 @@
         <editazione-destinatario-modal ref="editazioneDestinatarioModal"
                                     :destinatario="destinatario"
                                     v-on:salvato="$refs.savedDialog.open()"
-                                    v-on:ok="window.location = '/Destinatari'"></editazione-destinatario-modal>
+                                    ></editazione-destinatario-modal>
 
         <!-- Pannello notifica salvatagggio -->
         <notification-dialog ref="savedDialog"
@@ -19,7 +19,7 @@
         <notification-dialog ref="removedDialog"
                             :title="'Conferma rimozione'"
                             :message="'Destinatario rimosso correttamente'"
-                            v-on:ok="window.location = '/Destinatari'"></notification-dialog>
+                            v-on:ok="reload()"></notification-dialog>
 
         <!-- Pannello modale conferma eliminazione -->
         <confirm-dialog ref="confirmDeleteDialog"
@@ -57,6 +57,7 @@ import EditazioneDestinatarioModal from "../destinatari/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
 
+import { UrlService } from "@/services/url.service";
 import { Destinatario } from "../../models/destinatario.model";
 import { DestinatariService } from "../../services/destinatari.service";
 

@@ -81,6 +81,7 @@ export default class EditazioneLaboratorioModal extends Vue {
   public onSave() {
     this.laboratoriService.save(this.laboratorio).then(response => {
       if (response.data != undefined) {
+        this.$emit("salvato");
         this.close();
       } else {
         this.laboratorio = response.data;

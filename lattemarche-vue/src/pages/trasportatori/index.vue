@@ -10,13 +10,13 @@
         <notification-dialog ref="salvataggioDettaglioGiroModal"
                             :title="'Conferma salvataggio'"
                             :message="'Dettaglio giro salvato correttamente'"
-                            v-on:ok="window.location = '/trasportatori'"></notification-dialog>
+                            v-on:salvato="$refs.savedDialog.open()"></notification-dialog>
 
         <!-- Pannelli modali di conferma azioni -->
         <notification-dialog ref="salvataggioGiroModal"
                             :title="'Conferma salvataggio'"
                             :message="'Giro salvato correttamente'"
-                            v-on:ok="window.location = '/trasportatori'"></notification-dialog>
+                                  v-on:ok="reload()"></notification-dialog>
 
         <!-- modale modifica/aggiungi giro -->
         <giro-trasportatori-modal ref="giroTrasportatoriModal"
@@ -150,6 +150,7 @@
     import { Trasportatore } from "../../models/trasportatore.model";
     import { Giro, Item } from "../../models/giro.model";
 
+import { UrlService } from "@/services/url.service";
     import { GiriService } from "../../services/giri.service";
     import { TrasportatoriService } from "../../services/trasportatori.service";
 

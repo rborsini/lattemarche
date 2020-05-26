@@ -139,6 +139,7 @@ export default class EditazioneAcquirenteModal extends Vue {
   public onSave() {
     this.acquirentiService.save(this.acquirente).then(response => {
       if (response.data != undefined) {
+        this.$emit("salvato");
         this.close();
       } else {
         // save KO!!

@@ -8,6 +8,7 @@
     <editazione-cessionario-modal
       ref="editazioneCessionarioModal"
       :cessionario="cessionario"
+      v-on:salvato="$refs.savedDialog.open()"
     ></editazione-cessionario-modal>
 
     <!-- Pannello notifica salvatagggio -->
@@ -15,7 +16,7 @@
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Cessionario salvato correttamente'"
-      v-on:ok="window.location = '/Cessionari'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
@@ -23,7 +24,7 @@
       ref="removedDialog"
       :title="'Conferma rimozione'"
       :message="'Acquirente rimosso correttamente'"
-      v-on:ok="window.location = '/Cessionari'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
@@ -56,6 +57,7 @@ import { Component, Vue } from "vue-property-decorator";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
 import Waiter from "../../components/waiter.vue";
+import { UrlService } from "@/services/url.service";
 import EditazioneCessionarioModal from "../cessionari/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";

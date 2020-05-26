@@ -4,14 +4,14 @@
     <waiter ref="waiter"></waiter>
 
     <!-- Pannello editazione dettaglio -->
-    <editazione-acquirente-modal ref="editazioneAcquirenteModal" :acquirente="acquirente"></editazione-acquirente-modal>
+    <editazione-acquirente-modal ref="editazioneAcquirenteModal" :acquirente="acquirente" v-on:salvato="$refs.savedDialog.open()" ></editazione-acquirente-modal>
 
     <!-- Pannello notifica salvatagggio -->
     <notification-dialog
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Acquirente salvato correttamente'"
-      v-on:ok="window.location = '/Acquirenti'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
@@ -19,7 +19,7 @@
       ref="removedDialog"
       :title="'Conferma rimozione'"
       :message="'Acquirente rimosso correttamente'"
-      v-on:ok="window.location = '/Acquirenti'"
+       v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
@@ -50,6 +50,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+import { UrlService } from "@/services/url.service";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
 import Waiter from "../../components/waiter.vue";

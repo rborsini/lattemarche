@@ -8,7 +8,7 @@
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Laboratorio salvato correttamente'"
-      v-on:ok="window.location = '/laboratori'"
+      v-on:salvato="$refs.savedDialog.open()"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
@@ -16,7 +16,7 @@
       ref="removedDialog"
       :title="'Conferma rimozione'"
       :message="'Laboratorio rimosso correttamente'"
-      v-on:ok="window.location = '/laboratori'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
@@ -53,6 +53,7 @@ import EditazioneLaboratorioModal from "../laboratori/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
 
+import { UrlService } from "@/services/url.service";
 import { LaboratoriService } from '../../services/laboratori.service';
 import { Laboratorio } from '../../models/laboratorio.model';
 

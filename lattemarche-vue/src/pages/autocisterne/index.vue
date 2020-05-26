@@ -4,14 +4,14 @@
     <waiter ref="waiter"></waiter>
 
     <!-- Pannello editazione dettaglio -->
-    <editazione-autocisterna-modal ref="editazioneAutocisternaModal" :autocisterna="autocisterna"></editazione-autocisterna-modal>
+    <editazione-autocisterna-modal ref="editazioneAutocisternaModal" :autocisterna="autocisterna" v-on:salvato="$refs.savedDialog.open()" ></editazione-autocisterna-modal>
 
     <!-- Pannello notifica salvatagggio -->
     <notification-dialog
       ref="savedDialog"
       :title="'Conferma salvataggio'"
       :message="'Autocisterna salvata correttamente'"
-      v-on:ok="window.location = '/Autocisterne'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
@@ -19,7 +19,7 @@
       ref="removedDialog"
       :title="'Conferma rimozione'"
       :message="'Autocisterna rimossa correttamente'"
-      v-on:ok="window.location = '/Autocisterne'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
@@ -57,6 +57,7 @@ import EditazioneAutocisternaModal from "../autocisterne/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import Waiter from "../../components/waiter.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
+import { UrlService } from "@/services/url.service";
 
 import { Autocisterna } from "../../models/autocisterna.model";
 import { AutocisterneService } from "../../services/autocisterne.service";
@@ -146,7 +147,7 @@ export default class AutocisterneIndexPage extends Vue {
       this.$refs.removedDialog.open();
     });
   }
-
+  
   // inizializzazione tabella
   private initTable(): void {
     var options: any = {};
@@ -187,5 +188,12 @@ export default class AutocisterneIndexPage extends Vue {
     }
     this.tableOptions = options;
   }
+
+  // reload della pagina sullo stesso id
+  public reload() {
+      UrlService.reload();
+  }
+
+
 }
 </script>
