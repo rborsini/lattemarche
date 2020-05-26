@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FizzWare.NBuilder;
+using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
@@ -34,12 +35,14 @@ namespace LatteMarche.Tests.Mappings
                 .CreateNew()
                     .With(a => a.Comune = Builder<Comune>.CreateNew().Build())
                     .With(a => a.UtenteXAcquirente = Builder<UtenteXAcquirente>.CreateNew().Build())
+                    .With(a => a.Allevamenti = Builder<Allevamento>.CreateListOfSize(2).Build().ToList())
                 .Build();
 
             var dto = Mapper.Map<UtenteDto>(entity);
             Assert.AreEqual(dto.Id, entity.Id);
 
             Assert.AreEqual(dto.IdAcquirente, entity.UtenteXAcquirente.IdAcquirente);
+            Assert.AreEqual(2, dto.Allevamenti.Count);
         }
 
         [Test]
@@ -47,6 +50,7 @@ namespace LatteMarche.Tests.Mappings
         {
             var dto = Builder<UtenteDto>
                 .CreateNew()
+                    .With(a => a.Allevamenti = Builder<AllevamentoDto>.CreateListOfSize(2).Build().ToList())
                 .Build();
 
             var entity = Mapper.Map<Utente>(dto);
@@ -54,6 +58,7 @@ namespace LatteMarche.Tests.Mappings
 
             Assert.IsNotNull(entity.UtenteXAcquirente);
             Assert.AreEqual(entity.UtenteXAcquirente.IdAcquirente, dto.IdAcquirente.Value);
+            Assert.AreEqual(2, entity.Allevamenti.Count);
         }
 
         #endregion

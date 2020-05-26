@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Core.Models;
 
 namespace LatteMarche.Application.Utenti.Dtos
@@ -39,8 +41,12 @@ namespace LatteMarche.Application.Utenti.Dtos
         public int? IdCessionario { get; set; }
         public int? IdAziendaTrasporti { get; set; }
 
-                   
+        public List<AllevamentoDto> Allevamenti { get; set; }
 
+        public UtenteDto()
+        {
+            this.Allevamenti = new List<AllevamentoDto>();
+        }
 
     }
 

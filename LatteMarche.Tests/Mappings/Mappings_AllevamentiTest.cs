@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FizzWare.NBuilder;
+using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
 
@@ -52,9 +53,6 @@ namespace LatteMarche.Tests.Mappings
             var allevamento = Mapper.Map<Allevamento>(allevamentoDto);
 
             Assert.AreEqual(allevamentoDto.CodiceAsl, allevamento.CodiceAsl);
-
-            Assert.IsNotNull(allevamento.Utente);
-            Assert.AreEqual(idTipoLatte, allevamento.Utente.IdTipoLatte);
 
         }
 

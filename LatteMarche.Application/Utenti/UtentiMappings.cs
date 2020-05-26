@@ -46,6 +46,7 @@ namespace LatteMarche.Application.Utenti
                 .ForMember(dest => dest.IdDestinatario, opts => opts.MapFrom(src => src.UtenteXDestinatario != null ? src.UtenteXDestinatario.IdDestinatario : (int?)null))
                 .ForMember(dest => dest.IdCessionario, opts => opts.MapFrom(src => src.UtenteXCessionario != null ? src.UtenteXCessionario.IdCessionario : (int?)null))
                 .ForMember(dest => dest.IdAziendaTrasporti, opts => opts.MapFrom(src => src.TrasportatoreXAzienda != null ? src.TrasportatoreXAzienda.IdAzienda : (int?)null))
+                .ForMember(dest => dest.Allevamenti, opts => opts.MapFrom(src => src.Allevamenti))
                 ;
 
             mappings.CreateMap<UtenteDto, Utente>()
@@ -74,6 +75,7 @@ namespace LatteMarche.Application.Utenti
                 .ForMember(dest => dest.UtenteXCessionario, opts => opts.MapFrom(src => src.IdCessionario.HasValue ? new UtenteXCessionario() { Id = src.Id, IdCessionario = src.IdCessionario.Value } : null))
                 .ForMember(dest => dest.UtenteXDestinatario, opts => opts.MapFrom(src => src.IdDestinatario.HasValue ? new UtenteXDestinatario() { Id = src.Id, IdDestinatario = src.IdDestinatario.Value } : null))
                 .ForMember(dest => dest.TrasportatoreXAzienda, opts => opts.MapFrom(src => src.IdAziendaTrasporti.HasValue ? new TrasportatoreXAzienda() { Id = src.Id, IdAzienda = src.IdAziendaTrasporti.Value } : null))
+                .ForMember(dest => dest.Allevamenti, opts => opts.MapFrom(src => src.Allevamenti))
                 ;
 
             return mappings;

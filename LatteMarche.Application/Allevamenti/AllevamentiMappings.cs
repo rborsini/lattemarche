@@ -14,8 +14,11 @@ namespace LatteMarche.Application.Allevamenti
         internal static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
         {
             // https://docs.automapper.org/en/stable/Reverse-Mapping-and-Unflattening.html
-            mappings.CreateMap<Allevamento, AllevamentoDto>()
-                .ReverseMap();
+            mappings.CreateMap<Allevamento, AllevamentoDto>();
+                //.ReverseMap();
+
+            mappings.CreateMap<AllevamentoDto, Allevamento>();
+                //.ReverseMap();
 
             //mappings.CreateMap<V_Allevatore, AllevatoreDto>()
             //    .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
