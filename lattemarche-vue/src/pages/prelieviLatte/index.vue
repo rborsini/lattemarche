@@ -161,10 +161,10 @@
         <th>Allevamento</th>
         <th>Data prelievo</th>
         <th>Data consegna</th>
-        <th>Ultima mungitura</th>
-        <th>Quant. Kg</th>
-        <th>Quant. lt</th>
-        <th>Temp. C°</th>
+        <th>Ult mung.</th>
+        <th>Kg</th>
+        <th>Lt</th>
+        <th>Temp.</th>
         <th>Trasportatore</th>
         <th>Acquirente</th>
         <th>Destinatario</th>
@@ -633,6 +633,9 @@ export default class PrelieviLatteIndexPage extends Vue {
 }
 </script>
 <style>
+table.dataTable {
+  width: 100% !important;
+}
 td.truncate {
   max-width: 50px;
   white-space: nowrap;
