@@ -12,13 +12,19 @@
             <!-- Colonne -->
             <template slot="thead">
                 <th>Id</th>
+                <th>Nome</th>
+                <th>Marca</th>
+                <th>Modello</th>
+                <th>Vers. OS</th>
                 <th>Trasportatore</th>
                 <th>Automezzo</th>
                 <th>Attivo</th>
-                <th>Data registrazione</th>
-                <th>Data ultimo download</th>
-                <th>Data ultimo upload</th>
-                <th>Versione</th>
+                <th>Data reg.</th>
+                <th>Data download</th>
+                <th>Data upload</th>
+                <th>Versione App</th>
+                <th>Lat</th>
+                <th>Lng</th>
                 <th></th>
             </template>
 
@@ -93,13 +99,30 @@ import { Component, Vue } from "vue-property-decorator";
             options.columns = [];
 
             options.columns.push({ data: "Id" });
+            options.columns.push({ data: "Nome" });
+            options.columns.push({ data: "Marca" });
+            options.columns.push({ data: "Modello" });
+            options.columns.push({ data: "VersioneOS" });
             options.columns.push({ data: "Trasportatore_RagioneSociale" });
             options.columns.push({ data: "Autocisterna_Targa" });
             options.columns.push({ data: "Attivo" });
-            options.columns.push({ data: "DataRegistrazione" });
-            options.columns.push({ data: "DataUltimoDownload" });
-            options.columns.push({ data: "DataUltimoUpload" });
+
+
+            options.columns.push({ data: "DataRegistrazione", render: function(data: any, type: any, row: any) {
+                return row.DataRegistrazione_Str;
+            } });
+
+            options.columns.push({ data: "DataUltimoDownload", render: function(data: any, type: any, row: any) {
+                return row.DataUltimoDownload_Str;
+            } });
+
+            options.columns.push({ data: "DataUltimoUpload", render: function(data: any, type: any, row: any) {
+                return row.DataUltimoUpload_Str;
+            } });
+
             options.columns.push({ data: "VersioneApp" });
+            options.columns.push({ data: "Latitudine" });
+            options.columns.push({ data: "Longitudine" });
             
             options.columns.push({
                 render: function(data: any, type: any, row: any) {
