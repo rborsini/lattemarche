@@ -4,8 +4,12 @@ import { Utente } from '../models/utente.model';
 export class UtentiService {
     constructor() { }
 
-    public index(): AxiosPromise<Utente[]> {
-        return axios.get('/api/utenti');
+    public index(idProfilo?: number): AxiosPromise<Utente[]> {
+        
+        if(idProfilo)
+            return axios.get('/api/utenti/search?idProfilo=' + idProfilo);
+        else
+            return axios.get('/api/utenti');
     }
 
     public details(id: string): AxiosPromise<Utente> {
