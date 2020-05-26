@@ -111,13 +111,22 @@
         <label class="col-1">Tipo latte:</label>
 
         <div class="col-3">
+          <!-- <select2
+                class="form-control"
+                :dropdownparent="'#editazione-acquirente-modal'"
+                :options="provincia.Items"
+                :value.sync="acquirente.SiglaProvincia"
+                :value-field="'Value'"
+                :text-field="'Text'"
+                v-on:value-changed="loadComuni"
+          />-->
           <select2
             class="form-control"
             :placeholder="'-'"
-            :options="tipiLatte"
+            :options="tipiLatte.Items"
             :value.sync="idTipoLatteSelezionato"
-            :value-field="'Id'"
-            :text-field="'Descrizione'"
+            :value-field="'Value'"
+            :text-field="'Text'"
           />
         </div>
       </div>
@@ -148,11 +157,7 @@
             v-on:click="onExportClick"
             class="float-right btn btn-primary"
           >Esporta excel</a>
-          <button
-            
-            class="btn btn-primary float-right mr-3"
-            v-on:click="onAdd()"
-          >Aggiungi</button>
+          <button class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
         </div>
       </template>
 
@@ -213,6 +218,9 @@ import { AcquirentiService } from "../../services/acquirenti.service";
 import { DestinatariService } from "../../services/destinatari.service";
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { TipiLatteService } from "../../services/tipiLatte.service";
+import { DropdownService } from "../../services/dropdown.service";
+
+import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -245,10 +253,12 @@ export default class PrelieviLatteIndexPage extends Vue {
   public trasporatoriService: TrasportatoriService;
   public destinatariService: DestinatariService;
   public acquirentiService: AcquirentiService;
+  public dropdownService: DropdownService;
 
   public tableOptions: any = {};
   // public allevatori: Allevatore[] = [];
-  public tipiLatte: TipoLatte[] = [];
+  public tipiLatte: Dropdown = new Dropdown();
+  // public tipiLatte: TipoLatte[] = [];
   public trasportatore: Trasportatore[] = [];
   public destinatario: Destinatario[] = [];
   public acquirente: Acquirente[] = [];
@@ -286,6 +296,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.trasporatoriService = new TrasportatoriService();
     this.destinatariService = new DestinatariService();
     this.acquirentiService = new AcquirentiService();
+    this.dropdownService = new DropdownService();
 
     this.canAdd = $("#canAdd").val() == "true";
     this.canEdit = $("#canEdit").val() == "true";
@@ -398,8 +409,14 @@ export default class PrelieviLatteIndexPage extends Vue {
     (options.columnDefs = [
       {
         targets: [0, 7, 8, 9, 10],
-        createdCell: function(td:any, cellData:any, rowData:any, row:any, col:any) {
-          $(td).attr('title', cellData);
+        createdCell: function(
+          td: any,
+          cellData: any,
+          rowData: any,
+          row: any,
+          col: any
+        ) {
+          $(td).attr("title", cellData);
         }
       }
     ]),
@@ -538,14 +555,11 @@ export default class PrelieviLatteIndexPage extends Vue {
   }
 
   // caricamento tipi latte
-  private loadTipiLatte(): void {
-    this.tipiLatteService
-      .index()
-      .then((response: { data: TipoLatte[] | null }) => {
-        if (response.data != null) {
-          this.tipiLatte = response.data;
-        }
-      });
+  private async loadTipiLatte(): Promise<void> {
+    const dd = await this.dropdownService.getTipiLatte();
+    if (dd.data != null) {
+      this.tipiLatte = dd.data;
+    }
   }
 
   // caricamento trasportatori
@@ -608,11 +622,13 @@ export default class PrelieviLatteIndexPage extends Vue {
       case 4: //Aprile
       case 6: //Giugno
       case 9: //Settembre
-      case 11: { //Novembre
+      case 11: {
+        //Novembre
         days = 30;
         break;
       }
-      case 2: { //febbraio
+      case 2: {
+        //febbraio
         if (date.getFullYear() % 4 != 0) {
           //anno non bisestile
           days = 28;
