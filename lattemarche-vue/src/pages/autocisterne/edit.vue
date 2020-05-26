@@ -124,7 +124,6 @@ export default class EditazioneAutocisternaModal extends Vue {
   public trasportatori: Dropdown = new Dropdown();
 
   public autocisterneService: AutocisterneService;
-  public trasportatoriService: TrasportatoriService;
   private dropdownService: DropdownService;
 
   public progressBarVisible = false;
@@ -132,7 +131,6 @@ export default class EditazioneAutocisternaModal extends Vue {
   constructor() {
     super();
     this.autocisterneService = new AutocisterneService();
-    this.trasportatoriService = new TrasportatoriService();
     this.dropdownService = new DropdownService();
   }
 
