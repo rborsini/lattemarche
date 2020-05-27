@@ -53,6 +53,13 @@ html, body {
     min-width: 50px;
 }
 
+table {
+    thead {
+        background-color: $primary;
+        color: $light !important;
+    }
+}
+
 table.dataTable thead tr {
     color: $light;
     background-color: $primary;
