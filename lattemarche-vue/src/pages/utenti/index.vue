@@ -49,8 +49,8 @@
         <th>Ragione sociale</th>
         <th>Nome</th>
         <th>Cognome</th>
-        <th>Profilo</th>
         <th>Username</th>
+        <th>Profilo</th>
         <th v-if="canEdit || canRemove"></th>
       </template>
     </data-table>

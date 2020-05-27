@@ -38,7 +38,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
         public string DataUltimoDownload_Str
         {
             get { return new DateHelper().FormatDate(this.dataUltimoDownload); }
-            set { this.dataUltimoDownload = new DateHelper().ConvertToDateTime(value).Value; }
+            set { this.dataUltimoDownload = new DateHelper().ConvertToDateTime(value); }
         }
 
         public DateTime? DataUltimoUpload
@@ -50,7 +50,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
         public string DataUltimoUpload_Str
         {
             get { return new DateHelper().FormatDate(this.dataUltimoUpload); }
-            set { this.dataUltimoUpload = new DateHelper().ConvertToDateTime(value).Value; }
+            set { this.dataUltimoUpload = new DateHelper().ConvertToDateTime(value); }
         }
 
         public decimal? Latitudine { get; set; }

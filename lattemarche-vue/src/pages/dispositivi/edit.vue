@@ -10,11 +10,11 @@
                 </div>
                 <div class="modal-body pl-5 pr-5">
 
-                    <!-- IMEI -->
+                    <!-- Id -->
                     <div class="row form-group">
                         <label class="col-3">Id</label>
                         <div class="col-9">
-                            <input type="text" class="form-control" v-model="dispositivo.Id" />
+                            <input disabled type="text" class="form-control" v-model="dispositivo.Id" />
                         </div>
                     </div>
 
@@ -28,19 +28,25 @@
                         </div>
                     </div>
 
+                    <!-- Nome -->
+                    <div class="row form-group">
+                        <label class="col-3">Nome</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" v-model="dispositivo.Nome" />
+                        </div>
+                    </div>
+
                     <!-- Trasportatore --> 
                     <div class="row form-group">
                         <label class="col-3">Trasportatore</label>
                         <div class="col-9">
-                            <div class="form-group ">
-                                <select2 class="form-control"
-                                        :options="trasportatori.Items"
-                                        :value.sync="idTrasportatoreSelezionato"
-                                        :value-field="'Value'"
-                                        :text-field="'Text'" 
-                                        v-on:value-changed="onTrasporatoreChanged()"
-                                        />                                
-                            </div>
+                            <select2 class="form-control"
+                                    :options="trasportatori.Items"
+                                    :value.sync="idTrasportatoreSelezionato"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" 
+                                    v-on:value-changed="onTrasporatoreChanged()"
+                                    />
                         </div>                        
                     </div>
 
@@ -48,15 +54,45 @@
                     <div class="row form-group">
                         <label class="col-3">Automezzo</label>
                         <div class="col-9">
-                            <div class="form-group ">
-                                <select2 class="form-control"
-                                        :options="autocisterne.Items"
-                                        :value.sync="idAutocisternaSelezionata"
-                                        :value-field="'Value'"
-                                        :text-field="'Text'" />                                
-                            </div>
+                            <select2 class="form-control"
+                                    :options="autocisterne.Items"
+                                    :value.sync="idAutocisternaSelezionata"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
                         </div>                        
-                    </div>                   
+                    </div>       
+
+                    <!-- Marca -->
+                    <div class="row form-group">
+                        <label class="col-3">Marca</label>
+                        <div class="col-9">
+                            <input disabled type="text" class="form-control" v-model="dispositivo.Marca" />
+                        </div>
+                    </div>
+
+                    <!-- Modello -->
+                    <div class="row form-group">
+                        <label class="col-3">Modello</label>
+                        <div class="col-9">
+                            <input disabled type="text" class="form-control" v-model="dispositivo.Modello" />
+                        </div>
+                    </div>
+
+                    <!-- Versione OS -->
+                    <div class="row form-group">
+                        <label class="col-3">Versione OS</label>
+                        <div class="col-9">
+                            <input disabled type="text" class="form-control" v-model="dispositivo.VersioneOS" />
+                        </div>
+                    </div>
+
+                    <!-- Versione App -->
+                    <div class="row form-group">
+                        <label class="col-3">Versione App</label>
+                        <div class="col-9">
+                            <input disabled type="text" class="form-control" v-model="dispositivo.VersioneApp" />
+                        </div>
+                    </div>                                                            
 
                 </div>
                 <div class="modal-footer">

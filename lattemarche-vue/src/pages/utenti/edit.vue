@@ -130,17 +130,6 @@
                 />
               </div>
 
-              <!-- Trasportatore -->
-              <label v-if="utente.IdProfilo == 5" class="col-sm-1">Azienda trasporti</label>
-              <div v-if="utente.IdProfilo == 5" class="col-sm-4">
-                <select2
-                  class="form-control"
-                  :options="aziendaTrasportatore.Items"
-                  :value.sync="utente.IdAziendaTrasporti"
-                  :value-field="'Value'"
-                  :text-field="'Text'"
-                />
-              </div>
             </div>
 
             <!-- ragione sociale / username -->

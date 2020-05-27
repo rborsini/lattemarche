@@ -38,6 +38,7 @@ namespace LatteMarche.Application.Dispositivi.Services
         protected override DispositivoMobile UpdateProperties(DispositivoMobile viewEntity, DispositivoMobile dbEntity)
         {
             dbEntity.Attivo = viewEntity.Attivo;
+            dbEntity.Nome = viewEntity.Nome;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
             dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
 

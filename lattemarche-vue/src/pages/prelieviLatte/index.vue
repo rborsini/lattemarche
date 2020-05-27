@@ -8,10 +8,10 @@
     <editazione-prelievo-modal ref="editazionePrelievoModal" :prelievo-latte="prelievoSelezionato" v-on:salvato="$refs.savedDialog.open()" ></editazione-prelievo-modal>
 
     <!-- Pannello Salvataggio prelievo-->
-    <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Il prelievo è stato salvato correttamente'" v-on:ok="window.location = '/Prelievi'" ></notification-dialog>
+    <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Il prelievo è stato salvato correttamente'" ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
-    <notification-dialog ref="removedDialog" :title="'Conferma rimozione'" :message="'Prelievo rimosso correttamente'" v-on:ok="window.location = '/Prelievi'" ></notification-dialog>
+    <notification-dialog ref="removedDialog" :title="'Conferma rimozione'" :message="'Prelievo rimosso correttamente'"  ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
     <confirm-dialog ref="confirmDeleteDialog" :title="'Conferma eliminazione'" :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'" v-on:confirmed="onRemove()" ></confirm-dialog>
