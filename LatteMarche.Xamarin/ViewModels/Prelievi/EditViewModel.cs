@@ -48,14 +48,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Acquirente acquirenteSelezionato;
         private int? idDestinatario;
         private Destinatario destinatarioSelezionato;
+        private int? idCessionario;
+        private Cessionario cessionarioSelezionato;
         private TipoLatte tipoLatte;
 
         private ObservableCollection<Allevamento> allevamenti;
         private ObservableCollection<Acquirente> acquirenti;
+        private ObservableCollection<Cessionario> cessionari;
         private ObservableCollection<Destinatario> destinatari;
 
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
@@ -180,6 +184,24 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             set { SetProperty<Acquirente>(ref this.acquirenteSelezionato, value); }
         }
 
+        public ObservableCollection<Cessionario> Cessionari
+        {
+            get { return this.cessionari; }
+            set { SetProperty<ObservableCollection<Cessionario>>(ref this.cessionari, value); }
+        }
+
+        public int? IdCessionario
+        {
+            get { return this.idCessionario; }
+            set { SetProperty(ref this.idCessionario, value); }
+        }
+
+        public Cessionario CessionarioSelezionato
+        {
+            get { return this.cessionarioSelezionato; }
+            set { SetProperty<Cessionario>(ref this.cessionarioSelezionato, value); }
+        }
+
         public ObservableCollection<Destinatario> Destinatari
         {
             get { return this.destinatari; }
@@ -298,6 +320,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.IsEditable = !giro.DataConsegna.HasValue;
 
                     var acquirenti = this.acquirentiService.GetItemsAsync().Result;
+                    var cessionari = this.cessionariService.GetItemsAsync().Result;
                     var destinatari = this.destinatariService.GetItemsAsync().Result;
                     var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
 
@@ -337,6 +360,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     // acquirente
                     this.Acquirenti = new ObservableCollection<Acquirente>(acquirenti);
                     this.AcquirenteSelezionato = GetAcquirenteSelezionato();
+
+                    // cessionario
+                    this.Cessionari = new ObservableCollection<Cessionario>(cessionari);
+                    this.CessionarioSelezionato = GetCessionarioSelezionato();
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
@@ -406,6 +433,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.prelievo.NumeroMungiture = this.NumeroMungiture;
                     this.prelievo.DataUltimaMungitura = this.DataUltimaMungitura.Add(this.OraUltimaMungitura);
                     this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
+                    this.prelievo.IdCessionario = this.CessionarioSelezionato != null ? this.CessionarioSelezionato.Id : (int?)null;
                     this.prelievo.IdDestinatario = this.DestinatarioSelezionato != null ? this.DestinatarioSelezionato.Id : (int?)null;
 
                     this.prelievo.Titolo = this.AllevamentoSelezionato?.RagioneSociale;
@@ -418,7 +446,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 this.IsBusy = false;
                 await loadingDialog.DismissAsync();
-                await navigation.PopAsync();
+                //await navigation.PopAsync();
             }
             catch (Exception exc)
             {
@@ -549,6 +577,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
 
                     registroConsegna.Acquirente = GetAcquirente(this.prelievo.IdAcquirente).Result;
+                    registroConsegna.Cessionario = GetCessionario(this.prelievo.IdCessionario).Result;
                     registroConsegna.Destinatario = GetDestinatario(this.prelievo.IdDestinatario).Result;
                     registroConsegna.Giro = GetTemplateGiro(giro?.IdTemplateGiro).Result;
                     registroConsegna.Trasportatore = this.trasportatoriService.GetCurrent().Result;
@@ -608,6 +637,23 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             if (idAcquirente.HasValue)
             {
                 return await this.acquirentiService.GetItemAsync(idAcquirente.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup cessionario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Cessionario> GetCessionario(int? idCessionario)
+        {
+            if (idCessionario.HasValue)
+            {
+                return await this.cessionariService.GetItemAsync(idCessionario.Value);
             }
             else
             {
@@ -678,6 +724,23 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             if(this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
             {
                 return this.Acquirenti.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdAcquirenteDefault.Value);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Recupero cessionario selezionato o di default
+        /// </summary>
+        /// <returns></returns>
+        private Cessionario GetCessionarioSelezionato()
+        {
+            if (this.prelievo.IdCessionario.HasValue)
+                return this.Cessionari.FirstOrDefault(a => a.Id == this.prelievo.IdCessionario.Value);
+
+            if (this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdCessionarioDefault.HasValue)
+            {
+                return this.Cessionari.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdCessionarioDefault.Value);
             }
 
             return null;

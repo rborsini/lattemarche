@@ -14,12 +14,14 @@ namespace LatteMarche.Application.Mobile.Dtos
         public List<TipoLatteDto> TipiLatte { get; set; }
         public List<AcquirenteDto> Acquirenti { get; set; }
         public List<DestinatarioDto> Destinatari { get; set; }
+        public List<CessionarioDto> Cessionari { get; set; }
 
         public DownloadDto()
         {
             this.Giri = new List<TemplateGiroDto>();
             this.TipiLatte = new List<TipoLatteDto>();
             this.Acquirenti = new List<AcquirenteDto>();
+            this.Cessionari = new List<CessionarioDto>();
             this.Destinatari = new List<DestinatarioDto>();
         }
 

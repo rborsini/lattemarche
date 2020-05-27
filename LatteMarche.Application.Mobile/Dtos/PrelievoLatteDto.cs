@@ -22,6 +22,7 @@ namespace LatteMarche.Application.Mobile.Dtos
 
         public int IdDestinatario { get; set; }
 
+        public int IdCessionario { get; set; }
         public int IdAcquirente { get; set; }
 
         public int IdLabAnalisi { get; set; }

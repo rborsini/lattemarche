@@ -34,6 +34,7 @@ namespace LatteMarche.Xamarin.Db.Models
         public double? Longitudine { get; set; }
 
         public int? IdAcquirenteDefault { get; set; }
+        public int? IdCessionarioDefault { get; set; }
         public int? IdDestinatarioDefault { get; set; }
 
         public decimal? Quantita_Min { get; set; }

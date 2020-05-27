@@ -25,7 +25,8 @@ namespace LatteMarche.Application.Mobile.Services
         private IRepository<Giro, int> giriRepository;
         private IRepository<TipoLatte, int> tipiLatteRepository;
         private IRepository<Acquirente, int> acquirentiRepository;
-        private IRepository<Destinatario, int> destinataryRepository;
+        private IRepository<Destinatario, int> destinatariRepository;
+        private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
 
         #endregion
@@ -44,7 +45,8 @@ namespace LatteMarche.Application.Mobile.Services
 
             this.tipiLatteRepository = this.uow.Get<TipoLatte, int>();
             this.acquirentiRepository = this.uow.Get<Acquirente, int>();
-            this.destinataryRepository = this.uow.Get<Destinatario, int>();
+            this.cessionariRepository = this.uow.Get<Cessionario, int>();
+            this.destinatariRepository = this.uow.Get<Destinatario, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
 
         }
@@ -145,6 +147,7 @@ namespace LatteMarche.Application.Mobile.Services
                                 Latitudine = allevamento?.Latitudine,
                                 Longitudine = allevamento?.Longitudine,
                                 IdAcquirenteDefault = GetAcquirenteDefault(prelievi),
+                                IdCessionarioDefault = GetCessionarioDefault(prelievi),
                                 IdDestinatarioDefault = GetDestinatarioDefault(prelievi),
                                 Temperatura_Min = GetPercentile(temperature, 5),
                                 Temperatura_Max = GetPercentile(temperature, 95),
@@ -156,7 +159,8 @@ namespace LatteMarche.Application.Mobile.Services
 
                     db.TipiLatte = Mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
                     db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.ToList());
-                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinataryRepository.Query.ToList());
+                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.ToList());
+                    db.Cessionari = Mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.ToList());
 
                 }
 
@@ -220,6 +224,21 @@ namespace LatteMarche.Application.Mobile.Services
                 .Select(g => g.Key)
                 .FirstOrDefault();
 
+        }
+
+        /// <summary>
+        /// Recupera il cessionario più frequente
+        /// </summary>
+        /// <param name="prelievi"></param>
+        /// <returns></returns>
+        private int? GetCessionarioDefault(List<PrelievoLatte> prelievi)
+        {
+            return prelievi
+                .Where(p => p.IdCessionario.HasValue)
+                .GroupBy(p => p.IdCessionario)
+                .OrderByDescending(gp => gp.Count())
+                .Select(g => g.Key)
+                .FirstOrDefault();
         }
 
         /// <summary>

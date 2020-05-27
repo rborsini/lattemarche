@@ -47,6 +47,7 @@ namespace LatteMarche.Xamarin.Db.Services
             entityItem.DataUltimaMungitura = viewItem.DataUltimaMungitura;
             entityItem.IdAllevamento = viewItem.IdAllevamento;
             entityItem.IdAcquirente = viewItem.IdAcquirente;
+            entityItem.IdCessionario = viewItem.IdCessionario;
             entityItem.IdDestinatario = viewItem.IdDestinatario;
             entityItem.NumeroMungiture = viewItem.NumeroMungiture;
             entityItem.Quantita_kg = viewItem.Quantita_kg;

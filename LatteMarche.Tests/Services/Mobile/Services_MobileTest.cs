@@ -38,6 +38,7 @@ namespace LatteMarche.Tests.Services.Mobile
         private IRepository<Giro, int> giriRepository;
 
         private IRepository<Acquirente, int> acquirentiRepository;
+        private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<Destinatario, int> destinatariRepository;
 
         private IMobileService mobileService;
@@ -69,6 +70,7 @@ namespace LatteMarche.Tests.Services.Mobile
             this.giriRepository = this.uow.Get<Giro, int>();
 
             this.acquirentiRepository = this.uow.Get<Acquirente, int>();
+            this.cessionariRepository = this.uow.Get<Cessionario, int>();
             this.destinatariRepository = this.uow.Get<Destinatario, int>();
 
             this.mobileService = this.scope.Resolve<IMobileService>();
@@ -98,6 +100,14 @@ namespace LatteMarche.Tests.Services.Mobile
                 .Build();
 
             this.acquirentiRepository.Add(acquirente);
+
+            // cessionario
+            var cessionario = Builder<Cessionario>
+                .CreateNew()
+                    .With(u => u.IdComune = ID_COMUNE)
+                .Build();
+
+            this.cessionariRepository.Add(cessionario);
 
             // destinatario
             var destinatario = Builder<Destinatario>
@@ -227,6 +237,9 @@ namespace LatteMarche.Tests.Services.Mobile
             Assert.IsNotNull(localDb.Acquirenti[0].CAP);
             Assert.IsNotNull(localDb.Destinatari[0].CAP);
             Assert.IsNotNull(localDb.Giri[0].Allevamenti[0].CAP);
+
+            // #325953
+            Assert.IsTrue(localDb.Cessionari.Count > 0);
 
             deviceEntity = this.deviceRepository.GetById(id);
             Assert.IsTrue(deviceEntity.DataUltimoDownload.HasValue);

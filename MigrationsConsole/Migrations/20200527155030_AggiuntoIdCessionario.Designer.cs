@@ -3,14 +3,16 @@ using System;
 using LatteMarche.Xamarin.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MigrationsConsole.Migrations
 {
     [DbContext(typeof(LatteMarcheDbContext))]
-    partial class LatteMarcheDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200527155030_AggiuntoIdCessionario")]
+    partial class AggiuntoIdCessionario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,9 +63,6 @@ namespace MigrationsConsole.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("IdAllevamento")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("IdCessionarioDefault")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("IdDestinatarioDefault")

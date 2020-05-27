@@ -126,6 +126,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         }
 
+        private void Item_OnItem_Printing(object sender, EventArgs e)
+        {
+            
+        }
+
         /// <summary>
         /// Caricamento elenco lotti
         /// </summary>
@@ -196,6 +201,16 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     giro.DataConsegna = DateTime.Now;
                     giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
                     this.giriService.UpdateItemAsync(giro).Wait();
+
+                    var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
+                    foreach (var prelievo in prelievi)
+                    {
+                        prelievo.DataConsegna = giro.DataConsegna;
+                        this.prelieviService.UpdateItemAsync(prelievo).Wait();
+                    }
+                        
+
+                    
                 });
 
                 Analytics.TrackEvent("Giro chiuso", new Dictionary<string, string>());
@@ -320,6 +335,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                         Prelievi = prelieviDto
                     };
 
+                    var json = JsonConvert.SerializeObject(uploadDto);
+
                     // chiamata REST upload dati
                     if (this.restService.Upload(uploadDto).Result)
                     {
@@ -355,11 +372,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
-        }
-
-        private void Item_OnItem_Printing(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

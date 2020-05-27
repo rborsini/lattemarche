@@ -53,6 +53,7 @@ namespace LatteMarche.Xamarin
             DependencyService.Register<AcquirentiService>();
             DependencyService.Register<AllevamentiService>();
             DependencyService.Register<AutoCisterneService>();
+            DependencyService.Register<CessionariService>();
             DependencyService.Register<DestinatariService>();
             DependencyService.Register<GiriService>();
             DependencyService.Register<PrelieviService>();
