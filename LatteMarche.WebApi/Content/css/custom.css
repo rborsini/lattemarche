@@ -6913,16 +6913,8 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: rgba(0, 0, 0, 0.05); } }
 
-html {
+html, body {
   height: 100%; }
-
-body {
-  height: 100%;
-  /*padding: 100px 50px;
-    margin: 0;*/ }
-
-.wrapper_container {
-  margin: auto; }
 
 .home--ctr .home--bg--img {
   background-image: url(/Content/img/hero-cow.jpeg);
@@ -6931,11 +6923,8 @@ body {
   background-position: center center;
   background-repeat: no-repeat; }
 
-.main-logo {
-  width: 7rem; }
-
-.jumbotron {
-  padding: 1rem; }
+.navbar .dropdown-menu.login {
+  left: -36px; }
 
 .main-footer {
   position: fixed;
@@ -6949,9 +6938,6 @@ body {
 
 label {
   text-align: right; }
-
-.fixed-top {
-  padding: .5rem 2rem .5rem 2rem; }
 
 .edit-column {
   min-width: 50px; }

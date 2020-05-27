@@ -2,18 +2,8 @@
 @import "_bootswatch.scss";
 @import "../../../lattemarche-vue/node_modules/bootstrap/scss/bootstrap";
 
-html {
+html, body {
     height: 100%;
-}
-
-body {
-    height: 100%;
-    /*padding: 100px 50px;
-    margin: 0;*/
-}
-
-.wrapper_container {
-    margin: auto;
 }
 
 .home--ctr {
@@ -26,12 +16,10 @@ body {
     }
 }
 
-.main-logo {
-    width: 7rem;
-}
-
-.jumbotron {
-    padding: 1rem;
+.navbar {
+    .dropdown-menu.login {
+        left: -36px;
+    }
 }
 
 .main-footer {
@@ -49,10 +37,6 @@ body {
 
 label {
     text-align: right;
-}
-
-.fixed-top {
-    padding: .5rem 2rem .5rem 2rem;
 }
 
 .edit-column {
