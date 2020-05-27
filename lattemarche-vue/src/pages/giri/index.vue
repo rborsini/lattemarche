@@ -1,130 +1,145 @@
 <template>
-<div>
+  <div>
+    <!-- Pannello modale del caricamento -->
+    <waiter ref="waiter"></waiter>
 
-  <!-- Pannello modale del caricamento -->
-  <waiter ref="waiter"></waiter>
+    <!-- Pannelli modali di conferma azioni -->
+    <notification-dialog
+      ref="salvataggioDettaglioGiroModal"
+      :title="'Conferma salvataggio'"
+      :message="'Dettaglio giro salvato correttamente'"
+    ></notification-dialog>
 
-  <!-- Pannelli modali di conferma azioni -->
-  <notification-dialog ref="salvataggioDettaglioGiroModal" :title="'Conferma salvataggio'" :message="'Dettaglio giro salvato correttamente'" ></notification-dialog>
+    <!-- Pannelli modali di conferma azioni -->
+    <notification-dialog
+      ref="salvataggioGiroModal"
+      :title="'Conferma salvataggio'"
+      :message="'Giro salvato correttamente'"
+      v-on:ok="reload()"
+    ></notification-dialog>
 
-  <!-- Pannelli modali di conferma azioni -->
-  <notification-dialog ref="salvataggioGiroModal" :title="'Conferma salvataggio'" :message="'Giro salvato correttamente'" v-on:ok="reload()"></notification-dialog>
+    <!-- modale modifica/aggiungi giro -->
+    <giro-trasportatori-modal ref="giroTrasportatoriModal" :giro="giro" v-on:salvato="reload()"></giro-trasportatori-modal>
 
-  <!-- modale modifica/aggiungi giro -->
-  <giro-trasportatori-modal ref="giroTrasportatoriModal" :giro="giro" v-on:salvato="reload()" ></giro-trasportatori-modal>
+    <div class="container pt-4">
+      <!-- selezione trasportatore -->
+      <div class="row form-group">
+        <label class="col-sm-2 offset-1">Trasportatore</label>
+        <div class="col-sm-6">
+          <select2
+            class="form-control"
+            :options="trasportatori.Items"
+            :value.sync="selectedTrasportatore"
+            :value-field="'Value'"
+            :text-field="'Text'"
+            v-on:value-changed="onTrasportatoreSelezionato"
+          />
+        </div>
+      </div>
 
-  <div class="container">
+      <!-- selezione giro allevamenti -->
+      <div class="row form-group">
+        <label class="col-sm-2 offset-1">Giro degli allevamenti</label>
+        <div class="col-sm-6">
+          <select2
+            class="form-control"
+            :options="giri.Items"
+            :value.sync="selectedGiro"
+            :value-field="'Value'"
+            :text-field="'Text'"
+            :disabled="trasportatoreSelezionato"
+          />
+        </div>
+      </div>
 
-    <!-- selezione trasportatore -->
-    <div class="row form-group">
-      <label class="col-sm-2 offset-1">Trasportatore</label>
-      <div class="col-sm-6">
-        <select2
-          class="form-control"
-          :options="trasportatori.Items"
-          :value.sync="selectedTrasportatore"
-          :value-field="'Value'"
-          :text-field="'Text'"
-          v-on:value-changed="onTrasportatoreSelezionato"
-        />
+      <!-- bottoni modifica/aggiungi giro -->
+      <div class="row form-group">
+        <div class="col-sm-6 offset-3 text-right">
+          <button
+            class="btn btn-primary mr-2"
+            v-on:click="modificaGiro(selectedGiro)"
+            :disabled="selectedGiro == 0"
+          >Modifica giro</button>
+          <button
+            class="btn btn-success"
+            v-on:click="aggiungiGiro()"
+            :disabled="selectedTrasportatore == 0"
+          >Aggiungi giro</button>
+        </div>
+      </div>
+
+      <!-- bottone carica allevamenti trasportatore -->
+      <div class="row form-group">
+        <div class="col-sm-6 offset-3">
+          <button
+            class="btn btn-success"
+            v-on:click="loadGiro(selectedGiro)"
+            :disabled="selectedGiro == 0"
+            style="width:100%"
+          >Carica gli allevamenti in cui si reca il trasportatore</button>
+        </div>
       </div>
     </div>
 
-    <!-- selezione giro allevamenti -->
-    <div class="row form-group">
-      <label class="col-sm-2 offset-1">Giro degli allevamenti</label>
-      <div class="col-sm-6">
-        <select2
-          class="form-control"
-          :options="giri.Items"
-          :value.sync="selectedGiro"
-          :value-field="'Value'"
-          :text-field="'Text'"
-          :disabled="trasportatoreSelezionato"
-        />
-      </div>
-    </div>
-
-    <!-- bottoni modifica/aggiungi giro -->
-    <div class="row form-group">
-      <div class="col-sm-6 offset-3 text-right">
-        <button class="btn btn-primary mr-2" v-on:click="modificaGiro(selectedGiro)" :disabled="selectedGiro == 0" >Modifica giro</button>
-        <button class="btn btn-success" v-on:click="aggiungiGiro()" :disabled="selectedTrasportatore == 0" >Aggiungi giro</button>
-      </div>
-    </div>
-
-    <!-- bottone carica allevamenti trasportatore -->
-    <div class="row form-group">
-      <div class="col-sm-6 offset-3">
-        <button
-          class="btn btn-success"
-          v-on:click="loadGiro(selectedGiro)"
-          :disabled="selectedGiro == 0"
-          style="width:100%"
-        >Carica gli allevamenti in cui si reca il trasportatore</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid p-0">
-    <!-- tabella priorità allevamenti -->
-    <div class="row form-group" v-if="giro.Items.length > 0">
-      <div class="col-sm-12">
-        <hr />
-      </div>
-      <div class="col-sm-12">
-        <h3>Copertura territoriale dei trasportatori</h3>
-        <p>L'indice di priorità indica il percorso seguito dal trasportatore; Inserire una sequenza numerica dei soli allevamenti segnati del check.</p>
-      </div>
-      <div class="col-sm-12">
-        <table class="table table-striped table-bordered c-table-trasportatori">
-          <thead>
-            <tr>
-              <th>Ragione sociale</th>
-              <th>Allevatore</th>
-              <th>Indirizzo allevamento</th>
-              <th>Priorità</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="allevatore in giro.Items" :key="allevatore.Id">
-              <td>{{allevatore.RagioneSociale}}</td>
-              <td>{{allevatore.Allevatore}}</td>
-              <td>{{allevatore.Indirizzo}}</td>
-              <td>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <input
-                        type="checkbox"
-                        v-on:change="onItemSelectedChanged($event, allevatore)"
-                        v-model="allevatore.Selezionato"
-                      />
+    <div class="container-fluid">
+      <!-- tabella priorità allevamenti -->
+      <div class="row form-group" v-if="giro.Items.length > 0">
+        <div class="col-sm-12">
+          <hr />
+        </div>
+        <div class="col-sm-12">
+          <h3>Copertura territoriale dei trasportatori</h3>
+          <p>L'indice di priorità indica il percorso seguito dal trasportatore; Inserire una sequenza numerica dei soli allevamenti segnati del check.</p>
+        </div>
+        <div class="col-sm-12">
+          <table class="table table-striped table-bordered c-table-trasportatori">
+            <thead>
+              <tr>
+                <th>Ragione sociale</th>
+                <th>Allevatore</th>
+                <th>Indirizzo allevamento</th>
+                <th>Priorità</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="allevatore in giro.Items" :key="allevatore.Id">
+                <td>{{allevatore.RagioneSociale}}</td>
+                <td>{{allevatore.Allevatore}}</td>
+                <td>{{allevatore.Indirizzo}}</td>
+                <td>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input
+                          type="checkbox"
+                          v-on:change="onItemSelectedChanged($event, allevatore)"
+                          v-model="allevatore.Selezionato"
+                        />
+                      </div>
                     </div>
+                    <input
+                      :disabled="allevatore.Selezionato == false"
+                      type="number"
+                      class="form-control"
+                      v-model="allevatore.Priorita"
+                    />
                   </div>
-                  <input
-                    :disabled="allevatore.Selezionato == false"
-                    type="number"
-                    class="form-control"
-                    v-model="allevatore.Priorita"
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- bottoni annulla/salva priorità giro dei trasportatori -->
-      <div class="col-sm-12 text-right">
-        <button
-          class="btn btn-secondary mr-2"
-          v-on:click="window.location = '/trasportatori'"
-        >Annulla</button>
-        <button class="btn btn-success" v-on:click="salvaGiro()">Salva</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- bottoni annulla/salva priorità giro dei trasportatori -->
+        <div class="col-sm-12 text-right">
+          <button
+            class="btn btn-secondary mr-2"
+            v-on:click="window.location = '/trasportatori'"
+          >Annulla</button>
+          <button class="btn btn-success" v-on:click="salvaGiro()">Salva</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -143,7 +158,7 @@ import { Giro, Item } from "../../models/giro.model";
 import { UrlService } from "@/services/url.service";
 import { GiriService } from "../../services/giri.service";
 import { DropdownService } from "../../services/dropdown.service";
-import { Trasportatore } from '@/models/trasportatore.model';
+import { Trasportatore } from "@/models/trasportatore.model";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -207,15 +222,13 @@ export default class GiriIndexPage extends Vue {
 
   // carico allevamenti se seleziono trasportatore
   public onTrasportatoreSelezionato(idTrasportatore: string) {
-    
     this.trasportatoreSelezionato = false;
     this.giro = new Giro();
     this.selectedGiro = 0;
 
     this.dropdownService.getGiri(idTrasportatore).then(response => {
-        this.giri = response.data;
-      });
-
+      this.giri = response.data;
+    });
   }
 
   // Selezione / Deselezione item del giro
@@ -279,6 +292,5 @@ export default class GiriIndexPage extends Vue {
   public reload() {
     UrlService.reload();
   }
-
 }
 </script>
