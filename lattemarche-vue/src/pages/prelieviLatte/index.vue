@@ -133,7 +133,8 @@
       <!-- Toolbox -->
       <template slot="toolbox">
         <div class="toolbox">
-          <a download  class="float-right btn btn-primary" >Esporta excel</a>
+          <button download  class="float-right btn btn-primary ml-2" v-on:click="downloadExcel('allevatori')" >Esporta excel (allevatori)</button>
+          <button download  class="float-right btn btn-primary" v-on:click="downloadExcel('giornalieri')" >Esporta excel (giornalieri)</button>
           <button class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
         </div>
       </template>
@@ -191,6 +192,7 @@ import { TipoLatte } from "../../models/tipoLatte.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { DropdownService } from "../../services/dropdown.service";
+import { UrlService } from '@/services/url.service';
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 
@@ -508,6 +510,11 @@ export default class PrelieviLatteIndexPage extends Vue {
       this.cessionario = dd.data;
     }
   }  
+
+  //Esportazione excel
+  public downloadExcel(tipo: string) {
+    UrlService.redirect('/api/prelieviLatte/excel' + tipo + '?' + this.parameters.ToUrlQueryString());
+  }
 
   private subtractMonth(date: Date): Date {
     var days = 0;

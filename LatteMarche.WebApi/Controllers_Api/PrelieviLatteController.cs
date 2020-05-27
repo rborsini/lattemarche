@@ -269,16 +269,30 @@ namespace LatteMarche.WebApi.Controllers_Api
         }
 
         [HttpGet]
-        public IHttpActionResult Excel([FromUri] PrelieviLatteSearchDto searchDto)
+        public IHttpActionResult ExcelAllevatori([FromUri] PrelieviLatteSearchDto searchDto)
         {
 
             UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
             var list = this.prelieviLatteService.Search(searchDto, utente.Id);
 
-            byte[] content = LatteMarche.WebApi.Helpers.ExcelHelper.MakeExcelTot(list);
+            byte[] content = LatteMarche.WebApi.Helpers.ExcelAllevatoriHelper.MakeExcelTot(list);
 
 
-            return File(content, "application/vnd.ms-excel", "prelievi.xls");
+            return File(content, "prelievi.xls", "application/vnd.ms-excel");
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult ExcelGiornalieri([FromUri] PrelieviLatteSearchDto searchDto)
+        {
+
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+            var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+
+            byte[] content = LatteMarche.WebApi.Helpers.ExcelGiornalieriHelper.MakeExcel(list);
+
+
+            return File(content, "prelievi.xls", "application/vnd.ms-excel");
 
         }
 
