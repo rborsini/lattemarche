@@ -6926,6 +6926,13 @@ html, body {
 .navbar .dropdown-menu.login {
   left: -36px; }
 
+.breadcrumb {
+  margin-bottom: 0rem;
+  border-bottom: 1px solid rgba(131, 131, 131, 0.14); }
+
+.jumbotron {
+  padding: 2rem; }
+
 .main-footer {
   position: fixed;
   bottom: 0;
@@ -6960,7 +6967,7 @@ tfoot {
   font-weight: 700; }
 
 #DataTables_Table_0_wrapper {
-  padding: 0; }
+  padding: 16px; }
 
 .c-table-trasportatori thead tr {
   background-color: #007bff;

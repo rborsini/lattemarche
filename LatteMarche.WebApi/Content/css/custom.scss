@@ -22,6 +22,15 @@ html, body {
     }
 }
 
+.breadcrumb {
+    margin-bottom: 0rem;
+    border-bottom: 1px solid rgba(131, 131, 131, 0.14);
+}
+
+.jumbotron {
+    padding: 2rem;
+}
+
 .main-footer {
     position: fixed;
     bottom: 0;
@@ -65,7 +74,7 @@ tfoot {
 }
 
 #DataTables_Table_0_wrapper {
-    padding: 0;
+    padding: 16px;
 }
 
 .c-table-trasportatori thead tr {
