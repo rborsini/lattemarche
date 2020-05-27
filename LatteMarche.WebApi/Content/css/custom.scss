@@ -2,17 +2,12 @@
 @import "_bootswatch.scss";
 @import "../../../lattemarche-vue/node_modules/bootstrap/scss/bootstrap";
 
-html {
+html, body {
     height: 100%;
 }
 
-body {
-    padding: 100px 50px;
-    margin: 0;
-}
-
-.wrapper_container {
-    margin: auto;
+a {
+    color: $dark;
 }
 
 .home--ctr {
@@ -25,12 +20,20 @@ body {
     }
 }
 
-.main-logo {
-    width: 7rem;
+.navbar {
+    .dropdown-menu.login {
+        left: -36px;
+    }
+}
+
+.breadcrumb {
+    margin-bottom: 0rem;
+    border-bottom: 1px solid rgba(131, 131, 131, 0.14);
 }
 
 .jumbotron {
-    padding: 1rem;
+    padding: 2rem;
+    margin-bottom: 0;
 }
 
 .main-footer {
@@ -46,13 +49,9 @@ body {
     }
 }
 
-label {
+/*label {
     text-align: right;
-}
-
-.fixed-top {
-    padding: .5rem 2rem .5rem 2rem;
-}
+}*/
 
 .edit-column {
     min-width: 50px;
@@ -80,7 +79,7 @@ tfoot {
 }
 
 #DataTables_Table_0_wrapper {
-    padding: 0;
+    padding: 16px;
 }
 
 .c-table-trasportatori thead tr {

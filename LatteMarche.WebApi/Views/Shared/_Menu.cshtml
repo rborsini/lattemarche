@@ -21,9 +21,9 @@
     }
 }
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/">
-        <img class="main-logo" src="~/Content/img/main-logo.svg" />
+        <img class="main-logo" src="~/Content/img/main-logo.svg" style="width: 5rem" />
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu login" aria-labelledby="navbarDropdownMenuLink">
                         @Html.ActionLink("Cambia password", "ChangePassword", "Account", null, new { @class = "dropdown-item" })
                         @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
                     </div>

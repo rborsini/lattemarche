@@ -58,7 +58,7 @@ $progress-bar-bg: $primary !default;*/
   border-color: rgba(0, 0, 0, 0.05); }
 
 .form-control:focus {
-  box-shadow: 0 0 5px rgba(100, 65, 164, 0.4); }
+  /*box-shadow: 0 0 5px rgba(100,65,164,.4);*/ }
 
 .nav-tabs .nav-link,
 .nav-tabs .nav-link.active {
@@ -6913,15 +6913,11 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: rgba(0, 0, 0, 0.05); } }
 
-html {
+html, body {
   height: 100%; }
 
-body {
-  padding: 100px 50px;
-  margin: 0; }
-
-.wrapper_container {
-  margin: auto; }
+a {
+  color: #000000; }
 
 .home--ctr .home--bg--img {
   background-image: url(/Content/img/hero-cow.jpeg);
@@ -6930,11 +6926,16 @@ body {
   background-position: center center;
   background-repeat: no-repeat; }
 
-.main-logo {
-  width: 7rem; }
+.navbar .dropdown-menu.login {
+  left: -36px; }
+
+.breadcrumb {
+  margin-bottom: 0rem;
+  border-bottom: 1px solid rgba(131, 131, 131, 0.14); }
 
 .jumbotron {
-  padding: 1rem; }
+  padding: 2rem;
+  margin-bottom: 0; }
 
 .main-footer {
   position: fixed;
@@ -6946,12 +6947,9 @@ body {
   .main-footer p {
     font-size: 0.8rem; }
 
-label {
-  text-align: right; }
-
-.fixed-top {
-  padding: .5rem 2rem .5rem 2rem; }
-
+/*label {
+    text-align: right;
+}*/
 .edit-column {
   min-width: 50px; }
 
@@ -6973,7 +6971,7 @@ tfoot {
   font-weight: 700; }
 
 #DataTables_Table_0_wrapper {
-  padding: 0; }
+  padding: 16px; }
 
 .c-table-trasportatori thead tr {
   background-color: #007bff;
