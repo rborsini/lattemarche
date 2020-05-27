@@ -6,10 +6,6 @@ html, body {
     height: 100%;
 }
 
-a {
-    color: $dark;
-}
-
 .home--ctr {
     .home--bg--img {
         background-image: url(/Content/img/hero-cow.jpeg);
@@ -80,9 +76,28 @@ tfoot {
 
 #DataTables_Table_0_wrapper {
     padding: 16px;
+    .edit {
+        color: $dark;
+    }
 }
 
 .c-table-trasportatori thead tr {
     background-color: $primary;
     color: $light;
+}
+
+// Nav tabs
+.nav-tabs {
+    margin: 16px;
+    .nav-link.active {
+        background-color: $primary;
+        color: $light;
+    }
+    .nav-link {
+        border-bottom: 0;
+        &:hover {
+            background-color: $gray-100;
+            color: $primary;
+        }
+    }
 }
