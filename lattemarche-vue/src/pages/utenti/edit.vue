@@ -490,10 +490,6 @@ export default class App extends Vue {
       this.tipoLatte = response.data;
     });
 
-    // Azienda trasportatore
-    this.dropdownService.getAziendeTrasportatori().then(response => {
-      this.aziendaTrasportatore = response.data;
-    });
   }
 
   public loadComuni(provincia: string): void {

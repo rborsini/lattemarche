@@ -15,7 +15,7 @@ using System.Web;
 
 namespace LatteMarche.WebApi.Helpers
 {
-    public class ExcelHelper
+    public class ExcelAllevatoriHelper
     {
         public static byte[] MakeExcelTot(List<V_PrelievoLatte> prelievi)
         {
@@ -182,28 +182,6 @@ namespace LatteMarche.WebApi.Helpers
             }
         }
 
-        private static List<PropertyInfo> GetHeaderProperties(Type type)
-        {
-            // Recupero tutte le proprietà annotate come Header            
-            List<MemberInfo> headerMembers = type.GetMembers().Where(m => m is PropertyInfo).Where(p => p.GetCustomAttribute<ExcelHeaderAttribute>(false) != null).ToList();
-            IEnumerable<PropertyInfo> headerProperties = headerMembers.Select(h => h as PropertyInfo).OrderBy(h => h.GetCustomAttribute<ExcelHeaderAttribute>().Index);
-            return headerProperties.ToList();
-        }
-
-        private static PropertyInfo GetPropertyInfoByHeaderName(List<PropertyInfo> properties, string headerName)
-        {
-            foreach (PropertyInfo pi in properties)
-            {
-                List<ExcelHeaderAttribute> headers = pi.GetCustomAttributes<ExcelHeaderAttribute>().ToList();
-
-                if (headers.Select(h => h.Name).Contains(headerName))
-                {
-                    return pi;
-                }
-            }
-
-            return null;
-        }
 
     }
 }
