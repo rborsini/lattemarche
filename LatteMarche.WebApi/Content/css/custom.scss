@@ -1,11 +1,5 @@
-﻿// Custom.scss
-// Option B: Include parts of Bootstrap
-
-// Your variable overrides
-
-@import "_variables.scss";
+﻿@import "_variables.scss";
 @import "_bootswatch.scss";
-/*@import "../../node_modules/bootstrap/scss/bootstrap";*/
 @import "../../../lattemarche-vue/node_modules/bootstrap/scss/bootstrap";
 
 html {
@@ -19,6 +13,16 @@ body {
 
 .wrapper_container {
     margin: auto;
+}
+
+.home--ctr {
+    .home--bg--img {
+        background-image: url(/Content/img/hero-cow.jpeg);
+        height: 60vh;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
 }
 
 .main-logo {

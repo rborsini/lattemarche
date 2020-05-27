@@ -95,7 +95,6 @@ $progress-bar-bg: $primary !default;*/
   .list-group-item.disabled:hover {
     color: #5c507c; }
 
-/*@import "../../node_modules/bootstrap/scss/bootstrap";*/
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -6923,6 +6922,13 @@ body {
 
 .wrapper_container {
   margin: auto; }
+
+.home--ctr .home--bg--img {
+  background-image: url(/Content/img/hero-cow.jpeg);
+  height: 60vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
 
 .main-logo {
   width: 7rem; }
