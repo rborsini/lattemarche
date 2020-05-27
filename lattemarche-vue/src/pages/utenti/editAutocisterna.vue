@@ -77,8 +77,6 @@ import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Autocisterna } from "../../models/autocisterna.model";
 import { Trasportatore } from "../../models/trasportatore.model";
 
-import { AutocisterneService } from "../../services/autocisterne.service";
-import { TrasportatoriService } from "../../services/trasportatori.service";
 import { DropdownService } from "../../services/dropdown.service";
 
 @Component({

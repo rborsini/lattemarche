@@ -16,6 +16,9 @@ using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.Utenti.Dtos;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -29,8 +32,6 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IPrelieviLatteService prelieviLatteService;
-        //private IAcquirentiService acquirentiService;
-        //private IDestinatariService destinatariService;
         private ISynchService synchService;
         private ISitraService sitraService;
         private ILottiService lottiService;
@@ -49,8 +50,6 @@ namespace LatteMarche.WebApi.Controllers_Api
         public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
-            //this.acquirentiService = acquirentiService;
-            //this.destinatariService = destinatariService;
             this.synchService = synchService;
             this.sitraService = sitraService;
             this.lottiService = lottiService;
@@ -160,11 +159,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 this.LogDebug("InvioSitra", $"data [{data}]");
 
                 // prelievi giorno precedente
-                List<PrelievoLatteDto> prelieviDaInviare = Mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
-                {
-                    DataPeriodoInizio = data,
-                    DataPeriodoFine = data
-                }).ToList());
+                List<PrelievoLatteDto> prelieviDaInviare = Mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Sitra(data));
 
                 this.LogDebug("InvioSitra", $"prelievi giornalieri [{prelieviDaInviare.Count}]");
 
@@ -212,7 +207,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Synch), "Prelievi latte", "Sincronizzazione")]
         [HttpPost]
-        //[AllowAnonymous]
         public IHttpActionResult Synch([FromUri] string day = "")
         {
             // scarica i dati dal cloud verso server locale
@@ -260,48 +254,49 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
-        //[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Search(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string idTipoLatte = "", string dal = "", string al = "")
-        {
-
-            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
-
-            switch (utente.IdProfilo)
-            {
-                case 3:     // profilo allevatore
-                    idAllevamento = utente.Id.ToString();
-                    break;
-                case 5:     // profilo trasportatore
-                    idTrasportatore = utente.Id.ToString();
-                    break;
-                //case 7:     // profilo acquirente
-                //    var acquirente = this.acquirentiService.GetByIdUtente(utente.Id);
-                //    idAcquirente = acquirente != null ? acquirente.Id.ToString() : "";
-                //    break;
-                //case 6:     // profilo destinatario
-                //    var destinatario = this.destinatariService.GetByIdUtente(utente.Id);
-                //    idDestinatario = destinatario != null ? destinatario.Id.ToString() : "";
-                //    break;
-            }
-
-            //possibilità di mettere altri parametri come le date periodo prelievo
+        public IHttpActionResult Search([FromUri] PrelieviLatteSearchDto searchDto)
+        {            
             try
             {
-                return Ok(this.prelieviLatteService.Search(new PrelieviLatteSearchDto()
-                {
-                    idAllevamento = String.IsNullOrEmpty(idAllevamento) || idAllevamento == "undefined" ? (int?)null : Convert.ToInt32(idAllevamento),
-                    idTrasportatore = String.IsNullOrEmpty(idTrasportatore) || idTrasportatore == "undefined" ? (int?)null : Convert.ToInt32(idTrasportatore),
-                    idAcquirente = String.IsNullOrEmpty(idAcquirente) || idAcquirente == "undefined" ? (int?)null : Convert.ToInt32(idAcquirente),
-                    idDestinatario = String.IsNullOrEmpty(idDestinatario) || idDestinatario == "undefined" ? (int?)null : Convert.ToInt32(idDestinatario),
-                    idTipoLatte = String.IsNullOrEmpty(idTipoLatte) || idTipoLatte == "undefined" ? (int?)null : Convert.ToInt32(idTipoLatte),
-                    DataPeriodoInizio = String.IsNullOrEmpty(dal) ? (DateTime?)null : new DateHelper().ConvertToDateTime(dal),
-                    DataPeriodoFine = String.IsNullOrEmpty(al) ? (DateTime?)null : new DateHelper().ConvertToDateTime(al),
-                }));
+                UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+                var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+                return Ok(list);
             }
             catch (Exception exc)
             {
                 return InternalServerError(exc);
             }
+        }
+
+        [HttpGet]
+        public IHttpActionResult Excel([FromUri] PrelieviLatteSearchDto searchDto)
+        {
+
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+            var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+
+            byte[] content = LatteMarche.WebApi.Helpers.ExcelHelper.MakeExcelTot(list);
+
+
+            return File(content, "application/vnd.ms-excel", "prelievi.xls");
+
+        }
+
+        protected IHttpActionResult File(byte[] content, string filename, string mediaType)
+        {
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(content)
+            };
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+            {
+                FileName = filename
+            };
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
+
+            var response = ResponseMessage(result);
+
+            return response;
         }
 
         #endregion

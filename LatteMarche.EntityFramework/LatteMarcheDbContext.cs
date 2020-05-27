@@ -15,7 +15,6 @@ namespace LatteMarche.EntityFramework
 	{
         public DbSet<Autocisterna> Autocisterne { get; set; }
         public DbSet<Autorizzazione> Autorizzazioni { get; set; }
-        public DbSet<AziendaTrasportatori> AziendeTrasportatori { get; set; }
         public DbSet<Azione> Azioni { get; set; }
         public DbSet<Analisi> Analisi { get; set; }
         public DbSet<ValoreAnalisi> ValoriAnalisi { get; set; }
@@ -35,7 +34,6 @@ namespace LatteMarche.EntityFramework
         public DbSet<Lotto> Lotti { get; set; }
         public DbSet<Ruolo> Ruoli { get; set; }
         public DbSet<RuoloUtente> RuoliUtente { get; set; }
-        public DbSet<TrasportatoreXAzienda> TrasportatoriXAzienda { get; set; }
         public DbSet<LogRecord> Logs { get; set; }
         public DbSet<UtenteXAcquirente> UtentiXAcquirente { get; set; }
         public DbSet<UtenteXDestinatario> UtentiXDestinatario { get; set; }

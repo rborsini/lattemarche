@@ -28,8 +28,6 @@ namespace LatteMarche.Tests.Services
         private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
 
-        private IRepository<AziendaTrasportatori, int> aziendeTrasportatoriRepository;
-        private IRepository<TrasportatoreXAzienda, int> trasportatoriXAziendaRepository;
         private IRepository<Autocisterna, int> autocisterneRepository;
 
 
@@ -54,8 +52,6 @@ namespace LatteMarche.Tests.Services
             this.cessionariRepository = this.uow.Get<Cessionario, int>();
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
 
-            this.aziendeTrasportatoriRepository = this.uow.Get<AziendaTrasportatori, int>();
-            this.trasportatoriXAziendaRepository = this.uow.Get<TrasportatoreXAzienda, int>();
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
         }
 
@@ -75,14 +71,12 @@ namespace LatteMarche.Tests.Services
             this.utenteXDestinatarioRepository.CleanUp();
             this.utenteXCessionarioRepository.CleanUp();
             this.utenteXAcquirenteRepository.CleanUp();
-            this.trasportatoriXAziendaRepository.CleanUp();
 
             this.allevamentiRepository.CleanUp();
             this.utentiRepository.CleanUp();
             this.destinatariRepository.CleanUp();
             this.cessionariRepository.CleanUp();
             this.acquirentiRepository.CleanUp();
-            this.aziendeTrasportatoriRepository.CleanUp();
 
             this.uow.SaveChanges();
         }

@@ -307,7 +307,6 @@
     <Content Include="Views\Acquirenti\Index.cshtml" />
     <Content Include="Views\Destinatari\Index.cshtml" />
     <Content Include="Views\Sitra\Index.cshtml" />
-    <Content Include="Views\Documenti\Index.cshtml" />
     <Content Include="Views\Ruoli\Index.cshtml" />
     <Content Include="Views\Azioni\Index.cshtml" />
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
@@ -326,7 +325,6 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
-    <Content Include="Views\Autocisterne\Index.cshtml" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.eot" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
     <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff" />
@@ -344,7 +342,6 @@
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
     <Content Include="Views\Cessionari\Index.cshtml" />
-    <Content Include="Views\AziendeTrasportatori\Index.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -389,12 +386,10 @@
     <Compile Include="Attributes\ApiCustomAuthorize.cs" />
     <Compile Include="Attributes\MvcCustomAuthorize.cs" />
     <Compile Include="Attributes\ViewItem.cs" />
-    <Compile Include="Controllers_Api\AziendeTrasportatoriController.cs" />
     <Compile Include="Controllers_Api\TrasportatoriController.cs" />
     <Compile Include="Controllers_Api\WidgetsController.cs" />
     <Compile Include="Controllers_Web\CessionariController.cs" />
     <Compile Include="Controllers_Web\AnalisiLatteController.cs" />
-    <Compile Include="Controllers_Web\AutocisterneController.cs" />
     <Compile Include="Controllers_Web\DispositiviController.cs" />
     <Compile Include="Controllers_Web\LaboratorioAnalisiController.cs" />
     <Compile Include="Controllers_Web\RuoliController.cs" />

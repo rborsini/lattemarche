@@ -4,25 +4,15 @@
     <waiter ref="waiter"></waiter>
 
     <!-- Pannello editazione allevamento -->
-    <editazione-allevamento-modal
-      ref="editazioneAllevamentoModal"
-      :allevamento="allevamento"
-      v-on:salvato="onAllevamentoSaved"
-    ></editazione-allevamento-modal>
-
+    <editazione-allevamento-modal ref="editazioneAllevamentoModal" :allevamento="allevamento" v-on:salvato="onAllevamentoSaved"></editazione-allevamento-modal>    
+    
     <!-- Pannello editazione autocisterna -->
-    <editazione-autocisterna-modal
-      ref="editazioneAutocisternaModal"
-      :autocisterna="autocisterna"
-      v-on:salvato="onAutocisternaSaved"
-    ></editazione-autocisterna-modal>
+    <editazione-autocisterna-modal ref="editazioneAutocisternaModal" :autocisterna="autocisterna" v-on:salvato="onAutocisternaSaved"></editazione-autocisterna-modal>    
 
     <!-- modale errore generico -->
-    <notification-dialog
-      ref="errorDialog"
-      :title="'Errore imprevisto'"
-      :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
-      v-on:ok="reload()"
+    <notification-dialog ref="errorDialog" 
+      :title="'Errore imprevisto'" :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
+        v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- modale conferma salvataggio -->
@@ -54,18 +44,18 @@
         <li class="active">
           <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
         </li>
-        <li v-if="utente.IdProfilo == 3">
+        <li v-if="utente.IdProfilo == 3" >
           <a data-toggle="tab" class="nav-link" href="#allevamenti">Allevamenti</a>
         </li>
-        <li v-if="utente.IdProfilo == 5">
+        <li v-if="utente.IdProfilo == 5" >
           <a data-toggle="tab" class="nav-link" href="#autocisterne">Autocisterne</a>
-        </li>
+        </li>        
       </ul>
 
       <div class="tab-content">
+
         <!-- Tab dettaglio -->
         <div id="dettaglio" class="tab-pane fade show active">
-          <div class="container-fluid">
 
           <!-- tipo profilo -->
           <div class="row form-group pt-5">
@@ -127,19 +117,8 @@
                 :value-field="'Value'"
                 :text-field="'Text'"
               />
-            </div>
-
-            <!-- Trasportatore -->
-            <label v-if="utente.IdProfilo == 5" class="col-sm-1">Azienda trasporti</label>
-            <div v-if="utente.IdProfilo == 5" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="aziendaTrasportatore.Items"
-                :value.sync="utente.IdAziendaTrasporti"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
+            </div>        
+              
           </div>
 
           <!-- ragione sociale / username -->
@@ -233,90 +212,100 @@
               <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
             </div>
           </div>
-
-          </div>
         </div>
 
         <!-- Tab allevamenti -->
         <div id="allevamenti" class="tab-pane fade">
-          <div class="row">
-            <div class="col-sm-11 pt-4">
-              <button v-on:click="onAllevamentoAdd" class="btn btn-primary float-right">Aggiungi</button>
-            </div>
 
-            <div class="offset-1 col-sm-10 pt-2">
-              <table class="table table-bordered">
-                <thead class="table table-hover table-striped table-bordered">
-                  <tr>
-                    <th scope="rol">Codice ASL</th>
-                    <th scope="rol">Indirizzo</th>
-                    <th scope="rol">CUAA</th>
-                    <th scope="rol"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(allevamento, index) in utente.Allevamenti" :key="index">
-                    <td>{{allevamento.CodiceAsl}}</td>
-                    <td>{{allevamento.IndirizzoAllevamento}}</td>
-                    <td>{{allevamento.CUAA}}</td>
-                    <td>
-                      <div class="text-center">
-                        <button
-                          v-on:click="onAllevamentoEdit(allevamento)"
-                          class="edit"
-                          title="modifica"
-                        >
-                          <i class="far fa-edit"></i>
-                        </button>
-                        <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="row">
+              <div class="col-sm-11 pt-4">
+                <button v-on:click="onAllevamentoAdd" class="btn btn-primary float-right" >Aggiungi</button>
+              </div>
+
+              <div class="offset-1 col-sm-10 pt-2">
+                <table class="table table-bordered">
+
+                    <thead class="table table-hover table-striped table-bordered">
+                        <tr>
+                            <th scope="rol">Codice ASL</th>
+                            <th scope="rol">Indirizzo</th>
+                            <th scope="rol">CUAA</th>
+                            <th scope="rol"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(allevamento, index) in utente.Allevamenti" :key="index">
+                            <td>
+                                {{allevamento.CodiceAsl}}
+                            </td>
+                            <td>
+                                {{allevamento.IndirizzoAllevamento}}
+                            </td>
+                            <td>
+                                {{allevamento.CUAA}}
+                            </td>          
+                            <td>
+                                <div class="text-center">
+                                  <button v-on:click="onAllevamentoEdit(allevamento)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
+                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
+                                </div>
+                            </td>            
+                        </tr>
+                    </tbody>
+
+                </table>    
+
+              </div>
           </div>
+      
+
         </div>
 
         <!-- Tab autocisterne -->
         <div id="autocisterne" class="tab-pane fade">
-          <div class="row">
-            <div class="col-sm-11 pt-4">
-              <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right">Aggiungi</button>
-            </div>
 
-            <div class="offset-1 col-sm-10 pt-2">
-              <table class="table table-bordered">
-                <thead class="table table-hover table-striped table-bordered">
-                  <tr>
-                    <th scope="rol">Marca</th>
-                    <th scope="rol">Modello</th>
-                    <th scope="rol">Targa</th>
-                    <th scope="rol"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(autocisterna, index) in utente.Autocisterne" :key="index">
-                    <td>{{autocisterna.Marca}}</td>
-                    <td>{{autocisterna.Modello}}</td>
-                    <td>{{autocisterna.Targa}}</td>
-                    <td>
-                      <div class="text-center">
-                        <button
-                          v-on:click="onAutocisternaEdit(autocisterna)"
-                          class="edit"
-                          title="modifica"
-                        >
-                          <i class="far fa-edit"></i>
-                        </button>
-                        <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="row">
+              <div class="col-sm-11 pt-4">
+                <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right" >Aggiungi</button>
+              </div>
+
+              <div class="offset-1 col-sm-10 pt-2">
+                <table class="table table-bordered">
+
+                    <thead class="table table-hover table-striped table-bordered">
+                        <tr>
+                            <th scope="rol">Marca</th>
+                            <th scope="rol">Modello</th>
+                            <th scope="rol">Targa</th>
+                            <th scope="rol"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(autocisterna, index) in utente.Autocisterne" :key="index">
+                            <td>
+                                {{autocisterna.Marca}}
+                            </td>
+                            <td>
+                                {{autocisterna.Modello}}
+                            </td>
+                            <td>
+                                {{autocisterna.Targa}}
+                            </td>          
+                            <td>
+                                <div class="text-center">
+                                  <button v-on:click="onAutocisternaEdit(autocisterna)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
+                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
+                                </div>
+                            </td>            
+                        </tr>
+                    </tbody>
+
+                </table>    
+
+              </div>
           </div>
+      
+
         </div>
 
         <!-- Annulla / Salva -->
@@ -347,15 +336,15 @@ import { Utente } from "@/models/utente.model";
 import { UrlService } from "@/services/url.service";
 import { PermissionsService } from "@/services/permissions.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-import { Allevamento } from "../../models/allevamento.model";
-import { Autocisterna } from "../../models/autocisterna.model";
+import { Allevamento } from '../../models/allevamento.model';
+import { Autocisterna } from '../../models/autocisterna.model';
 
-declare module "vue/types/vue" {
-  interface Vue {
-    open(): void;
-    openAllevamento(allevamento: Allevamento): void;
-    close(): void;
-  }
+declare module 'vue/types/vue' {
+    interface Vue {
+        open(): void
+        openAllevamento(allevamento: Allevamento): void
+        close(): void
+    }
 }
 
 @Component({
@@ -396,7 +385,6 @@ export default class App extends Vue {
   public cessionario: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
   public tipoLatte: Dropdown = new Dropdown();
-  public aziendaTrasportatore: Dropdown = new Dropdown();
 
   constructor() {
     super();
@@ -487,12 +475,8 @@ export default class App extends Vue {
     // Tipo latte
     this.dropdownService.getTipiLatte().then(response => {
       this.tipoLatte = response.data;
-    });
-
-    // Azienda trasportatore
-    this.dropdownService.getAziendeTrasportatori().then(response => {
-      this.aziendaTrasportatore = response.data;
-    });
+    });  
+        
   }
 
   public loadComuni(provincia: string): void {
@@ -534,7 +518,7 @@ export default class App extends Vue {
 
   // evento conferma salvataggio allevamento
   public onAllevamentoSaved() {
-    if (this.allevamento.Id == 0) {
+    if(this.allevamento.Id == 0) {
       this.utente.Allevamenti.push(this.allevamento);
     }
   }
@@ -554,10 +538,10 @@ export default class App extends Vue {
 
   // evento conferma salvataggio autocisterna
   public onAutocisternaSaved() {
-    if (this.autocisterna.Id == 0) {
+    if(this.autocisterna.Id == 0) {
       this.utente.Autocisterne.push(this.autocisterna);
     }
-  }
+  }  
 
   // lettura permessi da jwt
   private readPermissions() {

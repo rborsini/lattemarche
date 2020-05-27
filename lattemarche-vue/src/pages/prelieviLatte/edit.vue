@@ -108,14 +108,7 @@
                 :value-field="'Value'"
                 :text-field="'Text'"
               />
-              <!-- <select2
-                class="form-control"
-                :dropdownparent="'#editazione-prelievo-modal'"
-                :options="acquirente"
-                :value.sync="prelievoLatte.IdAcquirente"
-                :value-field="'Id'"
-                :text-field="'RagioneSociale'"
-              />-->
+
             </div>
             <label class="col-2">Destinatario</label>
             <div class="col-sm-4">
@@ -199,14 +192,8 @@ import TimeEditor from "../../components/timeEditor.vue";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { PrelievoLatte } from "../../models/prelievoLatte.model";
 import { LaboratorioAnalisi } from "../../models/laboratorioAnalisi.model";
-import { Trasportatore } from "../../models/trasportatore.model";
-import { Acquirente } from "../../models/acquirente.model";
-import { Destinatario } from "../../models/destinatario.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
-import { TrasportatoriService } from "../../services/trasportatori.service";
-// import { AcquirentiService } from "../../services/acquirenti.service";
-import { DestinatariService } from "../../services/destinatari.service";
 import { DropdownService } from "../../services/dropdown.service";
 
 @Component({
@@ -218,12 +205,9 @@ import { DropdownService } from "../../services/dropdown.service";
 })
 export default class EditazionePrelievoModal extends Vue {
   @Prop()
-  prelievoLatte: PrelievoLatte = new PrelievoLatte();
+  prelievoLatte!: PrelievoLatte;
 
   public prelieviLatteService: PrelieviLatteService;
-//   public trasporatoriService: TrasportatoriService;
-  public destinatariService: DestinatariService;
-//   public acquirentiService: AcquirentiService;
   public dropdownService: DropdownService;
   public laboratoriAnalisi: Dropdown = new Dropdown();
   public trasportatore: Dropdown = new Dropdown();
@@ -236,9 +220,6 @@ export default class EditazionePrelievoModal extends Vue {
   constructor() {
     super();
     this.prelieviLatteService = new PrelieviLatteService();
-    // this.trasporatoriService = new TrasportatoriService();
-    this.destinatariService = new DestinatariService();
-    // this.acquirentiService = new AcquirentiService();
     this.dropdownService = new DropdownService();
     this.id = $("#id").val() as string;
   }
@@ -257,11 +238,7 @@ export default class EditazionePrelievoModal extends Vue {
     if (dd.data != null) {
       this.laboratoriAnalisi = dd.data;
     }
-    // this.prelieviLatteService.getLaboratoriAnalisi().then(response => {
-    //   if (response.data != null) {
-    //     this.laboratoriAnalisi = response.data;
-    //   }
-    // });
+
   }
 
   // caricamento trasportatori
@@ -271,11 +248,6 @@ export default class EditazionePrelievoModal extends Vue {
       this.trasportatore = dd.data;
     }
 
-    // this.trasporatoriService.getTrasportatori().then(response => {
-    //   if (response.data != null) {
-    //     this.trasportatore = response.data;
-    //   }
-    // });
   }
 
   // caricamento destinatari
@@ -286,11 +258,6 @@ export default class EditazionePrelievoModal extends Vue {
       this.destinatario = dd.data;
     }
 
-    // this.destinatariService.index().then(response => {
-    //   if (response.data != null) {
-    //     this.destinatario = response.data;
-    //   }
-    // });
   }
 
   // caricamento acquirenti
@@ -300,11 +267,7 @@ export default class EditazionePrelievoModal extends Vue {
     if (dd.data != null) {
       this.acquirente = dd.data;
     }
-    // this.acquirentiService.index().then(response => {
-    //   if (response.data != null) {
-    //     this.acquirente = response.data;
-    //   }
-    // });
+
   }
 
   public salvaDettaglioPrelievo() {

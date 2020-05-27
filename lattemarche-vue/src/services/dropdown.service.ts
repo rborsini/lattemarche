@@ -44,10 +44,6 @@ export class DropdownService {
         return axios.get("/api/tipiLatte/dropdown");
     }
 
-    public getAziendeTrasportatori(): AxiosPromise<Dropdown> {
-        return axios.get("/api/aziendeTrasportatori/dropdown");
-    }
-
     public getTrasportatori(): AxiosPromise<Dropdown> {
         return axios.get("/api/trasportatori/dropdown");
     }

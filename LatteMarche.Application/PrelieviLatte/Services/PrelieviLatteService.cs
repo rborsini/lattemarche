@@ -205,34 +205,44 @@ namespace LatteMarche.Application.Latte.Services
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto)
+        public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto, int idUtente)
         {
-            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.Query;
+            IQueryable<V_PrelievoLatte> query = PrelieviAutorizzati(idUtente);
 
             // Allevamento
-            if (searchDto.idAllevamento != null)
+            if (searchDto.IdAllevamento.HasValue && searchDto.IdAllevamento.Value != 0)
             {
-                query = query.Where(p => p.IdAllevamento == searchDto.idAllevamento);
+                query = query.Where(p => p.IdAllevamento == searchDto.IdAllevamento);
             }
 
-            if (searchDto.idTrasportatore != null)
+            // Trasportatore
+            if (searchDto.IdTrasportatore.HasValue && searchDto.IdTrasportatore.Value != 0)
             {
-                query = query.Where(p => p.IdTrasportatore == searchDto.idTrasportatore);
+                query = query.Where(p => p.IdTrasportatore == searchDto.IdTrasportatore);
             }
 
-            if (searchDto.idAcquirente != null)
+            // Acquirente
+            if (searchDto.IdAcquirente.HasValue && searchDto.IdAcquirente.Value != 0)
             {
-                query = query.Where(p => p.IdAcquirente == searchDto.idAcquirente);
+                query = query.Where(p => p.IdAcquirente == searchDto.IdAcquirente);
             }
 
-            if (searchDto.idDestinatario != null)
+            // Cessionario
+            if (searchDto.IdCessionario.HasValue && searchDto.IdCessionario.Value != 0)
             {
-                query = query.Where(p => p.IdDestinatario == searchDto.idDestinatario);
+                query = query.Where(p => p.IdCessionario == searchDto.IdCessionario);
             }
 
-            if (searchDto.idTipoLatte != null)
+            // Destinatario
+            if (searchDto.IdDestinatario.HasValue && searchDto.IdDestinatario.Value != 0)
             {
-                query = query.Where(p => p.IdTipoLatte == searchDto.idTipoLatte);
+                query = query.Where(p => p.IdDestinatario == searchDto.IdDestinatario);
+            }
+
+            // Tipo Latte
+            if (searchDto.IdTipoLatte.HasValue && searchDto.IdTipoLatte.Value != 0)
+            {
+                query = query.Where(p => p.IdTipoLatte == searchDto.IdTipoLatte);
             }
 
             // Periodo Prelievo
@@ -252,6 +262,25 @@ namespace LatteMarche.Application.Latte.Services
                 else
                     query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
             }
+
+            query = query.OrderBy(r => r.Allevamento);
+
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Ricerca prelievi latte
+        /// </summary>
+        /// <param name="searchDto"></param>
+        /// <returns></returns>
+        public List<V_PrelievoLatte> Sitra(DateTime data)
+        {
+            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.DbSet;
+
+            DateTime from = data;
+            DateTime to = data.AddDays(1);
+
+            query = query.Where(p => from <= p.DataPrelievo && p.DataPrelievo < to);
 
             query = query.OrderBy(r => r.Allevamento);
 

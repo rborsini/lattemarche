@@ -9,7 +9,6 @@ using LatteMarche.Application.Utenti;
 using LatteMarche.Application.Acquirenti;
 using LatteMarche.Application.Destinatari;
 using LatteMarche.Application.Cessionari;
-using LatteMarche.Application.AziendeTrasportatori;
 using LatteMarche.Application.Trasportatori;
 using LatteMarche.Application.Allevamenti;
 using LatteMarche.Application.Giri;
@@ -29,7 +28,6 @@ namespace LatteMarche.Application
             mappings = AnalisiMappings.Configure(mappings);
             mappings = AuthMappings.Configure(mappings);
             mappings = AutocisterneMappings.Configure(mappings);
-            mappings = AziendeTrasportatoriMappings.Configure(mappings);
             mappings = CessionariMappings.Configure(mappings);
             mappings = ComuniMappings.Configure(mappings);
             mappings = DestinatarioMappings.Configure(mappings);

@@ -20,6 +20,7 @@
     string canSearchTrasportatore = Convert.ToBoolean(ViewBag.Tokens["RicercaTrasportatore"]) ? "true" : "false";
     string canSearchAcquirente = Convert.ToBoolean(ViewBag.Tokens["RicercaAcquirente"]) ? "true" : "false";
     string canSearchDestinatario = Convert.ToBoolean(ViewBag.Tokens["RicercaDestinatario"]) ? "true" : "false";
+    string canSearchCessionario = Convert.ToBoolean(ViewBag.Tokens["RicercaCessionario"]) ? "true" : "false";
 
 }
 
@@ -30,6 +31,7 @@
 <input hidden id="canSearchTrasportatore" value="@canSearchTrasportatore" />
 <input hidden id="canSearchAcquirente" value="@canSearchAcquirente" />
 <input hidden id="canSearchDestinatario" value="@canSearchDestinatario" />
+<input hidden id="canSearchCessionario" value="@canSearchCessionario" />
 
 @{
     string version = System.Configuration.ConfigurationManager.AppSettings["version"];

@@ -154,10 +154,6 @@
     <Compile Include="AnalisiLatte\Interfaces\IAnalisiService.cs" />
     <Compile Include="AnalisiLatte\Services\AnalisiService.cs" />
     <Compile Include="Auth\AuthMappings.cs" />
-    <Compile Include="AziendeTrasportatori\AziendeTrasportatoriMappings.cs" />
-    <Compile Include="AziendeTrasportatori\Dtos\AziendaTrasportatoriDto.cs" />
-    <Compile Include="AziendeTrasportatori\Interfaces\IAziendeTrasportatoriService.cs" />
-    <Compile Include="AziendeTrasportatori\Services\AziendeTrasportatoriService.cs" />
     <Compile Include="Cessionari\CessionariMappings.cs" />
     <Compile Include="Cessionari\Dtos\CessionarioDto.cs" />
     <Compile Include="Cessionari\Interfaces\ICessionariService.cs" />
