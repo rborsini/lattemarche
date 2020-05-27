@@ -46,21 +46,27 @@
       </div>
     </div>
 
-    <!-- Tabella -->
-    <table class="table table-striped table-bordered dataTable">
-      <thead>
-        <tr>
-          <th v-for="(col, colIndex) in analisiTable.Cols" :key="colIndex">{{col.Nome}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, rowIndex) in analisiTable.Rows" :key="rowIndex">
-          <td v-for="(cell, cellIndex) in row.Cells" :key="cellIndex">
-            <span v-bind:class="{ 'text-danger' : cell.FuoriSoglia }">{{cell.Valore}}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <!-- Tabella -->
+          <table class="table table-striped table-bordered dataTable mt-3">
+            <thead>
+              <tr>
+                <th v-for="(col, colIndex) in analisiTable.Cols" :key="colIndex">{{col.Nome}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, rowIndex) in analisiTable.Rows" :key="rowIndex">
+                <td v-for="(cell, cellIndex) in row.Cells" :key="cellIndex">
+                  <span v-bind:class="{ 'text-danger' : cell.FuoriSoglia }">{{cell.Valore}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,18 +74,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
-
 import Waiter from "../../components/waiter.vue";
-
-import {
-  Analisi,
-  AnalisiSearchModel,
-  AnalisiTable,
-  AnalisiCol,
-  AnalisiRow,
-  AnalisiCell
-} from "../../models/analisi.model";
-
+import { Analisi, AnalisiSearchModel, AnalisiTable, AnalisiCol, AnalisiRow, AnalisiCell } from "../../models/analisi.model";
 import { AnalisiService } from "../../services/analisi.service";
 
 declare module "vue/types/vue" {
