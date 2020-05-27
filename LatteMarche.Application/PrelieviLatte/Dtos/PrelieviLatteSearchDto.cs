@@ -10,16 +10,32 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
     public class PrelieviLatteSearchDto
     {
 
-        public DateTime? DataPeriodoInizio { get; set; }
-        public DateTime? DataPeriodoFine { get; set; }
+        private DateTime? dataPeriodoInizio;
+        private DateTime? dataPeriodoFine;
 
-        public int? idAllevamento { get; set; }
-        public int? idTrasportatore;
-        public int? idAcquirente;
-        public int? idDestinatario;
-        public int? idTipoLatte;
+        public DateTime? DataPeriodoInizio
+        {
+            get { return this.dataPeriodoInizio; }
+            set { this.dataPeriodoInizio = value; }
+        }
 
-        public bool? InviatoSitra { get; set; }
+        public DateTime? DataPeriodoFine
+        {
+            get { return this.dataPeriodoFine; }
+            set { this.dataPeriodoFine = value; }
+        }
+
+        public string DataPeriodoInizio_Str { get { return new DateHelper().FormatDate(this.dataPeriodoInizio); } set { this.dataPeriodoInizio = new DateHelper().ConvertToDateTime(value); } }
+        public string DataPeriodoFine_Str { get { return new DateHelper().FormatDate(this.dataPeriodoFine); } set { this.dataPeriodoFine = new DateHelper().ConvertToDateTime(value); } }
+
+        public int? IdAllevamento { get; set; }
+        public int? IdTrasportatore { get; set; }
+        public int? IdAcquirente { get; set; }
+        public int? IdDestinatario { get; set; }
+        public int? IdCessionario { get; set; }
+        public int? IdTipoLatte { get; set; }
+
+        public bool? InviatoSitra { get; set; }            
 
         public int IdUtente { get; set; }
              

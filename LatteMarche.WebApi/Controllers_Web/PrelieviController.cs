@@ -43,7 +43,8 @@ namespace LatteMarche.WebApi.Controllers_Web
         [ViewItem("RicercaTrasportatore", "Prelievi", "Ricerca per Trasportatore")]
         [ViewItem("RicercaAcquirente", "Prelievi", "Ricerca per Acquirente")]
         [ViewItem("RicercaDestinatario", "Prelievi", "Ricerca per Destinatario")]
-    
+        [ViewItem("RicercaCessionario", "Prelievi", "Ricerca per Cessionario")]
+
         public ActionResult Index()
         {           
             return View();

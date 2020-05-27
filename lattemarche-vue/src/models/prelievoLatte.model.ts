@@ -36,11 +36,12 @@ export class PrelieviLatteSearchModel {
     public DataPeriodoInizio_Str: string = "";
     public DataPeriodoFine_Str: string = "";
 
-    public IdAllevamento?: number;
-    public IdTrasportatore?: number;
-    public IdAcquirente?: number;
-    public IdDestinatario?: number;
-    public IdTipoLatte?: number;
+    public IdAllevamento?: number = 0;
+    public IdTrasportatore?: number = 0;
+    public IdAcquirente?: number = 0;
+    public IdDestinatario?: number = 0;
+    public IdCessionario?: number = 0;
+    public IdTipoLatte?: number = 0;
 
     public ToUrlQueryString(): string {
         return jQuery.param(this);

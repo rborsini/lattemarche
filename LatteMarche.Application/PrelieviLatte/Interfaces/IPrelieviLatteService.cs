@@ -28,6 +28,12 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto, int idUtente);
 
         /// <summary>
+        /// Caricamento 
+        /// </summary>
+        /// <returns></returns>
+        List<V_PrelievoLatte> Sitra(DateTime data);
+
+        /// <summary>
         /// Pull prelievi per sincronizzazione
         /// </summary>
         /// <param name="timestamp"></param>

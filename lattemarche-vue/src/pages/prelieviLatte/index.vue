@@ -1,6 +1,9 @@
 <template>
-  <div id="index-prelievi-latte-page">
+  <div>
     
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
+
     <!-- modale modifica/inserisci prelievo -->
     <editazione-prelievo-modal ref="editazionePrelievoModal" :prelievo-latte="prelievoSelezionato" v-on:salvato="$refs.savedDialog.open()" ></editazione-prelievo-modal>
 
@@ -17,8 +20,24 @@
     <div class="jumbotron">
       <!-- Campi ricerca -->
 
-      <!-- Allevatore / dal / al -->
+      <!-- dal / al -->
       <div class="row pt-1">
+
+        <label class="col-1">Dal:</label>
+        <div class="col-3">
+          <datepicker class="form-control" :value.sync="parameters.DataPeriodoInizio_Str" />
+        </div>
+
+        <label class="col-1">Al:</label>
+        <div class="col-3">
+          <datepicker class="form-control" :value.sync="parameters.DataPeriodoFine_Str" />
+        </div>
+
+      </div>
+
+      <!-- Allevatore / Trasportatore / Tipo latte -->
+      <div class="row pt-1" v-if="canSearchAllevatore || canSearchTrasportatore" >
+
         <label class="col-1" v-if="canSearchAllevatore">Allevatore:</label>
         <div class="col-3" v-if="canSearchAllevatore">
           <select2
@@ -30,22 +49,6 @@
             :text-field="'Text'"
           />
         </div>
-
-        <label class="col-1">Dal:</label>
-
-        <div class="col-3">
-          <datepicker class="form-control" :value.sync="parameters.DataPeriodoInizio_Str" />
-        </div>
-
-        <label class="col-1">Al:</label>
-
-        <div class="col-3">
-          <datepicker class="form-control" :value.sync="parameters.DataPeriodoFine_Str" />
-        </div>
-      </div>
-
-      <!-- Trasportatore / Acquirente / Destinatario -->
-      <div class="row pt-1" v-if="canSearchTrasportatore || canSearchAcquirente || canSearchDestinatario" >
 
         <label class="col-1" v-if="canSearchTrasportatore">Trasportatore:</label>
         <div class="col-3" v-if="canSearchTrasportatore">
@@ -59,6 +62,23 @@
           />
         </div>
 
+        <label class="col-1">Tipo latte:</label>
+        <div class="col-3">
+          <select2
+            class="form-control"
+            :placeholder="'-'"
+            :options="tipiLatte.Items"
+            :value.sync="parameters.IdTipoLatte"
+            :value-field="'Value'"
+            :text-field="'Text'"
+          />
+        </div>
+
+      </div>
+
+      <!-- Acquirente / Cessionario / Destinatario -->
+      <div class="row pt-1" v-if="canSearchAcquirente || canSearchCessionario || canSearchDestinatario" >
+
         <label class="col-1" v-if="canSearchAcquirente">Acquirente:</label>
         <div class="col-3" v-if="canSearchAcquirente">
           <select2
@@ -66,6 +86,18 @@
             :placeholder="'-'"
             :options="acquirente.Items"
             :value.sync="parameters.IdAcquirente"
+            :value-field="'Value'"
+            :text-field="'Text'"
+          />
+        </div>
+
+        <label class="col-1" v-if="canSearchCessionario">Cessionario:</label>
+        <div class="col-3" v-if="canSearchCessionario">
+          <select2
+            class="form-control"
+            :placeholder="'-'"
+            :options="cessionario.Items"
+            :value.sync="parameters.IdCessionario"
             :value-field="'Value'"
             :text-field="'Text'"
           />
@@ -82,24 +114,12 @@
             :text-field="'Text'"
           />
         </div>
-      </div>
 
-      <div class="row pt-1">
-        <label class="col-1">Tipo latte:</label>
-        <div class="col-3">
-          <select2
-            class="form-control"
-            :placeholder="'-'"
-            :options="tipiLatte.Items"
-            :value.sync="parameters.IdTipoLatte"
-            :value-field="'Value'"
-            :text-field="'Text'"
-          />
-        </div>
+
       </div>
 
       <!-- Bottoni di ricerca -->
-      <div class="row pt-1">
+      <div class="row pt-3">
         <div class="col-12">
           <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
           <button v-on:click="onAnnullaClick" class="float-right btn btn-primary mr-2" href="#" role="button" >Annulla</button>
@@ -155,6 +175,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
 
+import Waiter from "../../components/waiter.vue";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
 import Datepicker from "../../components/datepicker.vue";
@@ -187,7 +208,8 @@ declare module "vue/types/vue" {
     Datepicker,
     EditazionePrelievoModal,
     NotificationDialog,
-    DataTable
+    DataTable,
+    Waiter    
   }
 })
 export default class PrelieviLatteIndexPage extends Vue {
@@ -195,7 +217,8 @@ export default class PrelieviLatteIndexPage extends Vue {
     savedDialog: Vue,
     editazionePrelievoModal: Vue,
     confirmDeleteDialog: Vue,
-    removedDialog: Vue
+    removedDialog: Vue,
+    waiter: Vue
   };
 
   private prelieviLatteService: PrelieviLatteService;
@@ -207,15 +230,14 @@ export default class PrelieviLatteIndexPage extends Vue {
   public trasportatore: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
   public acquirente: Dropdown = new Dropdown();
+  public cessionario: Dropdown = new Dropdown();
   public prelievi: PrelievoLatte[] = [];
   private idPrelievoDaEliminare!: number;
 
   public parameters: PrelieviLatteSearchModel = new PrelieviLatteSearchModel();
 
   public prelievoSelezionato: PrelievoLatte;
-  // public dal: string = "";
-  // public al: string = "";
-
+  
   public canAdd: boolean = false;
   public canEdit: boolean = false;
   public canRemove: boolean = false;
@@ -223,6 +245,7 @@ export default class PrelieviLatteIndexPage extends Vue {
   public canSearchTrasportatore: boolean = false;
   public canSearchAcquirente: boolean = false;
   public canSearchDestinatario: boolean = false;
+  public canSearchCessionario: boolean = false;
 
   public totale_prelievi_kg: number = 0;
   public totale_prelievi_lt: number = 0;
@@ -241,6 +264,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.canSearchTrasportatore = $("#canSearchTrasportatore").val() == "true";
     this.canSearchAcquirente = $("#canSearchAcquirente").val() == "true";
     this.canSearchDestinatario = $("#canSearchDestinatario").val() == "true";
+    this.canSearchCessionario = $("#canSearchCessionario").val() == "true";
   }
 
   public mounted() {
@@ -250,6 +274,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.loadTrasportatori();
     this.loadDestinatari();
     this.loadAcquirenti();
+    this.loadCessionari();
     this.initSearchBox();
   }
 
@@ -260,6 +285,8 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // Ricerca
   public onCercaClick() {
+
+    this.$refs.waiter.open();
     this.totale_prelievi_kg = 0;
     this.totale_prelievi_lt = 0;
 
@@ -271,6 +298,8 @@ export default class PrelieviLatteIndexPage extends Vue {
           this.totale_prelievi_kg += prelievo.Quantita;
           this.totale_prelievi_lt += prelievo.QuantitaLitri;
         }
+
+        this.$refs.waiter.close();
 
       });
   }
@@ -470,6 +499,15 @@ export default class PrelieviLatteIndexPage extends Vue {
       this.acquirente = dd.data;
     }
   }
+
+  // caricamento cessionari
+  private async loadCessionari() {
+    const dd = await this.dropdownService.getCessionari();
+
+    if (dd.data != null) {
+      this.cessionario = dd.data;
+    }
+  }  
 
   private subtractMonth(date: Date): Date {
     var days = 0;
