@@ -138,13 +138,8 @@
       <!-- Bottoni di ricerca -->
       <div class="row pt-3">
         <div class="col-12">
-          <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
-          <button
-            v-on:click="onAnnullaClick"
-            class="float-right btn btn-primary mr-2"
-            href="#"
-            role="button"
-          >Annulla</button>
+          <button v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
+          <button v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
         </div>
       </div>
     </div>
@@ -155,10 +150,10 @@
       <template slot="toolbox">
         <div class="toolbox text-right">
           <div class="btn-group">
-            <button class="btn btn-primary float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
+            <button class="btn btn-success float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
             <button
               type="button"
-              class="btn btn-primary dropdown-toggle"
+              class="btn btn-secondary dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
@@ -227,10 +222,7 @@ import ConfirmDialog from "../../components/confirmDialog.vue";
 import { Trasportatore } from "../../models/trasportatore.model";
 import { Acquirente } from "../../models/acquirente.model";
 import { Destinatario } from "../../models/destinatario.model";
-import {
-  PrelievoLatte,
-  PrelieviLatteSearchModel
-} from "../../models/prelievoLatte.model";
+import { PrelievoLatte, PrelieviLatteSearchModel } from "../../models/prelievoLatte.model";
 import { TipoLatte } from "../../models/tipoLatte.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";

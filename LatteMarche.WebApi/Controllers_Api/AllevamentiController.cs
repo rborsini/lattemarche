@@ -36,7 +36,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Dropdown), "Cessionari", "Dropdown")]
+        [ViewItem(nameof(Dropdown), "Allevamenti", "Dropdown")]
         [HttpGet]
         public IHttpActionResult Dropdown()
         {

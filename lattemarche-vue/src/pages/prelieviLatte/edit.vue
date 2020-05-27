@@ -175,7 +175,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-          <button class="btn btn-primary" v-on:click="salvaDettaglioPrelievo()">Salva</button>
+          <button class="btn btn-success" v-on:click="salvaDettaglioPrelievo()">Salva</button>
         </div>
       </div>
     </div>

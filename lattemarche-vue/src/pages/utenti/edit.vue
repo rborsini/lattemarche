@@ -230,7 +230,7 @@
         <div id="allevamenti" class="tab-pane fade">
           <div class="row justify-content-center">
             <div class="col-10 text-right pt-4">
-              <button v-on:click="onAllevamentoAdd" class="btn btn-primary mb-2">Aggiungi</button>
+              <button v-on:click="onAllevamentoAdd" class="btn btn-success mb-2">Aggiungi</button>
             </div>
 
             <div class="col-10">
@@ -271,7 +271,7 @@
         <div id="autocisterne" class="tab-pane fade">
           <div class="row justify-content-center">
             <div class="col-sm-10 pt-4">
-              <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right">Aggiungi</button>
+              <button v-on:click="onAutocisternaAdd" class="btn btn-success float-right">Aggiungi</button>
             </div>
 
             <div class="col-10 pt-2">
@@ -312,7 +312,7 @@
         <div class="row pt-3 justify-content-center">
           <div class="col-10 text-right">
             <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
-            <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
+            <button class="btn btn-success" role="button" v-on:click="onSave()">Salva</button>
           </div>
         </div>
       </div>

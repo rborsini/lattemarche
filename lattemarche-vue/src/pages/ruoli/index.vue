@@ -1,17 +1,23 @@
 <template>
     
-    <div id="index-ruoli-page">
+    <div >
 
-        <div class="container-fluid">
+        <!-- <div class="container-fluid">
             <div class="row">
                 <div class="col-12 text-right pb-3">
                     <a class="btn btn-success" href="/ruoli/new">Aggiungi</a>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Tabella -->
         <data-table :options="tableOptions" :rows="ruoli" >
+
+            <template slot="toolbox">
+                <div class="toolbox text-right">
+                    <a class="btn btn-primary" href="/ruoli/new">Aggiungi</a>
+                </div>
+            </template>
 
             <!-- Colonne -->
             <template slot="thead">

@@ -9,7 +9,7 @@
         <notification-dialog ref="savedDialog"
                             :title="'Conferma salvataggio'"
                             :message="'Ruolo salvato correttamente'"
-                            v-on:ok="window.location = '/ruoli/edit?id=' + ruolo.Id"></notification-dialog>
+                            v-on:ok="reload()"></notification-dialog>
 
 
         <!-- Nav tabs -->
@@ -23,15 +23,15 @@
         </nav>
 
         <!-- Nav content -->
-        <div class="tab-content" id="nav-tabContent">
+        <div class="tab-content pl-5 pt-3" id="nav-tabContent">
 
             <!-- Tab Autorizzazioni MVC -->
             <div class="tab-pane fade show active" id="nav-mvc" role="tabpanel" aria-labelledby="nav-home-tab">
 
-                <div class="form-group row pt-3" v-for="(pagina, index) in ruolo.Pagine_MVC">
+                <div class="form-group row pt-3" v-for="(pagina, index) in ruolo.Pagine_MVC" :key="index">
                     <div class="col-sm-1 font-weight-bold">{{pagina.Title}}</div>
                     <div class="col-sm-4">
-                        <div class="form-check" v-for="(item) in pagina.Items">
+                        <div class="form-check" v-for="(item, index2) in pagina.Items" :key="index2">
                             <input class="form-check-input" type="checkbox" v-model="item.Enabled">
                             <label class="form-check-label">
                                 {{item.DisplayName}}
@@ -90,7 +90,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(utente, index) in ruolo.Utenti">
+                        <tr v-for="(utente, index) in ruolo.Utenti" :key="index">
                             <td>{{utente.Username}}</td>
                             <td>{{utente.Nome}}</td>
                             <td>{{utente.Cognome}}</td>
@@ -119,6 +119,7 @@
     import Component from "vue-class-component";
     import { Prop, Watch, Emit } from "vue-property-decorator";
 
+    import { UrlService } from "@/services/url.service";
     import Waiter from "../../components/waiter.vue";
     import ConfirmDialog from "../../components/confirmDialog.vue";
     import NotificationDialog from "../../components/notificationDialog.vue";
@@ -198,6 +199,12 @@
                         this.$refs.savedDialog.open();
                     }
                 });
+        }
+
+        
+        // reload della pagina sullo stesso id
+        public reload() {
+            UrlService.reload();
         }
 
     }

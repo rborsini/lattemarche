@@ -49,7 +49,7 @@
         <!--  Registrati -->
         <div class="row form-group">
             <div class="col-9">
-                <button class="btn btn-primary float-right" v-on:click="onSave()">Cambia Password</button>
+                <button class="btn btn-success float-right" v-on:click="onSave()">Cambia Password</button>
             </div>
         </div>
 

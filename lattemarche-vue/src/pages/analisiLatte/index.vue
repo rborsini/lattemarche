@@ -30,15 +30,15 @@
       <!-- Bottoni di ricerca -->
       <div class="row pt-3">
         <div class="col-12">
-          <button v-on:click="onCercaClick" class="float-right btn btn-primary" role="button">Cerca</button>
+          <button v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
           <button
             v-on:click="onSynchClick"
-            class="float-right btn btn-primary mr-2"
+            class="float-right btn btn-success mr-2"
             role="button"
           >Synch</button>
           <button
             v-on:click="onAnnullaClick"
-            class="float-right btn btn-primary mr-2"
+            class="float-right btn btn-secondary mr-2"
             href="#"
             role="button"
           >Annulla</button>

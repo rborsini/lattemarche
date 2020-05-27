@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container h-100">
-    <div class="row h-100 d-flex align-items-center">
-        <div class="col-4 offset-4">
+<div class="container">
+    <div class="row mt-5 d-flex align-items-center">
+        <div class="col-4  mt-5 offset-4">
             <h3 class="text-center mb-2">Accedi alla piattaforma</h3>
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
             {

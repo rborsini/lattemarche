@@ -190,12 +190,16 @@ namespace LatteMarche.Application.Auth.Services
             {
                 List<Azione> azioni = azioniRepository.Query.ToList();
                 List<Autorizzazione> autorizzazioni = autorizzazioniRepository.Query.ToList();
-                List<long> ruoli = utentiRepository
-                    .Query.FirstOrDefault(u => u.Username == username)
-                    .RuoliUtente
-                    .Where(r => r.IdRuolo.HasValue)
-                    .Select(r => r.IdRuolo.Value)
-                    .ToList();
+
+                var utente = utentiRepository.DbSet.FirstOrDefault(u => u.Username == username);
+                List<long> ruoli = new List<long>() { utente.IdProfilo };
+
+                //List<long> ruoli = utentiRepository
+                //    .Query.FirstOrDefault(u => u.Username == username)
+                //    .RuoliUtente
+                //    .Where(r => r.IdRuolo.HasValue)
+                //    .Select(r => r.IdRuolo.Value)
+                //    .ToList();
 
                 foreach (Azione azione in azioni)
                 {

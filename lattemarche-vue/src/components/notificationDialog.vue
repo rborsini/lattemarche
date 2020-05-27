@@ -14,7 +14,7 @@
                     {{message}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" v-on:click="$emit('ok')" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    <button type="button" v-on:click="$emit('ok')" class="btn btn-success" data-dismiss="modal">Ok</button>
                 </div>
             </div>
         </div>

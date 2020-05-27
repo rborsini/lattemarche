@@ -56,7 +56,7 @@
       <div class="row form-group">
         <div class="col-sm-6 offset-3 text-right">
           <button
-            class="btn btn-primary mr-2"
+            class="btn btn-success mr-2"
             v-on:click="modificaGiro(selectedGiro)"
             :disabled="selectedGiro == 0"
           >Modifica giro</button>

@@ -82,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-                    <button :disabled="destinatario.P_IVA === '' || destinatario.RagioneSociale === '' ||  destinatario.Indirizzo === '' || destinatario.SiglaProvincia === '' || destinatario.IdComune == 0 || destinatario.Stabilimento === ''" class="btn btn-primary" v-on:click="onSave()">Salva</button>
+                    <button :disabled="destinatario.P_IVA === '' || destinatario.RagioneSociale === '' ||  destinatario.Indirizzo === '' || destinatario.SiglaProvincia === '' || destinatario.IdComune == 0 || destinatario.Stabilimento === ''" class="btn btn-success" v-on:click="onSave()">Salva</button>
                 </div>
             </div>
         </div>

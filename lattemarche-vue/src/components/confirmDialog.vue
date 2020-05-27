@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">No</button>
-                    <button type="submit" v-on:click="$emit('confirmed')" class="btn btn-primary" data-dismiss="modal">Si</button>
+                    <button type="submit" v-on:click="$emit('confirmed')" class="btn btn-success" data-dismiss="modal">Si</button>
                 </div>
             </div>
         </div>

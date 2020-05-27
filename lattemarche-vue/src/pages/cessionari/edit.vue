@@ -74,7 +74,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary mr-2" data-dismiss="modal">Annulla</button>
-          <button :disabled="cessionario.Piva === '' || cessionario.RagioneSociale === '' ||  cessionario.Indirizzo === '' || cessionario.SiglaProvincia === '' || cessionario.IdComune == 0" class="btn btn-primary" v-on:click="onSave()">Salva</button>
+          <button :disabled="cessionario.Piva === '' || cessionario.RagioneSociale === '' ||  cessionario.Indirizzo === '' || cessionario.SiglaProvincia === '' || cessionario.IdComune == 0" class="btn btn-success" v-on:click="onSave()">Salva</button>
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@
     <data-table :options="tableOptions" :rows="tipiLatte" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
       <template slot="toolbox" >
-        <button class="toolbox btn btn-primary float-right" v-on:click="onAdd()">Aggiungi</button>
+        <button class="toolbox btn btn-success float-right" v-on:click="onAdd()">Aggiungi</button>
       </template>
 
       <!-- Colonne -->
