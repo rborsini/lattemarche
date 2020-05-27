@@ -6,6 +6,10 @@ html, body {
     height: 100%;
 }
 
+a {
+    color: $dark;
+}
+
 .home--ctr {
     .home--bg--img {
         background-image: url(/Content/img/hero-cow.jpeg);
@@ -29,6 +33,7 @@ html, body {
 
 .jumbotron {
     padding: 2rem;
+    margin-bottom: 0;
 }
 
 .main-footer {
@@ -44,9 +49,9 @@ html, body {
     }
 }
 
-label {
+/*label {
     text-align: right;
-}
+}*/
 
 .edit-column {
     min-width: 50px;
