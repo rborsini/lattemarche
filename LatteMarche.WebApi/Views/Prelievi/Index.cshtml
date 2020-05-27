@@ -13,25 +13,23 @@
 }
 
 @{
-    string canAdd = Convert.ToBoolean(ViewBag.Tokens["Aggiungi"]) ? "true" : "false";
-    string canEdit = Convert.ToBoolean(ViewBag.Tokens["Modifica"]) ? "true" : "false";
-    string canRemove = Convert.ToBoolean(ViewBag.Tokens["Rimuovi"]) ? "true" : "false";
-    string canSearchAllevatore = Convert.ToBoolean(ViewBag.Tokens["RicercaAllevatore"]) ? "true" : "false";
-    string canSearchTrasportatore = Convert.ToBoolean(ViewBag.Tokens["RicercaTrasportatore"]) ? "true" : "false";
-    string canSearchAcquirente = Convert.ToBoolean(ViewBag.Tokens["RicercaAcquirente"]) ? "true" : "false";
-    string canSearchDestinatario = Convert.ToBoolean(ViewBag.Tokens["RicercaDestinatario"]) ? "true" : "false";
-    string canSearchCessionario = Convert.ToBoolean(ViewBag.Tokens["RicercaCessionario"]) ? "true" : "false";
+    //string canSearchAllevatore = Convert.ToBoolean(ViewBag.Tokens["RicercaAllevatore"]) ? "true" : "false";
+    //string canSearchTrasportatore = Convert.ToBoolean(ViewBag.Tokens["RicercaTrasportatore"]) ? "true" : "false";
+    //string canSearchAcquirente = Convert.ToBoolean(ViewBag.Tokens["RicercaAcquirente"]) ? "true" : "false";
+    //string canSearchDestinatario = Convert.ToBoolean(ViewBag.Tokens["RicercaDestinatario"]) ? "true" : "false";
+    //string canSearchCessionario = Convert.ToBoolean(ViewBag.Tokens["RicercaCessionario"]) ? "true" : "false";
+
+    
 
 }
 
-<input hidden id="canAdd" value="@canAdd" />
-<input hidden id="canEdit" value="@canEdit" />
-<input hidden id="canRemove" value="@canRemove" />
-<input hidden id="canSearchAllevatore" value="@canSearchAllevatore" />
+    <input hidden id="idProfilo" value="@Model" />
+
+@*<input hidden id="canSearchAllevatore" value="@canSearchAllevatore" />
 <input hidden id="canSearchTrasportatore" value="@canSearchTrasportatore" />
 <input hidden id="canSearchAcquirente" value="@canSearchAcquirente" />
 <input hidden id="canSearchDestinatario" value="@canSearchDestinatario" />
-<input hidden id="canSearchCessionario" value="@canSearchCessionario" />
+<input hidden id="canSearchCessionario" value="@canSearchCessionario" />*@
 
 @{
     string version = System.Configuration.ConfigurationManager.AppSettings["version"];

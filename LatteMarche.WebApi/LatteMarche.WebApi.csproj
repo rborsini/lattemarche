@@ -307,7 +307,6 @@
     <Content Include="Views\Utenti\Edit.cshtml" />
     <Content Include="Views\Acquirenti\Index.cshtml" />
     <Content Include="Views\Destinatari\Index.cshtml" />
-    <Content Include="Views\Sitra\Index.cshtml" />
     <Content Include="Views\Ruoli\Index.cshtml" />
     <Content Include="Views\Azioni\Index.cshtml" />
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
@@ -395,7 +394,6 @@
     <Compile Include="Controllers_Web\LaboratorioAnalisiController.cs" />
     <Compile Include="Controllers_Web\RuoliController.cs" />
     <Compile Include="Controllers_Web\AzioniController.cs" />
-    <Compile Include="Controllers_Web\SitraController.cs" />
     <Compile Include="Controllers_Web\AccountController.cs" />
     <Compile Include="Controllers_Web\DestinatariController.cs" />
     <Compile Include="Controllers_Web\AcquirentiController.cs" />
@@ -403,7 +401,6 @@
     <Compile Include="Controllers_Web\TipiLatteController.cs" />
     <Compile Include="Controllers_Web\AziendeTrasportatoriController.cs" />
     <Compile Include="Controllers_Web\GiriController.cs" />
-    <Compile Include="Controllers_Web\AllevamentiController.cs" />
     <Compile Include="Controllers_Web\UtentiController.cs" />
     <Compile Include="Controllers_Web\HomeController.cs" />
     <Compile Include="Filters\ApiActionFilter.cs" />
@@ -468,7 +465,6 @@
     <Content Include="Views\Shared\_ItemNotFound.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
-    <Content Include="Views\Allevamenti\Index.cshtml" />
     <Content Include="Views\Giri\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>

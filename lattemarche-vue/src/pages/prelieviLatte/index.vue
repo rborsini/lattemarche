@@ -121,6 +121,7 @@
         <div class="col-3" v-if="canSearchDestinatario">
           <select2
             class="form-control"
+            :disabled="idProfilo == 6"
             :placeholder="'-'"
             :options="destinatario.Items"
             :value.sync="parameters.IdDestinatario"
@@ -187,7 +188,7 @@
         <th>Acquirente</th>
         <th>Destinatario</th>
         <th>Tipo Latte</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
 
       <!-- foot -->
@@ -200,7 +201,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -277,15 +278,13 @@ export default class PrelieviLatteIndexPage extends Vue {
   public parameters: PrelieviLatteSearchModel = new PrelieviLatteSearchModel();
 
   public prelievoSelezionato: PrelievoLatte;
-
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
-  public canSearchAllevatore: boolean = false;
-  public canSearchTrasportatore: boolean = false;
-  public canSearchAcquirente: boolean = false;
-  public canSearchDestinatario: boolean = false;
-  public canSearchCessionario: boolean = false;
+  
+  public canSearchAllevatore: boolean = true;
+  public canSearchTrasportatore: boolean = true;
+  public canSearchAcquirente: boolean = true;
+  public canSearchDestinatario: boolean = true;
+  public canSearchCessionario: boolean = true;
+  public idProfilo: any = '';
 
   public totale_prelievi_kg: number = 0;
   public totale_prelievi_lt: number = 0;
@@ -297,14 +296,18 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.prelievoSelezionato = new PrelievoLatte();
     this.dropdownService = new DropdownService();
 
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
-    this.canSearchAllevatore = $("#canSearchAllevatore").val() == "true";
-    this.canSearchTrasportatore = $("#canSearchTrasportatore").val() == "true";
-    this.canSearchAcquirente = $("#canSearchAcquirente").val() == "true";
-    this.canSearchDestinatario = $("#canSearchDestinatario").val() == "true";
-    this.canSearchCessionario = $("#canSearchCessionario").val() == "true";
+    this.idProfilo = $("#idProfilo").val();
+
+    console.log("idProfilo", $("#idProfilo").val());
+
+    // this.canAdd = $("#canAdd").val() == "true";
+    // this.canEdit = $("#canEdit").val() == "true";
+    // this.canRemove = $("#canRemove").val() == "true";
+    // this.canSearchAllevatore = $("#canSearchAllevatore").val() == "true";
+    // this.canSearchTrasportatore = $("#canSearchTrasportatore").val() == "true";
+    // this.canSearchAcquirente = $("#canSearchAcquirente").val() == "true";
+    // this.canSearchDestinatario = $("#canSearchDestinatario").val() == "true";
+    // this.canSearchCessionario = $("#canSearchCessionario").val() == "true";
   }
 
   public mounted() {
@@ -431,25 +434,16 @@ export default class PrelieviLatteIndexPage extends Vue {
     options.columns.push({ className: "truncate", data: "Destinatario" });
     options.columns.push({ className: "truncate", data: "DescrizioneLatte" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
-            html +=
-              '<a class="edit" title="modifica" style="width: 30px;cursor: pointer;" data-row-id="' +
-              row.Id +
-              '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
-            html +=
-              '<a class="pl-3 delete" title="elimina" style="width: 30px;cursor: pointer;" data-row-id="' +
-              row.Id +
-              '" ><i class="far fa-trash-alt"></i></a>';
+            html += '<a class="edit" title="modifica" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
+
+
+            html += '<a class="pl-3 delete" title="elimina" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
 
           html += "</div>";
 
@@ -459,7 +453,7 @@ export default class PrelieviLatteIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+
 
     options.orderFixed = [0, "asc"];
 
@@ -555,6 +549,10 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     if (dd.data != null) {
       this.destinatario = dd.data;
+
+      if(this.idProfilo == 6)
+        this.parameters.IdDestinatario = dd.data.Items[0].Value;
+
     }
   }
 

@@ -36,9 +36,6 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
-        [ViewItem("Aggiungi", "Prelievi", "Aggiungi")]
-        [ViewItem("Modifica", "Prelievi", "Modifica")]
-        [ViewItem("Rimuovi", "Prelievi", "Rimuovi")]
         [ViewItem("RicercaAllevatore", "Prelievi", "Ricerca per Allevatore")]
         [ViewItem("RicercaTrasportatore", "Prelievi", "Ricerca per Trasportatore")]
         [ViewItem("RicercaAcquirente", "Prelievi", "Ricerca per Acquirente")]
@@ -46,8 +43,11 @@ namespace LatteMarche.WebApi.Controllers_Web
         [ViewItem("RicercaCessionario", "Prelievi", "Ricerca per Cessionario")]
 
         public ActionResult Index()
-        {           
-            return View();
+        {
+            var utente = this.utentiService.Details(User.Identity.Name);
+            int idProfilo = utente != null ? utente.IdProfilo : 0;
+
+            return View(idProfilo);
         }
 
         #endregion
