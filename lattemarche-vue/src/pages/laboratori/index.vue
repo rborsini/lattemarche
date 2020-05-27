@@ -121,7 +121,7 @@ export default class LaboratoriIndexPage extends Vue {
 
       this.laboratoriService.details(rowId).then(response => {
         this.laboratorio = response.data;
-        this.$refs.editazioneLaboratorioModal.openAcquirente(this.laboratorio);
+        this.$refs.editazioneLaboratorioModal.openLaboratorio(this.laboratorio);
       });
     });
 
