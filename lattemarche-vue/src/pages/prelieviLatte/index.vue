@@ -55,6 +55,7 @@
         <div class="col-3" v-if="canSearchAllevatore">
           <select2
             class="form-control"
+            :disabled="idProfilo == 3"
             :placeholder="'-'"
             :options="allevatori.Items"
             :value.sync="parameters.IdAllevamento"
@@ -68,6 +69,7 @@
           <select2
             class="form-control"
             :placeholder="'-'"
+            :disabled="idProfilo == 5"
             :options="trasportatore.Items"
             :value.sync="parameters.IdTrasportatore"
             :value-field="'Value'"
@@ -97,6 +99,7 @@
         <div class="col-3" v-if="canSearchAcquirente">
           <select2
             class="form-control"
+            :disabled="idProfilo == 7"
             :placeholder="'-'"
             :options="acquirente.Items"
             :value.sync="parameters.IdAcquirente"
@@ -109,6 +112,7 @@
         <div class="col-3" v-if="canSearchCessionario">
           <select2
             class="form-control"
+            :disabled="idProfilo == 8"
             :placeholder="'-'"
             :options="cessionario.Items"
             :value.sync="parameters.IdCessionario"
@@ -524,6 +528,9 @@ export default class PrelieviLatteIndexPage extends Vue {
     const dd = await this.dropdownService.getAllevamenti();
     if (dd.data != null) {
       this.allevatori = dd.data;
+
+      if(this.idProfilo == 3)
+        this.parameters.IdAllevamento = dd.data.Items[0].Value;      
     }
   }
 
@@ -540,6 +547,9 @@ export default class PrelieviLatteIndexPage extends Vue {
     const dd = await this.dropdownService.getTrasportatori();
     if (dd.data != null) {
       this.trasportatore = dd.data;
+
+      if(this.idProfilo == 5)
+        this.parameters.IdTrasportatore = dd.data.Items[0].Value;      
     }
   }
 
@@ -562,6 +572,9 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     if (dd.data != null) {
       this.acquirente = dd.data;
+
+      if(this.idProfilo == 7)
+        this.parameters.IdAcquirente = dd.data.Items[0].Value;      
     }
   }
 
@@ -571,6 +584,9 @@ export default class PrelieviLatteIndexPage extends Vue {
 
     if (dd.data != null) {
       this.cessionario = dd.data;
+
+      if(this.idProfilo == 8)
+        this.parameters.IdCessionario = dd.data.Items[0].Value;      
     }
   }
 
