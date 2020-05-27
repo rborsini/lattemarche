@@ -6990,3 +6990,17 @@ tfoot {
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding-left: 12px !important;
   padding-right: 24px !important; }
+
+.datepicker .datepicker-days thead th {
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 0; }
+
+.datepicker .datepicker-days tbody td {
+  border-radius: 0; }
+
+.datepicker table tr td.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active:hover {
+  background-image: linear-gradient(to bottom, #007bff, #007bff) !important; }
