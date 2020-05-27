@@ -57,9 +57,6 @@ $progress-bar-bg: $primary !default;*/
   background-color: #6c757d;
   border-color: rgba(0, 0, 0, 0.05); }
 
-.form-control:focus {
-  /*box-shadow: 0 0 5px rgba(100,65,164,.4);*/ }
-
 .breadcrumb-item.active {
   color: #444; }
 
@@ -6931,9 +6928,9 @@ html, body {
   .main-footer p {
     font-size: 0.8rem; }
 
-/*label {
-    text-align: right;
-}*/
+.form-control {
+  height: 28px; }
+
 .edit-column {
   min-width: 50px; }
 
@@ -6986,3 +6983,10 @@ tfoot {
       border-right: 1px solid #ededed;
       background-color: #fafafa;
       color: #007bff; }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 26px !important; }
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 12px !important;
+  padding-right: 24px !important; }
