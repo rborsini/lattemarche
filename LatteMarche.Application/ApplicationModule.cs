@@ -31,7 +31,6 @@ using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Destinatari.Services;
 using LatteMarche.Application.Cessionari.Services;
 using LatteMarche.Application.Cessionari.Interfaces;
-using LatteMarche.Application.AziendeTrasportatori.Interfaces;
 using LatteMarche.Application.Autocisterne.Interfaces;
 using LatteMarche.Application.Dashboard.Services;
 using LatteMarche.Application.Dashboard.Interfaces;
@@ -68,7 +67,6 @@ namespace LatteMarche.Application
             RegisterService<AnalisiService, IAnalisiService>(builder);
             RegisterService<AutorizzazioniService, IAutorizzazioniService>(builder);
             RegisterService<AutocisterneService, IAutocisterneService>(builder);
-            RegisterService<AziendeTrasportatoriService, IAziendeTrasportatoriService>(builder);
             RegisterService<AzioniService, IAzioniService>(builder);
             RegisterService<CessionariService, ICessionariService>(builder);
             RegisterService<ComuniService, IComuniService>(builder);

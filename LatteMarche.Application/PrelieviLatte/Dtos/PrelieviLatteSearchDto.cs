@@ -21,5 +21,8 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public bool? InviatoSitra { get; set; }
 
+        public int IdUtente { get; set; }
+             
+
     }
 }

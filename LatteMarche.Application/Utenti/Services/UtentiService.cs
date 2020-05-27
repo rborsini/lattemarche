@@ -25,7 +25,6 @@ namespace LatteMarche.Application.Utenti.Services
         private IRepository<UtenteXAcquirente, int> utenteXAcquirenteRepository;
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
         private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
-        private IRepository<TrasportatoreXAzienda, int> trasportatoriXAziendeRepository;
         private IRepository<Allevamento, int> allevamentiRepository;
         private IRepository<Autocisterna, int> autocisterneRepository;
 
@@ -43,7 +42,6 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXAcquirenteRepository = this.uow.Get<UtenteXAcquirente, int>();
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
             this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
-            this.trasportatoriXAziendeRepository = this.uow.Get<TrasportatoreXAzienda, int>();
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
 
@@ -59,7 +57,6 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXAcquirenteRepository.Delete(key);
             this.utenteXCessionarioRepository.Delete(key);
             this.utenteXDestinatarioRepository.Delete(key);
-            this.trasportatoriXAziendeRepository.Delete(key);
             
             var allevamentiDaRimuovere = this.allevamentiRepository.DbSet.Where(a => a.IdUtente == key).Select(a => a.Id).ToList();            
             this.allevamentiRepository.Delete(allevamentiDaRimuovere.ToArray());
@@ -250,7 +247,6 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.UtenteXAcquirente = UpdateUtenteXAcquirente(dbEntity.UtenteXAcquirente, viewEntity.UtenteXAcquirente);
             dbEntity.UtenteXCessionario = UpdateUtenteXCessionario(dbEntity.UtenteXCessionario, viewEntity.UtenteXCessionario);
             dbEntity.UtenteXDestinatario = UpdateUtenteXDestinatario(dbEntity.UtenteXDestinatario, viewEntity.UtenteXDestinatario);
-            dbEntity.TrasportatoreXAzienda = UpdateTrasportatoreXAzienda(dbEntity.TrasportatoreXAzienda, viewEntity.TrasportatoreXAzienda);
             dbEntity.Allevamenti = UpdateAllevamenti(dbEntity.Allevamenti, viewEntity.Allevamenti);
             dbEntity.Autocisterne = UpdateAutocisterne(dbEntity.Autocisterne, viewEntity.Autocisterne);
 
@@ -352,28 +348,6 @@ namespace LatteMarche.Application.Utenti.Services
             allevamentoDb.Longitudine = allevamentoView.Longitudine;
 
             return allevamentoDb;
-        }
-
-        private TrasportatoreXAzienda UpdateTrasportatoreXAzienda(TrasportatoreXAzienda dbEntity, TrasportatoreXAzienda viewEntity)
-        {
-            TrasportatoreXAzienda uxa = null;
-
-            if (dbEntity == null && viewEntity != null)
-            {
-                uxa = new TrasportatoreXAzienda() { Id = viewEntity.Id, IdAzienda = viewEntity.IdAzienda };
-                this.trasportatoriXAziendeRepository.Add(uxa);
-                this.uow.SaveChanges();
-            }
-
-            if (dbEntity != null && viewEntity != null)
-            {
-                dbEntity.IdAzienda = viewEntity.IdAzienda;
-                uxa = dbEntity;
-                this.trasportatoriXAziendeRepository.Update(dbEntity);
-                this.uow.SaveChanges();
-            }
-
-            return uxa;
         }
 
         private UtenteXDestinatario UpdateUtenteXDestinatario(UtenteXDestinatario dbEntity, UtenteXDestinatario viewEntity)

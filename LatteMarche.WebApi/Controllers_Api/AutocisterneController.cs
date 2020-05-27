@@ -32,37 +32,37 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Autocisterne", "Lista")]
-        [HttpGet]
-        public IHttpActionResult Index()
-        {
-            try
-            {
+        //[ViewItem(nameof(Index), "Autocisterne", "Lista")]
+        //[HttpGet]
+        //public IHttpActionResult Index()
+        //{
+        //    try
+        //    {
 
-                var autocisterne = this.service.Index();
-                return Ok(autocisterne);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+        //        var autocisterne = this.service.Index();
+        //        return Ok(autocisterne);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        return InternalServerError(exc);
+        //    }
 
-        }
+        //}
 
-        [ViewItem(nameof(Details), "Autocisterne", "Dettaglio")]
-        [HttpGet]
-        public IHttpActionResult Details(int id)
-        {
-            try
-            {
-                return Ok(this.service.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+        //[ViewItem(nameof(Details), "Autocisterne", "Dettaglio")]
+        //[HttpGet]
+        //public IHttpActionResult Details(int id)
+        //{
+        //    try
+        //    {
+        //        return Ok(this.service.Details(id));
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        return InternalServerError(exc);
+        //    }
 
-        }
+        //}
 
         [ViewItem(nameof(Dropdown), "Autocisterne", "Dropdown")]
         [HttpGet]
@@ -78,38 +78,38 @@ namespace LatteMarche.WebApi.Controllers_Api
             }
         }
 
-        [ViewItem(nameof(Save), "Autocisterne", "Salvataggio")]
-        [HttpPost]
-        public IHttpActionResult Save([FromBody] AutocisternaDto model)
-        {
-            try
-            {
-                if (model.Id == 0)
-                    return Ok(this.service.Create(model));
-                else
-                    return Ok(this.service.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+        //[ViewItem(nameof(Save), "Autocisterne", "Salvataggio")]
+        //[HttpPost]
+        //public IHttpActionResult Save([FromBody] AutocisternaDto model)
+        //{
+        //    try
+        //    {
+        //        if (model.Id == 0)
+        //            return Ok(this.service.Create(model));
+        //        else
+        //            return Ok(this.service.Update(model));
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        return InternalServerError(exc);
+        //    }
 
-        }
+        //}
 
-        [ViewItem(nameof(Delete), "Autocisterne", "Rimozione")]
-        [HttpDelete]
-        public IHttpActionResult Delete(int id)
-        {
-            try
-            {
-                this.service.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
+        //[ViewItem(nameof(Delete), "Autocisterne", "Rimozione")]
+        //[HttpDelete]
+        //public IHttpActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        this.service.Delete(id);
+        //        return Ok();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return InternalServerError(e);
+        //    }
+        //}
 
         #endregion
 

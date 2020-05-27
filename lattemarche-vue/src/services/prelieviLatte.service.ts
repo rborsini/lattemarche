@@ -1,20 +1,13 @@
 ﻿import axios, { AxiosPromise } from "axios";
-import { PrelievoLatte } from "../models/prelievoLatte.model";
+import { PrelievoLatte, PrelieviLatteSearchModel } from "../models/prelievoLatte.model";
 import { LaboratorioAnalisi } from "../models/laboratorioAnalisi.model";
 
 export class PrelieviLatteService {
 
     constructor() { }
 
-    public getPrelievi(idAllevamento: string, idTrasportatore: string, idAcquirente: string, idDestinatario: string, idTipoLatte: string,  dataInizio: string, dataFine: string): AxiosPromise<PrelievoLatte[]> {
-        var url = '/api/prelievilatte/Search?idAllevamento=' + idAllevamento;
-        url += '&idTrasportatore=' + idTrasportatore;
-        url += '&idAcquirente=' + idAcquirente;
-        url += '&idDestinatario=' + idDestinatario;
-        url += '&idTipoLatte=' + idTipoLatte;
-        url += '&dal=' + dataInizio;
-        url += '&al=' + dataFine;
-        return axios.get(url);
+    public getPrelievi(parameters?: PrelieviLatteSearchModel): AxiosPromise<PrelievoLatte[]> {
+        return axios.get('/api/prelievilatte/Search', { params: parameters });
     }
 
     public getPrelievo(id: string): AxiosPromise<PrelievoLatte> {

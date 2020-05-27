@@ -25,7 +25,7 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto);
+        List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto, int idUtente);
 
         /// <summary>
         /// Pull prelievi per sincronizzazione

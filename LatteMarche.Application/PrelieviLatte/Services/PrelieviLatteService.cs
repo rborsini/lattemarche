@@ -205,9 +205,9 @@ namespace LatteMarche.Application.Latte.Services
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto)
+        public List<V_PrelievoLatte> Search(PrelieviLatteSearchDto searchDto, int idUtente)
         {
-            IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.Query;
+            IQueryable<V_PrelievoLatte> query = PrelieviAutorizzati(idUtente);
 
             // Allevamento
             if (searchDto.idAllevamento != null)
@@ -215,21 +215,25 @@ namespace LatteMarche.Application.Latte.Services
                 query = query.Where(p => p.IdAllevamento == searchDto.idAllevamento);
             }
 
+            // Trasportatore
             if (searchDto.idTrasportatore != null)
             {
                 query = query.Where(p => p.IdTrasportatore == searchDto.idTrasportatore);
             }
 
+            // Acquirente
             if (searchDto.idAcquirente != null)
             {
                 query = query.Where(p => p.IdAcquirente == searchDto.idAcquirente);
             }
 
+            // Destinatario
             if (searchDto.idDestinatario != null)
             {
                 query = query.Where(p => p.IdDestinatario == searchDto.idDestinatario);
             }
 
+            // Tipo Latte
             if (searchDto.idTipoLatte != null)
             {
                 query = query.Where(p => p.IdTipoLatte == searchDto.idTipoLatte);

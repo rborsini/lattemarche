@@ -118,18 +118,7 @@
                 :text-field="'Text'"
               />
             </div>        
-
-            <!-- Trasportatore -->
-            <label v-if="utente.IdProfilo == 5" class="col-sm-1">Azienda trasporti</label>
-            <div v-if="utente.IdProfilo == 5" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="aziendaTrasportatore.Items"
-                :value.sync="utente.IdAziendaTrasporti"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>                       
+              
           </div>
 
           <!-- ragione sociale / username -->
@@ -396,7 +385,6 @@ export default class App extends Vue {
   public cessionario: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
   public tipoLatte: Dropdown = new Dropdown();
-  public aziendaTrasportatore: Dropdown = new Dropdown();
 
   constructor() {
     super();
@@ -488,11 +476,7 @@ export default class App extends Vue {
     this.dropdownService.getTipiLatte().then(response => {
       this.tipoLatte = response.data;
     });  
-    
-    // Azienda trasportatore
-    this.dropdownService.getAziendeTrasportatori().then(response => {
-      this.aziendaTrasportatore = response.data;
-    });      
+        
   }
 
   public loadComuni(provincia: string): void {

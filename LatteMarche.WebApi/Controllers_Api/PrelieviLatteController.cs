@@ -29,8 +29,6 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IPrelieviLatteService prelieviLatteService;
-        //private IAcquirentiService acquirentiService;
-        //private IDestinatariService destinatariService;
         private ISynchService synchService;
         private ISitraService sitraService;
         private ILottiService lottiService;
@@ -49,8 +47,6 @@ namespace LatteMarche.WebApi.Controllers_Api
         public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
         {
             this.prelieviLatteService = prelieviLatteService;
-            //this.acquirentiService = acquirentiService;
-            //this.destinatariService = destinatariService;
             this.synchService = synchService;
             this.sitraService = sitraService;
             this.lottiService = lottiService;
@@ -212,7 +208,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Synch), "Prelievi latte", "Sincronizzazione")]
         [HttpPost]
-        //[AllowAnonymous]
         public IHttpActionResult Synch([FromUri] string day = "")
         {
             // scarica i dati dal cloud verso server locale
@@ -260,7 +255,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
-        //[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(string idAllevamento = "", string idTrasportatore = "", string idAcquirente = "", string idDestinatario = "", string idTipoLatte = "", string dal = "", string al = "")
         {
 

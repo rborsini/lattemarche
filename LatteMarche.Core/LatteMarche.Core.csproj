@@ -102,7 +102,6 @@
     <Compile Include="Models\Analisi.cs" />
     <Compile Include="Models\Autocisterna.cs" />
     <Compile Include="Models\Autorizzazione.cs" />
-    <Compile Include="Models\AziendaTrasportatori.cs" />
     <Compile Include="Models\Azione.cs" />
     <Compile Include="Models\Cessionario.cs" />
     <Compile Include="Models\DispositivoMobile.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Models\RuoloUtente.cs" />
     <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Synch.cs" />
-    <Compile Include="Models\TrasportatoriXAzienda.cs" />
     <Compile Include="Models\UtenteXAcquirente.cs" />
     <Compile Include="Models\UtenteXCessionario.cs" />
     <Compile Include="Models\UtenteXDestinatario.cs" />

@@ -1,4 +1,6 @@
-﻿export class PrelievoLatte {
+﻿import $ from 'jquery';
+
+export class PrelievoLatte {
     public DataConsegna: string = "";
     public DataConsegnaStr: string = "";
     public DataPrelievo: string = "";
@@ -26,4 +28,22 @@
     public Scomparto: string = "";
     public SerialeLabAnalisi: string = "";
     public Temperatura: number = 0;
+}
+
+export class PrelieviLatteSearchModel {
+
+
+    public DataPeriodoInizio_Str: string = "";
+    public DataPeriodoFine_Str: string = "";
+
+    public IdAllevamento?: number;
+    public IdTrasportatore?: number;
+    public IdAcquirente?: number;
+    public IdDestinatario?: number;
+    public IdTipoLatte?: number;
+
+    public ToUrlQueryString(): string {
+        return jQuery.param(this);
+    }
+
 }

@@ -81,8 +81,6 @@ namespace LatteMarche.Core.Models
 
         public virtual UtenteXDestinatario UtenteXDestinatario { get; set; }
 
-        public virtual TrasportatoreXAzienda TrasportatoreXAzienda { get; set; }
-
         public virtual List<Allevamento> Allevamenti { get; set; }
 
         public virtual List<Autocisterna> Autocisterne { get; set; }
