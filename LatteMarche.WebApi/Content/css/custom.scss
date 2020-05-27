@@ -6,10 +6,6 @@ html, body {
     height: 100%;
 }
 
-a {
-    color: $dark;
-}
-
 .home--ctr {
     .home--bg--img {
         background-image: url(/Content/img/hero-cow.jpeg);
@@ -49,12 +45,20 @@ a {
     }
 }
 
-/*label {
-    text-align: right;
-}*/
+// Forms
+.form-control {
+    height: 28px;
+}
 
 .edit-column {
     min-width: 50px;
+}
+
+table {
+    thead {
+        background-color: $primary;
+        color: $light !important;
+    }
 }
 
 table.dataTable thead tr {
@@ -80,9 +84,51 @@ tfoot {
 
 #DataTables_Table_0_wrapper {
     padding: 16px;
+
+    .edit {
+        color: $dark;
+    }
 }
 
 .c-table-trasportatori thead tr {
     background-color: $primary;
     color: $light;
+}
+
+// Nav tabs
+.nav-tabs {
+    margin-top: 16px;
+    .nav-link.active {
+        border-top: 1px solid $primary;
+        border-left: 1px solid $primary;
+        border-right: 1px solid $primary;
+        background-color: $primary;
+        color: $light;
+    }
+
+    .nav-link {
+        border-top: 1px solid #ededed;
+        border-left: 1px solid #ededed;
+        border-right: 1px solid #ededed;
+        border-bottom: 0;
+
+        &:hover {
+            border-top: 1px solid #ededed;
+            border-left: 1px solid #ededed;
+            border-right: 1px solid #ededed;
+            background-color: $gray-100;
+            color: $primary;
+        }
+    }
+}
+
+
+// Select 2
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 26px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 12px !important;
+    padding-right: 24px !important;
 }

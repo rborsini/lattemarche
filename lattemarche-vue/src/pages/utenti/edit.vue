@@ -4,15 +4,25 @@
     <waiter ref="waiter"></waiter>
 
     <!-- Pannello editazione allevamento -->
-    <editazione-allevamento-modal ref="editazioneAllevamentoModal" :allevamento="allevamento" v-on:salvato="onAllevamentoSaved"></editazione-allevamento-modal>    
-    
+    <editazione-allevamento-modal
+      ref="editazioneAllevamentoModal"
+      :allevamento="allevamento"
+      v-on:salvato="onAllevamentoSaved"
+    ></editazione-allevamento-modal>
+
     <!-- Pannello editazione autocisterna -->
-    <editazione-autocisterna-modal ref="editazioneAutocisternaModal" :autocisterna="autocisterna" v-on:salvato="onAutocisternaSaved"></editazione-autocisterna-modal>    
+    <editazione-autocisterna-modal
+      ref="editazioneAutocisternaModal"
+      :autocisterna="autocisterna"
+      v-on:salvato="onAutocisternaSaved"
+    ></editazione-autocisterna-modal>
 
     <!-- modale errore generico -->
-    <notification-dialog ref="errorDialog" 
-      :title="'Errore imprevisto'" :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
-        v-on:ok="reload()"
+    <notification-dialog
+      ref="errorDialog"
+      :title="'Errore imprevisto'"
+      :message="'Si è verificato un errore imprevisto, contattare l\'amministratore del sistema'"
+      v-on:ok="reload()"
     ></notification-dialog>
 
     <!-- modale conferma salvataggio -->
@@ -40,282 +50,285 @@
     ></notification-dialog>
 
     <div>
+      <div class="container-fluid">
+
       <ul class="nav nav-tabs" id="tabWrapper">
         <li class="active">
           <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
         </li>
-        <li v-if="utente.IdProfilo == 3" >
+        <li v-if="utente.IdProfilo == 3">
           <a data-toggle="tab" class="nav-link" href="#allevamenti">Allevamenti</a>
         </li>
-        <li v-if="utente.IdProfilo == 5" >
+        <li v-if="utente.IdProfilo == 5">
           <a data-toggle="tab" class="nav-link" href="#autocisterne">Autocisterne</a>
-        </li>        
+        </li>
       </ul>
 
       <div class="tab-content">
-
         <!-- Tab dettaglio -->
         <div id="dettaglio" class="tab-pane fade show active">
+          <div class="container-fluid">
+            <!-- tipo profilo -->
+            <div class="row form-group pt-5">
+              <label class="offset-1 col-sm-1">Tipo profilo</label>
+              <div class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :disabled="utente.Id != 0"
+                  :options="profilo.Items"
+                  :value.sync="utente.IdProfilo"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
 
-          <!-- tipo profilo -->
-          <div class="row form-group pt-5">
-            <label class="offset-1 col-sm-1">Tipo profilo</label>
-            <div class="col-sm-4">
-              <select2
-                class="form-control"
-                :disabled="utente.Id != 0"
-                :options="profilo.Items"
-                :value.sync="utente.IdProfilo"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
+              <!-- Acquirente -->
+              <label v-if="utente.IdProfilo == 7" class="col-sm-1">Acquirente</label>
+              <div v-if="utente.IdProfilo == 7" class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :options="acquirente.Items"
+                  :value.sync="utente.IdAcquirente"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
 
-            <!-- Acquirente -->
-            <label v-if="utente.IdProfilo == 7" class="col-sm-1">Acquirente</label>
-            <div v-if="utente.IdProfilo == 7" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="acquirente.Items"
-                :value.sync="utente.IdAcquirente"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
+              <!-- Cessionario -->
+              <label v-if="utente.IdProfilo == 8" class="col-sm-1">Cessionario</label>
+              <div v-if="utente.IdProfilo == 8" class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :options="cessionario.Items"
+                  :value.sync="utente.IdCessionario"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
 
-            <!-- Cessionario -->
-            <label v-if="utente.IdProfilo == 8" class="col-sm-1">Cessionario</label>
-            <div v-if="utente.IdProfilo == 8" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="cessionario.Items"
-                :value.sync="utente.IdCessionario"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
+              <!-- Destinatario -->
+              <label v-if="utente.IdProfilo == 6" class="col-sm-1">Destinatario</label>
+              <div v-if="utente.IdProfilo == 6" class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :options="destinatario.Items"
+                  :value.sync="utente.IdDestinatario"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
 
-            <!-- Destinatario -->
-            <label v-if="utente.IdProfilo == 6" class="col-sm-1">Destinatario</label>
-            <div v-if="utente.IdProfilo == 6" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="destinatario.Items"
-                :value.sync="utente.IdDestinatario"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
+              <!-- Allevatore -->
+              <label v-if="utente.IdProfilo == 3" class="col-sm-1">Tipo latte</label>
+              <div v-if="utente.IdProfilo == 3" class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :options="tipoLatte.Items"
+                  :value.sync="utente.IdTipoLatte"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
 
-            <!-- Allevatore -->
-            <label v-if="utente.IdProfilo == 3" class="col-sm-1">Tipo latte</label>
-            <div v-if="utente.IdProfilo == 3" class="col-sm-4">
-              <select2
-                class="form-control"
-                :options="tipoLatte.Items"
-                :value.sync="utente.IdTipoLatte"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>        
-              
-          </div>
-
-          <!-- ragione sociale / username -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Ragione sociale</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.RagioneSociale" />
-            </div>
-            <label class="col-sm-1">Username</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Username" />
-            </div>
-          </div>
-
-          <!-- nome / cognome -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Nome</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Nome" />
-            </div>
-            <label class="col-sm-1">Cognome</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Cognome" />
-            </div>
-          </div>
-
-          <!-- sesso / p.iva/cf -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Sesso</label>
-            <div class="col-sm-4">
-              <select2
-                class="form-control"
-                :placeholder="'-'"
-                :options="sesso.Items"
-                :value.sync="utente.Sesso"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
-            <label class="col-sm-1">P. Iva / C.F.</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.PivaCF" />
-            </div>
-          </div>
-
-          <!-- indirizzo / provincia / città -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Indirizzo</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Indirizzo" />
+              <!-- Trasportatore -->
+              <label v-if="utente.IdProfilo == 5" class="col-sm-1">Azienda trasporti</label>
+              <div v-if="utente.IdProfilo == 5" class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :options="aziendaTrasportatore.Items"
+                  :value.sync="utente.IdAziendaTrasporti"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
             </div>
 
-            <label class="col-sm-1">Provincia</label>
-            <div class="col-sm-1">
-              <select2
-                class="form-control"
-                :options="provincia.Items"
-                :value.sync="utente.SiglaProvincia"
-                :value-field="'Value'"
-                :text-field="'Text'"
-                v-on:value-changed="loadComuni"
-              />
+            <!-- ragione sociale / username -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Ragione sociale</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.RagioneSociale" />
+              </div>
+              <label class="col-sm-1">Username</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Username" />
+              </div>
             </div>
-            <div class="col-sm-3">
-              <select2
-                class="form-control"
-                :options="comune.Items"
-                :value.sync="utente.IdComune"
-                :value-field="'Value'"
-                :text-field="'Text'"
-              />
-            </div>
-          </div>
 
-          <!-- telefono / cellulare -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Telefono</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Telefono" />
+            <!-- nome / cognome -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Nome</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Nome" />
+              </div>
+              <label class="col-sm-1">Cognome</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Cognome" />
+              </div>
             </div>
-            <label class="col-sm-1">Cellulare</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" v-model="utente.Cellulare" />
-            </div>
-          </div>
 
-          <!-- note -->
-          <div class="row form-group">
-            <label class="offset-1 col-sm-1">Note</label>
-            <div class="col-sm-9">
-              <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
+            <!-- sesso / p.iva/cf -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Sesso</label>
+              <div class="col-sm-4">
+                <select2
+                  class="form-control"
+                  :placeholder="'-'"
+                  :options="sesso.Items"
+                  :value.sync="utente.Sesso"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
+              <label class="col-sm-1">P. Iva / C.F.</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.PivaCF" />
+              </div>
+            </div>
+
+            <!-- indirizzo / provincia / città -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Indirizzo</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Indirizzo" />
+              </div>
+
+              <label class="col-sm-1">Provincia</label>
+              <div class="col-sm-1">
+                <select2
+                  class="form-control"
+                  :options="provincia.Items"
+                  :value.sync="utente.SiglaProvincia"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                  v-on:value-changed="loadComuni"
+                />
+              </div>
+              <div class="col-sm-3">
+                <select2
+                  class="form-control"
+                  :options="comune.Items"
+                  :value.sync="utente.IdComune"
+                  :value-field="'Value'"
+                  :text-field="'Text'"
+                />
+              </div>
+            </div>
+
+            <!-- telefono / cellulare -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Telefono</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Telefono" />
+              </div>
+              <label class="col-sm-1">Cellulare</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" v-model="utente.Cellulare" />
+              </div>
+            </div>
+
+            <!-- note -->
+            <div class="row form-group">
+              <label class="offset-1 col-sm-1">Note</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" v-model="utente.Note" rows="3"></textarea>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Tab allevamenti -->
         <div id="allevamenti" class="tab-pane fade">
+          <div class="row justify-content-center">
+            <div class="col-10 text-right pt-4">
+              <button v-on:click="onAllevamentoAdd" class="btn btn-primary mb-2">Aggiungi</button>
+            </div>
 
-          <div class="row">
-              <div class="col-sm-11 pt-4">
-                <button v-on:click="onAllevamentoAdd" class="btn btn-primary float-right" >Aggiungi</button>
-              </div>
-
-              <div class="offset-1 col-sm-10 pt-2">
-                <table class="table table-bordered">
-
-                    <thead class="table table-hover table-striped table-bordered">
-                        <tr>
-                            <th scope="rol">Codice ASL</th>
-                            <th scope="rol">Indirizzo</th>
-                            <th scope="rol">CUAA</th>
-                            <th scope="rol"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(allevamento, index) in utente.Allevamenti" :key="index">
-                            <td>
-                                {{allevamento.CodiceAsl}}
-                            </td>
-                            <td>
-                                {{allevamento.IndirizzoAllevamento}}
-                            </td>
-                            <td>
-                                {{allevamento.CUAA}}
-                            </td>          
-                            <td>
-                                <div class="text-center">
-                                  <button v-on:click="onAllevamentoEdit(allevamento)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
-                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
-                                </div>
-                            </td>            
-                        </tr>
-                    </tbody>
-
-                </table>    
-
-              </div>
+            <div class="col-10">
+              <table class="table table-bordered">
+                <thead class="table table-hover table-striped table-bordered">
+                  <tr>
+                    <th scope="rol">Codice ASL</th>
+                    <th scope="rol">Indirizzo</th>
+                    <th scope="rol">CUAA</th>
+                    <th scope="rol"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(allevamento, index) in utente.Allevamenti" :key="index">
+                    <td>{{allevamento.CodiceAsl}}</td>
+                    <td>{{allevamento.IndirizzoAllevamento}}</td>
+                    <td>{{allevamento.CUAA}}</td>
+                    <td>
+                      <div class="text-center">
+                        <a
+                          class="edit"
+                          title="Modifica"
+                          v-on:click="onAllevamentoEdit(allevamento)"
+                          style="cursor: pointer"
+                        >
+                          <i class="far fa-edit"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-      
-
         </div>
 
         <!-- Tab autocisterne -->
         <div id="autocisterne" class="tab-pane fade">
+          <div class="row justify-content-center">
+            <div class="col-sm-10 pt-4">
+              <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right">Aggiungi</button>
+            </div>
 
-          <div class="row">
-              <div class="col-sm-11 pt-4">
-                <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right" >Aggiungi</button>
-              </div>
-
-              <div class="offset-1 col-sm-10 pt-2">
-                <table class="table table-bordered">
-
-                    <thead class="table table-hover table-striped table-bordered">
-                        <tr>
-                            <th scope="rol">Marca</th>
-                            <th scope="rol">Modello</th>
-                            <th scope="rol">Targa</th>
-                            <th scope="rol"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(autocisterna, index) in utente.Autocisterne" :key="index">
-                            <td>
-                                {{autocisterna.Marca}}
-                            </td>
-                            <td>
-                                {{autocisterna.Modello}}
-                            </td>
-                            <td>
-                                {{autocisterna.Targa}}
-                            </td>          
-                            <td>
-                                <div class="text-center">
-                                  <button v-on:click="onAutocisternaEdit(autocisterna)" class="edit" title="modifica" ><i class="far fa-edit"></i></button>
-                                  <!-- <button v-on:click="onAllevamentoRemove(index)" class="pl-3 delete" title="elimina" style="cursor: pointer;" ><i class="far fa-trash-alt"></i></button> -->
-                                </div>
-                            </td>            
-                        </tr>
-                    </tbody>
-
-                </table>    
-
-              </div>
+            <div class="col-10 pt-2">
+              <table class="table table-bordered">
+                <thead class="table table-hover table-striped table-bordered">
+                  <tr>
+                    <th scope="rol">Marca</th>
+                    <th scope="rol">Modello</th>
+                    <th scope="rol">Targa</th>
+                    <th scope="rol"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(autocisterna, index) in utente.Autocisterne" :key="index">
+                    <td>{{autocisterna.Marca}}</td>
+                    <td>{{autocisterna.Modello}}</td>
+                    <td>{{autocisterna.Targa}}</td>
+                    <td>
+                      <div class="text-center">
+                        <a
+                          class="edit"
+                          title="Modifica"
+                          v-on:click="onAllevamentoEdit(autocisterna)"
+                          style="cursor: pointer"
+                        >
+                          <i class="far fa-edit"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-      
-
         </div>
 
         <!-- Annulla / Salva -->
-        <div class="row pt-3">
-          <div class="col-11 text-right">
+        <div class="row pt-3 justify-content-center">
+          <div class="col-10 text-right">
             <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
             <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
           </div>
         </div>
       </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -336,15 +349,15 @@ import { Utente } from "@/models/utente.model";
 import { UrlService } from "@/services/url.service";
 import { PermissionsService } from "@/services/permissions.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-import { Allevamento } from '../../models/allevamento.model';
-import { Autocisterna } from '../../models/autocisterna.model';
+import { Allevamento } from "../../models/allevamento.model";
+import { Autocisterna } from "../../models/autocisterna.model";
 
-declare module 'vue/types/vue' {
-    interface Vue {
-        open(): void
-        openAllevamento(allevamento: Allevamento): void
-        close(): void
-    }
+declare module "vue/types/vue" {
+  interface Vue {
+    open(): void;
+    openAllevamento(allevamento: Allevamento): void;
+    close(): void;
+  }
 }
 
 @Component({
@@ -475,8 +488,12 @@ export default class App extends Vue {
     // Tipo latte
     this.dropdownService.getTipiLatte().then(response => {
       this.tipoLatte = response.data;
-    });  
-        
+    });
+
+    // Azienda trasportatore
+    this.dropdownService.getAziendeTrasportatori().then(response => {
+      this.aziendaTrasportatore = response.data;
+    });
   }
 
   public loadComuni(provincia: string): void {
@@ -518,7 +535,7 @@ export default class App extends Vue {
 
   // evento conferma salvataggio allevamento
   public onAllevamentoSaved() {
-    if(this.allevamento.Id == 0) {
+    if (this.allevamento.Id == 0) {
       this.utente.Allevamenti.push(this.allevamento);
     }
   }
@@ -538,10 +555,10 @@ export default class App extends Vue {
 
   // evento conferma salvataggio autocisterna
   public onAutocisternaSaved() {
-    if(this.autocisterna.Id == 0) {
+    if (this.autocisterna.Id == 0) {
       this.utente.Autocisterne.push(this.autocisterna);
     }
-  }  
+  }
 
   // lettura permessi da jwt
   private readPermissions() {

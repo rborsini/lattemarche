@@ -57,22 +57,6 @@ $progress-bar-bg: $primary !default;*/
   background-color: #6c757d;
   border-color: rgba(0, 0, 0, 0.05); }
 
-.form-control:focus {
-  /*box-shadow: 0 0 5px rgba(100,65,164,.4);*/ }
-
-.nav-tabs .nav-link,
-.nav-tabs .nav-link.active {
-  border-width: 0 0 1px 0; }
-
-.nav-tabs .nav-link:hover,
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-link.active:hover,
-.nav-tabs .nav-link.active:focus {
-  border-bottom: 1px solid #007bff; }
-
-.nav-tabs .nav-item + .nav-item {
-  margin-left: 0; }
-
 .breadcrumb-item.active {
   color: #444; }
 
@@ -6916,9 +6900,6 @@ a.text-dark:hover, a.text-dark:focus {
 html, body {
   height: 100%; }
 
-a {
-  color: #000000; }
-
 .home--ctr .home--bg--img {
   background-image: url(/Content/img/hero-cow.jpeg);
   height: 60vh;
@@ -6947,11 +6928,15 @@ a {
   .main-footer p {
     font-size: 0.8rem; }
 
-/*label {
-    text-align: right;
-}*/
+.form-control {
+  height: 28px; }
+
 .edit-column {
   min-width: 50px; }
+
+table thead {
+  background-color: #007bff;
+  color: #ffffff !important; }
 
 table.dataTable thead tr {
   color: #ffffff;
@@ -6972,7 +6957,36 @@ tfoot {
 
 #DataTables_Table_0_wrapper {
   padding: 16px; }
+  #DataTables_Table_0_wrapper .edit {
+    color: #000000; }
 
 .c-table-trasportatori thead tr {
   background-color: #007bff;
   color: #ffffff; }
+
+.nav-tabs {
+  margin-top: 16px; }
+  .nav-tabs .nav-link.active {
+    border-top: 1px solid #007bff;
+    border-left: 1px solid #007bff;
+    border-right: 1px solid #007bff;
+    background-color: #007bff;
+    color: #ffffff; }
+  .nav-tabs .nav-link {
+    border-top: 1px solid #ededed;
+    border-left: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+    border-bottom: 0; }
+    .nav-tabs .nav-link:hover {
+      border-top: 1px solid #ededed;
+      border-left: 1px solid #ededed;
+      border-right: 1px solid #ededed;
+      background-color: #fafafa;
+      color: #007bff; }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 26px !important; }
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 12px !important;
+  padding-right: 24px !important; }
