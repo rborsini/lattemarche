@@ -5,30 +5,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h3 class="text-center mb-2">Accedi alla piattaforma</h3>
-    <div class="col-sm-6 offset-sm-3">
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
-        {
-            <div class="form-group">
-                <label>Username</label>
-                @Html.TextBoxFor(m => m.Username, "", new { placeholder = "Inserisci il tuo Username", @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                @Html.PasswordFor(m => m.Password, new { placeholder = "Inserisci la tua password", @class = "form-control" })
-            </div>
-            if (!String.IsNullOrEmpty(ViewBag.ErrorMessage))
+<div class="container h-100">
+    <div class="row h-100 d-flex align-items-center">
+        <div class="col-4 offset-4">
+            <h3 class="text-center mb-2">Accedi alla piattaforma</h3>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-login__form m-form" }))
             {
-                <div class="row">
-                    <p class="col-sm-6 offset-sm-3 text-danger">* Username o password errati</p>
+                <div class="form-group">
+                    <label>Username</label>
+                    @Html.TextBoxFor(m => m.Username, "", new { placeholder = "Inserisci il tuo Username", @class = "form-control" })
                 </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Inserisci la tua password", @class = "form-control" })
+                </div>
+                if (!String.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="row">
+                        <p class="col-sm-6 offset-sm-3 text-danger">* Username o password errati</p>
+                    </div>
+                }
+                <button type="submit" class="btn btn-success" style="width:100%">ACCEDI</button>
             }
-            <button type="submit" class="btn btn-success" style="width:100%">ACCEDI</button>
-        }
 
+        </div>
     </div>
-
 </div>
 
 

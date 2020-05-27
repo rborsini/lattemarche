@@ -6917,8 +6917,9 @@ html {
   height: 100%; }
 
 body {
-  padding: 100px 50px;
-  margin: 0; }
+  height: 100%;
+  /*padding: 100px 50px;
+    margin: 0;*/ }
 
 .wrapper_container {
   margin: auto; }
