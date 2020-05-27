@@ -76,6 +76,7 @@ tfoot {
 
 #DataTables_Table_0_wrapper {
     padding: 16px;
+
     .edit {
         color: $dark;
     }
@@ -89,13 +90,25 @@ tfoot {
 // Nav tabs
 .nav-tabs {
     margin: 16px;
+
     .nav-link.active {
+        border-top: 1px solid $primary;
+        border-left: 1px solid $primary;
+        border-right: 1px solid $primary;
         background-color: $primary;
         color: $light;
     }
+
     .nav-link {
+        border-top: 1px solid #ededed;
+        border-left: 1px solid #ededed;
+        border-right: 1px solid #ededed;
         border-bottom: 0;
+
         &:hover {
+            border-top: 1px solid #ededed;
+            border-left: 1px solid #ededed;
+            border-right: 1px solid #ededed;
             background-color: $gray-100;
             color: $primary;
         }

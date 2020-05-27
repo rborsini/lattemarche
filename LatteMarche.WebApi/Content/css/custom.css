@@ -6966,10 +6966,19 @@ tfoot {
 .nav-tabs {
   margin: 16px; }
   .nav-tabs .nav-link.active {
+    border-top: 1px solid #007bff;
+    border-left: 1px solid #007bff;
+    border-right: 1px solid #007bff;
     background-color: #007bff;
     color: #ffffff; }
   .nav-tabs .nav-link {
+    border-top: 1px solid #ededed;
+    border-left: 1px solid #ededed;
+    border-right: 1px solid #ededed;
     border-bottom: 0; }
     .nav-tabs .nav-link:hover {
+      border-top: 1px solid #ededed;
+      border-left: 1px solid #ededed;
+      border-right: 1px solid #ededed;
       background-color: #fafafa;
       color: #007bff; }
