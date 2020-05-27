@@ -12,12 +12,6 @@ namespace LatteMarche.Application.Comuni.Interfaces
     public interface IComuniService : IEntityReadOnlyService<Comune, int, ComuneDto>
     {
 
-        /// <summary>
-        /// Ricerca comuni
-        /// </summary>
-        /// <param name="searchDto"></param>
-        /// <returns></returns>
-        List<ComuneDto> Search(ComuniSearchDto searchDto);
 
         /// <summary>
         /// Elenco province

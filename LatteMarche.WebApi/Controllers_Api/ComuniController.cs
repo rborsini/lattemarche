@@ -35,52 +35,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Comuni", "Lista")]
-        [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Index()
-        {
-            try
-            {
-                var comuni = this.comuniService.Index();
-                return Ok(comuni);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
-        }
-
-        [ViewItem(nameof(Details), "Comuni", "Dettaglio")]
-        [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Details(int id)
-        {
-            try
-            {
-                return Ok((this.comuniService).Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-        }
-
-        [ViewItem(nameof(Search), "Comuni", "Ricerca")]
-        [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-        public IHttpActionResult Search(string provincia)
-        {
-            try
-            {
-                return Ok(this.comuniService.Search(new ComuniSearchDto() { SiglaProvincia = provincia }));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-        }
 
         [ViewItem(nameof(Dropdown), "Comuni", "Dropdown")]
         [HttpGet]

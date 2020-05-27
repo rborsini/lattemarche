@@ -16,7 +16,6 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class AzioniController : Controller
     {
         [ViewItem(nameof(Index), "Azioni", "Lista")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

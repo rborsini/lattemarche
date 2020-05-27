@@ -51,7 +51,7 @@
         <th>Cognome</th>
         <th>Username</th>
         <th>Profilo</th>
-        <th v-if="canEdit || canRemove"></th>
+        <th></th>
       </template>
     </data-table>
 
@@ -99,9 +99,6 @@ export default class UtentiIndexPage extends Vue {
 
   public tableOptions: any = {};
   public utenti: Utente[] = [];
-  public canAdd: boolean = false;
-  public canEdit: boolean = false;
-  public canRemove: boolean = false;
 
   constructor() {
     super();
@@ -109,10 +106,6 @@ export default class UtentiIndexPage extends Vue {
     this.dropdownService = new DropdownService();
     this.utentiService = new UtentiService();
     this.utente = new Utente();
-
-    this.canAdd = $("#canAdd").val() == "true";
-    this.canEdit = $("#canEdit").val() == "true";
-    this.canRemove = $("#canRemove").val() == "true";
   }
 
   public mounted() {
@@ -166,21 +159,16 @@ export default class UtentiIndexPage extends Vue {
     options.columns.push({ data: "Username" });
     options.columns.push({ data: "Profilo" });
 
-    var ce = this.canEdit;
-    var cr = this.canRemove;
 
-    if (ce || cr) {
       options.columns.push({
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-          if (ce)
             html +=
               '<a class="edit" title="Modifica" href="/utenti/edit?id=' +
               row.Id +
               '" ><i class="far fa-edit"></i></a>';
 
-          if (cr)
             html +=
               '<a class="pl-3 delete" title="Elimina" style="cursor: pointer;" data-row-id="' +
               row.Id +
@@ -193,7 +181,7 @@ export default class UtentiIndexPage extends Vue {
         className: "edit-column",
         orderable: false
       });
-    }
+    
     this.tableOptions = options;
   }
 }

@@ -144,7 +144,6 @@
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
     <Compile Include="Allevamenti\AllevamentiMappings.cs" />
     <Compile Include="Allevamenti\Dtos\AlevamentoDto.cs" />
-    <Compile Include="Allevamenti\Dtos\AllevamentiSearchDto.cs" />
     <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
     <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
     <Compile Include="AnalisiLatte\AnalisiMappings.cs" />
