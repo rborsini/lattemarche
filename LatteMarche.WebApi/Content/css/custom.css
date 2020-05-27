@@ -6964,7 +6964,7 @@ tfoot {
   color: #ffffff; }
 
 .nav-tabs {
-  margin: 16px; }
+  margin-top: 16px; }
   .nav-tabs .nav-link.active {
     border-top: 1px solid #007bff;
     border-left: 1px solid #007bff;

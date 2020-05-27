@@ -50,6 +50,8 @@
     ></notification-dialog>
 
     <div>
+      <div class="container-fluid">
+
       <ul class="nav nav-tabs" id="tabWrapper">
         <li class="active">
           <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
@@ -237,12 +239,12 @@
 
         <!-- Tab allevamenti -->
         <div id="allevamenti" class="tab-pane fade">
-          <div class="row">
-            <div class="col-12 text-right pt-4">
+          <div class="row justify-content-center">
+            <div class="col-10 text-right pt-4">
               <button v-on:click="onAllevamentoAdd" class="btn btn-primary mb-2">Aggiungi</button>
             </div>
 
-            <div class="col-12">
+            <div class="col-10">
               <table class="table table-bordered">
                 <thead class="table table-hover table-striped table-bordered">
                   <tr>
@@ -278,12 +280,12 @@
 
         <!-- Tab autocisterne -->
         <div id="autocisterne" class="tab-pane fade">
-          <div class="row">
-            <div class="col-sm-11 pt-4">
+          <div class="row justify-content-center">
+            <div class="col-sm-10 pt-4">
               <button v-on:click="onAutocisternaAdd" class="btn btn-primary float-right">Aggiungi</button>
             </div>
 
-            <div class="offset-1 col-sm-10 pt-2">
+            <div class="col-10 pt-2">
               <table class="table table-bordered">
                 <thead class="table table-hover table-striped table-bordered">
                   <tr>
@@ -318,13 +320,15 @@
         </div>
 
         <!-- Annulla / Salva -->
-        <div class="row pt-3">
-          <div class="col-11 text-right">
+        <div class="row pt-3 justify-content-center">
+          <div class="col-10 text-right">
             <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
             <button class="btn btn-primary" role="button" v-on:click="onSave()">Salva</button>
           </div>
         </div>
       </div>
+      </div>
+
     </div>
   </div>
 </template>
