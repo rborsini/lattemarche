@@ -256,12 +256,8 @@
     <Content Include="Content\plugins\select2\select2.full.min.js" />
     <Content Include="dist\acquirentiIndex.html" />
     <Content Include="dist\acquirentiIndex.js" />
-    <Content Include="dist\allevamentiIndex.html" />
-    <Content Include="dist\allevamentiIndex.js" />
     <Content Include="dist\analisiLatteIndex.html" />
     <Content Include="dist\analisiLatteIndex.js" />
-    <Content Include="dist\autocisterneIndex.html" />
-    <Content Include="dist\autocisterneIndex.js" />
     <Content Include="dist\cessionariIndex.html" />
     <Content Include="dist\cessionariIndex.js" />
     <Content Include="dist\changePassword.html" />
@@ -269,11 +265,15 @@
     <Content Include="dist\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\css\custom.css" />
     <Content Include="dist\css\select2.min.css" />
+    <Content Include="dist\dashboardIndex.html" />
+    <Content Include="dist\dashboardIndex.js" />
     <Content Include="dist\destinatariIndex.html" />
     <Content Include="dist\destinatariIndex.js" />
     <Content Include="dist\dispositiviIndex.html" />
     <Content Include="dist\dispositiviIndex.js" />
     <Content Include="dist\favicon.ico" />
+    <Content Include="dist\giriIndex.html" />
+    <Content Include="dist\giriIndex.js" />
     <Content Include="dist\laboratoriIndex.html" />
     <Content Include="dist\laboratoriIndex.js" />
     <Content Include="dist\plugins\datatables\css\dataTable.b4.css" />
@@ -297,8 +297,6 @@
     <Content Include="dist\ruoliNew.js" />
     <Content Include="dist\tipiLatteIndex.html" />
     <Content Include="dist\tipiLatteIndex.js" />
-    <Content Include="dist\trasportatoriIndex.html" />
-    <Content Include="dist\trasportatoriIndex.js" />
     <Content Include="dist\utentiEdit.html" />
     <Content Include="dist\utentiEdit.js" />
     <Content Include="dist\utentiIndex.html" />
