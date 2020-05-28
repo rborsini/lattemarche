@@ -123,24 +123,41 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         {
             var cmd = "";
 
+            int sxColWidth = WIDTH / 2;
             int lineSpacing = 30;
             var trasp = registro.Trasportatore;
             var automezzo = trasp != null ? trasp.AutoCisterna : new AutoCisterna();
+            var cessionario = registro.Cessionario;
 
-            // Targa
-            cmd += $"TEXT {p} {x} {y} Targa automezzo: {automezzo?.Targa}\r\n";
+            // intestazione
+            var headerTrasp = PadRight("Trasportatore", sxColWidth);
+            var headerCess = PadRight("1. Cessionario", sxColWidth);            
+            cmd += $"TEXT {p} {x} {y} {headerTrasp} {headerCess}\r\n";
             y += lineSpacing;
 
-            // Trasportatore
-            cmd += $"TEXT {p} {x} {y} Trasportatore: {trasp?.RagioneSociale}\r\n";
+            // Targa - Rag. soc
+            var targa = PadRight($"Targa automezzo: {automezzo?.Targa}", sxColWidth);
+            var ragSoc = PadRight($"{cessionario?.RagioneSociale}", sxColWidth);
+
+            cmd += $"TEXT {p} {x} {y} {targa} {ragSoc}\r\n";
             y += lineSpacing;
 
-            // Indirizzo
-            cmd += $"TEXT {p} {x} {y} {trasp?.Indirizzo}\r\n";
+            // Trasportatore - Indirizzo
+            var trasportatore = PadRight($"Trasportatore: {trasp?.RagioneSociale}", sxColWidth);
+            var cessIndirizzo = PadRight($"Trasportatore: {cessionario?.Indirizzo}", sxColWidth);
+            cmd += $"TEXT {p} {x} {y} {trasportatore} {cessIndirizzo}\r\n";
             y += lineSpacing;
 
-            // P IVA
-            cmd += $"TEXT {p} {x} {y} P.IVA: {trasp?.P_IVA}\r\n";
+            // Indirizzo - cap/comune /prov
+            var traspIndirizzo = PadRight($"{trasp?.Indirizzo}", sxColWidth);
+            var comCess = PadRight($"{cessionario?.CAP} {cessionario?.Comune} ({cessionario?.Provincia})", sxColWidth);
+            cmd += $"TEXT {p} {x} {y} {traspIndirizzo} {comCess}\r\n";
+            y += lineSpacing;
+
+            // P IVA - P IVA
+            var traspPiva = PadRight($"P.IVA: {trasp?.P_IVA}", sxColWidth);
+            var cessPiva = PadRight($"P.IVA: {cessionario?.P_IVA}", sxColWidth);
+            cmd += $"TEXT {p} {x} {y} {traspPiva} {cessPiva}\r\n";
             y += lineSpacing;
 
             return cmd;

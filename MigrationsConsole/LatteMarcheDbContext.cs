@@ -12,7 +12,8 @@ namespace LatteMarche.Xamarin.Db
     {
 		public DbSet<Acquirente> Acquirenti { get; set; }
 		public DbSet<Allevamento> Allevamenti { get; set; }
-		public DbSet<AutoCisterna> AutoCisterne { get; set; }		
+		public DbSet<AutoCisterna> AutoCisterne { get; set; }
+		public DbSet<Cessionario> Cessionari { get; set; }
 		public DbSet<Destinatario> Destinatari { get; set; }
 		public DbSet<Giro> Giri { get; set; }
 		public DbSet<Prelievo> Prelievi { get; set; }

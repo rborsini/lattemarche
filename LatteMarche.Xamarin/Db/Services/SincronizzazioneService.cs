@@ -20,6 +20,7 @@ namespace LatteMarche.Xamarin.Db.Services
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
         private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITipiLatteService tipiLatteService => DependencyService.Get<ITipiLatteService>();
@@ -85,6 +86,7 @@ namespace LatteMarche.Xamarin.Db.Services
                     this.autocisterneService.DeleteAllItemsAsync().Wait();
                     this.tipiLatteService.DeleteAllItemsAsync().Wait();
                     this.acquirentiService.DeleteAllItemsAsync().Wait();
+                    this.cessionariService.DeleteAllItemsAsync().Wait();
                     this.destinatariService.DeleteAllItemsAsync().Wait();
                     this.trasportatoriService.DeleteAllItemsAsync().Wait();
 
@@ -103,6 +105,10 @@ namespace LatteMarche.Xamarin.Db.Services
                     // acquirenti
                     var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
                     this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
+
+                    // cessionari
+                    var cessionari = Mapper.Map<List<Cessionario>>(dto.Cessionari);
+                    this.cessionariService.AddRangeItemAsync(cessionari).Wait();
 
                     // destinatari
                     var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
@@ -124,6 +130,7 @@ namespace LatteMarche.Xamarin.Db.Services
                     this.autocisterneService.DeleteAllItemsAsync().Wait();
                     this.tipiLatteService.DeleteAllItemsAsync().Wait();
                     this.acquirentiService.DeleteAllItemsAsync().Wait();
+                    this.cessionariService.DeleteAllItemsAsync().Wait();
                     this.destinatariService.DeleteAllItemsAsync().Wait();
                     this.trasportatoriService.DeleteAllItemsAsync().Wait();
 
@@ -141,8 +148,6 @@ namespace LatteMarche.Xamarin.Db.Services
         protected LatteMarcheDbContext CrateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
-            //databaseContext.Database.EnsureCreated();
-            //databaseContext.Database.Migrate();
             return databaseContext;
         }
 

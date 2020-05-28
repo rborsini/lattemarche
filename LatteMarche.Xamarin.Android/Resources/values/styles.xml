@@ -11,13 +11,13 @@
     <item name="windowActionBar">false</item>
     <!-- Set theme colors from https://aka.ms/material-colors -->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">#593196</item>
+    <item name="colorPrimary">#007bff</item>
     <!-- colorPrimaryDark is used for the status bar -->
-    <item name="colorPrimaryDark">#1976D2</item>
+    <item name="colorPrimaryDark">#0058B7</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="android:colorAccent">#593196</item>
-    <item name="android:statusBarColor">#593196</item>
+    <item name="android:colorAccent">#007bff</item>
+    <item name="android:statusBarColor">#007bff</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
@@ -38,15 +38,15 @@
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-          <item name="colorAccent">#593196</item>
+          <item name="colorAccent">#007bff</item>
   </style>
   
   <style name="TimePickerDialogStyle" parent="@android:style/Widget.Material.Light.TimePicker">
-    <item name="colorAccent">#593196</item>
+    <item name="colorAccent">#007bff</item>
     <!--<item name="android:timePickerMode">clock</item>-->
-    <item name="android:headerBackground">#593196</item>
+    <item name="android:headerBackground">#007bff</item>
     <!--<item name="android:numbersTextColor">#ff000000</item>-->
-    <item name="android:numbersSelectorColor">#593196</item>
+    <item name="android:numbersSelectorColor">#007bff</item>
     <!--<item name="android:numbersBackgroundColor">#ffdddddd</item>-->
   </style>
 

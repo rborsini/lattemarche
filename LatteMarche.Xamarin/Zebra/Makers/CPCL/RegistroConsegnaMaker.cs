@@ -32,7 +32,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             // linea separatrice
             cmd += MakeLine(ref y);
 
-            // Automezzo
+            // Automezzo / Cessionario
             cmd += MakeTrasportatoreSection(registroConsegna, ref y);
 
             // linea separatrice
@@ -148,7 +148,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             var temp = $"{registroConsegna.Temperatura:.0}";
             var tipoLatteText = $"{tipoLatte?.Codice} - {tipoLatte?.Descrizione}";
 
-            cmd += $"TEXT {p} {x} {y} {PadRight("Temp. °C: ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatteText} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("Temp. : ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatteText} \r\n";
 
             y += (lineSpacing * 2);
 

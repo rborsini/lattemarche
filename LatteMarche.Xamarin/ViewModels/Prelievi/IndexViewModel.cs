@@ -36,6 +36,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
@@ -197,6 +198,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var registroRaccolta = new RegistroRaccolta();
 
                     registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
+                    registroRaccolta.Cessionario = GetCessionario(this.giro).Result;
                     registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
                     registroRaccolta.Giro = templateGiro;
                     registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
@@ -262,6 +264,24 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 var idAcquirente = giro.Prelievi.First(p => p.IdAcquirente.HasValue).IdAcquirente.Value;
                 return await this.acquirentiService.GetItemAsync(idAcquirente);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup cessionario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Cessionario> GetCessionario(Giro giro)
+        {
+            if (giro.Prelievi.Count(p => p.IdCessionario.HasValue) > 0)
+            {
+                var idCessionario = giro.Prelievi.First(p => p.IdCessionario.HasValue).IdCessionario.Value;
+                return await this.cessionariService.GetItemAsync(idCessionario);
             }
             else
             {

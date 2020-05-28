@@ -21,6 +21,7 @@ namespace LatteMarche.Application.Mobile.Dtos
 
         public int? IdAcquirenteDefault { get; set; }
         public int? IdDestinatarioDefault { get; set; }
+        public int? IdCessionarioDefault { get; set; }
 
         public decimal? Quantita_Min { get; set; }
         public decimal? Quantita_Max { get; set; }

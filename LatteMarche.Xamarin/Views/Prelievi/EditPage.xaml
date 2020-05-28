@@ -173,6 +173,20 @@
                 matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
             />
 
+            <!--Cessionario-->
+            <material:MaterialTextField Placeholder="Cessionario"
+                InputType="Choice"
+                SelectedChoice="{Binding CessionarioSelezionato, Mode=TwoWay}"
+                IsEnabled="{ Binding IsEditable }"
+                Choices="{Binding Cessionari}"
+                ChoicesBindingName="RagioneSociale"
+                AlwaysShowUnderline="True"
+                BackgroundColor="Transparent"
+                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+            />
+
             <!--Destinatario--> 
             <material:MaterialTextField Placeholder="Destinatario"
                 InputType="Choice"

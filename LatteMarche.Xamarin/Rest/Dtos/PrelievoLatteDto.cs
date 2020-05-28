@@ -6,15 +6,15 @@ namespace LatteMarche.Xamarin.Rest.Dtos
 {
     public class PrelievoLatteDto
     {
-        public DateTime DataPrelievo { get; set; }
+        public DateTime? DataPrelievo { get; set; }
 
-        public DateTime DataConsegna { get; set; }
+        public DateTime? DataConsegna { get; set; }
 
         public decimal? Quantita { get; set; }
 
         public decimal? Temperatura { get; set; }
 
-        public DateTime DataUltimaMungitura { get; set; }
+        public DateTime? DataUltimaMungitura { get; set; }
 
         public int IdAllevamento { get; set; }
 

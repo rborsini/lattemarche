@@ -85,6 +85,7 @@
     <Compile Include="Dtos\AcquirenteDto.cs" />
     <Compile Include="Dtos\AllevamentoDto.cs" />
     <Compile Include="Dtos\AutocisternaDto.cs" />
+    <Compile Include="Dtos\CessionarioDto.cs" />
     <Compile Include="Dtos\DestinatarioDto.cs" />
     <Compile Include="Dtos\DispositivoDto.cs" />
     <Compile Include="Dtos\DownloadDto.cs" />

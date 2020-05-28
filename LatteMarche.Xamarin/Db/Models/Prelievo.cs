@@ -29,7 +29,7 @@ namespace LatteMarche.Xamarin.Db.Models
         public int? IdAllevamento { get; set; }
 
         public int? IdAcquirente { get; set; }
-
+        public int? IdCessionario { get; set; }
         public int? IdDestinatario { get; set; }
 
     }

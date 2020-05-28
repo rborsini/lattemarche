@@ -18,6 +18,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
 
         public Acquirente Acquirente { get; set; }
 
+        public Cessionario Cessionario { get; set; }
+
         public Destinatario Destinatario { get; set; }
 
         public Trasportatore Trasportatore { get; set; }
