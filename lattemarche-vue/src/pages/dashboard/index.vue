@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
-    <waiter ref="waiter"></waiter>
+    <!-- <waiter ref="waiter"></waiter> -->
     <!-- Summary -->
     <div class="row pt-4">
       <div class="col-12">
-        <h3>Progressivo</h3>
+        <!-- <h3>Progressivo</h3> -->
       </div>
     </div>
     <div class="row">
@@ -13,9 +13,7 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-7 pt-2">Settimanale</h3>
-              <h1
-                class="card-text col-5 text-center"
-              >{{sommarioWidgetModel.Qta_Settimanale || '-'}}</h1>
+              <h1 class="card-text col-5 text-center">{{sommarioWidgetModel.Qta_Settimanale || '-'}}</h1>
             </div>
           </div>
         </div>
@@ -26,9 +24,7 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-7 pt-2">Mensile</h3>
-              <h1
-                class="card-text col-5 text-center"
-              >{{sommarioWidgetModel.Qta_Mensile || '-'}}</h1>
+              <h1 class="card-text col-5 text-center">{{sommarioWidgetModel.Qta_Mensile || '-'}}</h1>
             </div>
           </div>
         </div>
@@ -39,9 +35,7 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-4 pt-2">Annuale</h3>
-              <h1
-                class="card-text col-8 text-center"
-              >{{sommarioWidgetModel.Qta_Annuale || '-'}}</h1>
+              <h1 class="card-text col-8 text-center">{{sommarioWidgetModel.Qta_Annuale || '-'}}</h1>
             </div>
           </div>
         </div>
@@ -73,7 +67,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
 
-import Waiter from "@/components/waiter.vue";
+// import Waiter from "@/components/waiter.vue";
 
 import DashboardService from "@/services/dashboard.service";
 import SommarioWidgetModel from "@/models/sommarioWidget.model";
@@ -88,13 +82,13 @@ declare module "vue/types/vue" {
 
 @Component({
   components: {
-    Waiter
+    // Waiter
   }
 })
 export default class DashboardPage extends Vue {
-  $refs: any = {
-    waiter: Vue
-  };
+  // $refs: any = {
+  //   waiter: Vue
+  // };
   private dashboardService: DashboardService;
 
   public sommarioWidgetModel: SommarioWidgetModel;
@@ -118,40 +112,36 @@ export default class DashboardPage extends Vue {
   }
 
   async mounted() {
-    this.$refs.waiter.open();
-    const sommarioRequest = this.dashboardService.sommario();
-    const tipiLatteRequest = this.dashboardService.tipiLatte();
-    const acquirentiRequest = this.dashboardService.acquirenti();
+    this.loadSommario();
+    this.loadTipiLatte();
+    this.loadAcquirenti();
+  }
 
-    let results = [];
-
-    try {
-      results = await Promise.all([
-        sommarioRequest,
-        tipiLatteRequest,
-        acquirentiRequest
-      ]);
-    } catch (error) {
-      console.error(`Error retrieving data: ${error}`);
-      throw error;
-    }
-
-    this.$refs.waiter.close();
+  private async loadSommario() {
+    const sommarioRequest = await this.dashboardService.sommario();
     // Popolo le card
-    this.sommarioWidgetModel = results[0].data;
+    this.sommarioWidgetModel = sommarioRequest.data;
+  }
 
+  private async loadTipiLatte() {
+    const tipiLatteRequest = await this.dashboardService.tipiLatte();
     // Grafico Tipi di latte
     this.tipiLatteWidgetModel = new GraficoWidgetModel(
-      results[1].data.ValoriAsseX,
-      results[1].data.Serie
+      tipiLatteRequest.data.ValoriAsseX,
+      tipiLatteRequest.data.Serie
     );
-    this.tipoLatteOptions = this.createChartWidget(this.tipiLatteWidgetModel);
 
-    // Grafico acquirenti
+    this.tipoLatteOptions = this.createChartWidget(this.tipiLatteWidgetModel);
+  }
+
+  private async loadAcquirenti() {
+    const acquirentiRequest = await this.dashboardService.acquirenti();
+    // Grafico Acquirenti
     this.acquirentiWidgetModel = new GraficoWidgetModel(
-      results[2].data.ValoriAsseX,
-      results[2].data.Serie
+      acquirentiRequest.data.ValoriAsseX,
+      acquirentiRequest.data.Serie
     );
+
     this.acquirentiOptions = this.createChartWidget(this.acquirentiWidgetModel);
   }
 
@@ -173,7 +163,7 @@ export default class DashboardPage extends Vue {
       xAxis: {
         categories: model.toHighchartsLabels()
       },
-      yAxis: { title: { text: "Litri" }, min: 0 },
+      yAxis: { title: { text: "Kg" }, min: 0 },
       lang: {
         noData: "Dati in caricamento..."
       },
@@ -181,7 +171,7 @@ export default class DashboardPage extends Vue {
         column: {
           stacking: "normal",
           dataLabels: {
-            enabled: true
+            enabled: false
           }
         }
       },
@@ -194,6 +184,6 @@ export default class DashboardPage extends Vue {
 <style scoped>
 .card-body {
   background-color: rgba(0, 123, 255, 0.25);
-  border: none
+  border: none;
 }
 </style>
