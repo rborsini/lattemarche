@@ -343,6 +343,7 @@
     <Content Include="Views\Dispositivi\Index.cshtml" />
     <Content Include="Views\Cessionari\Index.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

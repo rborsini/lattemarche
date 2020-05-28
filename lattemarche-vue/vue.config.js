@@ -47,6 +47,9 @@ module.exports = {
         utentiIndex: {            
             entry: 'src/pages/utenti/index.ts'
         },                         
+        dashboardIndex: {            
+            entry: 'src/pages/dashboard/index.ts'
+        },                         
     }
 
 

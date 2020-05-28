@@ -19,7 +19,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         private IAutorizzazioniService autorizzazioniService;
         private IUtentiService utentiService;
 
-        public HomeController (IAutorizzazioniService autorizzazioniService, IUtentiService utentiService)
+        public HomeController(IAutorizzazioniService autorizzazioniService, IUtentiService utentiService)
         {
             this.autorizzazioniService = autorizzazioniService;
             this.utentiService = utentiService;
@@ -28,7 +28,13 @@ namespace LatteMarche.WebApi.Controllers_Web
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
+            if (Request.IsAuthenticated)
+            {
+                log.Info("Home dashboard");
+                return View("Dashboard");
+            }
             log.Info("Home index");
+
             return View();
         }
 
@@ -54,7 +60,7 @@ namespace LatteMarche.WebApi.Controllers_Web
             gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
             gestione.Items.Add(MakeViewModel("Giri", "Index", "Giri"));
             gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
-            
+
             model.Add(gestione);
 
             MenuItemViewModel analisi = new MenuItemViewModel("Analisi");
