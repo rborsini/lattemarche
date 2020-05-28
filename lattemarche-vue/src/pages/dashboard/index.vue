@@ -13,7 +13,17 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-7 pt-2">Settimanale</h3>
-              <h1 class="card-text col-5 text-center">{{sommarioWidgetModel.Qta_Settimanale || '-'}}</h1>
+              <h1 class="card-text col-5 text-center">
+                <span v-if="!(sommarioWidgetModel.Qta_Settimanale >= 0)">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </span>
+                <i18n-n
+                  v-if="sommarioWidgetModel.Qta_Settimanale"
+                  :value="sommarioWidgetModel.Qta_Settimanale"
+                />
+              </h1>
             </div>
           </div>
         </div>
@@ -24,7 +34,17 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-7 pt-2">Mensile</h3>
-              <h1 class="card-text col-5 text-center">{{sommarioWidgetModel.Qta_Mensile || '-'}}</h1>
+              <h1 class="card-text col-5 text-center">
+                <span v-if="!(sommarioWidgetModel.Qta_Mensile >= 0)">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </span>
+                <i18n-n
+                  v-if="sommarioWidgetModel.Qta_Mensile >= 0"
+                  :value="sommarioWidgetModel.Qta_Mensile"
+                />
+              </h1>
             </div>
           </div>
         </div>
@@ -35,7 +55,17 @@
           <div class="card-body">
             <div class="row">
               <h3 class="card-title col-4 pt-2">Annuale</h3>
-              <h1 class="card-text col-8 text-center">{{sommarioWidgetModel.Qta_Annuale || '-'}}</h1>
+              <h1 class="card-text col-8 text-center">
+                <span v-if="!(sommarioWidgetModel.Qta_Annuale >= 0)">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </span>
+                <i18n-n
+                  v-if="sommarioWidgetModel.Qta_Annuale"
+                  :value="sommarioWidgetModel.Qta_Annuale"
+                />
+              </h1>
             </div>
           </div>
         </div>
@@ -185,5 +215,10 @@ export default class DashboardPage extends Vue {
 .card-body {
   background-color: rgba(0, 123, 255, 0.25);
   border: none;
+}
+
+.spinner-border {
+  border: 0.1em solid currentColor;
+  border-right-color: transparent;
 }
 </style>
