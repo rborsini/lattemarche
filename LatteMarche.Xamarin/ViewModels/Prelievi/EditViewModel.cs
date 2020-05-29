@@ -291,7 +291,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.IsBusy = true;
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
-            this.PrintCommand = new Command(async () => await ExecutePrintCommand());
+            this.PrintCommand = new Command(async () => await ExecutePrintCommand(), canExecute: () => { return !String.IsNullOrEmpty(this.Id); });
             this.SaveItemCommand = new Command(async () => await ExecuteSaveItemCommand(), canExecute: () => { return this.IsEditable; });
         }
 
@@ -355,10 +355,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                             IdGiro = this.idGiro,
                             DataPrelievo = DateTime.Now
                         };
+                        this.Id = String.Empty;
                     }
                     else
                     {
                         this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
+                        this.Id = this.prelievo.Id;
                     }
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
@@ -422,8 +424,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 });
 
+                (this.PrintCommand as Command).ChangeCanExecute();
                 (this.SaveItemCommand as Command).ChangeCanExecute();
-
+                await loadingDialog.DismissAsync();
             }
             catch (Exception exc)
             {
@@ -431,11 +434,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 Crashes.TrackError(exc);
                 await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
-            }
-            finally
-            {
-                this.IsBusy = false;
-                await loadingDialog.DismissAsync();
             }
 
         }
@@ -496,7 +494,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         prelieviService.AddItemAsync(this.prelievo).Wait();
                     else
                         prelieviService.UpdateItemAsync(this.prelievo).Wait();
+
+                    this.Id = this.prelievo.Id;
                 });
+
+                (this.PrintCommand as Command).ChangeCanExecute();
 
                 this.IsBusy = false;
                 await loadingDialog.DismissAsync();
@@ -644,6 +646,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     registroConsegna.Quantita_kg = this.prelievo.Quantita_kg;
                     registroConsegna.Quantita_lt = this.prelievo.Quantita_lt;
                     registroConsegna.NumeroMungiture = this.prelievo.NumeroMungiture;
+                    registroConsegna.Temperatura = this.prelievo.Temperatura;
                     registroConsegna.DataUltimaMungitura = this.prelievo.DataUltimaMungitura;
                     registroConsegna.TipoLatte = registroConsegna.Allevamento != null ? registroConsegna.Allevamento.TipoLatte : null;
 

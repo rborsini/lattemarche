@@ -19,7 +19,10 @@ namespace LatteMarche.Application.Mobile
             mappings.CreateMap<DispositivoDto, DispositivoMobile>();
 
             mappings.CreateMap<Utente, TrasportatoreDto>()
+                .ForMember(dest => dest.P_IVA, opt => opt.MapFrom(src => src.PivaCF.Trim()))
                 .ForMember(dest => dest.Comune, opt => opt.MapFrom(src => src.Comune.Descrizione.Trim()))
+                .ForMember(dest => dest.Provincia, opt => opt.MapFrom(src => src.Comune.Provincia.Trim()))
+                .ForMember(dest => dest.Indirizzo, opt => opt.MapFrom(src => $"{src.Comune.CAP.Trim()} {src.Indirizzo}"))
             ;
 
             mappings.CreateMap<Autocisterna, AutocisternaDto>();

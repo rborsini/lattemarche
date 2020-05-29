@@ -103,8 +103,8 @@ namespace LatteMarche.Xamarin.Db.Services
                     this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
 
                     // acquirenti
-                    //var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
-                    //this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
+                    var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
+                    this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
 
                     // cessionari
                     var cessionari = Mapper.Map<List<Cessionario>>(dto.Cessionari);
@@ -123,7 +123,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
                     this.AddAsync(SynchType.Download).Wait();
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     this.allevamentiService.DeleteAllItemsAsync().Wait();
                     this.templateGiriService.DeleteAllItemsAsync().Wait();

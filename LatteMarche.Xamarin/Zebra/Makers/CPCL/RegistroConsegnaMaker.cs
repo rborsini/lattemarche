@@ -170,7 +170,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             int colDxStart = (WIDTH / 2);
 
             // Prog. conferimenti      Analisi qualità:
-            cmd += $"TEXT {p} {x} {y} {PadRight("Progr. conferimenti", WIDTH - colDxStart)}Analisi Qualita' \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("Progr. conferimenti", WIDTH - colDxStart)} Analisi Qualita' \r\n";
             y += lineSpacing;
 
             // Mensile:    Grasso %

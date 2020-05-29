@@ -80,7 +80,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.AddCommand = new Command(async () => await ExecuteAddCommand(), canExecute: () => { return !this.IsReadOnly; });
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            this.PrintCommand = new Command(async () => await ExecutePrintCommand());
+            this.PrintCommand = new Command(async () => await ExecutePrintCommand(), canExecute: () => { return this.Prelievi.Count > 0; });
 
         }
 
@@ -117,10 +117,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     {
                         item.OnItem_Deleting += Item_OnItem_Deleting;
                     }
-
-
-                    (this.AddCommand as Command).ChangeCanExecute();
                 });
+
+                (this.AddCommand as Command).ChangeCanExecute();
+                (this.PrintCommand as Command).ChangeCanExecute();
             }
             catch (Exception exc)
             {

@@ -13,7 +13,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
     /// </summary>
     public abstract class AbstractLabelMaker : ILabelMaker
     {
-        protected const int WIDTH = 95;         // Larghezza ricevuta in caratteri
+        protected const int WIDTH = 98;         // Larghezza ricevuta in caratteri
 
         protected int quantity = 1;             // numero copie
         protected int offset = 0;               // offset sx label
@@ -131,7 +131,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // intestazione
             var headerTrasp = PadRight("Trasportatore", sxColWidth);
-            var headerCess = PadRight("1. Cessionario", sxColWidth);            
+            var headerCess = PadRight(cessionario != null ? "1. Cessionario" : "", sxColWidth);            
             cmd += $"TEXT {p} {x} {y} {headerTrasp} {headerCess}\r\n";
             y += lineSpacing;
 
@@ -144,19 +144,20 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // Trasportatore - Indirizzo
             var trasportatore = PadRight($"Trasportatore: {trasp?.RagioneSociale}", sxColWidth);
-            var cessIndirizzo = PadRight($"Trasportatore: {cessionario?.Indirizzo}", sxColWidth);
+            var cessIndirizzo = PadRight($"{cessionario?.Indirizzo}", sxColWidth);
             cmd += $"TEXT {p} {x} {y} {trasportatore} {cessIndirizzo}\r\n";
             y += lineSpacing;
 
             // Indirizzo - cap/comune /prov
             var traspIndirizzo = PadRight($"{trasp?.Indirizzo}", sxColWidth);
-            var comCess = PadRight($"{cessionario?.CAP} {cessionario?.Comune} ({cessionario?.Provincia})", sxColWidth);
+            var provCess = !string.IsNullOrEmpty(cessionario?.Provincia) ? $"({ cessionario?.Provincia})" : "";
+            var comCess = PadRight($"{cessionario?.CAP} {cessionario?.Comune} {provCess}", sxColWidth);
             cmd += $"TEXT {p} {x} {y} {traspIndirizzo} {comCess}\r\n";
             y += lineSpacing;
 
             // P IVA - P IVA
             var traspPiva = PadRight($"P.IVA: {trasp?.P_IVA}", sxColWidth);
-            var cessPiva = PadRight($"P.IVA: {cessionario?.P_IVA}", sxColWidth);
+            var cessPiva = PadRight(cessionario != null ? $"P.IVA: {cessionario?.P_IVA}" : "", sxColWidth);
             cmd += $"TEXT {p} {x} {y} {traspPiva} {cessPiva}\r\n";
             y += lineSpacing;
 
