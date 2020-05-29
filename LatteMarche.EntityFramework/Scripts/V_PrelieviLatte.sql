@@ -6,7 +6,7 @@ SELECT
 	prelievi.TEMPERATURA,
 	prelievi.DATA_ULTIMA_MUNGITURA,
 	prelievi.ID_ALLEVAMENTO,
-	utenti_allevamento.COGNOME + ' ' + utenti_allevamento.NOME  as DESCR_ALLEVAMENTO,
+	utenti_allevamento.RAGIONE_SOCIALE as DESCR_ALLEVAMENTO,
 	utenti_allevamento.PIVA_CF as PIVA_ALLEVAMENTO,
 	prelievi.ID_DESTINATARIO,
 	destinatari.RAG_SOC_DESTINATARIO,

@@ -179,7 +179,6 @@
         <th>Allevamento</th>
         <th>Data prelievo</th>
         <th>Data consegna</th>
-        <th>Ult mung.</th>
         <th>Kg</th>
         <th>Lt</th>
         <th>Temp.</th>
@@ -195,7 +194,6 @@
         <th colspan="4" style="text-align:right">Totale:</th>
         <th>{{totale_prelievi_kg}} kg</th>
         <th>{{totale_prelievi_lt}} lt</th>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -293,17 +291,6 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.dropdownService = new DropdownService();
 
     this.idProfilo = $("#idProfilo").val();
-
-    console.log("idProfilo", $("#idProfilo").val());
-
-    // this.canAdd = $("#canAdd").val() == "true";
-    // this.canEdit = $("#canEdit").val() == "true";
-    // this.canRemove = $("#canRemove").val() == "true";
-    // this.canSearchAllevatore = $("#canSearchAllevatore").val() == "true";
-    // this.canSearchTrasportatore = $("#canSearchTrasportatore").val() == "true";
-    // this.canSearchAcquirente = $("#canSearchAcquirente").val() == "true";
-    // this.canSearchDestinatario = $("#canSearchDestinatario").val() == "true";
-    // this.canSearchCessionario = $("#canSearchCessionario").val() == "true";
   }
 
   public mounted() {
@@ -382,7 +369,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     options.columns = [];
     (options.columnDefs = [
       {
-        targets: [0, 7, 8, 9, 10],
+        targets: [0, 6, 7, 8, 9],
         createdCell: function(
           td: any,
           cellData: any,
@@ -404,11 +391,6 @@ export default class PrelieviLatteIndexPage extends Vue {
       className: "truncate",
       width: "85px",
       data: "DataConsegnaStr"
-    });
-    options.columns.push({
-      className: "truncate",
-      width: "85px",
-      data: "DataUltimaMungituraStr"
     });
     options.columns.push({
       className: "truncate",
@@ -516,70 +498,71 @@ export default class PrelieviLatteIndexPage extends Vue {
   }
 
   // caricamento allevatori
-  private async loadAllevatori(): Promise<void> {
-    const dd = await this.dropdownService.getAllevamenti();
-    if (dd.data != null) {
-      this.allevatori = dd.data;
+  private loadAllevatori() {
+    this.dropdownService.getAllevamenti().then(response => {
+      this.allevatori = response.data;
 
       if(this.idProfilo == 3)
-        this.parameters.IdAllevamento = dd.data.Items[0].Value;      
-    }
+        this.parameters.IdAllevamento = response.data.Items[0].Value;      
+    });
   }
 
   // caricamento tipi latte
-  private async loadTipiLatte(): Promise<void> {
-    const dd = await this.dropdownService.getTipiLatte();
-    if (dd.data != null) {
-      this.tipiLatte = dd.data;
-    }
+  private loadTipiLatte() {
+    this.dropdownService.getTipiLatte().then(response => {
+      if (response.data != null) {
+        this.tipiLatte = response.data;
+      }
+    });
   }
 
   // caricamento trasportatori
-  private async loadTrasportatori() {
-    const dd = await this.dropdownService.getTrasportatori();
-    if (dd.data != null) {
-      this.trasportatore = dd.data;
+  private loadTrasportatori() {
+    this.dropdownService.getTrasportatori().then(response => {
+      if (response.data != null) {
+        this.trasportatore = response.data;
 
-      if(this.idProfilo == 5)
-        this.parameters.IdTrasportatore = dd.data.Items[0].Value;      
-    }
+        if(this.idProfilo == 5)
+          this.parameters.IdTrasportatore = response.data.Items[0].Value;      
+      }
+    });
   }
 
   // caricamento destinatari
-  private async loadDestinatari() {
-    const dd = await this.dropdownService.getDestinatari();
+  private loadDestinatari() {
+    this.dropdownService.getDestinatari().then(response => {
+      if (response.data != null) {
+        this.destinatario = response.data;
 
-    if (dd.data != null) {
-      this.destinatario = dd.data;
+        if(this.idProfilo == 6)
+          this.parameters.IdDestinatario = response.data.Items[0].Value;
 
-      if(this.idProfilo == 6)
-        this.parameters.IdDestinatario = dd.data.Items[0].Value;
-
-    }
+      }
+    });
   }
 
   // caricamento acquirenti
-  private async loadAcquirenti() {
-    const dd = await this.dropdownService.getAcquirenti();
+  private loadAcquirenti() {
+    this.dropdownService.getAcquirenti().then(response => {
+      if (response.data != null) {
+        this.acquirente = response.data;
 
-    if (dd.data != null) {
-      this.acquirente = dd.data;
-
-      if(this.idProfilo == 7)
-        this.parameters.IdAcquirente = dd.data.Items[0].Value;      
-    }
+        if(this.idProfilo == 7)
+          this.parameters.IdAcquirente = response.data.Items[0].Value;      
+      }
+    });
   }
 
   // caricamento cessionari
-  private async loadCessionari() {
-    const dd = await this.dropdownService.getCessionari();
+  private loadCessionari() {
+    this.dropdownService.getCessionari().then(response => {
+      if (response.data != null) {
+        this.cessionario = response.data;
 
-    if (dd.data != null) {
-      this.cessionario = dd.data;
-
-      if(this.idProfilo == 8)
-        this.parameters.IdCessionario = dd.data.Items[0].Value;      
-    }
+        if(this.idProfilo == 8)
+          this.parameters.IdCessionario = response.data.Items[0].Value;      
+      }
+    });
   }
 
   //Esportazione excel
