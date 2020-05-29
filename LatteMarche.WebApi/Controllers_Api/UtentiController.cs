@@ -73,7 +73,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
-        [ViewItem(nameof(Save), "Utenti", "Cambio Password")]
+        [ViewItem(nameof(ChangePassword), "Utenti", "Cambio Password")]
         [HttpPost]
         public IHttpActionResult ChangePassword([FromBody] ChangePasswordViewModel model)
         {
