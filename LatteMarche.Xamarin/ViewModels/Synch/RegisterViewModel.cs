@@ -57,6 +57,11 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             (this.RegisterCommand as Command).ChangeCanExecute();
         }
 
+        private Location GetLocation()
+        {
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
+            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
+        }
 
         private async Task ExecuteRegisterCommand()
         {
@@ -64,7 +69,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
             try
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = GetLocation();
                 VersionTracking.Track();
                 var appVersion = VersionTracking.CurrentVersion;
                 var isActive = false;

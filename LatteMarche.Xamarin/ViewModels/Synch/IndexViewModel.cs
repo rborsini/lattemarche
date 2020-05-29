@@ -95,12 +95,18 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         }
 
+        private Location GetLocation()
+        {
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
+            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
+        }
+
         private async Task ExecuteUploadCommand()
         {
             try
             {
                 this.IsBusy = true;
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = GetLocation();
                 VersionTracking.Track();
 
                 await Task.Run(() =>
@@ -156,7 +162,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 this.IsBusy = true;
 
                 var imei = DependencyService.Get<IDevice>().GetIdentifier();
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = GetLocation();
 
                 await Task.Run(() =>
                 {

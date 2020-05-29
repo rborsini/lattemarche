@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Xamarin.Essentials;
 
 namespace LatteMarche.Xamarin.Droid
 {
@@ -11,6 +12,8 @@ namespace LatteMarche.Xamarin.Droid
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
             base.OnCreate(savedInstanceState, persistentState);
+
+            Platform.Init(this, savedInstanceState);
         }
 
         // Launches the startup task
@@ -19,5 +22,13 @@ namespace LatteMarche.Xamarin.Droid
             base.OnResume();
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
     }
 }

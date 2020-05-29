@@ -301,6 +301,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
         }
 
+        private Location GetLocation()
+        {
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
+            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
+        }
+
         /// <summary>
         /// Invio giro
         /// </summary>
@@ -308,11 +314,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <param name="e"></param>
         private async void Item_OnItem_Sending(object sender, EventArgs e)
         {
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Invio giro", lottieAnimation: "LottieLogo1.json");
 
             try
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                var location = GetLocation();
                 VersionTracking.Track();
 
                 await Task.Run(() =>

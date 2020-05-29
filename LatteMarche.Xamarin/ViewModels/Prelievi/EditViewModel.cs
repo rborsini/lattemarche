@@ -29,6 +29,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private bool isNew = false;
         private bool isEditable = false;
+
+        private bool isAllevamentoEditable = false;
+        private bool isAcquirenteEditable = false;
+        private bool isCessionarioEditable = false;
+        private bool isDestinatarioEditable = false;
+
         private int idGiro;
 
         private string id;
@@ -76,6 +82,30 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         {
             get { return this.isEditable; }
             set { SetProperty(ref this.isEditable, value); }
+        }
+
+        public bool IsAllevamentoEditable
+        {
+            get { return this.isAllevamentoEditable; }
+            set { SetProperty(ref this.isAllevamentoEditable, value); }
+        }
+
+        public bool IsAcquirenteEditable
+        {
+            get { return this.isAcquirenteEditable; }
+            set { SetProperty(ref this.isAcquirenteEditable, value); }
+        }
+
+        public bool IsCessionarioEditable
+        {
+            get { return this.isCessionarioEditable; }
+            set { SetProperty(ref this.isCessionarioEditable, value); }
+        }
+
+        public bool IsDestinatarioEditable
+        {
+            get { return this.isDestinatarioEditable; }
+            set { SetProperty(ref this.isDestinatarioEditable, value); }
         }
 
         public string Id
@@ -289,6 +319,17 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.Kg = ConvertToKg(lt);
         }
 
+        public async Task<PermissionStatus> CheckLocationPermission()
+        {
+            return await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();            
+        }
+
+        private Location GetLocation()
+        {
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
+            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
+        }
+
         /// <summary>
         /// Comando caricamento dati singolo prelievo e tabelle lookup
         /// </summary>
@@ -296,9 +337,14 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private async Task ExecuteLoadCommand()
         {
             this.IsBusy = true;
+
+            var permissionStatus = CheckLocationPermission().Result;
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento", lottieAnimation: "LottieLogo1.json");
             try
             {
+                var location = GetLocation();
+
                 await Task.Run(() =>
                 {
                     if (isNew)
@@ -324,6 +370,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var destinatari = this.destinatariService.GetItemsAsync().Result;
                     var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
 
+                    this.IsAllevamentoEditable = this.IsEditable && allevamenti.Count() > 0;
+                    this.IsAcquirenteEditable = this.IsEditable && acquirenti.Count() > 0;
+                    this.IsCessionarioEditable = this.IsEditable && cessionari.Count() > 0;
+                    this.IsDestinatarioEditable = this.IsEditable && destinatari.Count() > 0;
+
                     // Data prelievo
                     this.DataPrelievo = GetDateWhitoutTime(prelievo.DataPrelievo);
 
@@ -332,7 +383,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     // Allevamento
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
-                    this.AllevamentoSelezionato = GetAllevamentoSelezionato(Geolocation.GetLastKnownLocationAsync().Result);
+                    this.AllevamentoSelezionato = GetAllevamentoSelezionato(location);
 
                     this.Title = this.AllevamentoSelezionato != null ? "Modifica Prelievo" : "Nuovo Prelievo";
 
@@ -378,7 +429,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);
-
+                await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
             finally
@@ -415,7 +466,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     bool reply = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
                     
                     if(reply == false)
+                    {
+                        await loadingDialog.DismissAsync();
                         return;
+                    }                        
                 }
 
 
@@ -769,6 +823,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private Allevamento GetAllevamentoSelezionato(Location location)
         {
+            if (location == null)
+                return null;                     
+
             // allevamento presente nel prelievo
             if (this.prelievo.IdAllevamento.HasValue)
                 return this.Allevamenti.FirstOrDefault(a => a.IdAllevamento == this.prelievo.IdAllevamento.Value);
