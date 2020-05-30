@@ -4,33 +4,16 @@
     <waiter ref="waiter"></waiter>
 
     <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal
-      ref="editazionePrelievoModal"
-      :prelievo-latte="prelievoSelezionato"
-      v-on:salvato="$refs.savedDialog.open()"
-    ></editazione-prelievo-modal>
+    <editazione-prelievo-modal ref="editazionePrelievoModal" :prelievo-latte="prelievoSelezionato" v-on:salvato="$refs.savedDialog.open()" ></editazione-prelievo-modal>
 
     <!-- Pannello Salvataggio prelievo-->
-    <notification-dialog
-      ref="savedDialog"
-      :title="'Conferma salvataggio'"
-      :message="'Il prelievo è stato salvato correttamente'"
-    ></notification-dialog>
+    <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Il prelievo è stato salvato correttamente'" ></notification-dialog>
 
     <!-- Pannello notifica rimozione -->
-    <notification-dialog
-      ref="removedDialog"
-      :title="'Conferma rimozione'"
-      :message="'Prelievo rimosso correttamente'"
-    ></notification-dialog>
+    <notification-dialog ref="removedDialog" :title="'Conferma rimozione'" :message="'Prelievo rimosso correttamente'" ></notification-dialog>
 
     <!-- Pannello modale conferma eliminazione -->
-    <confirm-dialog
-      ref="confirmDeleteDialog"
-      :title="'Conferma eliminazione'"
-      :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'"
-      v-on:confirmed="onRemove()"
-    ></confirm-dialog>
+    <confirm-dialog ref="confirmDeleteDialog" :title="'Conferma eliminazione'" :message="'Sei sicuro di voler rimuovere il prelievo selezionato?'" v-on:confirmed="onRemove()" ></confirm-dialog>
 
     <!-- Box ricerca -->
     <div class="jumbotron">
@@ -381,7 +364,7 @@ export default class PrelieviLatteIndexPage extends Vue {
         }
       }
     ]),
-      options.columns.push({ className: "truncate", data: "Allevamento" });
+    options.columns.push({ className: "truncate", data: "Allevamento" });
     options.columns.push({
       className: "truncate",
       width: "85px",

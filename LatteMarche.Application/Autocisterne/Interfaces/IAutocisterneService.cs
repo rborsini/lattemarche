@@ -8,6 +8,6 @@ namespace LatteMarche.Application.Autocisterne.Interfaces
 {
     public interface IAutocisterneService : IEntityService<Autocisterna, int, AutocisternaDto>
     {
-        DropDownDto DropDown();
+        DropDownDto DropDown(int idAutotrasportatore);
     }
 }

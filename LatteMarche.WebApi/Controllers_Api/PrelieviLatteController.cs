@@ -268,6 +268,7 @@ namespace LatteMarche.WebApi.Controllers_Api
             }
         }
 
+        [ViewItem(nameof(ExcelAllevatori), "Prelievi latte", "Excel Allevatori")]
         [HttpGet]
         public IHttpActionResult ExcelAllevatori([FromUri] PrelieviLatteSearchDto searchDto)
         {
@@ -282,6 +283,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(ExcelGiornalieri), "Prelievi latte", "Excel Giornalieri")]
         [HttpGet]
         public IHttpActionResult ExcelGiornalieri([FromUri] PrelieviLatteSearchDto searchDto)
         {

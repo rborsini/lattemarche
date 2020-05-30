@@ -69,7 +69,7 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             model.Add(analisi);
 
-            MenuItemViewModel anagrafiche = new MenuItemViewModel("Anagrafiche");
+            MenuItemViewModel anagrafiche = new MenuItemViewModel("Tabelle");
 
             anagrafiche.Items.Add(MakeViewModel("Acquirenti", "Index", "Acquirenti"));
             anagrafiche.Items.Add(MakeViewModel("Cessionari", "Index", "Cessionari"));

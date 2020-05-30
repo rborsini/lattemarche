@@ -442,7 +442,7 @@
       <Name>LatteMarche.Application.Mobile</Name>
     </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Application\LatteMarche.Application.csproj">
-      <Project>{C7EB12A1-580D-4B9C-9DFD-711A962A61E8}</Project>
+      <Project>{c7eb12a1-580d-4b9c-9dfd-711a962a61e8}</Project>
       <Name>LatteMarche.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">

@@ -84,7 +84,7 @@ namespace LatteMarche.Application.Mobile.Services
                 dispositivo.Longitudine = deviceInfo.Lng;
                 dispositivo.Marca = deviceInfo.Marca;
                 dispositivo.Modello = deviceInfo.Modello;
-                dispositivo.Nome = deviceInfo.Nome;
+                //dispositivo.Nome = deviceInfo.Nome;
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();

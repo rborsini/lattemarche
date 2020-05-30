@@ -25,13 +25,14 @@ namespace LatteMarche.Application.Autocisterne.Interfaces
 
         #region Methods
 
-        public DropDownDto DropDown()
+        public DropDownDto DropDown(int idAutotrasportatore)
         {
             DropDownDto model = new DropDownDto();
 
             var query = this.repository.Query;
 
             model.Items = query
+                .Where(a => a.IdTrasportatore == idAutotrasportatore)
                 .Select(item => new DropDownItem() { Value = item.Id.ToString(), Text = item.Targa })
                 .Distinct()
                 .ToList();

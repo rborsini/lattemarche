@@ -103,6 +103,7 @@ namespace LatteMarche.Application.Dashboard.Services
                 var queryMensile = query.Where(p => meseCorrente <= p.DataPrelievo && p.DataPrelievo < meseSuccessivo);
 
                 var result = queryMensile
+                    .Where(p => p.IdAcquirente.HasValue)
                     .GroupBy(p => p.IdAcquirente, (k, c) => new
                     {
                         IdAcquirente = k.Value,
@@ -154,16 +155,17 @@ namespace LatteMarche.Application.Dashboard.Services
                 var queryMensile = query.Where(p => meseCorrente <= p.DataPrelievo && p.DataPrelievo < meseSuccessivo);
 
                 var result = queryMensile
+                    .Where(p => p.IdTipoLatte.HasValue)
                     .GroupBy(p => p.IdTipoLatte, (k, c) => new
                     {
-                        IdAcquirente = k.Value,
+                        IdTipoLatte = k.Value,
                         Quantita = c.Sum(p => p.Quantita)
                     })
                     .ToList();
 
                 foreach (var serie in widgetDto.Serie)
                 {
-                    var valore = result.FirstOrDefault(r => $"{r.IdAcquirente}" == serie.Id);
+                    var valore = result.FirstOrDefault(r => $"{r.IdTipoLatte}" == serie.Id);
                     serie.Valori.Add(valore == null ? (decimal?)null : valore.Quantita);
                 }
 

@@ -25,7 +25,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataRegistrazione_Str 
         {
-            get { return new DateHelper().FormatDate(this.dataRegistratione); } 
+            get { return new DateHelper().FormatDateTime(this.dataRegistratione); } 
             set { this.dataRegistratione = new DateHelper().ConvertToDateTime(value).Value; } 
         }
 
@@ -37,7 +37,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataUltimoDownload_Str
         {
-            get { return new DateHelper().FormatDate(this.dataUltimoDownload); }
+            get { return new DateHelper().FormatDateTime(this.dataUltimoDownload); }
             set { this.dataUltimoDownload = new DateHelper().ConvertToDateTime(value); }
         }
 
@@ -49,7 +49,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataUltimoUpload_Str
         {
-            get { return new DateHelper().FormatDate(this.dataUltimoUpload); }
+            get { return new DateHelper().FormatDateTime(this.dataUltimoUpload); }
             set { this.dataUltimoUpload = new DateHelper().ConvertToDateTime(value); }
         }
 

@@ -50,9 +50,9 @@ export default {
       var dom = "";
 
       if ($(".toolbox")[0])
-        dom =
-          '<"top row"<"col-6 float-left"i><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
-      else dom = '<"row"<"col-6"f><"col-6">>t<"row"<"col-6"l><"col-6"p>>';
+        dom = '<"top row"<"col-6 float-left"f><"col-6 float-right toolbox-div">>t<"row"<"col-6"l><"col-6"p>>';
+      else 
+        dom = '<"row"<"col-6"f><"col-6">>t<"row"<"col-6"l><"col-6"p>>';
 
       var defaultOptions = {
         dom: dom,
