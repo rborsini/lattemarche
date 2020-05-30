@@ -120,7 +120,7 @@ namespace LatteMarche.Application.Mobile.Services
                     {
                         var giroFull = this.giriRepository.GetById(giro.Id);
 
-                        var allevamentiXGiro = giroFull.Allevamenti.Where(a => a.Priorita.HasValue).ToList();
+                        var allevamentiXGiro = giroFull.Allevamenti.Where(a => a.Priorita.HasValue && a.Allevamento.IdUtente.HasValue).ToList();
 
                         foreach (var axg in allevamentiXGiro)
                         {

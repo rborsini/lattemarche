@@ -14,7 +14,7 @@ namespace LatteMarche.Xamarin.Rest.Dtos
         public string Comune { get; set; }
         public string Provincia { get; set; }
         public int Priorita { get; set; }
-        public int IdTipoLatte { get; set; }
+        public int? IdTipoLatte { get; set; }
         public int IdTemplateGiro { get; set; }
 
         public double? Latitudine { get; set; }

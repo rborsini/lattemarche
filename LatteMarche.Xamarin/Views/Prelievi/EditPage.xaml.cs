@@ -41,38 +41,35 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private async void Scomparto_Focused(object sender, FocusEventArgs e)
         {
-            try
+
+            var ElencoScomparti = new List<string> { "1", "2", "3", "4", "5", "6" };
+
+            (sender as MaterialTextField).Unfocus();
+
+            this.viewModel.Scomparto = String.IsNullOrEmpty(this.viewModel.Scomparto) ? "" : this.viewModel.Scomparto;
+
+            var scompartiSelezionati = this.viewModel.Scomparto.Split('-');
+            var indiciSelezionati = new List<int>();
+
+            foreach (var scomparto in this.viewModel.Scomparto.Split('-'))
             {
-                var ElencoScomparti = new List<string> { "1", "2", "3", "4", "5", "6" };
+                if(ElencoScomparti.IndexOf(scomparto) > 0)
+                    indiciSelezionati.Add(ElencoScomparti.IndexOf(scomparto));
+            }
 
-                (sender as MaterialTextField).Unfocus();
+            var result = await MaterialDialog.Instance.SelectChoicesAsync(title: "Seleziona scomparto", selectedIndices: indiciSelezionati, dismissiveText: "Annulla", choices: ElencoScomparti.ToArray());
 
-                this.viewModel.Scomparto = String.IsNullOrEmpty(this.viewModel.Scomparto) ? "" : this.viewModel.Scomparto;
+            var scomparti = new List<string>();
 
-                var scompartiSelezionati = this.viewModel.Scomparto.Split('-');
-                var indiciSelezionati = new List<int>();
-
-                foreach (var scomparto in this.viewModel.Scomparto.Split('-'))
-                {
-                    if(ElencoScomparti.IndexOf(scomparto) > 0)
-                        indiciSelezionati.Add(ElencoScomparti.IndexOf(scomparto));
-                }
-
-                var result = await MaterialDialog.Instance.SelectChoicesAsync(title: "Seleziona scomparto", selectedIndices: indiciSelezionati, dismissiveText: "Annulla", choices: ElencoScomparti.ToArray());
-
-                var scomparti = new List<string>();
-
+            if (result != null)
+            {
                 foreach (var index in result)
                 {
                     scomparti.Add(ElencoScomparti[index]);
                 }
+            }
 
-                this.viewModel.Scomparto = String.Join("-", scomparti);
-            }
-            catch(Exception exc)
-            {
-                throw exc;
-            }
+            this.viewModel.Scomparto = String.Join("-", scomparti);
 
         }
 
