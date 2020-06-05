@@ -24,6 +24,10 @@ export class AnalisiSearchModel {
     public CodiceProduttore: string = "";
     public CodiceAsl: string = "";
     public Campione: string = "";
+    public IdAllevamento?: number = 0;
+
+    public DataPeriodoInizio_Str: string = "";
+    public DataPeriodoFine_Str: string = "";
 }
 
 export class AnalisiTable {

@@ -1,4 +1,5 @@
-﻿using LatteMarche.WebApi.Attributes;
+﻿using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,33 @@ namespace LatteMarche.WebApi.Controllers_Web
     [MvcExceptionFilter]
     public class AnalisiLatteController : Controller
     {
+        #region Fields
+
+        private IUtentiService utentiService;
+
+        #endregion
+
+        #region Constructor
+
+        public AnalisiLatteController(IUtentiService utentiService)
+        {
+            this.utentiService = utentiService;
+        }
+
+        #endregion
+
+        #region Methods
+
         [ViewItem(nameof(Index), "Analisi latte", "Lista")]
         public ActionResult Index()
-        {           
-            return View();
+        {
+            var utente = this.utentiService.Details(User.Identity.Name);
+            int idProfilo = utente != null ? utente.IdProfilo : 0;
+
+            return View(idProfilo);
         }
+
+        #endregion
 
     }
 }

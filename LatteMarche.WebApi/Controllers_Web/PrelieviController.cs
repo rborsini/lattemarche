@@ -18,16 +18,14 @@ namespace LatteMarche.WebApi.Controllers_Web
 
         #region Fields
 
-        private IPrelieviLatteService prelieviLatteService;
         private IUtentiService utentiService;
 
         #endregion
 
         #region Constructor
 
-        public PrelieviController(IPrelieviLatteService prelieviLatteService, IUtentiService utentiService)
+        public PrelieviController(IUtentiService utentiService)
         {
-            this.prelieviLatteService = prelieviLatteService;
             this.utentiService = utentiService;
         }
 
@@ -36,12 +34,6 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
-        //[ViewItem("RicercaAllevatore", "Prelievi", "Ricerca per Allevatore")]
-        //[ViewItem("RicercaTrasportatore", "Prelievi", "Ricerca per Trasportatore")]
-        //[ViewItem("RicercaAcquirente", "Prelievi", "Ricerca per Acquirente")]
-        //[ViewItem("RicercaDestinatario", "Prelievi", "Ricerca per Destinatario")]
-        //[ViewItem("RicercaCessionario", "Prelievi", "Ricerca per Cessionario")]
-
         public ActionResult Index()
         {
             var utente = this.utentiService.Details(User.Identity.Name);

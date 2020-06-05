@@ -75,12 +75,21 @@ namespace LatteMarche.Application.AnalisiLatte.Services
                 query = query.Where(a => a.CodiceProduttore == searchDto.CodiceProduttore);
 
             // IdAllevamento
-            if (searchDto.IdAllevamento.HasValue)
+            if (searchDto.IdAllevamento.HasValue && searchDto.IdAllevamento.Value != 0)
                 query = query.Where(a => a.IdAllevamento == searchDto.IdAllevamento);
 
             // Codice ASL
             if (!String.IsNullOrEmpty(searchDto.CodiceAsl))
                 query = query.Where(a => a.CodiceASL == searchDto.CodiceAsl);
+
+            // Periodo Prelievo
+            if (searchDto.DataPeriodoInizio.HasValue || searchDto.DataPeriodoFine.HasValue)
+            {
+                DateTime from = searchDto.DataPeriodoInizio.HasValue ? searchDto.DataPeriodoInizio.Value : DateTime.MinValue;
+                DateTime to = searchDto.DataPeriodoFine.HasValue ? searchDto.DataPeriodoFine.Value.AddDays(1) : DateTime.MaxValue;
+
+                query = query.Where(p => from <= p.DataPrelievo && p.DataPrelievo < to);
+            }
 
             return ConvertToDtoList(query.ToList());
         }
