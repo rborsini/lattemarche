@@ -80,7 +80,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.AddCommand = new Command(async () => await ExecuteAddCommand(), canExecute: () => { return !this.IsReadOnly; });
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            this.PrintCommand = new Command(async () => await ExecutePrintCommand(), canExecute: () => { return this.Prelievi.Count > 0; });
+            //this.PrintCommand = new Command(async () => await ExecutePrintCommand(), canExecute: () => { return this.Prelievi.Count > 0; });
 
         }
 
@@ -141,13 +141,16 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <param name="e"></param>
         private async void Item_OnItem_Deleting(object sender, EventArgs e)
         {
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione prelievo", lottieAnimation: "LottieLogo1.json");
+            IMaterialModalPage loadingDialog = null;
             try
             {
                 bool reply = await this.page.DisplayAlert("Attenzione", $"Sei sicuro di voler eliminare il prelievo selezionato?", "Si", "No");
                 if (reply == false)
+                {
                     return;
+                }
 
+                loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione prelievo", lottieAnimation: "LottieLogo1.json");
                 await Task.Run(() =>
                 {
                     var item = sender as ItemViewModel;
@@ -168,81 +171,81 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
-        /// <summary>
-        /// Comando stampa ricevuta raccolta
-        /// </summary>
-        /// <returns></returns>
-        private async Task ExecutePrintCommand()
-        {
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
+        ///// <summary>
+        ///// Comando stampa ricevuta raccolta
+        ///// </summary>
+        ///// <returns></returns>
+        //private async Task ExecutePrintCommand()
+        //{
+        //    var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
-            try
-            {
-                Debug.WriteLine("Print Command");
-                this.IsBusy = true;
+        //    try
+        //    {
+        //        Debug.WriteLine("Print Command");
+        //        this.IsBusy = true;
 
-                await Task.Run(() =>
-                {
-                    var stampante = this.stampantiService.GetDefaultAsync().Result;
+        //        await Task.Run(() =>
+        //        {
+        //            var stampante = this.stampantiService.GetDefaultAsync().Result;
 
-                    if (stampante == null)
-                        throw new Exception("Nessuna stampante associata");
+        //            if (stampante == null)
+        //                throw new Exception("Nessuna stampante associata");
 
-                    var printer = DependencyService.Get<IPrinter>();
-                    printer.MacAddress = stampante.MacAddress;
+        //            var printer = DependencyService.Get<IPrinter>();
+        //            printer.MacAddress = stampante.MacAddress;
 
-                    this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
-                    this.giro.Prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result.ToList();
-                    var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
+        //            this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
+        //            this.giro.Prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result.ToList();
+        //            var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
 
-                    var registroRaccolta = new RegistroRaccolta();
+        //            var registroRaccolta = new RegistroRaccolta();
 
-                    registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
-                    registroRaccolta.Cessionario = GetCessionario(this.giro).Result;
-                    registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
-                    registroRaccolta.Giro = templateGiro;
-                    registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
-                    registroRaccolta.CodiceLotto = this.giro.CodiceLotto;
-                    registroRaccolta.Data = DateTime.Now;
+        //            registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
+        //            registroRaccolta.Cessionario = GetCessionario(this.giro).Result;
+        //            registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
+        //            registroRaccolta.Giro = templateGiro;
+        //            registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
+        //            registroRaccolta.CodiceLotto = this.giro.CodiceLotto;
+        //            registroRaccolta.Data = DateTime.Now;
 
-                    foreach (var prelievo in this.giro.Prelievi)
-                    {
-                        var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
+        //            foreach (var prelievo in this.giro.Prelievi)
+        //            {
+        //                var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
 
-                        registroRaccolta.Items.Add(new RegistroRaccolta.Item()
-                        {
-                            Scomparto = prelievo.Scomparto,
-                            Allevamento = allevamento,
-                            DataPrelievo = prelievo.DataPrelievo,
-                            Quantita_kg = prelievo.Quantita_kg,
-                            TipoLatte = allevamento != null ? allevamento.TipoLatte : null
-                        });
-                    }
+        //                registroRaccolta.Items.Add(new RegistroRaccolta.Item()
+        //                {
+        //                    Scomparto = prelievo.Scomparto,
+        //                    Allevamento = allevamento,
+        //                    DataPrelievo = prelievo.DataPrelievo,
+        //                    Quantita_kg = prelievo.Quantita_kg,
+        //                    TipoLatte = allevamento != null ? allevamento.TipoLatte : null
+        //                });
+        //            }
 
-                    printer.PrintLabel(registroRaccolta);
+        //            printer.PrintLabel(registroRaccolta);
 
-                });
+        //        });
 
-                this.IsBusy = false;
-                await loadingDialog.DismissAsync();
+        //        this.IsBusy = false;
+        //        await loadingDialog.DismissAsync();
 
-                Analytics.TrackEvent("Stampa ricevuta consegna");
-                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
+        //        Analytics.TrackEvent("Stampa ricevuta consegna");
+        //        SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
 
-                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
-            }
-            catch (Exception exc)
-            {
-                this.IsBusy = false;
-                await loadingDialog.DismissAsync();
+        //        await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        this.IsBusy = false;
+        //        await loadingDialog.DismissAsync();
 
-                SentrySdk.CaptureException(exc);
-                Crashes.TrackError(exc);
+        //        SentrySdk.CaptureException(exc);
+        //        Crashes.TrackError(exc);
 
-                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
-            }
+        //        await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+        //    }
 
-        }    
+        //}    
 
         /// <summary>
         /// Apertura pagina nuovo prelievo

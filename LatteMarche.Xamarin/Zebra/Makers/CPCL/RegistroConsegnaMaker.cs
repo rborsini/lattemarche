@@ -128,8 +128,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             var tipoLatte = registroConsegna.TipoLatte;
 
             // Qta kg   -   Litri
-            var qtaKg = $"{registroConsegna.Quantita_kg:.0}";
-            var qtaLt = $"{registroConsegna.Quantita_lt:.0}";
+            var qtaKg = $"{registroConsegna.Quantita_kg:#}";
+            var qtaLt = $"{registroConsegna.Quantita_lt:#}";
 
             cmd += $"TEXT {p} {x} {y} {PadRight("Quantita' kg: ", colSxWidth)}{PadRight(qtaKg, colDxStart - colSxWidth)} Litri: {qtaLt} \r\n";
             y += 1;
@@ -146,7 +146,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // Temp   -   Tipo Latte
             var temp = $"{registroConsegna.Temperatura:.0}";
-            var tipoLatteText = $"{tipoLatte?.Codice} - {tipoLatte?.Descrizione}";
+            var tipoLatteText = $"{tipoLatte?.Codice}";
 
             cmd += $"TEXT {p} {x} {y} {PadRight("Temp. : ", colSxWidth)}{PadRight(temp, colDxStart - colSxWidth)} Tipo Latte: {tipoLatteText} \r\n";
 

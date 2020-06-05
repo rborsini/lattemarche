@@ -614,13 +614,16 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 Debug.WriteLine("Print Command");
                 this.IsBusy = true;
 
+                var stampante = this.stampantiService.GetDefaultAsync().Result;
+                if (stampante == null)
+                {
+                    await loadingDialog.DismissAsync();
+                    await this.page.DisplayAlert("Attenzione", "Nessuna stampante selezionata", "OK");
+                    return;
+                }
+
                 await Task.Run(() =>
                 {
-                    var stampante = this.stampantiService.GetDefaultAsync().Result;
-
-                    if (stampante == null)
-                        throw new Exception("Nessuna stampante associata");
-
                     var printer = DependencyService.Get<IPrinter>();
                     printer.MacAddress = stampante.MacAddress;
 
@@ -826,8 +829,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private Allevamento GetAllevamentoSelezionato(Location location)
         {
-            if (location == null)
-                return null;                     
 
             // allevamento presente nel prelievo
             if (this.prelievo.IdAllevamento.HasValue)
@@ -835,6 +836,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             if (this.isNew)
             {
+                if (location == null)
+                    return null;
+
                 var distanze = this.Allevamenti
                     .Where(a => a.Latitudine.HasValue && a.Longitudine.HasValue)
                     .Select(a => new { Id = a.IdAllevamento, Distance = GetDistance(a, location) })
@@ -864,9 +868,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 var kg = Convert.ToDecimal(value);
 
-                var lt = kg / this.TipoLatte.FattoreConversione.Value;
+                var lt = Convert.ToInt32(kg / this.TipoLatte.FattoreConversione.Value);
 
-                return $"{lt:#.00}";
+                return $"{lt:#}";
             }
 
             return String.Empty;
@@ -886,9 +890,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 var lt = Convert.ToDecimal(value);
 
-                var kg = lt * this.TipoLatte.FattoreConversione;
+                var kg = Convert.ToInt32(lt * this.TipoLatte.FattoreConversione);
 
-                return $"{kg:#.00}";
+                return $"{kg:#}";
             }
 
             return String.Empty;

@@ -183,11 +183,14 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private async Task ExecuteResetCommand()
         {
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Reset in corso", lottieAnimation: "LottieLogo1.json");
+            IMaterialModalPage loadingDialog = null;
             try
             {
-                this.IsBusy = true;
+                bool reply = await this.page.DisplayAlert("Attenzione", $"Sei sicuro di voler resettare l'applicazione?", "Si", "No");
+                if (reply == false)
+                    return;
 
+                loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Reset in corso", lottieAnimation: "LottieLogo1.json");
                 await Task.Run(() =>
                 {
                     this.sincronizzazioneService.ResetAsync().Wait();

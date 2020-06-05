@@ -393,7 +393,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     options.columns.push({ className: "truncate", data: "Trasportatore" });
     options.columns.push({ className: "truncate", data: "Acquirente" });
     options.columns.push({ className: "truncate", data: "Destinatario" });
-    options.columns.push({ className: "truncate", data: "DescrizioneLatte" });
+    options.columns.push({ className: "truncate", data: "SiglaLatte" });
 
 
       options.columns.push({

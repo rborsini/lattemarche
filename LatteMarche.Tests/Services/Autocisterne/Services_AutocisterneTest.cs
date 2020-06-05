@@ -89,7 +89,7 @@ namespace LatteMarche.Tests.Services.Autocisterne
             this.autocisterneRepository.Add(cessionari);
             this.uow.SaveChanges();
 
-            var dropdownDto = this.autocisterneService.DropDown();
+            var dropdownDto = this.autocisterneService.DropDown(this.trasportatore.Id);
             Assert.AreEqual(5, dropdownDto.Items.Count);
         }
 

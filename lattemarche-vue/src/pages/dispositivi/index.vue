@@ -97,23 +97,17 @@ export default class DispositiviIndexPage extends Vue {
 
     options.columns.push({
       data: "DataRegistrazione",
-      render: function(data: any, type: any, row: any) {
-        return row.DataRegistrazione_Str;
-      }
+      type: "date-eu"
     });
 
     options.columns.push({
       data: "DataUltimoDownload",
-      render: function(data: any, type: any, row: any) {
-        return row.DataUltimoDownload_Str;
-      }
+      type: "date-eu"
     });
 
     options.columns.push({
       data: "DataUltimoUpload",
-      render: function(data: any, type: any, row: any) {
-        return row.DataUltimoUpload_Str;
-      }
+      type: "date-eu"
     });
 
     options.columns.push({ data: "VersioneApp" });

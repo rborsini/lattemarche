@@ -168,16 +168,15 @@
         public mounted() {
             this.$refs.waiter.open();
             this.loadRuolo((ruolo: Ruolo) => {
-                // boh!
+                this.$refs.waiter.close();
             });
-            this.$refs.waiter.close();
+            
         }
 
         // carica ruolo
         public loadRuolo(done: (ruolo: Ruolo) => void) {
             this.ruoliService.getDetails(this.id)
                 .then(response => {
-                    console.log("response.data", response.data);
                     this.ruolo = response.data;
                     done(this.ruolo);
                 });

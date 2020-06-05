@@ -24,14 +24,14 @@
                     />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
-        <ToolbarItem  Command="{Binding PrintCommand}">
+        <!--<ToolbarItem  Command="{Binding PrintCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource
                     FontFamily="{StaticResource IconFont}"
                     Glyph="&#xF042A;"
                     />
             </ToolbarItem.IconImageSource>
-        </ToolbarItem>
+        </ToolbarItem>-->
     </ContentPage.ToolbarItems>
 
     <StackLayout>

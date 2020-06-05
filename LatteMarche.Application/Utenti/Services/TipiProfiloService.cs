@@ -14,8 +14,6 @@ namespace LatteMarche.Application.Utenti.Services
 
     public class TipiProfiloService: EntityReadOnlyService<TipoProfilo, int, TipoProfiloDto>, ITipiProfiloService
     {
-
-
         #region Constructors
 
         public TipiProfiloService(IUnitOfWork uow)
@@ -36,7 +34,7 @@ namespace LatteMarche.Application.Utenti.Services
             var dropdown = new DropDownDto();
 
             dropdown.Items = this.repository.DbSet
-                //.ToList()
+                .OrderBy(p => p.Descrizione)
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),

@@ -261,7 +261,9 @@ export default class GiriIndexPage extends Vue {
 
   // carico allevatori
   public loadGiro(id: number) {
+    this.$refs.waiter.open();
     this.giriService.getGiroDetails(id).then(response => {
+      this.$refs.waiter.close();
       if (response.data != null) {
         this.giro = response.data;
         for (let i = 0; i < this.giro.Items.length; i++) {

@@ -274,13 +274,14 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <param name="e"></param>
         private async void Item_OnItem_Deleting(object sender, EventArgs e)
         {
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione giro", lottieAnimation: "LottieLogo1.json");
+            IMaterialModalPage loadingDialog = null;
             try
             {
                 bool reply = await this.page.DisplayAlert("Attenzione", $"Sei sicuro di voler eliminare il giro selezionato?", "Si", "No");
                 if (reply == false)
                     return;
 
+                loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Rimozione giro", lottieAnimation: "LottieLogo1.json");
                 await Task.Run(() =>
                 {                   
                     var item = sender as ItemViewModel;

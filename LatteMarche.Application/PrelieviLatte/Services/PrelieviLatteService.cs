@@ -55,7 +55,7 @@ namespace LatteMarche.Application.Latte.Services
                     return query;
 
                 case 7:     // Acquirente
-                    return query.Where(a => a.Id == utente.IdAcquirente);
+                    return query.Where(a => a.IdAcquirente == utente.IdAcquirente);
 
                 case 3:
                     // allevamenti associati all'utente
@@ -182,8 +182,7 @@ namespace LatteMarche.Application.Latte.Services
                         this.repository.Add(prelievoDb);
                     }
 
-                    if(counter % Convert.ToInt32(ConfigurationManager.AppSettings["range_synch"]) == 0)
-                        this.uow.SaveChanges();
+                    this.uow.SaveChanges();
 
                     counter++;
                 }
@@ -263,7 +262,9 @@ namespace LatteMarche.Application.Latte.Services
                     query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
             }
 
-            query = query.OrderBy(r => r.Allevamento);
+            query = query
+                .OrderBy(r => r.Allevamento)
+                .ThenBy(r => r.DataPrelievo);
 
             return query.ToList();
         }

@@ -28,12 +28,14 @@ namespace LatteMarche.WebApi.Controllers_Web
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
-            if (Request.IsAuthenticated)
+            if(User.Identity.IsAuthenticated)
             {
-                log.Info("Home dashboard");
-                return View("Dashboard");
+                var user = this.utentiService.Details(User.Identity.Name);
+                if(user.IdProfilo != 4) // laboratorio
+                {
+                    return View("Dashboard");
+                }
             }
-            log.Info("Home index");
 
             return View();
         }
@@ -54,11 +56,14 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             MenuViewModel model = new MenuViewModel();
 
+            //model.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
+            //model.Add(MakeViewModel("Analisi latte", "Index", "AnalisiLatte"));
+
             MenuItemViewModel gestione = new MenuItemViewModel("Gestione");
 
             gestione.Items.Add(MakeViewModel("Dispositivi mobili", "Index", "Dispositivi"));
-            gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));
             gestione.Items.Add(MakeViewModel("Giri", "Index", "Giri"));
+            gestione.Items.Add(MakeViewModel("Prelievi latte", "Index", "Prelievi"));            
             gestione.Items.Add(MakeViewModel("Utenti", "Index", "Utenti"));
 
             model.Add(gestione);
@@ -80,7 +85,7 @@ namespace LatteMarche.WebApi.Controllers_Web
             model.Add(anagrafiche);
 
             MenuItemViewModel amministrazione = new MenuItemViewModel("Amministrazione");
-            amministrazione.Items.Add(MakeViewModel("Azioni", "Index", "Azioni"));
+            //amministrazione.Items.Add(MakeViewModel("Azioni", "Index", "Azioni"));
             amministrazione.Items.Add(MakeViewModel("Ruoli", "Index", "Ruoli"));
             model.Add(amministrazione);
 

@@ -50,14 +50,15 @@ namespace LatteMarche.Application.Giri.Services
             foreach (var allevamento in allevamenti)
             {
                 var allevamentoXGiro = allevamentiGiro.FirstOrDefault(ag => ag.IdAllevamento == allevamento.Id);
+                var utente = allevamento.Utente;
 
                 dto.Items.Add(new GiroItemDto()
                 {
                     IdGiro = key,
                     IdAllevamento = allevamento.Id,
-                    Allevatore = String.Format("{0} {1}", allevamento.Utente.Cognome, allevamento.Utente.Nome),
+                    Allevatore = String.Format("{0} {1}", utente?.Cognome, utente?.Nome),
                     Indirizzo = allevamento.IndirizzoAllevamento,
-                    RagioneSociale = allevamento.Utente.RagioneSociale,
+                    RagioneSociale = utente?.RagioneSociale,
                     Priorita = allevamentoXGiro != null && allevamentoXGiro.Priorita.HasValue ? allevamentoXGiro.Priorita.Value : (int?)null
                 });
 
