@@ -387,7 +387,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
                     this.AllevamentoSelezionato = GetAllevamentoSelezionato(location);
 
-                    this.Title = this.AllevamentoSelezionato != null ? "Modifica Prelievo" : "Nuovo Prelievo";
+                    this.Title = isNew ? "Nuovo Prelievo" : "Modifica Prelievo";
 
                     // Scomparto
                     this.Scomparto = this.prelievo.Scomparto;
@@ -496,6 +496,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                         prelieviService.UpdateItemAsync(this.prelievo).Wait();
 
                     this.Id = this.prelievo.Id;
+                    this.isNew = false;
+                    this.Title = "Modifica Prelievo";
                 });
 
                 (this.PrintCommand as Command).ChangeCanExecute();
@@ -663,6 +665,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
 
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
+                await navigation.PopAsync();
             }
             catch (Exception exc)
             {

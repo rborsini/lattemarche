@@ -33,15 +33,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Giro giro;
 
-        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
-        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
-        private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
-        private IGiriService giriService => DependencyService.Get<IGiriService>();
-        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
         private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
-        private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
         private ObservableCollection<ItemViewModel> prelievi;
 
@@ -74,13 +69,14 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public IndexViewModel(INavigation navigation, Page page, Giro giro)
             : base(navigation, page)
         {
-            this.Title = "Prelievi";
+            
             this.Prelievi = new ObservableCollection<ItemViewModel>();
             this.giro = giro;
 
+            this.Title = this.giro.Titolo;
+
             this.AddCommand = new Command(async () => await ExecuteAddCommand(), canExecute: () => { return !this.IsReadOnly; });
             this.LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //this.PrintCommand = new Command(async () => await ExecutePrintCommand(), canExecute: () => { return this.Prelievi.Count > 0; });
 
         }
 
@@ -109,6 +105,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Prelievi.Clear();
                     var prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result;
                     var items = Mapper.Map<List<ItemViewModel>>(prelievi.ToList());
+
+                    items.ForEach(i => { i.ReadOnly = this.giro.DataConsegna.HasValue; });
+
                     this.Prelievi = new ObservableCollection<ItemViewModel>(items);
 
                     this.NoData = this.Prelievi.Count == 0;
@@ -171,81 +170,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
         }
 
-        ///// <summary>
-        ///// Comando stampa ricevuta raccolta
-        ///// </summary>
-        ///// <returns></returns>
-        //private async Task ExecutePrintCommand()
-        //{
-        //    var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
-
-        //    try
-        //    {
-        //        Debug.WriteLine("Print Command");
-        //        this.IsBusy = true;
-
-        //        await Task.Run(() =>
-        //        {
-        //            var stampante = this.stampantiService.GetDefaultAsync().Result;
-
-        //            if (stampante == null)
-        //                throw new Exception("Nessuna stampante associata");
-
-        //            var printer = DependencyService.Get<IPrinter>();
-        //            printer.MacAddress = stampante.MacAddress;
-
-        //            this.giro = this.giriService.GetItemAsync(this.giro.Id).Result;
-        //            this.giro.Prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result.ToList();
-        //            var templateGiro = GetTemplateGiro(this.giro.IdTemplateGiro).Result;
-
-        //            var registroRaccolta = new RegistroRaccolta();
-
-        //            registroRaccolta.Acquirente = GetAcquirente(this.giro).Result;
-        //            registroRaccolta.Cessionario = GetCessionario(this.giro).Result;
-        //            registroRaccolta.Destinatario = GetDestinatario(this.giro).Result;
-        //            registroRaccolta.Giro = templateGiro;
-        //            registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
-        //            registroRaccolta.CodiceLotto = this.giro.CodiceLotto;
-        //            registroRaccolta.Data = DateTime.Now;
-
-        //            foreach (var prelievo in this.giro.Prelievi)
-        //            {
-        //                var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
-
-        //                registroRaccolta.Items.Add(new RegistroRaccolta.Item()
-        //                {
-        //                    Scomparto = prelievo.Scomparto,
-        //                    Allevamento = allevamento,
-        //                    DataPrelievo = prelievo.DataPrelievo,
-        //                    Quantita_kg = prelievo.Quantita_kg,
-        //                    TipoLatte = allevamento != null ? allevamento.TipoLatte : null
-        //                });
-        //            }
-
-        //            printer.PrintLabel(registroRaccolta);
-
-        //        });
-
-        //        this.IsBusy = false;
-        //        await loadingDialog.DismissAsync();
-
-        //        Analytics.TrackEvent("Stampa ricevuta consegna");
-        //        SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
-
-        //        await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        this.IsBusy = false;
-        //        await loadingDialog.DismissAsync();
-
-        //        SentrySdk.CaptureException(exc);
-        //        Crashes.TrackError(exc);
-
-        //        await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
-        //    }
-
-        //}    
 
         /// <summary>
         /// Apertura pagina nuovo prelievo
@@ -256,93 +180,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             await this.navigation.PushAsync(new EditPage(new EditViewModel(this.navigation, this.page, this.giro.Id, "")));
         }
 
-        /// <summary>
-        /// Lookup acquirente
-        /// </summary>
-        /// <param name="lotto"></param>
-        /// <returns></returns>
-        private async Task<Acquirente> GetAcquirente(Giro giro)
-        {
-            if (giro.Prelievi.Count(p => p.IdAcquirente.HasValue) > 0)
-            {
-                var idAcquirente = giro.Prelievi.First(p => p.IdAcquirente.HasValue).IdAcquirente.Value;
-                return await this.acquirentiService.GetItemAsync(idAcquirente);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Lookup cessionario
-        /// </summary>
-        /// <param name="lotto"></param>
-        /// <returns></returns>
-        private async Task<Cessionario> GetCessionario(Giro giro)
-        {
-            if (giro.Prelievi.Count(p => p.IdCessionario.HasValue) > 0)
-            {
-                var idCessionario = giro.Prelievi.First(p => p.IdCessionario.HasValue).IdCessionario.Value;
-                return await this.cessionariService.GetItemAsync(idCessionario);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Lookup destinatario
-        /// </summary>
-        /// <param name="lotto"></param>
-        /// <returns></returns>
-        private async Task<Destinatario> GetDestinatario(Giro giro)
-        {
-            if (giro.Prelievi.Count(p => p.IdDestinatario.HasValue) > 0)
-            {
-                var idDestinatario = giro.Prelievi.First(p => p.IdDestinatario.HasValue).IdDestinatario.Value;
-                return await this.destinatariService.GetItemAsync(idDestinatario);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Lookup allevamento
-        /// </summary>
-        /// <param name="idAllevamento"></param>
-        /// <returns></returns>
-        private async Task<Allevamento> GetAllevamento(int? idAllevamento)
-        {
-            if (idAllevamento.HasValue)
-            {
-                return await this.allevamentiService.GetItemAsync(idAllevamento.Value);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Lookup template giro
-        /// </summary>
-        /// <param name="idTemplateGiro"></param>
-        /// <returns></returns>
-        private async Task<TemplateGiro> GetTemplateGiro(int? idTemplateGiro)
-        {
-            if (idTemplateGiro.HasValue)
-            {
-                return await this.templateGiroService.GetItemAsync(idTemplateGiro.Value);
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         #endregion
 

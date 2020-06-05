@@ -6,6 +6,8 @@ using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Giri;
+using LatteMarche.Xamarin.Zebra.Interfaces;
+using LatteMarche.Xamarin.Zebra.Models;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
@@ -29,6 +31,10 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         #region Fields
 
         private IDevice device = DependencyService.Get<IDevice>();
+        private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
+        private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
+        private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private ITemplateGiroService templateService => DependencyService.Get<ITemplateGiroService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
@@ -36,6 +42,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private IRestService restService => DependencyService.Get<IRestService>();
 
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+        private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
+        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
 
         private List<TemplateGiro> templateList;
 
@@ -126,9 +134,73 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         }
 
-        private void Item_OnItem_Printing(object sender, EventArgs e)
+        private async void Item_OnItem_Printing(object sender, EventArgs e)
         {
-            
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
+
+            try
+            {
+                var item = sender as ItemViewModel;
+
+                //await Task.Run(() =>
+                //{
+                    var stampante = this.stampantiService.GetDefaultAsync().Result;
+
+                    if (stampante == null)
+                        throw new Exception("Nessuna stampante associata");
+
+                    var printer = DependencyService.Get<IPrinter>();
+                    printer.MacAddress = stampante.MacAddress;
+
+                    var giro = this.giriService.GetItemAsync(item.Id).Result;
+                    giro.Prelievi = this.prelieviService.GetByGiro(item.Id).Result.ToList();
+                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+
+                    var registroRaccolta = new RegistroRaccolta();
+
+                    registroRaccolta.Acquirente = GetAcquirente(giro).Result;
+                    registroRaccolta.Cessionario = GetCessionario(giro).Result;
+                    registroRaccolta.Destinatario = GetDestinatario(giro).Result;
+                    registroRaccolta.Giro = templateGiro;
+                    registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
+                    registroRaccolta.CodiceLotto = giro.CodiceLotto;
+                    registroRaccolta.Data = DateTime.Now;
+
+                    foreach (var prelievo in giro.Prelievi)
+                    {
+                        var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
+
+                        registroRaccolta.Items.Add(new RegistroRaccolta.Item()
+                        {
+                            Scomparto = prelievo.Scomparto,
+                            Allevamento = allevamento,
+                            DataPrelievo = prelievo.DataPrelievo,
+                            Quantita_kg = prelievo.Quantita_kg,
+                            TipoLatte = allevamento != null ? allevamento.TipoLatte : null
+                        });
+                    }
+
+                    await printer.PrintLabel(registroRaccolta);
+
+                //});
+
+                await loadingDialog.DismissAsync();
+
+                Analytics.TrackEvent("Stampa ricevuta consegna");
+                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
+
+                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+            }
         }
 
         /// <summary>
@@ -249,7 +321,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     // Salvataggio codice lotto
                     var giro = this.giriService.GetItemAsync(item.Id).Result;
                     giro.DataConsegna = (DateTime?)null;
-                    giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+                    giro.CodiceLotto = String.Empty;
                     this.giriService.UpdateItemAsync(giro).Wait();
                 });
 
@@ -300,12 +372,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
-        }
-
-        private Location GetLocation()
-        {
-            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
-            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
         }
 
         /// <summary>
@@ -392,6 +458,87 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             if (idTemplateGiro.HasValue)
             {
                 return await this.templateGiroService.GetItemAsync(idTemplateGiro.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Recupero posizione corrente
+        /// </summary>
+        /// <returns></returns>
+        private Location GetLocation()
+        {
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
+            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
+        }
+
+        /// <summary>
+        /// Lookup acquirente
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Acquirente> GetAcquirente(Giro giro)
+        {
+            if (giro.Prelievi.Count(p => p.IdAcquirente.HasValue) > 0)
+            {
+                var idAcquirente = giro.Prelievi.First(p => p.IdAcquirente.HasValue).IdAcquirente.Value;
+                return await this.acquirentiService.GetItemAsync(idAcquirente);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup cessionario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Cessionario> GetCessionario(Giro giro)
+        {
+            if (giro.Prelievi.Count(p => p.IdCessionario.HasValue) > 0)
+            {
+                var idCessionario = giro.Prelievi.First(p => p.IdCessionario.HasValue).IdCessionario.Value;
+                return await this.cessionariService.GetItemAsync(idCessionario);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup destinatario
+        /// </summary>
+        /// <param name="lotto"></param>
+        /// <returns></returns>
+        private async Task<Destinatario> GetDestinatario(Giro giro)
+        {
+            if (giro.Prelievi.Count(p => p.IdDestinatario.HasValue) > 0)
+            {
+                var idDestinatario = giro.Prelievi.First(p => p.IdDestinatario.HasValue).IdDestinatario.Value;
+                return await this.destinatariService.GetItemAsync(idDestinatario);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Lookup allevamento
+        /// </summary>
+        /// <param name="idAllevamento"></param>
+        /// <returns></returns>
+        private async Task<Allevamento> GetAllevamento(int? idAllevamento)
+        {
+            if (idAllevamento.HasValue)
+            {
+                return await this.allevamentiService.GetItemAsync(idAllevamento.Value);
             }
             else
             {

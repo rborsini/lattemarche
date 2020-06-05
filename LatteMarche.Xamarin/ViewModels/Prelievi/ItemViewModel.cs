@@ -19,6 +19,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Properties
 
+        public Color BackgroundColor => this.ReadOnly ? Color.FromHex("#BBB") : Color.FromHex("#FFF");
+
+        public bool ReadOnly { get; set; }
+
         public string Id { get; set; }
 
         public int? IdGiro { get; set; }
