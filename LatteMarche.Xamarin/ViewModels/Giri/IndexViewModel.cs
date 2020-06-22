@@ -105,10 +105,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     item.OnItem_Closing += Item_OnItem_Closing;
                     item.OnItem_Opening += Item_OnItem_Opening;
                     item.OnItem_Printing += Item_OnItem_Printing;
-                    item.OnItem_Sending += Item_OnItem_Sending;
                     item.OnItem_Deleting += Item_OnItem_Deleting;
 
                     this.Items.Add(item);
+
+                    // archiviazione eventuale giro (chiuso) precedente => scompare dalla lista
+                    this.giriService.ArchiviaGiroPrecedenteAsync(giro.IdTemplateGiro.Value).Wait();
 
                     Analytics.TrackEvent("Nuovo giro", new Dictionary<string, string>() {
                         { "giro", JsonConvert.SerializeObject(giro) },
@@ -222,7 +224,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 await Task.Run(() =>
                 {
                     this.Items.Clear();
-                    var giri = this.giriService.GetGiriApertiAsync().Result;
+                    var giri = this.giriService.GetGiriNonArchiviatiAsync().Result;
                     foreach (var giro in giri)
                     {
                         var item = Mapper.Map<ItemViewModel>(giro);
@@ -230,7 +232,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                         item.OnItem_Closing += Item_OnItem_Closing;
                         item.OnItem_Opening += Item_OnItem_Opening;
                         item.OnItem_Printing += Item_OnItem_Printing;
-                        item.OnItem_Sending += Item_OnItem_Sending;
                         item.OnItem_Deleting += Item_OnItem_Deleting;
 
                         this.Items.Add(item);
@@ -275,26 +276,15 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             try
             {
+                var location = GetLocation();
+                VersionTracking.Track();
+
                 await Task.Run(() =>
                 {
-                    var item = sender as ItemViewModel;
-                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+                    ChiudiGiro(sender);
 
-                    // Salvataggio codice lotto
-                    var giro = this.giriService.GetItemAsync(item.Id).Result;
-                    giro.DataConsegna = DateTime.Now;
-                    giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
-                    this.giriService.UpdateItemAsync(giro).Wait();
+                    InviaGiro(sender, location);
 
-                    var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
-                    foreach (var prelievo in prelievi)
-                    {
-                        prelievo.DataConsegna = giro.DataConsegna;
-                        this.prelieviService.UpdateItemAsync(prelievo).Wait();
-                    }
-                        
-
-                    
                 });
 
                 Analytics.TrackEvent("Giro chiuso", new Dictionary<string, string>());
@@ -312,6 +302,62 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 Crashes.TrackError(exc);
             }
 
+        }
+
+        private void InviaGiro(object sender, Location location)
+        {
+            var item = sender as ItemViewModel;
+            var prelievi = this.prelieviService.GetByGiro(item.Id).Result;
+
+            var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
+
+            var uploadDto = new UploadDto()
+            {
+                IMEI = this.device.GetIdentifier(),
+                Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
+                Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
+                VersioneApp = VersionTracking.CurrentVersion,
+                VersioneOS = DeviceInfo.VersionString,
+                Marca = DeviceInfo.Manufacturer,
+                Modello = DeviceInfo.Model,
+                Nome = DeviceInfo.Name,
+                Prelievi = prelieviDto
+            };
+
+            var json = JsonConvert.SerializeObject(uploadDto);
+
+            // chiamata REST upload dati
+            if (this.restService.Upload(uploadDto).Result)
+            {
+                var giro = this.giriService.GetItemAsync(item.Id).Result;
+                giro.DataUpload = DateTime.Now;
+                this.giriService.UpdateItemAsync(giro).Wait();
+
+                // aggiornamento tabella sincronizzazioni
+                this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
+            }
+            else
+            {
+                throw new Exception("Errore di sincronizzazione con il server");
+            }
+        }
+
+        private void ChiudiGiro(object sender)
+        {
+            var item = sender as ItemViewModel;
+            var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+
+            var giro = this.giriService.GetItemAsync(item.Id).Result;
+            giro.DataConsegna = DateTime.Now;
+            giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+            this.giriService.UpdateItemAsync(giro).Wait();
+
+            var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
+            foreach (var prelievo in prelievi)
+            {
+                prelievo.DataConsegna = giro.DataConsegna;
+                this.prelieviService.UpdateItemAsync(prelievo).Wait();
+            }
         }
 
         /// <summary>
@@ -384,80 +430,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
-        }
-
-        /// <summary>
-        /// Invio giro
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Item_OnItem_Sending(object sender, EventArgs e)
-        {
-
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Invio giro", lottieAnimation: "LottieLogo1.json");
-
-            try
-            {
-                var location = GetLocation();
-                VersionTracking.Track();
-
-                await Task.Run(() =>
-                {
-                    var item = sender as ItemViewModel;
-                    var prelievi = this.prelieviService.GetByGiro(item.Id).Result;
-
-                    var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
-
-                    var uploadDto = new UploadDto()
-                    {
-                        IMEI = this.device.GetIdentifier(),
-                        Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
-                        Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
-                        VersioneApp = VersionTracking.CurrentVersion,
-                        VersioneOS = DeviceInfo.VersionString,
-                        Marca = DeviceInfo.Manufacturer,
-                        Modello = DeviceInfo.Model,
-                        Nome = DeviceInfo.Name,
-                        Prelievi = prelieviDto
-                    };
-
-                    var json = JsonConvert.SerializeObject(uploadDto);
-
-                    // chiamata REST upload dati
-                    if (this.restService.Upload(uploadDto).Result)
-                    {
-                        var giro = this.giriService.GetItemAsync(item.Id).Result;
-                        giro.DataUpload = DateTime.Now;
-                        this.giriService.UpdateItemAsync(giro).Wait();
-
-                        // aggiornamento tabella sincronizzazioni
-                        this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
-                    }
-                    else
-                    {
-                        throw new Exception("Errore di sincronizzazione con il server");
-                    }
-
-                });
-
-                await loadingDialog.DismissAsync();
-
-                Analytics.TrackEvent("Invio lotto");
-                SentrySdk.CaptureMessage("Invio lotto", Sentry.Protocol.SentryLevel.Info);
-
-                await this.page.DisplayAlert("Info", "Invio effettuato con successo", "OK");
-                await ExecuteLoadItemsCommand();
-            }
-            catch (Exception exc)
-            {
-                await loadingDialog.DismissAsync();
-
-                SentrySdk.CaptureException(exc);
-                Crashes.TrackError(exc);
-
-                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
-            }
-
         }
 
         /// <summary>

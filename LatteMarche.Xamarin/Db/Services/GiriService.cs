@@ -20,7 +20,19 @@ namespace LatteMarche.Xamarin.Db.Services
             using (var context = CreateContext())
             {
                 return await context.Set<Giro>()
-                    .Where(g => !g.DataUpload.HasValue)
+                    .Where(g => !g.DataConsegna.HasValue)
+                    .Include(g => g.Prelievi)
+                    .AsNoTracking()
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Giro>> GetGiriNonArchiviatiAsync()
+        {
+            using (var context = CreateContext())
+            {
+                return await context.Set<Giro>()
+                    .Where(g => !g.Archiviato)
                     .Include(g => g.Prelievi)
                     .AsNoTracking()
                     .ToListAsync();
@@ -41,15 +53,39 @@ namespace LatteMarche.Xamarin.Db.Services
         {
             using (var context = CreateContext())
             {
-                var existingPrelievo = context.Set<Giro>()
+                var existingGiro = context.Set<Giro>()
                     .Include(g => g.Prelievi)
                     .FirstOrDefaultAsync(p => p.Id.Equals(id))
                     .Result;
 
-                context.Remove(existingPrelievo);
+                context.Remove(existingGiro);
                 await context.SaveChangesAsync();
                 return await Task.FromResult(true);
             }
+        }
+
+        public async Task<bool> ArchiviaGiroPrecedenteAsync(int templateGiro)
+        {
+            using (var context = CreateContext())
+            {
+                // ricerca giro precedente
+                var giroPrecedente = context.Set<Giro>()
+                    .Where(p => p.IdTemplateGiro.Value == templateGiro && p.DataConsegna.HasValue && !p.Archiviato)
+                    .FirstOrDefaultAsync()
+                    .Result;
+
+                if(giroPrecedente != null)
+                {
+                    giroPrecedente.Archiviato = true;
+                    context.Update<Giro>(giroPrecedente);
+
+                    await context.SaveChangesAsync();
+                }
+
+                return await Task.FromResult(true);
+            }
+
+
         }
 
         protected override Giro UpdateProperties(Giro entityItem, Giro viewItem)

@@ -18,7 +18,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private const string CHIUDI = "Chiudi";
         private const string RIAPRI = "Riapri";
         private const string STAMPA = "Stampa";
-        private const string INVIA = "Invia";
         private const string ELIMINA = "Elimina";
 
         #endregion
@@ -47,14 +46,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             {
                 var actions = new List<MaterialMenuItem>();
 
-                if (!this.DataConsegna.HasValue)
+                if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
                     actions.Add(new MaterialMenuItem { Text = CHIUDI });
 
                 if (this.DataConsegna.HasValue)
                     actions.Add(new MaterialMenuItem { Text = STAMPA });
-
-                if (!this.DataUpload.HasValue && Connectivity.NetworkAccess != NetworkAccess.None && this.DataConsegna.HasValue)
-                    actions.Add(new MaterialMenuItem { Text = INVIA });
 
                 if (!this.DataUpload.HasValue && !this.DataConsegna.HasValue)
                     actions.Add(new MaterialMenuItem { Text = ELIMINA });
@@ -75,7 +71,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         public event EventHandler OnItem_Closing;
         public event EventHandler OnItem_Opening;
         public event EventHandler OnItem_Printing;
-        public event EventHandler OnItem_Sending;
         public event EventHandler OnItem_Deleting;
 
         #endregion
@@ -101,9 +96,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     break;
                 case STAMPA:
                     this.OnItem_Printing(this, null);
-                    break;
-                case INVIA:
-                    this.OnItem_Sending(this, null);
                     break;
                 case ELIMINA:
                     this.OnItem_Deleting(this, null);
