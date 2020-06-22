@@ -33,13 +33,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private Giro giro;
 
-
-        private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
-        private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
 
         private ObservableCollection<ItemViewModel> prelievi;
-
 
         #endregion
 

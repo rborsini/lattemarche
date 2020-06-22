@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using XF.Material.Forms.UI;
 using XF.Material.Forms.UI.Dialogs;
 using Zebra.Sdk.Comm;
 using Zebra.Sdk.Printer;
@@ -609,6 +610,15 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
+
+            var choices = new string[] {"1", "2", "3", "4", "5" };
+
+            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
+            var input = choices[index];
+
+            if (String.IsNullOrEmpty(input))
+                return;
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
             try
@@ -634,6 +644,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.prelieviService.UpdateItemAsync(this.prelievo);
 
                     var registroConsegna = new RegistroConsegna();
+
+                    registroConsegna.NumeroCopie = Convert.ToInt32(input);
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
 

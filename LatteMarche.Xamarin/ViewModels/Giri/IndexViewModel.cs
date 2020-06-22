@@ -138,6 +138,14 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         private async void Item_OnItem_Printing(object sender, EventArgs e)
         {
+            var choices = new string[] { "1", "2", "3", "4", "5" };
+
+            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
+            var input = choices[index];
+
+            if (String.IsNullOrEmpty(input))
+                return;
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
             try
@@ -160,6 +168,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                     var registroRaccolta = new RegistroRaccolta();
 
+                    registroRaccolta.NumeroCopie = Convert.ToInt32(input);
                     registroRaccolta.Acquirente = GetAcquirente(giro).Result;
                     registroRaccolta.Cessionario = GetCessionario(giro).Result;
                     registroRaccolta.Destinatario = GetDestinatario(giro).Result;

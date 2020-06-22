@@ -15,7 +15,6 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
     {
         protected const int WIDTH = 98;         // Larghezza ricevuta in caratteri
 
-        protected int quantity = 1;             // numero copie
         protected int offset = 0;               // offset sx label
         protected int x = 30;                   // margine sx singola riga
         protected string h1 = "7 1";            // H1 => font 7 size 1

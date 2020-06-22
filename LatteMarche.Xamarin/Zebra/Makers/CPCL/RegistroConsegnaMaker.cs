@@ -79,7 +79,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // intestazione label aggiunta alla fine per avere l'altezza corretta
             var height = y + 100;
-            cmd = $"! {offset} 200 200 {height} {quantity}\r\n" + cmd;
+            cmd = $"! {offset} 200 200 {height} {registro.NumeroCopie}\r\n" + cmd;
 
             cmd += "PRINT\r\n";
 
