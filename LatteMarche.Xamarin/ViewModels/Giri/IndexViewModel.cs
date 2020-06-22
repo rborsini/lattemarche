@@ -236,8 +236,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                         this.Items.Add(item);
                     }
 
-                    this.templateList = this.templateService.GetItemsAsync().Result.ToList();
-                    this.NoData = this.Items.Count == 0;                    
+                    this.templateList = GetTemplateList();
+                    this.NoData = this.Items.Count == 0;
                 });
             }
             catch (Exception exc)
@@ -250,6 +250,18 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 await loadingDialog.DismissAsync();
                 this.IsBusy = false;
             }
+        }
+
+        private List<TemplateGiro> GetTemplateList()
+        {
+            var giriAperti = this.giriService.GetGiriApertiAsync().Result;
+            var templateAperti = giriAperti.Select(g => g.IdTemplateGiro).Distinct().ToList();
+
+            return this.templateService.GetItemsAsync()
+                .Result
+                .Where(t => !templateAperti.Contains(t.Id))
+                .OrderBy(t => t.Descrizione)
+                .ToList();
         }
 
         /// <summary>
