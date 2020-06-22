@@ -34,7 +34,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<bool> AddAsync(SynchType tipo)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 var item = new Sincronizzazione()
                 {
@@ -50,7 +50,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<Sincronizzazione> GetLastAysnc(SynchType tipo)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Sincronizzazione>()
                     .Where(s => s.Tipo == tipo.ToString())
@@ -61,6 +61,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<bool> ResetAsync()
         {
+            this.DeleteAllItemsAsync().Wait();
             this.prelieviService.DeleteAllItemsAsync().Wait();
             this.giriService.DeleteAllItemsAsync().Wait();
             this.allevamentiService.DeleteAllItemsAsync().Wait();
@@ -145,7 +146,17 @@ namespace LatteMarche.Xamarin.Db.Services
             return await Task.FromResult(false);
         }
 
-        protected LatteMarcheDbContext CrateContext()
+        public virtual async Task<bool> DeleteAllItemsAsync()
+        {
+            using (var context = CreateContext())
+            {
+                context.Set<Sincronizzazione>().RemoveRange(context.Set<Sincronizzazione>());
+                await context.SaveChangesAsync();
+                return await Task.FromResult(true);
+            }
+        }
+
+        protected LatteMarcheDbContext CreateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
             return databaseContext;

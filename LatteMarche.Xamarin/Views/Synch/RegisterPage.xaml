@@ -21,12 +21,39 @@
                 
                 <Image Source="cow.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
 
-                <Label FontSize="Medium" TextColor="#373737" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"  WidthRequest="300" Margin="0,25" TextType="Html" HorizontalTextAlignment="Center">
+                <Label 
+                    FontSize="Medium" 
+                    TextColor="#373737" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="CenterAndExpand"  
+                    WidthRequest="300"
+                    Margin="0,25" 
+                    TextType="Html" 
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding RegistrazioneNonPendente}"
+                >
                     <Label.Text>
                         <![CDATA[
-                    Per utilizzare l'app è necessario registrare il dispositivo e ricevere l'autorizzazione dall'amministratore
-                    ]]>
+                            Per utilizzare l'app è necessario registrare il dispositivo e ricevere l'autorizzazione dall'amministratore
+                        ]]>
+                    </Label.Text>
+                </Label>
 
+                <Label 
+                    FontSize="Medium" 
+                    TextColor="#373737" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="CenterAndExpand"  
+                    WidthRequest="300"
+                    Margin="0,25,0,180" 
+                    TextType="Html" 
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding RegistrazionePendente}"
+                >
+                    <Label.Text>
+                        <![CDATA[
+                            Registrazione effettuata, attendere l'abilitazione da parte dell'amministratore. Chiudere e riaprire l'applicazione.
+                        ]]>
                     </Label.Text>
                 </Label>
 
@@ -36,6 +63,7 @@
                     InputType="Choice"
                     SelectedChoice="{Binding AmbienteSelezionato, Mode=TwoWay}"
                     Choices="{Binding Ambienti}"
+                    IsVisible="{Binding RegistrazioneNonPendente}"
                     ChoicesBindingName="Nome"
                     AlwaysShowUnderline="True"
                     BackgroundColor="Transparent"
@@ -44,7 +72,16 @@
                     matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
                 />
 
-                <material:MaterialButton Margin="10,10,10,100" HeightRequest="70" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Registrazione dispositivo" Command="{Binding RegisterCommand}" TextColor="Black" VerticalOptions="Center" />
+                <material:MaterialButton 
+                    Margin="10,10,10,100" 
+                    HeightRequest="70" 
+                    BackgroundColor="#D8D8D8" 
+                    HorizontalOptions="Center" 
+                    Text="Registra dispositivo" 
+                    IsVisible="{Binding RegistrazioneNonPendente}"
+                    Command="{Binding RegisterCommand}" 
+                    TextColor="Black" 
+                    VerticalOptions="Center" />
 
             </StackLayout>
 

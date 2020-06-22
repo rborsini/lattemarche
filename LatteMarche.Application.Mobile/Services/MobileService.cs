@@ -142,7 +142,7 @@ namespace LatteMarche.Application.Mobile.Services
                                 Comune = comune != null ? comune.Descrizione.Trim() : "",
                                 Provincia = comune != null ? comune.Provincia : "",
                                 Priorita = axg.Priorita,
-                                P_IVA = utente != null ? utente.PivaCF.Trim() : "",
+                                P_IVA = utente != null && !String.IsNullOrEmpty(utente.PivaCF) ? utente.PivaCF.Trim() : "",
                                 RagioneSociale = utente != null ? utente.RagioneSociale.Trim() : "",
                                 Latitudine = allevamento?.Latitudine,
                                 Longitudine = allevamento?.Longitudine,
@@ -154,6 +154,7 @@ namespace LatteMarche.Application.Mobile.Services
                                 Quantita_Min = GetPercentile(quantita, 5),
                                 Quantita_Max = GetPercentile(quantita, 95)
                             });
+
                         }
                     }
 

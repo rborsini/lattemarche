@@ -35,6 +35,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private Ambiente ambienteSelezionato;
         private ObservableCollection<Ambiente> ambienti;
+        private bool registrazionePendente;
+        private bool registrazioneNonPendente;
 
         #endregion
 
@@ -52,6 +54,18 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             set { SetProperty<ObservableCollection<Ambiente>>(ref this.ambienti, value); }
         }
 
+        public bool RegistrazionePendente
+        {
+            get { return this.registrazionePendente; }
+            set { SetProperty<bool>(ref this.registrazionePendente, value); }
+        }
+
+        public bool RegistrazioneNonPendente
+        {
+            get { return this.registrazioneNonPendente; }
+            set { SetProperty<bool>(ref this.registrazioneNonPendente, value); }
+        }
+
         public Command LoadCommand { get; set; }
 
         public Command RegisterCommand { get; set; }
@@ -66,9 +80,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             this.navigation = navigation;
             this.page = page;
             this.RegisterCommand = new Command(async () => await ExecuteRegisterCommand(), canExecute: () => { return this.IsOnline; });
-
-
-
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
 
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
@@ -84,9 +95,35 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
             try
             {
-                this.Ambienti = new ObservableCollection<Ambiente>(this.ambientiService.Init());
-                this.AmbienteSelezionato = this.Ambienti.First(a => a.Selezionato);
+                var isActive = false;
+
+                await Task.Run(() =>
+                {
+                    this.Ambienti = new ObservableCollection<Ambiente>(this.ambientiService.Init());
+                    this.AmbienteSelezionato = this.Ambienti.First(a => a.Selezionato);
+
+                    var ultimaRegistrazione = this.sincronizzazioneService.GetLastAysnc(SynchType.Register).Result;
+                    this.RegistrazionePendente = ultimaRegistrazione != null;
+                    this.RegistrazioneNonPendente = !this.RegistrazionePendente;
+
+                    if (this.RegistrazionePendente)
+                    {
+                        var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
+                        this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
+                        isActive = dbDto != null;
+                    }
+
+                    this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
+
+                });
+
                 await loadingDialog.DismissAsync();
+
+                if (isActive)
+                {
+                    Application.Current.MainPage = new MainPage();
+                    await (Application.Current.MainPage as MainPage).NavigateFromMenu((int)MenuItemType.Giri);
+                }
 
             }
             catch (Exception exc)
@@ -163,7 +200,12 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                     Application.Current.MainPage = new MainPage();
                     await (Application.Current.MainPage as MainPage).NavigateFromMenu((int)MenuItemType.Giri);
                 }
-                    
+                else
+                {
+                    this.RegistrazionePendente = true;
+                    this.RegistrazioneNonPendente = !this.RegistrazionePendente;
+                }
+
 
             }
             catch (Exception exc)
@@ -177,6 +219,45 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             }
 
         }
+
+        //private async Task<bool> RegisterAsync()
+        //{
+        //    var location = GetLocation();
+        //    VersionTracking.Track();
+        //    var appVersion = VersionTracking.CurrentVersion;
+        //    var isActive = false;
+
+        //    var dto = new DispositivoDto()
+        //    {
+        //        Id = this.device.GetIdentifier(),
+        //        Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
+        //        Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
+        //        VersioneApp = appVersion,
+        //        VersioneOS = DeviceInfo.VersionString,
+        //        Marca = DeviceInfo.Manufacturer,
+        //        Modello = DeviceInfo.Model,
+        //        Nome = DeviceInfo.Name
+        //    };
+
+        //    await Task.Run(() =>
+        //    {
+
+        //        var dispositivo = this.restService.Register(dto).Result;
+        //        isActive = dispositivo.Attivo && dispositivo.IdTrasportatore.HasValue;
+
+        //        if (isActive)
+        //        {
+        //            var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
+        //            this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
+        //        }
+
+        //        this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
+        //    });
+
+        //    Analytics.TrackEvent("Registrazione inviata con successo", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
+        //    SentrySdk.CaptureMessage("Registrazione inviata con successo", Sentry.Protocol.SentryLevel.Info);
+        //    return isActive;
+        //}
 
         #endregion
     }
