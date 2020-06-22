@@ -11,6 +11,7 @@ namespace LatteMarche.Xamarin.Db
     public class LatteMarcheDbContext : DbContext
     {
 		public DbSet<Acquirente> Acquirenti { get; set; }
+		public DbSet<Ambiente> Ambienti { get; set; }
 		public DbSet<Allevamento> Allevamenti { get; set; }
 		public DbSet<AutoCisterna> AutoCisterne { get; set; }
 		public DbSet<Cessionario> Cessionari { get; set; }

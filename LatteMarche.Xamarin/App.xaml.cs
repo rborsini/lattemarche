@@ -51,6 +51,7 @@ namespace LatteMarche.Xamarin
             XF.Material.Forms.Material.Init(this, "Material.Configuration");
 
             DependencyService.Register<AcquirentiService>();
+            DependencyService.Register<AmbientiService>();
             DependencyService.Register<AllevamentiService>();
             DependencyService.Register<AutoCisterneService>();
             DependencyService.Register<CessionariService>();

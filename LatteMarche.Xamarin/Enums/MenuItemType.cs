@@ -7,7 +7,6 @@ namespace LatteMarche.Xamarin.Enums
     public enum MenuItemType
     {
         Giri,
-        Synch,
         Impostazioni
     }
 }

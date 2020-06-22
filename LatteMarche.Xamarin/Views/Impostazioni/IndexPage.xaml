@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-            xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"
              x:Class="LatteMarche.Xamarin.Views.Impostazioni.IndexPage"
-            Appearing="ContentPage_Appearing"
+             Appearing="ContentPage_Appearing"
              Title="Stampanti"
              >
 
@@ -24,7 +24,7 @@
 
     <ContentPage.Content>
 
-        <StackLayout Padding="16" Spacing="16" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
+        <StackLayout Padding="16" Spacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
 
             <!-- Stampanti -->
             <material:MaterialTextField Placeholder="Stampante"
@@ -45,6 +45,12 @@
             <material:MaterialButton Margin="0,30,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Esporta database" Command="{Binding ExportCommand}" TextColor="Black" VerticalOptions="Center" />
 
             <material:MaterialButton Margin="0,30,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Reset applicazione" Command="{Binding ResetCommand}" TextColor="Black" VerticalOptions="Center" />
+
+            <Label Margin="0,50,0,0" HorizontalOptions="Center" VerticalOptions="Center"  >Ambiente:</Label>
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Ambiente}" FontAttributes="Bold" ></Label>
+
+            <Label Margin="0,30,0,0" HorizontalOptions="Center"  VerticalOptions="Center" >Versione:</Label>
+            <Label HorizontalOptions="Center"  VerticalOptions="Center" Text="{Binding Versione}" FontAttributes="Bold"  ></Label>
 
         </StackLayout>
 

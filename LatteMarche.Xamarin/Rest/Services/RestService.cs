@@ -14,16 +14,26 @@ using System.Threading;
 using System.Linq;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
+using LatteMarche.Xamarin.Db.Interfaces;
 
 namespace LatteMarche.Xamarin.Rest.Services
 {
     public class RestService : IRestService
     {
-        private const string API_ENDPOINT = "http://robertoborsini.myqnapcloud.com:81";
+
+        #region Fields
+
+        private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
+
+        private string endpoint => this.ambientiService.GetDefault().Url;
+
+        #endregion
+
+        #region Methods
 
         public async Task<DispositivoDto> Register(DispositivoDto dto)
         {
-            var url = $"{API_ENDPOINT}/api/Mobile/Register";
+            var url = $"{this.endpoint}/api/Mobile/Register";
 
             var client = new RestClient(url);
             client.Timeout = -1;
@@ -43,7 +53,7 @@ namespace LatteMarche.Xamarin.Rest.Services
 
         public async Task<DownloadDto> Download(string imei)
         {
-            var client = new RestClient($"{API_ENDPOINT}/api/Mobile/Download?imei={imei}");
+            var client = new RestClient($"{this.endpoint}/api/Mobile/Download?imei={imei}");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = await client.ExecuteAsync(request);
@@ -55,7 +65,7 @@ namespace LatteMarche.Xamarin.Rest.Services
 
         public async Task<bool> Upload(UploadDto dto)
         {
-            var url = $"{API_ENDPOINT}/api/Mobile/Upload";
+            var url = $"{this.endpoint}/api/Mobile/Upload";
 
             var client = new RestClient(url);
             client.Timeout = -1;
@@ -69,6 +79,8 @@ namespace LatteMarche.Xamarin.Rest.Services
 
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
+
+        #endregion
 
     }
 }

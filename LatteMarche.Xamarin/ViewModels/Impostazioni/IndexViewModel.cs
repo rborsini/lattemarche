@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -28,12 +29,16 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+        private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
 
         private bool stampantiPresenti;
 
         private Stampante stampanteSelezionata;
 
         private ObservableCollection<Stampante> stampanti;
+
+        private string versione;
+        private string ambiente;
 
         #endregion
 
@@ -59,6 +64,18 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 SetProperty<Stampante>(ref this.stampanteSelezionata, value);
                 (this.SetDefaultCommand as Command).ChangeCanExecute();
             }
+        }
+
+        public string Versione
+        {
+            get { return this.versione; }
+            set { SetProperty(ref this.versione, value); }
+        }
+
+        public string Ambiente
+        {
+            get { return this.ambiente; }
+            set { SetProperty(ref this.ambiente, value); }
         }
 
 
@@ -100,16 +117,18 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
             try
             {
-                //await Task.Run(() =>
-                //{
-                    var stampanti = this.stampantiService.GetItemsAsync().Result;
-                    this.Stampanti = new ObservableCollection<Stampante>(stampanti);
 
-                    this.StampanteSelezionata = stampanti.FirstOrDefault(s => s.Selezionata);
+                var stampanti = this.stampantiService.GetItemsAsync().Result;
+                this.Stampanti = new ObservableCollection<Stampante>(stampanti);
 
-                    this.StampantiPresenti = this.Stampanti.Count > 0;
-                //});
+                this.StampanteSelezionata = stampanti.FirstOrDefault(s => s.Selezionata);
 
+                this.StampantiPresenti = this.Stampanti.Count > 0;
+
+                VersionTracking.Track();
+
+                this.Versione = VersionTracking.CurrentVersion;
+                this.Ambiente = this.ambientiService.GetDefault().Nome;
             }
             catch (Exception exc)
             {

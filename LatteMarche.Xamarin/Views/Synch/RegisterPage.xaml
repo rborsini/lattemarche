@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"
              mc:Ignorable="d"
+             Appearing="ContentPage_Appearing"
              x:Class="LatteMarche.Xamarin.Views.Synch.RegisterPage">
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -13,7 +14,7 @@
             <StackLayout 
                 AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
                 AbsoluteLayout.LayoutFlags= "All" 
-                Margin="0,100,0,0"
+                Margin="0,30,0,0"
                 >
 
                 <Image Source="logo_latte_marche_pink.png" Margin="40,0,40,20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
@@ -28,6 +29,20 @@
 
                     </Label.Text>
                 </Label>
+
+                <!-- Ambienti -->
+                <material:MaterialTextField 
+                    Margin="40,0,40,0"
+                    InputType="Choice"
+                    SelectedChoice="{Binding AmbienteSelezionato, Mode=TwoWay}"
+                    Choices="{Binding Ambienti}"
+                    ChoicesBindingName="Nome"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                    matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                    matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                    matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+                />
 
                 <material:MaterialButton Margin="10,10,10,100" HeightRequest="70" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Registrazione dispositivo" Command="{Binding RegisterCommand}" TextColor="Black" VerticalOptions="Center" />
 

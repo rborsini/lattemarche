@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Xamarin.Db.Interfaces;
+using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Enums;
 using LatteMarche.Xamarin.Interfaces;
 using LatteMarche.Xamarin.Rest.Dtos;
@@ -10,6 +11,8 @@ using Newtonsoft.Json;
 using Sentry;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -28,9 +31,28 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
 
+        private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
+
+        private Ambiente ambienteSelezionato;
+        private ObservableCollection<Ambiente> ambienti;
+
         #endregion
 
         #region Properties
+
+        public Ambiente AmbienteSelezionato
+        {
+            get { return this.ambienteSelezionato; }
+            set { SetProperty<Ambiente>(ref this.ambienteSelezionato, value); }
+        }
+
+        public ObservableCollection<Ambiente> Ambienti
+        {
+            get { return this.ambienti; }
+            set { SetProperty<ObservableCollection<Ambiente>>(ref this.ambienti, value); }
+        }
+
+        public Command LoadCommand { get; set; }
 
         public Command RegisterCommand { get; set; }
 
@@ -45,12 +67,39 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
             this.page = page;
             this.RegisterCommand = new Command(async () => await ExecuteRegisterCommand(), canExecute: () => { return this.IsOnline; });
 
+
+
+            this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
+
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
         #endregion
 
         #region Methods
+
+        private async Task ExecuteLoadCommand()
+        {
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento in corso", lottieAnimation: "LottieLogo1.json");
+
+            try
+            {
+                this.Ambienti = new ObservableCollection<Ambiente>(this.ambientiService.Init());
+                this.AmbienteSelezionato = this.Ambienti.First(a => a.Selezionato);
+                await loadingDialog.DismissAsync();
+
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+            }
+
+        }
 
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
@@ -73,6 +122,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                 VersionTracking.Track();
                 var appVersion = VersionTracking.CurrentVersion;
                 var isActive = false;
+
+                this.ambientiService.SetDefault(this.AmbienteSelezionato.Id);
 
                 await Task.Run(() =>
                 {

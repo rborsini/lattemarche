@@ -22,6 +22,8 @@ namespace LatteMarche.Application.Assam.Services
         {
             var reports = new List<Report>();
 
+            mailFilters.Since = new DateTime(2020, 3, 15);
+
             // download messaggi dalla casella di posta
             var messages = DownloadMessages(mailOptions.HostName, mailOptions.Port, mailOptions.Username, mailOptions.Password, mailFilters.From, mailFilters.Since, mailFilters.Before).ToList();
 
@@ -50,8 +52,8 @@ namespace LatteMarche.Application.Assam.Services
             using (ImapClient client = new ImapClient(hostname, port, username, password, AuthMethod.Login, true))
             {
                 var searchCondition = SearchCondition.SentSince(start);
-                searchCondition.And(SearchCondition.SentBefore(end));
-                searchCondition.And(SearchCondition.From(from));
+                searchCondition = searchCondition.And(SearchCondition.SentBefore(end));
+                searchCondition = searchCondition.And(SearchCondition.From(from));
 
                 IEnumerable<uint> uids = client.Search(searchCondition);
                 

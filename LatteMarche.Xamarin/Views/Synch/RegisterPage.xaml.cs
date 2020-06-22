@@ -21,5 +21,10 @@ namespace LatteMarche.Xamarin.Views.Synch
 
             BindingContext = this.viewModel = new RegisterViewModel(Navigation, this);
         }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            this.viewModel.LoadCommand.Execute(null);
+        }
     }
 }
