@@ -7,6 +7,7 @@ using LatteMarche.Application.Utenti.Services;
 using LatteMarche.EntityFramework;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeCode.Data;
 
@@ -22,11 +23,13 @@ namespace LatteMarche.Identity
     {
         private LatteMarcheDbContext database;
         private IUtentiService service;
+        private IAutorizzazioniService authorizationsService;
 
         public CustomUserStore()
         {
             this.database = new LatteMarcheDbContext();
             this.service = new UtentiService(new UnitOfWork(this.database));
+            this.authorizationsService = new AutorizzazioniService(new UnitOfWork(this.database));
         }
 
         public void Dispose()
@@ -55,6 +58,10 @@ namespace LatteMarche.Identity
         {
             UtenteDto userDto = service.Details(Convert.ToInt32(userId));
             CustomUser user = ConvertToCustomUser(userDto);
+
+            if (user != null)
+                user.Permissions = this.authorizationsService.GetPermissions(user.UserName);
+
             return await Task.FromResult<CustomUser>(user);
         }
 
@@ -62,6 +69,10 @@ namespace LatteMarche.Identity
         {
             UtenteDto userDto = service.Details(username);
             CustomUser user = ConvertToCustomUser(userDto);
+
+            if (user != null)
+                user.Permissions = this.authorizationsService.GetPermissions(username);
+
             return await Task.FromResult<CustomUser>(user);
         }
 
@@ -93,7 +104,8 @@ namespace LatteMarche.Identity
                     Email = String.Empty,
                     PasswordHash = userDto.Password,
                     Password = userDto.Password,
-                    UserName = userDto.Username
+                    UserName = userDto.Username,
+                    Roles = new List<string>() { userDto.Profilo }
                 };
             }
 

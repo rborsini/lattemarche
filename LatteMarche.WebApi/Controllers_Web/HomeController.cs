@@ -28,16 +28,22 @@ namespace LatteMarche.WebApi.Controllers_Web
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            
+            var token = Session["token"];
+
+            if (token == null && !String.IsNullOrEmpty(User.Identity.Name))
+                Session["token"] = this.utentiService.Details(User.Identity.Name).Token;
+
+            if (User.Identity.IsAuthenticated)
             {
                 var user = this.utentiService.Details(User.Identity.Name);
                 if(user.IdProfilo != 4) // laboratorio
                 {
-                    return View("Dashboard");
+                    return View("Dashboard", Session["token"]);
                 }
             }
 
-            return View();
+            return View(Session["token"]);
         }
 
         /// <summary>

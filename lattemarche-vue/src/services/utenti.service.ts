@@ -26,7 +26,7 @@ export class UtentiService {
     }
 
     public changePassword(model: ChangePassword): AxiosPromise<string> {
-        return axios.post('/api/users/changepassword', model);
+        return axios.post('/api/utenti/changepassword', model);
     }
 
 }

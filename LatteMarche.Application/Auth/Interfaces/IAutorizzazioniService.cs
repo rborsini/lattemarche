@@ -18,6 +18,6 @@ namespace LatteMarche.Application.Auth.Interfaces
 
         Dictionary<string, bool> GetViewBagTokens(HttpSessionState session, string username, string controllerName, string actionName);
 
-
+        List<string> GetPermissions(string username);
     }
 }

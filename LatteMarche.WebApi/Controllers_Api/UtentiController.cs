@@ -10,6 +10,7 @@ using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.WebApi.Models;
+using LatteMarche.Core.Models;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -82,7 +83,15 @@ namespace LatteMarche.WebApi.Controllers_Api
                 if (String.IsNullOrEmpty(model.Username))
                     return BadRequest();
 
-                string result = this.utentiService.ChangePassword(model.Username, model.OldPassword, model.Password, model.RePassword);
+                var user = this.utentiService.GetByUsername(User.Identity.Name);
+
+                string result = "";
+
+                if(user.Profilo.Contains("Admin")) 
+                    result = this.utentiService.ChangePassword(model.Username, model.Password, model.RePassword);
+                else
+                    result = this.utentiService.ChangePassword(model.Username, model.OldPassword, model.Password, model.RePassword);
+
                 return Ok(result);
             }
             catch (Exception exc)

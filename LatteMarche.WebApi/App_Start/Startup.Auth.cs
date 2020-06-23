@@ -6,12 +6,12 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using LatteMarche.Identity;
 using LatteMarche.Identity.Providers;
+using LatteMarche.Identity.OAuth;
 
 namespace LatteMarche.WebApi
 {
     public partial class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
 
@@ -27,21 +27,8 @@ namespace LatteMarche.WebApi
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Configure the application for OAuth based flow
-            PublicClientId = "self";
-            OAuthOptions = new OAuthAuthorizationServerOptions
-            {
-                TokenEndpointPath = new PathString("/Token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                AllowInsecureHttp = true
-            };
-
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
-            // Enable the application to use bearer tokens to authenticate users
-            app.UseOAuthBearerTokens(OAuthOptions);
+            app.UseOAuthAuthorizationServer(new OAuthOptions("/Token"));
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
         }
     }

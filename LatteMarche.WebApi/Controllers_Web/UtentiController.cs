@@ -1,4 +1,5 @@
-﻿using LatteMarche.WebApi.Attributes;
+﻿using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,6 @@ namespace LatteMarche.WebApi.Controllers_Web
     [MvcExceptionFilter]
     public class UtentiController : Controller
     {
-
-        public UtentiController()
-        {
-        }
 
         // GET: Utenti
         [ViewItem(nameof(Index), "Utenti - Elenco", "Lista")]

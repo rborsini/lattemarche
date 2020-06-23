@@ -34,7 +34,14 @@ namespace LatteMarche.Application.Utenti.Interfaces
         void SetPasswordHash(string username, string passwordHash);
 
         /// <summary>
-        /// Cambio password
+        /// Salvataggio del token di accesso alle API
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="token"></param>
+        void SetToken(string username, string token);
+
+        /// <summary>
+        /// Cambio password (per utenti base)
         /// </summary>
         /// <param name="username"></param>
         /// <param name="oldPassword"></param>
@@ -42,6 +49,15 @@ namespace LatteMarche.Application.Utenti.Interfaces
         /// <param name="rePassword"></param>
         /// <returns></returns>
         string ChangePassword(string username, string oldPassword, string password, string rePassword);
+
+        /// <summary>
+        /// Cambio password (per utenti amministratori)
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="rePassword"></param>
+        /// <returns></returns>
+        string ChangePassword(string username, string password, string rePassword);
 
         /// <summary>
         /// Ricerca utenti

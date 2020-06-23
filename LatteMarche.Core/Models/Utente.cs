@@ -73,6 +73,9 @@ namespace LatteMarche.Core.Models
         [Column("NOTE")]
         public string Note { get; set; }
 
+        [Column("TOKEN")]
+        public string Token { get; set; }
+
         public virtual List<RuoloUtente> RuoliUtente { get; set; }
 
         public virtual UtenteXAcquirente UtenteXAcquirente { get; set; }

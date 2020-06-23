@@ -14,11 +14,17 @@ namespace LatteMarche.Identity
 
         public string UserName { get; set; }
 
+        public string DisplayName => this.UserName;
+
         public string Email { get; set; }
 
         public string Password { get; set; }
 
         public string PasswordHash { get; set; }
+
+        public List<string> Roles { get; set; }
+
+        public List<string> Permissions { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<CustomUser> manager, string authenticationType)
         {

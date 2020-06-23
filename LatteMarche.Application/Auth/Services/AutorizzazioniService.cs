@@ -105,6 +105,27 @@ namespace LatteMarche.Application.Auth.Services
         }
 
         /// <summary>
+        /// Elenco dei viewItems abilitati per l'utente richiesto
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public List<string> GetPermissions(string username)
+        {
+            var user = this.utentiRepository.DbSet.FirstOrDefault(u => u.Username == username);
+
+            if (user == null)
+                return new List<string>();
+
+            return this.autorizzazioniRepository
+                .Query
+                .Where(a => a.IdRuolo == user.IdProfilo)
+                //.Where(a => a.ViewItemObj.Type == "MVC")
+                .Select(a => a.Azione)
+                .Distinct()
+                .ToList();
+        }
+
+        /// <summary>
         /// Generazione dei tokens di abilitazione dei viewItems relativi all'action passata come parametro
         /// </summary>
         /// <param name="username"></param>

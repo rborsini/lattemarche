@@ -12,16 +12,17 @@ using LatteMarche.Application.Utenti.Interfaces;
 using WeCode.Data.Interfaces;
 using WeCode.Application;
 using LatteMarche.Application.Common.Dtos;
+using Z.EntityFramework.Plus;
 
 namespace LatteMarche.Application.Utenti.Services
 {
 
     public class UtentiService : EntityService<Utente, int, UtenteDto>, IUtentiService
-	{
+    {
 
-		#region Fields
+        #region Fields
 
-		private IRepository<Utente, int> utentiRepository;
+        private IRepository<Utente, int> utentiRepository;
         private IRepository<UtenteXAcquirente, int> utenteXAcquirenteRepository;
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
         private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
@@ -30,15 +31,15 @@ namespace LatteMarche.Application.Utenti.Services
 
         private IComuniService comuniService;
 
-		#endregion
+        #endregion
 
-		#region Constructors
+        #region Constructors
 
-		public UtentiService(IUnitOfWork uow)
-			: base(uow)
-		{
-			this.utentiRepository = this.uow.Get<Utente, int>();
-            
+        public UtentiService(IUnitOfWork uow)
+            : base(uow)
+        {
+            this.utentiRepository = this.uow.Get<Utente, int>();
+
             this.utenteXAcquirenteRepository = this.uow.Get<UtenteXAcquirente, int>();
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
             this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
@@ -46,7 +47,7 @@ namespace LatteMarche.Application.Utenti.Services
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
 
             this.comuniService = new ComuniService(uow);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
-		}
+        }
 
         #endregion
 
@@ -57,8 +58,8 @@ namespace LatteMarche.Application.Utenti.Services
             this.utenteXAcquirenteRepository.Delete(key);
             this.utenteXCessionarioRepository.Delete(key);
             this.utenteXDestinatarioRepository.Delete(key);
-            
-            var allevamentiDaRimuovere = this.allevamentiRepository.DbSet.Where(a => a.IdUtente == key).Select(a => a.Id).ToList();            
+
+            var allevamentiDaRimuovere = this.allevamentiRepository.DbSet.Where(a => a.IdUtente == key).Select(a => a.Id).ToList();
             this.allevamentiRepository.Delete(allevamentiDaRimuovere.ToArray());
 
             var autocisterneDaRimuovere = this.autocisterneRepository.DbSet.Where(a => a.IdTrasportatore == key).Select(a => a.Id).ToList();
@@ -83,11 +84,11 @@ namespace LatteMarche.Application.Utenti.Services
 
             Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
 
-            if(utente != null)
+            if (utente != null)
             {
                 utenteDto = ConvertToDto(utente);
 
-                if(utenteDto.IdComune.HasValue)
+                if (utenteDto.IdComune.HasValue)
                 {
                     var comune = this.comuniService.Details(utenteDto.IdComune.Value);
                     if (comune != null)
@@ -112,7 +113,7 @@ namespace LatteMarche.Application.Utenti.Services
             {
                 utenteDto = ConvertToDto(utente);
 
-                if(utenteDto.IdComune.HasValue)
+                if (utenteDto.IdComune.HasValue)
                 {
                     ComuneDto comuneDto = this.comuniService.Details(utenteDto.IdComune.Value);
 
@@ -151,6 +152,59 @@ namespace LatteMarche.Application.Utenti.Services
                 utente.Password = passwordHash;
                 this.uow.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Aggiornamento token
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="token"></param>
+        public void SetToken(string username, string token)
+        {
+            this.repository.DbSet
+                .Where(u => u.Username == username)
+                .Update(u => new Utente() { Token = token });
+        }
+
+        /// <summary>
+        ///  Cambio password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="rePassword"></param>
+        /// <returns></returns>
+        public string ChangePassword(string username, string password, string rePassword)
+        {
+            string result = "";
+            if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(rePassword))
+            {
+                result = "Password obbligatoria";
+            }
+            else
+            {
+                string newPasswordHash = new HashHelper().HashPassword(password);
+
+                Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
+
+                if (utente == null)
+                {
+                    result = "Nessun utente trovato";
+                }
+                else
+                {
+                    if (password != rePassword)
+                    {
+                        result = "Nuove password non corrispondenti";
+                    }
+                    else
+                    {
+                        utente.Password = newPasswordHash;
+                        this.utentiRepository.Update(utente);
+                        this.uow.SaveChanges();
+                    }
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -305,7 +359,7 @@ namespace LatteMarche.Application.Utenti.Services
         {
             // allevamenti rimossi
             var allevamentiDaRimuovere = new List<Allevamento>();
-            foreach(var allevamento in allevamentiDb)
+            foreach (var allevamento in allevamentiDb)
             {
                 if (allevamentiView.FirstOrDefault(a => a.Id == allevamento.Id) == null)
                     allevamentiDaRimuovere.Add(allevamento);
@@ -324,16 +378,16 @@ namespace LatteMarche.Application.Utenti.Services
                 {
                     this.allevamentiRepository.Add(allevamentoView);
                     this.uow.SaveChanges();
-                }                    
+                }
                 else
                 {
                     allevamentoDb = UpdateAllevamentiProperties(allevamentoDb, allevamentoView);
                     this.allevamentiRepository.Update(allevamentoDb);
                     this.uow.SaveChanges();
                 }
-                    
+
             }
-            
+
             return allevamentiView;
         }
 
@@ -397,15 +451,15 @@ namespace LatteMarche.Application.Utenti.Services
         private UtenteXAcquirente UpdateUtenteXAcquirente(UtenteXAcquirente dbEntity, UtenteXAcquirente viewEntity)
         {
             UtenteXAcquirente uxa = null;
-           
+
             if (dbEntity == null && viewEntity != null)
             {
                 uxa = new UtenteXAcquirente() { Id = viewEntity.Id, IdAcquirente = viewEntity.IdAcquirente };
                 this.utenteXAcquirenteRepository.Add(uxa);
                 this.uow.SaveChanges();
-            }               
+            }
 
-            if(dbEntity != null && viewEntity != null)
+            if (dbEntity != null && viewEntity != null)
             {
                 dbEntity.IdAcquirente = viewEntity.IdAcquirente;
                 uxa = dbEntity;

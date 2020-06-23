@@ -67,6 +67,7 @@ namespace LatteMarche.Application.Utenti.Dtos
 
         public string Note { get; set; }
 
+        public string Token { get; set; }
 
         public int? IdAcquirente { get; set; }
         public int? IdDestinatario { get; set; }

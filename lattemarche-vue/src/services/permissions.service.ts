@@ -39,6 +39,12 @@ export class PermissionsService {
         return obj.username;
     }
 
+    public static getCurrentRole() {
+        var jwt = localStorage.getItem('jwt') as string
+        var obj = PermissionsService.decodeToken(jwt);
+        return obj.roles;
+    }
+
     private static decodeToken(token: string = '') {
         if (token === null || token === '') { return { 'upn': '' }; }
         const parts = token.split('.');

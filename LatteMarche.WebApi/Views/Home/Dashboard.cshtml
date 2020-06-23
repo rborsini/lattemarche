@@ -16,6 +16,10 @@
     string version = System.Configuration.ConfigurationManager.AppSettings["version"];
 }
 
+<script>
+    localStorage.setItem('jwt', '@Model');
+</script>
+
 <div id="app"></div>
 
 <script src="@Url.Content("~/dist/dashboardIndex.js")?ver=@version"></script>
