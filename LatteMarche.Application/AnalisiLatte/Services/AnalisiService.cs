@@ -62,6 +62,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         {
             var query = this.repository.Query;
 
+            query = query.Where(a => a.IdAllevamento.HasValue || a.IdProduttore.HasValue);
+
             // Campione
             if (!String.IsNullOrEmpty(searchDto.Campione))
                 query = query.Where(a => a.Id == searchDto.Campione);

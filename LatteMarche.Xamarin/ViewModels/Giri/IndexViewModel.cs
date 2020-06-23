@@ -426,6 +426,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     var item = sender as ItemViewModel;
                     this.giriService.DeleteItemAsync(item.Id).Wait();
                     this.Items.Remove(item);
+
+                    this.templateList = GetTemplateList();
                 });
 
                 await loadingDialog.DismissAsync();

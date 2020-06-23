@@ -55,8 +55,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         public Command AddCommand { get; set; }
 
-        public Command PrintCommand { get; set; }
-
 
         #endregion
 
@@ -115,7 +113,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 });
 
                 (this.AddCommand as Command).ChangeCanExecute();
-                (this.PrintCommand as Command).ChangeCanExecute();
             }
             catch (Exception exc)
             {
@@ -150,7 +147,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 {
                     var item = sender as ItemViewModel;
                     this.prelieviService.DeleteItemAsync(item.Id).Wait();
-                    this.Prelievi.Remove(item);
+                    this.Prelievi.Remove(item);                    
                 });
 
                 await loadingDialog.DismissAsync();
