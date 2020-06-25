@@ -206,6 +206,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         }
 
         [ViewItem(nameof(Synch), "Prelievi latte", "Sincronizzazione")]
+        [AllowAnonymous]
         [HttpPost]
         public IHttpActionResult Synch([FromUri] string day = "")
         {
@@ -221,7 +222,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
             SitraResponseVieModel response = InvioSitra(day);
 
-            return Ok(response);
+            return Ok();
         }
 
         private void LogDebug(string method, string message)

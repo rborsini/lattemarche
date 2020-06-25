@@ -55,7 +55,7 @@ namespace LatteMarche.Xamarin.Db.Services
             using (var context = CreateContext())
             {
                 return context.Set<Ambiente>()
-                    .First(a => a.Selezionato);
+                    .FirstOrDefault(a => a.Selezionato);
             }
         }
 

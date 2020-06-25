@@ -85,6 +85,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "lattemarche-vue", "lattemar
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "55380"
+		SlnRelativePath = "lattemarche-vue\"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsConsole", "MigrationsConsole\MigrationsConsole.csproj", "{832FF902-F45C-457E-A176-92E27412A9BB}"

@@ -127,8 +127,10 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 VersionTracking.Track();
 
+                var ambiente = this.ambientiService.GetDefault();
+
                 this.Versione = VersionTracking.CurrentVersion;
-                this.Ambiente = this.ambientiService.GetDefault().Nome;
+                this.Ambiente = ambiente != null ? ambiente.Nome : "";
             }
             catch (Exception exc)
             {

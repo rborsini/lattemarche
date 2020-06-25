@@ -25,7 +25,14 @@ namespace LatteMarche.Xamarin.Rest.Services
 
         private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
 
-        private string endpoint => this.ambientiService.GetDefault().Url;
+        private string endpoint
+        {
+            get
+            {
+                var ambiente = this.ambientiService.GetDefault();
+                return ambiente != null ? ambiente.Url : "";
+            }
+        }
 
         #endregion
 
