@@ -2,17 +2,17 @@ namespace LatteMarche.EntityFramework.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class AggiuntoCampoAbilitato : DbMigration
+    using WeCode.EntityFramework;
+
+    public partial class Aggiornata_V_Prelievi1 : ViewMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.AUTOCISTERNA", "ABILITATO", c => c.Boolean(nullable: false, defaultValue: true));
+            UpView("LatteMarche.EntityFramework", "V_PrelieviLatte");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.AUTOCISTERNA", "ABILITATO");
         }
     }
 }

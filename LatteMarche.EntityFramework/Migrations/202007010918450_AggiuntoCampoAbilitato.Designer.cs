@@ -7,13 +7,13 @@ namespace LatteMarche.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RinominazioneTabellaCessionari : IMigrationMetadata
+    public sealed partial class AggiuntoCampoAbilitato : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RinominazioneTabellaCessionari));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AggiuntoCampoAbilitato));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007010616440_RinominazioneTabellaCessionari"; }
+            get { return "202007010918450_AggiuntoCampoAbilitato"; }
         }
         
         string IMigrationMetadata.Source

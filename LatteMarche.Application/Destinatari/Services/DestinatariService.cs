@@ -57,10 +57,11 @@ namespace LatteMarche.Application.Destinatari.Services
 
             dropdown.Items = query
                 .Where(d => d.Abilitato)
+                .ToList()
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),
-                    Text = c.RagioneSociale
+                    Text = $"{c.RagioneSociale} - {c.Stabilimento}"
                 })
                 .OrderBy(i => i.Text)
                 .ToList();
