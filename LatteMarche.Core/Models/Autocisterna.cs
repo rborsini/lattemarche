@@ -34,5 +34,8 @@ namespace LatteMarche.Core.Models
         [Column("NUMERO_SCOMPARTI")]
         public int? NumScomparti { get; set; }
 
+        [Column("ABILITATO")]
+        public bool Abilitato { get; set; }
+
     }
 }

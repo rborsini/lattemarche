@@ -153,7 +153,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Search), "Utenti", "Ricerca")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Search(int idProfilo)
         {
             //possibilità di mettere altri parametri per la search
@@ -169,7 +168,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Destinatari), "Utenti", "Destinatari")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Destinatari()
         {
             try

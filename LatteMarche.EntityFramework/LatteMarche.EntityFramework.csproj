@@ -148,6 +148,26 @@
     <Compile Include="Migrations\202006230759387_AggiuntaColonnaUserToken.Designer.cs">
       <DependentUpon>202006230759387_AggiuntaColonnaUserToken.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006301522128_AggiuntoCampo_Destinatario_Abilitato.cs" />
+    <Compile Include="Migrations\202006301522128_AggiuntoCampo_Destinatario_Abilitato.Designer.cs">
+      <DependentUpon>202006301522128_AggiuntoCampo_Destinatario_Abilitato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006301538262_AggiuntoCampo_Abilitato.cs" />
+    <Compile Include="Migrations\202006301538262_AggiuntoCampo_Abilitato.Designer.cs">
+      <DependentUpon>202006301538262_AggiuntoCampo_Abilitato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007010616440_RinominazioneTabellaCessionari.cs" />
+    <Compile Include="Migrations\202007010616440_RinominazioneTabellaCessionari.Designer.cs">
+      <DependentUpon>202007010616440_RinominazioneTabellaCessionari.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007010648031_AggiuntoCampoAbilitato.cs" />
+    <Compile Include="Migrations\202007010648031_AggiuntoCampoAbilitato.Designer.cs">
+      <DependentUpon>202007010648031_AggiuntoCampoAbilitato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007010908121_Aggiornata_V_Prelievi1.cs" />
+    <Compile Include="Migrations\202007010908121_Aggiornata_V_Prelievi1.Designer.cs">
+      <DependentUpon>202007010908121_Aggiornata_V_Prelievi1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -214,6 +234,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006230759387_AggiuntaColonnaUserToken.resx">
       <DependentUpon>202006230759387_AggiuntaColonnaUserToken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006301522128_AggiuntoCampo_Destinatario_Abilitato.resx">
+      <DependentUpon>202006301522128_AggiuntoCampo_Destinatario_Abilitato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006301538262_AggiuntoCampo_Abilitato.resx">
+      <DependentUpon>202006301538262_AggiuntoCampo_Abilitato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007010616440_RinominazioneTabellaCessionari.resx">
+      <DependentUpon>202007010616440_RinominazioneTabellaCessionari.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007010648031_AggiuntoCampoAbilitato.resx">
+      <DependentUpon>202007010648031_AggiuntoCampoAbilitato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007010908121_Aggiornata_V_Prelievi1.resx">
+      <DependentUpon>202007010908121_Aggiornata_V_Prelievi1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

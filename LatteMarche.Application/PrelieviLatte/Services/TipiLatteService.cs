@@ -18,6 +18,9 @@ namespace LatteMarche.Application.PrelieviLatte.Services
         public TipiLatteService(IUnitOfWork uow)
             : base(uow) { }
 
+        #endregion
+
+        #region Methods
 
         public DropDownDto DropDown()
         {
@@ -29,6 +32,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     Value = c.Id.ToString(),
                     Text = c.Descrizione
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;

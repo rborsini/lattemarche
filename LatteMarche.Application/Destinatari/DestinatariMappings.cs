@@ -28,6 +28,7 @@ namespace LatteMarche.Application.Destinatari
                 .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
                 .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
+                .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
 
             return mappings;

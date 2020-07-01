@@ -44,6 +44,7 @@
       <template slot="thead">
         <th>P. IVA</th>
         <th>Ragione sociale</th>
+        <th>Stabilimento</th>
         <th></th>
       </template>
     </data-table>
@@ -156,6 +157,7 @@ export default class DestinatariIndexPage extends Vue {
 
     options.columns.push({ data: "P_IVA" });
     options.columns.push({ data: "RagioneSociale" });
+    options.columns.push({ data: "Stabilimento" });
 
 
 

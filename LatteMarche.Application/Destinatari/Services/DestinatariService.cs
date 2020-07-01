@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Common.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.Application.Destinatari.Interfaces;
@@ -41,6 +42,13 @@ namespace LatteMarche.Application.Destinatari.Services
 
         #region Methods
 
+        public override List<DestinatarioDto> Index()
+        {
+            var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
+
+            return Mapper.Map<List<DestinatarioDto>>(entities);
+        }
+
         public DropDownDto DropDown(int? idUtente = null)
         {
             var dropdown = new DropDownDto();
@@ -48,11 +56,13 @@ namespace LatteMarche.Application.Destinatari.Services
             var query = GetQuery(idUtente);
 
             dropdown.Items = query
+                .Where(d => d.Abilitato)
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),
                     Text = c.RagioneSociale
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;
@@ -61,7 +71,8 @@ namespace LatteMarche.Application.Destinatari.Services
 
         private IQueryable<Destinatario> GetQuery(int? idUtente = null)
         {
-            var query = this.repository.DbSet;
+            var query = this.repository.DbSet
+                .Where(d => d.Abilitato);
 
             if (!idUtente.HasValue)
                 return query;

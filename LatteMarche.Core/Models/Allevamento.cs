@@ -41,6 +41,7 @@ namespace LatteMarche.Core.Models
         [Column("LONGITUDINE")]
         public double? Longitudine { get; set; }
 
-
+        [Column("ABILITATO")]
+        public bool Abilitato { get; set; }
     }
 }

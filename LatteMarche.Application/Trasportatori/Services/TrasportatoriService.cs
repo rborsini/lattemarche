@@ -25,12 +25,14 @@ namespace LatteMarche.Application.Trasportatori.Services
             var dropdown = new DropDownDto();
 
             dropdown.Items = this.utentiRepository.DbSet
+                .Where(u => u.Abilitato)
                 .Where(u => u.IdProfilo ==  5)
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),
                     Text = c.RagioneSociale
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;

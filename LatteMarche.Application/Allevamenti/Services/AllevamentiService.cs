@@ -55,6 +55,7 @@ namespace LatteMarche.Application.Allevamenti.Services
                     Value = c.Id.ToString(),
                     Text = c.Utente.RagioneSociale
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;

@@ -9,6 +9,7 @@ using WeCode.Data;
 
 namespace LatteMarche.Core.Models
 {
+    [Table("ANAGRAFE_CESSIONARIO")]
     public class Cessionario : Entity<int>
     {
         [Key]
@@ -30,5 +31,7 @@ namespace LatteMarche.Core.Models
 
         public virtual Comune Comune { get; set; }
 
+        [Column("ABILITATO")]
+        public bool Abilitato { get; set; }
     }
 }

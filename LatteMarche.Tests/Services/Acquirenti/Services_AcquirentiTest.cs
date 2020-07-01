@@ -160,6 +160,7 @@ namespace LatteMarche.Tests.Services.Acquirenti
 
             var acquirente = this.acquirentiRepository.GetById(acquirenteDto.Id);
             Assert.IsNotNull(acquirente);
+            Assert.IsTrue(acquirente.Abilitato);
         }
 
         [Test]

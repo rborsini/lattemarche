@@ -17,7 +17,8 @@ namespace LatteMarche.Application.Allevamenti
             mappings.CreateMap<Allevamento, AllevamentoDto>()
                 .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia));
 
-            mappings.CreateMap<AllevamentoDto, Allevamento>();
+            mappings.CreateMap<AllevamentoDto, Allevamento>()
+                .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true));
             
 
             return mappings;

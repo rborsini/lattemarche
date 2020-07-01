@@ -29,5 +29,9 @@ namespace LatteMarche.Core.Models
 
         [Column("IDSITRA_ACQUIRENTE")]
         public int? IdSitra { get; set; }
+
+        [Column("ABILITATO")]
+        public bool Abilitato { get; set; }
+
     }
 }

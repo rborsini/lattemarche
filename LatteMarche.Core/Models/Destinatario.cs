@@ -37,5 +37,8 @@ namespace LatteMarche.Core.Models
         [Column("IDSITRA_STABILIMENTO_CASEIFICIO")]
         public int? IdSitraStabilimentoCaseificio { get; set; }
 
+        [Column("ABILITATO")]
+        public bool Abilitato { get; set; }
+
     }
 }

@@ -27,6 +27,7 @@ namespace LatteMarche.Application.Cessionari
                 .ForMember(dest => dest.Piva, opts => opts.MapFrom(src => src.Piva.Trim()))
                 .ForMember(dest => dest.Indirizzo, opts => opts.MapFrom(src => src.Indirizzo.Trim()))
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
+                .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
 
             return mappings;

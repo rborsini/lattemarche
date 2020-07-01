@@ -35,6 +35,7 @@ namespace LatteMarche.Application.Autocisterne.Interfaces
                 .Where(a => a.IdTrasportatore == idAutotrasportatore)
                 .Select(item => new DropDownItem() { Value = item.Id.ToString(), Text = item.Targa })
                 .Distinct()
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return model;

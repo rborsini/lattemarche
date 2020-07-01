@@ -33,7 +33,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Tipi profilo", "Lista")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Index()
         {
             try
@@ -49,7 +48,6 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Details), "Tipi profilo", "Dettaglio")]
         [HttpGet]
-        [CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
         public IHttpActionResult Details(int id)
         {
             try

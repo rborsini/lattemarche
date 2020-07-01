@@ -50,6 +50,7 @@ namespace LatteMarche.Application.Cessionari.Services
                     Value = c.Id.ToString(),
                     Text = c.RagioneSociale
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;

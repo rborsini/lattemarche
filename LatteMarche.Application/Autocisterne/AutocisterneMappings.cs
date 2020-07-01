@@ -16,7 +16,9 @@ namespace LatteMarche.Application.Trasportatori
         public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
         {
             mappings.CreateMap<Autocisterna, AutocisternaDto>();
-            mappings.CreateMap<AutocisternaDto, Autocisterna>();
+            mappings.CreateMap<AutocisternaDto, Autocisterna>()
+                .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
+                ;
 
             return mappings;
         }

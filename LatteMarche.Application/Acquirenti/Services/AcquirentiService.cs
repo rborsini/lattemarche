@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Common.Dtos;
@@ -42,6 +43,13 @@ namespace LatteMarche.Application.Acquirenti.Services
 
         #region Methods
 
+        public override List<AcquirenteDto> Index()
+        {
+            var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
+
+            return Mapper.Map<List<AcquirenteDto>>(entities);
+        }
+
         public DropDownDto DropDown(int? idUtente = null)
         {
             var dropdown = new DropDownDto();
@@ -49,11 +57,13 @@ namespace LatteMarche.Application.Acquirenti.Services
             var query = GetQuery(idUtente);
 
             dropdown.Items = query
+                .Where(c => c.Abilitato)
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),
                     Text = c.RagioneSociale
                 })
+                .OrderBy(i => i.Text)
                 .ToList();
 
             return dropdown;

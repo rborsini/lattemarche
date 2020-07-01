@@ -43,7 +43,7 @@ FROM
 	ANAGRAFE_ACQUIRENTE as acquirenti on prelievi.ID_ACQUIRENTE = acquirenti.ID_ACQUIRENTE
 
 	LEFT OUTER JOIN
-	Cessionario as cessionari on prelievi.ID_CESSIONARIO = cessionari.ID_CESSIONARIO
+	ANAGRAFE_CESSIONARIO as cessionari on prelievi.ID_CESSIONARIO = cessionari.ID_CESSIONARIO
 
 	LEFT OUTER JOIN
 	UTENTI as trasportatori on prelievi.ID_TRASPORTATORE = trasportatori.ID_UTENTE

@@ -13,6 +13,7 @@ using WeCode.Data.Interfaces;
 using WeCode.Application;
 using LatteMarche.Application.Common.Dtos;
 using Z.EntityFramework.Plus;
+using AutoMapper;
 
 namespace LatteMarche.Application.Utenti.Services
 {
@@ -257,6 +258,13 @@ namespace LatteMarche.Application.Utenti.Services
             return result;
         }
 
+        public override List<UtenteDto> Index()
+        {
+            var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
+
+            return Mapper.Map<List<UtenteDto>>(entities);
+        }
+
         /// <summary>
         /// Ricerca utenti
         /// </summary>
@@ -265,6 +273,8 @@ namespace LatteMarche.Application.Utenti.Services
         public List<UtenteDto> Search(UtentiSearchDto searchDto)
         {
             IQueryable<Utente> query = this.utentiRepository.Query;
+
+            query = query.Where(u => u.Abilitato);
 
             // Tipo profilo
             if (searchDto.IdProfilo != null)
