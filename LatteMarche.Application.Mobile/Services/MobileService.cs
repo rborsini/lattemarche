@@ -159,9 +159,9 @@ namespace LatteMarche.Application.Mobile.Services
                     }
 
                     db.TipiLatte = Mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
-                    db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.ToList());
-                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.ToList());
-                    db.Cessionari = Mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.ToList());
+                    db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
+                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
+                    db.Cessionari = Mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
 
                 }
 

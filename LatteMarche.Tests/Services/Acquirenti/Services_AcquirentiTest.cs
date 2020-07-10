@@ -78,6 +78,10 @@ namespace LatteMarche.Tests.Services.Acquirenti
         {
             var acquirenti = Builder<Acquirente>
                 .CreateListOfSize(10)
+                .TheFirst(5)
+                    .With(a => a.Abilitato = true)
+                .TheRest()
+                    .With(a => a.Abilitato = false)
                 .All()
                     .With(a => a.IdComune = ID_COMUNE)
                 .Build();
@@ -125,7 +129,7 @@ namespace LatteMarche.Tests.Services.Acquirenti
         {
             // admin vede tutto
             var dropdownDto = this.acquirentiService.DropDown(this.utenteAdmin.Id);
-            Assert.AreEqual(10, dropdownDto.Items.Count);
+            Assert.AreEqual(5, dropdownDto.Items.Count);
 
             // acquirente vede solo  il  proprio
             dropdownDto = this.acquirentiService.DropDown(this.utenteAcquirente.Id);

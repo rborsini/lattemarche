@@ -7,7 +7,7 @@ namespace LatteMarche.EntityFramework.Migrations
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.Cessionario", newName: "ANAGRAFE_CESSIONARIO");
+            //RenameTable(name: "dbo.Cessionario", newName: "ANAGRAFE_CESSIONARIO");
             AddColumn("dbo.ANAGRAFE_ACQUIRENTE", "ABILITATO", c => c.Boolean(nullable: false, defaultValue: true));
             AddColumn("dbo.ANAGRAFE_ALLEVAMENTO", "ABILITATO", c => c.Boolean(nullable: false, defaultValue: true));
             AddColumn("dbo.AUTOCISTERNA", "ABILITATO", c => c.Boolean(nullable: false, defaultValue: true));

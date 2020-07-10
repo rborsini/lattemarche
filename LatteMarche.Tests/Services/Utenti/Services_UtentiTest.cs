@@ -60,9 +60,13 @@ namespace LatteMarche.Tests.Services.Utenti
             Random rnd = new Random();
             var utenti = Builder<Utente>
                         .CreateListOfSize(100)
-                            .All()
-                                .With(d => d.IdComune = (int?)null)
-                                .With(d => d.IdProfilo = profiliIds[rnd.Next(0, profiliIds.Count - 1)])
+                        .TheFirst(50)
+                            .With(u => u.Abilitato = true)
+                        .TheRest()
+                            .With(u => u.Abilitato = false)
+                        .All()
+                            .With(d => d.IdComune = (int?)null)
+                            .With(d => d.IdProfilo = profiliIds[rnd.Next(0, profiliIds.Count - 1)])
                         .Build();
 
             this.utentiRepository.Add(utenti);
@@ -86,7 +90,7 @@ namespace LatteMarche.Tests.Services.Utenti
 
             Assert.IsTrue(utentiDto.All(u => u.IdProfilo == (int)ProfiloEnum.Allevatore));
 
-            var allevatoriCount = this.utentiRepository.DbSet.Count(u => u.IdProfilo == (int)ProfiloEnum.Allevatore);
+            var allevatoriCount = this.utentiRepository.DbSet.Count(u => u.Abilitato && u.IdProfilo == (int)ProfiloEnum.Allevatore);
 
             Assert.AreEqual(allevatoriCount, utentiDto.Count);
 

@@ -19,13 +19,13 @@ namespace LatteMarche.EntityFramework.Migrations
                         ID_CESSIONARIO = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID_UTENTE)
-                .ForeignKey("dbo.Cessionario", t => t.ID_CESSIONARIO, cascadeDelete: true)
+                .ForeignKey("dbo.ANAGRAFE_CESSIONARIO", t => t.ID_CESSIONARIO, cascadeDelete: true)
                 .ForeignKey("dbo.UTENTI", t => t.ID_UTENTE)
                 .Index(t => t.ID_UTENTE)
                 .Index(t => t.ID_CESSIONARIO);
             
             CreateTable(
-                "dbo.Cessionario",
+                "dbo.ANAGRAFE_CESSIONARIO",
                 c => new
                     {
                         ID_CESSIONARIO = c.Int(nullable: false, identity: true),
