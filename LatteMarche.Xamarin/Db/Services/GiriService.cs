@@ -33,6 +33,7 @@ namespace LatteMarche.Xamarin.Db.Services
             {
                 return await context.Set<Giro>()
                     .Where(g => !g.Archiviato)
+                    .OrderByDescending(g => g.DataCreazione)
                     .Include(g => g.Prelievi)
                     .AsNoTracking()
                     .ToListAsync();

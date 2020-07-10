@@ -293,7 +293,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
             this.idGiro = idGiro;
             this.Id = isNew ? Guid.NewGuid().ToString() : idPrelievo;
-            this.Title = String.Empty;
 
             this.IsBusy = true;
 
@@ -509,7 +508,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     this.Id = this.prelievo.Id;
                     this.isNew = false;
-                    this.Title = "Modifica Prelievo";
                 });
 
                 (this.PrintCommand as Command).ChangeCanExecute();

@@ -176,7 +176,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
                 var allevamento = prelievo.Allevamento;
                 var tipoLatte = prelievo.TipoLatte;
 
-                var scomparto = $"{prelievo.Scomparto}";
+                var scomparto_1 = prelievo.Scomparto.Length > 7 ? prelievo.Scomparto.Substring(0, 7) : prelievo.Scomparto;
+                var scomparto_2 = prelievo.Scomparto.Length > 7 ? prelievo.Scomparto.Substring(7, prelievo.Scomparto.Length - 7) : "";
                 var ragioneSociale = $"{allevamento?.RagioneSociale}";
                 var pIvaProv = $"{allevamento?.P_IVA}-{allevamento?.Provincia}";
                 var tipo = $"{tipoLatte?.Codice}";
@@ -186,12 +187,10 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
                 qtaTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
 
-                var aa = PadRight(scomparto, 7, ' ');
-
-                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(qta, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_1, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(qta, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
                 y += 25;
-                cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight(pIvaProv, 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight(data, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_2, 7, ' ')} {PadRight(pIvaProv, 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight(data, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
             }
 
             // Totali
