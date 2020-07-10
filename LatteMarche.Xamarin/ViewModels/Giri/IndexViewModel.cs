@@ -128,7 +128,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 });
 
                 await loadingDialog.DismissAsync();
-                //await ExecuteLoadItemsCommand();
+                await ExecuteLoadItemsCommand();
             }
             catch (Exception exc)
             {
@@ -153,10 +153,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             var choices = new string[] { "1", "2", "3", "4", "5" };
 
             var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
-            var input = choices[index];
 
-            if (String.IsNullOrEmpty(input))
+            if (index == -1)
                 return;
+
+            var input = choices[index];
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
