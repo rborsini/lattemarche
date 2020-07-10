@@ -132,6 +132,7 @@
     <Compile Include="AutomapperConfig.cs" />
     <Compile Include="JobGroupSection.cs" />
     <Compile Include="Jobs\BaseJob.cs" />
+    <Compile Include="Jobs\GeocoderJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStartUp.cs" />

@@ -27,6 +27,7 @@ namespace LatteMarche.Application.Trasportatori.Services
             dropdown.Items = this.utentiRepository.DbSet
                 .Where(u => u.Abilitato)
                 .Where(u => u.IdProfilo ==  5)
+                .ToList()
                 .Select(c => new DropDownItem()
                 {
                     Value = c.Id.ToString(),

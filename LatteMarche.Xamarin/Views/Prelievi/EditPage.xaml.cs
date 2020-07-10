@@ -73,5 +73,18 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         }
 
+        private void Allevamento_ChoiceSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            // #326101
+            this.viewModel.Prelievo.IdAcquirente = (int?)null;
+            this.viewModel.AcquirenteSelezionato = this.viewModel.GetAcquirenteSelezionato();
+
+            this.viewModel.Prelievo.IdCessionario = (int?)null;
+            this.viewModel.CessionarioSelezionato = this.viewModel.GetCessionarioSelezionato();
+
+            this.viewModel.Prelievo.IdDestinatario = (int?)null;
+            this.viewModel.DestinatarioSelezionato = this.viewModel.GetDestinatarioSelezionato();
+
+        }
     }
 }

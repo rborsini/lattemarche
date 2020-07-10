@@ -79,6 +79,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Properties
 
+        public Prelievo Prelievo
+        {
+            get { return this.prelievo; }
+            set { this.prelievo = value; }
+        }
+
         public bool IsEditable
         {
             get { return this.isEditable; }
@@ -371,7 +377,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var acquirenti = this.acquirentiService.GetItemsAsync().Result;
                     var cessionari = this.cessionariService.GetItemsAsync().Result;
                     var destinatari = this.destinatariService.GetItemsAsync().Result;
-                    var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result;
+                    var allevamenti = this.allevamentiService.GetByTemplate(giro.IdTemplateGiro.Value).Result.ToList();
+
+                    // #326117 rimozione degli allevamenti già presenti nel giro
+                    var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
+                    var idAllevamentiGiro = prelievi.Select(p => p.IdAllevamento).ToList();
+                    allevamenti = allevamenti.Where(a => a.IdAllevamento == this.prelievo.IdAllevamento || !idAllevamentiGiro.Contains(a.IdAllevamento)).ToList();
 
                     this.IsAllevamentoEditable = this.IsEditable && allevamenti.Count() > 0;
                     this.IsAcquirenteEditable = this.IsEditable && acquirenti.Count() > 0;
@@ -388,7 +399,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.Allevamenti = new ObservableCollection<Allevamento>(allevamenti);
                     this.AllevamentoSelezionato = GetAllevamentoSelezionato(location);
 
-                    this.Title = isNew ? "Nuovo Prelievo" : "Modifica Prelievo";
+                    this.Title = giro.Titolo;  // #325923
 
                     // Scomparto
                     this.Scomparto = this.prelievo.Scomparto;
@@ -505,6 +516,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 this.IsBusy = false;
                 await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Salvataggio avvenuto con successo", "OK");
                 //await navigation.PopAsync();
             }
             catch (Exception exc)
@@ -519,7 +531,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
 
         }
-
 
         /// <summary>
         /// Verifica compilazione campi obbligatori
@@ -791,12 +802,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// Recupero acquirente selezionato o di default
         /// </summary>
         /// <returns></returns>
-        private Acquirente GetAcquirenteSelezionato()
+        public Acquirente GetAcquirenteSelezionato()
         {
             if (this.prelievo.IdAcquirente.HasValue)
                 return this.Acquirenti.FirstOrDefault(a => a.Id == this.prelievo.IdAcquirente.Value);
 
-            if(this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
+            if(this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
             {
                 return this.Acquirenti.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdAcquirenteDefault.Value);
             }
@@ -808,12 +819,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// Recupero cessionario selezionato o di default
         /// </summary>
         /// <returns></returns>
-        private Cessionario GetCessionarioSelezionato()
+        public Cessionario GetCessionarioSelezionato()
         {
             if (this.prelievo.IdCessionario.HasValue)
                 return this.Cessionari.FirstOrDefault(a => a.Id == this.prelievo.IdCessionario.Value);
 
-            if (this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdCessionarioDefault.HasValue)
+            if (this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdCessionarioDefault.HasValue)
             {
                 return this.Cessionari.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdCessionarioDefault.Value);
             }
@@ -825,12 +836,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// Recupero destinatario selezionato o di default
         /// </summary>
         /// <returns></returns>
-        private Destinatario GetDestinatarioSelezionato()
+        public Destinatario GetDestinatarioSelezionato()
         {
             if (this.prelievo.IdDestinatario.HasValue)
                 return this.Destinatari.FirstOrDefault(a => a.Id == this.prelievo.IdDestinatario.Value);
 
-            if (this.isNew && this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdDestinatarioDefault.HasValue)
+            if (this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdDestinatarioDefault.HasValue)
             {
                 return this.Destinatari.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdDestinatarioDefault.Value);
             }
