@@ -80,10 +80,16 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <returns></returns>
         private async Task ExecuteAddCommand()
         {
+            
+            // selezione tipo giro
             var result = await MaterialDialog.Instance.SelectChoiceAsync(title: "Seleziona giro", dismissiveText: "Annulla", choices: templateList.Select(t => t.Descrizione).ToArray());
 
             if (result < 0)
                 return;
+
+            // check lavaggio cisterna
+            var resultLavaggioCisterna = await MaterialDialog.Instance.ConfirmAsync(message: "E' stato effettuato il lavaggio della cisterna?", confirmingText: "Si", dismissiveText: "No");
+
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
 
@@ -95,7 +101,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     {
                         IdTemplateGiro = this.templateList[result].Id,
                         DataCreazione = DateTime.Now,
-                        Titolo = this.templateList[result].Descrizione
+                        Titolo = this.templateList[result].Descrizione,
+                        LavaggioCisterna = resultLavaggioCisterna.HasValue ? resultLavaggioCisterna.Value : false
                     };
 
                     this.giriService.AddItemAsync(giro).Wait();
@@ -136,6 +143,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         }
 
+        /// <summary>
+        /// Stampa ricevuta consegna
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Item_OnItem_Printing(object sender, EventArgs e)
         {
             var choices = new string[] { "1", "2", "3", "4", "5" };
@@ -154,44 +166,45 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                 //await Task.Run(() =>
                 //{
-                    var stampante = this.stampantiService.GetDefaultAsync().Result;
+                var stampante = this.stampantiService.GetDefaultAsync().Result;
 
-                    if (stampante == null)
-                        throw new Exception("Nessuna stampante associata");
+                if (stampante == null)
+                    throw new Exception("Nessuna stampante associata");
 
-                    var printer = DependencyService.Get<IPrinter>();
-                    printer.MacAddress = stampante.MacAddress;
+                var printer = DependencyService.Get<IPrinter>();
+                printer.MacAddress = stampante.MacAddress;
 
-                    var giro = this.giriService.GetItemAsync(item.Id).Result;
-                    giro.Prelievi = this.prelieviService.GetByGiro(item.Id).Result.ToList();
-                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+                var giro = this.giriService.GetItemAsync(item.Id).Result;
+                giro.Prelievi = this.prelieviService.GetByGiro(item.Id).Result.ToList();
+                var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
 
-                    var registroRaccolta = new RegistroRaccolta();
+                var registroRaccolta = new RegistroRaccolta();
 
-                    registroRaccolta.NumeroCopie = Convert.ToInt32(input);
-                    registroRaccolta.Acquirente = GetAcquirente(giro).Result;
-                    registroRaccolta.Cessionario = GetCessionario(giro).Result;
-                    registroRaccolta.Destinatario = GetDestinatario(giro).Result;
-                    registroRaccolta.Giro = templateGiro;
-                    registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
-                    registroRaccolta.CodiceLotto = giro.CodiceLotto;
-                    registroRaccolta.Data = DateTime.Now;
+                registroRaccolta.NumeroCopie = Convert.ToInt32(input);
+                registroRaccolta.Acquirente = GetAcquirente(giro).Result;
+                registroRaccolta.Cessionario = GetCessionario(giro).Result;
+                registroRaccolta.Destinatario = GetDestinatario(giro).Result;
+                registroRaccolta.Giro = templateGiro;
+                registroRaccolta.Trasportatore = this.trasportatoriService.GetCurrent().Result;
+                registroRaccolta.CodiceLotto = giro.CodiceLotto;
+                registroRaccolta.Data = DateTime.Now;
+                registroRaccolta.LavaggioCisterna = giro.LavaggioCisterna;
 
-                    foreach (var prelievo in giro.Prelievi)
+                foreach (var prelievo in giro.Prelievi)
+                {
+                    var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
+
+                    registroRaccolta.Items.Add(new RegistroRaccolta.Item()
                     {
-                        var allevamento = GetAllevamento(prelievo.IdAllevamento).Result;
+                        Scomparto = prelievo.Scomparto,
+                        Allevamento = allevamento,
+                        DataPrelievo = prelievo.DataPrelievo,
+                        Quantita_kg = prelievo.Quantita_kg,
+                        TipoLatte = allevamento != null ? allevamento.TipoLatte : null
+                    });
+                }
 
-                        registroRaccolta.Items.Add(new RegistroRaccolta.Item()
-                        {
-                            Scomparto = prelievo.Scomparto,
-                            Allevamento = allevamento,
-                            DataPrelievo = prelievo.DataPrelievo,
-                            Quantita_kg = prelievo.Quantita_kg,
-                            TipoLatte = allevamento != null ? allevamento.TipoLatte : null
-                        });
-                    }
-
-                    await printer.PrintLabel(registroRaccolta);
+                await printer.PrintLabel(registroRaccolta);
 
                 //});
 

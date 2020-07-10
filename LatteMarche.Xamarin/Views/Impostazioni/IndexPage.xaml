@@ -30,7 +30,7 @@
             <material:MaterialTextField Placeholder="Stampante"
                 IsEnabled="{Binding StampantiPresenti }"
                 InputType="Choice"
-                SelectedChoice="{Binding StampanteSelezionata, Mode=TwoWay}"
+                SelectedChoice="{Binding StampanteSelezionata}"
                 Choices="{Binding Stampanti}"
                 ChoicesBindingName="Nome"
                 AlwaysShowUnderline="True"

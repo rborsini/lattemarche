@@ -11,6 +11,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
 
         public string Comunicazioni { get; set; }
 
+        public bool LavaggioCisterna { get; set; }
+
         public List<Item> Items { get; set; }
 
         public RegistroRaccolta()

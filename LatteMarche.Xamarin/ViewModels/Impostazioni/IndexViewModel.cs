@@ -184,6 +184,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 });
 
                 await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Impostata stampante predefinita", "OK");
             }
             catch (Exception exc)
             {
@@ -261,6 +262,10 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 var stampanti = this.stampantiService.GetItemsAsync().Result;
                 this.Stampanti = new ObservableCollection<Stampante>(stampanti);
                 this.StampantiPresenti = this.Stampanti.Count > 0;
+
+                if (this.Stampanti.Count == 1)
+                    this.StampanteSelezionata = stampante;
+
 
                 Analytics.TrackEvent("Stampante associata");
                 SentrySdk.CaptureMessage("Stampante associata", Sentry.Protocol.SentryLevel.Info);

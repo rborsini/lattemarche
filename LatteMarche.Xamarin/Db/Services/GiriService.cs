@@ -94,6 +94,7 @@ namespace LatteMarche.Xamarin.Db.Services
             entityItem.Titolo = viewItem.Titolo;
             entityItem.DataConsegna = viewItem.DataConsegna;
             entityItem.DataUpload = viewItem.DataUpload;
+            entityItem.LavaggioCisterna = viewItem.LavaggioCisterna;
 
             return entityItem;
         }

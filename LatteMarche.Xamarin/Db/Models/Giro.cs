@@ -26,6 +26,8 @@ namespace LatteMarche.Xamarin.Db.Models
         public virtual List<Prelievo> Prelievi { get; set; }
 
         public bool Archiviato { get; set; }
+        
+        public bool LavaggioCisterna { get; set; }
 
         public Giro()
         {

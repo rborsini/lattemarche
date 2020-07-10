@@ -38,6 +38,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             // Automezzo
             cmd += MakeTrasportatoreSection(registroRaccolta, ref y);
 
+            // Lavaggio cisterna
+            cmd += MakeLavaggioCisternaSection(registroRaccolta, ref y);
+
             // linea separatrice
             cmd += MakeLine(ref y);
 
@@ -73,6 +76,27 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             return cmd;
 
+        }
+
+        /// <summary>
+        /// Sezione lavaggio cisterna
+        /// </summary>
+        /// <param name="registroRaccolta"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private string MakeLavaggioCisternaSection(RegistroRaccolta registroRaccolta, ref int y)
+        {
+            int lineSpacing = 30;
+            var cmd = "";
+
+            if(registroRaccolta.LavaggioCisterna)
+            {
+                y += lineSpacing;
+                cmd += $"TEXT {p} {x} {y} Effettuato lavaggio cistena \r\n";
+                y += lineSpacing * 2;
+            }          
+
+            return cmd;
         }
 
         /// <summary>
