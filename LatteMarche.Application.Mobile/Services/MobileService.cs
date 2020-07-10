@@ -204,7 +204,6 @@ namespace LatteMarche.Application.Mobile.Services
                 dispositivo.VersioneOS = uploadDto.VersioneOS;
                 dispositivo.Marca = uploadDto.Marca;
                 dispositivo.Modello = uploadDto.Modello;
-                dispositivo.Nome = uploadDto.Nome;
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();

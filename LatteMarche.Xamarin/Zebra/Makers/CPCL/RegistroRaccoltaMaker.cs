@@ -17,8 +17,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             int y = 0;
             var cmd = "";
 
-            // intestazione
-            cmd += MakeHeader(registroRaccolta, ref y);
+            //// intestazione
+            //cmd += MakeHeader(registroRaccolta, ref y);
 
             // titolo
             cmd += MakeTitle(registroRaccolta, ref y);
@@ -67,6 +67,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // Firme
             cmd += MakeFirmeSection("Firma Acquirente \\ Delegato", "Firma Destinatario", ref y);
+
+            // Footer
+            cmd += MakeFooter(registro, ref y);
 
             // intestazione label aggiunta alla fine per avere l'altezza corretta
             var height = y + 100;

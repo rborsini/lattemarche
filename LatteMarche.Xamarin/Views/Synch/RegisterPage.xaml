@@ -19,7 +19,7 @@
 
                 <Image Source="logo_latte_marche_pink.png" Margin="40,0,40,20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
                 
-                <Image Source="cow.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                <Image Source="cooperlat.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
 
                 <Label 
                     FontSize="Medium" 

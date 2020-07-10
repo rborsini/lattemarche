@@ -47,6 +47,23 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         }
 
         /// <summary>
+        /// Footer
+        /// </summary>
+        /// <param name="registro"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        protected string MakeFooter(Registro registro, ref int y)
+        {
+            var cmd = "";
+
+            y += 25;
+
+            cmd += $"TEXT {p} {x} {y} {registro.Footer} \r\n";         // powered by
+
+            return cmd;
+        }
+
+        /// <summary>
         /// Titolo
         /// </summary>
         /// <param name="registro"></param>
@@ -56,7 +73,9 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
         {
             var cmd = "";
 
-            cmd += $"TEXT {h1} {x} 100 {registro.Titolo} \r\n";         // Registro raccolta latte bovino o Registro consegna latte bovino
+            cmd += $"TEXT {h1} {x} {y} {registro.Titolo} \r\n";         // Registro raccolta latte bovino o Registro consegna latte bovino
+
+            y += 70;
 
             return cmd;
         }
@@ -238,6 +257,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             cmd += $"LINE 30 {y} 280 {y} 2 \r\n";
 
             cmd += $"LINE 430 {y} 680 {y} 2 \r\n";
+
+            y += 30;
 
             return cmd;
         }

@@ -13,6 +13,7 @@ namespace LatteMarche.Xamarin.Zebra.Models
 
         public string Header_1 => "latte marche";
         public string Header_2 => "Organizzazione Produttori";
+        public string Footer => "powered by LatteMarche & Cooperlat";
         public string Titolo { get; set; }
         public string SottoTitolo => "L.119/03-D.M. 31/07/03, art.12 - Documentazione raccolta latte - Sistema informatizzato di registrazione - Autorizzazione Regione Marche DDs 512/SAR";
 

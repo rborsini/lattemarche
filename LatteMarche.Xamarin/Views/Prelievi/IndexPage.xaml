@@ -89,7 +89,7 @@
 
                 </Label.Text>
             </Label>
-            <Button Command="{Binding AddCommand}" Text="Aggiungi" VerticalOptions="CenterAndExpand"></Button>
+            <Button HeightRequest="70" Command="{Binding AddCommand}" Text="Aggiungi" VerticalOptions="CenterAndExpand"></Button>
         </StackLayout>
     </StackLayout>
 </ContentPage>
