@@ -64,7 +64,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             set 
             { 
                 SetProperty<Stampante>(ref this.stampanteSelezionata, value);
-                (this.SetDefaultCommand as Command).ChangeCanExecute();
+                //(this.SetDefaultCommand as Command).ChangeCanExecute();
             }
         }
 
@@ -110,7 +110,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
             this.DiscoveryCommand = new Command(async () => await ExecuteDiscoveryCommand());
-            this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand(), canExecute: () => { return this.stampanteSelezionata != null; });
+            //this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand(), canExecute: () => { return this.stampanteSelezionata != null; });
+            this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand());
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
             this.UpdateCommand = new Command(async () => await ExecuteUpdateCommand());
             this.ResetCommand = new Command(async () => await ExecuteResetCommand());
@@ -192,13 +193,13 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             {
                 this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
 
-                await Task.Run(() =>
-                {
+                if (this.stampanteSelezionata != null)
                     this.stampantiService.SetDefaultAsync(this.stampanteSelezionata.MacAddress).Wait();
-                });
 
                 await loadingDialog.DismissAsync();
-                await this.page.DisplayAlert("Info", "Impostata stampante predefinita", "OK");
+
+                if(this.stampanteSelezionata != null)
+                    await this.page.DisplayAlert("Info", "Impostata stampante predefinita", "OK");
             }
             catch (Exception exc)
             {
