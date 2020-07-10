@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Synch;
 using LatteMarche.Xamarin.Zebra;
 using LatteMarche.Xamarin.Zebra.Interfaces;
@@ -39,6 +40,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         private string versione;
         private string ambiente;
+        private string ultimoAggiornamento;
 
         #endregion
 
@@ -78,6 +80,11 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             set { SetProperty(ref this.ambiente, value); }
         }
 
+        public string UltimoAggiornamento
+        {
+            get { return this.ultimoAggiornamento; }
+            set { SetProperty(ref this.ultimoAggiornamento, value); }
+        }
 
         public Command LoadCommand { get; set; }
 
@@ -86,6 +93,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         public Command SetDefaultCommand { get; set; }
 
         public Command ExportCommand { get; set; }
+
+        public Command UpdateCommand { get; set; }
 
         public Command ResetCommand { get; set; }
 
@@ -103,6 +112,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             this.DiscoveryCommand = new Command(async () => await ExecuteDiscoveryCommand());
             this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand(), canExecute: () => { return this.stampanteSelezionata != null; });
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
+            this.UpdateCommand = new Command(async () => await ExecuteUpdateCommand());
             this.ResetCommand = new Command(async () => await ExecuteResetCommand());
         }
 
@@ -131,6 +141,11 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 this.Versione = VersionTracking.CurrentVersion;
                 this.Ambiente = ambiente != null ? ambiente.Nome : "";
+
+                var sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
+                var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
+
+                this.UltimoAggiornamento = $"{ultimoDownload.Timestamp:dd-MM-yyyy HH:mm:ss}";
             }
             catch (Exception exc)
             {
@@ -147,7 +162,6 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             }
 
         }
-
 
         private async Task ExecuteDiscoveryCommand()
         {
@@ -195,6 +209,45 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
+        }
+
+        private async Task ExecuteUpdateCommand()
+        {
+            try
+            {
+                var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Aggiornamento in corso", lottieAnimation: "LottieLogo1.json");
+                var device = DependencyService.Get<IDevice>();
+                var restService = DependencyService.Get<IRestService>();
+
+                await Task.Run(() =>
+                {
+                    try
+                    { 
+                        var dto = restService.Download(device.GetIdentifier()).Result;
+                        sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
+
+                        this.UltimoAggiornamento = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss}";
+
+                        Analytics.TrackEvent("Download avvenuto", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
+                        SentrySdk.CaptureMessage("Download avvenuto", Sentry.Protocol.SentryLevel.Info);
+                    }
+                    catch (Exception exc)
+                    {
+                        SentrySdk.CaptureException(exc);
+                        Crashes.TrackError(exc);
+                    }
+
+                });
+
+                await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Aggiornamento avvenuto con successo", "OK");
+            }
+            catch (Exception exc)
+            {
+                this.IsBusy = false;
+                await this.page.DisplayAlert("Errore", exc.Message, "OK");
+            }
+
         }
 
         private async Task ExecuteExportCommand()

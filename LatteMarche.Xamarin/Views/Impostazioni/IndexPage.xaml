@@ -40,17 +40,22 @@
                 matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
             />
 
-            <material:MaterialButton Margin="0,30,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Imposta stampante predefinita" Command="{Binding SetDefaultCommand}" TextColor="Black" VerticalOptions="Center" />
+            <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Imposta stampante predefinita" Command="{Binding SetDefaultCommand}" TextColor="Black" VerticalOptions="Center" />
 
-            <material:MaterialButton Margin="0,30,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Esporta database" Command="{Binding ExportCommand}" TextColor="Black" VerticalOptions="Center" />
+            <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Aggiorna database" Command="{Binding UpdateCommand}" TextColor="Black" VerticalOptions="Center" />
+            
+            <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Esporta database" Command="{Binding ExportCommand}" TextColor="Black" VerticalOptions="Center" />
 
-            <material:MaterialButton Margin="0,30,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Reset applicazione" Command="{Binding ResetCommand}" TextColor="Black" VerticalOptions="Center" />
+            <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Reset applicazione" Command="{Binding ResetCommand}" TextColor="Black" VerticalOptions="Center" />
 
-            <Label Margin="0,50,0,0" HorizontalOptions="Center" VerticalOptions="Center"  >Ambiente:</Label>
+            <Label Margin="0,30,0,0" HorizontalOptions="Center" VerticalOptions="Center"  >Ambiente:</Label>
             <Label HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Ambiente}" FontAttributes="Bold" ></Label>
 
-            <Label Margin="0,30,0,0" HorizontalOptions="Center"  VerticalOptions="Center" >Versione:</Label>
+            <Label Margin="0,20,0,0" HorizontalOptions="Center"  VerticalOptions="Center" >Versione:</Label>
             <Label HorizontalOptions="Center"  VerticalOptions="Center" Text="{Binding Versione}" FontAttributes="Bold"  ></Label>
+
+            <Label Margin="0,20,0,0" HorizontalOptions="Center"  VerticalOptions="Center" >Ultimo aggiornamento:</Label>
+            <Label HorizontalOptions="Center"  VerticalOptions="Center" Text="{Binding UltimoAggiornamento}" FontAttributes="Bold"  ></Label>
 
         </StackLayout>
 
