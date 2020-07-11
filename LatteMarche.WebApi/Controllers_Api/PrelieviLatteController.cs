@@ -220,7 +220,8 @@ namespace LatteMarche.WebApi.Controllers_Api
             if (this.PushEnabled)
                 this.synchService.Push();
 
-            SitraResponseVieModel response = InvioSitra(day);
+            if(this.SitraEnabled)
+                InvioSitra(day);
 
             return Ok();
         }

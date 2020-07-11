@@ -97,6 +97,7 @@ namespace LatteMarche.Tests.Services.Mobile
             var acquirente = Builder<Acquirente>
                 .CreateNew()
                     .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.Abilitato = true)
                 .Build();
 
             this.acquirentiRepository.Add(acquirente);
@@ -105,6 +106,7 @@ namespace LatteMarche.Tests.Services.Mobile
             var cessionario = Builder<Cessionario>
                 .CreateNew()
                     .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.Abilitato = true)
                 .Build();
 
             this.cessionariRepository.Add(cessionario);
@@ -113,6 +115,7 @@ namespace LatteMarche.Tests.Services.Mobile
             var destinatario = Builder<Destinatario>
                 .CreateNew()
                     .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.Abilitato = true)
                 .Build();
 
             this.destinatariRepository.Add(destinatario);

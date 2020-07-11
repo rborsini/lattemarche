@@ -78,6 +78,7 @@ namespace LatteMarche.Tests.Services.Utenti
             this.allevamento = Builder<Allevamento>
                 .CreateNew()
                     .With(a => a.IdUtente = this.utente.Id)
+                    .With(u => u.CodiceAsl = "abcd")
                 .Build();
 
             this.allevamentiRepository.Add(allevamento);
@@ -140,10 +141,16 @@ namespace LatteMarche.Tests.Services.Utenti
             Assert.AreEqual(2, utenteDto.Allevamenti.Count);
 
             // editazione allevamento 
-            utenteDto.Allevamenti[0].CodiceAsl = "1234";
+            utenteDto.Allevamenti[0].CUAA = "1234";
 
             utenteDto = this.utentiService.Update(utenteDto);
-            Assert.AreEqual("1234", utenteDto.Allevamenti[0].CodiceAsl);
+            Assert.AreEqual("1234", utenteDto.Allevamenti[0].CUAA);
+            Assert.That(utenteDto.Allevamenti[0].IdUtente.HasValue, Is.True);
+            Assert.That(utenteDto.Allevamenti[0].IdUtente.Value, Is.EqualTo(this.utente.Id));
+
+            // #Bug 326114
+            var allevamenti = this.allevamentiRepository.DbSet.Where(a => a.CodiceAsl == "abcd").ToList();
+            Assert.That(allevamenti, Has.Count.EqualTo(1));
 
             // rimozione allevamento
             utenteDto.Allevamenti.RemoveAt(0);

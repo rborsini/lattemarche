@@ -398,7 +398,7 @@ namespace LatteMarche.Application.Utenti.Services
 
             }
 
-            return allevamentiView;
+            return allevamentiDb;
         }
 
         private Allevamento UpdateAllevamentiProperties(Allevamento allevamentoDb, Allevamento allevamentoView)
