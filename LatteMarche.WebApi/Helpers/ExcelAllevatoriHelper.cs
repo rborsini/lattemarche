@@ -89,15 +89,15 @@ namespace LatteMarche.WebApi.Helpers
             row.CreateCell(0).SetCellValue("TOT");
             row.GetCell(0).CellStyle = groupCellStyle;
 
-            sheet.AddMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 7));
+            sheet.AddMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 0, 6));
 
             // Kg
-            row.CreateCell(8).SetCellFormula($"sum(I{rowIndex-group.Prelievi.Count+1}:I{rowIndex})");
-            row.GetCell(8).CellStyle = groupCellStyle;
+            row.CreateCell(7).SetCellFormula($"sum(H{rowIndex-group.Prelievi.Count+1}:H{rowIndex})");
+            row.GetCell(7).CellStyle = groupCellStyle;
 
             // Litri 
-            row.CreateCell(9).SetCellFormula($"sum(J{rowIndex - group.Prelievi.Count + 1}:J{rowIndex})");
-            row.GetCell(9).CellStyle = groupCellStyle;
+            row.CreateCell(8).SetCellFormula($"sum(I{rowIndex - group.Prelievi.Count + 1}:I{rowIndex})");
+            row.GetCell(8).CellStyle = groupCellStyle;
 
         }
 
@@ -119,14 +119,13 @@ namespace LatteMarche.WebApi.Helpers
             row.CreateCell(1).SetCellValue(prelievo.Acquirente);
             row.CreateCell(2).SetCellValue(prelievo.Destinatario);
             row.CreateCell(3).SetCellValue(prelievo.Trasportatore);
-            row.CreateCell(4).SetCellValue(prelievo.Targa);
-            row.CreateCell(5).SetCellValue(prelievo.DataPrelievoStr);
-            row.CreateCell(6).SetCellValue(Convert.ToDouble(prelievo.Scomparto));
-            row.CreateCell(7).SetCellValue(prelievo.LottoConsegna);
-            row.CreateCell(8).SetCellValue(Convert.ToDouble(prelievo.Quantita));
-            row.CreateCell(9).SetCellValue(Convert.ToDouble(prelievo.QuantitaLitri));
+            row.CreateCell(4).SetCellValue(prelievo.DataPrelievoStr);
+            row.CreateCell(5).SetCellValue(Convert.ToDouble(prelievo.Scomparto));
+            row.CreateCell(6).SetCellValue(prelievo.LottoConsegna);
+            row.CreateCell(7).SetCellValue(Convert.ToDouble(prelievo.Quantita));
+            row.CreateCell(8).SetCellValue(Convert.ToDouble(prelievo.QuantitaLitri));
 
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i <= 8; i++)
             {
                 row.GetCell(i).CellStyle = cellStyle;
             }
@@ -158,25 +157,23 @@ namespace LatteMarche.WebApi.Helpers
             headerRow.CreateCell(1).SetCellValue("ACQUIRENTE");
             headerRow.CreateCell(2).SetCellValue("DESTINATARIO");
             headerRow.CreateCell(3).SetCellValue("TRASPORTATORE");
-            headerRow.CreateCell(4).SetCellValue("TARGA");
-            headerRow.CreateCell(5).SetCellValue("DATA E ORA PRELIEVO");
-            headerRow.CreateCell(6).SetCellValue("SCOMPARTO");
-            headerRow.CreateCell(7).SetCellValue("LOTTO CONSEGNA");
-            headerRow.CreateCell(8).SetCellValue("QTA (kg)");
-            headerRow.CreateCell(9).SetCellValue("QTA (lt)");
+            headerRow.CreateCell(4).SetCellValue("DATA E ORA PRELIEVO");
+            headerRow.CreateCell(5).SetCellValue("SCOMPARTO");
+            headerRow.CreateCell(6).SetCellValue("LOTTO CONSEGNA");
+            headerRow.CreateCell(7).SetCellValue("QTA (kg)");
+            headerRow.CreateCell(8).SetCellValue("QTA (lt)");
 
             sheet.SetColumnWidth(0, 8000);
             sheet.SetColumnWidth(1, 6000);
             sheet.SetColumnWidth(2, 6000);
             sheet.SetColumnWidth(3, 7000);
             sheet.SetColumnWidth(4, 3000);
-            sheet.SetColumnWidth(5, 4500);
-            sheet.SetColumnWidth(6, 2000);
-            sheet.SetColumnWidth(7, 4000);
+            sheet.SetColumnWidth(5, 2000);
+            sheet.SetColumnWidth(6, 4000);
+            sheet.SetColumnWidth(7, 3000);
             sheet.SetColumnWidth(8, 3000);
-            sheet.SetColumnWidth(9, 3000);
 
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i <= 8; i++)
             {
                 headerRow.GetCell(i).CellStyle = headerCellStyle;
             }

@@ -102,9 +102,6 @@ namespace LatteMarche.Core.Models
         [ExcelHeader("TRASPORTATORE", 4)]
         public string Trasportatore { get; set; }
 
-        [Column("TARGA_MEZZO")]
-        public string Targa { get; set; }
-
         [Column("NUMERO_MUNGITURE")]
         public int? NumeroMungiture { get; set; }
 

@@ -17,7 +17,6 @@ SELECT
 	prelievi.ID_LABANALISI,
 	prelievi.ID_TRASPORTATORE,
 	trasportatori.RAGIONE_SOCIALE as TRASPORTATORE,
-	autocisterne.TARGA_MEZZO,
 	prelievi.NUMERO_MUNGITURE,
 	prelievi.SCOMPARTO,
 	prelievi.LOTTO_CONSEGNA,
@@ -48,8 +47,5 @@ FROM
 	LEFT OUTER JOIN
 	UTENTI as trasportatori on prelievi.ID_TRASPORTATORE = trasportatori.ID_UTENTE
 	
-	LEFT OUTER JOIN
-	AUTOCISTERNA as autocisterne on prelievi.ID_TRASPORTATORE = autocisterne.ID_TRASPORTATORE
-
 	LEFT OUTER JOIN
 	TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
