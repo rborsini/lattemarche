@@ -292,7 +292,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             this.isNew = String.IsNullOrEmpty(idPrelievo);
 
             this.idGiro = idGiro;
-            this.Id = isNew ? Guid.NewGuid().ToString() : idPrelievo;
+            this.Id = idPrelievo;
 
             this.IsBusy = true;
 
@@ -357,16 +357,14 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     {
                         this.prelievo = new Prelievo()
                         {
-                            Id = this.Id,
+                            Id = Guid.NewGuid().ToString(),
                             IdGiro = this.idGiro,
                             DataPrelievo = DateTime.Now
                         };
-                        this.Id = String.Empty;
                     }
                     else
                     {
                         this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
-                        this.Id = this.prelievo.Id;
                     }
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
@@ -579,7 +577,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             var lt = Convert.ToDecimal(this.Lt);
 
             // quantità
-            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue)
+            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue && 
+                allevamento.Quantita_Min.Value != 0 && allevamento.Quantita_Max.Value != 0)
             {
                 if (kg < allevamento.Quantita_Min)
                 {
@@ -595,7 +594,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             }
 
             // temperatura
-            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue)
+            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue &&
+                allevamento.Temperatura_Min.Value != 0 && allevamento.Temperatura_Max.Value != 0)
             {
                 if (lt < allevamento.Temperatura_Min)
                 {

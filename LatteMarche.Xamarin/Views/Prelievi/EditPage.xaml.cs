@@ -1,4 +1,5 @@
-﻿using LatteMarche.Xamarin.ViewModels.Prelievi;
+﻿using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.ViewModels.Prelievi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
             InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
+        }
+
+        private void ContentPage_Disappearing(object sender, EventArgs e)
+        {
+            int i = 0;
         }
 
         private void ContentPage_Appearing(object sender, EventArgs e)
@@ -75,16 +81,22 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private void Allevamento_ChoiceSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            // #326101
-            this.viewModel.Prelievo.IdAcquirente = (int?)null;
-            this.viewModel.AcquirenteSelezionato = this.viewModel.GetAcquirenteSelezionato();
+            //// #326101
+            //if(this.viewModel.Prelievo.IdAllevamento != (e.SelectedItem as Allevamento).IdAllevamento)
+            //{
+            //    this.viewModel.Prelievo.IdAcquirente = (int?)null;
+            //    this.viewModel.AcquirenteSelezionato = this.viewModel.GetAcquirenteSelezionato();
 
-            this.viewModel.Prelievo.IdCessionario = (int?)null;
-            this.viewModel.CessionarioSelezionato = this.viewModel.GetCessionarioSelezionato();
+            //    this.viewModel.Prelievo.IdCessionario = (int?)null;
+            //    this.viewModel.CessionarioSelezionato = this.viewModel.GetCessionarioSelezionato();
 
-            this.viewModel.Prelievo.IdDestinatario = (int?)null;
-            this.viewModel.DestinatarioSelezionato = this.viewModel.GetDestinatarioSelezionato();
+            //    this.viewModel.Prelievo.IdDestinatario = (int?)null;
+            //    this.viewModel.DestinatarioSelezionato = this.viewModel.GetDestinatarioSelezionato();
+            //}
+
 
         }
+
+
     }
 }

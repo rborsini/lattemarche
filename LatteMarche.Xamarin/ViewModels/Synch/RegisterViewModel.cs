@@ -113,8 +113,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
                         isActive = dbDto != null;
                     }
 
-                    this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
-
                 });
 
                 await loadingDialog.DismissAsync();
