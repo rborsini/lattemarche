@@ -163,6 +163,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
+    <Content Include="Scripts\V_IntegrazioneCooperlat.sql" />
     <Compile Include="Seeder.cs" />
   </ItemGroup>
   <ItemGroup>
