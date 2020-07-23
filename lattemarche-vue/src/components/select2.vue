@@ -1,7 +1,7 @@
 ﻿<template>
     <!-- https://select2.org/appearance#container-width -->
     <!-- Select2 will do its best to resolve the percent width specified via a CSS class, but it is not always possible. The best way to ensure that Select2 is using a percent based width is to inline the style declaration into the tag. -->
-    <select :disabled="disabled" class="select2-template" style="width: 100%">        
+    <select :disabled="disabled" class="select2-template" style="width: 100%">
     </select>
 </template>
 
@@ -13,7 +13,7 @@
     var select2Obj = null;
 
     export default {
-        props: ['options', 'ajax', 'url', 'value', 'value-field', 'text-field', 'disabled', 'placeholder', 'dropdownparent', 'allow-clear'],
+        props: ['options', 'ajax', 'url', 'value', 'old-value', 'value-field', 'text-field', 'disabled', 'placeholder', 'dropdownparent', 'allow-clear'],
 
         // init
         mounted: function () {
@@ -62,7 +62,7 @@
 
         methods: {
 
-            setItem: function(value, text) {
+            setItem: function (value, text) {
                 $(this.$el).append('<option value="' + value + '" selected="selected">' + text + '</option>');
                 $(this.$el).trigger('change');
             },
@@ -120,11 +120,14 @@
                             dataType: 'json'
                         }
                     })
-                    .on('change', function () {
+                    .on('change', function (a, b) {
+
                         this.value = $(this).val();
-                        vm.$emit('update:value', this.value);
-                        vm.$emit('value-changed', this.value);
-                        //vm.$emit('text-changed', vm.getSelectedText(this.value));
+
+                        vm.$emit('update:value', this.value, this.oldValue);
+                        vm.$emit('value-changed', this.value, this.oldValue);
+
+                        this.oldValue = this.value;
                     });
 
             },

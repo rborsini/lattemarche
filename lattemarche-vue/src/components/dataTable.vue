@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="table table-hover table-striped table-bordered">
+    <table class="table table-hover table-striped table-bordered"  style="width: 100%" >
       <div class="d-none">
         <slot class="toolbox" name="toolbox"></slot>
       </div>
@@ -72,6 +72,7 @@ export default {
           [20, 50, 100, 500, 1000, "All"]
         ],
         pageLength: 20,        
+        order: [],     // http://robertoborsini.myqnapcloud.com:82/redmine/projects/we-code/wiki/JQuery_DataTables        
         language: {
           sEmptyTable: "Nessun dato presente",
           sInfo: "_START_ - _END_ di _TOTAL_",
@@ -107,6 +108,11 @@ export default {
       table.on("draw.dt", function() {
         vm.$emit("data-loaded");
       });
+
+      table.on('preDraw', function () {
+          vm.$emit('pre-draw');
+      });
+
     },
 
     load: function(paramsQueryString) {
