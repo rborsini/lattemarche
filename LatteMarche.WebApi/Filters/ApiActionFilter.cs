@@ -14,7 +14,7 @@ namespace LatteMarche.WebApi.Filters
     {
         private Stopwatch swAction = new Stopwatch();
 
-        //public ILogsService logsService { get; set; }
+        public ILogsService logsService { get; set; }
 
         public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
@@ -35,19 +35,17 @@ namespace LatteMarche.WebApi.Filters
             var request = actionExecutedContext.Request.ToString();
             var arguments = JsonConvert.SerializeObject(actionExecutedContext.ActionContext.ActionArguments);
 
-            LoggerConfig.ApiLog.Info(message, swAction.Elapsed.TotalMilliseconds, request, arguments);
-
-            //this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
-            //{
-            //    Date = DateTime.Now,
-            //    Thread = "service",
-            //    Level = "INFO",
-            //    Logger = "api",
-            //    Identity = HttpContext.Current.User.Identity.Name,
-            //    Message = message,
-            //    Request = request,
-            //    Arguments = arguments
-            //});
+            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
+            {
+                Date = DateTime.Now,
+                Thread = "service",
+                Level = "INFO",
+                Logger = "api",
+                Identity = HttpContext.Current.User.Identity.Name,
+                Message = message,
+                Request = request,
+                Arguments = arguments
+            });
 
             Debug.WriteLine(message, "API Action Filter Log");
         }

@@ -91,32 +91,15 @@ namespace LatteMarche.WebApi.Filters
 
             var message = String.Format("{0}/{1}?{4} [{2} sec + {3} sec]", controllerName, actionName, swAction.Elapsed.ToString("s\\.f"), swResult.Elapsed.ToString("s\\.f"), this.actionParameters);
 
-            LoggerConfig.MvcLog.Info(message);
-
-            //using (SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587"))
+            //this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
             //{
-            //    SentrySdk.CaptureMessage("primo messaggio", Sentry.Protocol.SentryLevel.Info);
-
-            //    try
-            //    {
-            //        throw null;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        SentrySdk.CaptureException(e);
-            //    }
-            //}
-
-
-            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
-            {
-                Date = DateTime.Now,
-                Thread = "service",
-                Level = "INFO",
-                Logger = "mvc",
-                Identity = this.identity,
-                Message = message
-            });
+            //    Date = DateTime.Now,
+            //    Thread = "service",
+            //    Level = "INFO",
+            //    Logger = "mvc",
+            //    Identity = this.identity,
+            //    Message = message
+            //});
 
             Debug.WriteLine(message, "MVC Action Filter Log");
         }

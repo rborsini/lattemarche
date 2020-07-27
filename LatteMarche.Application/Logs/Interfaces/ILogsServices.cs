@@ -12,5 +12,6 @@ namespace LatteMarche.Application.Logs.Interfaces
 {
     public interface ILogsService : IEntityService<LogRecord, long, LogRecordDto>
     {
+        void Delete(DateTime from);
     }
 }

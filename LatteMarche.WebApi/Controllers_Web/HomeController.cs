@@ -2,6 +2,7 @@
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Models;
 using log4net;
 using System;
@@ -11,6 +12,8 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers_Web
 {
+    [MvcActionFilter]
+    [MvcExceptionFilter]
     public class HomeController : Controller
     {
         private static ILog log = LogManager.GetLogger(typeof(HomeController));

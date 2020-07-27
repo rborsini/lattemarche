@@ -73,8 +73,7 @@ namespace LatteMarche.Application
             RegisterService<DestinatariService, IDestinatariService>(builder);
             RegisterService<DispositiviService, IDispositiviService>(builder);
             RegisterService<GiriService, IGiriService>(builder);
-            RegisterService<LaboratoriAnalisiService, ILaboratoriAnalisiService>(builder);
-            RegisterService<LogsService, ILogsService>(builder);
+            RegisterService<LaboratoriAnalisiService, ILaboratoriAnalisiService>(builder);            
             RegisterService<LottiService, ILottiService>(builder);
             RegisterService<PrelieviLatteService, IPrelieviLatteService>(builder);
             RegisterService<RuoliService, IRuoliService>(builder);
@@ -85,6 +84,8 @@ namespace LatteMarche.Application
             RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
             RegisterService<UtentiService, IUtentiService>(builder);
             RegisterService<WidgetsService, IWidgetsService>(builder);
+
+            builder.RegisterType<LogsService>().As<ILogsService>().SingleInstance();            
 
             base.Load(builder);
 		}

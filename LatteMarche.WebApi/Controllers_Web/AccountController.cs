@@ -2,7 +2,9 @@
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Models;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
@@ -14,6 +16,8 @@ using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers_Web
 {
+    [MvcActionFilter]
+    [MvcExceptionFilter]
     public class AccountController : Controller
     {
 
@@ -48,12 +52,11 @@ namespace LatteMarche.WebApi.Controllers_Web
         {
             if (ModelState.IsValid && Membership.ValidateUser(model.Username, model.Password))
             {
-                Uri u = Request.Url;
 
                 UtenteDto utenteDto = this.utentiService.Details(model.Username);
 
                 if(utenteDto != null)
-                {
+                {                    
                     Session["fullname"] = String.Format("{0} {1}", utenteDto.Nome, utenteDto.Cognome);
                 }
 
@@ -61,7 +64,10 @@ namespace LatteMarche.WebApi.Controllers_Web
 
                 try
                 {
+
+                    tokenUrl = tokenUrl.Replace("https://", "http://");
                     string token = GetToken(tokenUrl, model.Username, model.Password);
+
                     if (!String.IsNullOrEmpty(token))
                     {
                         Session["token"] = token;

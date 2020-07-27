@@ -69,8 +69,6 @@
   <ItemGroup>
     <Compile Include="Geo\Geocoder.cs" />
     <Compile Include="Geo\Point.cs" />
-    <Compile Include="Logs\Logger.cs" />
-    <Compile Include="Logs\PerformanceLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

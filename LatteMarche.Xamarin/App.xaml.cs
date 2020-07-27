@@ -20,6 +20,7 @@ using Sentry;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Rewrite.Internal.ApacheModRewrite;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace LatteMarche.Xamarin
 {
@@ -46,7 +47,21 @@ namespace LatteMarche.Xamarin
             InitializeComponent();
 
             AppCenter.Start("android=2676a594-ff4a-483a-8178-ca2377f493d2;", typeof(Analytics), typeof(Crashes));
-            SentrySdk.Init("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587");
+
+            VersionTracking.Track();
+
+            var isDebug = false;
+
+#if DEBUG
+            isDebug = true;
+#endif
+
+            SentrySdk.Init(o =>
+            {
+                o.Dsn = new Dsn("https://a446f661b09343b8a3f828d89f198085@o382996.ingest.sentry.io/5219587");
+                o.Debug = isDebug;
+                o.Release = $"lattemarche@{VersionTracking.CurrentVersion}";
+            });
 
             XF.Material.Forms.Material.Init(this, "Material.Configuration");
 
@@ -115,7 +130,7 @@ namespace LatteMarche.Xamarin
                 });
         }
 
-        #endregion
+#endregion
 
     }
 }
