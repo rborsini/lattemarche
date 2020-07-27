@@ -651,11 +651,9 @@ export default class App extends Vue {
 
   // reload della pagina sullo stesso id
   public reload() {
-    UrlService.reload();
+    UrlService.redirect('/utenti/edit?id=' + this.utente.Id);
   }
 
-  public redirect() {
-    UrlService.redirect("/utenti");
-  }
+
 }
 </script>
