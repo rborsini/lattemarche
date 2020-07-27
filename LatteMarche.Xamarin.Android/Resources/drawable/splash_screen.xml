@@ -5,7 +5,7 @@
   </item>
   <item android:right="50dp" android:left="50dp" >
     <bitmap
-        android:src="@drawable/logo_latte_marche"
+        android:src="@drawable/splashscreen"
         android:tileMode="disabled"
         android:gravity="fill_horizontal"
         />

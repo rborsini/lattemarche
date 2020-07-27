@@ -20,7 +20,7 @@ namespace LatteMarche.Xamarin.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            var a = Resources.Configuration.Locale;
+            //var a = Resources.Configuration.Locale;
             base.OnCreate(savedInstanceState);
 
             Platform.Init(this, savedInstanceState);
@@ -29,12 +29,7 @@ namespace LatteMarche.Xamarin.Droid
 
             LoadApplication(new App());
         }
-        //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        //{
-        //    Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        //    base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        //}
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
