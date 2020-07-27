@@ -149,6 +149,9 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         private async Task ExecuteRegisterCommand()
         {
+
+            var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Registrazione in corso", lottieAnimation: "LottieLogo1.json");
 
             try

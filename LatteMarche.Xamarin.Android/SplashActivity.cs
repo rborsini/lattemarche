@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Runtime;
 using Xamarin.Essentials;
 
 namespace LatteMarche.Xamarin.Droid
@@ -23,12 +24,6 @@ namespace LatteMarche.Xamarin.Droid
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
-        {
-            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
 
     }
 }

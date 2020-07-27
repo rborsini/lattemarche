@@ -9,7 +9,6 @@ using Android.OS;
 using Xamarin.Essentials;
 using Forms = Xamarin.Forms;
 
-
 namespace LatteMarche.Xamarin.Droid
 {
     // Per le icone https://easyappicon.com/
@@ -31,11 +30,11 @@ namespace LatteMarche.Xamarin.Droid
         }
 
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
     }
 }

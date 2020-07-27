@@ -86,6 +86,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
             set { SetProperty(ref this.ultimoAggiornamento, value); }
         }
 
+
         public Command LoadCommand { get; set; }
 
         public Command DiscoveryCommand { get; set; }
@@ -121,13 +122,12 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         #region Methods
 
-
         private async Task ExecuteLoadCommand()
         {
-            this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento elenco stampanti", lottieAnimation: "LottieLogo1.json");
-
             try
             {
+
+                this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento elenco stampanti", lottieAnimation: "LottieLogo1.json");
 
                 var stampanti = this.stampantiService.GetItemsAsync().Result;
                 this.Stampanti = new ObservableCollection<Stampante>(stampanti);
@@ -147,6 +147,9 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
 
                 this.UltimoAggiornamento = $"{ultimoDownload.Timestamp:dd-MM-yyyy HH:mm:ss}";
+                
+                await loadingDialog.DismissAsync();               
+
             }
             catch (Exception exc)
             {
@@ -157,26 +160,31 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
-            finally
-            {
-                await loadingDialog.DismissAsync();
-            }
-
         }
 
         private async Task ExecuteDiscoveryCommand()
         {
             try
             {
-                this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Ricerca stampanti in corso", lottieAnimation: "LottieLogo1.json");
 
-                DiscoveryHandlerImplementation discoveryHandler = new DiscoveryHandlerImplementation(this.page);
+                var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                if (status == PermissionStatus.Granted)
+                {
+                    this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Ricerca stampanti in corso", lottieAnimation: "LottieLogo1.json");
 
-                discoveryHandler.OnDiscoveryError += DiscoveryHandler_OnDiscoveryError;
-                discoveryHandler.OnDiscoveryFinished += DiscoveryHandler_OnDiscoveryFinished;
-                discoveryHandler.OnFoundPrinter += DiscoveryHandler_OnFoundPrinter;
+                    DiscoveryHandlerImplementation discoveryHandler = new DiscoveryHandlerImplementation(this.page);
 
-                DependencyService.Get<IConnectionManager>().FindBluetoothPrinters(discoveryHandler);
+                    discoveryHandler.OnDiscoveryError += DiscoveryHandler_OnDiscoveryError;
+                    discoveryHandler.OnDiscoveryFinished += DiscoveryHandler_OnDiscoveryFinished;
+                    discoveryHandler.OnFoundPrinter += DiscoveryHandler_OnFoundPrinter;
+
+                    DependencyService.Get<IConnectionManager>().FindBluetoothPrinters(discoveryHandler);
+                }
+                else
+                {
+                    await this.page.DisplayAlert("Attenzione", "Autorizzazioni insufficienti", "OK");
+                }
+
             }
             catch (Exception exc)
             {
@@ -255,23 +263,26 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
-                this.IsBusy = true;
-
-                await Task.Run(() =>
+                var status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                if (status == PermissionStatus.Granted)
                 {
-                    var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
-                    DependencyService.Get<IFileSystem>().ExportDb(internalFile);
-                });
+                    await Task.Run(() =>
+                    {
+                        var internalFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
+                        DependencyService.Get<IFileSystem>().ExportDb(internalFile);
+                    });
+                    await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");
+                }
+                else
+                {
+                    await this.page.DisplayAlert("Attenzione", "Autorizzazioni insufficienti per accedere alla cartella Download", "OK");
+                }
 
-                this.IsBusy = false;
-                await this.page.DisplayAlert("Info", "Esportazione avvenuta con successo", "OK");
             }
             catch (Exception exc)
             {
-                this.IsBusy = false;
                 await this.page.DisplayAlert("Errore", exc.Message, "OK");
             }
-
         }
 
         private async Task ExecuteResetCommand()
@@ -347,6 +358,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
             this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
         }
+
 
         #endregion
     }
