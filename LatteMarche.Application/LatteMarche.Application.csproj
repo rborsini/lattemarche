@@ -227,6 +227,7 @@
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
     <Compile Include="Utenti\Dtos\LaboratorioDto.cs" />
     <Compile Include="Utenti\Dtos\TipoProfiloDto.cs" />
+    <Compile Include="Utenti\Dtos\UtentiSearchDto.cs" />
     <Compile Include="Utenti\Interfaces\ITipiProfiloService.cs" />
     <Compile Include="Utenti\Services\TipiProfiloService.cs" />
     <Compile Include="Comuni\Dtos\ComuneDto.cs" />

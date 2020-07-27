@@ -220,6 +220,9 @@
     <Reference Include="WeCode.Data">
       <HintPath>..\Libs\WeCode.Data.dll</HintPath>
     </Reference>
+    <Reference Include="WeCode.JQueryDataTable, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.JQueryDataTable.1.0.2\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom.css" />

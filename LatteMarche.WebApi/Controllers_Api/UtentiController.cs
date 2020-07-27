@@ -11,6 +11,9 @@ using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.WebApi.Models;
 using LatteMarche.Core.Models;
+using WeCode.JQueryDataTable.Models;
+using WeCode.Application;
+using WeCode.JQueryDataTable;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -152,18 +155,17 @@ namespace LatteMarche.WebApi.Controllers_Api
         }
 
         [ViewItem(nameof(Search), "Utenti", "Ricerca")]
-        [HttpGet]
-        public IHttpActionResult Search(int idProfilo)
+        [HttpPost]
+        public IHttpActionResult Search([FromBody] DataTableAjaxPostModel filterModel, [FromUri] UtentiSearchDto searchDto)
         {
-            //possibilità di mettere altri parametri per la search
-            try
-            {
-                return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            var pagedResult = new PagedResult<UtenteDto>();
+
+            searchDto.FullText = filterModel.Search.Value;
+
+            searchDto = JQueryDataTableHelper.Merge<UtentiSearchDto>(filterModel, searchDto);
+            pagedResult = this.utentiService.Search(searchDto);
+
+            return Ok(JQueryDataTableHelper.ConvertToResultModel<UtenteDto>(pagedResult));
         }
 
         [ViewItem(nameof(Destinatari), "Utenti", "Destinatari")]

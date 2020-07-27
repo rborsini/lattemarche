@@ -86,9 +86,6 @@ namespace LatteMarche.Application.Utenti.Dtos
 
     }
 
-    public class UtentiSearchDto
-    {
-        public int? IdProfilo { get; set; }
-    }
+
 
 }

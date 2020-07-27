@@ -91,15 +91,15 @@ namespace LatteMarche.WebApi.Filters
 
             var message = String.Format("{0}/{1}?{4} [{2} sec + {3} sec]", controllerName, actionName, swAction.Elapsed.ToString("s\\.f"), swResult.Elapsed.ToString("s\\.f"), this.actionParameters);
 
-            //this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
-            //{
-            //    Date = DateTime.Now,
-            //    Thread = "service",
-            //    Level = "INFO",
-            //    Logger = "mvc",
-            //    Identity = this.identity,
-            //    Message = message
-            //});
+            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
+            {
+                Date = DateTime.Now,
+                Thread = "service",
+                Level = "INFO",
+                Logger = "mvc",
+                Identity = this.identity,
+                Message = message
+            });
 
             Debug.WriteLine(message, "MVC Action Filter Log");
         }

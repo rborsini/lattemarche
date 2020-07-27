@@ -31,6 +31,7 @@
             :options="profilo.Items"
             :value-field="'Value'"
             :text-field="'Text'"
+            :value.sync="parameters.IdProfilo"
             v-on:value-changed="onProfiloValueChanged"
           />
         </div>
@@ -38,7 +39,7 @@
     </div>
 
     <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="utenti" v-on:data-loaded="onDataLoaded">
+    <data-table ref="table" :options="tableOptions" v-on:data-loaded="onDataLoaded">
       <!-- Toolbox -->
       <template slot="toolbox">
         <a class="toolbox btn btn-success float-right" href="/utenti/edit">Aggiungi</a>
@@ -68,7 +69,7 @@ import ConfirmDialog from "../../components/confirmDialog.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import Waiter from "../../components/waiter.vue";
 
-import { Utente } from "../../models/utente.model";
+import { Utente, UtentiSearchModel } from "../../models/utente.model";
 import { UtentiService } from "../../services/utenti.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { DropdownService } from "../../services/dropdown.service";
@@ -87,7 +88,8 @@ export default class UtentiIndexPage extends Vue {
     savedDialog: Vue,
     confirmDeleteDialog: Vue,
     waiter: Vue,
-    removedDialog: Vue
+    removedDialog: Vue,
+    table: Vue
   };
 
   private dropdownService: DropdownService;
@@ -96,6 +98,8 @@ export default class UtentiIndexPage extends Vue {
   private idUtente!: number;
 
   public profilo: Dropdown = new Dropdown();
+
+  public parameters: UtentiSearchModel = new UtentiSearchModel();
 
   public tableOptions: any = {};
   public utenti: Utente[] = [];
@@ -110,34 +114,28 @@ export default class UtentiIndexPage extends Vue {
 
   public mounted() {
     this.initTable();
+    this.loadDropdown();
 
     this.$refs.waiter.open();
-    this.utentiService.index().then(response => {
-      this.utenti = response.data;
-      this.$refs.waiter.close();
-    });
-
-    this.dropdownService.getProfili().then(response => {
-      this.profilo = response.data;
-    });
-  }
-
-  // Evento fine generazione tabella
-  public onDataLoaded() {
-    $(".delete").click(event => {
-      var element = $(event.currentTarget);
-      this.idUtente = $(element).data("row-id");
-
-      this.$refs.confirmDeleteDialog.open();
-    });
+    // this.$refs.table.load(this.parameters.ToUrlQueryString());
   }
 
   // selezione profilo di filtro
   public onProfiloValueChanged(value: number) {
     this.$refs.waiter.open();
-    this.utentiService.index(value).then(response => {
-      this.utenti = response.data;
-      this.$refs.waiter.close();
+    this.$refs.table.load(this.parameters.ToUrlQueryString());
+  }  
+
+  // Evento fine generazione tabella
+  public onDataLoaded() {
+
+    this.$refs.waiter.close();
+
+    $(".delete").click(event => {
+      var element = $(event.currentTarget);
+      this.idUtente = $(element).data("row-id");
+
+      this.$refs.confirmDeleteDialog.open();
     });
   }
 
@@ -151,13 +149,20 @@ export default class UtentiIndexPage extends Vue {
   // inizializzazione tabella
   private initTable(): void {
     var options: any = {};
+
+    options.serverSide = true;
+    options.ajax = {
+      url: '/api/utenti/search',
+      type: 'POST'
+    };
+
     options.columns = [];
 
     options.columns.push({ data: "RagioneSociale" });
     options.columns.push({ data: "Nome" });
     options.columns.push({ data: "Cognome" });
     options.columns.push({ data: "Username" });
-    options.columns.push({ data: "Profilo" });
+    options.columns.push({ data: "Profilo", orderable: false });
 
 
       options.columns.push({
@@ -184,5 +189,15 @@ export default class UtentiIndexPage extends Vue {
     
     this.tableOptions = options;
   }
+
+  // caricamento dropdown
+  private loadDropdown(){
+
+    this.dropdownService.getProfili().then(response => {
+      this.profilo = response.data;
+    });
+
+  }
+
 }
 </script>

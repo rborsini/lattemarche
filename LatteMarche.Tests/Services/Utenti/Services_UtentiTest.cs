@@ -85,8 +85,9 @@ namespace LatteMarche.Tests.Services.Utenti
             var searchDto = new UtentiSearchDto();
 
             // allevatore => 3
-            searchDto.IdProfilo = (int)ProfiloEnum.Allevatore ;
-            var utentiDto = this.utentiService.Search(searchDto);
+            searchDto.IdProfilo = (int)ProfiloEnum.Allevatore;
+            searchDto.Length = -1;
+            var utentiDto = this.utentiService.Search(searchDto).FilteredList;
 
             Assert.IsTrue(utentiDto.All(u => u.IdProfilo == (int)ProfiloEnum.Allevatore));
 

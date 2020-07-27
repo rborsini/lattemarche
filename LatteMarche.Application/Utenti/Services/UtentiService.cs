@@ -270,7 +270,7 @@ namespace LatteMarche.Application.Utenti.Services
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        public List<UtenteDto> Search(UtentiSearchDto searchDto)
+        public PagedResult<UtenteDto> Search(UtentiSearchDto searchDto)
         {
             IQueryable<Utente> query = this.utentiRepository.Query;
 
@@ -282,9 +282,54 @@ namespace LatteMarche.Application.Utenti.Services
                 query = query.Where(u => u.IdProfilo == searchDto.IdProfilo);
             }
 
-            var list = query.ToList();
+            // Ragione Sociale
+            if(!String.IsNullOrEmpty(searchDto.RagioneSociale))
+            {
+                query = query.Where(u => u.RagioneSociale.Contains(searchDto.RagioneSociale));
+            }
 
-            return ConvertToDtoList(list);
+            // Nome
+            if (!String.IsNullOrEmpty(searchDto.Nome))
+            {
+                query = query.Where(u => u.Nome.Contains(searchDto.Nome));
+            }
+
+            // Cognome
+            if (!String.IsNullOrEmpty(searchDto.Cognome))
+            {
+                query = query.Where(u => u.Cognome.Contains(searchDto.Cognome));
+            }
+
+            // Username
+            if (!String.IsNullOrEmpty(searchDto.Username))
+            {
+                query = query.Where(u => u.Username.Contains(searchDto.Username));
+            }
+
+            // full text
+            if(!String.IsNullOrEmpty(searchDto.FullText))
+            {
+                query = query.Where(u =>    u.RagioneSociale.Contains(searchDto.FullText) ||
+                                            u.Nome.Contains(searchDto.FullText) ||
+                                            u.Cognome.Contains(searchDto.FullText) ||
+                                            u.Username.Contains(searchDto.FullText)
+                                    );
+            }
+
+            // ordinamento
+            query = this.ApplySorting(query, searchDto.Order);
+
+            // paginazione
+            var pagedQuery = this.ApplyPaging<Utente>(query, searchDto.Start, searchDto.Length);
+
+            var list = pagedQuery.ToList();
+
+            // result dto
+            return new PagedResult<UtenteDto>()
+            {
+                FilteredList = Mapper.Map<List<UtenteDto>>(list),
+                Total = query.Count()
+            };
         }
 
 

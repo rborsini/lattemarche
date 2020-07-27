@@ -22,6 +22,8 @@ namespace LatteMarche.WebApi.Filters
 
             var message = String.Format("{0}/{1} [UNHANDLED EXCEPTION]", controllerName, actionName);
 
+            log.Error(message, filterContext.Exception);
+
             this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
             {
                 Date = DateTime.Now,
@@ -31,8 +33,6 @@ namespace LatteMarche.WebApi.Filters
                 Identity = filterContext.RequestContext.HttpContext.User.Identity.Name,
                 Message = message
             });
-
-            log.Error($"{filterContext.RequestContext.HttpContext.User.Identity.Name} - {message}");
 
         }
     }

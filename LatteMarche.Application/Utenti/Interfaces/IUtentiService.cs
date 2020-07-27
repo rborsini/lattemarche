@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using LatteMarche.Application.Utenti.Dtos;
 using WeCode.Application.Interfaces;
 using LatteMarche.Application.Common.Dtos;
+using WeCode.Application;
 
 namespace LatteMarche.Application.Utenti.Interfaces
 {
@@ -64,7 +65,7 @@ namespace LatteMarche.Application.Utenti.Interfaces
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        List<UtenteDto> Search(UtentiSearchDto searchDto);
+        PagedResult<UtenteDto> Search(UtentiSearchDto searchDto);
 
         /// <summary>
         /// Restituisce l'utente a partire dall'username

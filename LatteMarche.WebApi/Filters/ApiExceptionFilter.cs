@@ -1,4 +1,5 @@
-﻿using LatteMarche.WebApi.App_Start;
+﻿using LatteMarche.Application.Logs.Interfaces;
+using LatteMarche.WebApi.App_Start;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace LatteMarche.WebApi.Filters
     {
         private static ILog log = LogManager.GetLogger(typeof(ApiExceptionFilter));
 
+        public ILogsService logsService { get; set; }
+
         public override void OnException(HttpActionExecutedContext filterContext)
         {
             var routeData = filterContext.ActionContext.ControllerContext.RouteData;
@@ -20,7 +23,7 @@ namespace LatteMarche.WebApi.Filters
 
             var message = String.Format("{0}/{1} [UNHANDLED EXCEPTION]", controllerName, actionName);
 
-            log.Error(message);
+            log.Error(message, filterContext.Exception);
         }
 
     }
