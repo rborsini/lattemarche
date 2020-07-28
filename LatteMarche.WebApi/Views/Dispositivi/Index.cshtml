@@ -21,6 +21,20 @@
 <script src="@Url.Content("~/dist/dispositiviIndex.js")?ver=@version"></script>
 
 
+<script type="text/javascript">
 
+    jQuery(document).ready(function () {
+
+        var hub = $.connection.mobileHub;
+        hub.client.broadcastMessage = function (dispositivoId) {
+            $("#btnPushMessage").click();
+        };
+
+        $.connection.hub.start().done();
+
+
+    });
+
+</script>
 
 

@@ -4,6 +4,7 @@ using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Auth.Dtos;
+using LatteMarche.WebApi.Helpers;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -16,14 +17,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IRuoliService ruoliService;
+        private IAzioniService azioniService;
 
         #endregion
 
         #region Constructors
 
-        public RuoliController(IRuoliService ruoliService)
+        public RuoliController(IRuoliService ruoliService, IAzioniService azioniService)
         {
             this.ruoliService = ruoliService;
+            this.azioniService = azioniService;
         }
 
         #endregion
@@ -36,6 +39,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         {
             try
             {
+                this.azioniService.Synch(ReflectionHelper.GetAzioni());
                 return Ok(this.ruoliService.Index());
             }
             catch (Exception exc)

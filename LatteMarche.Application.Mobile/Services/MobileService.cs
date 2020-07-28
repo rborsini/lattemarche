@@ -90,7 +90,11 @@ namespace LatteMarche.Application.Mobile.Services
                 this.uow.SaveChanges();
             }
 
-            return Mapper.Map<DispositivoDto>(this.uow.Get<DispositivoMobile,string>().GetById(deviceInfo.Id));
+            var dto = Mapper.Map<DispositivoDto>(this.uow.Get<DispositivoMobile,string>().GetById(deviceInfo.Id));
+
+            PushNotificationsService.Instance.Push(dto.Id);
+
+            return dto;
         }
 
         /// <summary>
@@ -168,6 +172,8 @@ namespace LatteMarche.Application.Mobile.Services
                 dispositivo.DataUltimoDownload = DateTime.Now;
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();
+
+                PushNotificationsService.Instance.Push(id);
             }
 
             return db;
@@ -207,6 +213,8 @@ namespace LatteMarche.Application.Mobile.Services
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();
+
+                PushNotificationsService.Instance.Push(dispositivo.Id);
             }
         }
 

@@ -35,6 +35,40 @@ namespace LatteMarche.Application.Dispositivi.Services
             return this.repository.Query.ProjectToList<DispositivoMobileDto>();
         }
 
+        public PagedResult<DispositivoMobileDto> Search(DispositiviSearchDto searchDto)
+        {
+            IQueryable<DispositivoMobile> query = this.repository.Query;
+
+            // full text
+            if (!String.IsNullOrEmpty(searchDto.FullText))
+            {
+                query = query.Where(u => u.Id.Contains(searchDto.FullText) ||
+                                            u.Nome.Contains(searchDto.FullText) ||
+                                            u.Marca.Contains(searchDto.FullText) ||
+                                            u.Modello.Contains(searchDto.FullText) ||
+                                            u.VersioneOS.Contains(searchDto.FullText) ||
+                                            u.VersioneApp.Contains(searchDto.FullText) ||
+                                            u.Trasportatore.RagioneSociale.Contains(searchDto.FullText) ||
+                                            u.Autocisterna.Targa.Contains(searchDto.FullText)
+                                    );
+            }
+
+            // ordinamento
+            query = this.ApplySorting(query, searchDto.Order);
+
+            // paginazione
+            var pagedQuery = this.ApplyPaging<DispositivoMobile>(query, searchDto.Start, searchDto.Length);
+
+            var list = pagedQuery.ToList();
+
+            // result dto
+            return new PagedResult<DispositivoMobileDto>()
+            {
+                FilteredList = Mapper.Map<List<DispositivoMobileDto>>(list),
+                Total = query.Count()
+            };
+        }
+
         protected override DispositivoMobile UpdateProperties(DispositivoMobile viewEntity, DispositivoMobile dbEntity)
         {
             dbEntity.Attivo = viewEntity.Attivo;

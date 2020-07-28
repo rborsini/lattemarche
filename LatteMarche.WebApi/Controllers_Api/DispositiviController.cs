@@ -5,6 +5,8 @@ using LatteMarche.WebApi.Filters;
 using log4net;
 using System;
 using System.Web.Http;
+using WeCode.JQueryDataTable;
+using WeCode.JQueryDataTable.Models;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -32,20 +34,17 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Index), "Dispositivi", "Ricerca")]
-        [HttpGet]
-        public IHttpActionResult Index()
+
+        [ViewItem(nameof(Search), "Dispositivi", "Ricerca")]
+        [HttpPost]
+        public IHttpActionResult Search([FromBody] DataTableAjaxPostModel filterModel, [FromUri] DispositiviSearchDto searchDto)
         {
-            try
-            {
-                log.Info("Dispositivi index");
-                var list = this.dispositiviService.Index();
-                return Ok(list);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            searchDto.FullText = filterModel.Search.Value;
+
+            searchDto = JQueryDataTableHelper.Merge<DispositiviSearchDto>(filterModel, searchDto);
+            var pagedResult = this.dispositiviService.Search(searchDto);
+
+            return Ok(JQueryDataTableHelper.ConvertToResultModel<DispositivoMobileDto>(pagedResult));
         }
 
         [ViewItem(nameof(Details), "Dispositivi", "Dettaglio")]

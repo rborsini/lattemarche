@@ -158,12 +158,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Search([FromBody] DataTableAjaxPostModel filterModel, [FromUri] UtentiSearchDto searchDto)
         {
-            var pagedResult = new PagedResult<UtenteDto>();
-
             searchDto.FullText = filterModel.Search.Value;
 
             searchDto = JQueryDataTableHelper.Merge<UtentiSearchDto>(filterModel, searchDto);
-            pagedResult = this.utentiService.Search(searchDto);
+            var pagedResult = this.utentiService.Search(searchDto);
 
             return Ok(JQueryDataTableHelper.ConvertToResultModel<UtenteDto>(pagedResult));
         }

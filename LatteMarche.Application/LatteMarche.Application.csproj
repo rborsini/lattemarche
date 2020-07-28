@@ -177,6 +177,7 @@
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
     <Compile Include="Dispositivi\DispositiviMappings.cs" />
+    <Compile Include="Dispositivi\Dtos\DispositiviSearchDto.cs" />
     <Compile Include="Dispositivi\Dtos\DispositivoMobileDto.cs" />
     <Compile Include="Dispositivi\Interfaces\IDispositiviService.cs" />
     <Compile Include="Dispositivi\Services\DispositiviService.cs" />

@@ -115,9 +115,6 @@ export default class UtentiIndexPage extends Vue {
   public mounted() {
     this.initTable();
     this.loadDropdown();
-
-    this.$refs.waiter.open();
-    // this.$refs.table.load(this.parameters.ToUrlQueryString());
   }
 
   // selezione profilo di filtro
@@ -149,6 +146,8 @@ export default class UtentiIndexPage extends Vue {
   // inizializzazione tabella
   private initTable(): void {
     var options: any = {};
+
+    this.$refs.waiter.open();
 
     options.serverSide = true;
     options.ajax = {

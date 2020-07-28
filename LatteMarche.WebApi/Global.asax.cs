@@ -16,7 +16,7 @@ namespace LatteMarche.WebApi
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             WebConfig.RegisterRoutes(RouteTable.Routes);
-
+            MobileHubConfig.Configure();
             LoggerConfig.Configure();
             AutoFacConfig.Configure();
 			AutoMapperConfig.Configure();

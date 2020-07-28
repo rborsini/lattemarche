@@ -1,5 +1,9 @@
 <template>
   <div>
+
+    <!-- waiter -->
+    <waiter ref="waiter"></waiter>
+
     <!-- Pannello editazione dettaglio -->
     <editazione-dispositivo-modal
       ref="editazioneDispositivoModal"
@@ -7,8 +11,10 @@
       v-on:saved="onPopupSave"
     ></editazione-dispositivo-modal>
 
+    <button id="btnPushMessage" class="d-none" v-on:click="onPushMessage" ></button>
+
     <!-- Tabella -->
-    <data-table :options="tableOptions" :rows="dispositivi" v-on:data-loaded="onDataLoaded">
+    <data-table ref="table" :options="tableOptions" v-on:data-loaded="onDataLoaded">
       <!-- Colonne -->
       <template slot="thead">
         <th>Id</th>
@@ -32,12 +38,12 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from "vue-property-decorator";
+import Waiter from "../../components/waiter.vue";
 
 import DataTable from "../../components/dataTable.vue";
 import EditazioneDispositivoModal from "../dispositivi/edit.vue";
-
-import Waiter from "../../components/waiter.vue";
 
 import { Dispositivo } from "../../models/dispositivo.model";
 import { DispositiviService } from "../../services/dispositivi.service";
@@ -49,17 +55,19 @@ declare module "vue/types/vue" {
   }
 }
 
+
 @Component({
   components: {
-    Waiter,
     DataTable,
+    Waiter,
     EditazioneDispositivoModal
   }
 })
 export default class DispositiviIndexPage extends Vue {
   $refs: any = {
+    editazioneDispositivoModal: Vue,
     waiter: Vue,
-    editazioneDispositivoModal: Vue
+    table: Vue
   };
 
   private dispositiviService: DispositiviService;
@@ -74,16 +82,25 @@ export default class DispositiviIndexPage extends Vue {
     this.dispositiviService = new DispositiviService();
   }
 
-  public mounted() {
+  public mounted() {  
     this.initTable();
-    this.dispositiviService.index().then(response => {
-      this.dispositivi = response.data;
-    });
+  }
+  
+  public onPushMessage() {
+    this.$refs.waiter.open();
+    this.$refs.table.load();
   }
 
   // inizializzazione tabella
   private initTable(): void {
     var options: any = {};
+
+    options.serverSide = true;
+    options.ajax = {
+      url: '/api/dispositivi/search',
+      type: 'POST'
+    };
+
     options.columns = [];
 
     options.columns.push({ data: "Id" });
@@ -91,23 +108,50 @@ export default class DispositiviIndexPage extends Vue {
     options.columns.push({ data: "Marca" });
     options.columns.push({ data: "Modello" });
     options.columns.push({ data: "VersioneOS" });
-    options.columns.push({ data: "Trasportatore_RagioneSociale" });
-    options.columns.push({ data: "Autocisterna_Targa" });
-    options.columns.push({ data: "Attivo" });
+    
+    options.columns.push({ 
+      data: "Trasportatore.RagioneSociale", 
+      render: function(data: any, type: any, row: any) {
+        return row.Trasportatore_RagioneSociale;
+      }
+    });
+
+    options.columns.push({ 
+      data: "Autocisterna.Targa", 
+      render: function(data: any, type: any, row: any) {
+        return row.Autocisterna_Targa;
+      }
+    });
+
+    options.columns.push({ 
+      data: "Attivo",
+      render: function(data: any, type: any, row: any) {
+        return row.Attivo ? "Si" : "No";
+      }
+    });
 
     options.columns.push({
       data: "DataRegistrazione",
-      type: "date-eu"
+      width: "90px",
+      render: function(data: any, type: any, row: any) {
+        return row.DataRegistrazione_Str;
+      }
     });
 
     options.columns.push({
       data: "DataUltimoDownload",
-      type: "date-eu"
+      width: "90px",
+      render: function(data: any, type: any, row: any) {
+        return row.DataUltimoDownload_Str;
+      }
     });
 
     options.columns.push({
       data: "DataUltimoUpload",
-      type: "date-eu"
+      width: "90px",
+      render: function(data: any, type: any, row: any) {
+        return row.DataUltimoUpload_Str;
+      }
     });
 
     options.columns.push({ data: "VersioneApp" });
@@ -134,6 +178,9 @@ export default class DispositiviIndexPage extends Vue {
 
   // Evento fine generazione tabella
   public onDataLoaded() {
+
+    this.$refs.waiter.close();
+
     $(".edit").click(event => {
       var element = $(event.currentTarget);
       var rowId = $(element).data("row-id");
@@ -147,7 +194,8 @@ export default class DispositiviIndexPage extends Vue {
 
   // evento chiusura popup
   public onPopupSave() {
-    window.location = window.location;
+    this.$refs.table.load();
+    // window.location = window.location;
   }
 }
 </script>
