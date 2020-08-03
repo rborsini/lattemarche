@@ -140,6 +140,10 @@
                     .select2({
                         dropdownParent: this.dropdownparent ? $(this.dropdownparent) : undefined,
                         placeholder: '',
+                        language: {
+                            inputTooShort: function () { return 'Inserisci 2 o più caratteri'; },
+                            noResults: function () { return 'Nessun risultato'; },
+                        },                        
                         data: tranformOptions(options, this.valueField, this.textField),
                         allowClear: this.allowClear == undefined ? true : this.allowClear,
                         width: 'resolve'
