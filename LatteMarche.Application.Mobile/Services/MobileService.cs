@@ -71,7 +71,7 @@ namespace LatteMarche.Application.Mobile.Services
             {
                 // nuovo dispositivo
                 dispositivo = Mapper.Map<DispositivoMobile>(deviceInfo);
-                dispositivo.DataRegistrazione = DateTime.Now;
+                dispositivo.DataRegistrazione = DateTime.UtcNow;
 
                 this.dispositiviRepository.Add(dispositivo);
                 this.uow.SaveChanges();
@@ -169,7 +169,7 @@ namespace LatteMarche.Application.Mobile.Services
 
                 }
 
-                dispositivo.DataUltimoDownload = DateTime.Now;
+                dispositivo.DataUltimoDownload = DateTime.UtcNow;
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();
 
@@ -177,14 +177,6 @@ namespace LatteMarche.Application.Mobile.Services
             }
 
             return db;
-        }
-
-        private Autocisterna GetAutocisterna(DispositivoMobile dispositivo)
-        {
-            if(dispositivo.IdAutocisterna.HasValue)
-                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.Id == dispositivo.IdAutocisterna.Value);
-            else
-                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value);
         }
 
         /// <summary>
@@ -205,7 +197,7 @@ namespace LatteMarche.Application.Mobile.Services
 
                 dispositivo.Latitudine = uploadDto.Lat;
                 dispositivo.Longitudine = uploadDto.Lng;
-                dispositivo.DataUltimoUpload = DateTime.Now;
+                dispositivo.DataUltimoUpload = DateTime.UtcNow;
                 dispositivo.VersioneApp = uploadDto.VersioneApp;
                 dispositivo.VersioneOS = uploadDto.VersioneOS;
                 dispositivo.Marca = uploadDto.Marca;
@@ -217,6 +209,22 @@ namespace LatteMarche.Application.Mobile.Services
                 PushNotificationsService.Instance.Push(dispositivo.Id);
             }
         }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Recupero autocisterna per dispositivo
+        /// </summary>
+        /// <param name="dispositivo"></param>
+        /// <returns></returns>
+        private Autocisterna GetAutocisterna(DispositivoMobile dispositivo)
+        {
+            if (dispositivo.IdAutocisterna.HasValue)
+                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.Id == dispositivo.IdAutocisterna.Value);
+            else
+                return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value);
+        }
+
 
         /// <summary>
         /// Recupera l'acquirente più frequente
@@ -264,6 +272,12 @@ namespace LatteMarche.Application.Mobile.Services
                 .FirstOrDefault();
         }
 
+        /// <summary>
+        /// Recupero prelievi
+        /// </summary>
+        /// <param name="idAllevamento"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         private List<PrelievoLatte> GetPrelievi(int idAllevamento, int size)
         {
             return this.prelieviRepository
@@ -273,6 +287,12 @@ namespace LatteMarche.Application.Mobile.Services
                 .ToList();
         }
 
+        /// <summary>
+        /// Calcolo percentile
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <param name="excelPercentile"></param>
+        /// <returns></returns>
         public decimal GetPercentile(decimal[] sequence, decimal excelPercentile)
         {
             if (sequence.Length == 0)
@@ -294,6 +314,8 @@ namespace LatteMarche.Application.Mobile.Services
                 return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
             }
         }
+
+        #endregion
 
         #endregion
 
