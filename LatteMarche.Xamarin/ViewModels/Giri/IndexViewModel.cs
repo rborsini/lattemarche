@@ -334,6 +334,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
 
+            var trasportatore = this.trasportatoriService.GetCurrent().Result;
+
+            foreach (var prelievoDto in prelieviDto)
+                prelievoDto.IdTrasportatore = trasportatore.Id;
+
             var uploadDto = new UploadDto()
             {
                 IMEI = this.device.GetIdentifier(),
