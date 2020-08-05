@@ -121,6 +121,7 @@ namespace LatteMarche.Application.Assam.Services
                     var misura = new Misura();
 
                     misura.Nome = tipoAnalisiCell.TextValue;
+                    misura.Uom = new Cell(tipoAnalisiCell.RowIndex + 1, tipoAnalisiCell.ColIndex).ReadText(sheet);
                     misura.Valore = new Cell(cell.RowIndex, tipoAnalisiCell.ColIndex).ReadText(sheet);
 
                     if(misura.Valore.StartsWith("(#)"))
@@ -229,7 +230,7 @@ namespace LatteMarche.Application.Assam.Services
                 if (row != null)
                 {
                     var cell = row.GetCell(this.colIndex);
-                    if (cell != null)
+                    if (cell != null && cell.CellType != CellType.String)
                         date = cell.DateCellValue;
                 }
 

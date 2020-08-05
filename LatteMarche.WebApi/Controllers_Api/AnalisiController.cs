@@ -37,8 +37,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         {
             try
             {
-                this.analisiService.Synch();
-                return Ok();
+                var reports = this.analisiService.Synch();
+                return Ok(reports);
             }
             catch (Exception exc)
             {

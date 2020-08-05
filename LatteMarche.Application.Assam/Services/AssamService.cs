@@ -22,14 +22,13 @@ namespace LatteMarche.Application.Assam.Services
         {
             var reports = new List<Report>();
 
-            mailFilters.Since = new DateTime(2020, 3, 15);
-
             // download messaggi dalla casella di posta
             var messages = DownloadMessages(mailOptions.HostName, mailOptions.Port, mailOptions.Username, mailOptions.Password, mailFilters.From, mailFilters.Since, mailFilters.Before).ToList();
 
             foreach(var message in messages)
             {
-                foreach(var attachment in message.Attachments)
+                var excelAttachments = message.Attachments.Where(a => a.ContentType.MediaType == "application/vnd.ms-excel").ToList();
+                foreach (var attachment in excelAttachments)
                 {
                     // conversione file in report
                     var attechmentContent = ConvertToBytes(attachment.ContentStream);
@@ -53,7 +52,18 @@ namespace LatteMarche.Application.Assam.Services
             {
                 var searchCondition = SearchCondition.SentSince(start);
                 searchCondition = searchCondition.And(SearchCondition.SentBefore(end));
-                searchCondition = searchCondition.And(SearchCondition.From(from));
+
+                var fromAddresses = from.Split(';').ToList();
+
+                if(fromAddresses.Count > 0)
+                {
+                    var fromCondition = SearchCondition.From(fromAddresses[0]);
+
+                    for(int i = 1; i < fromAddresses.Count; i++)
+                        fromCondition = fromCondition.Or(SearchCondition.From(fromAddresses[i]));
+
+                    searchCondition = searchCondition.And(fromCondition);
+                }
 
                 IEnumerable<uint> uids = client.Search(searchCondition);
                 

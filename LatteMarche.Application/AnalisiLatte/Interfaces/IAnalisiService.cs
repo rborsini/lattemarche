@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Application.AnalisiLatte.Dtos;
+using LatteMarche.Application.Assam.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace LatteMarche.Application.AnalisiLatte.Interfaces
         /// <summary>
         /// Scarica le nuove analisi dall'ASSAM e le salva nel database locale
         /// </summary>
-        void Synch();
+        List<Report> Synch();
 
         /// <summary>
         /// Ricerca analisi latte

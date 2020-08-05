@@ -451,6 +451,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LatteMarche.Application.Assam\LatteMarche.Application.Assam.csproj">
+      <Project>{A07CE647-5734-4F4C-B14A-6146CE4F61AD}</Project>
+      <Name>LatteMarche.Application.Assam</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Application.Mobile\LatteMarche.Application.Mobile.csproj">
       <Project>{d52ab32e-1432-4b28-9438-c74d25e70f35}</Project>
       <Name>LatteMarche.Application.Mobile</Name>

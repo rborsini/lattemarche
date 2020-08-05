@@ -14,6 +14,7 @@ using System.Configuration;
 using System.Linq;
 using WeCode.Application;
 using WeCode.Data.Interfaces;
+using log4net;
 
 namespace LatteMarche.Application.AnalisiLatte.Services
 {
@@ -35,6 +36,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         #endregion
 
         #region Fields
+
+        private static ILog log = LogManager.GetLogger(typeof(AnalisiService));
 
         private IRepository<Allevamento, int> allevamentiRepository;
         private IRepository<ValoreAnalisi, long> valoriRepository;
@@ -123,10 +126,11 @@ namespace LatteMarche.Application.AnalisiLatte.Services
             this.uow.SaveChanges();
         }
 
-        public void Synch()
+        public List<Report> Synch()
         {
             var mailOptions = new MailOptions() { HostName = this.hostName, Port = this.port, Username = this.username, Password = this.password };
-            var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Now };
+            var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Today.AddDays(1) };
+            //var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Now };
             var ftpOptions = String.IsNullOrEmpty(ftpUrl) ? null : new FtpOptions() { Url = this.ftpUrl, Username = this.ftpUsername, Password = this.ftpPassword };
 
             // download reports 
@@ -141,10 +145,11 @@ namespace LatteMarche.Application.AnalisiLatte.Services
                 }
                 catch(Exception exc)
                 {
-                    Console.WriteLine("Save error", exc);
+                    log.Error(exc);
                 }
             }
 
+            return reports;
         }
 
         private void Save(Report report)
