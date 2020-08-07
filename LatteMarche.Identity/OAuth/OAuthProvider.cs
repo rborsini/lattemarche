@@ -19,7 +19,7 @@ namespace LatteMarche.Identity.OAuth
         {
             var userManager = context.OwinContext.GetUserManager<CustomUserManager>();
 
-            var identity = new ClaimsIdentity("otc");
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
             var owinUser = context.OwinContext.Get<CustomUser>(context.UserName);
 

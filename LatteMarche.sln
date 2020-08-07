@@ -90,6 +90,15 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "lattemarche-vue", "lattemar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsConsole", "MigrationsConsole\MigrationsConsole.csproj", "{832FF902-F45C-457E-A176-92E27412A9BB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerShellScripts", "{09EFCA2A-6073-4C4B-9254-E8B7D6C996E6}"
+	ProjectSection(SolutionItems) = preProject
+		PowerShellScripts\download_assam.ps1 = PowerShellScripts\download_assam.ps1
+		PowerShellScripts\lattemarche_token.ps1 = PowerShellScripts\lattemarche_token.ps1
+		PowerShellScripts\log.txt = PowerShellScripts\log.txt
+		PowerShellScripts\log_test.ps1 = PowerShellScripts\log_test.ps1
+		PowerShellScripts\oauth-test.ps1 = PowerShellScripts\oauth-test.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

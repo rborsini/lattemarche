@@ -1,5 +1,4 @@
 ﻿using LatteMarche.Application.Auth.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.WebApi.Helpers;
 using System.Web.Http;

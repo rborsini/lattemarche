@@ -6,7 +6,7 @@ using LatteMarche.Application.Auth.Interfaces;
 using System.Configuration;
 using System;
 
-namespace LatteMarche.WebApi.Attributes
+namespace LatteMarche.WebApi.Filters
 {
     public class ApiCustomAuthorize : AuthorizeAttribute
     {

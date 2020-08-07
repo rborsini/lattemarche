@@ -4,7 +4,6 @@ using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Application.Allevamenti;
 using Newtonsoft.Json.Linq;
-using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Utenti.Interfaces;

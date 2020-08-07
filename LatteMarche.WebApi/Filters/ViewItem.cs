@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LatteMarche.WebApi.Attributes
+namespace LatteMarche.WebApi.Filters
 {
     [System.AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class ViewItem : System.Attribute

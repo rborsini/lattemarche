@@ -1,6 +1,5 @@
 ﻿using LatteMarche.Application.Dispositivi.Dtos;
 using LatteMarche.Application.Dispositivi.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using log4net;
 using System;
