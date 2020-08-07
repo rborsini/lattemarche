@@ -1,23 +1,22 @@
-$url = "http://localhost:56465"
+$url = "http://localhost:53137"
 $username = "02102002"
 $password = "giorgia2"
 
-# Recupero token
+# Recupero Token
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/x-www-form-urlencoded")
 
 $body = "grant_type=password&username=$username&password=$password"
 
-$response = Invoke-RestMethod $url'/Token' -Method 'POST' -Headers $headers -Body $body 
+$response = Invoke-RestMethod $url'//Token' -Method 'POST' -Headers $headers -Body $body 
 $response | ConvertTo-Json
 
 $accessToken = $response.access_token
 $bearer = "Bearer $accessToken"
 
-
-# Chiamata REST protetta da autorizzazioni
+# POST Logs/Clear
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization",  $bearer)
 
-$response = Invoke-RestMethod $url'/api/Values?' -Method 'GET' -Headers $headers 
+$response = Invoke-RestMethod $url'/api/Logs/Clear' -Method 'POST' -Headers $headers
 $response | ConvertTo-Json
