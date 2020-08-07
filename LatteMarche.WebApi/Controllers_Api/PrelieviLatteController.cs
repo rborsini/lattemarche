@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.WebApi.Attributes;
 using RB.Date;
 using System.Collections.Generic;
 using LatteMarche.Application.Synch.Interfaces;

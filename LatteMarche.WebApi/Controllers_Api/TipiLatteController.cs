@@ -3,7 +3,6 @@ using System.Web.Http;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Controllers_Api

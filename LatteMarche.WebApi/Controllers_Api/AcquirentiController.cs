@@ -3,7 +3,6 @@ using System.Web.Http;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Acquirenti.Dtos;
 using Newtonsoft.Json.Linq;
-using LatteMarche.WebApi.Attributes;
 using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Utenti.Interfaces;

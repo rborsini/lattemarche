@@ -1,5 +1,4 @@
-﻿using LatteMarche.WebApi.Attributes;
-using LatteMarche.WebApi.Filters;
+﻿using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

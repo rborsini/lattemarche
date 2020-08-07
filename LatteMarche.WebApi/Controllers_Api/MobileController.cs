@@ -1,6 +1,5 @@
 ﻿using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Application.Mobile.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using System;
 using System.Web.Http;

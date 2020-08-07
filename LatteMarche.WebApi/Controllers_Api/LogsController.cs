@@ -3,12 +3,11 @@ using System.Web.Http;
 using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.Application.Logs.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
-    [AllowAnonymous]
+    [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
     public class LogsController : ApiController
@@ -40,7 +39,7 @@ namespace LatteMarche.WebApi.Controllers_Api
             {
                 var date = DateTime.Today.AddDays(-10);
                 this.logsService.Delete(date);
-                return Ok();
+                return Ok("done");
             }
             catch (Exception exc)
             {

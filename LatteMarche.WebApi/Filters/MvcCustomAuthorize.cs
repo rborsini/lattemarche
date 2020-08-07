@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LatteMarche.WebApi.Attributes
+namespace LatteMarche.WebApi.Filters
 {
     public class MvcCustomAuthorize : AuthorizeAttribute
     {

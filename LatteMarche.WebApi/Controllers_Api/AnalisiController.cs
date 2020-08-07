@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Http;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Dtos;

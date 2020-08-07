@@ -2,7 +2,6 @@
 using System.Web.Http;
 using LatteMarche.Application.Giri.Dtos;
 using LatteMarche.Application.Giri.Interfaces;
-using LatteMarche.WebApi.Attributes;
 using LatteMarche.WebApi.Filters;
 
 namespace LatteMarche.WebApi.Controllers_Api

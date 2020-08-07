@@ -129,12 +129,8 @@
     <Compile Include="CustomUserManager.cs" />
     <Compile Include="CustomUserStore.cs" />
     <Compile Include="OAuth\ClaimTypes.cs" />
-    <Compile Include="OAuth\JwtFormat.cs" />
-    <Compile Include="OAuth\OAuthOptions.cs" />
     <Compile Include="OAuth\OAuthProvider.cs" />
-    <Compile Include="OAuth\SecurityConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

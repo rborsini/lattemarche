@@ -377,7 +377,6 @@
   <ItemGroup>
     <Compile Include="App_Start\LoggerConfig.cs" />
     <Compile Include="App_Start\MobileHubConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers_Api\AcquirentiController.cs" />
     <Compile Include="Controllers_Api\AllevamentiController.cs" />
     <Compile Include="Controllers_Api\AnalisiController.cs" />
@@ -395,9 +394,9 @@
     <Compile Include="Controllers_Api\ComuniController.cs" />
     <Compile Include="Controllers_Api\PrelieviLatteController.cs" />
     <Compile Include="Controllers_Api\GiriController.cs" />
-    <Compile Include="Attributes\ApiCustomAuthorize.cs" />
-    <Compile Include="Attributes\MvcCustomAuthorize.cs" />
-    <Compile Include="Attributes\ViewItem.cs" />
+    <Compile Include="Filters\ApiCustomAuthorize.cs" />
+    <Compile Include="Filters\MvcCustomAuthorize.cs" />
+    <Compile Include="Filters\ViewItem.cs" />
     <Compile Include="Controllers_Api\TrasportatoriController.cs" />
     <Compile Include="Controllers_Api\WidgetsController.cs" />
     <Compile Include="Controllers_Web\CessionariController.cs" />
@@ -485,7 +484,9 @@
     <Content Include="Views\Giri\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
