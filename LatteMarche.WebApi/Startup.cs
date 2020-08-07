@@ -21,19 +21,30 @@ namespace LatteMarche.WebApi
             app.MapSignalR();
         }
 
-        public void ConfigureAuth(IAppBuilder app)
+        private void ConfigureAuth(IAppBuilder app)
         {
             // Add our custom managers
             app.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);
             app.CreatePerOwinContext<CustomSignInManager>(CustomSignInManager.Create);
 
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            app.UseOAuthAuthorizationServer(new OAuthOptions("/Token"));
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
+            var OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(7),
+                Provider = new OAuthProvider(),
+            };
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
 
         }
     }

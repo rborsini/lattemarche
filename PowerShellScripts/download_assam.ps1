@@ -2,6 +2,7 @@ $url = "http://localhost:53137"
 $username = "02102002"
 $password = "giorgia2"
 
+# Recupero Token
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/x-www-form-urlencoded")
 
@@ -13,12 +14,9 @@ $response | ConvertTo-Json
 $accessToken = $response.access_token
 $bearer = "Bearer $accessToken"
 
+# GET TipiProfilo
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization",  $bearer)
 
 $response = Invoke-RestMethod $url'/api/TipiProfilo' -Method 'GET' -Headers $headers
 $response | ConvertTo-Json
-
-
-# https://www.it-swarm.dev/it/c%23/autenticazione-jwt-api-web-asp.net/827483858/
-# https://github.com/cuongle/WebApi.Jwt
