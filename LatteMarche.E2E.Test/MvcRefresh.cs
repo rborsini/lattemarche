@@ -12,17 +12,15 @@ namespace LatteMarche.E2E.Test
     /// https://www.stuartwhiteford.com/running-selenium-ui-tests-in-an-azure-devops-pipeline/
     /// </summary>
     [TestClass]
-    public class HomePageTests
+    public class MvcRefresh
     {
-        private const string webAppBaseUrl = "http://robertoborsini.myqnapcloud.com:81/account/login";
+        private string baseUrl = "http://robertoborsini.myqnapcloud.com:81";
         private static IWebDriver driver;
 
         [ClassInitialize]
         public static void ClassInitialise(TestContext testContext)
         {
             SetupDriver();
-            driver.Url = webAppBaseUrl;
-            driver.Navigate();
         }
 
         [ClassCleanup]
@@ -32,10 +30,37 @@ namespace LatteMarche.E2E.Test
         }
 
         [TestMethod]
-        public void HomePageHeadingContainsWelcome()
+        public void Refresh()
         {
-            // Arrange/Act/Assert
-            driver.FindElement(By.Id("Username")).Text.Should().Be("");
+            driver.Url = $"{this.baseUrl}/account/login";
+            driver.Navigate();
+
+            // login -> dashboard
+            driver.FindElement(By.Id("Username")).SendKeys("02102002");
+            driver.FindElement(By.Id("Password")).SendKeys("giorgia2");
+            driver.FindElement(By.Id("btnLogin")).Click();
+
+            // utenti
+            driver.Url = $"{this.baseUrl}/utenti";
+            driver.Navigate();
+
+            // dispositivi
+            driver.Url = $"{this.baseUrl}/dispositivi";
+            driver.Navigate();
+
+            // giri
+            driver.Url = $"{this.baseUrl}/utenti";
+            driver.Navigate();
+
+            // prelievi
+            driver.Url = $"{this.baseUrl}/prelievi";
+            driver.Navigate();
+
+            // analisi
+            driver.Url = $"{this.baseUrl}/analisi";
+            driver.Navigate();
+
+            true.Should().BeTrue();
         }
 
         private static void SetupDriver()
