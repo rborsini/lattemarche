@@ -17,12 +17,12 @@ $response | ConvertTo-Json
 $accessToken = $response.access_token
 $bearer = "Bearer $accessToken"
 
-# POST Logs/Clear
+# POST Analisi/Synch
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization",  $bearer)
 
 $response = ""
-$response = Invoke-RestMethod $url'/api/Logs/Clear' -Method 'POST' -Headers $headers
+$response = Invoke-RestMethod $url'/api/Analisi/Synch' -Method 'POST' -Headers $headers
 $response | ConvertTo-Json    
 
 

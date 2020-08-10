@@ -43,6 +43,13 @@ namespace LatteMarche.WebApi.Controllers_Api
             }
             catch (Exception exc)
             {
+                logsService.Create(new Application.Logs.Dtos.LogRecordDto()
+                {
+                    Date = DateTime.Now,
+                    Exception = exc.Message,
+                    Level = "ERROR",
+                    Message = "Logs/Clear"
+                });
                 return InternalServerError(exc);
             }
 
