@@ -15,6 +15,10 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'LatteMarche.E2E.Test'
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
