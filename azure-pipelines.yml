@@ -7,8 +7,11 @@ trigger:
 - master
 
 schedules:
-- cron: "0 13 * * *"
+- cron: "0 * * * *"
   displayName: Aggiornamento giornaliero
+  branches:
+    include:
+    - master  
   always: true
 
 pool:
