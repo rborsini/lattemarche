@@ -3,8 +3,6 @@ $url = "http://robertoborsini.myqnapcloud.com:81/"
 $username = "02102002"
 $password = "giorgia2"
 
-Clear-Host
-
 # Recupero Token
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/x-www-form-urlencoded")

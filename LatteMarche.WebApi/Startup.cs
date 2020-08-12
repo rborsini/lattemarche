@@ -7,8 +7,11 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
+using WeCode.Identity;
+using WeCode.Identity.OAuth;
 
 [assembly: OwinStartup(typeof(LatteMarche.WebApi.Startup))]
 namespace LatteMarche.WebApi
@@ -24,27 +27,19 @@ namespace LatteMarche.WebApi
         private void ConfigureAuth(IAppBuilder app)
         {
             // Add our custom managers
-            app.CreatePerOwinContext<CustomUserManager>(CustomUserManager.Create);
-            app.CreatePerOwinContext<CustomSignInManager>(CustomSignInManager.Create);
+            app.CreatePerOwinContext<CustomUserManager<CustomUserStore>>(CustomUserManager<CustomUserStore>.Create);
+            app.CreatePerOwinContext<CustomSignInManager<CustomUserStore>>(CustomSignInManager<CustomUserStore>.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
-            var OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
-
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
-            {
-
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(7),
-                Provider = new OAuthProvider(),
-            };
-
             // Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+            var issuer = ConfigurationManager.AppSettings["jwtIssuer"];
+            var secretKey = ConfigurationManager.AppSettings["jwtSecretKey"];
+            var claimsProvider = new ClaimsProvider();
+
+            app.UseOAuthAuthorizationServer(new AuthorizationOptions<CustomUserStore>("/Token", issuer, secretKey, claimsProvider));
+            app.UseJwtBearerAuthentication(new BearerAuthenticationOptions(issuer, secretKey));
 
         }
     }

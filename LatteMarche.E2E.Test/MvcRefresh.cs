@@ -14,7 +14,7 @@ namespace LatteMarche.E2E.Test
     [TestClass]
     public class MvcRefresh
     {
-        private string baseUrl = "http://robertoborsini.myqnapcloud.com:81";
+        private string baseUrl = "https://lattemarche.azurewebsites.net/";
         private static IWebDriver driver;
 
         [ClassInitialize]

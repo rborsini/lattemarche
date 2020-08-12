@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeCode.Data;
+using WeCode.Identity;
 
 namespace LatteMarche.Identity
 {
