@@ -2,7 +2,7 @@
 
 # Install-Module -Name Selenium -RequiredVersion 1.2
 
-$url = "http://robertoborsini.myqnapcloud.com:81"
+$url = "https://lattemarche.azurewebsites.net"
 
 $Driver = Start-SeChrome
 

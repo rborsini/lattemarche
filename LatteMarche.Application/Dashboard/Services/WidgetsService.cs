@@ -91,7 +91,7 @@ namespace LatteMarche.Application.Dashboard.Services
             //var dataRiferimento = new DateTime(2018, 1, 1);
             var dataRiferimento = DateTime.Today;
             var meseCorrente = GetInizioAnno(dataRiferimento);
-            var fineAnno = meseCorrente.AddYears(1);
+            var fineAnno = meseCorrente.AddYears(1).AddMonths(1);
 
             while(meseCorrente < fineAnno)
             {
@@ -143,7 +143,7 @@ namespace LatteMarche.Application.Dashboard.Services
             //var dataRiferimento = new DateTime(2018, 1, 1);
             var dataRiferimento = DateTime.Today;
             var meseCorrente = GetInizioAnno(dataRiferimento);
-            var fineAnno = meseCorrente.AddYears(1);
+            var fineAnno = meseCorrente.AddYears(1).AddMonths(1);
 
             while (meseCorrente < fineAnno)
             {

@@ -214,7 +214,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
             var allevamenti = this.allevamentiRepository.DbSet.Where(a => a.CodiceAsl == codiceASL);
             if (allevamenti.Count() == 1)
-                return allevamenti.First().IdUtente;
+                return allevamenti.First().Id;
 
             return (int?)null;
         }
