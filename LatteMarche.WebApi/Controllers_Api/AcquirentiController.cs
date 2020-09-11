@@ -2,10 +2,11 @@
 using System.Web.Http;
 using LatteMarche.Application.Acquirenti.Interfaces;
 using LatteMarche.Application.Acquirenti.Dtos;
-using Newtonsoft.Json.Linq;
-using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Utenti.Interfaces;
+using WeCode.MVC.Attributes;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -36,70 +37,45 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Acquirenti", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
-
-                var acquirenti = this.acquirentiService.Index();           
-                return Ok(acquirenti);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
+            var acquirenti = this.acquirentiService.Index();
+            return Ok(acquirenti);
         }
 
         [ViewItem(nameof(Details), "Acquirenti", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.acquirentiService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
+            return Ok(this.acquirentiService.Details(id));
         }
 
         [ViewItem(nameof(Dropdown), "Acquirenti", "Dropdown")]
         [HttpGet]
-        public IHttpActionResult Dropdown()
+        [ETag]
+        public async Task<IHttpActionResult> Dropdown()
         {
-            try
-            {
-                var utente = this.utentiService.Details(User.Identity.Name);
 
-                if(utente != null)
-                    return Ok(this.acquirentiService.DropDown(utente.Id));
-                else
-                    return Ok();
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            Thread.Sleep(3000);
+
+            var utente = this.utentiService.Details(User.Identity.Name);
+            var dropDown = this.acquirentiService.DropDown(utente.Id);
+
+            return Ok(Task.FromResult(dropDown));
+
         }
 
         [ViewItem(nameof(Save), "Acquirenti", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] AcquirenteDto model)
         {
-            try
-            {
-                if(model.Id == 0)
-                    return Ok(this.acquirentiService.Create(model));
-                else
-                    return Ok(this.acquirentiService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            if (model.Id == 0)
+                return Ok(this.acquirentiService.Create(model));
+            else
+                return Ok(this.acquirentiService.Update(model));
 
         }
 
@@ -107,15 +83,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            try
-            {
-                this.acquirentiService.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+
+            this.acquirentiService.Delete(id);
+            return Ok();
+
         }
 
         #endregion

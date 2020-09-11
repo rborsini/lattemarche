@@ -1,4 +1,7 @@
 ﻿@using LatteMarche.WebApi.Models
+@using LatteMarche.WebApi.Helpers
+
+<!-- Breadcrumb -->
 @section Breadcrumb
 {
     @{
@@ -6,23 +9,30 @@
         bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
         bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Prelievi latte" });
     }
-
-
-    @* Breadcrumb *@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-
-
-    <input hidden id="idProfilo" value="@Model" />
-
-
-@{
-    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
+<!-- Css -->
+@section Css
+{
+    @if (EnvHelper.IsProd)
+    {
+        <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/prelieviLatteIndex.css")" />
+    }
 }
 
+<input hidden id="idProfilo" value="@Model" />
 <div id="app">
 </div>
 
-<script src="@Url.Content("~/dist/prelieviLatteIndex.js")?ver=@version"></script>
+<!-- Js -->
+@section Js
+{
+    @{
+        var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+        var folder = EnvHelper.IsProd ? "prod/js" : "dev";
+        var url = "~/dist/" + folder + "/prelieviLatteIndex.js";
 
+        <script src="@Url.Content(url)?ver=@version"></script>
+    }
+}

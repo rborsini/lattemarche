@@ -6,6 +6,7 @@ using System;
 using System.Web.Http;
 using WeCode.JQueryDataTable;
 using WeCode.JQueryDataTable.Models;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -48,16 +49,11 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Details), "Dispositivi", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(string id)
         {
-            try
-            {
-                return Ok(this.dispositiviService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.dispositiviService.Details(id));
 
         }
 
@@ -65,15 +61,9 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPut]
         public IHttpActionResult Update([FromBody] DispositivoMobileDto dispositivo)
         {
-            try
-            {
-                var model = this.dispositiviService.Update(dispositivo);
-                return Ok(model);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var model = this.dispositiviService.Update(dispositivo);
+            return Ok(model);
 
         }
 

@@ -4,6 +4,7 @@ using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.WebApi.Helpers;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -34,46 +35,29 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Ruoli", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
-                this.azioniService.Synch(ReflectionHelper.GetAzioni());
-                return Ok(this.ruoliService.Index());
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
+            this.azioniService.Synch(ReflectionHelper.GetAzioni());
+            return Ok(this.ruoliService.Index());
         }
 
         [ViewItem(nameof(Details), "Ruoli", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.ruoliService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.ruoliService.Details(id));
+
         }
 
         [ViewItem(nameof(Create), "Ruoli", "Creazione")]
         [HttpPost]
         public IHttpActionResult Create([FromBody] RuoloDto model)
         {
-            try
-            {
-                return Ok(this.ruoliService.Create(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.ruoliService.Create(model));
 
         }
 
@@ -81,14 +65,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPut]
         public IHttpActionResult Update([FromBody] RuoloDto model)
         {
-            try
-            {
-                return Ok(this.ruoliService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.ruoliService.Update(model));
 
         }
 

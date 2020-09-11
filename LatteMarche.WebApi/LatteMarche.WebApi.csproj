@@ -92,6 +92,18 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.3.1.8\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=3.1.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.3.1.8\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=3.1.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.3.1.8\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.8\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.7.1\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
       <Private>True</Private>
@@ -156,8 +168,14 @@
       <HintPath>..\packages\Sentry.Protocol.2.1.1\lib\net46\Sentry.Protocol.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -167,12 +185,19 @@
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.7.1\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
@@ -195,7 +220,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
@@ -206,20 +231,20 @@
     <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
@@ -233,12 +258,6 @@
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WebApi.OutputCache.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.11.0\lib\net45\WebApi.OutputCache.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="WebApi.OutputCache.V2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.11.0\lib\net45\WebApi.OutputCache.V2.dll</HintPath>
-    </Reference>
     <Reference Include="WeCode.Application">
       <HintPath>..\Libs\WeCode.Application.dll</HintPath>
     </Reference>
@@ -251,6 +270,9 @@
     <Reference Include="WeCode.JQueryDataTable, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCode.JQueryDataTable.1.0.2\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
     </Reference>
+    <Reference Include="WeCode.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.MVC.1.0.0\lib\net461\WeCode.MVC.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom.css" />
@@ -258,19 +280,8 @@
     <Content Include="Content\img\hero-cow.jpeg" />
     <Content Include="Content\img\logo.svg" />
     <Content Include="Content\img\main-logo.svg" />
-    <Content Include="Content\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
-    <Content Include="Content\plugins\bootstrap-datepicker\js\bootstrap-datepicker.it.min.js" />
-    <Content Include="Content\plugins\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\plugins\bootstrap\bootstrap.min.css" />
     <Content Include="Content\plugins\bootstrap\bootstrap.min.js" />
-    <Content Include="Content\plugins\datatables\css\dataTable.b4.css" />
-    <Content Include="Content\plugins\datatables\dataTable.b4.js" />
-    <Content Include="Content\plugins\datatables\dataTables.rowGroup.min.js" />
-    <Content Include="Content\plugins\datatables\images\sort_asc.png" />
-    <Content Include="Content\plugins\datatables\images\sort_asc_disabled.png" />
-    <Content Include="Content\plugins\datatables\images\sort_both.png" />
-    <Content Include="Content\plugins\datatables\images\sort_desc.png" />
-    <Content Include="Content\plugins\datatables\images\sort_desc_disabled.png" />
-    <Content Include="Content\plugins\datatables\jquery.dataTables.js" />
     <Content Include="Content\plugins\fontawesome\css\all.min.css" />
     <Content Include="Content\plugins\fontawesome\js\all.min.js" />
     <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.svg" />
@@ -278,57 +289,101 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\plugins\jquery\jquery.min.js" />
     <Content Include="Content\plugins\popper\popper.min.js" />
-    <Content Include="Content\plugins\select2\css\select2.min.css" />
-    <Content Include="Content\plugins\select2\it.js" />
-    <Content Include="Content\plugins\select2\select2.full.min.js" />
-    <Content Include="dist\acquirentiIndex.html" />
-    <Content Include="dist\acquirentiIndex.js" />
-    <Content Include="dist\analisiLatteIndex.html" />
-    <Content Include="dist\analisiLatteIndex.js" />
-    <Content Include="dist\cessionariIndex.html" />
-    <Content Include="dist\cessionariIndex.js" />
-    <Content Include="dist\changePassword.html" />
-    <Content Include="dist\changePassword.js" />
-    <Content Include="dist\css\bootstrap-datepicker.min.css" />
-    <Content Include="dist\css\custom.css" />
-    <Content Include="dist\css\select2.min.css" />
-    <Content Include="dist\dashboardIndex.html" />
-    <Content Include="dist\dashboardIndex.js" />
-    <Content Include="dist\destinatariIndex.html" />
-    <Content Include="dist\destinatariIndex.js" />
-    <Content Include="dist\dispositiviIndex.html" />
-    <Content Include="dist\dispositiviIndex.js" />
-    <Content Include="dist\favicon.ico" />
-    <Content Include="dist\giriIndex.html" />
-    <Content Include="dist\giriIndex.js" />
-    <Content Include="dist\laboratoriIndex.html" />
-    <Content Include="dist\laboratoriIndex.js" />
-    <Content Include="dist\plugins\datatables\css\dataTable.b4.css" />
-    <Content Include="dist\plugins\datatables\images\sort_asc.png" />
-    <Content Include="dist\plugins\datatables\images\sort_asc_disabled.png" />
-    <Content Include="dist\plugins\datatables\images\sort_both.png" />
-    <Content Include="dist\plugins\datatables\images\sort_desc.png" />
-    <Content Include="dist\plugins\datatables\images\sort_desc_disabled.png" />
-    <Content Include="dist\plugins\fontawesome\css\all.min.css" />
-    <Content Include="dist\plugins\fontawesome\js\all.min.js" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.svg" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.svg" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.svg" />
-    <Content Include="dist\prelieviLatteIndex.html" />
-    <Content Include="dist\prelieviLatteIndex.js" />
-    <Content Include="dist\ruoliEdit.html" />
-    <Content Include="dist\ruoliEdit.js" />
-    <Content Include="dist\ruoliIndex.html" />
-    <Content Include="dist\ruoliIndex.js" />
-    <Content Include="dist\ruoliNew.html" />
-    <Content Include="dist\ruoliNew.js" />
-    <Content Include="dist\tipiLatteIndex.html" />
-    <Content Include="dist\tipiLatteIndex.js" />
-    <Content Include="dist\utentiEdit.html" />
-    <Content Include="dist\utentiEdit.js" />
-    <Content Include="dist\utentiIndex.html" />
-    <Content Include="dist\utentiIndex.js" />
+    <Content Include="dist\prod\acquirentiIndex.html" />
+    <Content Include="dist\prod\analisiLatteIndex.html" />
+    <Content Include="dist\prod\cessionariIndex.html" />
+    <Content Include="dist\prod\changePassword.html" />
+    <Content Include="dist\prod\css\bootstrap-datepicker.min.css" />
+    <Content Include="dist\prod\css\chunk-common.css" />
+    <Content Include="dist\prod\css\custom.css" />
+    <Content Include="dist\prod\css\dashboardIndex.css" />
+    <Content Include="dist\prod\css\prelieviLatteIndex.css" />
+    <Content Include="dist\prod\css\select2.min.css" />
+    <Content Include="dist\prod\dashboardIndex.html" />
+    <Content Include="dist\prod\destinatariIndex.html" />
+    <Content Include="dist\prod\dispositiviIndex.html" />
+    <Content Include="dist\prod\favicon.ico" />
+    <Content Include="dist\prod\giriIndex.html" />
+    <Content Include="dist\prod\js\acquirentiIndex.js" />
+    <Content Include="dist\prod\js\analisiLatteIndex.js" />
+    <Content Include="dist\prod\js\cessionariIndex.js" />
+    <Content Include="dist\prod\js\changePassword.js" />
+    <Content Include="dist\prod\js\chunk-common.js" />
+    <Content Include="dist\prod\js\chunk-vendors.js" />
+    <Content Include="dist\prod\js\dashboardIndex.js" />
+    <Content Include="dist\prod\js\destinatariIndex.js" />
+    <Content Include="dist\prod\js\dispositiviIndex.js" />
+    <Content Include="dist\prod\js\giriIndex.js" />
+    <Content Include="dist\prod\js\laboratoriIndex.js" />
+    <Content Include="dist\prod\js\prelieviLatteIndex.js" />
+    <Content Include="dist\prod\js\ruoliEdit.js" />
+    <Content Include="dist\prod\js\ruoliIndex.js" />
+    <Content Include="dist\prod\js\ruoliNew.js" />
+    <Content Include="dist\prod\js\tipiLatteIndex.js" />
+    <Content Include="dist\prod\js\utentiEdit.js" />
+    <Content Include="dist\prod\js\utentiIndex.js" />
+    <Content Include="dist\prod\laboratoriIndex.html" />
+    <Content Include="dist\prod\plugins\datatables\css\dataTable.b4.css" />
+    <Content Include="dist\prod\plugins\datatables\images\sort_asc.png" />
+    <Content Include="dist\prod\plugins\datatables\images\sort_asc_disabled.png" />
+    <Content Include="dist\prod\plugins\datatables\images\sort_both.png" />
+    <Content Include="dist\prod\plugins\datatables\images\sort_desc.png" />
+    <Content Include="dist\prod\plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="dist\prod\plugins\fontawesome\css\all.min.css" />
+    <Content Include="dist\prod\plugins\fontawesome\js\all.min.js" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-brands-400.svg" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-regular-400.svg" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="dist\prod\prelieviLatteIndex.html" />
+    <Content Include="dist\prod\ruoliEdit.html" />
+    <Content Include="dist\prod\ruoliIndex.html" />
+    <Content Include="dist\prod\ruoliNew.html" />
+    <Content Include="dist\prod\tipiLatteIndex.html" />
+    <Content Include="dist\prod\utentiEdit.html" />
+    <Content Include="dist\prod\utentiIndex.html" />
     <Content Include="favicon.ico" />
+    <Content Include="dist\prod\js\acquirentiIndex.js.map" />
+    <Content Include="dist\prod\js\analisiLatteIndex.js.map" />
+    <Content Include="dist\prod\js\cessionariIndex.js.map" />
+    <Content Include="dist\prod\js\changePassword.js.map" />
+    <Content Include="dist\prod\js\chunk-common.js.map" />
+    <Content Include="dist\prod\js\chunk-vendors.js.map" />
+    <Content Include="dist\prod\js\dashboardIndex.js.map" />
+    <Content Include="dist\prod\js\destinatariIndex.js.map" />
+    <Content Include="dist\prod\js\dispositiviIndex.js.map" />
+    <Content Include="dist\prod\js\giriIndex.js.map" />
+    <Content Include="dist\prod\js\laboratoriIndex.js.map" />
+    <Content Include="dist\prod\js\prelieviLatteIndex.js.map" />
+    <Content Include="dist\prod\js\ruoliEdit.js.map" />
+    <Content Include="dist\prod\js\ruoliIndex.js.map" />
+    <Content Include="dist\prod\js\ruoliNew.js.map" />
+    <Content Include="dist\prod\js\tipiLatteIndex.js.map" />
+    <Content Include="dist\prod\js\utentiEdit.js.map" />
+    <Content Include="dist\prod\js\utentiIndex.js.map" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="dist\prod\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -342,31 +397,7 @@
     <Content Include="Views\LaboratorioAnalisi\Index.cshtml" />
     <Content Include="Views\Ruoli\Edit.cshtml" />
     <Content Include="Views\Ruoli\New.cshtml" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.eot" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.woff" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.eot" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.woff" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.eot" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff" />
-    <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-brands-400.woff2" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-regular-400.woff2" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.eot" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff" />
-    <Content Include="dist\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="lattemarche - Web Deploy.pubxml" />
     <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
@@ -406,6 +437,7 @@
     <Compile Include="Controllers_Api\CessionariController.cs" />
     <Compile Include="Controllers_Api\DestinatariController.cs" />
     <Compile Include="Controllers_Api\DispositiviController.cs" />
+    <Compile Include="Controllers_Api\DropDownsController.cs" />
     <Compile Include="Controllers_Api\LogsController.cs" />
     <Compile Include="Controllers_Api\LaboratoriAnalisiController.cs" />
     <Compile Include="Controllers_Api\RuoliController.cs" />
@@ -447,6 +479,7 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
     <Compile Include="Controllers_Api\UtentiController.cs" />
+    <Compile Include="Helpers\EnvHelper.cs" />
     <Compile Include="Helpers\ExcelGiornalieriHelper.cs" />
     <Compile Include="Helpers\ExcelAllevatoriHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
@@ -505,9 +538,7 @@
     <Content Include="Views\Giri\Index.cshtml" />
     <Content Include="Views\Prelievi\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>

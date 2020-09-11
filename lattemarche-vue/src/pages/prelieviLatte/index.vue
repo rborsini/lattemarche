@@ -4,7 +4,8 @@
     <waiter ref="waiter"></waiter>
 
     <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal ref="editazionePrelievoModal" :prelievo-latte="prelievoSelezionato" v-on:salvato="$refs.savedDialog.open()" ></editazione-prelievo-modal>
+    <editazione-prelievo-modal ref="editazionePrelievoModal"  :prelievo-latte="prelievoSelezionato"  v-on:salvato="$refs.savedDialog.open()" >
+    </editazione-prelievo-modal>
 
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Il prelievo è stato salvato correttamente'" ></notification-dialog>
@@ -121,8 +122,8 @@
       <!-- Bottoni di ricerca -->
       <div class="row pt-3">
         <div class="col-12">
-          <button v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
-          <button v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
+          <button :disabled="!isLoaded" v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
+          <button :disabled="!isLoaded" v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
         </div>
       </div>
     </div>
@@ -191,6 +192,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch, Emit } from "vue-property-decorator";
+import axios, { AxiosPromise } from 'axios';
 
 import Waiter from "../../components/waiter.vue";
 import DataTable from "../../components/dataTable.vue";
@@ -211,6 +213,7 @@ import { DropdownService } from "../../services/dropdown.service";
 import { UrlService } from "@/services/url.service";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
+import { parseJSON } from 'jquery';
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -249,8 +252,10 @@ export default class PrelieviLatteIndexPage extends Vue {
   public destinatario: Dropdown = new Dropdown();
   public acquirente: Dropdown = new Dropdown();
   public cessionario: Dropdown = new Dropdown();
+
   public prelievi: PrelievoLatte[] = [];
   private idPrelievoDaEliminare!: number;
+  private isLoaded: boolean = false;
 
   public parameters: PrelieviLatteSearchModel = new PrelieviLatteSearchModel();
 
@@ -278,13 +283,9 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   public mounted() {
     this.initTable();
-    this.loadAllevatori();
-    this.loadTipiLatte();
-    this.loadTrasportatori();
-    this.loadDestinatari();
-    this.loadAcquirenti();
-    this.loadCessionari();
-    this.initSearchBox();
+    this.loadDropdown();
+
+    this.initSearchBox();  
   }
 
   // Pulizia selezione
@@ -478,72 +479,43 @@ export default class PrelieviLatteIndexPage extends Vue {
     return returnDate;
   }
 
-  // caricamento allevatori
-  private loadAllevatori() {
-    this.dropdownService.getAllevamenti().then(response => {
-      this.allevatori = response.data;
+  // load dropdown
+  private loadDropdown() {
 
-      if(this.idProfilo == 3)
-        this.parameters.IdAllevamento = response.data.Items[0].Value;      
-    });
-  }
+    this.$refs.waiter.open();
+    this.dropdownService.getDropdowns("allevatori|acquirenti|cessionari|destinatari|tipiLatte|trasportatori")
+      .then(response => {
 
-  // caricamento tipi latte
-  private loadTipiLatte() {
-    this.dropdownService.getTipiLatte().then(response => {
-      if (response.data != null) {
-        this.tipiLatte = response.data;
-      }
-    });
-  }
+        this.allevatori = response.data["allevatori"] as Dropdown;
+        this.acquirente = response.data["acquirenti"] as Dropdown;
+        this.cessionario = response.data["cessionari"] as Dropdown;
+        this.destinatario = response.data["destinatari"] as Dropdown;
+        this.tipiLatte = response.data["tipiLatte"] as Dropdown;
+        this.trasportatore = response.data["trasportatori"] as Dropdown;
 
-  // caricamento trasportatori
-  private loadTrasportatori() {
-    this.dropdownService.getTrasportatori().then(response => {
-      if (response.data != null) {
-        this.trasportatore = response.data;
+        switch(this.idProfilo) {
+          case "3":   // allevatore
+            this.parameters.IdAllevamento = this.allevatori.Items[0].Value; 
+            break;
+          case "5":   // trasportatore
+            this.parameters.IdTrasportatore = this.trasportatore.Items[0].Value; 
+            break;
+          case "6":   // destinatario
+            this.parameters.IdDestinatario = this.destinatario.Items[0].Value; 
+            break;
+          case "7":   // acquirente
+            this.parameters.IdAcquirente = this.acquirente.Items[0].Value; 
+            break;
+          case "8":   // cessionario
+            this.parameters.IdCessionario = this.cessionario.Items[0].Value; 
+            break;                                        
+        }
 
-        if(this.idProfilo == 5)
-          this.parameters.IdTrasportatore = response.data.Items[0].Value;      
-      }
-    });
-  }
+        this.isLoaded = true;
+        this.$refs.waiter.close();
 
-  // caricamento destinatari
-  private loadDestinatari() {
-    this.dropdownService.getDestinatari().then(response => {
-      if (response.data != null) {
-        this.destinatario = response.data;
+      });
 
-        if(this.idProfilo == 6)
-          this.parameters.IdDestinatario = response.data.Items[0].Value;
-
-      }
-    });
-  }
-
-  // caricamento acquirenti
-  private loadAcquirenti() {
-    this.dropdownService.getAcquirenti().then(response => {
-      if (response.data != null) {
-        this.acquirente = response.data;
-
-        if(this.idProfilo == 7)
-          this.parameters.IdAcquirente = response.data.Items[0].Value;      
-      }
-    });
-  }
-
-  // caricamento cessionari
-  private loadCessionari() {
-    this.dropdownService.getCessionari().then(response => {
-      if (response.data != null) {
-        this.cessionario = response.data;
-
-        if(this.idProfilo == 8)
-          this.parameters.IdCessionario = response.data.Items[0].Value;      
-      }
-    });
   }
 
   //Esportazione excel

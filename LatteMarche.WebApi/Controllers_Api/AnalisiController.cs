@@ -34,15 +34,9 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Synch()
         {
-            try
-            {
+
                 var reports = this.analisiService.Synch();
                 return Ok(reports);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
 
         }
 
@@ -50,14 +44,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpGet]
         public IHttpActionResult Search([FromUri] AnalisiSearchDto searchDto)
         {
-            try
-            {
+
                 return Ok(this.analisiService.Search(searchDto));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
 
         }
 

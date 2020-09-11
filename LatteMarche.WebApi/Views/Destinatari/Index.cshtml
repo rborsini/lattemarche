@@ -1,4 +1,6 @@
 ﻿@using LatteMarche.WebApi.Models
+@using LatteMarche.WebApi.Helpers
+
 @section Breadcrumb
 {
     @{
@@ -13,15 +15,20 @@
 }
 
 
-
-@{
-    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
-}
-
 <div id="app">
 </div>
 
-<script src="@Url.Content("~/dist/destinatariIndex.js")?ver=@version"></script>
+<!-- Js -->
+@section Js
+{
+    @{
+        var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+        var folder = EnvHelper.IsProd ? "prod/js" : "dev";
+        var url = "~/dist/" + folder + "/destinatariIndex.js";
+
+        <script src="@Url.Content(url)?ver=@version"></script>
+    }
+}
 
 
 

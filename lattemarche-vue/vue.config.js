@@ -1,5 +1,5 @@
 module.exports = {
-    outputDir: './../LatteMarche.WebApi/dist',
+    outputDir: './../LatteMarche.WebApi/dist/dev',
     filenameHashing: false,
     pages: {      
         acquirentiIndex: {            

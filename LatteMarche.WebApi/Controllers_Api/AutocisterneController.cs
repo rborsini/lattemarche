@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -33,16 +34,12 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Dropdown), "Autocisterne", "Dropdown")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Dropdown(int idTrasportatore)
         {
-            try
-            {
+
                 return Ok(this.service.DropDown(idTrasportatore));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
         }
 
         #endregion

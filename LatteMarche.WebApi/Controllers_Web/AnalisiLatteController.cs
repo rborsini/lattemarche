@@ -33,6 +33,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Analisi latte", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
             var utente = this.utentiService.Details(User.Identity.Name);

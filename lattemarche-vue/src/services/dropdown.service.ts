@@ -1,8 +1,13 @@
 import axios, { AxiosPromise } from 'axios';
 import { Dropdown } from "@/models/dropdown.model";
+import { PermissionsService } from './permissions.service';
 
 export class DropdownService {
     constructor() { }
+
+    public getDropdowns(keys: string): AxiosPromise<any> {
+        return axios.get('/api/dropdowns/index?keys=' + keys);
+    }
 
     public getAutocisterne(idTrasportatore: number): AxiosPromise<Dropdown> {
         return axios.get('/api/autocisterne/dropdown?idTrasportatore=' + idTrasportatore);

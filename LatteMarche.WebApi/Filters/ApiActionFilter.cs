@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Application.Logs.Interfaces;
 using LatteMarche.WebApi.App_Start;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace LatteMarche.WebApi.Filters
         private Stopwatch swAction = new Stopwatch();
 
         public ILogsService logsService { get; set; }
+        private static readonly ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public override void OnActionExecuting(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
@@ -25,10 +27,13 @@ namespace LatteMarche.WebApi.Filters
         {
             swAction.Stop();
 
+            Stopwatch swlog = new Stopwatch();
+            swlog.Start();
+
             var routeData = actionExecutedContext.ActionContext.ControllerContext.RouteData;
 
-            var controllerName = routeData.Values["controller"];
-            var actionName = routeData.Values["action"];
+            var controllerName = routeData.Values.ContainsKey("controller") ? routeData.Values["controller"] : "";
+            var actionName = routeData.Values.ContainsKey("action") ? routeData.Values["action"] : "";
 
             var message = String.Format("{0}/{1} [{2} sec]", controllerName, actionName, swAction.Elapsed.ToString("s\\.f"));
 
@@ -47,7 +52,9 @@ namespace LatteMarche.WebApi.Filters
                 Arguments = arguments
             });
 
-            Debug.WriteLine(message, "API Action Filter Log");
+            swlog.Stop();
+
+            log.Debug($"API Action Filter Log [Request: {controllerName}/{actionName} - Action: {swAction.Elapsed} - Log: {swlog.Elapsed}]");
         }
 
     }

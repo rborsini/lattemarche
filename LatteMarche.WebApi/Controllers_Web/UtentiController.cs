@@ -18,12 +18,14 @@ namespace LatteMarche.WebApi.Controllers_Web
 
         // GET: Utenti
         [ViewItem(nameof(Index), "Utenti - Elenco", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
             return View();
         }
 
         [ViewItem(nameof(Edit), "Utenti - Dettaglio", "Sola lettura")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Edit()
         {
             return View();

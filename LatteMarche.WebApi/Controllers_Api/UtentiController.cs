@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Http;
-using WebApi.OutputCache.V2;
 using RB.Hash;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Auth.Interfaces;
@@ -13,6 +12,7 @@ using LatteMarche.Core.Models;
 using WeCode.JQueryDataTable.Models;
 using WeCode.Application;
 using WeCode.JQueryDataTable;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -33,11 +33,11 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Constructors
 
         public UtentiController(IUtentiService utentiService, ITipiProfiloService tipiProfiloService, IRuoliService ruoliService)
-		{
+        {
             this.utentiService = utentiService;
             this.tipiProfiloService = tipiProfiloService;
-		    this.ruoliService = ruoliService;
-		}
+            this.ruoliService = ruoliService;
+        }
 
         #endregion
 
@@ -45,34 +45,24 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Utenti", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
-                return Ok(this.utentiService.Index());
-            }
-            catch(Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.utentiService.Index());
 
         }
 
         [ViewItem(nameof(Details), "Utenti", "Dettaglio")]
         [HttpGet]
-        public IHttpActionResult Details(string username="", int id = 0)
+        [ETag]
+        public IHttpActionResult Details(string username = "", int id = 0)
         {
-            try
-            {
-                if(!String.IsNullOrEmpty(username))
-                    return Ok(this.utentiService.Details(username));
-                else
-                    return Ok(this.utentiService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            if (!String.IsNullOrEmpty(username))
+                return Ok(this.utentiService.Details(username));
+            else
+                return Ok(this.utentiService.Details(id));
 
         }
 
@@ -80,26 +70,20 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult ChangePassword([FromBody] ChangePasswordViewModel model)
         {
-            try
-            {
-                if (String.IsNullOrEmpty(model.Username))
-                    return BadRequest();
 
-                var user = this.utentiService.GetByUsername(User.Identity.Name);
+            if (String.IsNullOrEmpty(model.Username))
+                return BadRequest();
 
-                string result = "";
+            var user = this.utentiService.GetByUsername(User.Identity.Name);
 
-                if(user.Profilo.Contains("Admin")) 
-                    result = this.utentiService.ChangePassword(model.Username, model.Password, model.RePassword);
-                else
-                    result = this.utentiService.ChangePassword(model.Username, model.OldPassword, model.Password, model.RePassword);
+            string result = "";
 
-                return Ok(result);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            if (user.Profilo.Contains("Admin"))
+                result = this.utentiService.ChangePassword(model.Username, model.Password, model.RePassword);
+            else
+                result = this.utentiService.ChangePassword(model.Username, model.OldPassword, model.Password, model.RePassword);
+
+            return Ok(result);
 
         }
 
@@ -107,33 +91,27 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Save([FromBody] UtenteDto model)
         {
-            try
+
+            if (model.Id == 0)
             {
-                if (model.Id == 0)
-                {
-                    model.Abilitato = true;
-                    model.Password = new HashHelper().HashPassword(model.Password);
+                model.Abilitato = true;
+                model.Password = new HashHelper().HashPassword(model.Password);
 
-                    UtenteDto utente = this.utentiService.Create(model);
+                UtenteDto utente = this.utentiService.Create(model);
 
-                    string tokenUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.LocalPath, "/Token");
+                string tokenUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.LocalPath, "/Token");
 
-                    return Ok(utente);
-                }
-                else
-                {
-                    // aggiornare ruoli/utenti
-                    this.ruoliService.UpdateUserRole(model.Id, model.IdProfilo);
-
-                    // aggiornare utente
-                    var users = this.utentiService.Update(model);
-
-                    return Ok(model);
-                }
+                return Ok(utente);
             }
-            catch (Exception exc)
+            else
             {
-                return InternalServerError(exc);
+                // aggiornare ruoli/utenti
+                this.ruoliService.UpdateUserRole(model.Id, model.IdProfilo);
+
+                // aggiornare utente
+                var users = this.utentiService.Update(model);
+
+                return Ok(model);
             }
 
         }
@@ -142,15 +120,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            try
-            {
-                this.utentiService.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+
+            this.utentiService.Delete(id);
+            return Ok();
+
         }
 
         [ViewItem(nameof(Search), "Utenti", "Ricerca")]
@@ -167,17 +140,13 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Destinatari), "Utenti", "Destinatari")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Destinatari()
         {
-            try
-            {
-                int idProfilo = tipiProfiloService.GetIdProfilo("Destinatario");
-                return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            int idProfilo = tipiProfiloService.GetIdProfilo("Destinatario");
+            return Ok(this.utentiService.Search(new UtentiSearchDto() { IdProfilo = idProfilo }));
+
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿@using LatteMarche.WebApi.Models
+@using LatteMarche.WebApi.Helpers
 @section Breadcrumb
 {
     @{
@@ -7,16 +8,22 @@
         bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Acquirenti" });
     }
 
-
     @* Breadcrumb *@
     @Html.Partial("_Breadcrumb", bm)
 }
 
-@{
-    string version = System.Configuration.ConfigurationManager.AppSettings["version"];
-}
 
 <div id="app">
 </div>
 
-<script src="@Url.Content("~/dist/acquirentiIndex.js")?ver=@version"></script>
+<!-- Js -->
+@section Js
+{
+    @{
+        var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+        var folder = EnvHelper.IsProd ? "prod/js" : "dev";
+        var url = "~/dist/" + folder + "/acquirentiIndex.js";
+
+        <script src="@Url.Content(url)?ver=@version"></script>
+    }
+}

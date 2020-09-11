@@ -115,11 +115,11 @@ export default class EditazioneDestinatarioModal extends Vue {
   public destinatariService: DestinatariService;
   private dropdownService: DropdownService;
 
-        constructor() {
-            super();
-            this.destinatariService = new DestinatariService();
-            this.dropdownService = new DropdownService();
-        }
+  constructor() {
+      super();
+      this.destinatariService = new DestinatariService();
+      this.dropdownService = new DropdownService();
+  }
 
   mounted() {
     this.dropdownService.getProvince().then(response => {
@@ -130,9 +130,6 @@ export default class EditazioneDestinatarioModal extends Vue {
   public openDestinatario(dest: Destinatario): void {
     $(this.$el).modal("show");
     this.loadComuni(dest.SiglaProvincia);
-    // this.dropdownService.getProvince().then(response => {
-    //   this.provincia = response.data;
-    // });
   }
 
   public open(): void {
@@ -148,31 +145,23 @@ export default class EditazioneDestinatarioModal extends Vue {
     });
   }
 
-  // carico provincia se seleziono comune (senza aver precedentemente selezionato la provincia)
-//   public onComuneSelezionato(idComune: string): void {
-//     if (this.destinatario.SiglaProvincia == "") {
-//       this.comuniService.getComuneDetails(idComune).then(response => {
-//         this.destinatario.SiglaProvincia = response.data.Provincia;
-//       });
-//     }
-//   }
 
-        public onSave() {
+  public onSave() {
 
-            this.destinatariService.save(this.destinatario)
-                .then(response => {
-                    if (response.data != undefined) {
-                        this.$emit("salvato");
-                        this.close();
-                    } else {
-                        // save KO!!
-                        this.destinatario = response.data;
-                        // TODO: msg di validazione
-                        //this.$emit("errore");
-                        this.close();
-                    }
-                });
-        }
+      this.destinatariService.save(this.destinatario)
+          .then(response => {
+              if (response.data != undefined) {
+                  this.$emit("salvato");
+                  this.close();
+              } else {
+                  // save KO!!
+                  this.destinatario = response.data;
+                  // TODO: msg di validazione
+                  //this.$emit("errore");
+                  this.close();
+              }
+          });
+  }
 
   public close(): void {
     $(this.$el).modal("hide");

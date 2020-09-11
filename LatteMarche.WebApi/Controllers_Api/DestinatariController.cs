@@ -4,13 +4,14 @@ using LatteMarche.Application.Destinatari.Interfaces;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Utenti.Interfaces;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
     [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
-    public class DestinatariController: ApiController
+    public class DestinatariController : ApiController
     {
 
         #region Fields
@@ -34,67 +35,48 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Destinatari", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
-                return Ok(this.destinatariService.Index());
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.destinatariService.Index());
 
         }
 
         [ViewItem(nameof(Details), "Destinatari", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.destinatariService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.destinatariService.Details(id));
+
         }
 
         [ViewItem(nameof(Dropdown), "Destinatari", "Dropdown")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Dropdown()
         {
-            try
-            {
-                var utente = this.utentiService.Details(User.Identity.Name);
 
-                if (utente != null)
-                    return Ok(this.destinatariService.DropDown(utente.Id));
-                else
-                    return Ok();
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            var utente = this.utentiService.Details(User.Identity.Name);
+
+            if (utente != null)
+                return Ok(this.destinatariService.DropDown(utente.Id));
+            else
+                return Ok();
+
         }
 
         [ViewItem(nameof(Save), "Destinatari", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] DestinatarioDto model)
         {
-            try
-            {
-                if(model.Id == 0)
-                    return Ok(this.destinatariService.Create(model));
-                else
-                    return Ok(this.destinatariService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            if (model.Id == 0)
+                return Ok(this.destinatariService.Create(model));
+            else
+                return Ok(this.destinatariService.Update(model));
 
         }
 
@@ -102,15 +84,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            try
-            {
-                this.destinatariService.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+
+            this.destinatariService.Delete(id);
+            return Ok();
+
         }
 
         #endregion
