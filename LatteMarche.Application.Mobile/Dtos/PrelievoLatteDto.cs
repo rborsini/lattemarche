@@ -35,5 +35,11 @@ namespace LatteMarche.Application.Mobile.Dtos
 
         public string LottoConsegna { get; set; }
 
+        public decimal Lat { get; set; }
+
+        public decimal Lng { get; set; }
+
+        public int IdAutocisterna { get; set; }
+
     }
 }

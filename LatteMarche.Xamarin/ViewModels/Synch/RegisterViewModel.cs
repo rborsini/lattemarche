@@ -221,44 +221,6 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
         }
 
-        //private async Task<bool> RegisterAsync()
-        //{
-        //    var location = GetLocation();
-        //    VersionTracking.Track();
-        //    var appVersion = VersionTracking.CurrentVersion;
-        //    var isActive = false;
-
-        //    var dto = new DispositivoDto()
-        //    {
-        //        Id = this.device.GetIdentifier(),
-        //        Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
-        //        Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
-        //        VersioneApp = appVersion,
-        //        VersioneOS = DeviceInfo.VersionString,
-        //        Marca = DeviceInfo.Manufacturer,
-        //        Modello = DeviceInfo.Model,
-        //        Nome = DeviceInfo.Name
-        //    };
-
-        //    await Task.Run(() =>
-        //    {
-
-        //        var dispositivo = this.restService.Register(dto).Result;
-        //        isActive = dispositivo.Attivo && dispositivo.IdTrasportatore.HasValue;
-
-        //        if (isActive)
-        //        {
-        //            var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
-        //            this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
-        //        }
-
-        //        this.sincronizzazioneService.AddAsync(SynchType.Register).Wait();
-        //    });
-
-        //    Analytics.TrackEvent("Registrazione inviata con successo", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
-        //    SentrySdk.CaptureMessage("Registrazione inviata con successo", Sentry.Protocol.SentryLevel.Info);
-        //    return isActive;
-        //}
 
         #endregion
     }

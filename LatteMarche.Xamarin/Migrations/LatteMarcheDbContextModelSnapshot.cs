@@ -63,6 +63,9 @@ namespace LatteMarche.Xamarin.Migrations
                     b.Property<int>("IdAllevamento")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("IdCessionarioDefault")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("IdDestinatarioDefault")
                         .HasColumnType("INTEGER");
 
@@ -114,6 +117,26 @@ namespace LatteMarche.Xamarin.Migrations
                     b.ToTable("Allevamenti");
                 });
 
+            modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.Ambiente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Selezionato")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ambienti");
+                });
+
             modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.AutoCisterna", b =>
                 {
                     b.Property<int>("Id")
@@ -144,6 +167,35 @@ namespace LatteMarche.Xamarin.Migrations
                         .IsUnique();
 
                     b.ToTable("AutoCisterne");
+                });
+
+            modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.Cessionario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CAP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Comune")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("P_IVA")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Provincia")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RagioneSociale")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cessionari");
                 });
 
             modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.Destinatario", b =>
@@ -181,6 +233,9 @@ namespace LatteMarche.Xamarin.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Archiviato")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("CodiceLotto")
                         .HasColumnType("TEXT");
 
@@ -194,6 +249,9 @@ namespace LatteMarche.Xamarin.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("IdTemplateGiro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LavaggioCisterna")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Titolo")
@@ -224,11 +282,23 @@ namespace LatteMarche.Xamarin.Migrations
                     b.Property<int?>("IdAllevamento")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IdAutocisterna")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IdCessionario")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("IdDestinatario")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("IdGiro")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Lat")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Lng")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("NumeroMungiture")
                         .HasColumnType("INTEGER");

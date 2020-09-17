@@ -27,7 +27,7 @@ namespace LatteMarche.Xamarin.Droid
             Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
 
-            Distribute.SetEnabledForDebuggableBuild(true);
+            //Distribute.SetEnabledForDebuggableBuild(true);
 
             LoadApplication(new App());
         }
