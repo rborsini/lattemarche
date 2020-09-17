@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Essentials;
 using Forms = Xamarin.Forms;
+using Microsoft.AppCenter.Distribute;
 
 namespace LatteMarche.Xamarin.Droid
 {
@@ -25,6 +26,8 @@ namespace LatteMarche.Xamarin.Droid
             Platform.Init(this, savedInstanceState);
             Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+
+            Distribute.SetEnabledForDebuggableBuild(true);
 
             LoadApplication(new App());
         }
