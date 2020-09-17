@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -33,65 +34,44 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Laboratori Analisi", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
 
-                var laboratori = this.service.Index();
-                return Ok(laboratori);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            var laboratori = this.service.Index();
+            return Ok(laboratori);
 
         }
 
         [ViewItem(nameof(Details), "Laboratori Analisi", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.service.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.service.Details(id));
 
         }
 
         [ViewItem(nameof(Dropdown), "Laboratori Analisi", "Dropdown")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Dropdown()
         {
-            try
-            {
-                return Ok(this.service.DropDown());
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.service.DropDown());
+
         }
 
         [ViewItem(nameof(Save), "Laboratori Analisi", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] LaboratorioAnalisiDto model)
         {
-            try
-            {
-                if (model.Id == 0)
-                    return Ok(this.service.Create(model));
-                else
-                    return Ok(this.service.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            if (model.Id == 0)
+                return Ok(this.service.Create(model));
+            else
+                return Ok(this.service.Update(model));
 
         }
 
@@ -99,15 +79,9 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            try
-            {
-                this.service.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            this.service.Delete(id);
+            return Ok();
+
         }
 
         #endregion

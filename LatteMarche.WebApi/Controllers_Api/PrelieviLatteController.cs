@@ -18,6 +18,7 @@ using LatteMarche.Application.Utenti.Dtos;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -36,7 +37,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         private ILottiService lottiService;
         private ILogsService logsService;
         private IUtentiService utentiService;
-        
+
 
         private bool PullEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_pull_enabled"]); } }
         private bool PushEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_push_enabled"]); } }
@@ -64,51 +65,32 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpGet]
         public IHttpActionResult Index()
         {
-            try
-            {
-                return Ok(this.prelieviLatteService.Index());
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.prelieviLatteService.Index());
 
         }
 
         [ViewItem(nameof(Details), "Prelievi latte", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.prelieviLatteService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
 
+            return Ok(this.prelieviLatteService.Details(id));
         }
 
         [ViewItem(nameof(Save), "Prelievi latte", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] PrelievoLatteDto model)
         {
-            try
-            {
-                if (model.Id == 0)
-                    this.prelieviLatteService.Create(model);
-                else
-                    this.prelieviLatteService.Update(model);
+
+            if (model.Id == 0)
+                this.prelieviLatteService.Create(model);
+            else
+                this.prelieviLatteService.Update(model);
 
 
-                return Ok(model);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
-
+            return Ok(model);
         }
 
         [ViewItem(nameof(Push), "Prelievi latte", "Push")]
@@ -168,7 +150,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 this.LogDebug("InvioSitra", $"prelievi inviati [{JsonConvert.SerializeObject(response.PrelieviInviati)}]");
 
                 // fix valorizzazione codice sitra
-                foreach(var prelievo in prelieviDaInviare)
+                foreach (var prelievo in prelieviDaInviare)
                 {
                     var prelievoInviato = response.PrelieviInviati.FirstOrDefault(p => p.Id == prelievo.Id);
 
@@ -219,7 +201,7 @@ namespace LatteMarche.WebApi.Controllers_Api
             if (this.PushEnabled)
                 this.synchService.Push();
 
-            if(this.SitraEnabled)
+            if (this.SitraEnabled)
                 InvioSitra(day);
 
             return Ok();
@@ -256,7 +238,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         [ViewItem(nameof(Search), "Prelievi latte", "Ricerca")]
         [HttpGet]
         public IHttpActionResult Search([FromUri] PrelieviLatteSearchDto searchDto)
-        {            
+        {
             try
             {
                 UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);

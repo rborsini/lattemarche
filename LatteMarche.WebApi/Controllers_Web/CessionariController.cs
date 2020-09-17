@@ -15,6 +15,7 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class CessionariController : Controller
     {
         [ViewItem(nameof(Index), "Cessionari", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

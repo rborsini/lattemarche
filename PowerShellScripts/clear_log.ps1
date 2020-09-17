@@ -1,5 +1,6 @@
-# $url = "https://lattemarche.azurewebsites.net/"
-$url = "http://robertoborsini.myqnapcloud.com:81/"
+$url = "https://lattemarche.azurewebsites.net/"
+# $url = "http://robertoborsini.myqnapcloud.com:81/"
+# $url = "http://localhost:53137/"
 $username = "02102002"
 $password = "giorgia2"
 

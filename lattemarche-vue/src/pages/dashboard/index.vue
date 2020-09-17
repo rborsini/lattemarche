@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <!-- <waiter ref="waiter"></waiter> -->
+
     <!-- Summary -->
     <div class="row pt-4">
       <div class="col-12">

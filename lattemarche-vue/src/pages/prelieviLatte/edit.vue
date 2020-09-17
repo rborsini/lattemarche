@@ -204,11 +204,13 @@ import { DropdownService } from "../../services/dropdown.service";
   }
 })
 export default class EditazionePrelievoModal extends Vue {
+  
   @Prop()
   prelievoLatte!: PrelievoLatte;
 
   public prelieviLatteService: PrelieviLatteService;
   public dropdownService: DropdownService;
+
   public laboratoriAnalisi: Dropdown = new Dropdown();
   public trasportatore: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
@@ -221,52 +223,24 @@ export default class EditazionePrelievoModal extends Vue {
     super();
     this.prelieviLatteService = new PrelieviLatteService();
     this.dropdownService = new DropdownService();
+
     this.id = $("#id").val() as string;
   }
 
   mounted() {
-    this.loadLaboratoriAnalisi();
-    this.loadTrasportatori();
-    this.loadDestinatari();
-    this.loadAcquirenti();
+    this.loadDropdown();
   }
 
-  // caricamento laboratori analisi
-  public async  loadLaboratoriAnalisi() {
-      const dd = await this.dropdownService.getLaboratori();
+  // load dropdown
+  private loadDropdown() {
 
-    if (dd.data != null) {
-      this.laboratoriAnalisi = dd.data;
-    }
-
-  }
-
-  // caricamento trasportatori
-  public async loadTrasportatori() {
-      const dd = await this.dropdownService.getTrasportatori();
-    if (dd.data != null) {
-      this.trasportatore = dd.data;
-    }
-
-  }
-
-  // caricamento destinatari
-  public async loadDestinatari() {
-      const dd = await this.dropdownService.getDestinatari();
-
-    if (dd.data != null) {
-      this.destinatario = dd.data;
-    }
-
-  }
-
-  // caricamento acquirenti
-  public async loadAcquirenti() {
-    const dd = await this.dropdownService.getAcquirenti();
-
-    if (dd.data != null) {
-      this.acquirente = dd.data;
-    }
+    this.dropdownService.getDropdowns("acquirenti|destinatari|laboratoriAnalisi|trasportatori")
+      .then(response => {
+        this.acquirente = response.data["acquirenti"] as Dropdown;
+        this.destinatario = response.data["destinatari"] as Dropdown;
+        this.laboratoriAnalisi = response.data["laboratoriAnalisi"] as Dropdown;
+        this.trasportatore = response.data["trasportatori"] as Dropdown;
+      });
 
   }
 

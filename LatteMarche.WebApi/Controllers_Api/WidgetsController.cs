@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -37,47 +38,35 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Sommario), "Widgets", "Sommario")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Sommario()
         {
-            try
-            {
-                var user = this.utentiService.Details(User.Identity.Name);
-                return Ok(this.widgetsService.WidgetSommario(user.Id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var user = this.utentiService.Details(User.Identity.Name);
+            return Ok(this.widgetsService.WidgetSommario(user.Id));
+
         }
 
         [ViewItem(nameof(Acquirenti), "Widgets", "Acquirenti")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Acquirenti()
         {
-            try
-            {
-                var user = this.utentiService.Details(User.Identity.Name);
-                return Ok(this.widgetsService.WidgetAcquirenti(user.Id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var user = this.utentiService.Details(User.Identity.Name);
+            return Ok(this.widgetsService.WidgetAcquirenti(user.Id));
+
         }
 
         [ViewItem(nameof(TipiLatte), "Widgets", "TipiLatte")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult TipiLatte()
         {
-            try
-            {
-                var user = this.utentiService.Details(User.Identity.Name);
-                return Ok(this.widgetsService.WidgetTipiLatte(user.Id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var user = this.utentiService.Details(User.Identity.Name);
+            return Ok(this.widgetsService.WidgetTipiLatte(user.Id));
+
         }
 
         #endregion

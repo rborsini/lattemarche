@@ -45,7 +45,6 @@
       <div class="row pt-3">
         <div class="col-12">
           <button v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
-          <!-- <button v-on:click="onSynchClick" class="float-right btn btn-success mr-2" role="button" >Synch</button> -->
           <button v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
         </div>
       </div>
@@ -150,21 +149,6 @@ export default class AnalisiLatteIndexPage extends Vue {
   // Click bottone annulla
   public onAnnullaClick() {
     this.initSearchBox();
-  }
-
-  // Click bottone synch
-  public onSynchClick() {
-    this.$refs.waiter.open();
-    this.analisiService
-      .synch()
-      .then(respose => {
-        this.$refs.waiter.close();
-        this.onCercaClick();
-      })
-      .catch(error => {
-        this.$refs.waiter.close();
-        alert("errore");
-      });
   }
 
   // caricamento allevamenti

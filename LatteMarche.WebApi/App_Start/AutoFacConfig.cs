@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Http;
 using LatteMarche.Application;
 using System.Web.Mvc;
+using System.Runtime.Caching;
+using LatteMarche.WebApi.Helpers;
+using WeCode.MVC.Cache;
 
 namespace LatteMarche.WebApi.App_Start
 {
@@ -29,6 +32,9 @@ namespace LatteMarche.WebApi.App_Start
 			// Registro i db context e unit of work
 			builder.RegisterModule(new ApplicationModule());
 			builder.RegisterModule(new LatteMarche.Application.Mobile.ApplicationModule(false));
+
+			// Cache
+			builder.RegisterType<CacheHelper>().As<ICacheHelper>().SingleInstance();
 
 			builder.RegisterFilterProvider();
 			builder.RegisterWebApiFilterProvider(config);

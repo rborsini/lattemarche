@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build --mode development --no-clean",
-    "build:watch": "vue-cli-service build --mode development --no-clean --watch"
+    "build:dev": "vue-cli-service build --mode development",
+    "build:watch": "vue-cli-service build --mode development --watch",
+    "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod"
   },
   "dependencies": {
     "@types/bootstrap": "^4.0.0",

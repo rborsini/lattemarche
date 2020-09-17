@@ -15,6 +15,7 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class AziendeTrasportatoriController : Controller
     {
         [ViewItem(nameof(Index), "AziendeTrasportatori", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();

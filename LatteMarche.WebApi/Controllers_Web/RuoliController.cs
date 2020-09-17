@@ -15,18 +15,21 @@ namespace LatteMarche.WebApi.Controllers_Web
     public class RuoliController : Controller
     {
         [ViewItem(nameof(Index), "Ruoli", "Lista")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {           
             return View();
         }
 
         [ViewItem(nameof(Edit), "Ruoli", "Modifica")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Edit(long id)
         {
             return View();
         }
 
         [ViewItem(nameof(New), "Ruoli", "Aggiungi")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult New()
         {
             return View();
