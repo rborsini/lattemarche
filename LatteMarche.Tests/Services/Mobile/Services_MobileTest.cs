@@ -142,8 +142,10 @@ namespace LatteMarche.Tests.Services.Mobile
 
             var deviceEntity = this.deviceRepository.GetById(deviceInfoDto.Id);
 
+            var italyTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+
             Assert.IsNotNull(deviceEntity);
-            Assert.IsTrue((DateTime.Now - deviceEntity.DataRegistrazione).TotalSeconds < 10);
+            Assert.IsTrue((DateTime.Now - TimeZoneInfo.ConvertTimeFromUtc(deviceEntity.DataRegistrazione, italyTimeZone)).TotalSeconds < 10);
             
         }
 

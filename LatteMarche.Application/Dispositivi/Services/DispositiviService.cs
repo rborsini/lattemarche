@@ -32,7 +32,8 @@ namespace LatteMarche.Application.Dispositivi.Services
 
         public override List<DispositivoMobileDto> Index()
         {
-            return this.repository.Query.ProjectToList<DispositivoMobileDto>();
+            var entities = this.repository.Query.ToList();
+            return Mapper.Map<List<DispositivoMobileDto>>(entities);
         }
 
         public PagedResult<DispositivoMobileDto> Search(DispositiviSearchDto searchDto)
