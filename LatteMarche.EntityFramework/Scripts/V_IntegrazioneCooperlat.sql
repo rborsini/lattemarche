@@ -23,6 +23,9 @@
 	prelievi.SCOMPARTO,
 	prelievi.LOTTO_CONSEGNA,
 	prelievi.CODICE_SITRA,
+	prelievi.LATITUDINE,
+	prelievi.LONGITUDINE,
+	autocisterne.TARGA_MEZZO,
 	tipo_latte.FATTORE_CONVERSIONE,
     tipo_latte.ID_TIPO_LATTE,
     tipo_latte.DESCRIZIONE AS DESCR_LATTE, 
@@ -53,8 +56,10 @@ FROM
 	TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
 
 	LEFT OUTER JOIN
-
 	GIRO as giri on left(prelievi.LOTTO_CONSEGNA, 2) = giri.CODICE_GIRO
 
+	LEFT OUTER JOIN
+	AUTOCISTERNA as autocisterne on autocisterne.ID_VEICOLO = prelievi.ID_AUTOCISTERNA
+
 WHERE 
-	prelievi.DATA_PRELIEVO > '2020-01-01'
+	prelievi.DATA_PRELIEVO > (SELECT GETDATE() - 15)
