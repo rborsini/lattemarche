@@ -185,7 +185,6 @@ export default class GiriIndexPage extends Vue {
   };
 
   public dropdownService: DropdownService;
-  // public trasportatoriService: TrasportatoriService;
   public trasportatore: Trasportatore;
 
   public trasportatori: Dropdown = new Dropdown();
@@ -202,7 +201,6 @@ export default class GiriIndexPage extends Vue {
     this.trasportatore = new Trasportatore();
     this.trasportatore.Giri[0] = new Giro();
     this.dropdownService = new DropdownService();
-    // this.trasportatoriService = new TrasportatoriService();
     this.giro = new Giro();
     this.giriService = new GiriService();
   }

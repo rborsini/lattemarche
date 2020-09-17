@@ -532,39 +532,60 @@ export default class App extends Vue {
 
   // caricamento dropdown
   private loadDropdown() {
-    // tipi profilo
-    this.dropdownService.getProfili().then(response => {
-      this.profilo = response.data;
-    });
 
     // sesso
     this.sesso.Items.push(new DropdownItem("M", "Maschio"));
     this.sesso.Items.push(new DropdownItem("F", "Femmina"));
 
-    // province
-    this.dropdownService.getProvince().then(response => {
-      this.provincia = response.data;
-    });
+    this.dropdownService.getDropdowns("acquirenti|cessionari|destinatari|province|tipiLatte|profili")
+      .then(response => {
 
-    // acquirente
-    this.dropdownService.getAcquirenti().then(response => {
-      this.acquirente = response.data;
-    });
+        this.acquirente = response.data["acquirenti"] as Dropdown;
+        this.cessionario = response.data["cessionari"] as Dropdown;
+        this.destinatario = response.data["destinatari"] as Dropdown;
+        this.provincia = response.data["province"] as Dropdown;
+        this.tipoLatte = response.data["tipiLatte"] as Dropdown;
+        this.profilo = response.data["profili"] as Dropdown;
 
-    // Cesionario
-    this.dropdownService.getCessionari().then(response => {
-      this.cessionario = response.data;
-    });
+      });    
 
-    // Destinatario
-    this.dropdownService.getDestinatari().then(response => {
-      this.destinatario = response.data;
-    });
+    // // acquirente
+    // this.dropdownService.getAcquirenti().then(response => {
+    //   this.acquirente = response.data;
+    // });
 
-    // Tipo latte
-    this.dropdownService.getTipiLatte().then(response => {
-      this.tipoLatte = response.data;
-    });
+    // // Cesionario
+    // this.dropdownService.getCessionari().then(response => {
+    //   this.cessionario = response.data;
+    // });
+
+    // // Destinatario
+    // this.dropdownService.getDestinatari().then(response => {
+    //   this.destinatario = response.data;
+    // });    
+
+    // // province
+    // this.dropdownService.getProvince().then(response => {
+    //   this.provincia = response.data;
+    // });
+
+    // // Tipo latte
+    // this.dropdownService.getTipiLatte().then(response => {
+    //   this.tipoLatte = response.data;
+    // });
+
+    // // tipi profilo
+    // this.dropdownService.getProfili().then(response => {
+    //   this.profilo = response.data;
+    // });
+
+
+
+
+
+
+
+
 
   }
 

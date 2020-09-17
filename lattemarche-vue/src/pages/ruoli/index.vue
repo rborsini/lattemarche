@@ -2,14 +2,6 @@
     
     <div >
 
-        <!-- <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 text-right pb-3">
-                    <a class="btn btn-success" href="/ruoli/new">Aggiungi</a>
-                </div>
-            </div>
-        </div> -->
-
         <!-- Tabella -->
         <data-table :options="tableOptions" :rows="ruoli" >
 

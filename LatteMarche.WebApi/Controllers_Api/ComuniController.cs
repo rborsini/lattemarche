@@ -5,9 +5,9 @@ using System.Web.Http;
 using System.Linq;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Comuni.Dtos;
-using WebApi.OutputCache.V2;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.Common.Dtos;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -37,36 +37,28 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Dropdown), "Comuni", "Dropdown")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Dropdown(string siglaProvincia)
         {
-            try
-            {
-                return Ok(this.comuniService.DropDown(siglaProvincia));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.comuniService.DropDown(siglaProvincia));
+
         }
 
         [ViewItem(nameof(Province), "Comuni", "Province")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Province()
         {
-            try
+
+            var province = ((IComuniService)this.comuniService).GetProvince();
+            DropDownDto dropDown = new DropDownDto();
+            foreach (var prov in province)
             {
-                var province = ((IComuniService)this.comuniService).GetProvince();
-                DropDownDto dropDown = new DropDownDto();
-                foreach (var prov in province)
-                {
-                    dropDown.Items.Add(new DropDownItem() { Value = prov, Text = prov });
-                }
-                return Ok(dropDown);
+                dropDown.Items.Add(new DropDownItem() { Value = prov, Text = prov });
             }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            return Ok(dropDown);
+
         }
 
         #endregion

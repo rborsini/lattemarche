@@ -32,30 +32,19 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Register([FromBody] DispositivoDto deviceInfo)
         {
-            try
-            {
-                var dto = this.mobileService.Register(deviceInfo);
-                return Ok(dto);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var dto = this.mobileService.Register(deviceInfo);
+            return Ok(dto);
+
         }
 
         [ViewItem(nameof(Download), "Mobile", "Download")]
         [HttpGet]
         public IHttpActionResult Download(string imei)
         {
-            try
-            {
-                var model = this.mobileService.Download(imei);
-                return Ok(model);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            var model = this.mobileService.Download(imei);
+            return Ok(model);
 
         }
 
@@ -63,15 +52,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Upload([FromBody] UploadDto dto)
         {
-            try
-            {
-                this.mobileService.Upload(dto);
-                return Ok();
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            this.mobileService.Upload(dto);
+            return Ok();
+
         }
 
         #endregion

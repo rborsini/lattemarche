@@ -6,6 +6,7 @@ using LatteMarche.WebApi.Filters;
 using RB.Date;
 using System;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace LatteMarche.WebApi.Controllers_Web
 {
@@ -33,6 +34,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
+        [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
             var utente = this.utentiService.Details(User.Identity.Name);

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -37,70 +38,49 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         [ViewItem(nameof(Index), "Cessionari", "Lista")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Index()
         {
-            try
-            {
 
-                var acquirenti = this.cessionariService.Index();
-                return Ok(acquirenti);
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            var acquirenti = this.cessionariService.Index();
+            return Ok(acquirenti);
 
         }
 
         [ViewItem(nameof(Details), "Cessionari", "Dettaglio")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Details(int id)
         {
-            try
-            {
-                return Ok(this.cessionariService.Details(id));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            return Ok(this.cessionariService.Details(id));
 
         }
 
         [ViewItem(nameof(Dropdown), "Cessionari", "Dropdown")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult Dropdown()
         {
-            try
-            {
-                var utente = this.utentiService.Details(User.Identity.Name);
 
-                if (utente != null)
-                    return Ok(this.cessionariService.DropDown(utente.Id));
-                else
-                    return Ok();
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+            var utente = this.utentiService.Details(User.Identity.Name);
+
+            if (utente != null)
+                return Ok(this.cessionariService.DropDown(utente.Id));
+            else
+                return Ok();
+
         }
 
         [ViewItem(nameof(Save), "Cessionari", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] CessionarioDto model)
         {
-            try
-            {
-                if (model.Id == 0)
-                    return Ok(this.cessionariService.Create(model));
-                else
-                    return Ok(this.cessionariService.Update(model));
-            }
-            catch (Exception exc)
-            {
-                return InternalServerError(exc);
-            }
+
+            if (model.Id == 0)
+                return Ok(this.cessionariService.Create(model));
+            else
+                return Ok(this.cessionariService.Update(model));
 
         }
 
@@ -108,15 +88,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            try
-            {
-                this.cessionariService.Delete(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+
+            this.cessionariService.Delete(id);
+            return Ok();
+
         }
 
         #endregion
