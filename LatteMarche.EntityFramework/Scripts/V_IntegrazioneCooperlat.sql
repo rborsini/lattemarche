@@ -55,3 +55,6 @@ FROM
 	LEFT OUTER JOIN
 
 	GIRO as giri on left(prelievi.LOTTO_CONSEGNA, 2) = giri.CODICE_GIRO
+
+WHERE 
+	prelievi.DATA_PRELIEVO > '2020-01-01'
