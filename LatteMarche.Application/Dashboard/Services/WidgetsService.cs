@@ -15,6 +15,12 @@ namespace LatteMarche.Application.Dashboard.Services
 {
     public class WidgetsService : IWidgetsService
     {
+        #region Constants
+
+        public const int MESE_INIZIO_STAGIONE = 7;
+
+        #endregion
+
         #region Fields
 
         private IPrelieviLatteService prelieviService;
@@ -67,8 +73,6 @@ namespace LatteMarche.Application.Dashboard.Services
 
             return widgetDto;
         }
-
-
 
         public WidgetGraficoDto WidgetAcquirenti(int idUtente)
         {
@@ -140,7 +144,6 @@ namespace LatteMarche.Application.Dashboard.Services
 
             var query = this.prelieviService.PrelieviAutorizzati(idUtente);
 
-            //var dataRiferimento = new DateTime(2018, 1, 1);
             var dataRiferimento = DateTime.Today;
             var meseCorrente = GetInizioAnno(dataRiferimento);
             var fineAnno = meseCorrente.AddYears(1).AddMonths(1);
@@ -193,9 +196,9 @@ namespace LatteMarche.Application.Dashboard.Services
         /// <returns></returns>
         private DateTime GetInizioAnno(DateTime today)
         {
-            var year = today.Month > 8 ? today.Year : today.Year - 1;
+            var year = today.Month > MESE_INIZIO_STAGIONE ? today.Year : today.Year - 1;
 
-            return new DateTime(year, 8, 1);
+            return new DateTime(year, MESE_INIZIO_STAGIONE, 1);
         }
 
         #endregion
