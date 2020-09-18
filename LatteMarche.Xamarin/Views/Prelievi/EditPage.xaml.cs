@@ -17,12 +17,13 @@ namespace LatteMarche.Xamarin.Views.Prelievi
     public partial class EditPage : ContentPage
     {
         private EditViewModel viewModel;
+        private bool firstLoad = true;
 
         public EditPage(EditViewModel viewModel)
         {
             InitializeComponent();
-
             BindingContext = this.viewModel = viewModel;
+            this.firstLoad = true;
         }
 
         private void ContentPage_Disappearing(object sender, EventArgs e)
@@ -32,7 +33,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            this.viewModel.LoadCommand.Execute(null);
+            if(this.firstLoad)
+            {
+                this.viewModel.LoadCommand.Execute(null);
+                this.firstLoad = false;
+            }            
         }
 
         private void Kg_Unfocused(object sender, FocusEventArgs e)
