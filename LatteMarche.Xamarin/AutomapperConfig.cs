@@ -6,6 +6,7 @@ using LatteMarche.Xamarin.ViewModels.Giri;
 using LatteMarche.Xamarin.ViewModels.Prelievi;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LatteMarche.Xamarin
@@ -41,7 +42,8 @@ namespace LatteMarche.Xamarin
 
 			#region ViewModels
 
-			mappings.CreateMap<Giro, ViewModels.Giri.ItemViewModel>();
+			mappings.CreateMap<Giro, ViewModels.Giri.ItemViewModel>()
+				.ForMember(dest => dest.SubTotaleStr, opt => opt.MapFrom(src => $"{src.Prelievi.Sum(p => p.Quantita_kg)} kg - {src.Prelievi.Sum(p => p.Quantita_lt)} lt"));
 
 			mappings.CreateMap<Prelievo, ViewModels.Prelievi.ItemViewModel>();
 

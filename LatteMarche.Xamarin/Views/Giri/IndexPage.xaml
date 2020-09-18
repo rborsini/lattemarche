@@ -44,19 +44,20 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <material:MaterialCard BackgroundColor="{Binding BackgroundColor}" Margin="0, 5, 0, 5" CornerRadius="5" Elevation="1" HeightRequest="60" HorizontalOptions="FillAndExpand" >
+                                    <material:MaterialCard BackgroundColor="{Binding BackgroundColor}" Margin="0, 3, 0, 3" CornerRadius="5" Elevation="1" HeightRequest="80" HorizontalOptions="FillAndExpand" >
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="70*" />
-                                                <ColumnDefinition Width="30*" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20*" />
                                             </Grid.ColumnDefinitions>
 
-                                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+                                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0"  >
                                                 <Label Text="{Binding Titolo}" LineBreakMode="TailTruncation" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
-                                                <Label Text="{Binding CodiceLotto}" TextColor="#AAA" FontSize="Small" Margin="0,0,0,10" />
+                                                <Label Text="{Binding SubTotaleStr}" LineBreakMode="TailTruncation" FontSize="Small" Margin="0,0,0,0" TextColor="#777"/>
+                                                <Label Text="{Binding CodiceLotto}" TextColor="#777" FontSize="Small" Margin="0,0,0,0" />
                                             </StackLayout>
 
                                             <material:MaterialMenuButton Grid.Row="0" Grid.Column="1" Image="icon_more.png" TintColor="Black" ButtonType="Text" CornerRadius="24" Choices="{ Binding Actions }" Command="{ Binding MenuCommand }" />
