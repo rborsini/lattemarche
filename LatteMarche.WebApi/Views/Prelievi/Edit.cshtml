@@ -7,21 +7,12 @@
     @{
         BreadcrumbViewModel bm = new BreadcrumbViewModel();
         bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
-        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Prelievi latte" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Prelievi", DisplayName = "Prelievi latte" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Modifica" });
     }
     @Html.Partial("_Breadcrumb", bm)
 }
 
-<!-- Css -->
-@section Css
-{
-    @if (EnvHelper.IsProd)
-    {
-        <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/prelieviLatteIndex.css")" />
-    }
-}
-
-<input hidden id="idProfilo" value="@Model" />
 <div id="app">
 </div>
 
@@ -33,7 +24,7 @@
     @{
         var version = System.Configuration.ConfigurationManager.AppSettings["version"];
         var folder = EnvHelper.IsProd ? "prod/js" : "dev";
-        var url = "~/dist/" + folder + "/prelieviLatteIndex.js";
+        var url = "~/dist/" + folder + "/prelieviLatteEdit.js";
 
         <script src="@Url.Content(url)?ver=@version"></script>
     }

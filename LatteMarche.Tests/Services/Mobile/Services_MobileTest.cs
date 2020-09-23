@@ -289,6 +289,8 @@ namespace LatteMarche.Tests.Services.Mobile
             var prelievi = this.prelieviRepository.Query.ToList();
             Assert.AreEqual(3, prelievi.Count);
 
+            Assert.AreEqual(imei, prelievi.First().DeviceId);
+
             deviceEntity = this.deviceRepository.GetById(imei);
             Assert.IsTrue(deviceEntity.DataUltimoUpload.HasValue);
         }

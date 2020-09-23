@@ -19,6 +19,7 @@ using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using WeCode.MVC.Attributes;
+using WeCode.Application.Exceptions;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -75,22 +76,29 @@ namespace LatteMarche.WebApi.Controllers_Api
         [ETag]
         public IHttpActionResult Details(int id)
         {
-
-            return Ok(this.prelieviLatteService.Details(id));
+            var dto = this.prelieviLatteService.Details(id);
+            return Ok(dto);
         }
 
         [ViewItem(nameof(Save), "Prelievi latte", "Salvataggio")]
         [HttpPost]
         public IHttpActionResult Save([FromBody] PrelievoLatteDto model)
         {
+            try
+            {
+                this.prelieviLatteService.Validazione(model);
 
-            if (model.Id == 0)
-                this.prelieviLatteService.Create(model);
-            else
-                this.prelieviLatteService.Update(model);
+                if (model.Id == 0)
+                    this.prelieviLatteService.Create(model);
+                else
+                    this.prelieviLatteService.Update(model);
 
-
-            return Ok(model);
+                return Ok(model);
+            }
+            catch (ValidationException validationExc)
+            {
+                return BadRequest(validationExc.ModelStateDictionary);
+            }
         }
 
         [ViewItem(nameof(Push), "Prelievi latte", "Push")]
@@ -135,7 +143,7 @@ namespace LatteMarche.WebApi.Controllers_Api
             this.LogDebug("InvioSitra", $"SitraEnabled [{this.SitraEnabled}]");
             if (this.SitraEnabled)
             {
-                DateTime data = String.IsNullOrEmpty(day) ? DateTime.Today.AddDays(-1) : new DateHelper().ConvertToDateTime(day).Value;
+                DateTime data = String.IsNullOrEmpty(day) ? DateTime.Today.AddDays(-1) : DateHelper.ConvertToDateTime(day).Value;
 
                 this.LogDebug("InvioSitra", $"data [{data}]");
 

@@ -9,20 +9,53 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 {
     public class PrelievoLatteDto 
     {
-        private DateHelper dateHelper;
+        #region Fields
 
-        
+        private DateTime? dataPrelievo;
+        private DateTime? dataConsegna;
+        private DateTime? dataUltimaMungitura;
+
+        #endregion
+
+        #region Properties
+
         public int Id { get; set; }
 
         public int? IdAllevamento { get; set; }
+
+        public double? Allevamento_Lat { get; set; }
+        public double? Allevamento_Lng { get; set; }
+
         public int? IdDestinatario { get; set; }
         public int? IdAcquirente { get; set; }
         public int? IdTrasportatore { get; set; }
         public int? IdLabAnalisi { get; set; }
         public int? IdCessionario { get; set; }
-        public DateTime? DataPrelievo { get; set; }
-        public DateTime? DataConsegna { get; set; }
-        public DateTime? DataUltimaMungitura { get; set; }
+        public DateTime? DataPrelievo { get { return this.dataPrelievo; } set { this.dataPrelievo = value; } }
+        public string DataPrelievoStr
+        {
+            get { return DateHelper.FormatDate(this.dataPrelievo); }
+            set { this.dataPrelievo = DateHelper.ConvertToDateTime(value); }
+        }
+        public string OraPrelievo { get { return this.DataPrelievo.HasValue ? this.DataPrelievo.Value.ToString("HH:mm") : String.Empty; } }
+
+        public DateTime? DataConsegna { get { return this.dataConsegna; } set { this.dataConsegna = value; } }
+        public string DataConsegnaStr
+        {
+            get { return DateHelper.FormatDate(this.dataConsegna); }
+            set { this.dataConsegna = DateHelper.ConvertToDateTime(value); }
+        }
+        public string OraConsegna { get { return this.DataConsegna.HasValue ? this.DataConsegna.Value.ToString("HH:mm") : String.Empty; } }
+
+        public DateTime? DataUltimaMungitura { get { return this.dataUltimaMungitura; } set { this.dataUltimaMungitura = value; } }
+        public string DataUltimaMungituraStr
+        {
+            get { return DateHelper.FormatDate(this.dataUltimaMungitura); }
+            set { this.dataUltimaMungitura = DateHelper.ConvertToDateTime(value); }
+        }
+
+        public string OraUltimaMungitura { get { return this.DataUltimaMungitura.HasValue ? this.DataUltimaMungitura.Value.ToString("HH:mm") : String.Empty; } }
+
         public Decimal? Quantita { get; set; }
         public Decimal? Temperatura { get; set; }
         public int? NumeroMungiture { get; set; }
@@ -35,38 +68,13 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public DateTime LastChange { get; set; }
 
-        
-        public string DataPrelievoStr
-        {
-            get { return new DateHelper().FormatDate(this.DataPrelievo); }
-            set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
-        }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
+        public int? IdAutocisterna { get; set; }
+        public string DeviceId { get; set; }
 
-        
-        public string OraPrelievo { get { return this.DataPrelievo.HasValue ? this.DataPrelievo.Value.ToString("HH:mm") : String.Empty; } }
+        #endregion
 
-        
-        public string DataConsegnaStr
-        {
-            get { return new DateHelper().FormatDate(this.DataConsegna); }
-            set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
-        }
-
-        [ExcelHeader("Ora Consegna")]
-        public string OraConsegna { get { return this.DataConsegna.HasValue ? this.DataConsegna.Value.ToString("HH:mm") : String.Empty; } }
-
-        public string DataUltimaMungituraStr
-        {
-            get { return new DateHelper().FormatDate(this.DataUltimaMungitura); }
-            set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
-        }
-
-        public string OraUltimaMungitura { get { return this.DataUltimaMungitura.HasValue ? this.DataUltimaMungitura.Value.ToString("HH:mm") : String.Empty; } }
-
-        public PrelievoLatteDto()
-        {
-            this.dateHelper = new DateHelper();
-        }
 
     }
 

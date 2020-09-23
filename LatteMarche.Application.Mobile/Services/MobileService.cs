@@ -192,6 +192,9 @@ namespace LatteMarche.Application.Mobile.Services
                 foreach (var prelievoDto in uploadDto.Prelievi)
                 {
                     var prelievo = Mapper.Map<PrelievoLatte>(prelievoDto);
+
+                    prelievo.DeviceId = uploadDto.IMEI;
+
                     this.prelieviRepository.Add(prelievo);
                 }
 

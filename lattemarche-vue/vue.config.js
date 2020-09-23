@@ -26,6 +26,9 @@ module.exports = {
         laboratoriIndex: {            
             entry: 'src/pages/laboratori/index.ts'
         },
+        prelieviLatteEdit: {            
+            entry: 'src/pages/prelieviLatte/edit.ts'
+        },
         prelieviLatteIndex: {            
             entry: 'src/pages/prelieviLatte/index.ts'
         },

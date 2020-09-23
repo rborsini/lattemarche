@@ -25,8 +25,8 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataRegistrazione_Str 
         {
-            get { return new DateHelper().FormatDateTime(this.dataRegistratione); } 
-            set { this.dataRegistratione = new DateHelper().ConvertToDateTime(value).Value; } 
+            get { return DateHelper.FormatDateTime(this.dataRegistratione); } 
+            set { this.dataRegistratione = DateHelper.ConvertToDateTime(value).Value; } 
         }
 
         public DateTime? DataUltimoDownload
@@ -37,8 +37,8 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataUltimoDownload_Str
         {
-            get { return new DateHelper().FormatDateTime(this.dataUltimoDownload); }
-            set { this.dataUltimoDownload = new DateHelper().ConvertToDateTime(value); }
+            get { return DateHelper.FormatDateTime(this.dataUltimoDownload); }
+            set { this.dataUltimoDownload = DateHelper.ConvertToDateTime(value); }
         }
 
         public DateTime? DataUltimoUpload
@@ -49,8 +49,8 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string DataUltimoUpload_Str
         {
-            get { return new DateHelper().FormatDateTime(this.dataUltimoUpload); }
-            set { this.dataUltimoUpload = new DateHelper().ConvertToDateTime(value); }
+            get { return DateHelper.FormatDateTime(this.dataUltimoUpload); }
+            set { this.dataUltimoUpload = DateHelper.ConvertToDateTime(value); }
         }
 
         public decimal? Latitudine { get; set; }

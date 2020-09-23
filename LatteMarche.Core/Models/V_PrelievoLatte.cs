@@ -8,33 +8,44 @@ using WeCode.Data;
 
 namespace LatteMarche.Core.Models
 {
+    public enum FlagCoordinate
+    {
+        Mancanti,
+        Corrette,
+        Errate
+    }
+
     [System.ComponentModel.DataAnnotations.Schema.Table("V_PrelieviLatte")]
     public class V_PrelievoLatte : Entity<int>
     {
-        private DateHelper dateHelper;
+        private const double DELTA_COORDINATE = 0.01;
+
+        private DateTime? dataPrelievo;
+        private DateTime? dataConsegna;
+        private DateTime? dataUltimaMungitura;
 
         [Key]
         [Column("ID_PRELIEVO")]
         public override int Id { get; set; }
 
         [Column("DATA_PRELIEVO")]
-        public DateTime? DataPrelievo { get; set; }
+        public DateTime? DataPrelievo { get { return this.dataPrelievo; } set { this.dataPrelievo = value; } }
 
         [NotMapped]
         public string DataPrelievoStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataPrelievo); }
-            set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataPrelievo); }
+            set { this.dataPrelievo = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("DATA_CONSEGNA")]
-        public DateTime? DataConsegna { get; set; }
+        public DateTime? DataConsegna { get { return this.dataConsegna; } set { this.dataConsegna = value; } }
 
         [NotMapped]
         public string DataConsegnaStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataConsegna); }
-            set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataConsegna); }
+            set { this.dataConsegna = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("SCOMPARTO")]
@@ -53,13 +64,13 @@ namespace LatteMarche.Core.Models
         public Decimal? Temperatura { get; set; }
 
         [Column("DATA_ULTIMA_MUNGITURA")]
-        public DateTime? DataUltimaMungitura { get; set; }
+        public DateTime? DataUltimaMungitura { get { return this.dataUltimaMungitura; } set { this.dataUltimaMungitura = value; } }
 
         [NotMapped]
         public string DataUltimaMungituraStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataUltimaMungitura); }
-            set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataUltimaMungitura); }
+            set { this.dataUltimaMungitura = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("ID_ALLEVAMENTO")]
@@ -70,6 +81,34 @@ namespace LatteMarche.Core.Models
 
         [Column("PIVA_ALLEVAMENTO")]
         public string PIVA_Allevamento { get; set; }
+
+        [Column("LAT_ALLEVAMENTO")]
+        public double? Lat_Allevamento { get; set; }
+
+        [Column("LNG_ALLEVAMENTO")]
+        public double? Lng_Allevamento { get; set; }
+
+        [Column("LAT_PRELIEVO")]
+        public double? Lat { get; set; }
+
+        [Column("LNG_PRELIEVO")]
+        public double? Lng { get; set; }
+
+        [Column("TARGA_MEZZO")]
+        public string Targa { get; set; }
+
+        public FlagCoordinate FlagCoordinate
+        {
+            get
+            {
+                if (!this.Lat.HasValue || !this.Lng.HasValue)
+                    return FlagCoordinate.Mancanti;
+
+                var distanza = GetDistance(this.Lat.Value, this.Lng.Value, this.Lat_Allevamento.Value, this.Lng_Allevamento.Value);
+                return distanza < DELTA_COORDINATE ? FlagCoordinate.Corrette : FlagCoordinate.Errate;
+            }
+        }
+
 
         [NotMapped]
         public string AllevamentoCompleto { get { return $"{this.Allevamento} {this.PIVA_Allevamento}"; } }
@@ -120,9 +159,13 @@ namespace LatteMarche.Core.Models
         [Column("SIGLA_LATTE")]
         public string SiglaLatte { get; set; }
 
-        public V_PrelievoLatte()
+
+        private double GetDistance(double lat_1, double lng_1, double lat_2, double lng_2)
         {
-            this.dateHelper = new DateHelper();
+            var deltaLat = Math.Abs(lat_1 - lat_2);
+            var deltaLng = Math.Abs(lng_1 - lng_2);
+
+            return Math.Sqrt(Math.Pow(deltaLat, 2) + Math.Pow(deltaLng, 2));
         }
     }
 }

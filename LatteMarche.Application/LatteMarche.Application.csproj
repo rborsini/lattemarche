@@ -64,9 +64,8 @@
     <Reference Include="AutoMapper.EF6, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.EF6.2.0.0\lib\net461\AutoMapper.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="DateHelper, Version=1.0.6492.17801, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DateHelper.1.0.6492.17801\lib\net45\DateHelper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DateHelper, Version=1.0.7571.21747, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DateHelper.1.0.7571.21747\lib\net45\DateHelper.dll</HintPath>
     </Reference>
     <Reference Include="DelegateDecompiler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93b26a10a04705bd, processorArchitecture=MSIL">
       <HintPath>..\packages\DelegateDecompiler.0.24.0\lib\net45\DelegateDecompiler.dll</HintPath>
@@ -122,6 +121,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -133,11 +136,14 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="WeCode.Application">
-      <HintPath>..\Libs\WeCode.Application.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Data">
-      <HintPath>..\Libs\WeCode.Data.dll</HintPath>
+    <Reference Include="WeCode.Application, Version=1.0.7570.21542, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Application.1.0.7570.21542\lib\net461\WeCode.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
     <Reference Include="Z.EntityFramework.Extensions, Version=4.0.78.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
       <HintPath>..\packages\Z.EntityFramework.Extensions.4.0.78\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>

@@ -7004,3 +7004,7 @@ tfoot {
 .datepicker table tr td.active.disabled:hover,
 .datepicker table tr td.active:hover {
   background-image: linear-gradient(to bottom, #007bff, #007bff) !important; }
+
+label {
+  text-align: right;
+  padding-top: 3px; }

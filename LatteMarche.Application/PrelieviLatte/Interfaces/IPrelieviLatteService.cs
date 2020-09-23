@@ -47,8 +47,11 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// <returns>Nuovi prelievi inseriti</returns>
         List<PrelievoLatte> Push(List<PrelievoLatte> list);
 
-
-
+        /// <summary>
+        /// Validazione campi
+        /// </summary>
+        /// <param name="model"></param>
+        void Validazione(PrelievoLatteDto model);
     }
 
 }

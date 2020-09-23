@@ -3,10 +3,6 @@
     <!-- waiter -->
     <waiter ref="waiter"></waiter>
 
-    <!-- modale modifica/inserisci prelievo -->
-    <editazione-prelievo-modal ref="editazionePrelievoModal"  :prelievo-latte="prelievoSelezionato"  v-on:salvato="$refs.savedDialog.open()" >
-    </editazione-prelievo-modal>
-
     <!-- Pannello Salvataggio prelievo-->
     <notification-dialog ref="savedDialog" :title="'Conferma salvataggio'" :message="'Il prelievo è stato salvato correttamente'" ></notification-dialog>
 
@@ -134,7 +130,7 @@
       <template slot="toolbox">
         <div class="toolbox text-right">
           <div class="btn-group">
-            <button v-if="idProfilo == 1" class="btn btn-success float-right mr-3" v-on:click="onAdd()">Aggiungi</button>
+            <a v-if="idProfilo == 1" class="btn btn-success float-right mr-3" href="/prelievi/edit" >Aggiungi</a>
             <button
               type="button"
               class="btn btn-secondary dropdown-toggle"
@@ -198,7 +194,6 @@ import Waiter from "../../components/waiter.vue";
 import DataTable from "../../components/dataTable.vue";
 import Select2 from "../../components/select2.vue";
 import Datepicker from "../../components/datepicker.vue";
-import EditazionePrelievoModal from "../prelieviLatte/edit.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
 
@@ -227,7 +222,6 @@ declare module "vue/types/vue" {
     Select2,
     ConfirmDialog,
     Datepicker,
-    EditazionePrelievoModal,
     NotificationDialog,
     DataTable,
     Waiter
@@ -236,7 +230,6 @@ declare module "vue/types/vue" {
 export default class PrelieviLatteIndexPage extends Vue {
   $refs: any = {
     savedDialog: Vue,
-    editazionePrelievoModal: Vue,
     confirmDeleteDialog: Vue,
     removedDialog: Vue,
     waiter: Vue
@@ -299,7 +292,7 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.totale_prelievi_kg = 0;
     this.totale_prelievi_lt = 0;
 
-    this.prelieviLatteService.getPrelievi(this.parameters).then(response => {
+    this.prelieviLatteService.search(this.parameters).then(response => {
       this.prelievi = response.data;
 
       for (let prelievo of this.prelievi) {
@@ -313,28 +306,12 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // Evento fine generazione tabella
   public onDataLoaded() {
-    $(".edit").click(event => {
-      var element = $(event.currentTarget);
-      var rowId = $(element).data("row-id");
-
-      this.prelieviLatteService.getPrelievo(rowId).then(response => {
-        this.prelievoSelezionato = response.data;
-        this.$refs.editazionePrelievoModal.open();
-      });
-    });
-
     $(".delete").click(event => {
       var element = $(event.currentTarget);
       this.idPrelievoDaEliminare = $(element).data("row-id");
 
       this.$refs.confirmDeleteDialog.open();
     });
-  }
-
-  // nuova autocisterna
-  public onAdd() {
-    this.prelievoSelezionato = new PrelievoLatte();
-    this.$refs.editazionePrelievoModal.open();
   }
 
   // rimozione autocisterna
@@ -401,9 +378,8 @@ export default class PrelieviLatteIndexPage extends Vue {
         render: function(data: any, type: any, row: any) {
           var html = '<div class="text-center">';
 
-
-            html += '<a class="edit" title="modifica" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
-            html += '<a class="pl-3 delete" title="elimina" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+          html += '<a class="edit" title="modifica" style="width: 30px;cursor: pointer;" href="/prelievi/edit?id=' + row.Id + '" ><i class="far fa-edit"></i></a>';            
+          html += '<a class="pl-3 delete" title="elimina" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
 
           html += "</div>";
 

@@ -28,6 +28,13 @@ export class PrelievoLatte {
     public Scomparto: string = "";
     public SerialeLabAnalisi: string = "";
     public Temperatura: number = 0;
+    public IdAutocisterna: number = 0;
+    public Lat: number = 0;
+    public Lng: number = 0;
+    public Allevamento_Lat: number = 0;
+    public Allevamento_Lng: number = 0;    
+    public DeviceId: string = "";
+    public CodiceSitra: string = "";
 }
 
 export class PrelieviLatteSearchModel {

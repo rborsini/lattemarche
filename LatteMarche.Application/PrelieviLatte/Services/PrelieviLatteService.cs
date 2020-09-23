@@ -11,6 +11,7 @@ using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
+using WeCode.Application.Exceptions;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -24,25 +25,37 @@ namespace LatteMarche.Application.Latte.Services
         private IRepository<Allevamento, int> allevamentiRepository;
         private IUtentiService utentiService;
 
-        private ILogsService logsService;
-
         #endregion
 
         #region Constructor
 
-        public PrelieviLatteService(IUnitOfWork uow, ILogsService logsService, IUtentiService utentiService)
+        public PrelieviLatteService(IUnitOfWork uow, IUtentiService utentiService)
             : base(uow)
         {
             this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
             this.allevamentiRepository = uow.Get<Allevamento, int>();
 
-            this.logsService = logsService;
             this.utentiService = utentiService;
         }
 
         #endregion
 
         #region Methods
+
+        public override PrelievoLatteDto Details(int key)
+        {
+            var dto = base.Details(key);
+
+            if(dto.IdAllevamento.HasValue)
+            {
+                var allevamento = this.allevamentiRepository.GetById(dto.IdAllevamento.Value);
+
+                dto.Allevamento_Lat = allevamento.Latitudine;
+                dto.Allevamento_Lng = allevamento.Longitudine;
+            }            
+
+            return dto;
+        }
 
         public IQueryable<V_PrelievoLatte> PrelieviAutorizzati(int idUtente)
         {
@@ -95,6 +108,47 @@ namespace LatteMarche.Application.Latte.Services
             this.uow.SaveChanges();
 
             return this.ConvertToDto(dbEntity);
+        }
+
+        public void Validazione(PrelievoLatteDto model)
+        {
+            List<string> missingFields = new List<string>();
+
+            if (!model.IdAllevamento.HasValue || model.IdAllevamento.Value == 0)
+                missingFields.Add("Allevamento");
+
+            if (!model.IdAcquirente.HasValue || model.IdAcquirente.Value == 0)
+                missingFields.Add("Acquirente");
+
+            if (!model.IdDestinatario.HasValue || model.IdDestinatario.Value == 0)
+                missingFields.Add("Destinatario");
+
+            if (!model.DataPrelievo.HasValue)
+                missingFields.Add("Data prelievo");
+
+            if (!model.DataUltimaMungitura.HasValue)
+                missingFields.Add("Data ultima mungitura");
+
+            if (!model.NumeroMungiture.HasValue)
+                missingFields.Add("Numero mungiture");
+
+            if (!model.Temperatura.HasValue)
+                missingFields.Add("Temperatura");
+
+            if (!model.Quantita.HasValue)
+                missingFields.Add("Quantità");
+
+            if (!model.IdTrasportatore.HasValue || model.IdTrasportatore.Value == 0)
+                missingFields.Add("Trasportatore");
+
+            if (!model.DataConsegna.HasValue)
+                missingFields.Add("Data consegna");
+
+            if (String.IsNullOrEmpty(model.LottoConsegna))
+                missingFields.Add("Lotto consegna");
+
+            if (missingFields.Count > 0)
+                throw new RequiredFieldsException(missingFields);
         }
 
         public override PrelievoLatteDto Update(PrelievoLatteDto model)
@@ -293,6 +347,7 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.IdDestinatario = viewEntity.IdDestinatario;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
             dbEntity.IdAcquirente = viewEntity.IdAcquirente;
+            dbEntity.IdCessionario = viewEntity.IdCessionario;
             dbEntity.IdLabAnalisi = viewEntity.IdLabAnalisi;
             dbEntity.DataConsegna = viewEntity.DataConsegna;
             dbEntity.DataPrelievo = viewEntity.DataPrelievo;
@@ -304,6 +359,7 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.LottoConsegna = viewEntity.LottoConsegna;
             dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
             dbEntity.CodiceSitra = viewEntity.CodiceSitra;
+            dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
 
             return dbEntity;
         }

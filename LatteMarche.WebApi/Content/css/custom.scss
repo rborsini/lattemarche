@@ -159,3 +159,8 @@ tfoot {
 .datepicker table tr td.active:hover {
     background-image: linear-gradient(to bottom, $primary, $primary) !important;
 }
+
+label {
+    text-align: right;
+    padding-top: 3px;
+}

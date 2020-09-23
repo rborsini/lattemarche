@@ -548,45 +548,6 @@ export default class App extends Vue {
         this.profilo = response.data["profili"] as Dropdown;
 
       });    
-
-    // // acquirente
-    // this.dropdownService.getAcquirenti().then(response => {
-    //   this.acquirente = response.data;
-    // });
-
-    // // Cesionario
-    // this.dropdownService.getCessionari().then(response => {
-    //   this.cessionario = response.data;
-    // });
-
-    // // Destinatario
-    // this.dropdownService.getDestinatari().then(response => {
-    //   this.destinatario = response.data;
-    // });    
-
-    // // province
-    // this.dropdownService.getProvince().then(response => {
-    //   this.provincia = response.data;
-    // });
-
-    // // Tipo latte
-    // this.dropdownService.getTipiLatte().then(response => {
-    //   this.tipoLatte = response.data;
-    // });
-
-    // // tipi profilo
-    // this.dropdownService.getProfili().then(response => {
-    //   this.profilo = response.data;
-    // });
-
-
-
-
-
-
-
-
-
   }
 
   public loadComuni(provincia: string): void {
