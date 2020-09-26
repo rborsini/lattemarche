@@ -43,8 +43,9 @@ namespace LatteMarche.WebApi.Controllers_Web
             return View(idProfilo);
         }
 
-        [ViewItem("ReadOnly", "Prelievi - Dettaglio", "Sola lettura")]
-        [ViewItem(nameof(Edit), "Prelievi - Dettaglio", "Modifica")]
+        [ViewItem("Save", "Prelievi - Dettaglio", "Modifica")]
+        [ViewItem("Mappa", "Prelievi - Dettaglio", "Mappa")]
+        [ViewItem(nameof(Edit), "Prelievi - Dettaglio", "Sola lettura")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Edit()
         {

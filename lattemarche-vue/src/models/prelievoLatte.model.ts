@@ -33,6 +33,8 @@ export class PrelievoLatte {
     public Lng: number = 0;
     public Allevamento_Lat: number = 0;
     public Allevamento_Lng: number = 0;    
+    public DistanzaAllevamento: number = 0;
+    public DistanzaAllevamento_Str: string = "";
     public DeviceId: string = "";
     public CodiceSitra: string = "";
 }

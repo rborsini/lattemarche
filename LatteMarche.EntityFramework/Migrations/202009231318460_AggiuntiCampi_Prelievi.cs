@@ -2,12 +2,16 @@ namespace LatteMarche.EntityFramework.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    using WeCode.EntityFramework;
-
-    public partial class AggiuntiCampi_V_Prelievo : DbMigration
+    
+    public partial class AggiuntiCampi_Prelievi : DbMigration
     {
         public override void Up()
         {
+            AddColumn("dbo.PRELIEVO_LATTE", "LATITUDINE", c => c.Double());
+            AddColumn("dbo.PRELIEVO_LATTE", "LONGITUDINE", c => c.Double());
+            AddColumn("dbo.PRELIEVO_LATTE", "ID_AUTOCISTERNA", c => c.Int());
+            AddColumn("dbo.PRELIEVO_LATTE", "DEVICE_ID", c => c.String());
+
 			Sql("DROP VIEW V_PrelieviLatte");
 
 			Sql(@"	CREATE VIEW V_PrelieviLatte as 
@@ -75,6 +79,11 @@ namespace LatteMarche.EntityFramework.Migrations
         
         public override void Down()
         {
+            DropColumn("dbo.PRELIEVO_LATTE", "DEVICE_ID");
+            DropColumn("dbo.PRELIEVO_LATTE", "ID_AUTOCISTERNA");
+            DropColumn("dbo.PRELIEVO_LATTE", "LONGITUDINE");
+            DropColumn("dbo.PRELIEVO_LATTE", "LATITUDINE");
+
 			Sql("DROP VIEW V_PrelieviLatte");
 
 			Sql(@"	CREATE VIEW V_PrelieviLatte as 
@@ -97,6 +106,7 @@ namespace LatteMarche.EntityFramework.Migrations
 						prelievi.ID_LABANALISI,
 						prelievi.ID_TRASPORTATORE,
 						trasportatori.RAGIONE_SOCIALE as TRASPORTATORE,
+						autocisterne.TARGA_MEZZO,
 						prelievi.NUMERO_MUNGITURE,
 						prelievi.SCOMPARTO,
 						prelievi.LOTTO_CONSEGNA,
@@ -127,6 +137,9 @@ namespace LatteMarche.EntityFramework.Migrations
 						LEFT OUTER JOIN
 						UTENTI as trasportatori on prelievi.ID_TRASPORTATORE = trasportatori.ID_UTENTE
 	
+						LEFT OUTER JOIN
+						AUTOCISTERNA as autocisterne on prelievi.ID_TRASPORTATORE = autocisterne.ID_TRASPORTATORE
+
 						LEFT OUTER JOIN
 						TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
 			

@@ -11,7 +11,7 @@
         },
         methods: {
 
-            initMap: function(center, zoom, markers) {
+            initMap: function(center, zoom, prelievi) {
                 var options = {
                     center: center,
                     zoom: zoom
@@ -19,20 +19,21 @@
                 
                 var map = new google.maps.Map(document.getElementById("map"), options);
 
-                for(var i = 0; i < markers.length; i++) {
-                    var m = markers[i];
+                for(var i = 0; i < prelievi.length; i++) {
+                    var p = prelievi[i];
 
-                    const marker = new google.maps.Marker({
-                        position: { lat: m.lat, lng: m.lng },
+                    new google.maps.Marker({
+                        position: { lat: p.Lat, lng: p.Lng },
                         map,
-                        label: 'P',
-                        title: m.title
+                        label: 'P'
                     });
 
-                    // marker.addListener('click', () => {
-                    //     var infoWindow = new google.maps.InfoWindow({ content: marker.title });
-                    //     infoWindow.open(map, marker);
-                    // });
+                    new google.maps.Marker({
+                        position: { lat: p.Allevamento_Lat, lng: p.Allevamento_Lng },
+                        map,
+                        label: 'A'
+                    });
+
                 }
             }
 

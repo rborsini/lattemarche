@@ -6931,6 +6931,9 @@ html, body {
 .form-control {
   height: 28px; }
 
+.form-control:disabled, .form-control[readonly] {
+  background-color: #eeeeee !important; }
+
 .edit-column {
   min-width: 50px; }
 

@@ -360,6 +360,8 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
             dbEntity.CodiceSitra = viewEntity.CodiceSitra;
             dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
+            dbEntity.Lat = viewEntity.Lat;
+            dbEntity.Lng = viewEntity.Lng;
 
             return dbEntity;
         }

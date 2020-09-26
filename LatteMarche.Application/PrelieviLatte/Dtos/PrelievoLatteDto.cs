@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Device.Location;
 using AutoMapper;
 using LatteMarche.Common;
 using LatteMarche.Core.Models;
@@ -22,10 +23,6 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public int Id { get; set; }
 
         public int? IdAllevamento { get; set; }
-
-        public double? Allevamento_Lat { get; set; }
-        public double? Allevamento_Lng { get; set; }
-
         public int? IdDestinatario { get; set; }
         public int? IdAcquirente { get; set; }
         public int? IdTrasportatore { get; set; }
@@ -70,6 +67,28 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public double? Lat { get; set; }
         public double? Lng { get; set; }
+        public double? Allevamento_Lat { get; set; }
+        public double? Allevamento_Lng { get; set; }
+
+        public double? DistanzaAllevamento
+        {
+            get
+            {
+                if (this.Lat.HasValue && this.Lng.HasValue && this.Allevamento_Lat.HasValue && this.Allevamento_Lng.HasValue)
+                {
+                    var coordinatePrelievo = new GeoCoordinate(this.Lat.Value, this.Lng.Value);
+                    var coordinateAllevamento = new GeoCoordinate(this.Allevamento_Lat.Value, this.Allevamento_Lng.Value);
+
+                    return coordinatePrelievo.GetDistanceTo(coordinateAllevamento);
+                }
+                else
+                    return (double?)null;
+            }
+        }
+
+        public string DistanzaAllevamento_Str { get { return this.DistanzaAllevamento.HasValue ? $"{this.DistanzaAllevamento:#0} m" : "-"; } }
+
+
         public int? IdAutocisterna { get; set; }
         public string DeviceId { get; set; }
 

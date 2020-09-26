@@ -20,7 +20,7 @@
           <li class="active">
             <a data-toggle="tab" class="nav-link active" href="#dettaglio">Dettaglio</a>
           </li>
-          <li>
+          <li v-if="isMapVisible" >
             <a data-toggle="tab" class="nav-link" href="#mappa">Mappa</a>
           </li>             
         </ul>
@@ -37,14 +37,14 @@
                 <div class="offset-1 col-5 row" >
                   <label class="col-2">Allevamento</label>
                   <div class="col-10">
-                    <select2 class="form-control" :options="allevatore.Items" :value.sync="prelievoLatte.IdAllevamento" :value-field="'Value'" :text-field="'Text'" />                  
+                    <select2 class="form-control" :disabled="isReadOnly" :options="allevatore.Items" :value.sync="prelievoLatte.IdAllevamento" :value-field="'Value'" :text-field="'Text'" />                  
                   </div>
                 </div>
 
                 <div class="col-5 row" >
                   <label class="col-2">Acquirente</label>
                   <div class="col-10">
-                    <select2 class="form-control" :placeholder="'-'" :options="acquirente.Items" :value.sync="prelievoLatte.IdAcquirente" :value-field="'Value'" :text-field="'Text'" />
+                    <select2 class="form-control" :disabled="isReadOnly" :placeholder="'-'" :options="acquirente.Items" :value.sync="prelievoLatte.IdAcquirente" :value-field="'Value'" :text-field="'Text'" />
                   </div>                  
                 </div>                
 
@@ -56,14 +56,14 @@
                 <div class="offset-1 col-5 row" >
                   <label class="col-2">Cessionario</label>
                   <div class="col-10">
-                    <select2 class="form-control" :options="cessionario.Items" :value.sync="prelievoLatte.IdCessionario" :value-field="'Value'" :text-field="'Text'" />                  
+                    <select2 class="form-control" :disabled="isReadOnly" :options="cessionario.Items" :value.sync="prelievoLatte.IdCessionario" :value-field="'Value'" :text-field="'Text'" />                  
                   </div>
                 </div>
 
                 <div class="col-5 row" >
                   <label class="col-2">Destinatario</label>
                   <div class="col-10">
-                    <select2 class="form-control" :placeholder="'-'" :options="destinatario.Items" :value.sync="prelievoLatte.IdDestinatario" :value-field="'Value'" :text-field="'Text'" />
+                    <select2 class="form-control" :disabled="isReadOnly" :placeholder="'-'" :options="destinatario.Items" :value.sync="prelievoLatte.IdDestinatario" :value-field="'Value'" :text-field="'Text'" />
                   </div>                  
                 </div>                
 
@@ -76,13 +76,13 @@
 
                   <label class="col-2">Data prelievo</label>
                   <div class="col-4">
-                    <datepicker :value.sync="prelievoLatte.DataPrelievoStr" />
+                    <datepicker :disabled="isReadOnly" :value.sync="prelievoLatte.DataPrelievoStr" />
                     <div class="invalid-feedback">Inserire data prelievo.</div>
                   </div>
 
                   <label class="col-2">Ora prelievo</label>
                   <div class="col-4">
-                    <time-editor v-model="prelievoLatte.OraPrelievo"></time-editor>
+                    <time-editor :disabled="isReadOnly" v-model="prelievoLatte.OraPrelievo"></time-editor>
                   </div>
 
                 </div>
@@ -90,13 +90,13 @@
                 <div class="col-5 row" >
                   <label class="col-2">Data ult. mung.</label>
                   <div class="col-4">
-                    <datepicker :value.sync="prelievoLatte.DataUltimaMungituraStr" />
+                    <datepicker :disabled="isReadOnly" :value.sync="prelievoLatte.DataUltimaMungituraStr" />
                     <div class="invalid-feedback">Inserire data ultima mungitura.</div>
                   </div>
 
                   <label class="col-2">Ora ult. mung.</label>
                   <div class="col-4">
-                    <time-editor v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
+                    <time-editor :disabled="isReadOnly" v-model="prelievoLatte.OraUltimaMungitura"></time-editor>
                   </div>                  
                 </div> 
 
@@ -108,23 +108,23 @@
                 <div class="offset-1 col-5 row" >
                   <label class="col-2">Num. mungiture</label>
                   <div class="col-4">
-                    <input type="number" min="0" class="form-control" v-model="prelievoLatte.NumeroMungiture" />
+                    <input type="number" :disabled="isReadOnly" min="0" class="form-control" v-model="prelievoLatte.NumeroMungiture" />
                   </div>
 
                   <label class="col-2">Temp. in C°</label>
                   <div class="col-4">
-                    <input type="number" min="-20" class="form-control" v-model="prelievoLatte.Temperatura" />
+                    <input type="number" :disabled="isReadOnly" min="-20" class="form-control" v-model="prelievoLatte.Temperatura" />
                   </div>  
                 </div>
 
                 <div class="col-5 row" >
                   <label class="col-2">Qta in Kg</label>
                   <div class="col-4">
-                    <input type="number" min="0" class="form-control" v-model="prelievoLatte.Quantita" />
+                    <input type="number" :disabled="isReadOnly" min="0" class="form-control" v-model="prelievoLatte.Quantita" />
                   </div>                  
                   <label class="col-2">Lab. analisi</label>
                   <div class="col-4">
-                    <select2 class="form-control" :options="laboratoriAnalisi.Items" :value.sync="prelievoLatte.IdLabAnalisi" :value-field="'Value'" :text-field="'Text'" />
+                    <select2 class="form-control" :disabled="isReadOnly" :options="laboratoriAnalisi.Items" :value.sync="prelievoLatte.IdLabAnalisi" :value-field="'Value'" :text-field="'Text'" />
                   </div>                  
                 </div>
 
@@ -137,23 +137,23 @@
                 <div class="offset-1 col-5 row" >
                   <label class="col-2">Trasportatore</label>
                   <div class="col-4">
-                    <select2 class="form-control" :options="trasportatore.Items" :value.sync="prelievoLatte.IdTrasportatore" v-on:value-changed="loadAutocisterne" :value-field="'Value'" :text-field="'Text'" />
+                    <select2 class="form-control" :disabled="isReadOnly" :options="trasportatore.Items" :value.sync="prelievoLatte.IdTrasportatore" v-on:value-changed="loadAutocisterne" :value-field="'Value'" :text-field="'Text'" />
                   </div>
 
                   <label class="col-2">Targa mezzo</label>
                   <div class="col-4">
-                    <select2 class="form-control" :options="autocisterna.Items" :value.sync="prelievoLatte.IdAutocisterna" :value-field="'Value'" :text-field="'Text'" />
+                    <select2 class="form-control" :disabled="isReadOnly" :options="autocisterna.Items" :value.sync="prelievoLatte.IdAutocisterna" :value-field="'Value'" :text-field="'Text'" />
                   </div>
                 </div>
 
                 <div class="col-5 row" >
                   <label class="col-2">Scomparto</label>
                   <div class="col-4">
-                    <input type="text" class="form-control" v-model="prelievoLatte.Scomparto" />
+                    <input type="text" class="form-control" :disabled="isReadOnly" v-model="prelievoLatte.Scomparto" />
                   </div>       
                   <label class="col-2">Dispositivo</label>
                   <div class="col-4">
-                    <input disabled type="text" class="form-control" v-model="prelievoLatte.DeviceId" />
+                    <input disabled type="text" class="form-control" :disabled="isReadOnly" v-model="prelievoLatte.DeviceId" />
                   </div>                                 
                 </div>
 
@@ -165,24 +165,24 @@
                 <div class="offset-1 col-5 row" >
                   <label class="col-2">Data consegna</label>
                   <div class="col-4">
-                    <datepicker :value.sync="prelievoLatte.DataConsegnaStr" />
+                    <datepicker :disabled="isReadOnly" :value.sync="prelievoLatte.DataConsegnaStr" />
                     <div class="invalid-feedback">Inserire data consegna.</div>
                   </div>
 
                   <label class="col-2">Ora consegna</label>
                   <div class="col-4">
-                    <time-editor v-model="prelievoLatte.OraConsegna"></time-editor>
+                    <time-editor :disabled="isReadOnly" v-model="prelievoLatte.OraConsegna"></time-editor>
                   </div>                  
                 </div>
 
                 <div class="col-5 row" >
                   <label class="col-2">Lotto di consegna</label>
                   <div class="col-4">
-                    <input type="text" class="form-control" v-model="prelievoLatte.LottoConsegna" />
+                    <input type="text" :disabled="isReadOnly" class="form-control" v-model="prelievoLatte.LottoConsegna" />
                   </div>       
                   <label class="col-2">Codice Sitra</label>
                   <div class="col-4">
-                    <input type="text" class="form-control" v-model="prelievoLatte.CodiceSitra" />
+                    <input type="text" :disabled="isReadOnly" class="form-control" v-model="prelievoLatte.CodiceSitra" />
                   </div>                                
                 </div>  
 
@@ -190,7 +190,7 @@
 
 
               <!-- Annulla / Salva -->
-              <div class="row pt-3 justify-content-center">
+              <div v-if="!isReadOnly" class="row pt-3 justify-content-center">
                 <div class="col-10 text-right">
                   <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
                   <button class="btn btn-success" role="button" v-on:click="onSave()">Salva</button>
@@ -206,18 +206,40 @@
 
               <!-- Lat / Lng -->
               <div class="row pt-3 form-group">
+                
+                <div class="offset-1 col-5" >
+                  <div class="row">
+                    <label class="col-2"><b>Prelievo</b></label>
+                    <label class="col-1">Lat</label>
+                    <div class="col-4">
+                      <input :disabled="isReadOnly" type="number" class="form-control" v-model="prelievoLatte.Lat" />
+                    </div>
+                    <label class="col-1">Lng</label>
+                    <div class="col-4">
+                      <input :disabled="isReadOnly" type="number" class="form-control" v-model="prelievoLatte.Lng" />
+                    </div>
+                  </div>
 
-                <label class="offset-2 col-1">Latitudine</label>
-                <div class="col-2">
-                  <input type="number" class="form-control" v-model="prelievoLatte.Lat" />
+                  <div class="row pt-1">
+                    <label class="col-2"><b>Allevamento</b></label>
+                    <label class="col-1">Lat</label>
+                    <div class="col-4">
+                      <input disabled type="number" class="form-control" v-model="prelievoLatte.Allevamento_Lat" />
+                    </div>
+                    <label class="col-1">Lng</label>
+                    <div class="col-4">
+                      <input disabled type="number" class="form-control" v-model="prelievoLatte.Allevamento_Lng" />
+                    </div>                        
+                  </div>                                    
+                </div>
+                
+                <div class="col-5 row pt-3">
+                  <label class="col-2"><b>Distanza</b></label>
+                  <span class="col-6 pt-1">{{prelievoLatte.DistanzaAllevamento_Str}}</span>
                 </div>
 
-                <label class="col-1">Longitudine</label>
-                <div class="col-2">
-                  <input type="number" class="form-control" v-model="prelievoLatte.Lng" />                    
-                </div>
-
-              </div>      
+              </div>   
+              
 
               <!-- Mappa -->
               <div class="row">
@@ -227,7 +249,7 @@
               </div>
               
               <!-- Annulla / Salva -->
-              <div class="row pt-3 justify-content-center">
+              <div v-if="!isReadOnly" class="row pt-3 justify-content-center">
                 <div class="col-10 text-right">
                   <button class="btn btn-secondary mr-2" role="button" v-on:click="reload()">Annulla</button>
                   <button class="btn btn-success" role="button" v-on:click="onSave()">Salva</button>
@@ -285,6 +307,9 @@ export default class EditazionePrelievoModal extends Vue {
   };
 
   public itemNotFound: boolean = false;
+  public isReadOnly: boolean = true;
+  public isMapVisible: boolean = false;
+
   public prelievoLatte: PrelievoLatte = new PrelievoLatte();
 
   public prelieviLatteService: PrelieviLatteService;
@@ -336,16 +361,8 @@ export default class EditazionePrelievoModal extends Vue {
 
   // inizializzazione mappa
   private initMap(prelievo: PrelievoLatte) {
-
     var center = new Position(43, 13);
-    var markers = [];
-
-    if(prelievo.Lat && prelievo.Lng) {
-      var center = new Position(prelievo.Lat, prelievo.Lng);
-      markers.push(new Marker(prelievo.Lat, prelievo.Lng, ''));
-    }
-
-    this.$refs.mapViewer.initMap(center, 8, markers);
+    this.$refs.mapViewer.initMap(center, 8, [prelievo]);
   }
 
   // load dropdown
@@ -389,19 +406,8 @@ export default class EditazionePrelievoModal extends Vue {
 
   // lettura permessi da jwt
   private readPermissions() {
-
-    // this.isAdmin = PermissionsService.getCurrentRole() == "Admin";
-
-    // this.isReadOnly = !PermissionsService.isViewItemAuthorized(
-    //   "Utenti",
-    //   "Edit",
-    //   "Edit"
-    // );
-    // this.btnDeleteVisible = PermissionsService.isViewItemAuthorized(
-    //   "Utenti",
-    //   "Edit",
-    //   "Delete"
-    // );
+    this.isReadOnly = !PermissionsService.isViewItemAuthorized("Prelievi","Edit","Save");
+    this.isMapVisible = PermissionsService.isViewItemAuthorized("Prelievi","Edit","Mappa");
   }  
 
   // reload della pagina sullo stesso id

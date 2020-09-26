@@ -155,29 +155,9 @@
     <Compile Include="Migrations\202007010918450_AggiuntoCampoAbilitato.Designer.cs">
       <DependentUpon>202007010918450_AggiuntoCampoAbilitato.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.cs" />
-    <Compile Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.Designer.cs">
-      <DependentUpon>202007010919323_Aggiornata_V_Prelievi1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.cs" />
-    <Compile Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.Designer.cs">
-      <DependentUpon>202007131015136_RimossaColonnaTargaMezzo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009171504246_AggiuntiCampiTabellaPrelievi.cs" />
-    <Compile Include="Migrations\202009171504246_AggiuntiCampiTabellaPrelievi.Designer.cs">
-      <DependentUpon>202009171504246_AggiuntiCampiTabellaPrelievi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009210832242_AggiuntiCampi_V_Prelievo.cs" />
-    <Compile Include="Migrations\202009210832242_AggiuntiCampi_V_Prelievo.Designer.cs">
-      <DependentUpon>202009210832242_AggiuntiCampi_V_Prelievo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009210833412_AggiuntaColonnaDeviceId.cs" />
-    <Compile Include="Migrations\202009210833412_AggiuntaColonnaDeviceId.Designer.cs">
-      <DependentUpon>202009210833412_AggiuntaColonnaDeviceId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009211225559_AggiornamentoTipiColonna.cs" />
-    <Compile Include="Migrations\202009211225559_AggiornamentoTipiColonna.Designer.cs">
-      <DependentUpon>202009211225559_AggiornamentoTipiColonna.cs</DependentUpon>
+    <Compile Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.cs" />
+    <Compile Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.Designer.cs">
+      <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -250,23 +230,8 @@
     <EmbeddedResource Include="Migrations\202007010918450_AggiuntoCampoAbilitato.resx">
       <DependentUpon>202007010918450_AggiuntoCampoAbilitato.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.resx">
-      <DependentUpon>202007010919323_Aggiornata_V_Prelievi1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.resx">
-      <DependentUpon>202007131015136_RimossaColonnaTargaMezzo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009171504246_AggiuntiCampiTabellaPrelievi.resx">
-      <DependentUpon>202009171504246_AggiuntiCampiTabellaPrelievi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009210832242_AggiuntiCampi_V_Prelievo.resx">
-      <DependentUpon>202009210832242_AggiuntiCampi_V_Prelievo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009210833412_AggiuntaColonnaDeviceId.resx">
-      <DependentUpon>202009210833412_AggiuntaColonnaDeviceId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009211225559_AggiornamentoTipiColonna.resx">
-      <DependentUpon>202009211225559_AggiornamentoTipiColonna.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.resx">
+      <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

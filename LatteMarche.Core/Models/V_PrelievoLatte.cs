@@ -5,21 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LatteMarche.Core.Models;
 using WeCode.Data;
+using System.Device.Location;
 
 namespace LatteMarche.Core.Models
 {
-    public enum FlagCoordinate
-    {
-        Mancanti,
-        Corrette,
-        Errate
-    }
 
     [System.ComponentModel.DataAnnotations.Schema.Table("V_PrelieviLatte")]
     public class V_PrelievoLatte : Entity<int>
     {
-        private const double DELTA_COORDINATE = 0.01;
-
         private DateTime? dataPrelievo;
         private DateTime? dataConsegna;
         private DateTime? dataUltimaMungitura;
@@ -83,10 +76,10 @@ namespace LatteMarche.Core.Models
         public string PIVA_Allevamento { get; set; }
 
         [Column("LAT_ALLEVAMENTO")]
-        public double? Lat_Allevamento { get; set; }
+        public double? Allevamento_Lat { get; set; }
 
         [Column("LNG_ALLEVAMENTO")]
-        public double? Lng_Allevamento { get; set; }
+        public double? Allevamento_Lng { get; set; }
 
         [Column("LAT_PRELIEVO")]
         public double? Lat { get; set; }
@@ -97,17 +90,23 @@ namespace LatteMarche.Core.Models
         [Column("TARGA_MEZZO")]
         public string Targa { get; set; }
 
-        public FlagCoordinate FlagCoordinate
+        public double? DistanzaAllevamento
         {
             get
             {
-                if (!this.Lat.HasValue || !this.Lng.HasValue)
-                    return FlagCoordinate.Mancanti;
+                if (this.Lat.HasValue && this.Lng.HasValue && this.Allevamento_Lat.HasValue && this.Allevamento_Lng.HasValue)
+                {
+                    var coordinatePrelievo = new GeoCoordinate(this.Lat.Value, this.Lng.Value);
+                    var coordinateAllevamento = new GeoCoordinate(this.Allevamento_Lat.Value, this.Allevamento_Lng.Value);
 
-                var distanza = GetDistance(this.Lat.Value, this.Lng.Value, this.Lat_Allevamento.Value, this.Lng_Allevamento.Value);
-                return distanza < DELTA_COORDINATE ? FlagCoordinate.Corrette : FlagCoordinate.Errate;
+                    return coordinatePrelievo.GetDistanceTo(coordinateAllevamento);
+                }
+                else
+                    return (double?)null;
             }
         }
+
+        public string DistanzaAllevamento_Str { get { return this.DistanzaAllevamento.HasValue ? $"{this.DistanzaAllevamento:#0} m" : "-"; } }
 
 
         [NotMapped]
@@ -160,12 +159,6 @@ namespace LatteMarche.Core.Models
         public string SiglaLatte { get; set; }
 
 
-        private double GetDistance(double lat_1, double lng_1, double lat_2, double lng_2)
-        {
-            var deltaLat = Math.Abs(lat_1 - lat_2);
-            var deltaLng = Math.Abs(lng_1 - lng_2);
 
-            return Math.Sqrt(Math.Pow(deltaLat, 2) + Math.Pow(deltaLng, 2));
-        }
     }
 }
