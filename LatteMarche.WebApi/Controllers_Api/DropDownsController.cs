@@ -114,7 +114,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 model.Add("tipiLatte", this.tipiLatteService.DropDown());
 
             if (list.Contains("trasportatori"))
-                model.Add("trasportatori", this.trasportatoriService.DropDown());
+                model.Add("trasportatori", this.trasportatoriService.DropDown(utente.Id));
                 
             return Ok(model);
         }

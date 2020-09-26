@@ -1,4 +1,5 @@
 ﻿using LatteMarche.Application.Trasportatori.Interfaces;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private ITrasportatoriService trasportatoriService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructor
 
-        public TrasportatoriController(ITrasportatoriService trasportatoriService)
+        public TrasportatoriController(ITrasportatoriService trasportatoriService, IUtentiService utentiService)
         {
             this.trasportatoriService = trasportatoriService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -36,9 +39,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [ETag]
         public IHttpActionResult Dropdown()
         {
+            var utente = this.utentiService.Details(User.Identity.Name);
+            var dropDown = this.trasportatoriService.DropDown(utente.Id);
 
-            return Ok(this.trasportatoriService.DropDown());
-
+            return Ok(dropDown);
         }
 
         #endregion
