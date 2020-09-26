@@ -52,6 +52,9 @@ export class PrelieviLatteSearchModel {
     public IdCessionario?: number = 0;
     public IdTipoLatte?: number = 0;
 
+    public LottoConsegna: string = "";
+    public CodiceGiro: string = "";
+
     public ToUrlQueryString(): string {
         return jQuery.param(this);
     }

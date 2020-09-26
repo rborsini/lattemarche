@@ -42,6 +42,11 @@ namespace LatteMarche.Application.Latte.Services
 
         #region Methods
 
+        /// <summary>
+        /// Caricamento dettaglio singolo prelievo
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public override PrelievoLatteDto Details(int key)
         {
             var dto = base.Details(key);
@@ -57,6 +62,11 @@ namespace LatteMarche.Application.Latte.Services
             return dto;
         }
 
+        /// <summary>
+        /// Generazione query per recupero prelievi autorizzati dall'utente passato come parametro
+        /// </summary>
+        /// <param name="idUtente"></param>
+        /// <returns></returns>
         public IQueryable<V_PrelievoLatte> PrelieviAutorizzati(int idUtente)
         {
             var query = this.v_prelieviLatteRepository.DbSet;
@@ -96,6 +106,11 @@ namespace LatteMarche.Application.Latte.Services
             }
         }
 
+        /// <summary>
+        /// Inserimento nuovo prelievo
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public override PrelievoLatteDto Create(PrelievoLatteDto model)
         {
             // conversione da dto a entity
@@ -110,6 +125,10 @@ namespace LatteMarche.Application.Latte.Services
             return this.ConvertToDto(dbEntity);
         }
 
+        /// <summary>
+        /// Validazione campi per salvataggio da web
+        /// </summary>
+        /// <param name="model"></param>
         public void Validazione(PrelievoLatteDto model)
         {
             List<string> missingFields = new List<string>();
@@ -151,6 +170,11 @@ namespace LatteMarche.Application.Latte.Services
                 throw new RequiredFieldsException(missingFields);
         }
 
+        /// <summary>
+        /// Aggiornamento singolo prelievo
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public override PrelievoLatteDto Update(PrelievoLatteDto model)
         {
             var viewEntity = ConvertToEntity(model);
@@ -316,6 +340,18 @@ namespace LatteMarche.Application.Latte.Services
                     query = query.Where(p => String.IsNullOrEmpty(p.CodiceSitra));
             }
 
+            // Lotto consegna
+            if(!String.IsNullOrEmpty(searchDto.LottoConsegna))
+            {
+                query = query.Where(p => p.LottoConsegna.Contains(searchDto.LottoConsegna));
+            }
+
+            // Giro
+            if(!String.IsNullOrEmpty(searchDto.CodiceGiro))
+            {
+                query = query.Where(p => p.LottoConsegna.StartsWith(searchDto.CodiceGiro));
+            }
+
             query = query
                 .OrderBy(r => r.Allevamento)
                 .ThenBy(r => r.DataPrelievo);
@@ -342,6 +378,12 @@ namespace LatteMarche.Application.Latte.Services
             return query.ToList();
         }
 
+        /// <summary>
+        /// Aggiornamento proprietà
+        /// </summary>
+        /// <param name="viewEntity"></param>
+        /// <param name="dbEntity"></param>
+        /// <returns></returns>
         protected override PrelievoLatte UpdateProperties(PrelievoLatte viewEntity, PrelievoLatte dbEntity)
         {
             dbEntity.IdDestinatario = viewEntity.IdDestinatario;

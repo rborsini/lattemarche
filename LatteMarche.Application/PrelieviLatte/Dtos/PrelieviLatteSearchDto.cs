@@ -46,6 +46,10 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public bool? InviatoSitra { get; set; }            
 
+        public string LottoConsegna { get; set; }
+
+        public string CodiceGiro { get; set; }
+
         public int IdUtente { get; set; }
              
 

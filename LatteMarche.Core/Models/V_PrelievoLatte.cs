@@ -47,6 +47,8 @@ namespace LatteMarche.Core.Models
         [Column("LOTTO_CONSEGNA")]
         public string LottoConsegna { get; set; }
 
+        public string CodiceGiro { get { return !String.IsNullOrEmpty(this.LottoConsegna) && this.LottoConsegna.Length > 2 ? this.LottoConsegna.Substring(0, 2) : ""; } }
+
         [Column("QUANTITA")]
         public Decimal? Quantita { get; set; }
 

@@ -34,6 +34,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
+        [ViewItem("FlagCoordinate", "Prelievi", "Flag coordinate")]
         [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
