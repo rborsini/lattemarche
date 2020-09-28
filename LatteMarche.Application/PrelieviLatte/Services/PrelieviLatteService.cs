@@ -404,6 +404,7 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
             dbEntity.Lat = viewEntity.Lat;
             dbEntity.Lng = viewEntity.Lng;
+            dbEntity.IdGiro = viewEntity.IdGiro;
 
             return dbEntity;
         }

@@ -159,6 +159,10 @@
     <Compile Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.Designer.cs">
       <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009280629306_Aggiunto_IdGiro.cs" />
+    <Compile Include="Migrations\202009280629306_Aggiunto_IdGiro.Designer.cs">
+      <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.resx">
       <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009280629306_Aggiunto_IdGiro.resx">
+      <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

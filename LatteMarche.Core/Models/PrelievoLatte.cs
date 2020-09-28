@@ -76,5 +76,8 @@ namespace LatteMarche.Core.Models
         [Column("DEVICE_ID")]
         public string DeviceId { get; set; }
 
+        [Column("ID_GIRO")]
+        public int? IdGiro { get; set; }
+
     }
 }
