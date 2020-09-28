@@ -153,6 +153,7 @@
     <Compile Include="JobGroupSection.cs" />
     <Compile Include="Jobs\BaseJob.cs" />
     <Compile Include="Jobs\GeocoderJob.cs" />
+    <Compile Include="Jobs\PrelieviFixerJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStartUp.cs" />
@@ -172,6 +173,10 @@
     <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">
       <Project>{7399bb9d-fa00-400e-b9f8-c78751ce153f}</Project>
       <Name>LatteMarche.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LatteMarche.EntityFramework\LatteMarche.EntityFramework.csproj">
+      <Project>{939A98BB-3372-4BBC-8A9C-213113AEE01C}</Project>
+      <Name>LatteMarche.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Utils\LatteMarche.Utils.csproj">
       <Project>{edc79ac8-16c0-4f80-a81c-bd2bc6af87f6}</Project>

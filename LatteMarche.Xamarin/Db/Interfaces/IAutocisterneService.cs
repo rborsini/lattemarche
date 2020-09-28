@@ -9,5 +9,7 @@ namespace LatteMarche.Xamarin.Db.Interfaces
     public interface IAutoCisterneService : IEntityService<AutoCisterna, int>
     {
         Task<AutoCisterna> GetDefaultAsync();
+
+        Task<bool> SetDefaultAsync(int idAutocisterna);
     }
 }

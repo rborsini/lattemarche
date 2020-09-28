@@ -29,14 +29,17 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         private IMaterialModalPage loadingDialog;
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
+        private IAutoCisterneService autoCisterneService => DependencyService.Get<IAutoCisterneService>();
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
         private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
 
         private bool stampantiPresenti;
 
         private Stampante stampanteSelezionata;
-
         private ObservableCollection<Stampante> stampanti;
+
+        private AutoCisterna autocisternaSelezionata;
+        private ObservableCollection<AutoCisterna> autocisterne;
 
         private string versione;
         private string ambiente;
@@ -61,11 +64,19 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         public Stampante StampanteSelezionata
         {
             get { return this.stampanteSelezionata; }
-            set 
-            { 
-                SetProperty<Stampante>(ref this.stampanteSelezionata, value);
-                //(this.SetDefaultCommand as Command).ChangeCanExecute();
-            }
+            set { SetProperty<Stampante>(ref this.stampanteSelezionata, value); }
+        }
+
+        public ObservableCollection<AutoCisterna> Autocisterne
+        {
+            get { return this.autocisterne; }
+            set { SetProperty<ObservableCollection<AutoCisterna>>(ref this.autocisterne, value); }
+        }
+
+        public AutoCisterna AutocisternaSelezionata
+        {
+            get { return this.autocisternaSelezionata; }
+            set { SetProperty<AutoCisterna>(ref this.autocisternaSelezionata, value); }
         }
 
         public string Versione
@@ -93,6 +104,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         public Command SetDefaultCommand { get; set; }
 
+        public Command SetAutocisternaCommand { get; set; }
+
         public Command ExportCommand { get; set; }
 
         public Command UpdateCommand { get; set; }
@@ -111,8 +124,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
             this.LoadCommand = new Command(async () => await ExecuteLoadCommand());
             this.DiscoveryCommand = new Command(async () => await ExecuteDiscoveryCommand());
-            //this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand(), canExecute: () => { return this.stampanteSelezionata != null; });
             this.SetDefaultCommand = new Command(async () => await ExecuteSetDefaultCommand());
+            this.SetAutocisternaCommand = new Command(async () => await ExecuteSetAutocisternaCommand());
             this.ExportCommand = new Command(async () => await ExecuteExportCommand());
             this.UpdateCommand = new Command(async () => await ExecuteUpdateCommand());
             this.ResetCommand = new Command(async () => await ExecuteResetCommand());
@@ -131,10 +144,12 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 var stampanti = this.stampantiService.GetItemsAsync().Result;
                 this.Stampanti = new ObservableCollection<Stampante>(stampanti);
-
                 this.StampanteSelezionata = stampanti.FirstOrDefault(s => s.Selezionata);
-
                 this.StampantiPresenti = this.Stampanti.Count > 0;
+
+                var autocisterne = this.autoCisterneService.GetItemsAsync().Result;
+                this.Autocisterne = new ObservableCollection<AutoCisterna>(autocisterne);
+                this.AutocisternaSelezionata = autocisterne.FirstOrDefault(a => a.Selezionata);
 
                 VersionTracking.Track();
 
@@ -146,9 +161,10 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 var sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
                 var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
 
-                this.UltimoAggiornamento = $"{ultimoDownload.Timestamp:dd-MM-yyyy HH:mm:ss}";
-                
-                await loadingDialog.DismissAsync();               
+                if (ultimoDownload != null)
+                    this.UltimoAggiornamento = $"{ultimoDownload.Timestamp:dd-MM-yyyy HH:mm:ss}";
+
+                await loadingDialog.DismissAsync();
 
             }
             catch (Exception exc)
@@ -206,8 +222,33 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 await loadingDialog.DismissAsync();
 
-                if(this.stampanteSelezionata != null)
+                if (this.stampanteSelezionata != null)
                     await this.page.DisplayAlert("Info", "Impostata stampante predefinita", "OK");
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+
+                await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
+            }
+        }
+
+        private async Task ExecuteSetAutocisternaCommand()
+        {
+            try
+            {
+                this.loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
+
+                if (this.autocisternaSelezionata != null)
+                    this.autoCisterneService.SetDefaultAsync(this.autocisternaSelezionata.Id).Wait();
+
+                await loadingDialog.DismissAsync();
+
+                if (this.autocisternaSelezionata != null)
+                    await this.page.DisplayAlert("Info", "Impostata autocisterna predefinita", "OK");
             }
             catch (Exception exc)
             {
@@ -231,7 +272,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 await Task.Run(() =>
                 {
                     try
-                    { 
+                    {
                         var dto = restService.Download(device.GetIdentifier()).Result;
                         sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
 
@@ -321,7 +362,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         {
             try
             {
-                
+
                 this.stampantiService.InsertOrUpdateAsync(stampante).Wait();
 
                 var stampanti = this.stampantiService.GetItemsAsync().Result;
@@ -335,7 +376,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 Analytics.TrackEvent("Stampante associata");
                 SentrySdk.CaptureMessage("Stampante associata", Sentry.Protocol.SentryLevel.Info);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);
@@ -346,7 +387,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
         private async void DiscoveryHandler_OnDiscoveryFinished(object sender, EventArgs e)
         {
-            await loadingDialog.DismissAsync(); 
+            await loadingDialog.DismissAsync();
         }
 
         private void DiscoveryHandler_OnDiscoveryError(object sender, string errorMessage)

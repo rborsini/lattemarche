@@ -13,7 +13,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<IEnumerable<Stampante>> GetItemsAsync()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Stampante>()
                                     .AsNoTracking()
@@ -24,7 +24,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<bool> InsertOrUpdateAsync(Stampante stampante)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 var entity = context.Set<Stampante>().FirstOrDefaultAsync(s => s.MacAddress == stampante.MacAddress).Result;
 
@@ -47,7 +47,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<Stampante> GetDefaultAsync()
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 return await context.Set<Stampante>().FirstOrDefaultAsync(p => p.Selezionata);
             }
@@ -55,7 +55,7 @@ namespace LatteMarche.Xamarin.Db.Services
 
         public async Task<bool> SetDefaultAsync(string macAddress)
         {
-            using (var context = CrateContext())
+            using (var context = CreateContext())
             {
                 foreach(var stampante in context.Set<Stampante>())
                 {
@@ -68,7 +68,7 @@ namespace LatteMarche.Xamarin.Db.Services
             }
         }
 
-        protected LatteMarcheDbContext CrateContext()
+        protected LatteMarcheDbContext CreateContext()
         {
             LatteMarcheDbContext databaseContext = (LatteMarcheDbContext)Activator.CreateInstance(typeof(LatteMarcheDbContext));
             return databaseContext;

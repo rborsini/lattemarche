@@ -18,7 +18,7 @@ namespace LatteMarche.Xamarin.Db.Services
             {
                 return await context
                     .Set<Trasportatore>()
-                    .Include(t => t.AutoCisterna)
+                    .Include(t => t.AutoCisterne)
                     .FirstOrDefaultAsync();
             }
         }

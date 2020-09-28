@@ -97,7 +97,15 @@ namespace LatteMarche.Xamarin.Db.Services
 
                     // autocisterna
                     var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
-                    this.autocisterneService.AddItemAsync(autocisterna).Wait();
+                    var autocisterne = Mapper.Map<List<AutoCisterna>>(dto.Autocisterne);
+
+                    if(autocisterna != null)
+                    {
+                        var autocisternaSelezionata = autocisterne.First(a => a.Id == autocisterna.Id);
+                        autocisternaSelezionata.Selezionata = true;
+                    }
+
+                    this.autocisterneService.AddRangeItemAsync(autocisterne).Wait();
 
                     // tipi latte
                     var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);

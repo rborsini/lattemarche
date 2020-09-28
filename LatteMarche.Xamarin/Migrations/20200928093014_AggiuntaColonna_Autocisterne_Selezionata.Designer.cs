@@ -3,14 +3,16 @@ using System;
 using LatteMarche.Xamarin.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LatteMarche.Xamarin.Migrations
 {
     [DbContext(typeof(LatteMarcheDbContext))]
-    partial class LatteMarcheDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200928093014_AggiuntaColonna_Autocisterne_Selezionata")]
+    partial class AggiuntaColonna_Autocisterne_Selezionata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

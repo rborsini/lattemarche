@@ -26,21 +26,52 @@
 
         <StackLayout Padding="16" Spacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags= "All" >
 
-            <!-- Stampanti -->
-            <material:MaterialTextField Placeholder="Stampante"
-                IsEnabled="{Binding StampantiPresenti }"
-                InputType="Choice"
-                SelectedChoice="{Binding StampanteSelezionata}"
-                Choices="{Binding Stampanti}"
-                ChoicesBindingName="Nome"
-                AlwaysShowUnderline="True"
-                BackgroundColor="Transparent"
-                matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
-                matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
-                matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
-            />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="30*" />
+                </Grid.ColumnDefinitions>
 
-            <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Imposta stampante predefinita" Command="{Binding SetDefaultCommand}" TextColor="Black" VerticalOptions="Center" />
+                <!-- Stampanti -->
+                <material:MaterialTextField 
+                    Grid.Row="0" Grid.Column="0"
+                    Placeholder="Stampante"
+                    IsEnabled="{Binding StampantiPresenti }"
+                    InputType="Choice"
+                    SelectedChoice="{Binding StampanteSelezionata}"
+                    Choices="{Binding Stampanti}"
+                    ChoicesBindingName="Nome"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                    matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                    matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                    matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+                />
+
+                <material:MaterialButton Grid.Row="0" Grid.Column="1" Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="SET" Command="{Binding SetDefaultCommand}" TextColor="Black" VerticalOptions="Center" />
+
+                <!-- Autocisterne -->
+                <material:MaterialTextField 
+                    Grid.Row="1" Grid.Column="0"
+                    Placeholder="Autocisterna"                
+                    InputType="Choice"
+                    SelectedChoice="{Binding AutocisternaSelezionata}"
+                    Choices="{Binding Autocisterne}"
+                    ChoicesBindingName="Targa"
+                    AlwaysShowUnderline="True"
+                    BackgroundColor="Transparent"
+                    matd:MaterialConfirmationDialog.DialogTitle="Seleziona"
+                    matd:MaterialConfirmationDialog.DialogConfirmingText="Ok"
+                    matd:MaterialConfirmationDialog.DialogDismissiveText="Annulla"
+                />
+
+                <material:MaterialButton Grid.Row="1" Grid.Column="1" Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="SET" Command="{Binding SetAutocisternaCommand}" TextColor="Black" VerticalOptions="Center" />
+
+
+            </Grid>
 
             <material:MaterialButton Margin="0,20,0,0" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="Aggiorna database" Command="{Binding UpdateCommand}" TextColor="Black" VerticalOptions="Center" />
             

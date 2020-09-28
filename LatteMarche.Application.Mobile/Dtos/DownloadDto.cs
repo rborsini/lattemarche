@@ -10,6 +10,7 @@ namespace LatteMarche.Application.Mobile.Dtos
     {
         public TrasportatoreDto Trasportatore { get; set; }
         public AutocisternaDto Autocisterna { get; set; }
+        public List<AutocisternaDto> Autocisterne { get; set; }
         public List<TemplateGiroDto> Giri { get; set; }
         public List<TipoLatteDto> TipiLatte { get; set; }
         public List<AcquirenteDto> Acquirenti { get; set; }
@@ -18,6 +19,7 @@ namespace LatteMarche.Application.Mobile.Dtos
 
         public DownloadDto()
         {
+            this.Autocisterne = new List<AutocisternaDto>();
             this.Giri = new List<TemplateGiroDto>();
             this.TipiLatte = new List<TipoLatteDto>();
             this.Acquirenti = new List<AcquirenteDto>();

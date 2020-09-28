@@ -17,6 +17,8 @@ namespace LatteMarche.Xamarin.Db.Models
         public int Portata { get; set; }
         public int NumScomparti { get; set; }
 
+        public bool Selezionata { get; set; }
+
         [ForeignKey(nameof(Trasportatore))]
         public int? IdTrasportatore { get; set; }
 

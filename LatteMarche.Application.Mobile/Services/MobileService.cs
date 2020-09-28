@@ -114,10 +114,11 @@ namespace LatteMarche.Application.Mobile.Services
                 if (dispositivo.IdTrasportatore.HasValue)
                 {
                     var idTrasportatore = dispositivo.IdTrasportatore.Value;
-                    var autocisterna = GetAutocisterna(dispositivo);
 
                     db.Trasportatore = Mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
-                    db.Autocisterna = Mapper.Map<AutocisternaDto>(autocisterna);
+                    db.Autocisterna = Mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
+                    db.Autocisterne = Mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
+
                     db.Giri = Mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
 
                     foreach (var giro in db.Giri)
@@ -228,6 +229,15 @@ namespace LatteMarche.Application.Mobile.Services
                 return this.autocisterneRepository.DbSet.FirstOrDefault(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value);
         }
 
+        /// <summary>
+        /// Recupero autocisterne per dispositivo
+        /// </summary>
+        /// <param name="dispositivo"></param>
+        /// <returns></returns>
+        private List<Autocisterna> GetAutocisterne(DispositivoMobile dispositivo)
+        {
+            return this.autocisterneRepository.DbSet.Where(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value).ToList();
+        }
 
         /// <summary>
         /// Recupera l'acquirente più frequente
