@@ -1,4 +1,6 @@
-﻿using LatteMarche.Application.Dashboard.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.AnalisiLatte.Dtos;
+using LatteMarche.Application.Dashboard.Dtos;
 using LatteMarche.Application.Dashboard.Interfaces;
 using LatteMarche.Core.Models;
 using System;
@@ -15,7 +17,7 @@ namespace LatteMarche.Application.Dashboard.Services
 
         #region Fields
 
-        private IUnitOfWork uow;
+        private IRepository<Analisi, string> analisiRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
 
         #endregion
@@ -24,7 +26,8 @@ namespace LatteMarche.Application.Dashboard.Services
 
         public AnalisiComparativaService(IUnitOfWork uow)
         {
-            this.uow = uow;
+            this.analisiRepository = uow.Get<Analisi, string>();
+            this.prelieviRepository = uow.Get<PrelievoLatte, int>();
         }
 
         #endregion
@@ -35,29 +38,98 @@ namespace LatteMarche.Application.Dashboard.Services
         {
             var dto = new WidgetAnalisiComparativaDto();
 
-            dto.BubbleChart.Serie.Add(new SerieDto()
-            {
-                Bolle = new List<BollaDto>()
-                {
-                    new BollaDto() { Nome = "Giulio",   X = 95,     Y = 95,     Z = 75 },
-                    new BollaDto() { Nome = "altri",    X = 100,    Y = 80,     Z = 75 }
-                }
-            });
+            var analisi = GetAnalisi(from, to);
 
-
-            dto.SpiderChart.ValoriAsseX = new List<string>() { "Grasso", "Proteine", "Carica batterica", "Cellule somatiche" };
-            dto.SpiderChart.Serie.Add(new SerieDto()
-            {
-                Nome = "Viola Giulio",
-                Valori = new List<decimal?>() { 1, 2, 3, 4 }
-            });
-            dto.SpiderChart.Serie.Add(new SerieDto()
-            {
-                Nome = "Altri",
-                Valori = new List<decimal?>() { 4, 3, 2, 1 }
-            });
+            dto.BubbleChart = MakeBubbleChart(analisi, from, to);
+            dto.SpiderChart = MakeSpiderChart(analisi, idAllevamento);
 
             return dto;
+        }
+
+
+
+        private WidgetGraficoDto MakeBubbleChart(List<AnalisiDto> analisi, DateTime from, DateTime to)
+        {
+            var dto = new WidgetGraficoDto();
+            var serie = new SerieDto();
+
+            var idAllevamenti = analisi.Select(a => a.IdAllevamento).Distinct().ToList();
+
+            foreach(var idAllevamento in idAllevamenti)
+            {
+                var analisiAllevamento = analisi.Where(a => a.IdAllevamento == idAllevamento).ToList();
+                var prelieviAllevamento = this.prelieviRepository.DbSet.Where(p => p.IdAllevamento == idAllevamento && from <= p.DataPrelievo && p.DataPrelievo < to);
+                var valoriGrasso = analisiAllevamento.Where(a => a.Grasso.HasValue).Select(a => a.Grasso);
+                var valoriProteine = analisiAllevamento.Where(a => a.Proteine.HasValue).Select(a => a.Proteine);
+
+                serie.Bolle.Add(new BollaDto()
+                {
+                    Nome = analisiAllevamento[0].NomeProduttore,
+                    X = valoriGrasso.Count() > 0 ? valoriGrasso.Average() : (decimal?)null,
+                    Y = valoriProteine.Count() > 0 ? valoriProteine.Average() : (decimal?)null,
+                    Z = prelieviAllevamento.Count() > 0 ? prelieviAllevamento.Sum(p => p.Quantita.Value) : (decimal?)null
+                });
+            }
+
+            dto.Serie.Add(serie);
+
+            return dto;
+        }
+
+        private WidgetGraficoDto MakeSpiderChart(List<AnalisiDto> analisi, int idAllevamento)
+        {
+            var dto = new WidgetGraficoDto();
+            //var serieAllevamento = new SerieDto() { Nome = "Allevamento" };
+            //var serieAltri = new SerieDto() { Nome = "Altri" };
+
+            var analisiAllevamento = analisi.Where(a => a.IdAllevamento == idAllevamento).ToList();
+            var analisiAltri = analisi.Where(a => a.IdAllevamento != idAllevamento).ToList();
+
+            var serieAllevamento = MakeSerie("Allevamento", analisiAllevamento);
+            var serieAltri = MakeSerie("Altri", analisiAltri);
+
+            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.Grasso));
+            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.Proteine));
+            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.CaricaBatterica));
+            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.CelluleSomatiche));
+
+
+            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.Grasso));
+            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.Proteine));
+            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.CaricaBatterica));
+            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.CelluleSomatiche));
+
+            dto.Serie.Add(serieAllevamento);
+            dto.Serie.Add(serieAltri);
+
+            return dto;
+        }
+
+        private SerieDto MakeSerie(string nome, List<AnalisiDto> analisi)
+        {
+            var serie = new SerieDto() { Nome = nome };
+
+            var valoriGrasso = analisi.Where(a => a.Grasso.HasValue).Select(a => a.Grasso.Value);
+            var valoriProteine = analisi.Where(a => a.Proteine.HasValue).Select(a => a.Proteine.Value);
+            var valoriCaricaBatterica = analisi.Where(a => a.CaricaBatterica.HasValue).Select(a => a.CaricaBatterica.Value);
+            var valoriCelluleSomatiche = analisi.Where(a => a.CelluleSomatiche.HasValue).Select(a => a.CelluleSomatiche.Value);
+
+            serie.Valori.Add(valoriGrasso.Count() > 0 ? valoriGrasso.Average() : (decimal?)null);
+            serie.Valori.Add(valoriProteine.Count() > 0 ? valoriProteine.Average() : (decimal?)null);
+            serie.Valori.Add(valoriCaricaBatterica.Count() > 0 ? valoriCaricaBatterica.Average() : (decimal?)null);
+            serie.Valori.Add(valoriCelluleSomatiche.Count() > 0 ? valoriCelluleSomatiche.Average() : (decimal?)null);
+
+            return serie;
+        }
+
+        private List<AnalisiDto> GetAnalisi(DateTime from, DateTime to)
+        {
+            var entities = this.analisiRepository.DbSet
+                .Where(a => from <= a.DataPrelievo)
+                .Where(a => a.DataPrelievo < to)
+                .ToList();
+
+            return Mapper.Map<List<AnalisiDto>>(entities);
         }
 
         #endregion

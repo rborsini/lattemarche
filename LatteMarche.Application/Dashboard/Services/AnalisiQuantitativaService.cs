@@ -80,7 +80,7 @@ namespace LatteMarche.Application.Dashboard.Services
                 valoriAsseX.Add($"{date:dd}");
 
                 var prelieviGiorno = records.Where(r => date <= r.Data && r.Data < date.AddDays(1));
-                var valore = prelieviGiorno.Count() == 0 ? 0 : prelieviGiorno.Sum(p => p.Qta_Kg);
+                var valore = prelieviGiorno.Count() == 0 ? (decimal?)null : prelieviGiorno.Sum(p => p.Qta_Kg);
 
                 serie.Valori.Add(valore);
 
@@ -149,44 +149,6 @@ namespace LatteMarche.Application.Dashboard.Services
         {
             return new DateTime(date.Year, date.Month, 1).AddMonths(1);
         }
-
-        //public WidgetAnalisiQuantitativaDto Load(int idAllevamento, DateTime? from, DateTime to)
-        //{
-        //    var dto = new WidgetAnalisiQuantitativaDto();
-
-        //    dto.AndamentoGiornaliero.ValoriAsseX = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        //    dto.AndamentoGiornaliero.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "latte",
-        //        Nome = "kg",
-        //        Valori = new List<decimal?>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
-        //    });
-
-        //    dto.AndamentoMensile.ValoriAsseX = new List<string>() { "gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic" };
-        //    dto.AndamentoMensile.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "latte",
-        //        Nome = "kg",
-        //        Valori = new List<decimal?>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }
-        //    });
-
-        //    dto.Records = new List<WidgetAnalisiQuantitativaDto.Record>()
-        //    {
-        //        new WidgetAnalisiQuantitativaDto.Record()
-        //        {
-        //            Acquirente = "LatteMarche",
-        //            Data = DateTime.Today,
-        //            Destinatario = "Cooperlat",
-        //            Qta_Kg = 10,
-        //            Qta_Lt = 12,
-        //            Temperatura = 3,
-        //            TipoLatte = "Crudo",
-        //            Trasportatore = "Fattorie Marchigiane"
-        //        }
-        //    };
-
-        //    return dto;
-        //}
 
         #endregion
 

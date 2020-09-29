@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Configuration;
+using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.Dashboard.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -11,6 +12,8 @@ namespace LatteMarche.Application.Dashboard
 {
     public class WidgetsMappings
     {
+
+
         internal static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
         {
             mappings.CreateMap<V_PrelievoLatte, WidgetAnalisiQuantitativaDto.Record>()
@@ -21,6 +24,18 @@ namespace LatteMarche.Application.Dashboard
                 .ForMember(dest => dest.Trasportatore, opts => opts.MapFrom(src => src.Trasportatore))
                 .ForMember(dest => dest.Acquirente, opts => opts.MapFrom(src => src.Acquirente))
                 .ForMember(dest => dest.Destinatario, opts => opts.MapFrom(src => src.Destinatario))
+                ;
+
+            mappings.CreateMap<AnalisiDto, WidgetAnalisiQualitativaDto.Record>()
+                .ForMember(dest => dest.Campione, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CodiceASL, opts => opts.MapFrom(src => src.CodiceASL))
+                .ForMember(dest => dest.DataRapporto, opts => opts.MapFrom(src => src.DataRapportoDiProva))
+                .ForMember(dest => dest.DataAccettazione, opts => opts.MapFrom(src => src.DataAccettazione))
+                .ForMember(dest => dest.DataPrelievo, opts => opts.MapFrom(src => src.DataPrelievo))
+                .ForMember(dest => dest.Grasso, opts => opts.MapFrom(src => src.Grasso))
+                .ForMember(dest => dest.Proteine, opts => opts.MapFrom(src => src.Proteine))
+                .ForMember(dest => dest.CaricaBatterica, opts => opts.MapFrom(src => src.CaricaBatterica))
+                .ForMember(dest => dest.CelluleSomatiche, opts => opts.MapFrom(src => src.CelluleSomatiche))
                 ;
 
             return mappings;

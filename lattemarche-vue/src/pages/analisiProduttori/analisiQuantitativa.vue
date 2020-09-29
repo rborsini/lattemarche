@@ -18,7 +18,7 @@
         </div>
 
         <!-- Tabella -->
-        <data-table :options="tableOptions" :rows="model.records" >
+        <data-table :options="tableOptions" :rows="model.Records" >
             <template slot="thead">
                 <th>Data</th>
                 <th>Qta [kg]</th>
@@ -60,7 +60,6 @@ export default class AnalisiQuantitativa extends Vue {
     public andamentoMensileOptions: any = {};
     public andamentoGiornalieroOptions: any = {};
     public tableOptions: any = {};
-    public records: Record[] = [];
 
     constructor() {
         super();        

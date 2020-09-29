@@ -155,6 +155,8 @@
     <Compile Include="Mappings\Mappings_UtentiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Acquirenti\Services_AcquirentiTest.cs" />
+    <Compile Include="Services\AnalisiProduttori\Services_AnalisiComparativaTest.cs" />
+    <Compile Include="Services\AnalisiProduttori\Services_AnalisiQualitativaTest.cs" />
     <Compile Include="Services\AnalisiProduttori\Services_AnalisiQuantitativaTest.cs" />
     <Compile Include="Services\Autocisterne\Services_AutocisterneTest.cs" />
     <Compile Include="Services\Cessionari\Services_CessionariTest.cs" />
