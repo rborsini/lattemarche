@@ -1,9 +1,17 @@
 import { Widget } from './widget.model';
 
+export class BollaModel {
+    public Nome!: string;
+    public X!: number;
+    public Y!: number;
+    public Z!: number;
+}
+
 export class SerieModel {
     public Id!: string;
     public Nome!: string;
-    public Valori!: Array<number>
+    public Valori!: number[];
+    public Bolle!: BollaModel[];
 }
 
 export default class GraficoWidgetModel extends Widget {

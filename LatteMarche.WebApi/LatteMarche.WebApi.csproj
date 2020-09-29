@@ -418,6 +418,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
+    <Content Include="Views\Analisi\Produttori.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -460,6 +461,7 @@
     <Compile Include="Controllers_Api\ComuniController.cs" />
     <Compile Include="Controllers_Api\PrelieviLatteController.cs" />
     <Compile Include="Controllers_Api\GiriController.cs" />
+    <Compile Include="Controllers_Web\AnalisiController.cs" />
     <Compile Include="Filters\ApiCustomAuthorize.cs" />
     <Compile Include="Filters\MvcCustomAuthorize.cs" />
     <Compile Include="Filters\ViewItem.cs" />

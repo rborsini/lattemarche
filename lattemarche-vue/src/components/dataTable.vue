@@ -20,7 +20,6 @@
 </template>
 
 <script>
-var table = null;
 
 import dataTable from "datatables.net-bs4";
 import $ from "jquery";
@@ -36,9 +35,9 @@ export default {
     },
 
     rows: function(rows) {
-      table.clear();
-      table.rows.add(rows);
-      table.draw();
+      this.table.clear();
+      this.table.rows.add(rows);
+      this.table.draw();
     }
   },
 
@@ -103,21 +102,29 @@ export default {
       // merge delle opzioni
       var fullOptions = Object.assign(defaultOptions, options);
 
-      table = $(this.$el.children[0]).DataTable(fullOptions);
+      this.id = options.id;
 
-      table.on("draw.dt", function() {
+      this.table = $(this.$el.children[0]).DataTable(fullOptions);
+
+      this.table.on("draw.dt", function() {
         vm.$emit("data-loaded");
       });
 
-      table.on('preDraw', function () {
+      this.table.on('preDraw', function () {
           vm.$emit('pre-draw');
       });
 
     },
 
+    refresh: function(rows) {
+      this.table.clear();
+      this.table.rows.add(rows);
+      this.table.draw();
+    },
+
     load: function(paramsQueryString) {
       var baseUrl = table.ajax.url().split("?")[0];
-      table.ajax.url(baseUrl + "?" + paramsQueryString).load();
+      this.table.ajax.url(baseUrl + "?" + paramsQueryString).load();
     }
   }
 };

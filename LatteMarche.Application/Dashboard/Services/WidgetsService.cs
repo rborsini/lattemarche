@@ -189,11 +189,6 @@ namespace LatteMarche.Application.Dashboard.Services
             return new DateTime(today.Year, today.Month, 1);
         }
 
-        /// <summary>
-        /// La stagione del latte inizia ad agosto
-        /// </summary>
-        /// <param name="today"></param>
-        /// <returns></returns>
         private DateTime GetInizioAnno(DateTime today)
         {
             var year = today.Month > MESE_INIZIO_STAGIONE ? today.Year : today.Year - 1;

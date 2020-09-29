@@ -7,7 +7,10 @@ module.exports = {
         },
         analisiLatteIndex: {            
             entry: 'src/pages/analisiLatte/index.ts'
-        },        
+        },   
+        analisiProduttoriIndex: {            
+            entry: 'src/pages/analisiProduttori/index.ts'
+        },                
         cessionariIndex: {            
             entry: 'src/pages/cessionari/index.ts'
         },

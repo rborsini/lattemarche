@@ -294,12 +294,18 @@ export default class PrelieviLatteIndexPage extends Vue {
     options.columns.push({
       className: "truncate",
       width: "55px",
-      data: "DataPrelievoStr"
+      data: { 
+        _: "DataPrelievoStr",
+        sort: "DataPrelievo"
+      }
     });
     options.columns.push({
       className: "truncate",
       width: "55px",
-      data: "DataConsegnaStr"
+      data: { 
+        _: "DataConsegnaStr",
+        sort: "DataConsegna"
+      }      
     });
     options.columns.push({
       className: "truncate",

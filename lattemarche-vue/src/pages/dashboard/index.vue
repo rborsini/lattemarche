@@ -99,7 +99,7 @@ import { Prop, Watch, Emit } from "vue-property-decorator";
 
 // import Waiter from "@/components/waiter.vue";
 
-import DashboardService from "@/services/dashboard.service";
+import WidgetsService from "@/services/widgets.service";
 import SommarioWidgetModel from "@/models/sommarioWidget.model";
 import GraficoWidgetModel, { SerieModel } from "@/models/graficoWidget.model";
 
@@ -119,7 +119,7 @@ export default class DashboardPage extends Vue {
   // $refs: any = {
   //   waiter: Vue
   // };
-  private dashboardService: DashboardService;
+  private widgetsService: WidgetsService;
 
   public sommarioWidgetModel: SommarioWidgetModel;
   public tipiLatteWidgetModel: GraficoWidgetModel;
@@ -131,7 +131,7 @@ export default class DashboardPage extends Vue {
   constructor() {
     super();
 
-    this.dashboardService = new DashboardService();
+    this.widgetsService = new WidgetsService();
 
     this.sommarioWidgetModel = new SommarioWidgetModel();
     this.tipiLatteWidgetModel = new GraficoWidgetModel();
@@ -148,13 +148,13 @@ export default class DashboardPage extends Vue {
   }
 
   private async loadSommario() {
-    const sommarioRequest = await this.dashboardService.sommario();
+    const sommarioRequest = await this.widgetsService.sommario();
     // Popolo le card
     this.sommarioWidgetModel = sommarioRequest.data;
   }
 
   private async loadTipiLatte() {
-    const tipiLatteRequest = await this.dashboardService.tipiLatte();
+    const tipiLatteRequest = await this.widgetsService.tipiLatte();
     // Grafico Tipi di latte
     this.tipiLatteWidgetModel = new GraficoWidgetModel(
       tipiLatteRequest.data.ValoriAsseX,
@@ -165,7 +165,7 @@ export default class DashboardPage extends Vue {
   }
 
   private async loadAcquirenti() {
-    const acquirentiRequest = await this.dashboardService.acquirenti();
+    const acquirentiRequest = await this.widgetsService.acquirenti();
     // Grafico Acquirenti
     this.acquirentiWidgetModel = new GraficoWidgetModel(
       acquirentiRequest.data.ValoriAsseX,

@@ -12,9 +12,12 @@ namespace LatteMarche.Application.Dashboard.Dtos
         public string Nome { get; set; }
         public List<decimal?> Valori { get; set; }
 
+        public List<BollaDto> Bolle { get; set; }
+
         public SerieDto()
         {
             this.Valori = new List<decimal?>();
+            this.Bolle = new List<BollaDto>();
         }
 
     }
