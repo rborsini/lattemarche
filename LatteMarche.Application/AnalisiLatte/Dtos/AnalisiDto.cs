@@ -3,6 +3,7 @@ using LatteMarche.Core.Models;
 using RB.Date;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,8 +47,11 @@ namespace LatteMarche.Application.AnalisiLatte.Dtos
 
         private decimal? GetValore(string nome)
         {
+            var ci = CultureInfo.InvariantCulture.Clone() as CultureInfo;
+            ci.NumberFormat.NumberDecimalSeparator = ",";
+
             var valore = this.Valori.FirstOrDefault(v => v.Nome.ToLower() == nome.ToLower());
-            return valore != null && !String.IsNullOrEmpty(valore.Valore) ? Convert.ToDecimal(valore.Valore) : (decimal?)null;
+            return valore != null && !String.IsNullOrEmpty(valore.Valore) ? Convert.ToDecimal(valore.Valore, ci) : (decimal?)null;
         }
 
 

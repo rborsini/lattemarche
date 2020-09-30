@@ -109,6 +109,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         /// <returns></returns>
         [ViewItem(nameof(AnalisiQuantitativa), PAGE_NAME, "Analisi Quantitativa")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult AnalisiQuantitativa(int idAllevamento, string da, string a)
         {
             var dto = this.analisiQuantitativaService.Load(idAllevamento, DateHelper.ConvertToDateTime(da).Value, DateHelper.ConvertToDateTime(a).Value);
@@ -124,6 +125,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         /// <returns></returns>
         [ViewItem(nameof(AnalisiQualitativa), PAGE_NAME, "Analisi Qualitativa")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult AnalisiQualitativa(int idAllevamento, string da, string a)
         {
             var dto = this.analisiQualitativaService.Load(idAllevamento, DateHelper.ConvertToDateTime(da).Value, DateHelper.ConvertToDateTime(a).Value);
@@ -139,6 +141,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         /// <returns></returns>
         [ViewItem(nameof(AnalisiComparativa), PAGE_NAME, "Analisi Comparativa")]
         [HttpGet]
+        [ETag]
         public IHttpActionResult AnalisiComparativa(int idAllevamento, string da, string a)
         {
             var dto = this.analisiComparativaService.Load(idAllevamento, DateHelper.ConvertToDateTime(da).Value, DateHelper.ConvertToDateTime(a).Value);

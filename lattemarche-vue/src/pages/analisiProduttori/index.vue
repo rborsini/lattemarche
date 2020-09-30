@@ -107,8 +107,6 @@ export default class AnalisiProduttoriIndexPage extends Vue {
     public mounted() {
         this.loadDropdown();
         this.keepSelectedTabOnRefresh();
-
-        this.onCaricaClick();
     }
 
 
