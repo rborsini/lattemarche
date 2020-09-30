@@ -108,7 +108,6 @@ export default class AnalisiProduttoriIndexPage extends Vue {
         this.loadDropdown();
         this.keepSelectedTabOnRefresh();
 
-        this.idProduttore = 79;
         this.onCaricaClick();
     }
 
