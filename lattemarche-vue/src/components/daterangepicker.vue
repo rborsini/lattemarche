@@ -4,7 +4,7 @@
 <script>
 
 import $ from 'jquery';
-import { daterangepicker } from 'daterangepicker';     
+import daterangepicker from 'daterangepicker';     
 import moment  from 'moment';     
 import 'daterangepicker/daterangepicker.css'
 
