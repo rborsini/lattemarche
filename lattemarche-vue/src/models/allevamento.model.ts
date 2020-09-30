@@ -6,4 +6,6 @@
     public IdComune: number = 0;
     public IdUtente: number = 0;
     public CUAA: string = "";
+    public Latitudine: number = 0;
+    public Longitudine: number = 0;
 }

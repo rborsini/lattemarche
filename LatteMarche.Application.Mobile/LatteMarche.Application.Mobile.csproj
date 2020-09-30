@@ -75,8 +75,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeCode.Data">
-      <HintPath>..\Libs\WeCode.Data.dll</HintPath>
+    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

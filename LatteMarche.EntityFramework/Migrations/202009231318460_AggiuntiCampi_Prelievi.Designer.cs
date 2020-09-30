@@ -7,13 +7,13 @@ namespace LatteMarche.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RimossaColonnaTargaMezzo : IMigrationMetadata
+    public sealed partial class AggiuntiCampi_Prelievi : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RimossaColonnaTargaMezzo));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AggiuntiCampi_Prelievi));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007131015136_RimossaColonnaTargaMezzo"; }
+            get { return "202009231318460_AggiuntiCampi_Prelievi"; }
         }
         
         string IMigrationMetadata.Source

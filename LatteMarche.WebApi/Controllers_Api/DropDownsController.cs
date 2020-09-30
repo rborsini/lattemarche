@@ -5,6 +5,7 @@ using LatteMarche.Application.Cessionari.Interfaces;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.Comuni.Interfaces;
 using LatteMarche.Application.Destinatari.Interfaces;
+using LatteMarche.Application.Giri.Interfaces;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
@@ -31,6 +32,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         private ICessionariService cessionariService;
         private IComuniService comuniService;
         private IDestinatariService destinatariService;
+        private IGiriService giriService;
         private ILaboratoriAnalisiService laboratoriAnalisiService;
         private ITipiProfiloService tipiProfiloService;
         private ITipiLatteService tipiLatteService;
@@ -48,6 +50,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 ICessionariService cessionariService,
                 IComuniService comuniService,
                 IDestinatariService destinatariService,
+                IGiriService giriService,
                 ILaboratoriAnalisiService laboratoriAnalisiService,
                 ITipiProfiloService tipiProfiloService,
                 ITipiLatteService tipiLatteService,
@@ -60,6 +63,7 @@ namespace LatteMarche.WebApi.Controllers_Api
             this.cessionariService = cessionariService;
             this.comuniService = comuniService;
             this.destinatariService = destinatariService;
+            this.giriService = giriService;
             this.laboratoriAnalisiService = laboratoriAnalisiService;
             this.tipiProfiloService = tipiProfiloService;
             this.tipiLatteService = tipiLatteService;
@@ -93,6 +97,9 @@ namespace LatteMarche.WebApi.Controllers_Api
             if (list.Contains("destinatari"))
                 model.Add("destinatari", this.destinatariService.DropDown(utente.Id));
 
+            if (list.Contains("giri"))
+                model.Add("giri", this.giriService.DropDown(utente.Id));
+
             if (list.Contains("laboratoriAnalisi"))
                 model.Add("laboratoriAnalisi", this.laboratoriAnalisiService.DropDown());
 
@@ -114,7 +121,7 @@ namespace LatteMarche.WebApi.Controllers_Api
                 model.Add("tipiLatte", this.tipiLatteService.DropDown());
 
             if (list.Contains("trasportatori"))
-                model.Add("trasportatori", this.trasportatoriService.DropDown());
+                model.Add("trasportatori", this.trasportatoriService.DropDown(utente.Id));
                 
             return Ok(model);
         }

@@ -36,6 +36,7 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.2.1" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.2.1" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2" />

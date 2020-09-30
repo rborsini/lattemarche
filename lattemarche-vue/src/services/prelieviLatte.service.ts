@@ -6,11 +6,11 @@ export class PrelieviLatteService {
 
     constructor() { }
 
-    public getPrelievi(parameters?: PrelieviLatteSearchModel): AxiosPromise<PrelievoLatte[]> {
+    public search(parameters?: PrelieviLatteSearchModel): AxiosPromise<PrelievoLatte[]> {
         return axios.get('/api/prelievilatte/Search', { params: parameters });
     }
 
-    public getPrelievo(id: string): AxiosPromise<PrelievoLatte> {
+    public details(id: string): AxiosPromise<PrelievoLatte> {
         return axios.get('/api/prelieviLatte/Details?id=' + id);
     }
 

@@ -55,8 +55,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DateHelper, Version=1.0.6492.17801, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DateHelper.1.0.6492.17801\lib\net45\DateHelper.dll</HintPath>
+    <Reference Include="DateHelper, Version=1.0.7571.21747, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DateHelper.1.0.7571.21747\lib\net45\DateHelper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -87,14 +87,9 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="WeCode.Application">
-      <HintPath>..\Libs\WeCode.Application.dll</HintPath>
-    </Reference>
-    <Reference Include="WeCode.Data">
-      <HintPath>..\Libs\WeCode.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="WeCode.EntityFramework">
-      <HintPath>..\Libs\WeCode.EntityFramework.dll</HintPath>
+    <Reference Include="System.Device" />
+    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -64,5 +64,20 @@ namespace LatteMarche.Core.Models
         [Column("CODICE_SITRA")]
         public string CodiceSitra { get; set; }
 
+        [Column("LATITUDINE")]
+        public double? Lat { get; set; }
+
+        [Column("LONGITUDINE")]
+        public double? Lng { get; set; }
+
+        [Column("ID_AUTOCISTERNA")]
+        public int? IdAutocisterna { get; set; }
+
+        [Column("DEVICE_ID")]
+        public string DeviceId { get; set; }
+
+        [Column("ID_GIRO")]
+        public int? IdGiro { get; set; }
+
     }
 }

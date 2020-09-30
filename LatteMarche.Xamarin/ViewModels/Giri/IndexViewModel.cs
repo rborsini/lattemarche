@@ -305,9 +305,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 await Task.Run(() =>
                 {
                     ChiudiGiro(sender);
-
                     InviaGiro(sender, location);
-
                 });
 
                 Analytics.TrackEvent("Giro chiuso", new Dictionary<string, string>());
@@ -327,10 +325,34 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         }
 
+        private void ChiudiGiro(object sender)
+        {
+            var item = sender as ItemViewModel;
+            var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+
+            var giro = this.giriService.GetItemAsync(item.Id).Result;
+            giro.DataConsegna = DateTime.Now;
+            giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+            this.giriService.UpdateItemAsync(giro).Wait();
+
+            var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
+            foreach (var prelievo in prelievi)
+            {
+                prelievo.DataConsegna = giro.DataConsegna;
+                this.prelieviService.UpdateItemAsync(prelievo).Wait();
+            }
+        }
+
         private void InviaGiro(object sender, Location location)
         {
             var item = sender as ItemViewModel;
+
+            var giro = this.giriService.GetItemAsync(item.Id).Result;
+
             var prelievi = this.prelieviService.GetByGiro(item.Id).Result;
+
+            foreach (var prelievo in prelievi)
+                prelievo.Giro = giro;
 
             var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
 
@@ -357,7 +379,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             // chiamata REST upload dati
             if (this.restService.Upload(uploadDto).Result)
             {
-                var giro = this.giriService.GetItemAsync(item.Id).Result;
                 giro.DataUpload = DateTime.Now;
                 this.giriService.UpdateItemAsync(giro).Wait();
 
@@ -367,24 +388,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             else
             {
                 throw new Exception("Errore di sincronizzazione con il server");
-            }
-        }
-
-        private void ChiudiGiro(object sender)
-        {
-            var item = sender as ItemViewModel;
-            var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
-
-            var giro = this.giriService.GetItemAsync(item.Id).Result;
-            giro.DataConsegna = DateTime.Now;
-            giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
-            this.giriService.UpdateItemAsync(giro).Wait();
-
-            var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
-            foreach (var prelievo in prelievi)
-            {
-                prelievo.DataConsegna = giro.DataConsegna;
-                this.prelieviService.UpdateItemAsync(prelievo).Wait();
             }
         }
 

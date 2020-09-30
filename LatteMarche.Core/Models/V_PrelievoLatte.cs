@@ -5,36 +5,40 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LatteMarche.Core.Models;
 using WeCode.Data;
+using System.Device.Location;
 
 namespace LatteMarche.Core.Models
 {
+
     [System.ComponentModel.DataAnnotations.Schema.Table("V_PrelieviLatte")]
     public class V_PrelievoLatte : Entity<int>
     {
-        private DateHelper dateHelper;
+        private DateTime? dataPrelievo;
+        private DateTime? dataConsegna;
+        private DateTime? dataUltimaMungitura;
 
         [Key]
         [Column("ID_PRELIEVO")]
         public override int Id { get; set; }
 
         [Column("DATA_PRELIEVO")]
-        public DateTime? DataPrelievo { get; set; }
+        public DateTime? DataPrelievo { get { return this.dataPrelievo; } set { this.dataPrelievo = value; } }
 
         [NotMapped]
         public string DataPrelievoStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataPrelievo); }
-            set { this.DataPrelievo = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataPrelievo); }
+            set { this.dataPrelievo = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("DATA_CONSEGNA")]
-        public DateTime? DataConsegna { get; set; }
+        public DateTime? DataConsegna { get { return this.dataConsegna; } set { this.dataConsegna = value; } }
 
         [NotMapped]
         public string DataConsegnaStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataConsegna); }
-            set { this.DataConsegna = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataConsegna); }
+            set { this.dataConsegna = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("SCOMPARTO")]
@@ -42,6 +46,8 @@ namespace LatteMarche.Core.Models
 
         [Column("LOTTO_CONSEGNA")]
         public string LottoConsegna { get; set; }
+
+        public string CodiceGiro { get { return !String.IsNullOrEmpty(this.LottoConsegna) && this.LottoConsegna.Length > 2 ? this.LottoConsegna.Substring(0, 2) : ""; } }
 
         [Column("QUANTITA")]
         public Decimal? Quantita { get; set; }
@@ -53,13 +59,13 @@ namespace LatteMarche.Core.Models
         public Decimal? Temperatura { get; set; }
 
         [Column("DATA_ULTIMA_MUNGITURA")]
-        public DateTime? DataUltimaMungitura { get; set; }
+        public DateTime? DataUltimaMungitura { get { return this.dataUltimaMungitura; } set { this.dataUltimaMungitura = value; } }
 
         [NotMapped]
         public string DataUltimaMungituraStr
         {
-            get { return new DateHelper().FormatDateTime(this.DataUltimaMungitura); }
-            set { this.DataUltimaMungitura = this.dateHelper.ConvertToDateTime(value).HasValue ? this.dateHelper.ConvertToDateTime(value).Value : DateTime.MinValue; }
+            get { return DateHelper.FormatDate(this.dataUltimaMungitura); }
+            set { this.dataUltimaMungitura = DateHelper.ConvertToDateTime(value); }
         }
 
         [Column("ID_ALLEVAMENTO")]
@@ -70,6 +76,40 @@ namespace LatteMarche.Core.Models
 
         [Column("PIVA_ALLEVAMENTO")]
         public string PIVA_Allevamento { get; set; }
+
+        [Column("LAT_ALLEVAMENTO")]
+        public double? Allevamento_Lat { get; set; }
+
+        [Column("LNG_ALLEVAMENTO")]
+        public double? Allevamento_Lng { get; set; }
+
+        [Column("LAT_PRELIEVO")]
+        public double? Lat { get; set; }
+
+        [Column("LNG_PRELIEVO")]
+        public double? Lng { get; set; }
+
+        [Column("TARGA_MEZZO")]
+        public string Targa { get; set; }
+
+        public double? DistanzaAllevamento
+        {
+            get
+            {
+                if (this.Lat.HasValue && this.Lng.HasValue && this.Allevamento_Lat.HasValue && this.Allevamento_Lng.HasValue)
+                {
+                    var coordinatePrelievo = new GeoCoordinate(this.Lat.Value, this.Lng.Value);
+                    var coordinateAllevamento = new GeoCoordinate(this.Allevamento_Lat.Value, this.Allevamento_Lng.Value);
+
+                    return coordinatePrelievo.GetDistanceTo(coordinateAllevamento);
+                }
+                else
+                    return (double?)null;
+            }
+        }
+
+        public string DistanzaAllevamento_Str { get { return this.DistanzaAllevamento.HasValue ? $"{this.DistanzaAllevamento:#0} m" : "-"; } }
+
 
         [NotMapped]
         public string AllevamentoCompleto { get { return $"{this.Allevamento} {this.PIVA_Allevamento}"; } }
@@ -120,9 +160,7 @@ namespace LatteMarche.Core.Models
         [Column("SIGLA_LATTE")]
         public string SiglaLatte { get; set; }
 
-        public V_PrelievoLatte()
-        {
-            this.dateHelper = new DateHelper();
-        }
+
+
     }
 }

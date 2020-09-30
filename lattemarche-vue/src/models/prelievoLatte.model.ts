@@ -28,6 +28,15 @@ export class PrelievoLatte {
     public Scomparto: string = "";
     public SerialeLabAnalisi: string = "";
     public Temperatura: number = 0;
+    public IdAutocisterna: number = 0;
+    public Lat: number = 0;
+    public Lng: number = 0;
+    public Allevamento_Lat: number = 0;
+    public Allevamento_Lng: number = 0;    
+    public DistanzaAllevamento: number = 0;
+    public DistanzaAllevamento_Str: string = "";
+    public DeviceId: string = "";
+    public CodiceSitra: string = "";
 }
 
 export class PrelieviLatteSearchModel {
@@ -42,6 +51,9 @@ export class PrelieviLatteSearchModel {
     public IdDestinatario?: number = 0;
     public IdCessionario?: number = 0;
     public IdTipoLatte?: number = 0;
+
+    public LottoConsegna: string = "";
+    public CodiceGiro: string = "";
 
     public ToUrlQueryString(): string {
         return jQuery.param(this);

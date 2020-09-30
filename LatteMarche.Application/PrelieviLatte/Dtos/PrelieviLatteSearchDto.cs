@@ -25,8 +25,17 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
             set { this.dataPeriodoFine = value; }
         }
 
-        public string DataPeriodoInizio_Str { get { return new DateHelper().FormatDate(this.dataPeriodoInizio); } set { this.dataPeriodoInizio = new DateHelper().ConvertToDateTime(value); } }
-        public string DataPeriodoFine_Str { get { return new DateHelper().FormatDate(this.dataPeriodoFine); } set { this.dataPeriodoFine = new DateHelper().ConvertToDateTime(value); } }
+        public string DataPeriodoInizio_Str 
+        { 
+            get { return DateHelper.FormatDate(this.dataPeriodoInizio); } 
+            set { this.dataPeriodoInizio = DateHelper.ConvertToDateTime(value); } 
+        }
+
+        public string DataPeriodoFine_Str 
+        { 
+            get { return DateHelper.FormatDate(this.dataPeriodoFine); } 
+            set { this.dataPeriodoFine = DateHelper.ConvertToDateTime(value); } 
+        }
 
         public int? IdAllevamento { get; set; }
         public int? IdTrasportatore { get; set; }
@@ -36,6 +45,10 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public int? IdTipoLatte { get; set; }
 
         public bool? InviatoSitra { get; set; }            
+
+        public string LottoConsegna { get; set; }
+
+        public string CodiceGiro { get; set; }
 
         public int IdUtente { get; set; }
              

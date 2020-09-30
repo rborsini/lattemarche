@@ -79,8 +79,11 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.EntityFramework">
-      <HintPath>..\Libs\WeCode.EntityFramework.dll</HintPath>
+    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WeCode.EntityFramework, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.EntityFramework.1.0.7459.22210\lib\net461\WeCode.EntityFramework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -152,13 +155,13 @@
     <Compile Include="Migrations\202007010918450_AggiuntoCampoAbilitato.Designer.cs">
       <DependentUpon>202007010918450_AggiuntoCampoAbilitato.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.cs" />
-    <Compile Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.Designer.cs">
-      <DependentUpon>202007010919323_Aggiornata_V_Prelievi1.cs</DependentUpon>
+    <Compile Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.cs" />
+    <Compile Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.Designer.cs">
+      <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.cs" />
-    <Compile Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.Designer.cs">
-      <DependentUpon>202007131015136_RimossaColonnaTargaMezzo.cs</DependentUpon>
+    <Compile Include="Migrations\202009280629306_Aggiunto_IdGiro.cs" />
+    <Compile Include="Migrations\202009280629306_Aggiunto_IdGiro.Designer.cs">
+      <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,11 +234,11 @@
     <EmbeddedResource Include="Migrations\202007010918450_AggiuntoCampoAbilitato.resx">
       <DependentUpon>202007010918450_AggiuntoCampoAbilitato.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007010919323_Aggiornata_V_Prelievi1.resx">
-      <DependentUpon>202007010919323_Aggiornata_V_Prelievi1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009231318460_AggiuntiCampi_Prelievi.resx">
+      <DependentUpon>202009231318460_AggiuntiCampi_Prelievi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007131015136_RimossaColonnaTargaMezzo.resx">
-      <DependentUpon>202007131015136_RimossaColonnaTargaMezzo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009280629306_Aggiunto_IdGiro.resx">
+      <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

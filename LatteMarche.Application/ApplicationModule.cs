@@ -85,6 +85,11 @@ namespace LatteMarche.Application
             RegisterService<UtentiService, IUtentiService>(builder);
             RegisterService<WidgetsService, IWidgetsService>(builder);
 
+            RegisterService<AnalisiComparativaService, IAnalisiComparativaService>(builder);
+            RegisterService<AnalisiQualitativaService, IAnalisiQualitativaService>(builder);
+            RegisterService<AnalisiQuantitativaService, IAnalisiQuantitativaService>(builder);
+
+
             builder.RegisterType<LogsService>().As<ILogsService>().SingleInstance();            
 
             base.Load(builder);

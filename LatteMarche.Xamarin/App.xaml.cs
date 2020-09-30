@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Rewrite.Internal.ApacheModRewrite;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Distribute;
 
 namespace LatteMarche.Xamarin
 {
@@ -46,7 +48,8 @@ namespace LatteMarche.Xamarin
         {
             InitializeComponent();
 
-            AppCenter.Start("android=2676a594-ff4a-483a-8178-ca2377f493d2;", typeof(Analytics), typeof(Crashes));
+            Distribute.UpdateTrack = UpdateTrack.Private;
+            AppCenter.Start("android=2676a594-ff4a-483a-8178-ca2377f493d2;", typeof(Analytics), typeof(Crashes), typeof(Distribute));
 
             VersionTracking.Track();
 
@@ -101,6 +104,7 @@ namespace LatteMarche.Xamarin
 
         protected override void OnResume()
         {
+            Distribute.CheckForUpdate();
 
             var device = DependencyService.Get<IDevice>();
             var restService = DependencyService.Get<IRestService>();

@@ -158,13 +158,15 @@ namespace MigrationsConsole.Migrations
                     b.Property<int>("Portata")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Selezionata")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Targa")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdTrasportatore")
-                        .IsUnique();
+                    b.HasIndex("IdTrasportatore");
 
                     b.ToTable("AutoCisterne");
                 });
@@ -282,6 +284,9 @@ namespace MigrationsConsole.Migrations
                     b.Property<int?>("IdAllevamento")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IdAutocisterna")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("IdCessionario")
                         .HasColumnType("INTEGER");
 
@@ -290,6 +295,12 @@ namespace MigrationsConsole.Migrations
 
                     b.Property<int?>("IdGiro")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Lat")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Lng")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("NumeroMungiture")
                         .HasColumnType("INTEGER");
@@ -429,8 +440,8 @@ namespace MigrationsConsole.Migrations
             modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.AutoCisterna", b =>
                 {
                     b.HasOne("LatteMarche.Xamarin.Db.Models.Trasportatore", "Trasportatore")
-                        .WithOne("AutoCisterna")
-                        .HasForeignKey("LatteMarche.Xamarin.Db.Models.AutoCisterna", "IdTrasportatore");
+                        .WithMany("AutoCisterne")
+                        .HasForeignKey("IdTrasportatore");
                 });
 
             modelBuilder.Entity("LatteMarche.Xamarin.Db.Models.Prelievo", b =>

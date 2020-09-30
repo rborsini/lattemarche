@@ -8,6 +8,11 @@ SELECT
 	prelievi.ID_ALLEVAMENTO,
 	utenti_allevamento.RAGIONE_SOCIALE as DESCR_ALLEVAMENTO,
 	utenti_allevamento.PIVA_CF as PIVA_ALLEVAMENTO,
+	allevamenti.LATITUDINE as LAT_ALLEVAMENTO,
+	allevamenti.LONGITUDINE as LNG_ALLEVAMENTO,
+	prelievi.LATITUDINE as LAT_PRELIEVO,
+	prelievi.LONGITUDINE as LNG_PRELIEVO,
+	autocisterne.TARGA_MEZZO,
 	prelievi.ID_DESTINATARIO,
 	destinatari.RAG_SOC_DESTINATARIO,
 	prelievi.ID_ACQUIRENTE,
@@ -49,3 +54,6 @@ FROM
 	
 	LEFT OUTER JOIN
 	TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
+
+	LEFT OUTER JOIN
+	AUTOCISTERNA as autocisterne on autocisterne.ID_VEICOLO = prelievi.ID_AUTOCISTERNA

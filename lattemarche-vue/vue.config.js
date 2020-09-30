@@ -7,7 +7,10 @@ module.exports = {
         },
         analisiLatteIndex: {            
             entry: 'src/pages/analisiLatte/index.ts'
-        },        
+        },   
+        analisiProduttoriIndex: {            
+            entry: 'src/pages/analisiProduttori/index.ts'
+        },                
         cessionariIndex: {            
             entry: 'src/pages/cessionari/index.ts'
         },
@@ -25,6 +28,9 @@ module.exports = {
         },             
         laboratoriIndex: {            
             entry: 'src/pages/laboratori/index.ts'
+        },
+        prelieviLatteEdit: {            
+            entry: 'src/pages/prelieviLatte/edit.ts'
         },
         prelieviLatteIndex: {            
             entry: 'src/pages/prelieviLatte/index.ts'

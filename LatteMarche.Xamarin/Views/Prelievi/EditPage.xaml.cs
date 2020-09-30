@@ -17,12 +17,13 @@ namespace LatteMarche.Xamarin.Views.Prelievi
     public partial class EditPage : ContentPage
     {
         private EditViewModel viewModel;
+        private bool firstLoad = true;
 
         public EditPage(EditViewModel viewModel)
         {
             InitializeComponent();
-
             BindingContext = this.viewModel = viewModel;
+            this.firstLoad = true;
         }
 
         private void ContentPage_Disappearing(object sender, EventArgs e)
@@ -32,7 +33,11 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            this.viewModel.LoadCommand.Execute(null);
+            if(this.firstLoad)
+            {
+                this.viewModel.LoadCommand.Execute(null);
+                this.firstLoad = false;
+            }            
         }
 
         private void Kg_Unfocused(object sender, FocusEventArgs e)
@@ -79,20 +84,38 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
         }
 
+        /// <summary>
+        /// #326256
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Allevamento_ChoiceSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //// #326101
-            //if(this.viewModel.Prelievo.IdAllevamento != (e.SelectedItem as Allevamento).IdAllevamento)
-            //{
-            //    this.viewModel.Prelievo.IdAcquirente = (int?)null;
-            //    this.viewModel.AcquirenteSelezionato = this.viewModel.GetAcquirenteSelezionato();
+            var allevamento = (e.SelectedItem as Allevamento);
+            if (this.viewModel.Prelievo.IdAllevamento != allevamento.IdAllevamento)
+            {
+                // acquirente default
+                var idAcquirenteDefault = allevamento.IdAcquirenteDefault;
+                if (idAcquirenteDefault.HasValue && idAcquirenteDefault.Value != this.viewModel.AcquirenteSelezionato.Id)
+                {
+                    this.viewModel.AcquirenteSelezionato = this.viewModel.Acquirenti.First(a => a.Id == idAcquirenteDefault.Value);
+                }
 
-            //    this.viewModel.Prelievo.IdCessionario = (int?)null;
-            //    this.viewModel.CessionarioSelezionato = this.viewModel.GetCessionarioSelezionato();
+                // cessionario default
+                var idCessionarioDefault = allevamento.IdCessionarioDefault;
+                if (idCessionarioDefault.HasValue && idCessionarioDefault.Value != this.viewModel.CessionarioSelezionato.Id)
+                {
+                    this.viewModel.CessionarioSelezionato = this.viewModel.Cessionari.First(a => a.Id == idCessionarioDefault.Value);
+                }
 
-            //    this.viewModel.Prelievo.IdDestinatario = (int?)null;
-            //    this.viewModel.DestinatarioSelezionato = this.viewModel.GetDestinatarioSelezionato();
-            //}
+                // destinatario default
+                var idDestinatarioDefault = allevamento.IdDestinatarioDefault;
+                if (idDestinatarioDefault.HasValue && idDestinatarioDefault.Value != this.viewModel.DestinatarioSelezionato.Id)
+                {
+                    this.viewModel.DestinatarioSelezionato = this.viewModel.Destinatari.First(a => a.Id == idDestinatarioDefault.Value);
+                }
+
+            }
 
 
         }

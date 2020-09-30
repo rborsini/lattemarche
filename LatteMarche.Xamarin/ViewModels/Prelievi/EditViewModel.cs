@@ -66,6 +66,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
         private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private IGiriService giriService => DependencyService.Get<IGiriService>();
@@ -330,6 +331,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             return await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();            
         }
 
+        /// <summary>
+        /// Rilevamento posizione
+        /// </summary>
+        /// <returns></returns>
         private Location GetLocation()
         {
             var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
@@ -457,9 +462,18 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
+                // rilevamento posizione
+                var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                var location = GetLocation();
+                if (location == null)
+                {
+                    await loadingDialog.DismissAsync();
+                    await this.page.DisplayAlert("Attenzione", "E' necessario abilitare la geolocalizzazione.", "OK");
+                    return;
+                }
 
                 // validazione campi obbligatori
-                if(!MandatoryFieldsAreFilled())
+                if (!MandatoryFieldsAreFilled())
                 {
                     await loadingDialog.DismissAsync();
                     await this.page.DisplayAlert("Attenzione", "E' necessario compilare tutti i valori indicati.", "OK");
@@ -479,7 +493,6 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     }                        
                 }
 
-
                 await Task.Run(() =>
                 {
                     this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
@@ -496,6 +509,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     this.prelievo.IdAcquirente = this.AcquirenteSelezionato != null ? this.AcquirenteSelezionato.Id : (int?)null;
                     this.prelievo.IdCessionario = this.CessionarioSelezionato != null ? this.CessionarioSelezionato.Id : (int?)null;
                     this.prelievo.IdDestinatario = this.DestinatarioSelezionato != null ? this.DestinatarioSelezionato.Id : (int?)null;
+
+                    this.prelievo.IdAutocisterna = this.autocisterneService.GetDefaultAsync().Result.Id;
+                    this.prelievo.Lat = Convert.ToDecimal(location.Latitude);
+                    this.prelievo.Lng = Convert.ToDecimal(location.Longitude);
 
                     this.prelievo.Titolo = this.AllevamentoSelezionato?.RagioneSociale;
 

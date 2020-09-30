@@ -34,6 +34,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         #region Methods
 
         [ViewItem(nameof(Index), "Prelievi", "Lista")]
+        [ViewItem("FlagCoordinate", "Prelievi", "Flag coordinate")]
         [OutputCache(Duration = 86400, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Index()
         {
@@ -42,6 +43,16 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             return View(idProfilo);
         }
+
+        [ViewItem("Save", "Prelievi - Dettaglio", "Modifica")]
+        [ViewItem("Mappa", "Prelievi - Dettaglio", "Mappa")]
+        [ViewItem(nameof(Edit), "Prelievi - Dettaglio", "Sola lettura")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
 
         #endregion
 

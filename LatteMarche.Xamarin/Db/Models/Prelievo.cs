@@ -32,5 +32,9 @@ namespace LatteMarche.Xamarin.Db.Models
         public int? IdCessionario { get; set; }
         public int? IdDestinatario { get; set; }
 
+        public int IdAutocisterna { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Lng { get; set; }
+
     }
 }

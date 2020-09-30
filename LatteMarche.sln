@@ -52,19 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{C892F85C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.Application.Mobile", "LatteMarche.Application.Mobile\LatteMarche.Application.Mobile.csproj", "{D52AB32E-1432-4B28-9438-C74D25E70F35}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B7A81D8E-7860-49E9-9401-9E800F7F4E8F}"
-	ProjectSection(SolutionItems) = preProject
-		Libs\WeCode.Application.dll = Libs\WeCode.Application.dll
-		Libs\WeCode.Application.dll.config = Libs\WeCode.Application.dll.config
-		Libs\WeCode.Application.pdb = Libs\WeCode.Application.pdb
-		Libs\WeCode.Data.dll = Libs\WeCode.Data.dll
-		Libs\WeCode.Data.dll.config = Libs\WeCode.Data.dll.config
-		Libs\WeCode.Data.pdb = Libs\WeCode.Data.pdb
-		Libs\WeCode.EntityFramework.dll = Libs\WeCode.EntityFramework.dll
-		Libs\WeCode.EntityFramework.dll.config = Libs\WeCode.EntityFramework.dll.config
-		Libs\WeCode.EntityFramework.pdb = Libs\WeCode.EntityFramework.pdb
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZebraPrinterlConsole", "ZebraPrinterlConsole\ZebraPrinterlConsole.csproj", "{7C922B9C-1E3B-46D5-AD69-684BF126C572}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "lattemarche-vue", "lattemarche-vue\", "{F050BA14-BB3B-4B0C-A5F8-06B87C4868F0}"
@@ -99,7 +86,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShellScripts", "PowerS
 		PowerShellScripts\oauth-test.ps1 = PowerShellScripts\oauth-test.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.E2E.Test", "LatteMarche.E2E.Test\LatteMarche.E2E.Test.csproj", "{25858094-F9B7-4F88-9B9B-0B193257E424}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LatteMarche.E2E.Test", "LatteMarche.E2E.Test\LatteMarche.E2E.Test.csproj", "{25858094-F9B7-4F88-9B9B-0B193257E424}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

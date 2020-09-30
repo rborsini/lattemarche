@@ -8,6 +8,8 @@ using WeCode.Data.Interfaces;
 using WeCode.Application;
 using LatteMarche.EntityFramework;
 using LatteMarche.Application.Common.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
+using LatteMarche.Application.Trasportatori.Interfaces;
 
 namespace LatteMarche.Application.Giri.Services
 {
@@ -19,16 +21,19 @@ namespace LatteMarche.Application.Giri.Services
 
         private IRepository<Giro, int> giriRepository;
         private IRepository<Allevamento, int> allevamentiRepository;
+        private ITrasportatoriService trasportatoriService;
 
         #endregion
 
         #region Constructor
 
-        public GiriService(IUnitOfWork uow)
+        public GiriService(IUnitOfWork uow, ITrasportatoriService trasportatoriService)
             : base(uow)
         {
             this.giriRepository = this.uow.Get<Giro, int>();
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+
+            this.trasportatoriService = trasportatoriService;
         }
 
         #endregion
@@ -69,12 +74,33 @@ namespace LatteMarche.Application.Giri.Services
             return dto;
         }
 
+        public DropDownDto DropDown(int? idUtente = null)
+        {
+            var dropdown = new DropDownDto();
+
+            var trasportatoriDropdown = this.trasportatoriService.DropDown(idUtente);
+            var trasportatoriIds = trasportatoriDropdown.Items.Select(i => Convert.ToInt32(i.Value)).ToList();
+
+            dropdown.Items = this.repository.DbSet
+                .Where(g => trasportatoriIds.Contains(g.IdTrasportatore))
+                .OrderBy(i => i.CodiceGiro)
+                .ToList()
+                .Select(c => new DropDownItem()
+                {
+                    Value = c.CodiceGiro,
+                    Text = $"{c.CodiceGiro} - {c.Denominazione}"
+                })
+                .ToList();
+
+            return dropdown;
+        }
+
         /// <summary>
         /// Caricamento giri singolo trasportatore
         /// </summary>
         /// <param name="idTrasportatore"></param>
         /// <returns></returns>
-        public DropDownDto DropDown(int idTrasportatore)
+        public DropDownDto DropDownByTrasportatore(int idTrasportatore)
         {
             var dropdown = new DropDownDto();
 

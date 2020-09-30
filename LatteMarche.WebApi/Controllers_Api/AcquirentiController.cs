@@ -55,16 +55,12 @@ namespace LatteMarche.WebApi.Controllers_Api
         [ViewItem(nameof(Dropdown), "Acquirenti", "Dropdown")]
         [HttpGet]
         [ETag]
-        public async Task<IHttpActionResult> Dropdown()
+        public IHttpActionResult Dropdown()
         {
-
-            Thread.Sleep(3000);
-
             var utente = this.utentiService.Details(User.Identity.Name);
             var dropDown = this.acquirentiService.DropDown(utente.Id);
 
-            return Ok(Task.FromResult(dropDown));
-
+            return Ok(dropDown);
         }
 
         [ViewItem(nameof(Save), "Acquirenti", "Salvataggio")]

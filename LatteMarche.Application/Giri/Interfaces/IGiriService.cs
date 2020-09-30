@@ -11,12 +11,10 @@ namespace LatteMarche.Application.Giri.Interfaces
     public interface IGiriService : IEntityService<Giro, int, GiroDto>
     {
 
-        /// <summary>
-        /// Recupero giri trasportatore
-        /// </summary>
-        /// <param name="idTrasportatore"></param>
-        /// <returns></returns>
-        DropDownDto DropDown(int idTrasportatore);
+        DropDownDto DropDownByTrasportatore(int idTrasportatore);
+
+
+        DropDownDto DropDown(int? idUtente = (int?)null);
 
     }
 

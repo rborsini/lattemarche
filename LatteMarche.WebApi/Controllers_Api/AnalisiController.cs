@@ -30,23 +30,19 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Methods
 
 
-        [ViewItem(nameof(Synch), "Analisi latte", "Sincronizzazione")]
+        [ViewItem(nameof(Synch), "Analisi", "Sincronizzazione")]
         [HttpPost]
         public IHttpActionResult Synch()
         {
-
-                var reports = this.analisiService.Synch();
-                return Ok(reports);
-
+            var reports = this.analisiService.Synch();
+            return Ok(reports);
         }
 
-        [ViewItem(nameof(Search), "Analisi latte", "Ricerca")]
+        [ViewItem(nameof(Search), "Analisi", "Ricerca")]
         [HttpGet]
         public IHttpActionResult Search([FromUri] AnalisiSearchDto searchDto)
         {
-
-                return Ok(this.analisiService.Search(searchDto));
-
+            return Ok(this.analisiService.Search(searchDto));
         }
 
         #endregion

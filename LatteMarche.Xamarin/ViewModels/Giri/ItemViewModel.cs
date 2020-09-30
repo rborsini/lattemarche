@@ -34,6 +34,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         public string CodiceLotto { get; set; }
 
+        public string SubTotaleStr { get; set; }
+
         public DateTime DataCreazione { get; set; }
 
         public DateTime? DataConsegna { get; set; }
