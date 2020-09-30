@@ -40,7 +40,7 @@ namespace LatteMarche.Application.Dashboard.Services
 
             var analisi = GetAnalisi(from, to);
 
-            dto.BubbleChart = MakeBubbleChart(analisi, from, to);
+            dto.BubbleChart = MakeBubbleChart(analisi, idAllevamento, from, to);
             dto.SpiderChart = MakeSpiderChart(analisi, idAllevamento);
 
             return dto;
@@ -48,23 +48,24 @@ namespace LatteMarche.Application.Dashboard.Services
 
 
 
-        private WidgetGraficoDto MakeBubbleChart(List<AnalisiDto> analisi, DateTime from, DateTime to)
+        private WidgetGraficoDto MakeBubbleChart(List<AnalisiDto> analisi, int idAllevamento, DateTime from, DateTime to)
         {
             var dto = new WidgetGraficoDto();
             var serie = new SerieDto();
 
             var idAllevamenti = analisi.Select(a => a.IdAllevamento).Distinct().ToList();
 
-            foreach(var idAllevamento in idAllevamenti)
+            foreach(var id in idAllevamenti)
             {
-                var analisiAllevamento = analisi.Where(a => a.IdAllevamento == idAllevamento).ToList();
-                var prelieviAllevamento = this.prelieviRepository.DbSet.Where(p => p.IdAllevamento == idAllevamento && from <= p.DataPrelievo && p.DataPrelievo < to);
+                var analisiAllevamento = analisi.Where(a => a.IdAllevamento == id).ToList();
+                var prelieviAllevamento = this.prelieviRepository.DbSet.Where(p => p.IdAllevamento == id && from <= p.DataPrelievo && p.DataPrelievo < to);
                 var valoriGrasso = analisiAllevamento.Where(a => a.Grasso.HasValue).Select(a => a.Grasso);
                 var valoriProteine = analisiAllevamento.Where(a => a.Proteine.HasValue).Select(a => a.Proteine);
 
                 serie.Bolle.Add(new BollaDto()
                 {
                     Nome = analisiAllevamento[0].NomeProduttore,
+                    Colore = idAllevamento == id ? "#ff0000" : "",
                     X = valoriGrasso.Count() > 0 ? valoriGrasso.Average() : (decimal?)null,
                     Y = valoriProteine.Count() > 0 ? valoriProteine.Average() : (decimal?)null,
                     Z = prelieviAllevamento.Count() > 0 ? prelieviAllevamento.Sum(p => p.Quantita.Value) : (decimal?)null
@@ -79,25 +80,16 @@ namespace LatteMarche.Application.Dashboard.Services
         private WidgetGraficoDto MakeSpiderChart(List<AnalisiDto> analisi, int idAllevamento)
         {
             var dto = new WidgetGraficoDto();
-            //var serieAllevamento = new SerieDto() { Nome = "Allevamento" };
-            //var serieAltri = new SerieDto() { Nome = "Altri" };
 
-            var analisiAllevamento = analisi.Where(a => a.IdAllevamento == idAllevamento).ToList();
-            var analisiAltri = analisi.Where(a => a.IdAllevamento != idAllevamento).ToList();
+            dto.ValoriAsseX = new List<string>() { "Grasso", "Proteine", "Carica batterica", "Cellule somatiche" };
 
-            var serieAllevamento = MakeSerie("Allevamento", analisiAllevamento);
-            var serieAltri = MakeSerie("Altri", analisiAltri);
+            var analisiNotNull = analisi.Where(a => a.Grasso.HasValue && a.Proteine.HasValue && a.CaricaBatterica.HasValue && a.CelluleSomatiche.HasValue).ToList();
 
-            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.Grasso));
-            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.Proteine));
-            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.CaricaBatterica));
-            //serieAllevamento.Valori.Add(analisiAllevamento.Sum(a => a.CelluleSomatiche));
+            var analisiAllevamento = analisiNotNull.Where(a => a.IdAllevamento == idAllevamento).ToList();
+            var analisiAltri = analisiNotNull.Where(a => a.IdAllevamento != idAllevamento).ToList();
 
-
-            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.Grasso));
-            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.Proteine));
-            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.CaricaBatterica));
-            //serieAltri.Valori.Add(analisiAltri.Sum(a => a.CelluleSomatiche));
+            var serieAllevamento = MakeSerie("Allevamento", analisiNotNull, analisiAllevamento);
+            var serieAltri = MakeSerie("Altri", analisiNotNull, analisiAltri);
 
             dto.Serie.Add(serieAllevamento);
             dto.Serie.Add(serieAltri);
@@ -105,19 +97,18 @@ namespace LatteMarche.Application.Dashboard.Services
             return dto;
         }
 
-        private SerieDto MakeSerie(string nome, List<AnalisiDto> analisi)
+
+        private SerieDto MakeSerie(string nome, List<AnalisiDto> analisiAll, List<AnalisiDto> analisi)
         {
             var serie = new SerieDto() { Nome = nome };
 
-            var valoriGrasso = analisi.Where(a => a.Grasso.HasValue).Select(a => a.Grasso.Value);
-            var valoriProteine = analisi.Where(a => a.Proteine.HasValue).Select(a => a.Proteine.Value);
-            var valoriCaricaBatterica = analisi.Where(a => a.CaricaBatterica.HasValue).Select(a => a.CaricaBatterica.Value);
-            var valoriCelluleSomatiche = analisi.Where(a => a.CelluleSomatiche.HasValue).Select(a => a.CelluleSomatiche.Value);
-
-            serie.Valori.Add(valoriGrasso.Count() > 0 ? valoriGrasso.Average() : (decimal?)null);
-            serie.Valori.Add(valoriProteine.Count() > 0 ? valoriProteine.Average() : (decimal?)null);
-            serie.Valori.Add(valoriCaricaBatterica.Count() > 0 ? valoriCaricaBatterica.Average() : (decimal?)null);
-            serie.Valori.Add(valoriCelluleSomatiche.Count() > 0 ? valoriCelluleSomatiche.Average() : (decimal?)null);
+            if(analisi.Count > 0)
+            {
+                serie.Valori.Add(GetPercentile(analisiAll.Select(a => a.Grasso.Value).Distinct().ToArray(), analisi.Average(a => a.Grasso.Value)));
+                serie.Valori.Add(GetPercentile(analisiAll.Select(a => a.Proteine.Value).Distinct().ToArray(), analisi.Average(a => a.Proteine.Value)));
+                serie.Valori.Add(GetPercentile(analisiAll.Select(a => a.CaricaBatterica.Value).Distinct().ToArray(), analisi.Average(a => a.CaricaBatterica.Value)));
+                serie.Valori.Add(GetPercentile(analisiAll.Select(a => a.CelluleSomatiche.Value).Distinct().ToArray(), analisi.Average(a => a.CelluleSomatiche.Value)));
+            }
 
             return serie;
         }
@@ -131,6 +122,102 @@ namespace LatteMarche.Application.Dashboard.Services
 
             return Mapper.Map<List<AnalisiDto>>(entities);
         }
+
+        public decimal GetPercentile(decimal[] sequence, decimal value)
+        {
+            var sortedSequence = sequence.OrderBy(d => d).ToArray();
+
+            var min = sortedSequence.First();
+            var max = sortedSequence.Last();
+
+            if (value <= min)
+                return 0;
+
+            if (value >= max)
+                return 100;
+
+            //var index = sortedSequence
+            //    .Select((d, i) => new { Value = d, Index = i })
+            //    .First(v => v.Value >= value)
+            //    .Index;
+            var index = sortedSequence.TakeWhile(d => d < value).Count();
+            
+
+            return Math.Round((Convert.ToDecimal(index) / sortedSequence.Length) * 100, 2);
+
+        }
+
+        //public decimal GetPercentile(decimal[] sequence, decimal value)
+        //{
+        //    if (sequence.Length == 0)
+        //        return 0;
+
+        //    if (value > 100)
+        //        value = 100;
+
+        //    Array.Sort(sequence);
+        //    int N = sequence.Length;
+        //    decimal n = (N - 1) * (value / 100) + 1;
+        //    // Another method: double n = (N + 1) * excelPercentile;
+        //    if (n == 1) return sequence[0];
+        //    else if (n == N) return sequence[N - 1];
+        //    else
+        //    {
+        //        int k = (int)n;
+        //        decimal d = n - k;
+        //        return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
+        //    }
+        //}
+
+        //public decimal GetPercentile(decimal[] sequence, decimal excelPercentile)
+        //{
+        //    Array.Sort(sequence);
+        //    int N = sequence.Length;
+        //    decimal n = (N - 1) * excelPercentile + 1;
+        //    // Another method: double n = (N + 1) * excelPercentile;
+        //    if (n == 1) return sequence[0];
+        //    else if (n == N) return sequence[N - 1];
+        //    else
+        //    {
+        //        int k = (int)n;
+        //        decimal d = n - k;
+        //        return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
+        //    }
+        //}
+
+        //private decimal GetPercentile(decimal[] data, decimal p)
+        //{
+        //    var sortedData = data.OrderBy(d => d).ToArray();
+
+        //    if (p >= 100) 
+        //        return sortedData[sortedData.Length - 1];
+
+        //    decimal position = Convert.ToDecimal((sortedData.Length + 1) * p) / 100;
+
+        //    decimal leftNumber = 0;
+        //    decimal rightNumber = 0;
+
+        //    decimal n = p / 100 * (sortedData.Length - 1) + 1;
+
+        //    if (position >= 1)
+        //    {
+        //        leftNumber = sortedData[(int)System.Math.Floor(n) - 1];
+        //        rightNumber = sortedData[(int)System.Math.Floor(n)];
+        //    }
+        //    else
+        //    {
+        //        leftNumber = sortedData[0]; // first data
+        //        rightNumber = sortedData[1]; // first data
+        //    }
+
+        //    if (leftNumber == rightNumber)
+        //        return leftNumber;
+        //    else
+        //    {
+        //        decimal part = n - System.Math.Floor(n);
+        //        return leftNumber + part * (rightNumber - leftNumber);
+        //    }
+        //}
 
         #endregion
 

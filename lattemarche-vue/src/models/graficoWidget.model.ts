@@ -5,11 +5,13 @@ export class BollaModel {
     public X!: number;
     public Y!: number;
     public Z!: number;
+    public Colore!: string;
 }
 
 export class SerieModel {
     public Id!: string;
     public Nome!: string;
+    public Y_Axis!: number;
     public Valori!: number[];
     public Bolle!: BollaModel[];
 }

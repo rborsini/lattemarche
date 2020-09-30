@@ -1,35 +1,42 @@
 <template>
     <div>
-        <div class="row pl-3 pt-3">
-            <h2>Analisi quantitativa</h2>
+        <div class="row pl-4 pt-4">
+            <h2 class="pl-2" >Analisi quantitativa</h2>
         </div>
 
-        <!-- grafici -->
-        <div class="row">
-            <!-- Andamento mensile -->
-            <div class="col-6">
-                <highcharts :options="andamentoMensileOptions"></highcharts>
-            </div>
-
-            <!-- Andamento giornaliero -->
-            <div class="col-6">
-                <highcharts :options="andamentoGiornalieroOptions"></highcharts>
+        <div v-show="loading" class="loader row justify-content-center" >
+            <div class="col-1">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
+        <div v-show="!loading" >
+            <div class="row pt-4">
+                <!-- Andamento mensile -->
+                <div class="col-6">
+                    <highcharts :options="andamentoMensileOptions"></highcharts>
+                </div>
 
-        <!-- Tabella -->
-        <data-table :options="tableOptions" :rows="model.Records" >
-            <template slot="thead">
-                <th>Data</th>
-                <th>Qta [kg]</th>
-                <th>Qta [lt]</th>
-                <th>Trasportatore</th>
-                <th>Acquirente</th>
-                <th>Destinatario</th>
-                <th>Tipo latte</th>
-            </template>
-        </data-table>
+                <!-- Andamento giornaliero -->
+                <div class="col-6">
+                    <highcharts :options="andamentoGiornalieroOptions"></highcharts>
+                </div>
+            </div>
 
+            <!-- Tabella -->
+            <data-table :options="tableOptions" :rows="model.Records" >
+                <template slot="thead">
+                    <th>Data</th>
+                    <th>Qta [kg]</th>
+                    <th>Qta [lt]</th>
+                    <th>Trasportatore</th>
+                    <th>Acquirente</th>
+                    <th>Destinatario</th>
+                    <th>Tipo latte</th>
+                </template>
+            </data-table>            
+        </div>
     </div>
 </template>
 
@@ -57,9 +64,10 @@ export default class AnalisiQuantitativa extends Vue {
 
     public model: AnalisiQuantitativaWidget = new AnalisiQuantitativaWidget();
     
-    public andamentoMensileOptions: any = {};
-    public andamentoGiornalieroOptions: any = {};
+    public andamentoMensileOptions: any = { title: { text: '' } };
+    public andamentoGiornalieroOptions: any = { title: { text: '' } };
     public tableOptions: any = {};
+    public loading: boolean = false;
 
     constructor() {
         super();        
@@ -72,11 +80,14 @@ export default class AnalisiQuantitativa extends Vue {
     // caricamento dati
     load(idAllevamento: number, da: string, a: string) {
         
+        this.loading = true;
         this.widgetsService.analisiQuantitativa(idAllevamento, da, a)
             .then((response) => {
+                this.loading = false;
                 this.model = response.data;
-                this.andamentoMensileOptions = this.initChart('column', this.model.AndamentoMensile);
-                this.andamentoGiornalieroOptions = this.initChart('line', this.model.AndamentoGiornaliero);
+
+                this.andamentoMensileOptions = this.initChart('column', 'Andamento mensile', this.model.AndamentoMensile);
+                this.andamentoGiornalieroOptions = this.initChart('line', 'Andamento giornaliero', this.model.AndamentoGiornaliero);
             });
 
     }
@@ -109,21 +120,17 @@ export default class AnalisiQuantitativa extends Vue {
 
 
     // inizializzazione grafico
-    private initChart(chartType: string, model: GraficoWidgetModel): any {
+    private initChart(chartType: string, title: string, model: GraficoWidgetModel): any {
 
         return {
             chart: {
                 backgroundColor: "rgba(0,0,0,0)",
                 plotBorderWidth: null,
                 plotShadow: false,
+                zoomType: 'x',
                 type: chartType,
             },
-            title: {
-                text: "",
-                style: {
-                    display: "none",
-                },
-            },
+            title: { text: title },
             exporting: { enabled: false },
             legend: { enabled: false },
             xAxis: {

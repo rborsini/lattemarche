@@ -38,8 +38,8 @@ namespace LatteMarche.Application.Dashboard.Services
             var dto = new WidgetAnalisiQualitativaDto();
 
             dto.Records = MakeRecords(idAllevamento, from, to);
-            dto.Grasso_Proteine = MakeGrassoProteine(dto.Records, from, to);
-            dto.CaricaBatterica_CelluleSomatiche = MakeCaricaBattericaCelluleSomatiche(dto.Records, from, to);
+            dto.Grasso_Proteine = MakeGrassoProteine(dto.Records);
+            dto.CaricaBatterica_CelluleSomatiche = MakeCaricaBattericaCelluleSomatiche(dto.Records);
 
             return dto;
         }
@@ -58,31 +58,17 @@ namespace LatteMarche.Application.Dashboard.Services
 
         }
 
-        private WidgetGraficoDto MakeGrassoProteine(List<WidgetAnalisiQualitativaDto.Record> records, DateTime from, DateTime to)
+        private WidgetGraficoDto MakeGrassoProteine(List<WidgetAnalisiQualitativaDto.Record> records)
         {
             var valoriAsseX = new List<string>();
-            var serieGrasso = new SerieDto();
-            var serieProteine = new SerieDto();
-
-            var date = from;
-            while (date < to)
+            var serieGrasso = new SerieDto() { Nome = "Grasso" };
+            var serieProteine = new SerieDto() { Nome = "Proteine", Y_Axis = 1 };
+            
+            foreach(var record in records)
             {
-                valoriAsseX.Add($"{date:dd}");
-
-                var analisiGiorno = records.Where(r => date <= r.DataPrelievo && r.DataPrelievo < date.AddDays(1));
-                if(analisiGiorno.Count() == 1)
-                {
-                    var analisi = analisiGiorno.First();
-                    serieGrasso.Valori.Add(analisi.Grasso);
-                    serieProteine.Valori.Add(analisi.Proteine);
-                }
-                else
-                {
-                    serieGrasso.Valori.Add((decimal?)null);
-                    serieProteine.Valori.Add((decimal?)null);
-                }               
-
-                date = date.AddDays(1);
+                valoriAsseX.Add($"{record.DataPrelievo:dd/MM}");
+                serieGrasso.Valori.Add(record.Grasso);
+                serieProteine.Valori.Add(record.Proteine);
             }
 
             return new WidgetGraficoDto()
@@ -92,31 +78,17 @@ namespace LatteMarche.Application.Dashboard.Services
             };
         }
 
-        private WidgetGraficoDto MakeCaricaBattericaCelluleSomatiche(List<WidgetAnalisiQualitativaDto.Record> records, DateTime from, DateTime to)
+        private WidgetGraficoDto MakeCaricaBattericaCelluleSomatiche(List<WidgetAnalisiQualitativaDto.Record> records)
         {
             var valoriAsseX = new List<string>();
-            var serieCaricaBatterica = new SerieDto();
-            var serieCelluleSomatiche = new SerieDto();
+            var serieCaricaBatterica = new SerieDto() { Nome = "Carica batterica" };
+            var serieCelluleSomatiche = new SerieDto() { Nome = "Cellule somatiche", Y_Axis = 1 };
 
-            var date = from;
-            while (date < to)
+            foreach (var record in records)
             {
-                valoriAsseX.Add($"{date:dd}");
-
-                var analisiGiorno = records.Where(r => date <= r.DataPrelievo && r.DataPrelievo < date.AddDays(1));
-                if (analisiGiorno.Count() == 1)
-                {
-                    var analisi = analisiGiorno.First();
-                    serieCaricaBatterica.Valori.Add(analisi.CaricaBatterica);
-                    serieCelluleSomatiche.Valori.Add(analisi.CelluleSomatiche);
-                }
-                else
-                {
-                    serieCaricaBatterica.Valori.Add((decimal?)null);
-                    serieCelluleSomatiche.Valori.Add((decimal?)null);
-                }
-
-                date = date.AddDays(1);
+                valoriAsseX.Add($"{record.DataPrelievo:dd/MM}");
+                serieCaricaBatterica.Valori.Add(record.CaricaBatterica);
+                serieCelluleSomatiche.Valori.Add(record.CelluleSomatiche);
             }
 
             return new WidgetGraficoDto()
@@ -125,58 +97,6 @@ namespace LatteMarche.Application.Dashboard.Services
                 Serie = new List<SerieDto>() { serieCaricaBatterica, serieCelluleSomatiche }
             };
         }
-
-        //public WidgetAnalisiQualitativaDto IAnalisiQualitativaService.Load(int idAllevamento, DateTime from, DateTime to)
-        //{
-        //    var dto = new WidgetAnalisiQualitativaDto();
-
-        //    dto.Grasso_Proteine.ValoriAsseX = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        //    dto.Grasso_Proteine.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "grasso",
-        //        Nome = "Grasso",
-        //        Valori = new List<decimal?>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
-        //    });
-        //    dto.Grasso_Proteine.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "proteine",
-        //        Nome = "Proteine",
-        //        Valori = new List<decimal?>() { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 }
-        //    });
-
-        //    dto.CaricaBatterica_CelluleSomatiche.ValoriAsseX = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        //    dto.CaricaBatterica_CelluleSomatiche.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "carica_batterica",
-        //        Nome = "Carica batterica",
-        //        Valori = new List<decimal?>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
-        //    });
-        //    dto.CaricaBatterica_CelluleSomatiche.Serie.Add(new SerieDto()
-        //    {
-        //        Id = "cellule_somatiche",
-        //        Nome = "Cellule somatiche",
-        //        Valori = new List<decimal?>() { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 }
-        //    });
-
-
-        //    dto.Records = new List<WidgetAnalisiQualitativaDto.Record>()
-        //    {
-        //        new WidgetAnalisiQualitativaDto.Record()
-        //        {
-        //            Campione = "1234",
-        //            CaricaBatterica = 1,
-        //            CelluleSomatiche = 2,
-        //            CodiceASL = "ABCD",
-        //            DataAccettazione = DateTime.Today,
-        //            DataPrelievo = DateTime.Today.AddDays(-1),
-        //            DataRapporto = DateTime.Today.AddDays(1),
-        //            Grasso = 3,
-        //            Proteine = 4
-        //        }
-        //    };
-
-        //    return dto;
-        //}
 
         #endregion
 

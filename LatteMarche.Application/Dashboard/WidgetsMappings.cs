@@ -24,6 +24,7 @@ namespace LatteMarche.Application.Dashboard
                 .ForMember(dest => dest.Trasportatore, opts => opts.MapFrom(src => src.Trasportatore))
                 .ForMember(dest => dest.Acquirente, opts => opts.MapFrom(src => src.Acquirente))
                 .ForMember(dest => dest.Destinatario, opts => opts.MapFrom(src => src.Destinatario))
+                .ForMember(dest => dest.TipoLatte, opts => opts.MapFrom(src => src.DescrizioneLatte))
                 ;
 
             mappings.CreateMap<AnalisiDto, WidgetAnalisiQualitativaDto.Record>()

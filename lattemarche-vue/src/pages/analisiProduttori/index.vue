@@ -17,7 +17,7 @@
             </div>
 
             <div class="col-1">
-                <button class="btn btn-success" v-on:click="onCaricaClick" >Carica</button>
+                <button :disabled="idProduttore == ''" class="btn btn-success" v-on:click="onCaricaClick" >Carica</button>
             </div>
             
         </div>
@@ -25,15 +25,39 @@
                         
     </div>
 
-    <!-- Analisi Quantitativa -->
-    <analisi-quantitativa ref="analisiQuantitativa" ></analisi-quantitativa>
+    <div class="container-fluid pt-3" >
 
-    <!-- Analisi Qualitativa -->
-    <analisi-qualitativa ref="analisiQualitativa" ></analisi-qualitativa>    
+        <ul class="nav nav-tabs" id="tabWrapper">
+          <li class="active">
+            <a data-toggle="tab" class="nav-link active" href="#analisi-quantitativa">Analisi quantitativa</a>
+          </li>
+          <li>
+            <a data-toggle="tab" class="nav-link" href="#analisi-qualitativa">Analisi qualitativa</a>
+          </li>
+          <li>
+            <a data-toggle="tab" class="nav-link" href="#analisi-comparativa">Analisi comparativa</a>
+          </li>          
+        </ul>
 
-    <!-- Analisi Comparativa -->
-    <analisi-comparativa ref="analisiComparativa" ></analisi-comparativa>
+        <div class="tab-content">
 
+            <!-- Analisi Quantitativa -->        
+            <div id="analisi-quantitativa" class="tab-pane fade show active">
+                <analisi-quantitativa ref="analisiQuantitativa" ></analisi-quantitativa>
+            </div>
+
+            <!-- Analisi Qualitativa -->        
+            <div id="analisi-qualitativa" class="tab-pane fade">
+                <analisi-qualitativa ref="analisiQualitativa" ></analisi-qualitativa>                
+            </div>
+
+            <!-- Analisi Comparativa -->        
+            <div id="analisi-comparativa" class="tab-pane fade">
+                <analisi-comparativa ref="analisiComparativa" ></analisi-comparativa>            
+            </div>            
+
+        </div>
+    </div>
   </div>
 </template>
 
@@ -82,7 +106,9 @@ export default class AnalisiProduttoriIndexPage extends Vue {
 
     public mounted() {
         this.loadDropdown();
-        this.idProduttore = 100;
+        this.keepSelectedTabOnRefresh();
+
+        this.idProduttore = 79;
         this.onCaricaClick();
     }
 
@@ -105,6 +131,15 @@ export default class AnalisiProduttoriIndexPage extends Vue {
             this.produttori = response.data;
         });        
     }
+
+    // Mantengo la tab selezionata per il refresh della pagina
+    public keepSelectedTabOnRefresh() {
+        $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+            window.location.hash = String($(e.target).attr("href"));
+        });
+
+        $('#tabWrapper a[href="' + window.location.hash + '"]').tab("show");
+    }    
 
 }
 </script>

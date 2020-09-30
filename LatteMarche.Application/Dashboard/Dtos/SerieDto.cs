@@ -11,6 +11,7 @@ namespace LatteMarche.Application.Dashboard.Dtos
         public string Id { get; set; }
         public string Nome { get; set; }
         public List<decimal?> Valori { get; set; }
+        public int Y_Axis { get; set; }
 
         public List<BollaDto> Bolle { get; set; }
 

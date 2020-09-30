@@ -89,4 +89,9 @@ export default {
 <style>
     /* @import 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css';  */
 
+    .daterangepicker table thead {
+        color: #17141f !important;
+        background-color: white;
+    }
+
 </style>

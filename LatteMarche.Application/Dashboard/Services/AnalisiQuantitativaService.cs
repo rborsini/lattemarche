@@ -43,7 +43,7 @@ namespace LatteMarche.Application.Dashboard.Services
             var dto = new WidgetAnalisiQuantitativaDto();
 
             dto.Records = MakeRecords(idAllevamento, from, to);
-            dto.AndamentoGiornaliero = MakeAndamentoGiornaliero(dto.Records, from, to);
+            dto.AndamentoGiornaliero = MakeAndamentoGiornaliero(dto.Records);
             dto.AndamentoMensile = MakeAndamentoMensile(idAllevamento, from, to);
 
             return dto;
@@ -69,22 +69,15 @@ namespace LatteMarche.Application.Dashboard.Services
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private WidgetGraficoDto MakeAndamentoGiornaliero(List<WidgetAnalisiQuantitativaDto.Record> records, DateTime from, DateTime to)
+        private WidgetGraficoDto MakeAndamentoGiornaliero(List<WidgetAnalisiQuantitativaDto.Record> records)
         {
             var valoriAsseX = new List<string>();
             var serie = new SerieDto() { Nome = "kg" };
 
-            var date = from;
-            while(date < to)
-            {
-                valoriAsseX.Add($"{date:dd}");
-
-                var prelieviGiorno = records.Where(r => date <= r.Data && r.Data < date.AddDays(1));
-                var valore = prelieviGiorno.Count() == 0 ? (decimal?)null : prelieviGiorno.Sum(p => p.Qta_Kg);
-
-                serie.Valori.Add(valore);
-
-                date = date.AddDays(1);
+            foreach(var record in records)
+            { 
+                valoriAsseX.Add($"{record.Data:dd/MM}");
+                serie.Valori.Add(record.Qta_Kg);
             }
 
             return new WidgetGraficoDto()

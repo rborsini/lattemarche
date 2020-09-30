@@ -1,35 +1,43 @@
 <template>
     <div>
-        <div class="row pl-3 pt-3">
-            <h2>Analisi quantitativa</h2>
+        <div class="row pl-4 pt-4">
+            <h2 class="pl-2" >Analisi quantitativa</h2>
         </div>
 
-        <!-- grafici -->
-        <div class="row">
-            <!-- Grasso / Proteine -->
-            <div class="col-6">
-                <highcharts :options="grassoProteineOptions"></highcharts>
-            </div>
-
-            <!-- Carica batterica / Cellule somatiche -->
-            <div class="col-6">
-                <highcharts :options="caricaBattericaCelluleSomaticheOptions"></highcharts>
+        <div v-if="loading" class="loader row justify-content-center" >
+            <div class="col-1">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
+        <div v-show="!loading" >            
+            <div class="row pt-4">
+                <!-- Grasso / Proteine -->
+                <div class="col-6">
+                    <highcharts :options="grassoProteineOptions"></highcharts>
+                </div>
 
-        <!-- Tabella -->
-        <data-table :options="tableOptions" :rows="model.Records" >
-            <template slot="thead">
-                <th>Campione</th>
-                <th>Data rapporto</th>
-                <th>Data accettazione</th>
-                <th>Data prelievo</th>
-                <th>Grasso</th>
-                <th>Proteine</th>
-                <th>Carica batterica</th>
-                <th>Cellule somatiche</th>
-            </template>
-        </data-table>
+                <!-- Carica batterica / Cellule somatiche -->
+                <div class="col-6">
+                    <highcharts :options="caricaBattericaCelluleSomaticheOptions"></highcharts>
+                </div>
+            </div>
+
+            <!-- Tabella -->
+            <data-table :options="tableOptions" :rows="model.Records" >
+                <template slot="thead">
+                    <th>Campione</th>
+                    <th>Data rapporto</th>
+                    <th>Data accettazione</th>
+                    <th>Data prelievo</th>
+                    <th>Grasso</th>
+                    <th>Proteine</th>
+                    <th>Carica batterica</th>
+                    <th>Cellule somatiche</th>
+                </template>
+            </data-table>           
+        </div>        
 
     </div>
 </template>
@@ -58,9 +66,20 @@ export default class AnalisiQualitativa extends Vue {
 
     public model: AnalisiQualitativaWidget = new AnalisiQualitativaWidget();
 
-    public grassoProteineOptions: any = {};
-    public caricaBattericaCelluleSomaticheOptions: any = {};
+    public grassoProteineOptions: any =  { title: { text: '' } };
+    public caricaBattericaCelluleSomaticheOptions: any =  { title: { text: '' } };
     public tableOptions: any = {};
+    public loading: boolean = false;
+
+    public yAxis_GrassoProteine = [
+        { title: { text: "% p/V" }, min: 0 },
+        { title: { text: "% p/V" }, min: 0, opposite: true }
+    ]; 
+
+    public yAxis_CaricaBatterica = [
+        { title: { text: 'UFCx1000/mL' }, min: 0 },
+        { title: { text: 'cell x 1000/mL' }, min: 0, opposite: true },
+    ]
 
     constructor() {
         super();        
@@ -73,11 +92,13 @@ export default class AnalisiQualitativa extends Vue {
     // caricamento dati
     load(idAllevamento: number, da: string, a: string) {
         
+        this.loading = true;
         this.widgetsService.analisiQualitativa(idAllevamento, da, a)
             .then((response) => {
+                this.loading = false;
                 this.model = response.data;
-                this.grassoProteineOptions = this.initChart('line', this.model.Grasso_Proteine);
-                this.caricaBattericaCelluleSomaticheOptions = this.initChart('line', this.model.CaricaBatterica_CelluleSomatiche);
+                this.grassoProteineOptions = this.initChart('line', 'Grasso / Proteine', this.yAxis_GrassoProteine, this.model.Grasso_Proteine);
+                this.caricaBattericaCelluleSomaticheOptions = this.initChart('line', 'Carica batterica / Cellule somatiche', this.yAxis_CaricaBatterica, this.model.CaricaBatterica_CelluleSomatiche);
             });
 
     }
@@ -123,40 +144,30 @@ export default class AnalisiQualitativa extends Vue {
     }
 
     // inizializzazione grafico
-    private initChart(chartType: string, model: GraficoWidgetModel): any {
+    private initChart(chartType: string, title: string, yAxis: any, model: GraficoWidgetModel): any {
         return {
             chart: {
                 backgroundColor: "rgba(0,0,0,0)",
                 plotBorderWidth: null,
                 plotShadow: false,
+                zoomType: 'x',
                 type: chartType,
             },
-            title: {
-                text: "",
-                style: {
-                    display: "none",
-                },
-            },
+            title: { text: title },
             exporting: { enabled: false },
-            xAxis: {
-                categories: model.ValoriAsseX,
-            },
-            yAxis: { title: { text: "Kg" }, min: 0 },
-            lang: {
-                noData: "Dati in caricamento...",
-            },
+            xAxis: { categories: model.ValoriAsseX },
+            yAxis: yAxis,
             plotOptions: {
                 column: {
                     stacking: "normal",
-                    dataLabels: {
-                        enabled: false,
-                    },
+                    dataLabels: { enabled: false },
                 },
             },
             series: model.Serie.map(
                         elem => ({
                             name: elem.Nome,
-                            data: elem.Valori
+                            data: elem.Valori,
+                            yAxis: elem.Y_Axis
                         })
             )
         };
