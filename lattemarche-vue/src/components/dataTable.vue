@@ -123,7 +123,7 @@ export default {
     },
 
     load: function(paramsQueryString) {
-      var baseUrl = table.ajax.url().split("?")[0];
+      var baseUrl = this.table.ajax.url().split("?")[0];
       this.table.ajax.url(baseUrl + "?" + paramsQueryString).load();
     }
   }
