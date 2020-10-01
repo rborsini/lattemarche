@@ -5,7 +5,8 @@
   "scripts": {
     "build:dev": "vue-cli-service build --mode development",
     "build:watch": "vue-cli-service build --mode development --watch",
-    "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod"
+    "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@types/bootstrap": "^4.0.0",
@@ -30,7 +31,7 @@
     "@vue/cli-plugin-babel": "^3.1.1",
     "@vue/cli-plugin-typescript": "^3.1.1",
     "@vue/cli-service": "^3.1.1",
-    "cypress": "3.1.4",
+    "cypress": "^3.1.4",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "typescript": "^3.0.0",
