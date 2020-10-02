@@ -150,7 +150,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
             try
             {
-                var location = GeolocationService.GetLocation();
+                
                 VersionTracking.Track();
                 var appVersion = VersionTracking.CurrentVersion;
                 var isActive = false;
@@ -159,6 +159,8 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                 await Task.Run(() =>
                 {
+                    var location = GeolocationService.GetLocation();
+
                     var dto = new DispositivoDto()
                     {
                         Id = this.device.GetIdentifier(),

@@ -427,10 +427,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Salvataggio in corso", lottieAnimation: "LottieLogo1.json");
             try
             {
+
                 // rilevamento posizione
-                var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                var location = GeolocationService.GetLocation();
-                if (location == null)
+                var status = Permissions.RequestAsync<Permissions.LocationWhenInUse>().Result;                
+                if (status != PermissionStatus.Granted)
                 {
                     await loadingDialog.DismissAsync();
                     await this.page.DisplayAlert("Attenzione", "E' necessario abilitare la geolocalizzazione.", "OK");
@@ -460,6 +460,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                 await Task.Run(() =>
                 {
+                    var location = GeolocationService.GetLocation();
+
                     this.prelievo.IdAllevamento = this.AllevamentoSelezionato != null ? this.AllevamentoSelezionato.IdAllevamento : (int?)null;
                     this.prelievo.IdGiro = this.idGiro;
 

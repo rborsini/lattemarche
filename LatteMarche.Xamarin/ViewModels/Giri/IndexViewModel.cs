@@ -299,11 +299,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             try
             {
-                var location = GeolocationService.GetLocation();
                 VersionTracking.Track();
 
                 await Task.Run(() =>
                 {
+                    var location = GeolocationService.GetLocation();
+
                     ChiudiGiro(sender);
                     InviaGiro(sender, location);
                 });
