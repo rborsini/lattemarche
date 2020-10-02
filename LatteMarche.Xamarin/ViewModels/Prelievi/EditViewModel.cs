@@ -177,7 +177,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public string Lt
         {
             get { return this.lt; }
-            set { SetProperty(ref this.lt, value);  }
+            set { SetProperty(ref this.lt, value); }
         }
 
         public string Temperatura
@@ -262,8 +262,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         {
             get
             {
-                if(this.AllevamentoSelezionato != null &&
-                    this.AllevamentoSelezionato.IdTipoLatte.HasValue && 
+                if (this.AllevamentoSelezionato != null &&
+                    this.AllevamentoSelezionato.IdTipoLatte.HasValue &&
                     (this.tipoLatte == null || this.tipoLatte.Id != this.AllevamentoSelezionato.IdTipoLatte))
                 {
                     this.tipoLatte = this.tipiLatteService.GetItemAsync(this.AllevamentoSelezionato.IdTipoLatte.Value).Result;
@@ -286,7 +286,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public EditViewModel(INavigation navigation, Page page, int idGiro, string idPrelievo)
             : base(navigation, page)
         {
-            
+
             this.navigation = navigation;
             this.page = page;
 
@@ -303,43 +303,8 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         }
 
         #endregion
-        
+
         #region Methods
-
-        /// <summary>
-        /// Evento selezione quantità in kg
-        /// </summary>
-        /// <param name="kg"></param>
-        public void OnKgChanged(string kg)
-        {
-            this.Kg = kg;
-            this.Lt = ConvertToLt(kg);
-        }
-
-        /// <summary>
-        /// Evento selezione quantità in lt
-        /// </summary>
-        /// <param name="lt"></param>
-        public void OnLtChanged(string lt)
-        {
-            this.Lt = lt;
-            this.Kg = ConvertToKg(lt);
-        }
-
-        public async Task<PermissionStatus> CheckLocationPermission()
-        {
-            return await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();            
-        }
-
-        /// <summary>
-        /// Rilevamento posizione
-        /// </summary>
-        /// <returns></returns>
-        private Location GetLocation()
-        {
-            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
-            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
-        }
 
         /// <summary>
         /// Comando caricamento dati singolo prelievo e tabelle lookup
@@ -349,15 +314,15 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         {
             this.IsBusy = true;
 
-            var permissionStatus = CheckLocationPermission().Result;
+            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Caricamento", lottieAnimation: "LottieLogo1.json");
             try
             {
-                var location = GetLocation();
-
                 await Task.Run(() =>
                 {
+                    var location = GeolocationService.GetLocation();
+
                     if (isNew)
                     {
                         this.prelievo = new Prelievo()
@@ -434,7 +399,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
                     // destinatario
                     this.Destinatari = new ObservableCollection<Destinatario>(destinatari);
-                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();                    
+                    this.DestinatarioSelezionato = GetDestinatarioSelezionato();
 
                 });
 
@@ -464,7 +429,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
                 // rilevamento posizione
                 var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                var location = GetLocation();
+                var location = GeolocationService.GetLocation();
                 if (location == null)
                 {
                     await loadingDialog.DismissAsync();
@@ -485,12 +450,12 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 if (!AllFieldsInThreshold(out warningMsg))
                 {
                     bool reply = await this.page.DisplayAlert("Attenzione", $"Alcuni valori sono fuori soglia.\n\n{warningMsg}\nSei sicuro di voler salvare ugualmente?", "Si", "No");
-                    
-                    if(reply == false)
+
+                    if (reply == false)
                     {
                         await loadingDialog.DismissAsync();
                         return;
-                    }                        
+                    }
                 }
 
                 await Task.Run(() =>
@@ -546,106 +511,21 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         }
 
         /// <summary>
-        /// Verifica compilazione campi obbligatori
-        /// </summary>
-        /// <returns></returns>
-        private bool MandatoryFieldsAreFilled()
-        {
-            var result = true;
-
-            if (this.AllevamentoSelezionato == null)
-                return false;
-
-            if (String.IsNullOrEmpty(this.Scomparto))
-                return false;
-
-            if (String.IsNullOrEmpty(this.Kg))
-                return false;
-
-            if (String.IsNullOrEmpty(this.Lt))
-                return false;
-
-            if (String.IsNullOrEmpty(this.Temperatura))
-                return false;
-
-            if (!this.NumeroMungiture.HasValue)
-                return false;
-
-            if (this.AcquirenteSelezionato == null)
-                return false;
-
-            if (this.DestinatarioSelezionato == null)
-                return false;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Verifica campi fuori soglia
-        /// </summary>
-        /// <returns></returns>
-        private bool AllFieldsInThreshold(out string message)
-        {
-            var result = true;
-            message = "";
-
-            var allevamento = this.AllevamentoSelezionato;
-            var kg = Convert.ToDecimal(this.Kg);
-            var lt = Convert.ToDecimal(this.Lt);
-
-            // quantità
-            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue && 
-                allevamento.Quantita_Min.Value != 0 && allevamento.Quantita_Max.Value != 0)
-            {
-                if (kg < allevamento.Quantita_Min)
-                {
-                    message += $"Qta < {allevamento.Quantita_Min:#.0} kg (5% percentile) \n";
-                    result = false;
-                }
-
-                if (kg > allevamento.Quantita_Max)
-                {
-                    message += $"Qta > {allevamento.Quantita_Max:#.0} kg (95% percentile) \n";
-                    result = false;
-                }
-            }
-
-            // temperatura
-            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue &&
-                allevamento.Temperatura_Min.Value != 0 && allevamento.Temperatura_Max.Value != 0)
-            {
-                if (lt < allevamento.Temperatura_Min)
-                {
-                    message += $"Temp. < {allevamento.Temperatura_Min:#.0} °C (5% percentile) \n";
-                    result = false;
-                }
-
-                if (lt > allevamento.Temperatura_Max)
-                {
-                    message += $"Temp. > {allevamento.Temperatura_Max:#.0} °C (95% percentile) \n";
-                    result = false;
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Comando stampa ricevuta consegna
         /// </summary>
         /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
 
-            var choices = new string[] {"1", "2", "3", "4", "5" };
+            var choices = new string[] { "1", "2", "3", "4", "5" };
 
             var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
 
-            if(index == -1)
+            if (index == -1)
                 return;
 
             var input = choices[index];
-                
+
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
@@ -718,6 +598,111 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
 
+        }
+
+        /// <summary>
+        /// Verifica compilazione campi obbligatori
+        /// </summary>
+        /// <returns></returns>
+        private bool MandatoryFieldsAreFilled()
+        {
+            var result = true;
+
+            if (this.AllevamentoSelezionato == null)
+                return false;
+
+            if (String.IsNullOrEmpty(this.Scomparto))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Kg))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Lt))
+                return false;
+
+            if (String.IsNullOrEmpty(this.Temperatura))
+                return false;
+
+            if (!this.NumeroMungiture.HasValue)
+                return false;
+
+            if (this.AcquirenteSelezionato == null)
+                return false;
+
+            if (this.DestinatarioSelezionato == null)
+                return false;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Verifica campi fuori soglia
+        /// </summary>
+        /// <returns></returns>
+        private bool AllFieldsInThreshold(out string message)
+        {
+            var result = true;
+            message = "";
+
+            var allevamento = this.AllevamentoSelezionato;
+            var kg = Convert.ToDecimal(this.Kg);
+            var lt = Convert.ToDecimal(this.Lt);
+
+            // quantità
+            if (allevamento.Quantita_Min.HasValue && allevamento.Quantita_Max.HasValue &&
+                allevamento.Quantita_Min.Value != 0 && allevamento.Quantita_Max.Value != 0)
+            {
+                if (kg < allevamento.Quantita_Min)
+                {
+                    message += $"Qta < {allevamento.Quantita_Min:#.0} kg (5% percentile) \n";
+                    result = false;
+                }
+
+                if (kg > allevamento.Quantita_Max)
+                {
+                    message += $"Qta > {allevamento.Quantita_Max:#.0} kg (95% percentile) \n";
+                    result = false;
+                }
+            }
+
+            // temperatura
+            if (allevamento.Temperatura_Min.HasValue && allevamento.Temperatura_Max.HasValue &&
+                allevamento.Temperatura_Min.Value != 0 && allevamento.Temperatura_Max.Value != 0)
+            {
+                if (lt < allevamento.Temperatura_Min)
+                {
+                    message += $"Temp. < {allevamento.Temperatura_Min:#.0} °C (5% percentile) \n";
+                    result = false;
+                }
+
+                if (lt > allevamento.Temperatura_Max)
+                {
+                    message += $"Temp. > {allevamento.Temperatura_Max:#.0} °C (95% percentile) \n";
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Evento selezione quantità in kg
+        /// </summary>
+        /// <param name="kg"></param>
+        public void OnKgChanged(string kg)
+        {
+            this.Kg = kg;
+            this.Lt = ConvertToLt(kg);
+        }
+
+        /// <summary>
+        /// Evento selezione quantità in lt
+        /// </summary>
+        /// <param name="lt"></param>
+        public void OnLtChanged(string lt)
+        {
+            this.Lt = lt;
+            this.Kg = ConvertToKg(lt);
         }
 
         /// <summary>
@@ -824,7 +809,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             if (this.prelievo.IdAcquirente.HasValue)
                 return this.Acquirenti.FirstOrDefault(a => a.Id == this.prelievo.IdAcquirente.Value);
 
-            if(this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
+            if (this.AllevamentoSelezionato != null && this.AllevamentoSelezionato.IdAcquirenteDefault.HasValue)
             {
                 return this.Acquirenti.FirstOrDefault(a => a.Id == this.AllevamentoSelezionato.IdAcquirenteDefault.Value);
             }

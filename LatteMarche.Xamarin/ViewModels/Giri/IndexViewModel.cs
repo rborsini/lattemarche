@@ -299,7 +299,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             try
             {
-                var location = GetLocation();
+                var location = GeolocationService.GetLocation();
                 VersionTracking.Track();
 
                 await Task.Run(() =>
@@ -480,16 +480,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             {
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Recupero posizione corrente
-        /// </summary>
-        /// <returns></returns>
-        private Location GetLocation()
-        {
-            var permissionStatus = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>().Result;
-            return permissionStatus == PermissionStatus.Granted ? Geolocation.GetLastKnownLocationAsync().Result : null;
         }
 
         /// <summary>
