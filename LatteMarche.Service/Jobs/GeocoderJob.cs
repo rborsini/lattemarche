@@ -29,9 +29,9 @@ namespace LatteMarche.Service.Jobs
                 var uow = scope.Resolve<IUnitOfWork>();
                 var allevamentiRepo = uow.Get<Allevamento, int>();
 
-                var allevamenti = allevamentiRepo.DbSet.Where(a => a.Abilitato && !a.Latitudine.HasValue).ToList();
+                var allevamenti = allevamentiRepo.DbSet.Where(a => !a.Latitudine.HasValue).ToList();
 
-                int i = 0;
+                int i = 1;
 
                 foreach (var allevamento in allevamenti)
                 {

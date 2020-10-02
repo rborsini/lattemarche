@@ -58,10 +58,23 @@ namespace LatteMarche.Application.Mobile
             mappings.CreateMap<PrelievoLatteDto, PrelievoLatte>()
                 .ForMember(dest => dest.LastChange, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.LastOperation, opt => opt.MapFrom(src => OperationEnum.Added))
+                .ForMember(dest => dest.IdCessionario, opt => opt.MapFrom(src => GetDecimal(src.IdCessionario)))
+                .ForMember(dest => dest.IdAcquirente, opt => opt.MapFrom(src => GetDecimal(src.IdAcquirente)))
+                .ForMember(dest => dest.IdDestinatario, opt => opt.MapFrom(src => GetDecimal(src.IdDestinatario)))
+                .ForMember(dest => dest.IdGiro, opt => opt.MapFrom(src => GetDecimal(src.IdGiro)))
+                .ForMember(dest => dest.IdTrasportatore, opt => opt.MapFrom(src => GetDecimal(src.IdTrasportatore)))
+                .ForMember(dest => dest.IdAutocisterna, opt => opt.MapFrom(src => GetDecimal(src.IdAutocisterna)))
+                .ForMember(dest => dest.Lat, opt => opt.MapFrom(src => GetDecimal(src.Lat)))
+                .ForMember(dest => dest.Lng, opt => opt.MapFrom(src => GetDecimal(src.Lng)))
                 ;
 
             return mappings;
 
+        }
+
+        private static decimal? GetDecimal(decimal? dto)
+        {
+            return dto.HasValue && dto.Value != 0 ? dto.Value : (decimal?)null;
         }
     }
 }

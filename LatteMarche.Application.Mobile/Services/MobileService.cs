@@ -199,8 +199,8 @@ namespace LatteMarche.Application.Mobile.Services
                     this.prelieviRepository.Add(prelievo);
                 }
 
-                dispositivo.Latitudine = uploadDto.Lat;
-                dispositivo.Longitudine = uploadDto.Lng;
+                dispositivo.Latitudine = GetDecimal(uploadDto.Lat);
+                dispositivo.Longitudine = GetDecimal(uploadDto.Lng);
                 dispositivo.DataUltimoUpload = DateTime.UtcNow;
                 dispositivo.VersioneApp = uploadDto.VersioneApp;
                 dispositivo.VersioneOS = uploadDto.VersioneOS;
@@ -326,6 +326,11 @@ namespace LatteMarche.Application.Mobile.Services
                 decimal d = n - k;
                 return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
             }
+        }
+
+        private static decimal? GetDecimal(decimal? dto)
+        {
+            return dto.HasValue && dto.Value != 0 ? dto.Value : (decimal?)null;
         }
 
         #endregion
