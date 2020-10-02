@@ -74,7 +74,10 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         {
             get
             {
-                if (this.Lat.HasValue && this.Lng.HasValue && this.Allevamento_Lat.HasValue && this.Allevamento_Lng.HasValue)
+                if (this.Lat.HasValue && this.Lng.HasValue && 
+                    this.Lat.Value != 0 && this.Lng.Value != 0 &&
+                    this.Allevamento_Lat.HasValue && this.Allevamento_Lng.HasValue
+                   )
                 {
                     var coordinatePrelievo = new GeoCoordinate(this.Lat.Value, this.Lng.Value);
                     var coordinateAllevamento = new GeoCoordinate(this.Allevamento_Lat.Value, this.Allevamento_Lng.Value);
