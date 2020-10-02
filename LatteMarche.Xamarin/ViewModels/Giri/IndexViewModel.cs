@@ -375,8 +375,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 Prelievi = prelieviDto
             };
 
-            var json = JsonConvert.SerializeObject(uploadDto);
-
             // chiamata REST upload dati
             if (this.restService.Upload(uploadDto).Result)
             {
