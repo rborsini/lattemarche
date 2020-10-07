@@ -31,7 +31,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public DateTime? DataPrelievo { get { return this.dataPrelievo; } set { this.dataPrelievo = value; } }
         public string DataPrelievoStr
         {
-            get { return DateHelper.FormatDate(this.dataPrelievo); }
+            get { return DateHelper.FormatDateTime(this.dataPrelievo); }
             set { this.dataPrelievo = DateHelper.ConvertToDateTime(value); }
         }
         public string OraPrelievo { get { return this.DataPrelievo.HasValue ? this.DataPrelievo.Value.ToString("HH:mm") : String.Empty; } }
@@ -39,7 +39,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public DateTime? DataConsegna { get { return this.dataConsegna; } set { this.dataConsegna = value; } }
         public string DataConsegnaStr
         {
-            get { return DateHelper.FormatDate(this.dataConsegna); }
+            get { return DateHelper.FormatDateTime(this.dataConsegna); }
             set { this.dataConsegna = DateHelper.ConvertToDateTime(value); }
         }
         public string OraConsegna { get { return this.DataConsegna.HasValue ? this.DataConsegna.Value.ToString("HH:mm") : String.Empty; } }
@@ -47,7 +47,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public DateTime? DataUltimaMungitura { get { return this.dataUltimaMungitura; } set { this.dataUltimaMungitura = value; } }
         public string DataUltimaMungituraStr
         {
-            get { return DateHelper.FormatDate(this.dataUltimaMungitura); }
+            get { return DateHelper.FormatDateTime(this.dataUltimaMungitura); }
             set { this.dataUltimaMungitura = DateHelper.ConvertToDateTime(value); }
         }
 
