@@ -120,7 +120,7 @@ namespace LatteMarche.WebApi.Helpers
             row.CreateCell(2).SetCellValue(prelievo.Destinatario);
             row.CreateCell(3).SetCellValue(prelievo.Trasportatore);
             row.CreateCell(4).SetCellValue(prelievo.DataPrelievoStr);
-            row.CreateCell(5).SetCellValue(Convert.ToDouble(prelievo.Scomparto));
+            row.CreateCell(5).SetCellValue(prelievo.Scomparto);
             row.CreateCell(6).SetCellValue(prelievo.LottoConsegna);
             row.CreateCell(7).SetCellValue(Convert.ToDouble(prelievo.Quantita));
             row.CreateCell(8).SetCellValue(Convert.ToDouble(prelievo.QuantitaLitri));
