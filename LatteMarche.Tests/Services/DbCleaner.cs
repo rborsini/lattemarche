@@ -29,7 +29,7 @@ namespace LatteMarche.Tests.Services
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
 
         private IRepository<Autocisterna, int> autocisterneRepository;
-
+        private IRepository<Analisi, string> analisiRepository;
 
 
         #endregion
@@ -53,6 +53,7 @@ namespace LatteMarche.Tests.Services
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
 
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
+            this.analisiRepository = this.uow.Get<Analisi, string>();
         }
 
         #endregion
@@ -61,6 +62,7 @@ namespace LatteMarche.Tests.Services
 
         public void CleanUp()
         {
+            this.analisiRepository.CleanUp();
             this.prelieviRepository.CleanUp();
             this.lottiRepository.CleanUp();
 
