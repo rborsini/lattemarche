@@ -55,8 +55,8 @@
     <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="FtpHelper, Version=1.0.7396.26104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FtpHelper.1.0.7396.26104\lib\net45\FtpHelper.dll</HintPath>
+    <Reference Include="FtpHelper, Version=1.0.7457.16093, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FtpHelper.1.0.7457.16093\lib\net45\FtpHelper.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
