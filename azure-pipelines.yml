@@ -7,7 +7,7 @@ trigger:
 - master
 
 schedules:
-- cron: "*/10 * * * *"
+- cron: "* 0 * * *"
   displayName: Aggiornamento giornaliero
   branches:
     include:
