@@ -139,7 +139,7 @@ namespace LatteMarche.Core.Models
         public int? IdTrasportatore { get; set; }
 
         [Column("TRASPORTATORE")]
-        [ExcelHeader("TRASPORTATORE", 4)]
+        [ExcelHeader("TRASPORTATORE")]
         public string Trasportatore { get; set; }
 
         [Column("NUMERO_MUNGITURE")]
