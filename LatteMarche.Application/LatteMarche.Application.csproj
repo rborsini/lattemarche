@@ -61,11 +61,11 @@
     <Reference Include="Autofac, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.5.0.0\lib\net461\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper.EF6, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.EF6.2.0.0\lib\net461\AutoMapper.EF6.dll</HintPath>
+    <Reference Include="AutoMapper.Contrib.Autofac.DependencyInjection, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.Contrib.Autofac.DependencyInjection.3.0.0\lib\netstandard2.0\AutoMapper.Contrib.Autofac.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.95.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.95.3\lib\net46\ClosedXML.dll</HintPath>
@@ -129,20 +129,33 @@
       <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Device" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Packaging, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.7.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -158,11 +171,11 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Application, Version=1.0.7570.21542, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Application.1.0.7570.21542\lib\net461\WeCode.Application.dll</HintPath>
+    <Reference Include="WeCode.Application, Version=1.20.10.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Application.1.20.10.21\lib\net461\WeCode.Application.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
+    <Reference Include="WeCode.Data, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.20.10.21\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="Z.EntityFramework.Extensions, Version=4.0.101.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
@@ -176,26 +189,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acquirenti\AcquirentiMappings.cs" />
+    <Compile Include="Acquirenti\AcquirentiProfile.cs" />
     <Compile Include="Acquirenti\Dtos\AcquirenteDto.cs" />
     <Compile Include="Acquirenti\Interfaces\IAcquirentiService.cs" />
     <Compile Include="Acquirenti\Services\AcquirentiService.cs" />
-    <Compile Include="Allevamenti\AllevamentiMappings.cs" />
+    <Compile Include="Allevamenti\AllevamentiProfile.cs" />
     <Compile Include="Allevamenti\Dtos\AlevamentoDto.cs" />
     <Compile Include="Allevamenti\Interfaces\IAllevamentiService.cs" />
     <Compile Include="Allevamenti\Services\AllevamentiService.cs" />
-    <Compile Include="AnalisiLatte\AnalisiMappings.cs" />
+    <Compile Include="AnalisiLatte\AnalisiLatteProfile.cs" />
     <Compile Include="AnalisiLatte\Dtos\AnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Dtos\AnalisiSearchDto.cs" />
     <Compile Include="AnalisiLatte\Dtos\ValoreAnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Interfaces\IAnalisiService.cs" />
     <Compile Include="AnalisiLatte\Services\AnalisiService.cs" />
-    <Compile Include="Auth\AuthMappings.cs" />
-    <Compile Include="Cessionari\CessionariMappings.cs" />
+    <Compile Include="Auth\AuthProfile.cs" />
+    <Compile Include="Autocisterne\AutocisterneProfile.cs" />
+    <Compile Include="Cessionari\CessionariProfile.cs" />
     <Compile Include="Cessionari\Dtos\CessionarioDto.cs" />
     <Compile Include="Cessionari\Interfaces\ICessionariService.cs" />
     <Compile Include="Cessionari\Services\CessionariService.cs" />
-    <Compile Include="Comuni\ComuniMappings.cs" />
+    <Compile Include="Comuni\ComuniProfile.cs" />
     <Compile Include="Dashboard\Dtos\BollaDto.cs" />
     <Compile Include="Dashboard\Dtos\SerieDto.cs" />
     <Compile Include="Dashboard\Dtos\WidgetAnalisiQualitativaDto.cs" />
@@ -211,29 +225,28 @@
     <Compile Include="Dashboard\Services\AnalisiComparativaService.cs" />
     <Compile Include="Dashboard\Services\AnalisiQuantitativaService.cs" />
     <Compile Include="Dashboard\Services\WidgetsService.cs" />
-    <Compile Include="Dashboard\WidgetsMappings.cs" />
-    <Compile Include="Destinatari\DestinatariMappings.cs" />
+    <Compile Include="Dashboard\WidgetsProfile.cs" />
+    <Compile Include="Destinatari\DestinatariProfile.cs" />
     <Compile Include="Destinatari\Dtos\DestinatarioDto.cs" />
     <Compile Include="Destinatari\Interfaces\IDestinatariService.cs" />
     <Compile Include="Destinatari\Services\DestinatariService.cs" />
-    <Compile Include="Dispositivi\DispositiviMappings.cs" />
+    <Compile Include="Dispositivi\DispositiviProfile.cs" />
     <Compile Include="Dispositivi\Dtos\DispositiviSearchDto.cs" />
     <Compile Include="Dispositivi\Dtos\DispositivoMobileDto.cs" />
     <Compile Include="Dispositivi\Interfaces\IDispositiviService.cs" />
     <Compile Include="Dispositivi\Services\DispositiviService.cs" />
-    <Compile Include="Giri\GiriMappings.cs" />
-    <Compile Include="Logs\LogsMappings.cs" />
-    <Compile Include="PrelieviLatte\PrelieviLatteMappings.cs" />
+    <Compile Include="Giri\GiriProfile.cs" />
+    <Compile Include="Logs\LogsProfile.cs" />
     <Compile Include="Autocisterne\Dtos\AutocisternaDto.cs" />
     <Compile Include="Autocisterne\Interfaces\IAutocisterneService.cs" />
     <Compile Include="Autocisterne\Services\AutocisterneService.cs" />
-    <Compile Include="Autocisterne\AutocisterneMappings.cs" />
     <Compile Include="Common\Dto\DropDownDto.cs" />
     <Compile Include="Logs\Dtos\LogRecordDto.cs" />
     <Compile Include="Logs\Interfaces\ILogsServices.cs" />
     <Compile Include="Logs\Services\LogsService.cs" />
     <Compile Include="PrelieviLatte\Dtos\LottoDto.cs" />
     <Compile Include="PrelieviLatte\Interfaces\ILottiService.cs" />
+    <Compile Include="PrelieviLatte\PrelieviLatteProfile.cs" />
     <Compile Include="PrelieviLatte\Services\LottiService.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelievoLatteDto.cs" />
     <Compile Include="PrelieviLatte\Dtos\PrelieviLatteSearchDto.cs" />
@@ -275,11 +288,10 @@
     <Compile Include="Comuni\Interfaces\IComuniService.cs" />
     <Compile Include="Comuni\Services\ComuniService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AutomapperConfig.cs" />
     <Compile Include="Utenti\Dtos\UtenteDto.cs" />
     <Compile Include="Utenti\Interfaces\IUtentiService.cs" />
     <Compile Include="Utenti\Services\UtentiService.cs" />
-    <Compile Include="Utenti\UtentiMappings.cs" />
+    <Compile Include="Utenti\UtentiProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteMarche.Application.Assam\LatteMarche.Application.Assam.csproj">

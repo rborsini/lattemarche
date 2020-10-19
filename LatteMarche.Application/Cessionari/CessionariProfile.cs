@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Cessionari.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Cessionari
 {
-    public class CessionariMappings
+    public class CessionariProfile : Profile
     {
-        public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public CessionariProfile()
         {
-            mappings.CreateMap<Cessionario, CessionarioDto>()
+            CreateMap<Cessionario, CessionarioDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Piva, opts => opts.MapFrom(src => src.Piva.Trim()))
@@ -21,7 +22,8 @@ namespace LatteMarche.Application.Cessionari
                 .ForMember(dest => dest.IdComune, opts => opts.MapFrom(src => src.IdComune))
                 .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia))
                 ;
-            mappings.CreateMap<CessionarioDto, Cessionario>()
+            
+            CreateMap<CessionarioDto, Cessionario>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Piva, opts => opts.MapFrom(src => src.Piva.Trim()))
@@ -30,7 +32,6 @@ namespace LatteMarche.Application.Cessionari
                 .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
 
-            return mappings;
         }
     }
 }

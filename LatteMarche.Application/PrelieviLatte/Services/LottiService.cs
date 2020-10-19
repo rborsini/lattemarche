@@ -21,8 +21,8 @@ namespace LatteMarche.Application.PrelieviLatte.Services
 
         #region Constructor
 
-        public LottiService(IUnitOfWork uow)
-            : base(uow)
+        public LottiService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
         }
@@ -66,7 +66,7 @@ namespace LatteMarche.Application.PrelieviLatte.Services
                     Quantita = grp.Count(s => s.Quantita.HasValue) == 0 ? 0 : grp.Where(s => s.Quantita.HasValue).Sum(s => s.Quantita.Value),
                     DataConsegna = grp.Max(s => s.DataConsegna) != null ? grp.Max(s => s.DataConsegna).Value : DateTime.Now,
                     DataUltimaMungitura = grp.Max(s => s.DataUltimaMungitura) != null ? grp.Max(s => s.DataUltimaMungitura).Value : DateTime.Now.AddHours(-2),
-                    PrelieviPadre = grp.Select(p => Mapper.Map<PrelievoLatteDto>(p)).ToList()
+                    PrelieviPadre = grp.Select(p => this.mapper.Map<PrelievoLatteDto>(p)).ToList()
                 })
                 .ToList();
 

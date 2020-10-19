@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using LatteMarche.Application.Mobile.Interfaces;
 using LatteMarche.Application.Mobile.Services;
 using LatteMarche.Core;
@@ -27,6 +28,8 @@ namespace LatteMarche.Application.Mobile
         {
             RegisterService<LatteMarcheDbContext, DbContext>(builder);
             RegisterService<UnitOfWork, IUnitOfWork>(builder);
+
+            builder.AddAutoMapper(this.GetType().Assembly);
 
             RegisterService<MobileService, IMobileService>(builder);
 

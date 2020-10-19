@@ -22,8 +22,8 @@ namespace LatteMarche.Application.Dispositivi.Services
 
         #region Constructor
 
-        public DispositiviService(IUnitOfWork uow)
-            : base(uow)
+        public DispositiviService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         { }
 
         #endregion
@@ -33,7 +33,7 @@ namespace LatteMarche.Application.Dispositivi.Services
         public override List<DispositivoMobileDto> Index()
         {
             var entities = this.repository.Query.ToList();
-            return Mapper.Map<List<DispositivoMobileDto>>(entities);
+            return this.mapper.Map<List<DispositivoMobileDto>>(entities);
         }
 
         public PagedResult<DispositivoMobileDto> Search(DispositiviSearchDto searchDto)
@@ -65,7 +65,7 @@ namespace LatteMarche.Application.Dispositivi.Services
             // result dto
             return new PagedResult<DispositivoMobileDto>()
             {
-                FilteredList = Mapper.Map<List<DispositivoMobileDto>>(list),
+                FilteredList = this.mapper.Map<List<DispositivoMobileDto>>(list),
                 Total = query.Count()
             };
         }

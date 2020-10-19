@@ -12,6 +12,7 @@ using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using WeCode.Application.Exceptions;
+using AutoMapper;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -29,8 +30,8 @@ namespace LatteMarche.Application.Latte.Services
 
         #region Constructor
 
-        public PrelieviLatteService(IUnitOfWork uow, IUtentiService utentiService)
-            : base(uow)
+        public PrelieviLatteService(IUnitOfWork uow, IMapper mapper, IUtentiService utentiService)
+            : base(uow, mapper)
         {
             this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
             this.allevamentiRepository = uow.Get<Allevamento, int>();

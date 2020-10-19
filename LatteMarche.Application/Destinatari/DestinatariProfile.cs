@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Destinatari.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Destinatari
 {
-    public class DestinatarioMappings
+    public class DestinatariProfile : Profile
     {
-        public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public DestinatariProfile()
         {
-            mappings.CreateMap<Destinatario, DestinatarioDto>()
+            CreateMap<Destinatario, DestinatarioDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
@@ -22,7 +23,7 @@ namespace LatteMarche.Application.Destinatari
                 .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia))
                 ;
 
-            mappings.CreateMap<DestinatarioDto, Destinatario>()
+            CreateMap<DestinatarioDto, Destinatario>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.P_IVA, opts => opts.MapFrom(src => src.P_IVA.Trim()))
@@ -31,7 +32,6 @@ namespace LatteMarche.Application.Destinatari
                 .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
 
-            return mappings;
         }
     }
 }

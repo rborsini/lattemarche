@@ -54,7 +54,6 @@ namespace LatteMarche.Tests.Services.Mobile
         public Services_MobileTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

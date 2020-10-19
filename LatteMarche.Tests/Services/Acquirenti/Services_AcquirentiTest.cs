@@ -53,7 +53,6 @@ namespace LatteMarche.Tests.Services.Acquirenti
         public Services_AcquirentiTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

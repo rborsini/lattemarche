@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,18 +10,15 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Trasportatori
 {
-
-
-    public class AutocisterneMappings
+    public class AutocisterneProfile : Profile
     {
-        public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public AutocisterneProfile()
         {
-            mappings.CreateMap<Autocisterna, AutocisternaDto>();
-            mappings.CreateMap<AutocisternaDto, Autocisterna>()
+            CreateMap<Autocisterna, AutocisternaDto>();
+            CreateMap<AutocisternaDto, Autocisterna>()
                 .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
 
-            return mappings;
         }
     }
 

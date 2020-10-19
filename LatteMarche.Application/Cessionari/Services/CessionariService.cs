@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Cessionari.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.Cessionari.Dtos;
 using LatteMarche.Application.Cessionari.Interfaces;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
@@ -26,8 +27,8 @@ namespace LatteMarche.Application.Cessionari.Services
 
         #region Constructors
 
-        public CessionariService(IUnitOfWork uow, IUtentiService utentiService)
-            : base(uow)
+        public CessionariService(IUnitOfWork uow, IMapper mapper, IUtentiService utentiService)
+            : base(uow, mapper)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();

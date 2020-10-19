@@ -31,8 +31,8 @@ namespace LatteMarche.Application.Acquirenti.Services
 
         #region Constructors
 
-        public AcquirentiService(IUnitOfWork uow, IUtentiService utentiService)
-			: base(uow)
+        public AcquirentiService(IUnitOfWork uow, IMapper mapper, IUtentiService utentiService)
+			: base(uow, mapper)
 		{
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
@@ -47,7 +47,7 @@ namespace LatteMarche.Application.Acquirenti.Services
         {
             var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
 
-            return Mapper.Map<List<AcquirenteDto>>(entities);
+            return this.mapper.Map<List<AcquirenteDto>>(entities);
         }
 
         public DropDownDto DropDown(int? idUtente = null)

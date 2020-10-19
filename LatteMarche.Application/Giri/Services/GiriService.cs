@@ -10,6 +10,7 @@ using LatteMarche.EntityFramework;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Trasportatori.Interfaces;
+using AutoMapper;
 
 namespace LatteMarche.Application.Giri.Services
 {
@@ -27,8 +28,8 @@ namespace LatteMarche.Application.Giri.Services
 
         #region Constructor
 
-        public GiriService(IUnitOfWork uow, ITrasportatoriService trasportatoriService)
-            : base(uow)
+        public GiriService(IUnitOfWork uow, IMapper mapper, ITrasportatoriService trasportatoriService)
+            : base(uow, mapper)
         {
             this.giriRepository = this.uow.Get<Giro, int>();
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using FizzWare.NBuilder;
 using LatteMarche.Application.Dispositivi.Dtos;
 using LatteMarche.Core.Models;
@@ -9,12 +10,22 @@ namespace LatteMarche.Tests.Mappings
     [TestFixture]
     public class Mappings_DispositiviTest
     {
+
+        #region Fields
+
+        private ILifetimeScope scope;
+        private IMapper mapper;
+
+        #endregion
+
         #region Constructors
 
         public Mappings_DispositiviTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
+
+            this.scope = AutoFacConfig.Container.BeginLifetimeScope();
+            this.mapper = this.scope.Resolve<IMapper>();
         }
 
         #endregion
@@ -28,7 +39,7 @@ namespace LatteMarche.Tests.Mappings
                 .CreateNew()
                 .Build();
 
-            var dto = Mapper.Map<DispositivoMobileDto>(entity);
+            var dto = this.mapper.Map<DispositivoMobileDto>(entity);
 
             Assert.AreEqual(dto.Id, entity.Id);
 

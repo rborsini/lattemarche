@@ -4,13 +4,16 @@ using LatteMarche.Application.Auth.Services;
 using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.Application.Utenti.Services;
+using LatteMarche.Core.Models;
 using LatteMarche.EntityFramework;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeCode.Data;
+using WeCode.Data.Interfaces;
 using WeCode.Identity;
+using System.Linq;
 
 namespace LatteMarche.Identity
 {
@@ -23,13 +26,18 @@ namespace LatteMarche.Identity
     public class CustomUserStore : IUserStore<CustomUser>, IUserPasswordStore<CustomUser>
     {
         private LatteMarcheDbContext database;
-        private IUtentiService service;
+        private IUnitOfWork uow;
+        private IRepository<Utente, int> utentiRepository;
+        private IRepository<TipoProfilo, int> profiliRepository;
         private IAutorizzazioniService authorizationsService;
 
         public CustomUserStore()
         {
             this.database = new LatteMarcheDbContext();
-            this.service = new UtentiService(new UnitOfWork(this.database));
+            this.uow = new UnitOfWork(this.database);
+            this.utentiRepository = this.uow.Get<Utente, int>();
+            this.profiliRepository = this.uow.Get<TipoProfilo, int>();
+
             this.authorizationsService = new AutorizzazioniService(new UnitOfWork(this.database));
         }
 
@@ -57,8 +65,8 @@ namespace LatteMarche.Identity
 
         public async Task<CustomUser> FindByIdAsync(string userId)
         {
-            UtenteDto userDto = service.Details(Convert.ToInt32(userId));
-            CustomUser user = ConvertToCustomUser(userDto);
+            var utente = this.utentiRepository.GetById(Convert.ToInt32(userId));
+            CustomUser user = ConvertToCustomUser(utente);
 
             if (user != null)
                 user.Permissions = this.authorizationsService.GetPermissions(user.UserName);
@@ -68,8 +76,8 @@ namespace LatteMarche.Identity
 
         public async Task<CustomUser> FindByNameAsync(string username)
         {
-            UtenteDto userDto = service.Details(username);
-            CustomUser user = ConvertToCustomUser(userDto);
+            var utente = this.utentiRepository.DbSet.FirstOrDefault(u => u.Username == username);
+            CustomUser user = ConvertToCustomUser(utente);
 
             if (user != null)
                 user.Permissions = this.authorizationsService.GetPermissions(username);
@@ -79,13 +87,13 @@ namespace LatteMarche.Identity
 
         public Task SetPasswordHashAsync(CustomUser user, string passwordHash)
         {
-            service.SetPasswordHash(user.UserName, passwordHash);
+            this.SetPasswordHash(user.UserName, passwordHash);
             return Task.FromResult(0);
         }
 
         public Task<string> GetPasswordHashAsync(CustomUser user)
         {
-            UtenteDto utente = service.Details(user.UserName);
+            var utente = this.utentiRepository.DbSet.FirstOrDefault(u => u.Username == user.UserName);
             return Task.FromResult<string>(utente.Password);
         }
 
@@ -94,23 +102,40 @@ namespace LatteMarche.Identity
             throw new NotImplementedException();
         }
 
-        private CustomUser ConvertToCustomUser(UtenteDto userDto)
+        private CustomUser ConvertToCustomUser(Utente utente)
         {
+            var profilo = this.profiliRepository.GetById(utente.IdProfilo);
+
             CustomUser user = null;
-            if (userDto != null)
+            if (utente != null)
             {
                 user = new CustomUser()
                 {
-                    Id = userDto.Id.ToString(),
+                    Id = utente.Id.ToString(),
                     Email = String.Empty,
-                    PasswordHash = userDto.Password,
-                    Password = userDto.Password,
-                    UserName = userDto.Username,
-                    Roles = new List<string>() { userDto.Profilo }
+                    PasswordHash = utente.Password,
+                    Password = utente.Password,
+                    UserName = utente.Username,
+                    Roles = new List<string>() { profilo.Descrizione }
                 };
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Impostazione della password hashata
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordHash"></param>
+        private void SetPasswordHash(string username, string passwordHash)
+        {
+            Utente utente = this.utentiRepository.Query.FirstOrDefault(u => u.Username == username);
+            if (utente != null)
+            {
+                utente.Password = passwordHash;
+                this.uow.SaveChanges();
+            }
         }
 
     }

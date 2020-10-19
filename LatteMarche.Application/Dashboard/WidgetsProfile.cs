@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.Dashboard.Dtos;
 using LatteMarche.Core.Models;
@@ -10,13 +11,11 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Dashboard
 {
-    public class WidgetsMappings
+    public class WidgetsProfile : Profile
     {
-
-
-        internal static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public WidgetsProfile()
         {
-            mappings.CreateMap<V_PrelievoLatte, WidgetAnalisiQuantitativaDto.Record>()
+            CreateMap<V_PrelievoLatte, WidgetAnalisiQuantitativaDto.Record>()
                 .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.DataPrelievo))
                 .ForMember(dest => dest.Qta_Kg, opts => opts.MapFrom(src => src.Quantita))
                 .ForMember(dest => dest.Qta_Lt, opts => opts.MapFrom(src => src.QuantitaLitri))
@@ -27,7 +26,7 @@ namespace LatteMarche.Application.Dashboard
                 .ForMember(dest => dest.TipoLatte, opts => opts.MapFrom(src => src.DescrizioneLatte))
                 ;
 
-            mappings.CreateMap<AnalisiDto, WidgetAnalisiQualitativaDto.Record>()
+            CreateMap<AnalisiDto, WidgetAnalisiQualitativaDto.Record>()
                 .ForMember(dest => dest.Campione, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.CodiceASL, opts => opts.MapFrom(src => src.CodiceASL))
                 .ForMember(dest => dest.DataRapporto, opts => opts.MapFrom(src => src.DataRapportoDiProva))
@@ -39,7 +38,6 @@ namespace LatteMarche.Application.Dashboard
                 .ForMember(dest => dest.CelluleSomatiche, opts => opts.MapFrom(src => src.CelluleSomatiche))
                 ;
 
-            return mappings;
         }
     }
 }

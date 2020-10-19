@@ -39,6 +39,8 @@ namespace LatteMarche.WebApi.Controllers_Api
         private ILogsService logsService;
         private IUtentiService utentiService;
 
+        private IMapper mapper;
+
 
         private bool PullEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_pull_enabled"]); } }
         private bool PushEnabled { get { return Convert.ToBoolean(ConfigurationManager.AppSettings["synch_push_enabled"]); } }
@@ -48,8 +50,18 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Constructors
 
-        public PrelieviLatteController(IPrelieviLatteService prelieviLatteService, ISynchService synchService, ISitraService sitraService, ILottiService lottiService, ILogsService logsService, IUtentiService utentiService)
+        public PrelieviLatteController(
+            IMapper mapper, 
+            IPrelieviLatteService prelieviLatteService, 
+            ISynchService synchService, 
+            ISitraService sitraService, 
+            ILottiService lottiService, 
+            ILogsService logsService, 
+            IUtentiService utentiService
+            )
         {
+            this.mapper = mapper;
+
             this.prelieviLatteService = prelieviLatteService;
             this.synchService = synchService;
             this.sitraService = sitraService;
@@ -148,12 +160,12 @@ namespace LatteMarche.WebApi.Controllers_Api
                 this.LogDebug("InvioSitra", $"data [{data}]");
 
                 // prelievi giorno precedente
-                List<PrelievoLatteDto> prelieviDaInviare = Mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Sitra(data));
+                List<PrelievoLatteDto> prelieviDaInviare = this.mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Sitra(data));
 
                 this.LogDebug("InvioSitra", $"prelievi giornalieri [{prelieviDaInviare.Count}]");
 
                 // invio singoli prelievi
-                response.PrelieviInviati = this.sitraService.InvioPrelievi(Mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
+                response.PrelieviInviati = this.sitraService.InvioPrelievi(this.mapper.Map<List<PrelievoLatteDto>>(prelieviDaInviare));
 
                 this.LogDebug("InvioSitra", $"prelievi inviati [{JsonConvert.SerializeObject(response.PrelieviInviati)}]");
 

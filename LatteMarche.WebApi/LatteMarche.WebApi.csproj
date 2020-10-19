@@ -54,11 +54,8 @@
     <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.EF6, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.EF6.2.0.0\lib\net461\AutoMapper.EF6.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.95.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.95.3\lib\net46\ClosedXML.dll</HintPath>
@@ -200,6 +197,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.8.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -285,20 +285,20 @@
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WeCode.Application, Version=1.0.7570.21542, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Application.1.0.7570.21542\lib\net461\WeCode.Application.dll</HintPath>
+    <Reference Include="WeCode.Application, Version=1.20.10.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Application.1.20.10.21\lib\net461\WeCode.Application.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Data, Version=1.0.7459.22210, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Data.1.0.7459.22210\lib\net461\WeCode.Data.dll</HintPath>
+    <Reference Include="WeCode.Data, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Data.1.20.10.21\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Identity, Version=1.0.7529.20054, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Identity.1.0.7529.20054\lib\net461\WeCode.Identity.dll</HintPath>
+    <Reference Include="WeCode.Identity, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.Identity.1.20.10.20\lib\net461\WeCode.Identity.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.JQueryDataTable, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.JQueryDataTable.1.0.2\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
+    <Reference Include="WeCode.JQueryDataTable, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.JQueryDataTable.1.20.10.21\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
     </Reference>
     <Reference Include="WeCode.MVC, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.MVC.1.20.10.19\lib\net461\WeCode.MVC.dll</HintPath>
+      <HintPath>..\packages\WeCode.MVC.1.20.10.21\lib\net461\WeCode.MVC.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -517,7 +517,6 @@
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\AutoFacConfig.cs" />
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\WebConfig.cs" />
     <Compile Include="Controllers_Api\UtentiController.cs" />
     <Compile Include="Helpers\EnvHelper.cs" />

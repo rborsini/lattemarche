@@ -42,7 +42,6 @@ namespace LatteMarche.Service
             try
             {
                 AutoFacConfig.Configure();
-                AutomapperConfig.Configure();
 
                 NameValueCollection properties = new NameValueCollection();
 

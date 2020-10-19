@@ -38,6 +38,8 @@ using LatteMarche.Application.Allevamenti.Services;
 using LatteMarche.Application.Allevamenti.Interfaces;
 using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Trasportatori.Services;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
+using WeCode.Application;
 
 namespace LatteMarche.Application
 {
@@ -45,23 +47,22 @@ namespace LatteMarche.Application
     /// <summary>
     /// Modulo AutoFac per la registrazione dei servizi
     /// </summary>
-    public class ApplicationModule : Module
-	{
-		private bool isWeb;
+    public class ApplicationModule : BaseModule
+    {
 
-		public ApplicationModule(bool isWeb = true)
-		{
-			this.isWeb = isWeb;
-		}
+        public ApplicationModule(bool isWeb = true)
+            : base(isWeb)
+        { }
 
-		protected override void Load(ContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
 		{
             builder.RegisterModule(new AssamModule());
 
             RegisterService<LatteMarcheDbContext, DbContext>(builder);
             RegisterService<UnitOfWork, IUnitOfWork>(builder);
 
-            
+            builder.AddAutoMapper(this.GetType().Assembly);
+
             RegisterService<AcquirentiService, IAcquirentiService>(builder);
             RegisterService<AllevamentiService, IAllevamentiService>(builder);
             RegisterService<AnalisiService, IAnalisiService>(builder);
@@ -95,12 +96,5 @@ namespace LatteMarche.Application
             base.Load(builder);
 		}
 
-        private void RegisterService<TService, TInterface>(ContainerBuilder builder)
-        {
-            var registration = builder.RegisterType<TService>().As<TInterface>();
-
-            if (this.isWeb)
-                registration.InstancePerRequest();
-        }
     }
 }

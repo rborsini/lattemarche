@@ -41,7 +41,6 @@ namespace LatteMarche.Tests.Services.AnalisiProduttori
         public Services_AnalisiQuantitativaTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

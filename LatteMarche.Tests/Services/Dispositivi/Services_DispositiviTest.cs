@@ -37,7 +37,6 @@ namespace LatteMarche.Tests.Services.Dispositivi
         public Services_DispositiviTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

@@ -36,8 +36,8 @@ namespace LatteMarche.Application.Utenti.Services
 
         #region Constructors
 
-        public UtentiService(IUnitOfWork uow)
-            : base(uow)
+        public UtentiService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         {
             this.utentiRepository = this.uow.Get<Utente, int>();
 
@@ -47,7 +47,7 @@ namespace LatteMarche.Application.Utenti.Services
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
 
-            this.comuniService = new ComuniService(uow);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
+            this.comuniService = new ComuniService(uow, mapper);    // HACK: faccio la new perché IUtentiService è usato dal CustomUserStore
         }
 
         #endregion
@@ -262,7 +262,7 @@ namespace LatteMarche.Application.Utenti.Services
         {
             var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
 
-            return Mapper.Map<List<UtenteDto>>(entities);
+            return this.mapper.Map<List<UtenteDto>>(entities);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace LatteMarche.Application.Utenti.Services
             // result dto
             return new PagedResult<UtenteDto>()
             {
-                FilteredList = Mapper.Map<List<UtenteDto>>(list),
+                FilteredList = this.mapper.Map<List<UtenteDto>>(list),
                 Total = query.Count()
             };
         }

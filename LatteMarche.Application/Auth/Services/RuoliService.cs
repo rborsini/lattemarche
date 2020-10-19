@@ -18,8 +18,8 @@ namespace LatteMarche.Application.Auth.Services
         private IRepository<Autorizzazione, long> autorizzazioniRepository;
         private IRepository<RuoloUtente, long> ruoliUtenteRepository;
 
-        public RuoliService(IUnitOfWork uow)
-            : base(uow)
+        public RuoliService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         {
             this.azioniRepository = uow.Get<Azione, string>();
             this.autorizzazioniRepository = uow.Get<Autorizzazione, long>();
@@ -42,7 +42,7 @@ namespace LatteMarche.Application.Auth.Services
                 dto.Pagine_API = GetPagine(azioni, autorizzazioni, "API");
 
                 List<Utente> utenti = ruolo.UtentiRuolo.Select(ur => ur.UtenteObj).OrderBy(u => u.Id).ToList();
-                dto.Utenti = Mapper.Map<List<UtenteDto>>(utenti);
+                dto.Utenti = this.mapper.Map<List<UtenteDto>>(utenti);
             }
 
             return dto;
@@ -77,7 +77,7 @@ namespace LatteMarche.Application.Auth.Services
 
         public override RuoloDto Update(RuoloDto model)
         {
-            Ruolo ruolo = Mapper.Map<Ruolo>(model);
+            Ruolo ruolo = this.mapper.Map<Ruolo>(model);
 
             // pulizia vecchie autorizzazioni
             List<Autorizzazione> autorizzazioniToRemove = autorizzazioniRepository.Query.Where(a => a.IdRuolo == model.Id).ToList();

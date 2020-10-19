@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using FizzWare.NBuilder;
 using LatteMarche.Application.Autocisterne.Dtos;
 using LatteMarche.Core.Models;
@@ -14,13 +15,21 @@ namespace LatteMarche.Tests.Mappings
     [TestFixture]
     public class Mappings_AutocisterneTest
     {
+        #region Fields
+
+        private ILifetimeScope scope;
+        private IMapper mapper;
+
+        #endregion
 
         #region Constructors
 
         public Mappings_AutocisterneTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
+
+            this.scope = AutoFacConfig.Container.BeginLifetimeScope();
+            this.mapper = this.scope.Resolve<IMapper>();
         }
 
         #endregion
@@ -34,7 +43,7 @@ namespace LatteMarche.Tests.Mappings
                 .CreateNew()
                 .Build();
 
-            var dto = Mapper.Map<AutocisternaDto>(entity);
+            var dto = this.mapper.Map<AutocisternaDto>(entity);
 
             Assert.AreEqual(dto.Id, entity.Id);
 
@@ -47,7 +56,7 @@ namespace LatteMarche.Tests.Mappings
                 .CreateNew()
                 .Build();
 
-            var entity = Mapper.Map<Autocisterna>(dto);
+            var entity = this.mapper.Map<Autocisterna>(dto);
 
             Assert.AreEqual(entity.Id, dto.Id);
 

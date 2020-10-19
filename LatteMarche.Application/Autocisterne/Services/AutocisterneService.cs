@@ -5,6 +5,7 @@ using LatteMarche.Core.Models;
 using System.Linq;
 using WeCode.Application;
 using WeCode.Data.Interfaces;
+using AutoMapper;
 
 namespace LatteMarche.Application.Autocisterne.Interfaces
 {
@@ -16,8 +17,8 @@ namespace LatteMarche.Application.Autocisterne.Interfaces
 
         #region Constructors
 
-        public AutocisterneService(IUnitOfWork uow)
-            : base(uow)
+        public AutocisterneService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         {
         }
 
