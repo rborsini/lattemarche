@@ -27,7 +27,7 @@ namespace LatteMarche.Tests.Services
         private IRepository<UtenteXDestinatario, int> utenteXDestinatarioRepository;
         private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
-
+        private IRepository<Analisi, string> analisiRepository;
         private IRepository<Autocisterna, int> autocisterneRepository;
 
 
@@ -51,7 +51,7 @@ namespace LatteMarche.Tests.Services
             this.utenteXDestinatarioRepository = this.uow.Get<UtenteXDestinatario, int>();
             this.cessionariRepository = this.uow.Get<Cessionario, int>();
             this.utenteXCessionarioRepository = this.uow.Get<UtenteXCessionario, int>();
-
+            this.analisiRepository = this.uow.Get<Analisi, string>();
             this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
         }
 
@@ -61,6 +61,7 @@ namespace LatteMarche.Tests.Services
 
         public void CleanUp()
         {
+            this.analisiRepository.CleanUp();
             this.prelieviRepository.CleanUp();
             this.lottiRepository.CleanUp();
 

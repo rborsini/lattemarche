@@ -111,8 +111,9 @@ namespace LatteMarche.Tests.Services.Cessionari
             cessionarioDto = this.cessionariService.Create(cessionarioDto);
             Assert.IsNotNull(cessionarioDto);
 
-            var acquirente = this.cessionariRepository.GetById(cessionarioDto.Id);
-            Assert.IsNotNull(acquirente);
+            var cessionario = this.cessionariRepository.GetById(cessionarioDto.Id);
+            Assert.IsNotNull(cessionario);
+            Assert.IsTrue(cessionario.Abilitato);
         }
 
         [Test]
