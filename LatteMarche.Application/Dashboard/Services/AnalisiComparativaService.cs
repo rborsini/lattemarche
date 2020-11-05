@@ -17,6 +17,8 @@ namespace LatteMarche.Application.Dashboard.Services
 
         #region Fields
 
+        private IMapper mapper;
+
         private IRepository<Analisi, string> analisiRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
 
@@ -24,8 +26,10 @@ namespace LatteMarche.Application.Dashboard.Services
 
         #region Constructor
 
-        public AnalisiComparativaService(IUnitOfWork uow)
+        public AnalisiComparativaService(IUnitOfWork uow, IMapper mapper)
         {
+            this.mapper = mapper;
+
             this.analisiRepository = uow.Get<Analisi, string>();
             this.prelieviRepository = uow.Get<PrelievoLatte, int>();
         }
@@ -120,7 +124,7 @@ namespace LatteMarche.Application.Dashboard.Services
                 .Where(a => a.DataPrelievo < to)
                 .ToList();
 
-            return Mapper.Map<List<AnalisiDto>>(entities);
+            return this.mapper.Map<List<AnalisiDto>>(entities);
         }
 
         public decimal GetPercentile(decimal[] sequence, decimal value)

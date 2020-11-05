@@ -19,7 +19,6 @@ namespace LatteMarche.WebApi
             MobileHubConfig.Configure();
             LoggerConfig.Configure();
             AutoFacConfig.Configure();
-			AutoMapperConfig.Configure();
 
             log.Info("Application started");
         }

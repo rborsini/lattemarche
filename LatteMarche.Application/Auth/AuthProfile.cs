@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Auth
 {
-    public class AuthMappings
+    public class AuthProfile : Profile
     {
-        internal static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public AuthProfile()
         {
-            mappings.CreateMap<Azione, AzioneDto>()
+            CreateMap<Azione, AzioneDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Type, opts => opts.MapFrom(src => src.Type.Trim()))
                 .ForMember(dest => dest.Controller, opts => opts.MapFrom(src => src.Controller.Trim()))
@@ -23,7 +24,7 @@ namespace LatteMarche.Application.Auth
                 .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
                 ;
 
-            mappings.CreateMap<AzioneDto, Azione>()
+            CreateMap<AzioneDto, Azione>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Type, opts => opts.MapFrom(src => src.Type.Trim()))
                 .ForMember(dest => dest.Controller, opts => opts.MapFrom(src => src.Controller.Trim()))
@@ -33,19 +34,18 @@ namespace LatteMarche.Application.Auth
                 .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Nome.Trim()))
                 ;
 
-            mappings.CreateMap<Ruolo, RuoloDto>()
+            CreateMap<Ruolo, RuoloDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Codice, opts => opts.MapFrom(src => src.Codice.Trim()))
                 .ForMember(dest => dest.Descrizione, opts => opts.MapFrom(src => src.Descrizione.Trim()))
                 ;
 
-            mappings.CreateMap<RuoloDto, Ruolo>()
+            CreateMap<RuoloDto, Ruolo>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Codice, opts => opts.MapFrom(src => src.Codice.Trim()))
                 .ForMember(dest => dest.Descrizione, opts => opts.MapFrom(src => src.Descrizione.Trim()))
                 ;
 
-            return mappings;
         }
     }
 }

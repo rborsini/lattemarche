@@ -48,7 +48,6 @@ namespace LatteMarche.Tests.Services.Utenti
         public Services_TrasportatoreTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

@@ -9,6 +9,7 @@ using System.Linq;
 using WeCode.Application;
 using WeCode.Data.Interfaces;
 using LatteMarche.Application.Common.Dtos;
+using AutoMapper;
 
 namespace LatteMarche.Application.Comuni.Services
 {
@@ -24,8 +25,8 @@ namespace LatteMarche.Application.Comuni.Services
 
         #region Constructors
 
-        public ComuniService(IUnitOfWork uow)
-            : base(uow)
+        public ComuniService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         {
             this.comuniRepository = this.uow.Get<Comune, int>();
         }

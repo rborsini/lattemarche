@@ -46,7 +46,6 @@ namespace LatteMarche.Tests.Services.Utenti
         public Services_CessionarioTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

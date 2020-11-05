@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.AnalisiLatte.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Core;
@@ -19,8 +20,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         #region Constructors
 
-        public LaboratoriAnalisiService(IUnitOfWork uow)
-            : base(uow) { }
+        public LaboratoriAnalisiService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper) { }
 
         #endregion
 

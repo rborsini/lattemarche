@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Acquirenti.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Acquirenti
 {
-    public class AcquirentiMappings
+    public class AcquirentiProfile : Profile
     {
-        public static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public AcquirentiProfile()
         {
-            mappings.CreateMap<Acquirente, AcquirenteDto>()
+            CreateMap<Acquirente, AcquirenteDto>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Piva, opts => opts.MapFrom(src => src.Piva.Trim()))
@@ -22,7 +23,8 @@ namespace LatteMarche.Application.Acquirenti
                 .ForMember(dest => dest.IdSitra, opts => opts.MapFrom(src => src.IdSitra))
                 .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia))
                 ;
-            mappings.CreateMap<AcquirenteDto, Acquirente>()
+            
+            CreateMap<AcquirenteDto, Acquirente>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.RagioneSociale, opts => opts.MapFrom(src => src.RagioneSociale.Trim()))
                 .ForMember(dest => dest.Piva, opts => opts.MapFrom(src => src.Piva.Trim()))
@@ -31,8 +33,6 @@ namespace LatteMarche.Application.Acquirenti
                 .ForMember(dest => dest.IdSitra, opts => opts.MapFrom(src => src.IdSitra))
                 .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true))
                 ;
-
-            return mappings;
         }
     }
 }

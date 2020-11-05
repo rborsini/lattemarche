@@ -1,4 +1,5 @@
-﻿using AutoMapper.Configuration;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Core.Models;
 using System;
@@ -9,19 +10,17 @@ using System.Threading.Tasks;
 
 namespace LatteMarche.Application.Allevamenti
 {
-    public class AllevamentiMappings
+    public class AllevamentiProfile : Profile
     {
-        internal static MapperConfigurationExpression Configure(MapperConfigurationExpression mappings)
+        public AllevamentiProfile()
         {
             // https://docs.automapper.org/en/stable/Reverse-Mapping-and-Unflattening.html
-            mappings.CreateMap<Allevamento, AllevamentoDto>()
+            CreateMap<Allevamento, AllevamentoDto>()
                 .ForMember(dest => dest.SiglaProvincia, opts => opts.MapFrom(src => src.Comune.Provincia));
 
-            mappings.CreateMap<AllevamentoDto, Allevamento>()
+            CreateMap<AllevamentoDto, Allevamento>()
                 .ForMember(dest => dest.Abilitato, opts => opts.MapFrom(src => true));
             
-
-            return mappings;
         }
     }
 }

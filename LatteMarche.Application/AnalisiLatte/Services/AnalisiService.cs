@@ -48,8 +48,8 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         #region Constructor
 
-        public AnalisiService(IUnitOfWork uow, IAssamService assamService)
-            : base(uow)
+        public AnalisiService(IUnitOfWork uow, IMapper mapper, IAssamService assamService)
+            : base(uow, mapper)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.valoriRepository = this.uow.Get<ValoreAnalisi, long>();
@@ -102,7 +102,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         public override AnalisiDto Update(AnalisiDto model)
         {
             var analisi = this.repository.GetById(model.Id);
-            var viewValori = Mapper.Map<List<ValoreAnalisi>>(model.Valori);
+            var viewValori = this.mapper.Map<List<ValoreAnalisi>>(model.Valori);
             var dbValori = analisi != null ? analisi.Valori : new List<ValoreAnalisi>();
             UpdateValori(viewValori, dbValori);
 
@@ -155,7 +155,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         private void Save(Report report)
         {
             
-            var analisiList = Mapper.Map<List<AnalisiDto>>(report.Analisi.Where(a => !String.IsNullOrEmpty(a.Campione)));
+            var analisiList = this.mapper.Map<List<AnalisiDto>>(report.Analisi.Where(a => !String.IsNullOrEmpty(a.Campione)));
 
             foreach (var analisi in analisiList)
             {

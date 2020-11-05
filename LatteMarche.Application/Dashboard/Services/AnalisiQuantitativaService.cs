@@ -22,15 +22,19 @@ namespace LatteMarche.Application.Dashboard.Services
         #region Fields
 
         private IUnitOfWork uow;
+        private IMapper mapper;
+
         private IRepository<V_PrelievoLatte, int> prelieviRepository;
 
         #endregion
 
         #region Constructor
 
-        public AnalisiQuantitativaService(IUnitOfWork uow)
+        public AnalisiQuantitativaService(IUnitOfWork uow, IMapper mapper)
         {
             this.uow = uow;
+            this.mapper = mapper;
+
             this.prelieviRepository = this.uow.Get<V_PrelievoLatte, int>();
         }
 
@@ -59,7 +63,7 @@ namespace LatteMarche.Application.Dashboard.Services
         private List<WidgetAnalisiQuantitativaDto.Record> MakeRecords(int idAllevamento, DateTime from, DateTime to)
         {
             var prelievi = LoadPrelievi(idAllevamento, from, to).ToList();
-            return Mapper.Map<List<WidgetAnalisiQuantitativaDto.Record>>(prelievi);
+            return this.mapper.Map<List<WidgetAnalisiQuantitativaDto.Record>>(prelievi);
         }
 
         /// <summary>

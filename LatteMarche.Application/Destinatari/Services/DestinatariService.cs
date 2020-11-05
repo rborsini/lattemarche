@@ -30,8 +30,8 @@ namespace LatteMarche.Application.Destinatari.Services
 
         #region Constructors
 
-        public DestinatariService(IUnitOfWork uow, IUtentiService utentiService)
-            : base(uow)
+        public DestinatariService(IUnitOfWork uow, IMapper mapper, IUtentiService utentiService)
+            : base(uow, mapper)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
@@ -46,7 +46,7 @@ namespace LatteMarche.Application.Destinatari.Services
         {
             var entities = this.repository.DbSet.Where(d => d.Abilitato).ToList();
 
-            return Mapper.Map<List<DestinatarioDto>>(entities);
+            return this.mapper.Map<List<DestinatarioDto>>(entities);
         }
 
         public DropDownDto DropDown(int? idUtente = null)

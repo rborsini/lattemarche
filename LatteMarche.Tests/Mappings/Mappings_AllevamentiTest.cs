@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using FizzWare.NBuilder;
 using LatteMarche.Application.Allevamenti.Dtos;
 using LatteMarche.Core.Models;
@@ -10,12 +11,21 @@ namespace LatteMarche.Tests.Mappings
     public class Mappings_AllevamentiTest
     {
 
+        #region Fields
+
+        private ILifetimeScope scope;
+        private IMapper mapper;
+
+        #endregion
+
         #region Constructors
 
         public Mappings_AllevamentiTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
+
+            this.scope = AutoFacConfig.Container.BeginLifetimeScope();
+            this.mapper = this.scope.Resolve<IMapper>();
         }
 
         #endregion
@@ -34,7 +44,7 @@ namespace LatteMarche.Tests.Mappings
                             .Build())
                 .Build();
 
-            var allevamentoDto = Mapper.Map<AllevamentoDto>(allevamento);
+            var allevamentoDto = this.mapper.Map<AllevamentoDto>(allevamento);
 
             Assert.AreEqual(allevamentoDto.CodiceAsl, allevamento.CodiceAsl);
             Assert.AreEqual(idTipoLatte, allevamentoDto.Utente_IdTipoLatte);
@@ -50,7 +60,7 @@ namespace LatteMarche.Tests.Mappings
                     .With(a => a.Utente_IdTipoLatte = idTipoLatte)
                 .Build();
 
-            var allevamento = Mapper.Map<Allevamento>(allevamentoDto);
+            var allevamento = this.mapper.Map<Allevamento>(allevamentoDto);
 
             Assert.AreEqual(allevamentoDto.CodiceAsl, allevamento.CodiceAsl);
 

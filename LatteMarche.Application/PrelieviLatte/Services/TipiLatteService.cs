@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Common.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.PrelieviLatte.Dtos;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
 using LatteMarche.Core;
@@ -15,8 +16,8 @@ namespace LatteMarche.Application.PrelieviLatte.Services
 
         #region Constructors
 
-        public TipiLatteService(IUnitOfWork uow)
-            : base(uow) { }
+        public TipiLatteService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper) { }
 
         #endregion
 

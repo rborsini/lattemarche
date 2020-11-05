@@ -1,4 +1,5 @@
-﻿using DelegateDecompiler;
+﻿using AutoMapper;
+using DelegateDecompiler;
 using LatteMarche.Application.Logs.Dtos;
 using LatteMarche.Application.Logs.Interfaces;
 using LatteMarche.Core;
@@ -22,8 +23,8 @@ namespace LatteMarche.Application.Logs.Services
 
         private string connectionString => ConfigurationManager.ConnectionStrings["LatteMarcheDbContext"].ConnectionString;
 
-        public LogsService(IUnitOfWork uow)
-            : base(uow)
+        public LogsService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         { }
 
         public void Delete(DateTime from)

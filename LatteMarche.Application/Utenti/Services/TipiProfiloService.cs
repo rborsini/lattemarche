@@ -1,4 +1,5 @@
-﻿using LatteMarche.Application.Auth.Dtos;
+﻿using AutoMapper;
+using LatteMarche.Application.Auth.Dtos;
 using LatteMarche.Application.Auth.Interfaces;
 using LatteMarche.Application.Common.Dtos;
 using LatteMarche.Application.Utenti.Dtos;
@@ -16,8 +17,8 @@ namespace LatteMarche.Application.Utenti.Services
     {
         #region Constructors
 
-        public TipiProfiloService(IUnitOfWork uow)
-            : base(uow)
+        public TipiProfiloService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         { }
 
         #endregion

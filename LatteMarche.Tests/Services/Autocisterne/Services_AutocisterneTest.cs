@@ -42,7 +42,6 @@ namespace LatteMarche.Tests.Services.Autocisterne
         public Services_AutocisterneTest()
         {
             AutoFacConfig.Configure();
-            AutomapperConfig.Configure();
 
             this.scope = AutoFacConfig.Container.BeginLifetimeScope();
 

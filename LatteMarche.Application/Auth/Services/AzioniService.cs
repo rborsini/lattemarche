@@ -13,13 +13,13 @@ namespace LatteMarche.Application.Auth.Services
     public class AzioniService : EntityService<Azione, string, AzioneDto>, IAzioniService
     {
 
-        public AzioniService(IUnitOfWork uow)
-            : base(uow)
+        public AzioniService(IUnitOfWork uow, IMapper mapper)
+            : base(uow, mapper)
         { }
 
         public void Synch(List<AzioneDto> azioniReflectionDto)
         {
-            List<Azione> azioniReflection = Mapper.Map<List<Azione>>(azioniReflectionDto);
+            List<Azione> azioniReflection = this.mapper.Map<List<Azione>>(azioniReflectionDto);
             List<Azione> azioniDb = this.repository.Query.ToList();
 
             foreach (Azione azione in azioniReflection)

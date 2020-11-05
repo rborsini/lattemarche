@@ -18,6 +18,8 @@ namespace LatteMarche.Application.Mobile.Services
         #region Fields
 
         private IUnitOfWork uow;
+        private IMapper mapper;
+
         private IRepository<DispositivoMobile, string> dispositiviRepository;
 
         private IRepository<Utente, int> trasportatoriRepository;
@@ -33,9 +35,10 @@ namespace LatteMarche.Application.Mobile.Services
 
         #region Constructor
 
-        public MobileService(IUnitOfWork uow)
+        public MobileService(IUnitOfWork uow, IMapper mapper)
         {
             this.uow = uow;
+            this.mapper = mapper;
 
             this.dispositiviRepository = this.uow.Get<DispositivoMobile, string>();
 
@@ -70,7 +73,7 @@ namespace LatteMarche.Application.Mobile.Services
             if (dispositivo == null)
             {
                 // nuovo dispositivo
-                dispositivo = Mapper.Map<DispositivoMobile>(deviceInfo);
+                dispositivo = this.mapper.Map<DispositivoMobile>(deviceInfo);
                 dispositivo.DataRegistrazione = DateTime.UtcNow;
 
                 this.dispositiviRepository.Add(dispositivo);
@@ -90,7 +93,7 @@ namespace LatteMarche.Application.Mobile.Services
                 this.uow.SaveChanges();
             }
 
-            var dto = Mapper.Map<DispositivoDto>(this.uow.Get<DispositivoMobile,string>().GetById(deviceInfo.Id));
+            var dto = this.mapper.Map<DispositivoDto>(this.uow.Get<DispositivoMobile,string>().GetById(deviceInfo.Id));
 
             PushNotificationsService.Instance.Push(dto.Id);
 
@@ -115,11 +118,11 @@ namespace LatteMarche.Application.Mobile.Services
                 {
                     var idTrasportatore = dispositivo.IdTrasportatore.Value;
 
-                    db.Trasportatore = Mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
-                    db.Autocisterna = Mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
-                    db.Autocisterne = Mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
+                    db.Trasportatore = this.mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
+                    db.Autocisterna = this.mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
+                    db.Autocisterne = this.mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
 
-                    db.Giri = Mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
+                    db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
 
                     foreach (var giro in db.Giri)
                     {
@@ -163,10 +166,10 @@ namespace LatteMarche.Application.Mobile.Services
                         }
                     }
 
-                    db.TipiLatte = Mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
-                    db.Acquirenti = Mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
-                    db.Destinatari = Mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
-                    db.Cessionari = Mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
+                    db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
+                    db.Acquirenti = this.mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
+                    db.Destinatari = this.mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
+                    db.Cessionari = this.mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
 
                 }
 
@@ -192,7 +195,7 @@ namespace LatteMarche.Application.Mobile.Services
             {
                 foreach (var prelievoDto in uploadDto.Prelievi)
                 {
-                    var prelievo = Mapper.Map<PrelievoLatte>(prelievoDto);
+                    var prelievo = this.mapper.Map<PrelievoLatte>(prelievoDto);
 
                     prelievo.DeviceId = uploadDto.IMEI;
 

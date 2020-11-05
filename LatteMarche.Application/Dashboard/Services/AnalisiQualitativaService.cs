@@ -18,14 +18,20 @@ namespace LatteMarche.Application.Dashboard.Services
 
         #region Fields
 
+        private IUnitOfWork uow;
+        private IMapper mapper;
+
         private IRepository<Analisi, string> analisiRepository;
 
         #endregion
 
         #region Constructor
 
-        public AnalisiQualitativaService(IUnitOfWork uow)
+        public AnalisiQualitativaService(IUnitOfWork uow, IMapper mapper)
         {
+            this.uow = uow;
+            this.mapper = mapper;
+
             this.analisiRepository = uow.Get<Analisi, string>();
         }
 
@@ -52,9 +58,9 @@ namespace LatteMarche.Application.Dashboard.Services
                 .Where(a => a.DataPrelievo < to)
                 .ToList();
 
-            var analisiDto = Mapper.Map<List<AnalisiDto>>(analisi);
+            var analisiDto = this.mapper.Map<List<AnalisiDto>>(analisi);
 
-            return Mapper.Map<List<WidgetAnalisiQualitativaDto.Record>>(analisiDto);
+            return this.mapper.Map<List<WidgetAnalisiQualitativaDto.Record>>(analisiDto);
 
         }
 
