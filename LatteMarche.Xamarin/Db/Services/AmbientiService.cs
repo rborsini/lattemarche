@@ -11,7 +11,7 @@ namespace LatteMarche.Xamarin.Db.Services
     {
         #region Constants
 
-        private const string TEST_URL = "http://robertoborsini.myqnapcloud.com:81";
+        private const string TEST_URL = "http://www.cowo.we-code.it:81";
         private const string PROD_URL = "http://lattemarche.azurewebsites.net/";
 
         #endregion

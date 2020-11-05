@@ -406,6 +406,7 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="dist\prod\js\prelieviLatteEdit.js.map" />
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
+    <None Include="Deploy_TEST.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
@@ -420,8 +421,6 @@
     <Content Include="Views\Ruoli\Edit.cshtml" />
     <Content Include="Views\Ruoli\New.cshtml" />
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
-    <None Include="lattemarche - Web Deploy.pubxml" />
-    <None Include="TEST.pubxml" />
     <Content Include="Views\AnalisiLatte\Index.cshtml" />
     <Content Include="Views\Dispositivi\Index.cshtml" />
     <Content Include="Views\Cessionari\Index.cshtml" />

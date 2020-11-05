@@ -93,7 +93,7 @@ namespace LatteMarche.Application.Sitra.Services
                         prelievo.CodiceSitra = InserimentoLotto(accessToken, root);
                         //this.LogDebug($"Prelievo inviato correttamente [{prelievo.Id}]");
                     }
-                    catch(Exception exc)
+                    catch
                     {
                         //this.LogDebug($"Errore invio SITRA [{exc.Message}]");
                         prelievo.CodiceSitra = "ERRORE_INVIO";
@@ -158,7 +158,7 @@ namespace LatteMarche.Application.Sitra.Services
                         });
                     }
                 }
-                catch(Exception exc)
+                catch
                 {
                     lotto.Inviato = false;
                     lotto.Messaggio = "Dati lotto non inviati";

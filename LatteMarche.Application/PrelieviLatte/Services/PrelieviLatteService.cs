@@ -235,7 +235,9 @@ namespace LatteMarche.Application.Latte.Services
                     var prelievoDb = base.repository.Query.FirstOrDefault(p =>
                             p.IdAllevamento == item.IdAllevamento &&
                             p.IdTrasportatore == item.IdTrasportatore &&
-                            p.DataPrelievo == item.DataPrelievo);
+                            p.DataPrelievo.Value.Year == item.DataPrelievo.Value.Year &&
+                            p.DataPrelievo.Value.Month == item.DataPrelievo.Value.Month &&
+                            p.DataPrelievo.Value.Day == item.DataPrelievo.Value.Day);
 
 
                     if (prelievoDb != null)
