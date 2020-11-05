@@ -422,6 +422,7 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="dist\prod\js\prelieviLatteEdit.js.map" />
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
+    <None Include="Deploy_PROD.pubxml" />
     <None Include="Deploy_TEST.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
