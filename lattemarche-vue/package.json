@@ -5,7 +5,8 @@
   "scripts": {
     "build:dev": "vue-cli-service build --mode development",
     "build:watch": "vue-cli-service build --mode development --watch",
-    "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod"
+    "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@types/bootstrap": "^4.0.0",
