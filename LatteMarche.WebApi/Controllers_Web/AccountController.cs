@@ -85,7 +85,7 @@ namespace LatteMarche.WebApi.Controllers_Web
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                catch (Exception exc)
+                catch 
                 {
                     ViewBag.ErrorMessage = "Username o password errati";
                 }

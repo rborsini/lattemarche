@@ -14,7 +14,7 @@ namespace LatteMarche.Core.Models
     {
 
         [Key]
-        public long Id { get; set; }
+        public override long Id { get; set; }
 
         public DateTime Date { get; set; }
 

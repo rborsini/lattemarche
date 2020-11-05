@@ -29,7 +29,6 @@ namespace LatteMarche.Tests.Services
         private IRepository<UtenteXCessionario, int> utenteXCessionarioRepository;
         private IRepository<Analisi, string> analisiRepository;
         private IRepository<Autocisterna, int> autocisterneRepository;
-        private IRepository<Analisi, string> analisiRepository;
 
 
         #endregion
