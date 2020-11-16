@@ -4,7 +4,7 @@
         "username": "02102002",
         "password": "giorgia2"
     },
-    "defaultCommandTimeout": 600000,
+    "defaultCommandTimeout": 3000000,
     "execTimeout":60000,
     "requestTimeout":60000,
     "responseTimeout":60000,
