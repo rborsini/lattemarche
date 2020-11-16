@@ -72,10 +72,10 @@
         {
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
+                    <a class="nav-link dropdown-toggle cy-username" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente: @User.Identity.Name</a>
                     <div class="dropdown-menu login" aria-labelledby="navbarDropdownMenuLink">
                         @Html.ActionLink("Cambia password", "ChangePassword", "Account", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @id = "cy-btn-logout", @class = "dropdown-item" })
                     </div>
                 </li>
             </ul>
