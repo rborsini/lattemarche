@@ -282,7 +282,7 @@ import { PrelievoLatte } from "../../models/prelievoLatte.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { DropdownService } from "../../services/dropdown.service";
-import { PermissionsService } from '@/services/permissions.service';
+import { AuthorizationsService } from '@/services/authorizations.service';
 import { UrlService } from '@/services/url.service';
 import { Marker, Position } from '@/models/map.model';
 
@@ -406,8 +406,8 @@ export default class EditazionePrelievoModal extends Vue {
 
   // lettura permessi da jwt
   private readPermissions() {
-    this.isReadOnly = !PermissionsService.isViewItemAuthorized("Prelievi","Edit","Save");
-    this.isMapVisible = PermissionsService.isViewItemAuthorized("Prelievi","Edit","Mappa");
+    this.isReadOnly = !AuthorizationsService.isViewItemAuthorized("Prelievi","Edit","Save");
+    this.isMapVisible = AuthorizationsService.isViewItemAuthorized("Prelievi","Edit","Mappa");
   }  
 
   // reload della pagina sullo stesso id

@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios';
 import { Dropdown } from "@/models/dropdown.model";
-import { PermissionsService } from './permissions.service';
+import { AuthorizationsService } from './authorizations.service';
 
 export class DropdownService {
     constructor() { }

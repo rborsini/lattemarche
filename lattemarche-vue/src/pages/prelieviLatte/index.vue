@@ -158,7 +158,7 @@ import { UrlService } from "@/services/url.service";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { parseJSON } from 'jquery';
-import { PermissionsService } from '@/services/permissions.service';
+import { AuthorizationsService } from '@/services/authorizations.service';
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -509,7 +509,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // lettura permessi da jwt
   private readPermissions() {
-    this.canHighligthRow = PermissionsService.isViewItemAuthorized("Prelievi","Index","FlagCoordinate");
+    this.canHighligthRow = AuthorizationsService.isViewItemAuthorized("Prelievi","Index","FlagCoordinate");
   }  
 
 }

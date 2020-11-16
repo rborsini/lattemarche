@@ -1,4 +1,4 @@
-export class PermissionsService {
+export class AuthorizationsService {
     constructor() {}
 
     public static isAuthenticated() : boolean {
@@ -16,7 +16,7 @@ export class PermissionsService {
         var permissions = [];
 
         var jwt = localStorage.getItem('jwt') as string
-        var obj = PermissionsService.decodeToken(jwt);
+        var obj = AuthorizationsService.decodeToken(jwt);
 
         var items: string[] = [];
         
@@ -35,13 +35,13 @@ export class PermissionsService {
 
     public static getCurrentUser() {
         var jwt = localStorage.getItem('jwt') as string
-        var obj = PermissionsService.decodeToken(jwt);
+        var obj = AuthorizationsService.decodeToken(jwt);
         return obj.username;
     }
 
     public static getCurrentRole() {
         var jwt = localStorage.getItem('jwt') as string
-        var obj = PermissionsService.decodeToken(jwt);
+        var obj = AuthorizationsService.decodeToken(jwt);
         return obj.roles;
     }
 

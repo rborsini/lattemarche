@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:dev": "vue-cli-service build --mode development",
+    "build": "vue-cli-service build --mode development",
     "build:watch": "vue-cli-service build --mode development --watch",
     "build:prod": "vue-cli-service build --mode production --dest ./../LatteMarche.WebApi/dist/prod",
     "cypress:open": "cypress open"
