@@ -47,7 +47,8 @@ describe('Prelievi - List', () => {
 
         cy.url().should('contains', 'IdDestinatario');
 
-          cy.get('#cy-lotto').should('have.value', '1234');
+        cy.get('#cy-lotto').should('have.value', '1234');
+        cy.get('table > tbody').find('tr').should('not.have.length', 1);
 
     });
 
@@ -75,12 +76,12 @@ describe('Prelievi - List', () => {
       cy.get('#cy-lotto').should('have.value', '');
       cy.get('#cy-giro').should('have.value', '');
 
-      cy.get('#cy-allevatore').should('have.value', null);
-      cy.get('#cy-trasportatore').should('have.value', null);
-      cy.get('#cy-tipo-latte').should('have.value', null);
-      cy.get('#cy-acquirente').should('have.value', null);
-      cy.get('#cy-cessionario').should('have.value', null);
-      cy.get('#cy-destinatario').should('have.value', null);
+      cy.get('#cy-allevatore').should('have.value', '');
+      cy.get('#cy-trasportatore').should('have.value', '');
+      cy.get('#cy-tipo-latte').should('have.value', '');
+      cy.get('#cy-acquirente').should('have.value', '');
+      cy.get('#cy-cessionario').should('have.value', '');
+      cy.get('#cy-destinatario').should('have.value', '');
 
 
     });

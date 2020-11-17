@@ -232,11 +232,14 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.readPermissions();
     this.initTable();
     this.loadDropdown();
+    this.initSearchBox();  
 
     if(window.location.hash.length > 0)
+    {
       this.parameters.decodeUrl(window.location.hash);
+      this.onCercaClick();
+    }
 
-    this.initSearchBox();  
   }
 
   // evento modifica parametri ricerca

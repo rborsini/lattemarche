@@ -47,7 +47,7 @@
                     })
                     .on('changeDate', function () {
                         vm.$emit('update:value', this.value);
-                        //vm.$emit('value-changed', this.value); commentato perchè questo evento viene generato dala watch del value
+                        vm.$emit('value-changed', this.value); 
                     }).on('clearDate', function () {
                         vm.$emit('update:value', '');
                         vm.$emit('value-changed', '');

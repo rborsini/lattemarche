@@ -44,12 +44,13 @@ export abstract class BaseSearchModel {
         return new URLSearchParams(url);
     }
 
-    protected getNumberParam(params: URLSearchParams, key: string): number {
+    protected getNumberParam(params: URLSearchParams, key: string): any {
         if(!params.has(key)) {
-            return 0;
+            return null;
         }            
         else {
-            return parseInt(params.get(key) as string);
+            var str = params.get(key) as string;
+            return str != '' ? parseInt(str) : null;
         }
     }
 
