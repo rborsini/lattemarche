@@ -120,7 +120,7 @@ export default class UtentiIndexPage extends Vue {
   // selezione profilo di filtro
   public onProfiloValueChanged(value: number) {
     this.$refs.waiter.open();
-    this.$refs.table.load(this.parameters.ToUrlQueryString());
+    this.$refs.table.load(this.parameters.toUrlQueryString());
   }  
 
   // Evento fine generazione tabella

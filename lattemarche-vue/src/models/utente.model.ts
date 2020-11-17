@@ -43,4 +43,13 @@ export class UtentiSearchModel extends BaseSearchModel {
     public Cognome: string = "";
     public Username: string = "";
 
+    public decodeUrl(url: string) {
+
+        var obj = super.parseUrl(url);
+
+        console.log("obj", obj);
+        //this.idAllevamento = 
+
+    }    
+
 }
