@@ -81,7 +81,7 @@
       <div class="row pt-3">
         <div class="col-12">
           <button id="cy-btn-search" :disabled="!isLoaded" v-on:click="onCercaClick" class="cy-btn-search float-right btn btn-success" role="button">Cerca</button>
-          <button :disabled="!isLoaded" v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
+          <button id="cy-btn-clear" :disabled="!isLoaded" v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
         </div>
       </div>
     </div>
@@ -233,8 +233,6 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.initTable();
     this.loadDropdown();
 
-    // this.parameters.onChange(this.onParametersChanged);
-
     if(window.location.hash.length > 0)
       this.parameters.decodeUrl(window.location.hash);
 
@@ -243,7 +241,6 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // evento modifica parametri ricerca
   private onParametersChanged() {
-    console.log("on change");
     window.location.hash = this.parameters.toUrlQueryString(); 
   }
 
@@ -288,39 +285,6 @@ export default class PrelieviLatteIndexPage extends Vue {
         this.$refs.removedDialog.open();
       });
   }
-
-  // evento selezione allevatore
-  public onAllevatoreSelected(idAllevatore: number) {
-
-    var url = this.parameters.toUrlQueryString();
-    console.log('url', url);
-
-  }
-
-  private getHashValue(name: string)
-  {
-      // For example... passing a name parameter of "name1" will return a value of "100", etc.
-      // page.htm?name1=100&name2=101&name3=102
-
-      var winURL = window.location.href;
-      var queryStringArray = winURL.split("?");
-      var queryStringParamArray = queryStringArray[1].split("&");
-      var nameValue = null;
-
-      for ( var i=0; i<queryStringParamArray.length; i++ )
-      {           
-          var queryStringNameValueArray = queryStringParamArray[i].split("=");
-
-          if ( name == queryStringNameValueArray[0] )
-          {
-              nameValue = queryStringNameValueArray[1];
-          }                       
-      }
-
-      return nameValue;
-  }
-
-
 
   // inizializzazione tabella
   private initTable(): void {
@@ -441,7 +405,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // inizializzazione parametri di ricerca
   private initSearchBox() {
-    // this.parameters = new PrelieviLatteSearchModel();
+    this.parameters.clear();
     this.parameters.DataPeriodoFine_Str = this.formatDate(new Date());
     this.parameters.DataPeriodoInizio_Str = this.formatDate(
       this.subtractMonth(new Date())

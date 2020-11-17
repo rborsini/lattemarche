@@ -12,6 +12,10 @@ export abstract class BaseSearchModel {
         this.handlers = this.handlers.filter(h => h !== handler);
     }    
 
+    public clear() {
+        this.decodeUrl('');
+    }
+
     public toUrlQueryString(): string {
 
         var json = JSON.stringify(this, this.replacer);
