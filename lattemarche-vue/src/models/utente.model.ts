@@ -37,18 +37,17 @@ export class Utente {
 
 export class UtentiSearchModel extends BaseSearchModel {
 
-    public IdProfilo: number = 0;
-    public RagioneSociale: string = "";
-    public Nome: string = "";
-    public Cognome: string = "";
-    public Username: string = "";
+    public IdProfilo!: number;
+    // public RagioneSociale: string = "";
+    // public Nome: string = "";
+    // public Cognome: string = "";
+    // public Username: string = "";
 
     public decodeUrl(url: string) {
 
         var obj = super.parseUrl(url);
 
-        console.log("obj", obj);
-        //this.idAllevamento = 
+        this.IdProfilo = this.getNumberParam(obj, 'IdProfilo');
 
     }    
 
