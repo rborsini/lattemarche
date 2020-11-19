@@ -1,4 +1,5 @@
 ﻿import $ from 'jquery';
+import { BaseSearchModel } from './baseSearch.model';
 
 export class PrelievoLatte {
     public DataConsegna: string = "";
@@ -39,13 +40,13 @@ export class PrelievoLatte {
     public CodiceSitra: string = "";
 }
 
-export class PrelieviLatteSearchModel {
 
+
+export class PrelieviLatteSearchModel extends BaseSearchModel {
 
     public DataPeriodoInizio_Str: string = "";
     public DataPeriodoFine_Str: string = "";
-
-    public IdAllevamento?: number = 0;
+    public IdAllevamento: number = 0;
     public IdTrasportatore?: number = 0;
     public IdAcquirente?: number = 0;
     public IdDestinatario?: number = 0;
@@ -55,8 +56,23 @@ export class PrelieviLatteSearchModel {
     public LottoConsegna: string = "";
     public CodiceGiro: string = "";
 
-    public ToUrlQueryString(): string {
-        return jQuery.param(this);
+    public decodeUrl(url: string) {
+
+        var obj = super.parseUrl(url);
+        
+        this.DataPeriodoInizio_Str = this.getStringParam(obj, 'DataPeriodoInizio_Str');
+        this.DataPeriodoFine_Str = this.getStringParam(obj, 'DataPeriodoFine_Str');
+
+        this.IdAllevamento = this.getNumberParam(obj, 'IdAllevamento');
+        this.IdTrasportatore = this.getNumberParam(obj, 'IdTrasportatore');
+        this.IdAcquirente = this.getNumberParam(obj, 'IdAcquirente');
+        this.IdDestinatario = this.getNumberParam(obj, 'IdDestinatario');
+        this.IdCessionario = this.getNumberParam(obj, 'IdCessionario');
+        this.IdTipoLatte = this.getNumberParam(obj, 'IdTipoLatte');
+
+        this.LottoConsegna = this.getStringParam(obj, 'LottoConsegna');
+        this.CodiceGiro = this.getStringParam(obj, 'CodiceGiro');
+
     }
 
 }

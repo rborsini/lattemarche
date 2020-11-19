@@ -20,22 +20,22 @@
       <div class="row pt-1">
         <label class="col-1">Dal:</label>
         <div class="col-1">
-          <datepicker class="form-control" :value.sync="parameters.DataPeriodoInizio_Str" />
+          <datepicker id="cy-data-inizio" v-on:value-changed="onParametersChanged" class="form-control" :value.sync="parameters.DataPeriodoInizio_Str" />
         </div>
 
         <label class="col-1">Al:</label>
         <div class="col-1">
-          <datepicker class="form-control" :value.sync="parameters.DataPeriodoFine_Str" />
+          <datepicker id="cy-data-fine" v-on:value-changed="onParametersChanged" class="form-control" :value.sync="parameters.DataPeriodoFine_Str" />
         </div>
 
         <label class="col-1">Lotto:</label>
         <div class="col-3">
-          <input class="form-control" type="text" v-model="parameters.LottoConsegna" />
+          <input id="cy-lotto" v-on:input="onParametersChanged" class="form-control" type="text" v-model="parameters.LottoConsegna" />
         </div>
 
         <label class="col-1">Giro:</label>
         <div class="col-3">
-          <select2 class="form-control" :placeholder="'-'" :options="giro.Items" :value.sync="parameters.CodiceGiro" :value-field="'Value'" :text-field="'Text'" />          
+          <select2 id="cy-giro" v-on:value-changed="onParametersChanged" class="form-control" :placeholder="'-'" :options="giro.Items" :value.sync="parameters.CodiceGiro" :value-field="'Value'" :text-field="'Text'" />          
         </div>        
 
       </div>
@@ -44,17 +44,17 @@
       <div class="row pt-1" v-if="canSearchAllevatore || canSearchTrasportatore">
         <label class="col-1" v-if="canSearchAllevatore">Allevatore:</label>
         <div class="col-3" v-if="canSearchAllevatore">
-          <select2 class="form-control" :disabled="idProfilo == 3" :placeholder="'-'" :options="allevatori.Items" :value.sync="parameters.IdAllevamento" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-allevatore" v-on:value-changed="onParametersChanged" class="form-control" :disabled="idProfilo == 3" :placeholder="'-'" :options="allevatori.Items" :value.sync="parameters.IdAllevamento" :value-field="'Value'" :text-field="'Text'" />
         </div>
 
         <label class="col-1" v-if="canSearchTrasportatore">Trasportatore:</label>
         <div class="col-3" v-if="canSearchTrasportatore">
-          <select2 class="form-control" :placeholder="'-'" :disabled="idProfilo == 5" :options="trasportatore.Items" :value.sync="parameters.IdTrasportatore" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-trasportatore" v-on:value-changed="onParametersChanged" class="form-control" :placeholder="'-'" :disabled="idProfilo == 5" :options="trasportatore.Items" :value.sync="parameters.IdTrasportatore" :value-field="'Value'" :text-field="'Text'" />
         </div>
 
         <label class="col-1">Tipo latte:</label>
         <div class="col-3">
-          <select2 class="form-control" :placeholder="'-'" :options="tipiLatte.Items" :value.sync="parameters.IdTipoLatte" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-tipo-latte" v-on:value-changed="onParametersChanged" class="form-control" :placeholder="'-'" :options="tipiLatte.Items" :value.sync="parameters.IdTipoLatte" :value-field="'Value'" :text-field="'Text'" />
         </div>
       </div>
 
@@ -63,25 +63,25 @@
 
         <label class="col-1" v-if="canSearchAcquirente">Acquirente:</label>
         <div class="col-3" v-if="canSearchAcquirente">
-          <select2 class="form-control" :disabled="idProfilo == 7" :placeholder="'-'" :options="acquirente.Items" :value.sync="parameters.IdAcquirente" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-acquirente" v-on:value-changed="onParametersChanged" class="form-control" :disabled="idProfilo == 7" :placeholder="'-'" :options="acquirente.Items" :value.sync="parameters.IdAcquirente" :value-field="'Value'" :text-field="'Text'" />
         </div>
 
         <label class="col-1" v-if="canSearchCessionario">Cessionario:</label>
         <div class="col-3" v-if="canSearchCessionario">
-          <select2 class="form-control" :disabled="idProfilo == 8" :placeholder="'-'" :options="cessionario.Items" :value.sync="parameters.IdCessionario" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-cessionario" v-on:value-changed="onParametersChanged" class="form-control" :disabled="idProfilo == 8" :placeholder="'-'" :options="cessionario.Items" :value.sync="parameters.IdCessionario" :value-field="'Value'" :text-field="'Text'" />
         </div>
 
         <label class="col-1" v-if="canSearchDestinatario">Destinatario:</label>
         <div class="col-3" v-if="canSearchDestinatario">
-          <select2 class="form-control" :disabled="idProfilo == 6" :placeholder="'-'" :options="destinatario.Items" :value.sync="parameters.IdDestinatario" :value-field="'Value'" :text-field="'Text'" />
+          <select2 id="cy-destinatario" v-on:value-changed="onParametersChanged" class="form-control" :disabled="idProfilo == 6" :placeholder="'-'" :options="destinatario.Items" :value.sync="parameters.IdDestinatario" :value-field="'Value'" :text-field="'Text'" />
         </div>
       </div>
 
       <!-- Bottoni di ricerca -->
       <div class="row pt-3">
         <div class="col-12">
-          <button :disabled="!isLoaded" v-on:click="onCercaClick" class="float-right btn btn-success" role="button">Cerca</button>
-          <button :disabled="!isLoaded" v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
+          <button id="cy-btn-search" :disabled="!isLoaded" v-on:click="onCercaClick" class="cy-btn-search float-right btn btn-success" role="button">Cerca</button>
+          <button id="cy-btn-clear" :disabled="!isLoaded" v-on:click="onAnnullaClick" class="float-right btn btn-secondary mr-2" href="#" role="button" >Annulla</button>
         </div>
       </div>
     </div>
@@ -158,7 +158,8 @@ import { UrlService } from "@/services/url.service";
 
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { parseJSON } from 'jquery';
-import { PermissionsService } from '@/services/permissions.service';
+import { AuthorizationsService } from '@/services/authorizations.service';
+import { BaseSearchModel } from '@/models/baseSearch.model';
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -201,7 +202,7 @@ export default class PrelieviLatteIndexPage extends Vue {
   private idPrelievoDaEliminare!: number;
   private isLoaded: boolean = false;
 
-  public parameters: PrelieviLatteSearchModel = new PrelieviLatteSearchModel();
+  public parameters!: PrelieviLatteSearchModel;
 
   public prelievoSelezionato: PrelievoLatte;
   
@@ -219,6 +220,7 @@ export default class PrelieviLatteIndexPage extends Vue {
   constructor() {
     super();
 
+    this.parameters = new PrelieviLatteSearchModel();
     this.prelieviLatteService = new PrelieviLatteService();
     this.prelievoSelezionato = new PrelievoLatte();
     this.dropdownService = new DropdownService();
@@ -230,8 +232,19 @@ export default class PrelieviLatteIndexPage extends Vue {
     this.readPermissions();
     this.initTable();
     this.loadDropdown();
-
     this.initSearchBox();  
+
+    if(window.location.hash.length > 0)
+    {
+      this.parameters.decodeUrl(window.location.hash);
+      this.onCercaClick();
+    }
+
+  }
+
+  // evento modifica parametri ricerca
+  private onParametersChanged() {
+    window.location.hash = this.parameters.toUrlQueryString(); 
   }
 
   // Pulizia selezione
@@ -395,7 +408,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // inizializzazione parametri di ricerca
   private initSearchBox() {
-    this.parameters = new PrelieviLatteSearchModel();
+    this.parameters.clear();
     this.parameters.DataPeriodoFine_Str = this.formatDate(new Date());
     this.parameters.DataPeriodoInizio_Str = this.formatDate(
       this.subtractMonth(new Date())
@@ -470,7 +483,7 @@ export default class PrelieviLatteIndexPage extends Vue {
       "/api/prelieviLatte/excel" +
         tipo +
         "?" +
-        this.parameters.ToUrlQueryString()
+        this.parameters.toUrlQueryString()
     );
   }
 
@@ -509,7 +522,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   // lettura permessi da jwt
   private readPermissions() {
-    this.canHighligthRow = PermissionsService.isViewItemAuthorized("Prelievi","Index","FlagCoordinate");
+    this.canHighligthRow = AuthorizationsService.isViewItemAuthorized("Prelievi","Index","FlagCoordinate");
   }  
 
 }

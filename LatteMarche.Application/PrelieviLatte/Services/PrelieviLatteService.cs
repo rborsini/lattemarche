@@ -56,8 +56,11 @@ namespace LatteMarche.Application.Latte.Services
             {
                 var allevamento = this.allevamentiRepository.GetById(dto.IdAllevamento.Value);
 
-                dto.Allevamento_Lat = allevamento.Latitudine;
-                dto.Allevamento_Lng = allevamento.Longitudine;
+                if(allevamento != null)
+                {
+                    dto.Allevamento_Lat = allevamento.Latitudine;
+                    dto.Allevamento_Lng = allevamento.Longitudine;
+                }
             }            
 
             return dto;

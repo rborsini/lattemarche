@@ -79,10 +79,10 @@ namespace ZebraPrinterlConsole
                     RagioneSociale = "SIBILLA SOC. COOP. AGR.",
                     Indirizzo = "Via Montepulciano",
                     P_IVA = "1232135",
-                    AutoCisterna = new LatteMarche.Xamarin.Db.Models.AutoCisterna()
-                    {
-                        Targa = "12RTY56",
-                    },
+                    //AutoCisterna = new LatteMarche.Xamarin.Db.Models.AutoCisterna()
+                    //{
+                    //    Targa = "12RTY56",
+                    //},
                 },
                 Giro = new LatteMarche.Xamarin.Db.Models.TemplateGiro()
                 {

@@ -401,7 +401,7 @@ import { UtentiService } from "@/services/utenti.service";
 import { DropdownService } from "@/services/dropdown.service";
 import { Utente } from "@/models/utente.model";
 import { UrlService } from "@/services/url.service";
-import { PermissionsService } from "@/services/permissions.service";
+import { AuthorizationsService } from "@/services/authorizations.service";
 import { Dropdown, DropdownItem } from "../../models/dropdown.model";
 import { Allevamento } from "../../models/allevamento.model";
 import { Autocisterna } from "../../models/autocisterna.model";
@@ -617,14 +617,14 @@ export default class App extends Vue {
   // lettura permessi da jwt
   private readPermissions() {
 
-    this.isAdmin = PermissionsService.getCurrentRole() == "Admin";
+    this.isAdmin = AuthorizationsService.getCurrentRole() == "Admin";
 
-    this.isReadOnly = !PermissionsService.isViewItemAuthorized(
+    this.isReadOnly = !AuthorizationsService.isViewItemAuthorized(
       "Utenti",
       "Edit",
       "Edit"
     );
-    this.btnDeleteVisible = PermissionsService.isViewItemAuthorized(
+    this.btnDeleteVisible = AuthorizationsService.isViewItemAuthorized(
       "Utenti",
       "Edit",
       "Delete"

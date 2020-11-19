@@ -44,3 +44,6 @@ Thumbs.db
 *.dotCover
 /LatteMarche.WebApi/Logs
 /LatteMarche.WebApi/dist/**
+
+/lattemarche.Vue/cypress/screenshots
+/lattemarche.Vue/cypress/videos

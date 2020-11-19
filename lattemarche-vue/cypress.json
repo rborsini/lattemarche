@@ -1,9 +1,10 @@
 {
     "env": {
-        "url": "http://localhost:50510/",
-        "username": "pippo",
-        "password": "WeCode01"
+        "url": "http://localhost:53137",
+        "username": "02102002",
+        "password": "giorgia2"
     },
+    "defaultCommandTimeout": 60000,
     "execTimeout":60000,
     "requestTimeout":60000,
     "responseTimeout":60000,
