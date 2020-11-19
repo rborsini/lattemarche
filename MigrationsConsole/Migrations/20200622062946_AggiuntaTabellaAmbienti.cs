@@ -25,7 +25,7 @@ namespace MigrationsConsole.Migrations
                 INSERT INTO Ambienti (Nome, Url, Selezionato)
                 VALUES
                 ('Prod', 'http://lattemarche.azurewebsites.net/', 1),
-                ('Test', 'http://robertoborsini.myqnapcloud.com:81', 0),
+                ('Test', 'http://www.cowo.we-code.it:81', 0),
             ");
 
         }
