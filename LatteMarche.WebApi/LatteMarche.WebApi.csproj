@@ -427,6 +427,7 @@
     <None Include="Properties\PublishProfiles\lattemarche - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Properties\PublishProfiles\Dev_Local.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\lattemarche - Web Deploy.pubxml.user" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.4.1.js" />
