@@ -294,8 +294,8 @@
     <Reference Include="WeCode.Identity, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCode.Identity.1.20.10.20\lib\net461\WeCode.Identity.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.JQueryDataTable, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.JQueryDataTable.1.20.11.24\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
+    <Reference Include="WeCode.JQueryDataTable, Version=1.20.11.25, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WeCode.JQueryDataTable.1.20.11.25\lib\net461\WeCode.JQueryDataTable.dll</HintPath>
     </Reference>
     <Reference Include="WeCode.MVC, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCode.MVC.1.20.10.21\lib\net461\WeCode.MVC.dll</HintPath>
