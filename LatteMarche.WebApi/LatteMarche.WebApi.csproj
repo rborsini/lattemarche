@@ -325,6 +325,7 @@
     <Content Include="dist\prod\css\analisiProduttoriIndex.css" />
     <Content Include="dist\prod\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\prod\css\chunk-common.css" />
+    <Content Include="dist\prod\css\chunk-vendors.css" />
     <Content Include="dist\prod\css\custom.css" />
     <Content Include="dist\prod\css\dashboardIndex.css" />
     <Content Include="dist\prod\css\daterangepicker.css" />
@@ -424,7 +425,10 @@
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
     <None Include="Properties\PublishProfiles\Deploy_TEST.pubxml" />
     <None Include="Properties\PublishProfiles\Dev_Local.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\lattemarche - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Properties\PublishProfiles\Dev_Local.pubxml.user" />
     <Content Include="Properties\PublishProfiles\lattemarche - Web Deploy.pubxml.user" />
