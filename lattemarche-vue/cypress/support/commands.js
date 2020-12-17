@@ -37,16 +37,19 @@ Cypress.Commands.add("select2_PickValue", (id) => {
 
 })
 
-// select2 searchValue
-Cypress.Commands.add("select2_TypeValue", (id, api, value) => {
-
+ // select2 searchValue
+ Cypress.Commands.add("select2_TypeValue", (id, api, value) => {
+ 
    cy.get(id + ' + .select2');
    cy.get(id + ' + .select2').find('.select2-selection').click();
    
-   cy.route(api).as('search');
+   if(api != '')
+     cy.route(api).as('search');
+
    cy.get('.select2-search__field').first().type(value);   
 
-   cy.wait('@search');
+   if(api != '')
+     cy.wait('@search');
    cy.get('.select2-results__option--highlighted').should('be.visible');
    cy.get('.select2-search__field').first().type('{enter}');
 
