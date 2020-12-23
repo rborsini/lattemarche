@@ -335,6 +335,7 @@ namespace LatteMarche.Application.Utenti.Services
 
         protected override Utente UpdateProperties(Utente viewEntity, Utente dbEntity)
         {
+            dbEntity.Username = viewEntity.Username;
             dbEntity.Nome = viewEntity.Nome;
             dbEntity.Cognome = viewEntity.Cognome;
             dbEntity.PivaCF = viewEntity.PivaCF;
