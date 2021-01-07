@@ -19,6 +19,7 @@ namespace LatteMarche.Tests.Services.Mobile
         private const int ID_COMUNE = 252;      // Filottrano (unico comune presente in test)
         private const int ID_PROFILO_TRASPORTATORE = 5;         // Trasportatore
         private const int ID_PROFILO_ALLEVATORE = 3;            // Allevatore
+        private const int ID_TIPO_LATTE_QM = 1;                 // QM Alta Qualità
 
         private const int ID_ACQUIRENTE_DEFAULT = 123;
         private const int ID_DESTINATARIO_DEFAULT = 321;
@@ -46,6 +47,8 @@ namespace LatteMarche.Tests.Services.Mobile
         private DbCleaner dbCleaner;
 
         private Utente trasportatore;
+        private Utente allevatore;
+        private Allevamento allevamento;
 
         #endregion
 
@@ -91,6 +94,26 @@ namespace LatteMarche.Tests.Services.Mobile
                 .Build();
 
             this.trasportatore = this.utentiRepository.Add(trasportatore);
+
+            // utente allevatore
+            this.allevatore = Builder<Utente>
+                .CreateNew()
+                    .With(u => u.Id = 2)
+                    .With(u => u.IdComune = ID_COMUNE)
+                    .With(u => u.IdProfilo = ID_PROFILO_ALLEVATORE)
+                    .With(u => u.IdTipoLatte = ID_TIPO_LATTE_QM)
+                .Build();
+
+            this.allevatore = this.utentiRepository.Add(allevatore);
+
+            // allevamento
+            this.allevamento = Builder<Allevamento>
+                .CreateNew()
+                    .With(a => a.IdUtente = this.allevatore.Id)
+                    .With(u => u.IdComune = ID_COMUNE)
+                .Build();
+
+            this.allevamento = this.allevamentiRepository.Add(this.allevamento);
 
             // acquirente
             var acquirente = Builder<Acquirente>
@@ -277,6 +300,7 @@ namespace LatteMarche.Tests.Services.Mobile
             uploadDto.Prelievi = Builder<Application.Mobile.Dtos.PrelievoLatteDto>
                 .CreateListOfSize(3)
                     .All()
+                        .With(p => p.IdAllevamento = this.allevamento.Id)
                         .With(p => p.DataConsegna = DateTime.Now)
                         .With(p => p.DataPrelievo = DateTime.Now)
                         .With(p => p.DataUltimaMungitura = DateTime.Now)
@@ -287,6 +311,8 @@ namespace LatteMarche.Tests.Services.Mobile
 
             var prelievi = this.prelieviRepository.Query.ToList();
             Assert.AreEqual(3, prelievi.Count);
+
+            Assert.AreEqual(ID_TIPO_LATTE_QM, prelievi[0].IdTipoLatte.Value);
 
             Assert.AreEqual(imei, prelievi.First().DeviceId);
 

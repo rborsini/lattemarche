@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using System.Runtime.Caching;
 using LatteMarche.WebApi.Helpers;
 using WeCode.MVC.Cache;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 
 namespace LatteMarche.WebApi.App_Start
 {
@@ -32,6 +33,9 @@ namespace LatteMarche.WebApi.App_Start
 			// Registro i db context e unit of work
 			builder.RegisterModule(new ApplicationModule());
 			builder.RegisterModule(new LatteMarche.Application.Mobile.ApplicationModule(false));
+
+			// automapper
+			builder.AddAutoMapper(typeof(AutoFacConfig).Assembly);
 
 			// Cache
 			builder.RegisterType<CacheHelper>().As<ICacheHelper>().SingleInstance();

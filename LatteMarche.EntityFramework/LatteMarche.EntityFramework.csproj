@@ -175,6 +175,14 @@
     <Compile Include="Migrations\202009280629306_Aggiunto_IdGiro.Designer.cs">
       <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101041037370_AggiuntaColonna_PrelievoLatte_IdTipoLatte.cs" />
+    <Compile Include="Migrations\202101041037370_AggiuntaColonna_PrelievoLatte_IdTipoLatte.designer.cs">
+      <DependentUpon>202101041037370_AggiuntaColonna_PrelievoLatte_IdTipoLatte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041301552_AggiornateViste.cs" />
+    <Compile Include="Migrations\202101041301552_AggiornateViste.designer.cs">
+      <DependentUpon>202101041301552_AggiornateViste.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -251,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009280629306_Aggiunto_IdGiro.resx">
       <DependentUpon>202009280629306_Aggiunto_IdGiro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041037370_AggiuntaColonna_PrelievoLatte_IdTipoLatte.resx">
+      <DependentUpon>202101041037370_AggiuntaColonna_PrelievoLatte_IdTipoLatte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041301552_AggiornateViste.resx">
+      <DependentUpon>202101041301552_AggiornateViste.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

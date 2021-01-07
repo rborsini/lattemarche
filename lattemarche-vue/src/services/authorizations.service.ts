@@ -1,9 +1,10 @@
 export class AuthorizationsService {
     constructor() {}
 
-    public static isAuthenticated() : boolean {
+    public static isAuthenticated(): boolean {
         var jwt = localStorage.getItem('jwt') as string;
-        return jwt != '';
+
+        return jwt != '' && !this.tokenExpired(jwt);
     }
 
     public static isViewItemAuthorized(controller: string, action: string, viewItem: string, type: string = "MVC") :boolean {
@@ -36,14 +37,25 @@ export class AuthorizationsService {
     public static getCurrentUser() {
         var jwt = localStorage.getItem('jwt') as string
         var obj = AuthorizationsService.decodeToken(jwt);
-        return obj.username;
+
+        if(!this.tokenExpired(jwt))  {
+            return obj.username;
+        } else {
+            return null;
+        }        
     }
+
 
     public static getCurrentRole() {
         var jwt = localStorage.getItem('jwt') as string
         var obj = AuthorizationsService.decodeToken(jwt);
         return obj.roles;
     }
+
+    private static tokenExpired(token: string) {
+        const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+        return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    }    
 
     private static decodeToken(token: string = '') {
         if (token === null || token === '') { return { 'upn': '' }; }

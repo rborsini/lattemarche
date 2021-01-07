@@ -20,7 +20,9 @@ namespace LatteMarche.WebApi.Helpers
         private class Record
         {
             public DateTime Data { get; set; }
-            public decimal? Qta { get; set; }
+            public decimal? Qta_kg { get; set; }
+            public decimal? Qta_lt { get; set; }
+
         }
 
         public static byte[] MakeExcel(List<V_PrelievoLatte> prelievi)
@@ -47,7 +49,8 @@ namespace LatteMarche.WebApi.Helpers
                     records.Add(new Record()
                     {
                         Data = data,
-                        Qta = prelievi.Where(p => data <= p.DataPrelievo && p.DataPrelievo < data.AddDays(1)).Sum(p => p.Quantita)
+                        Qta_kg = prelievi.Where(p => data <= p.DataPrelievo && p.DataPrelievo < data.AddDays(1)).Sum(p => p.Quantita),
+                        Qta_lt = prelievi.Where(p => data <= p.DataPrelievo && p.DataPrelievo < data.AddDays(1)).Sum(p => p.QuantitaLitri)
                     }); 
 
                     data = data.AddDays(1);
@@ -83,8 +86,11 @@ namespace LatteMarche.WebApi.Helpers
 
             row.CreateCell(0).SetCellValue($"{record.Data:dd-MM-yyyy}");
 
-            if(record.Qta.HasValue)
-                row.CreateCell(1).SetCellValue(Convert.ToDouble(record.Qta.Value));
+            if(record.Qta_kg.HasValue)
+                row.CreateCell(1).SetCellValue(Convert.ToDouble(record.Qta_kg.Value));
+
+            if (record.Qta_lt.HasValue)
+                row.CreateCell(2).SetCellValue(Convert.ToDouble(record.Qta_lt.Value));
 
             for (int i = 0; i <= 1; i++)
             {
@@ -115,12 +121,14 @@ namespace LatteMarche.WebApi.Helpers
             IRow headerRow = sheet.CreateRow(0);
 
             headerRow.CreateCell(0).SetCellValue("DATA");
-            headerRow.CreateCell(1).SetCellValue("QUANTITA'");
+            headerRow.CreateCell(1).SetCellValue("QUANTITA' kg");
+            headerRow.CreateCell(2).SetCellValue("QUANTITA' lt");
 
             sheet.SetColumnWidth(0, 8000);
             sheet.SetColumnWidth(1, 6000);
+            sheet.SetColumnWidth(2, 6000);
 
-            for (int i = 0; i <= 1; i++)
+            for (int i = 0; i <= 2; i++)
             {
                 headerRow.GetCell(i).CellStyle = headerCellStyle;
             }

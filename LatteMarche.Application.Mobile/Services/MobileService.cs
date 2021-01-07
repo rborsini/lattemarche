@@ -30,6 +30,8 @@ namespace LatteMarche.Application.Mobile.Services
         private IRepository<Destinatario, int> destinatariRepository;
         private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<PrelievoLatte, int> prelieviRepository;
+        private IRepository<Allevamento, int> allevamentiRepository;
+        private IRepository<Utente, int> utentiRepository;
 
         #endregion
 
@@ -51,7 +53,8 @@ namespace LatteMarche.Application.Mobile.Services
             this.cessionariRepository = this.uow.Get<Cessionario, int>();
             this.destinatariRepository = this.uow.Get<Destinatario, int>();
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
-
+            this.allevamentiRepository = this.uow.Get<Allevamento, int>();
+            this.utentiRepository = this.uow.Get<Utente, int>();
         }
 
         #endregion
@@ -198,6 +201,17 @@ namespace LatteMarche.Application.Mobile.Services
                     var prelievo = this.mapper.Map<PrelievoLatte>(prelievoDto);
 
                     prelievo.DeviceId = uploadDto.IMEI;
+
+                    if(prelievo.IdAllevamento.HasValue)
+                    {
+                        var allevamento = this.allevamentiRepository.GetById(prelievo.IdAllevamento.Value);
+                        if(allevamento != null)
+                        {
+                            var allevatore = this.utentiRepository.GetById(allevamento.IdUtente.Value);
+
+                            prelievo.IdTipoLatte = allevatore != null ? allevatore.IdTipoLatte : (int?)null;
+                        }
+                    }
 
                     this.prelieviRepository.Add(prelievo);
                 }

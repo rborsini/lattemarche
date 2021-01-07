@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using WeCode.MVC.Attributes;
 using WeCode.Application.Exceptions;
+using RB.Excel;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -227,19 +228,6 @@ namespace LatteMarche.WebApi.Controllers_Api
             return Ok();
         }
 
-        private void LogDebug(string method, string message)
-        {
-            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
-            {
-                Identity = User.Identity.Name,
-                Date = DateTime.Now,
-                Level = "DEBUG",
-                Logger = "api",
-                Message = message,
-                Thread = $"PrelieviLatteController.{method}"
-            });
-        }
-
         [ViewItem(nameof(Delete), "Prelievi latte", "Rimozione")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
@@ -286,6 +274,26 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(ExcelTrasportatori), "Prelievi latte", "Excel Trasportatori")]
+        [HttpGet]
+        public IHttpActionResult ExcelTrasportatori([FromUri] PrelieviLatteSearchDto searchDto)
+        {
+
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+            var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+
+            var records = this.mapper.Map<List<ExcelTrasportatoriViewModel>>(list);
+
+            ExcelMaker helper = new ExcelMaker();
+
+            byte[] content = helper.Make(records);
+
+
+            return File(content, "prelievi.xlsx", "application/vnd.ms-excel");
+
+        }
+
+
         [ViewItem(nameof(ExcelGiornalieri), "Prelievi latte", "Excel Giornalieri")]
         [HttpGet]
         public IHttpActionResult ExcelGiornalieri([FromUri] PrelieviLatteSearchDto searchDto)
@@ -317,6 +325,20 @@ namespace LatteMarche.WebApi.Controllers_Api
 
             return response;
         }
+
+        private void LogDebug(string method, string message)
+        {
+            this.logsService.Create(new Application.Logs.Dtos.LogRecordDto()
+            {
+                Identity = User.Identity.Name,
+                Date = DateTime.Now,
+                Level = "DEBUG",
+                Logger = "api",
+                Message = message,
+                Thread = $"PrelieviLatteController.{method}"
+            });
+        }
+
 
         #endregion
 

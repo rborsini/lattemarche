@@ -96,6 +96,7 @@
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Esporta in excel</button>
             <div class="dropdown-menu">
               <a class="dropdown-item" v-on:click="downloadExcel('allevatori')" style="cursor: pointer" >Allevatori</a>
+              <a class="dropdown-item" v-on:click="downloadExcel('trasportatori')" style="cursor: pointer" >Trasportatori</a>
               <a class="dropdown-item" v-on:click="downloadExcel('giornalieri')" style="cursor: pointer" >Giornalieri</a>
             </div>
           </div>

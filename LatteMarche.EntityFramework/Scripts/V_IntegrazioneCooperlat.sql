@@ -53,7 +53,7 @@ FROM
 	UTENTI as trasportatori on prelievi.ID_TRASPORTATORE = trasportatori.ID_UTENTE
 
 	LEFT OUTER JOIN
-	TIPO_LATTE as tipo_latte on utenti_allevamento.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
+	TIPO_LATTE as tipo_latte on prelievi.ID_TIPO_LATTE = tipo_latte.ID_TIPO_LATTE
 
 	LEFT OUTER JOIN
 	GIRO as giri on left(prelievi.LOTTO_CONSEGNA, 2) = giri.CODICE_GIRO

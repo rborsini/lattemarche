@@ -79,5 +79,8 @@ namespace LatteMarche.Core.Models
         [Column("ID_GIRO")]
         public int? IdGiro { get; set; }
 
+        [Column("ID_TIPO_LATTE")]
+        public int? IdTipoLatte { get; set; }
+
     }
 }
