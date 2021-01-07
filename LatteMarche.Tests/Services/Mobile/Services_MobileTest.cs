@@ -176,17 +176,6 @@ namespace LatteMarche.Tests.Services.Mobile
         {
             var id = "ABCD";
 
-            // utente allevatore
-            var allevatore = Builder<Utente>
-                .CreateNew()
-                    .With(u => u.Id = 2)
-                    .With(u => u.IdComune = ID_COMUNE)
-                    .With(u => u.IdProfilo = ID_PROFILO_ALLEVATORE)
-                .Build();
-
-            allevatore = this.utentiRepository.Add(allevatore);
-            this.uow.SaveChanges();
-
             // allevamento
             var allevamento = Builder<Allevamento>
                 .CreateNew()

@@ -62,8 +62,8 @@ namespace LatteMarche.Tests.Services.AnalisiProduttori
         public void Init()
         {
             var analisiList = new List<Analisi>();
-            var date = new DateTime(DateTime.Now.Year, 1, 1);
-            var end = date.AddYears(1);
+            var date = new DateTime(DateTime.Now.Year - 1, 1, 1);
+            var end = date.AddYears(2);
             var rnd = new Random();
 
             while (date < end)

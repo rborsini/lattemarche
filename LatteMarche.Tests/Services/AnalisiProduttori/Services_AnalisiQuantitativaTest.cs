@@ -61,10 +61,10 @@ namespace LatteMarche.Tests.Services.AnalisiProduttori
         public void Init()
         {
             var prelievi = new List<PrelievoLatte>();
-            var date = new DateTime(DateTime.Now.Year, 1, 1);
-            var end = date.AddYears(1);
+            var date = new DateTime(DateTime.Now.Year - 1, 1, 1);
+            var end = date.AddYears(2);
 
-            while(date < end)
+            while (date < end)
             {
                 var prelievo = Builder<PrelievoLatte>
                     .CreateNew()
