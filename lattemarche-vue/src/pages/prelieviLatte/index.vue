@@ -121,9 +121,10 @@
 
       <!-- foot -->
       <template slot="tfoot">
-        <th colspan="5" style="text-align:right">Totale:</th>
+        <th colspan="4" style="text-align:right">Totale:</th>
         <th>{{totale_prelievi_kg}} kg</th>
         <th>{{totale_prelievi_lt}} lt</th>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
