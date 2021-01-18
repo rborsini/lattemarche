@@ -91,9 +91,10 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public string DistanzaAllevamento_Str { get { return this.DistanzaAllevamento.HasValue ? $"{this.DistanzaAllevamento:#0} m" : "-"; } }
 
-
         public int? IdAutocisterna { get; set; }
         public string DeviceId { get; set; }
+
+        public int? IdTipoLatte { get; set; }
 
         #endregion
 

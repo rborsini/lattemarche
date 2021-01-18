@@ -9,9 +9,17 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 {
     public class PrelieviLatteSearchDto
     {
+        #region Fields
 
         private DateTime? dataPeriodoInizio;
         private DateTime? dataPeriodoFine;
+
+        private DateTime? dataConsegnaInizio;
+        private DateTime? dataConsegnaFine;
+
+        #endregion
+
+        #region Properties
 
         public DateTime? DataPeriodoInizio
         {
@@ -37,6 +45,31 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
             set { this.dataPeriodoFine = DateHelper.ConvertToDateTime(value); } 
         }
 
+
+        public DateTime? DataConsegnaInizio
+        {
+            get { return this.dataConsegnaInizio; }
+            set { this.dataConsegnaInizio = value; }
+        }
+
+        public DateTime? DataConsegnaFine
+        {
+            get { return this.dataConsegnaFine; }
+            set { this.dataConsegnaFine = value; }
+        }
+
+        public string DataConsegnaInizio_Str
+        {
+            get { return DateHelper.FormatDate(this.dataConsegnaInizio); }
+            set { this.dataConsegnaInizio = DateHelper.ConvertToDateTime(value); }
+        }
+
+        public string DataConsegnaFine_Str
+        {
+            get { return DateHelper.FormatDate(this.dataConsegnaFine); }
+            set { this.dataConsegnaFine = DateHelper.ConvertToDateTime(value); }
+        }
+
         public int? IdAllevamento { get; set; }
         public int? IdTrasportatore { get; set; }
         public int? IdAcquirente { get; set; }
@@ -51,7 +84,7 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string CodiceGiro { get; set; }
 
         public int IdUtente { get; set; }
-             
 
+        #endregion
     }
 }

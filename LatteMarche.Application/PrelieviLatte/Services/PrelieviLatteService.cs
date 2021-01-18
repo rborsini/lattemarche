@@ -72,7 +72,8 @@ namespace LatteMarche.Application.Latte.Services
         /// <param name="idUtente"></param>
         /// <returns></returns>
         public IQueryable<V_PrelievoLatte> PrelieviAutorizzati(int idUtente)
-        {
+        
+         {
             var query = this.v_prelieviLatteRepository.DbSet;
             var utente = this.utentiService.Details(idUtente);
 
@@ -337,6 +338,16 @@ namespace LatteMarche.Application.Latte.Services
                 query = query.Where(p => from <= p.DataPrelievo && p.DataPrelievo < to);
             }
 
+
+            // Data consegna
+            if (searchDto.DataConsegnaInizio.HasValue || searchDto.DataConsegnaFine.HasValue)
+            {
+                DateTime from = searchDto.DataConsegnaInizio.HasValue ? searchDto.DataConsegnaInizio.Value : DateTime.MinValue;
+                DateTime to = searchDto.DataConsegnaFine.HasValue ? searchDto.DataConsegnaFine.Value.AddDays(1) : DateTime.MaxValue;
+
+                query = query.Where(p => from <= p.DataConsegna && p.DataConsegna < to);
+            }
+
             // Inviato sitra
             if (searchDto.InviatoSitra.HasValue)
             {
@@ -397,6 +408,7 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.IdAcquirente = viewEntity.IdAcquirente;
             dbEntity.IdCessionario = viewEntity.IdCessionario;
             dbEntity.IdLabAnalisi = viewEntity.IdLabAnalisi;
+            dbEntity.IdTipoLatte = viewEntity.IdTipoLatte;
             dbEntity.DataConsegna = viewEntity.DataConsegna;
             dbEntity.DataPrelievo = viewEntity.DataPrelievo;
             dbEntity.DataUltimaMungitura = viewEntity.DataUltimaMungitura;

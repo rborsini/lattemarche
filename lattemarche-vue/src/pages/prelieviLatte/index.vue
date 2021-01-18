@@ -77,6 +77,20 @@
         </div>
       </div>
 
+      <!-- dal / al -->
+      <div class="row pt-1">
+        <label class="col-1">Data consegna dal:</label>
+        <div class="col-1">
+          <datepicker id="cy-data-consegna-inizio" v-on:value-changed="onParametersChanged" class="form-control" :value.sync="parameters.DataConsegnaInizio_Str" />
+        </div>
+
+        <label class="col-1">Al:</label>
+        <div class="col-1">
+          <datepicker id="cy-data-consegna-fine" v-on:value-changed="onParametersChanged" class="form-control" :value.sync="parameters.DataConsegnaFine_Str" />
+        </div>     
+
+      </div>
+
       <!-- Bottoni di ricerca -->
       <div class="row pt-3">
         <div class="col-12">

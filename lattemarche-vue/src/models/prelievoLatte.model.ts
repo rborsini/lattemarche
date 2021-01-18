@@ -46,6 +46,10 @@ export class PrelieviLatteSearchModel extends BaseSearchModel {
 
     public DataPeriodoInizio_Str: string = "";
     public DataPeriodoFine_Str: string = "";
+
+    public DataConsegnaInizio_Str: string = "";
+    public DataConsegnaFine_Str: string = "";
+
     public IdAllevamento: number = 0;
     public IdTrasportatore?: number = 0;
     public IdAcquirente?: number = 0;
@@ -62,6 +66,9 @@ export class PrelieviLatteSearchModel extends BaseSearchModel {
         
         this.DataPeriodoInizio_Str = this.getStringParam(obj, 'DataPeriodoInizio_Str');
         this.DataPeriodoFine_Str = this.getStringParam(obj, 'DataPeriodoFine_Str');
+
+        this.DataConsegnaInizio_Str = this.getStringParam(obj, 'DataConsegnaInizio_Str');
+        this.DataConsegnaFine_Str = this.getStringParam(obj, 'DataConsegnaFine_Str');        
 
         this.IdAllevamento = this.getNumberParam(obj, 'IdAllevamento');
         this.IdTrasportatore = this.getNumberParam(obj, 'IdTrasportatore');

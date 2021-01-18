@@ -118,14 +118,18 @@
                 </div>
 
                 <div class="col-5 row" >
+                  <label class="col-2">Tipo latte</label>
+                  <div class="col-4">
+                    <select2 class="form-control" :disabled="isReadOnly" :options="tipiLatte.Items" :value.sync="prelievoLatte.IdTipoLatte" :value-field="'Value'" :text-field="'Text'" />
+                  </div>                       
                   <label class="col-2">Qta in Kg</label>
                   <div class="col-4">
                     <input type="number" :disabled="isReadOnly" min="0" class="form-control" v-model="prelievoLatte.Quantita" />
                   </div>                  
-                  <label class="col-2">Lab. analisi</label>
+                  <!-- <label class="col-2">Lab. analisi</label>
                   <div class="col-4">
                     <select2 class="form-control" :disabled="isReadOnly" :options="laboratoriAnalisi.Items" :value.sync="prelievoLatte.IdLabAnalisi" :value-field="'Value'" :text-field="'Text'" />
-                  </div>                  
+                  </div>                   -->
                 </div>
 
               </div>                    
@@ -322,6 +326,7 @@ export default class EditazionePrelievoModal extends Vue {
   public cessionario: Dropdown = new Dropdown();
   public destinatario: Dropdown = new Dropdown();
   public trasportatore: Dropdown = new Dropdown();
+  public tipiLatte: Dropdown = new Dropdown();
 
   public id: string = "";
   public showMap: boolean = false;
@@ -367,7 +372,7 @@ export default class EditazionePrelievoModal extends Vue {
 
   // load dropdown
   private loadDropdown() {
-    this.dropdownService.getDropdowns("acquirenti|allevatori|cessionari|destinatari|laboratoriAnalisi|trasportatori")
+    this.dropdownService.getDropdowns("acquirenti|allevatori|cessionari|destinatari|laboratoriAnalisi|trasportatori|tipiLatte")
       .then(response => {
         this.acquirente = response.data["acquirenti"] as Dropdown;
         this.allevatore = response.data["allevatori"] as Dropdown;
@@ -375,6 +380,7 @@ export default class EditazionePrelievoModal extends Vue {
         this.destinatario = response.data["destinatari"] as Dropdown;
         this.laboratoriAnalisi = response.data["laboratoriAnalisi"] as Dropdown;
         this.trasportatore = response.data["trasportatori"] as Dropdown;
+        this.tipiLatte = response.data["tipiLatte"] as Dropdown;
       });
   }
 
@@ -390,6 +396,8 @@ export default class EditazionePrelievoModal extends Vue {
     this.$refs.waiter.open();
     this.prelieviLatteService.save(this.prelievoLatte).then(
       (response) => {
+        this.id = response.data.Id.toString();
+        this.prelievoLatte.Id = response.data.Id;
         this.$refs.waiter.close();
         this.$refs.savedDialog.open();
       },
