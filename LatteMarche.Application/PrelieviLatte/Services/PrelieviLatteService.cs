@@ -403,6 +403,7 @@ namespace LatteMarche.Application.Latte.Services
         /// <returns></returns>
         protected override PrelievoLatte UpdateProperties(PrelievoLatte viewEntity, PrelievoLatte dbEntity)
         {
+            dbEntity.IdAllevamento = viewEntity.IdAllevamento;
             dbEntity.IdDestinatario = viewEntity.IdDestinatario;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
             dbEntity.IdAcquirente = viewEntity.IdAcquirente;
