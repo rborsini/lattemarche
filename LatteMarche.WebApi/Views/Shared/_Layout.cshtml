@@ -11,7 +11,9 @@
 
     @if (EnvHelper.IsProd)
     {
-        <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/chunk-common.css")" />
+        var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+
+        <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/chunk-common.css")?version=@version" />
         <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/bootstrap-datepicker.min.css")" />
         <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/select2.min.css")" />
         <link rel="stylesheet" href="@Url.Content("~/dist/prod/css/daterangepicker.css")" />
@@ -48,8 +50,9 @@
 
         @if (EnvHelper.IsProd)
         {
-            <script src="@Url.Content("~/dist/prod/js/chunk-common.js")"></script>
-            <script src="@Url.Content("~/dist/prod/js/chunk-vendors.js")"></script>
+            var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+            <script src="@Url.Content("~/dist/prod/js/chunk-common.js")?version=@version"></script>
+            <script src="@Url.Content("~/dist/prod/js/chunk-vendors.js")?version=@version"></script>
         }
 
         @if(IsSectionDefined("Js"))
