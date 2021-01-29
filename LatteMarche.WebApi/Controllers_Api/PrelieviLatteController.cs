@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using WeCode.MVC.Attributes;
 using WeCode.Application.Exceptions;
 using RB.Excel;
+using log4net;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -32,6 +33,8 @@ namespace LatteMarche.WebApi.Controllers_Api
     {
 
         #region Fields
+
+        private static ILog log = LogManager.GetLogger(typeof(PrelieviLatteController));
 
         private IPrelieviLatteService prelieviLatteService;
         private ISynchService synchService;
@@ -212,20 +215,32 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Synch([FromUri] string day = "")
         {
-            // scarica i dati dal cloud verso server locale
-            this.LogDebug("Synch", $"PullEnabled [{this.PullEnabled}]");
-            if (this.PullEnabled)
-                this.synchService.Pull();
+            try
+            {
+                log.Info("Prelievi Synch executing");
 
-            // carica i dati locali verso il cloud
-            this.LogDebug("Synch", $"PushEnabled [{this.PushEnabled}]");
-            if (this.PushEnabled)
-                this.synchService.Push();
+                // scarica i dati dal cloud verso server locale
+                this.LogDebug("Synch", $"PullEnabled [{this.PullEnabled}]");
+                if (this.PullEnabled)
+                    this.synchService.Pull();
 
-            if (this.SitraEnabled)
-                InvioSitra(day);
+                // carica i dati locali verso il cloud
+                this.LogDebug("Synch", $"PushEnabled [{this.PushEnabled}]");
+                if (this.PushEnabled)
+                    this.synchService.Push();
 
-            return Ok();
+                if (this.SitraEnabled)
+                    InvioSitra(day);
+
+                log.Info("Prelievi Synch executed");
+
+                return Ok();
+            }
+            catch(Exception exc)
+            {
+                log.Error("Prelievi Synch", exc);
+                return InternalServerError(exc);
+            }
         }
 
         [ViewItem(nameof(Delete), "Prelievi latte", "Rimozione")]
