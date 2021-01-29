@@ -30,8 +30,8 @@ namespace LatteMarche.Xamarin
     {
         #region Constants
 
-        private const long MinSecondsToRefreshDb = 60 * 60 * 24;
-        //private const long MinSecondsToRefreshDb = 0;
+        //private const long MinSecondsToRefreshDb = 60 * 60 * 24;
+        private const long MinSecondsToRefreshDb = 0;
 
         #endregion
 

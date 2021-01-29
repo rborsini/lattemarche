@@ -3,7 +3,11 @@ using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Enums;
 using LatteMarche.Xamarin.Rest.Dtos;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +85,9 @@ namespace LatteMarche.Xamarin.Db.Services
             {
                 try
                 {
+
+                    LogEvent(dto, "UpdateDataSync");
+
                     // pulizia database
                     this.allevamentiService.DeleteAllItemsAsync().Wait();
                     this.templateGiriService.DeleteAllItemsAsync().Wait();
@@ -92,10 +99,12 @@ namespace LatteMarche.Xamarin.Db.Services
                     this.trasportatoriService.DeleteAllItemsAsync().Wait();
 
                     // trasportatore
+                    LogEvent(dto, "Add Trasportatore", dto.Trasportatore);
                     var trasportatore = Mapper.Map<Trasportatore>(dto.Trasportatore);
                     this.trasportatoriService.AddItemAsync(trasportatore).Wait();
 
                     // autocisterna
+                    LogEvent(dto, "Add Autocisterna", dto.Autocisterna);
                     var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
                     var autocisterne = Mapper.Map<List<AutoCisterna>>(dto.Autocisterne);
 
@@ -108,32 +117,43 @@ namespace LatteMarche.Xamarin.Db.Services
                     this.autocisterneService.AddRangeItemAsync(autocisterne).Wait();
 
                     // tipi latte
+                    LogEvent(dto, "Add TipiLatte", dto.TipiLatte);
                     var tipiLatte = Mapper.Map<List<TipoLatte>>(dto.TipiLatte);
                     this.tipiLatteService.AddRangeItemAsync(tipiLatte).Wait();
 
                     // acquirenti
+                    LogEvent(dto, "Add Acquirenti", dto.Acquirenti);
                     var acquirenti = Mapper.Map<List<Acquirente>>(dto.Acquirenti);
                     this.acquirentiService.AddRangeItemAsync(acquirenti).Wait();
 
                     // cessionari
+                    LogEvent(dto, "Add Cessionari", dto.Cessionari);
                     var cessionari = Mapper.Map<List<Cessionario>>(dto.Cessionari);
                     this.cessionariService.AddRangeItemAsync(cessionari).Wait();
 
                     // destinatari
+                    LogEvent(dto, "Add Destinatari", dto.Destinatari);
                     var destinatari = Mapper.Map<List<Destinatario>>(dto.Destinatari);
                     this.destinatariService.AddRangeItemAsync(destinatari).Wait();
 
                     // template giro
+                    LogEvent(dto, "Add Template giri", dto.Giri);
                     var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
 
                     giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
 
                     this.templateGiriService.AddRangeItemAsync(giri).Wait();
 
+                    LogEvent(dto, "Add Sinch Download");
                     this.AddAsync(SynchType.Download).Wait();
                 }
                 catch (Exception exc)
                 {
+                    LogEvent(dto, "Update Synch Exc", exc);
+
+                    SentrySdk.CaptureException(exc);
+                    Crashes.TrackError(exc);
+
                     this.allevamentiService.DeleteAllItemsAsync().Wait();
                     this.templateGiriService.DeleteAllItemsAsync().Wait();
                     this.autocisterneService.DeleteAllItemsAsync().Wait();
@@ -152,6 +172,16 @@ namespace LatteMarche.Xamarin.Db.Services
             }
 
             return await Task.FromResult(false);
+        }
+
+        private void LogEvent(DownloadDto dto, string message, object payload = null)
+        {
+            if(dto.Trasportatore.Id == 473)
+            {
+                Analytics.TrackEvent(message, new Dictionary<string, string>() {
+                        { "payload", JsonConvert.SerializeObject(payload) },
+                    });
+            }
         }
 
         public virtual async Task<bool> DeleteAllItemsAsync()
