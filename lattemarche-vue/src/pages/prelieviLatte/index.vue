@@ -111,6 +111,7 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" v-on:click="downloadExcel('allevatori')" style="cursor: pointer" >Allevatori</a>
               <a class="dropdown-item" v-on:click="downloadExcel('trasportatori')" style="cursor: pointer" >Trasportatori</a>
+              <a class="dropdown-item" v-on:click="downloadExcel('cooperative')" style="cursor: pointer" >Cooperative</a>
               <a class="dropdown-item" v-on:click="downloadExcel('giornalieri')" style="cursor: pointer" >Giornalieri</a>
             </div>
           </div>

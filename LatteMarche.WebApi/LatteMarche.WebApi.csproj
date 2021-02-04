@@ -535,12 +535,12 @@
     <Compile Include="Helpers\EnvHelper.cs" />
     <Compile Include="Helpers\ExcelGiornalieriHelper.cs" />
     <Compile Include="Helpers\ExcelAllevatoriHelper.cs" />
-    <Compile Include="Helpers\ExcelTrasportatoriHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Hubs\MobileHub.cs" />
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\BreadcrumbViewModel.cs" />
+    <Compile Include="Models\ExcelCooperativeViewModel.cs" />
     <Compile Include="Models\ExcelTrasportatoriViewModel.cs" />
     <Compile Include="Models\ExcelViewModelProfile.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

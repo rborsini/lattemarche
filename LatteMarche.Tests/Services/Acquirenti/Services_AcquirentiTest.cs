@@ -41,10 +41,7 @@ namespace LatteMarche.Tests.Services.Acquirenti
         private DbCleaner dbCleaner;
 
         private UtenteDto utenteAdmin;
-        private UtenteDto utenteAllevatore;
         private UtenteDto utenteAcquirente;
-        private UtenteDto utenteDestinatario;
-        private UtenteDto utenteTrasportatore;
 
         #endregion
 

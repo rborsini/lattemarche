@@ -324,6 +324,36 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(ExcelCooperative), "Prelievi latte", "Excel Cooperative")]
+        [HttpGet]
+        public IHttpActionResult ExcelCooperative([FromUri] PrelieviLatteSearchDto searchDto)
+        {
+            var utente = this.utentiService.GetByUsername(User.Identity.Name);
+            var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+
+            var records = list
+                .GroupBy(p => new { p.LottoConsegna })
+                .SelectMany(l => l.Select(i => new ExcelCooperativeViewModel()
+                {
+                    LottoConsegna = i.LottoConsegna,
+                    DataConsegna = l.Min(p => p.DataConsegna),
+                    Acquirente = l.FirstOrDefault() != null ? l.First().Acquirente : "",
+                    Trasportatore = l.FirstOrDefault() != null ? l.First().Trasportatore : "",
+                    Quantita_Kg = l.Sum(p => p.Quantita),
+                    Quantita_Lt = l.Sum(p => p.QuantitaLitri)
+                }))
+                .ToList<ExcelCooperativeViewModel>();
+
+            records = records.Distinct().OrderBy(r => r.LottoConsegna).ToList();
+
+            ExcelMaker helper = new ExcelMaker();
+
+            byte[] content = helper.Make(records);
+
+            return File(content, "lotti.xlsx", "application/vnd.ms-excel");
+        }
+
+
         protected IHttpActionResult File(byte[] content, string filename, string mediaType)
         {
             var result = new HttpResponseMessage(HttpStatusCode.OK)
