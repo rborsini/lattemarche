@@ -328,29 +328,37 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpGet]
         public IHttpActionResult ExcelCooperative([FromUri] PrelieviLatteSearchDto searchDto)
         {
-            var utente = this.utentiService.GetByUsername(User.Identity.Name);
-            var list = this.prelieviLatteService.Search(searchDto, utente.Id);
+            try
+            {
+                var utente = this.utentiService.GetByUsername(User.Identity.Name);
+                var list = this.prelieviLatteService.Search(searchDto, utente.Id);
 
-            var records = list
-                .GroupBy(p => new { p.LottoConsegna })
-                .SelectMany(l => l.Select(i => new ExcelCooperativeViewModel()
-                {
-                    LottoConsegna = i.LottoConsegna,
-                    DataConsegna = l.Min(p => p.DataConsegna),
-                    Acquirente = l.FirstOrDefault() != null ? l.First().Acquirente : "",
-                    Trasportatore = l.FirstOrDefault() != null ? l.First().Trasportatore : "",
-                    Quantita_Kg = l.Sum(p => p.Quantita),
-                    Quantita_Lt = l.Sum(p => p.QuantitaLitri)
-                }))
-                .ToList<ExcelCooperativeViewModel>();
+                var records = list
+                    .Where(p => !String.IsNullOrEmpty(p.LottoConsegna))
+                    .GroupBy(p => new { p.LottoConsegna })
+                    .SelectMany(l => l.Select(i => new ExcelCooperativeViewModel()
+                    {
+                        LottoConsegna = i.LottoConsegna,
+                        DataConsegna = l.Min(p => p.DataConsegna),
+                        Acquirente = l.FirstOrDefault() != null ? l.First().Acquirente : "",
+                        Trasportatore = l.FirstOrDefault() != null ? l.First().Trasportatore : "",
+                        Quantita_Kg = l.Sum(p => p.Quantita),
+                        Quantita_Lt = l.Sum(p => p.QuantitaLitri)
+                    }))
+                    .ToList<ExcelCooperativeViewModel>();
 
-            records = records.Distinct().OrderBy(r => r.LottoConsegna).ToList();
+                records = records.Distinct().OrderBy(r => r.LottoConsegna).ToList();
 
-            ExcelMaker helper = new ExcelMaker();
+                ExcelMaker helper = new ExcelMaker();
 
-            byte[] content = helper.Make(records);
+                byte[] content = helper.Make(records);
 
-            return File(content, "lotti.xlsx", "application/vnd.ms-excel");
+                return File(content, "lotti.xlsx", "application/vnd.ms-excel");
+            }
+            catch(Exception exc)
+            {
+                return InternalServerError(exc);
+            }
         }
 
 
