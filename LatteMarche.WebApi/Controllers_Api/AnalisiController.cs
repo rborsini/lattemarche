@@ -3,13 +3,15 @@ using System.Web.Http;
 using LatteMarche.WebApi.Filters;
 using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Dtos;
+using RB.Excel;
+using WeCode.MVC.Controllers;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
     [ApiCustomAuthorize]
     [ApiActionFilter]
     [ApiExceptionFilter]
-    public class AnalisiController : ApiController
+    public class AnalisiController : ApiFileController
     {
 
         #region Fields
@@ -43,6 +45,18 @@ namespace LatteMarche.WebApi.Controllers_Api
         public IHttpActionResult Search([FromUri] AnalisiSearchDto searchDto)
         {
             return Ok(this.analisiService.Search(searchDto));
+        }
+
+        [ViewItem(nameof(Excel), "Analisi", "Excel")]
+        [HttpGet]
+        public IHttpActionResult Excel([FromUri] AnalisiSearchDto searchDto)
+        {
+            var list = this.analisiService.Search(searchDto);
+
+            byte[] content = LatteMarche.WebApi.Helpers.ExcelAnalisiLatteHelper.MakeExcel(list);
+
+            return File(content, "analisi latte.xlsx", "application/vnd.ms-excel");
+
         }
 
         #endregion

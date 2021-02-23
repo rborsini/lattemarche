@@ -72,10 +72,14 @@ namespace LatteMarche.Application.Assam.Services
 
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadWrite);
+                var senders = from.Split(';');                
 
-                foreach (var uid in inbox.Search(MakeQuery(from)))
+                foreach (var uid in inbox.Search(SearchQuery.NotSeen))
                 {
                     var message = inbox.GetMessage(uid);
+                    if (!senders.Contains(message.From.OfType<MailboxAddress>().Single().Address))
+                        continue;
+
                     inbox.SetFlags(uid, MessageFlags.Seen, true);
 
                     foreach(var mimeEntity in message.Attachments.Where(a => a.ContentType.MimeType == mimeType))
@@ -90,20 +94,6 @@ namespace LatteMarche.Application.Assam.Services
             return attachments;
         }
 
-        private SearchQuery MakeQuery(string from)
-        {
-            var notSeenQuery = SearchQuery.NotSeen;
-            var senders = from.Split(';');
-
-            var sendersQuery = senders.Length == 1 ? SearchQuery.FromContains(from) : SearchQuery.FromContains(senders[0]);
-
-            for(var i = 1; i < senders.Length; i++)
-            {
-                sendersQuery.Or(SearchQuery.FromContains(senders[i]));
-            }
-
-            return notSeenQuery.And(sendersQuery);
-        }
 
         private Attachment ConverToAttachment(MimeEntity mimeEntity)
         {

@@ -51,10 +51,17 @@
     </div>
 
     <div class="container-fluid">
+
+      <div class="row" v-if="analisiTable.Rows.length > 0" >
+        <div class="col-12 mt-3">
+          <button class="btn btn-primary float-right" v-on:click="downloadExcel()" >Esporta excel</button>
+        </div>        
+      </div>
+
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 pt-2">
           <!-- Tabella -->
-          <table class="table table-striped table-bordered dataTable mt-3">
+          <table class="table table-striped table-bordered dataTable">
             <thead>
               <tr>
                 <th v-for="(col, colIndex) in analisiTable.Cols" :key="colIndex">{{col.Nome}}</th>
@@ -86,6 +93,7 @@ import { AnalisiService } from "../../services/analisi.service";
 import { DropdownItem, Dropdown } from '../../models/dropdown.model';
 import { DropdownService } from '../../services/dropdown.service';
 import { DateService } from '@/services/date.service';
+import { UrlService } from "@/services/url.service";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -232,6 +240,11 @@ export default class AnalisiLatteIndexPage extends Vue {
 
     return cols;
   }
+
+	//Esportazione excel
+	public downloadExcel() {
+		UrlService.redirect("/api/analisi/excel?" + jQuery.param(this.params));
+	}  
 
 }
 </script>

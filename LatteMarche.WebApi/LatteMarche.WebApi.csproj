@@ -533,6 +533,7 @@
     <Compile Include="App_Start\WebConfig.cs" />
     <Compile Include="Controllers_Api\UtentiController.cs" />
     <Compile Include="Helpers\EnvHelper.cs" />
+    <Compile Include="Helpers\ExcelAnalisiLatteHelper.cs" />
     <Compile Include="Helpers\ExcelGiornalieriHelper.cs" />
     <Compile Include="Helpers\ExcelAllevatoriHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
