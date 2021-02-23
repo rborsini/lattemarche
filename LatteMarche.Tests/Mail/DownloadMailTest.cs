@@ -16,7 +16,7 @@ namespace LatteMarche.Tests.Mail
     public class DownloadMailTest
     {
 
-        [Test]
+        //[Test]
         public void DownloadMail_Mailkit_Test()
         {
             var hostname = "we-code.it";
