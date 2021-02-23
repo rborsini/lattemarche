@@ -16,6 +16,9 @@ namespace LatteMarche.Core.Models
         [Column("CAMPIONE")]
         public override string Id { get; set; }
 
+        [Column("CATEGORIA")]
+        public string Categoria { get; set; }
+
         [Column("CODICE_PRODUTTORE")]
         public string CodiceProduttore { get; set; }
 

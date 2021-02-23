@@ -30,6 +30,7 @@ namespace LatteMarche.WebApi.Helpers
 
             table.TableName = "Analisi latte";
 
+            table.Columns.Add("Categoria", typeof(string));
             table.Columns.Add("Codice Produttore", typeof(string));
             table.Columns.Add("Nome Produttore", typeof(string));
             table.Columns.Add("Campione", typeof(string));
@@ -53,13 +54,14 @@ namespace LatteMarche.WebApi.Helpers
             {
                 var dataRow = table.NewRow();
 
-                dataRow.SetField(0, row.CodiceProduttore);
-                dataRow.SetField(1, row.NomeProduttore);
-                dataRow.SetField(2, row.Id);
-                dataRow.SetField(3, row.CodiceASL);
-                dataRow.SetField(4, row.DataRapportoDiProva);
-                dataRow.SetField(5, row.DataAccettazione);
-                dataRow.SetField(6, row.DataPrelievo);
+                dataRow.SetField(0, row.Categoria);
+                dataRow.SetField(1, row.CodiceProduttore);
+                dataRow.SetField(2, row.NomeProduttore);
+                dataRow.SetField(3, row.Id);
+                dataRow.SetField(4, row.CodiceASL);
+                dataRow.SetField(5, row.DataRapportoDiProva);
+                dataRow.SetField(6, row.DataAccettazione);
+                dataRow.SetField(7, row.DataPrelievo);
                 
                 foreach(var value in row.Valori)
                 {

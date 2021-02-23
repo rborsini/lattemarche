@@ -37,7 +37,7 @@ namespace LatteMarche.Application.Assam.Services
             foreach(var attachment in attachments)
             {
                 // conversione file in report
-                var attachmentReports = ExcelParser.Parse(new MemoryStream(attachment.Content));
+                var attachmentReports = ExcelParser.Parse(attachment);
                     
                 reports.AddRange(attachmentReports);
 
@@ -80,11 +80,16 @@ namespace LatteMarche.Application.Assam.Services
                     if (!senders.Contains(message.From.OfType<MailboxAddress>().Single().Address))
                         continue;
 
+                    var category = GetCategory(message.Subject);
+
                     inbox.SetFlags(uid, MessageFlags.Seen, true);
 
                     foreach(var mimeEntity in message.Attachments.Where(a => a.ContentType.MimeType == mimeType))
                     {
-                        attachments.Add(ConverToAttachment(mimeEntity));
+                        var attachment = ConverToAttachment(mimeEntity);
+                        attachment.Category = category;
+
+                        attachments.Add(attachment);
                     }
                 }
 
@@ -94,6 +99,21 @@ namespace LatteMarche.Application.Assam.Services
             return attachments;
         }
 
+        /// <summary>
+        /// Recupero categoria report in base all'oggetto della mail
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        private string GetCategory(string subject)
+        {
+            if (subject.ToLower().Contains("veterinari"))
+                return "veterinari";
+
+            if (subject.ToLower().Contains("autisti"))
+                return "autisti";
+
+            return "-";
+        }
 
         private Attachment ConverToAttachment(MimeEntity mimeEntity)
         {

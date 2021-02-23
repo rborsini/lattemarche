@@ -9,17 +9,16 @@
       <!-- Codice produttore -->
       <div class="row pt-1">
 
+        <!-- Categoria -->
+        <label class="col-1">Categoria:</label>
+        <div class="col-2">
+          <select2 class="form-control" :placeholder="'-'" :options="categorie.Items" :value.sync="params.Categoria" :value-field="'Value'" :text-field="'Text'" />
+        </div>        
+
+        <!-- Allevamento -->
         <label class="col-1">Allevamento:</label>
         <div class="col-2">
-          <select2
-            class="form-control"
-            :disabled="idProfilo == 3"
-            :placeholder="'-'"
-            :options="allevamenti.Items"
-            :value.sync="params.IdAllevamento"
-            :value-field="'Value'"
-            :text-field="'Text'"
-          />
+          <select2 class="form-control" :disabled="idProfilo == 3" :placeholder="'-'" :options="allevamenti.Items" :value.sync="params.IdAllevamento" :value-field="'Value'" :text-field="'Text'" />
         </div>
 
         <!-- dal / al -->        
@@ -31,12 +30,6 @@
         <label class="col-1">Al:</label>
         <div class="col-2">
           <datepicker class="form-control" :value.sync="params.DataPeriodoFine_Str" />
-        </div>
-
-        <!-- Campione -->
-        <label class="col-1">Campione:</label>
-        <div class="col-2">
-          <input type="text" class="form-control" v-model="params.Campione" />
         </div>
 
       </div>
@@ -121,6 +114,7 @@ export default class AnalisiLatteIndexPage extends Vue {
   public idProfilo: any = '';
 
   public allevamenti: Dropdown = new Dropdown();
+  public categorie: Dropdown = new Dropdown();
 
   public analisi: Analisi[] = [];
   public analisiTable: AnalisiTable = new AnalisiTable();
@@ -132,7 +126,7 @@ export default class AnalisiLatteIndexPage extends Vue {
   }
 
   public mounted() {
-    this.loadAllevamenti();
+    this.loadDropdown();
     this.initSearchBox();
   }
 
@@ -161,13 +155,21 @@ export default class AnalisiLatteIndexPage extends Vue {
   }
 
   // caricamento allevamenti
-  private loadAllevamenti() {
+  private loadDropdown() {
+
+    // allevamenti
     this.dropdownService.getAllevamenti().then(response => {
       this.allevamenti = response.data;
 
       if(this.idProfilo == 3)
         this.params.IdAllevamento = response.data.Items[0].Value;      
     });
+
+    // categorie
+    this.dropdownService.getCategorieAnalisi().then(response => {
+      this.categorie = response.data;
+    });
+
   }
 
   // Popolamento tabella
@@ -180,6 +182,7 @@ export default class AnalisiLatteIndexPage extends Vue {
       var resultRow = result[i];
       var row = new AnalisiRow();
 
+      row.Cells.push(new AnalisiCell(resultRow.Categoria));
       row.Cells.push(new AnalisiCell(resultRow.CodiceProduttore));
       row.Cells.push(new AnalisiCell(resultRow.NomeProduttore));
       row.Cells.push(new AnalisiCell(resultRow.Id));
@@ -213,6 +216,7 @@ export default class AnalisiLatteIndexPage extends Vue {
   public bindCols(result: Analisi[]): AnalisiCol[] {
     var cols: AnalisiCol[] = [];
 
+    cols.push(new AnalisiCol("Categoria", ""));
     cols.push(new AnalisiCol("Codice Produttore", ""));
     cols.push(new AnalisiCol("Nome Produttore", ""));
     cols.push(new AnalisiCol("Campione", ""));

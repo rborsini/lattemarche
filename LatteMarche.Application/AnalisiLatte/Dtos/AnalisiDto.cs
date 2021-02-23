@@ -19,6 +19,7 @@ namespace LatteMarche.Application.AnalisiLatte.Dtos
 
         public string Id { get; set; }
 
+        public string Categoria { get; set; }
         public string CodiceProduttore { get; set; }
         public string NomeProduttore { get; set; }
         public int? IdProduttore { get; set; }

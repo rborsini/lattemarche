@@ -45,6 +45,10 @@ export class DropdownService {
         return axios.get("/api/allevamenti/dropdown");
     }
 
+    public getCategorieAnalisi(): AxiosPromise<Dropdown> {
+        return axios.get("/api/analisi/categorie");
+    }    
+
     public getTipiLatte(): AxiosPromise<Dropdown> {
         return axios.get("/api/tipiLatte/dropdown");
     }

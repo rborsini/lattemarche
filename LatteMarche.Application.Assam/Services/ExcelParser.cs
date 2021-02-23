@@ -16,21 +16,25 @@ namespace LatteMarche.Application.Assam.Services
 
         private static List<string> Columns = new List<string>() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-        public static List<Report> Parse(Stream fileStream)
+        public static List<Report> Parse(Attachment attachment)
         {
             var reports = new List<Report>();
 
-            HSSFWorkbook woorkbook = new HSSFWorkbook(fileStream);
+            HSSFWorkbook woorkbook = new HSSFWorkbook(new MemoryStream(attachment.Content));
 
             for (var i = 0; i < woorkbook.NumberOfSheets; i++)
             {
                 var sheet = woorkbook.GetSheetAt(i);
                 var report = ParseSheet(sheet, i);
+
+                report.Categoria = attachment.Category;
+
                 reports.Add(report);
             }
 
             return reports;
         }
+
 
         private static Report ParseSheet(ISheet sheet, int sheetIndex)
         {

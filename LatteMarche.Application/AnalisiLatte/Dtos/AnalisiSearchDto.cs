@@ -12,6 +12,8 @@ namespace LatteMarche.Application.AnalisiLatte.Dtos
         private DateTime? dataPeriodoInizio;
         private DateTime? dataPeriodoFine;
 
+        public string Categoria { get; set; }
+
         public int? IdProduttore { get; set; }
 
         public string CodiceProduttore { get; set; }

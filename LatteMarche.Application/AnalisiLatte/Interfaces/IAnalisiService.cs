@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Application.AnalisiLatte.Dtos;
 using LatteMarche.Application.Assam.Models;
+using LatteMarche.Application.Common.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace LatteMarche.Application.AnalisiLatte.Interfaces
         /// <param name="searchDto"></param>
         /// <returns></returns>
         List<AnalisiDto> Search(AnalisiSearchDto searchDto);
+
+        /// <summary>
+        /// Dropdown categorie
+        /// </summary>
+        /// <returns></returns>
+        DropDownDto DropDown();
 
     }
 }

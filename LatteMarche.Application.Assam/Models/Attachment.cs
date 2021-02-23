@@ -8,6 +8,7 @@ namespace LatteMarche.Application.Assam.Models
 {
     public class Attachment
     {
+        public string Category { get; set; }
         public string Name { get; set; }
         public byte[] Content { get; set; }
     }

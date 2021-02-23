@@ -15,6 +15,7 @@ using System.Linq;
 using WeCode.Application;
 using WeCode.Data.Interfaces;
 using log4net;
+using LatteMarche.Application.Common.Dtos;
 
 namespace LatteMarche.Application.AnalisiLatte.Services
 {
@@ -60,11 +61,33 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         #region Methods
 
+        public DropDownDto DropDown()
+        {
+            var dropdown = new DropDownDto();
+
+            dropdown.Items = this.repository.Query
+                .Select(a => a.Categoria)
+                .Distinct()
+                .Select(c => new DropDownItem()
+                {
+                    Value = c,
+                    Text = c
+                })
+                .OrderBy(i => i.Text)
+                .ToList();
+
+            return dropdown;
+        }
+
         public List<AnalisiDto> Search(AnalisiSearchDto searchDto)
         {
             var query = this.repository.Query;
 
             query = query.Where(a => a.IdAllevamento.HasValue || a.IdProduttore.HasValue);
+
+            // Categoria
+            if(!String.IsNullOrEmpty(searchDto.Categoria))
+                query = query.Where(a => a.Categoria == searchDto.Categoria);
 
             // Campione
             if (!String.IsNullOrEmpty(searchDto.Campione))
@@ -163,6 +186,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
                 analisi.CodiceProduttore = report.Produttore_Codice;
                 analisi.NomeProduttore = report.Produttore_Nome;
                 analisi.TipoLatte_Descr = report.TipoLatte;
+                analisi.Categoria = report.Categoria;
 
                 // aggancio con produttore e allevamento
                 var codiceAllevatore = report.Produttore_Codice.StartsWith("A") ? report.Produttore_Codice.Substring(1) : report.Produttore_Codice; // nel file excel il codice allevatore è preceduto a 'A'
@@ -223,6 +247,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         {
             dbEntity.CodiceASL = viewEntity.CodiceASL;
 
+            dbEntity.Categoria = viewEntity.Categoria;
             dbEntity.CodiceProduttore = viewEntity.CodiceProduttore;
             dbEntity.IdAllevamento = viewEntity.IdAllevamento;
             dbEntity.IdProduttore = viewEntity.IdProduttore;

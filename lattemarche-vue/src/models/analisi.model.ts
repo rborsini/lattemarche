@@ -1,5 +1,6 @@
 ﻿export class Analisi {
     public Id: string = "";
+    public Categoria: string = "";
     public CodiceProduttore: string = "";
     public NomeProduttore: string = "";
     public CodiceASL: string = "";
@@ -21,6 +22,7 @@ export class ValoreAnalisi {
 }
 
 export class AnalisiSearchModel {
+    public Categoria: string = "";
     public CodiceProduttore: string = "";
     public CodiceAsl: string = "";
     public Campione: string = "";

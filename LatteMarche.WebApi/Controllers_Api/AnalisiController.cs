@@ -5,6 +5,7 @@ using LatteMarche.Application.AnalisiLatte.Interfaces;
 using LatteMarche.Application.AnalisiLatte.Dtos;
 using RB.Excel;
 using WeCode.MVC.Controllers;
+using WeCode.MVC.Attributes;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -31,6 +32,13 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
+        [ViewItem(nameof(Categorie), "Analisi", "Dropdown Categorie")]
+        [HttpGet]
+        [ETag]
+        public IHttpActionResult Categorie()
+        {
+            return Ok(this.analisiService.DropDown());
+        }
 
         [ViewItem(nameof(Synch), "Analisi", "Sincronizzazione")]
         [HttpPost]

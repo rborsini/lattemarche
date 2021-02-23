@@ -8,6 +8,8 @@ namespace LatteMarche.Application.Assam.Models
 {
     public class Report
     {
+        public string Categoria { get; set; }
+
         public string Committente { get; set; }
 
         public string Produttore_Codice { get; set; }
