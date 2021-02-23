@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using S22.Imap;
 using System.Net.Mail;
+using MailKit.Net.Imap;
+using MailKit;
 
 namespace LatteMarche.Tests.Mail
 {
@@ -15,34 +16,33 @@ namespace LatteMarche.Tests.Mail
     public class DownloadMailTest
     {
 
-        //[Test]
-        public void DownloadMail_Test()
+        [Test]
+        public void DownloadMail_Mailkit_Test()
         {
             var hostname = "we-code.it";
             var username = "lattemarche@we-code.it";
             var password = "Lattemarche123";
+            var port = 993;
 
-            using (ImapClient client = new ImapClient(hostname, 993, username, password, AuthMethod.Login, true))
+            using (var client = new ImapClient())
             {
+                client.Connect(hostname, port, true);
+                client.Authenticate(username, password);
 
-                var searchCondition = SearchCondition.SentSince(new DateTime(2012, 8, 23));
-                //var searchCondition = SearchCondition.From("roberto.borsini@gmail.com");
+                // The Inbox folder is always available on all IMAP servers...
+                var inbox = client.Inbox;
+                inbox.Open(FolderAccess.ReadOnly);
 
-                IEnumerable<uint> uids = client.Search(searchCondition);                
-                IEnumerable<MailMessage> messages = client.GetMessages(uids);
+                Console.WriteLine("Total messages: {0}", inbox.Count);
+                Console.WriteLine("Recent messages: {0}", inbox.Recent);
 
-                foreach(var message in messages)
+                for (int i = 0; i < inbox.Count; i++)
                 {
-                    foreach(var attachment in message.Attachments)
-                    {
-                        var fileStream = File.Create(attachment.Name);
-                        attachment.ContentStream.Seek(0, SeekOrigin.Begin);
-                        attachment.ContentStream.CopyTo(fileStream);
-                        fileStream.Close();
-                    }
+                    var message = inbox.GetMessage(i);
+                    Console.WriteLine("Subject: {0}", message.Subject);
                 }
 
-                Console.WriteLine("We are connected!");
+                client.Disconnect(true);
             }
 
             Assert.IsTrue(true);

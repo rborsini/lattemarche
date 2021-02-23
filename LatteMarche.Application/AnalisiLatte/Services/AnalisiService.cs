@@ -27,8 +27,7 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         private string username => ConfigurationManager.AppSettings["Assam.Mail.Username"];
         private string password => ConfigurationManager.AppSettings["Assam.Mail.Password"];
         private string from => ConfigurationManager.AppSettings["Assam.Mail.From"];
-        private int depth => Convert.ToInt32(ConfigurationManager.AppSettings["Assam.Mail.Depth"]);
-
+        
         private string ftpUrl => ConfigurationManager.AppSettings["Assam.Ftp.Url"];
         private string ftpUsername => ConfigurationManager.AppSettings["Assam.Ftp.Username"];
         private string ftpPassword => ConfigurationManager.AppSettings["Assam.Ftp.Password"];
@@ -128,9 +127,10 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         public List<Report> Synch()
         {
+
             var mailOptions = new MailOptions() { HostName = this.hostName, Port = this.port, Username = this.username, Password = this.password };
-            var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Today.AddDays(1) };
-            //var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Now };
+            var mailFilters = new MailFilters() { From = this.from };
+
             var ftpOptions = String.IsNullOrEmpty(ftpUrl) ? null : new FtpOptions() { Url = this.ftpUrl, Username = this.ftpUsername, Password = this.ftpPassword };
 
             // download reports 

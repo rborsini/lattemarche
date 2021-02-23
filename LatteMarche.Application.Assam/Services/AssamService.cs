@@ -1,13 +1,15 @@
 ﻿using LatteMarche.Application.Assam.Interfaces;
 using LatteMarche.Application.Assam.Models;
+using MailKit;
+using MailKit.Net.Imap;
+using MailKit.Search;
+using MimeKit;
 using RB.Ftp;
-using S22.Imap;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,72 +18,113 @@ namespace LatteMarche.Application.Assam.Services
     public class AssamService : IAssamService
     {
 
+        #region Constant
+
+        private const string EXCEL_MIME_TYPE = "application/vnd.ms-excel";
+
+        #endregion
+
+
         #region Methods
 
         public List<Report> CheckMailBox(MailOptions mailOptions, MailFilters mailFilters, FtpOptions ftpOptions = null)
         {
             var reports = new List<Report>();
 
-            // download messaggi dalla casella di posta
-            var messages = DownloadMessages(mailOptions.HostName, mailOptions.Port, mailOptions.Username, mailOptions.Password, mailFilters.From, mailFilters.Since, mailFilters.Before).ToList();
+            // download allegati dalla casella di posta
+            var attachments = DownloadUnseenAttachments(mailOptions.HostName, mailOptions.Port, mailOptions.Username, mailOptions.Password, mailFilters.From, EXCEL_MIME_TYPE).ToList();
 
-            foreach(var message in messages)
+            foreach(var attachment in attachments)
             {
-                var excelAttachments = message.Attachments.Where(a => a.ContentType.MediaType == "application/vnd.ms-excel").ToList();
-                foreach (var attachment in excelAttachments)
-                {
-                    // conversione file in report
-                    var attechmentContent = ConvertToBytes(attachment.ContentStream);
-                    var attachmentReports = ExcelParser.Parse(attachment.ContentStream);
+                // conversione file in report
+                var attachmentReports = ExcelParser.Parse(new MemoryStream(attachment.Content));
                     
-                    reports.AddRange(attachmentReports);
+                reports.AddRange(attachmentReports);
 
-                    // salvataggio copia di backup su cartella FTP
-                    if(ftpOptions != null)
-                        BackupFile(ftpOptions, attachment.Name, attechmentContent);
-                }
+                // salvataggio copia di backup su cartella FTP
+                if(ftpOptions != null)
+                    BackupFile(ftpOptions, attachment.Name, attachment.Content);
+
             }
 
             return reports;
         }
 
-
-        private IEnumerable<MailMessage> DownloadMessages(string hostname, int port, string username, string password, string from, DateTime start, DateTime end)
+        /// <summary>
+        /// Download degli allegati delle mail non ancora lette
+        /// </summary>
+        /// <param name="hostname"></param>
+        /// <param name="port"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="from"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        private IEnumerable<Attachment> DownloadUnseenAttachments(string hostname, int port, string username, string password, string from, string mimeType)
         {
-            using (ImapClient client = new ImapClient(hostname, port, username, password, AuthMethod.Login, true))
+            var attachments = new List<Attachment>();
+
+            using (var client = new ImapClient())
             {
-                var searchCondition = SearchCondition.SentSince(start);
-                searchCondition = searchCondition.And(SearchCondition.SentBefore(end));
+                client.Connect(hostname, port, true);
+                client.Authenticate(username, password);
 
-                var fromAddresses = from.Split(';').ToList();
+                var inbox = client.Inbox;
+                inbox.Open(FolderAccess.ReadWrite);
 
-                if(fromAddresses.Count > 0)
+                foreach (var uid in inbox.Search(MakeQuery(from)))
                 {
-                    var fromCondition = SearchCondition.From(fromAddresses[0]);
+                    var message = inbox.GetMessage(uid);
+                    inbox.SetFlags(uid, MessageFlags.Seen, true);
 
-                    for(int i = 1; i < fromAddresses.Count; i++)
-                        fromCondition = fromCondition.Or(SearchCondition.From(fromAddresses[i]));
-
-                    searchCondition = searchCondition.And(fromCondition);
+                    foreach(var mimeEntity in message.Attachments.Where(a => a.ContentType.MimeType == mimeType))
+                    {
+                        attachments.Add(ConverToAttachment(mimeEntity));
+                    }
                 }
 
-                IEnumerable<uint> uids = client.Search(searchCondition);
-                
-                return client.GetMessages(uids);
+                client.Disconnect(true);
             }
+
+            return attachments;
         }
 
-        private byte[] ConvertToBytes(Stream stream)
+        private SearchQuery MakeQuery(string from)
         {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
+            var notSeenQuery = SearchQuery.NotSeen;
+            var senders = from.Split(';');
+
+            var sendersQuery = senders.Length == 1 ? SearchQuery.FromContains(from) : SearchQuery.FromContains(senders[0]);
+
+            for(var i = 1; i < senders.Length; i++)
             {
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                sendersQuery.Or(SearchQuery.FromContains(senders[i]));
+            }
+
+            return notSeenQuery.And(sendersQuery);
+        }
+
+        private Attachment ConverToAttachment(MimeEntity mimeEntity)
+        {
+            using (var ms = new MemoryStream())
+            {
+                if (mimeEntity is MessagePart)
                 {
-                    ms.Write(buffer, 0, read);
+                    var part = (MessagePart)mimeEntity;
+                    part.Message.WriteTo(ms);
                 }
-                return ms.ToArray();
+                else
+                {
+                    var part = (MimePart)mimeEntity;
+                    part.Content.DecodeTo(ms);
+                }
+
+                return new Models.Attachment()
+                {
+                    Name = ((MimePart)mimeEntity).FileName,
+                    Content = ms.ToArray()
+                };
             }
         }
 

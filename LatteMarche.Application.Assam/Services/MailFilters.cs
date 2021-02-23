@@ -10,8 +10,5 @@ namespace LatteMarche.Application.Assam.Services
     {
         public string From { get; set; }
 
-        public DateTime Since { get; set; }
-
-        public DateTime Before { get; set; }
     }
 }
