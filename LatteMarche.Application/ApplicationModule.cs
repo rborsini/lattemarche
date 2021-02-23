@@ -56,7 +56,7 @@ namespace LatteMarche.Application
 
         protected override void Load(ContainerBuilder builder)
 		{
-            builder.RegisterModule(new AssamModule());
+            builder.RegisterModule(new AssamModule(isWeb));
 
             RegisterService<LatteMarcheDbContext, DbContext>(builder);
             RegisterService<UnitOfWork, IUnitOfWork>(builder);

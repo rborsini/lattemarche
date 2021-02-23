@@ -182,6 +182,7 @@
   <ItemGroup>
     <Compile Include="AutoFacConfig.cs" />
     <Compile Include="JobGroupSection.cs" />
+    <Compile Include="Jobs\AssamJob.cs" />
     <Compile Include="Jobs\BaseJob.cs" />
     <Compile Include="Jobs\GeocoderJob.cs" />
     <Compile Include="Jobs\PrelieviFixerJob.cs" />
@@ -198,6 +199,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LatteMarche.Application.Assam\LatteMarche.Application.Assam.csproj">
+      <Project>{a07ce647-5734-4f4c-b14a-6146ce4f61ad}</Project>
+      <Name>LatteMarche.Application.Assam</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LatteMarche.Application\LatteMarche.Application.csproj">
       <Project>{c7eb12a1-580d-4b9c-9dfd-711a962a61e8}</Project>
       <Name>LatteMarche.Application</Name>

@@ -128,9 +128,12 @@ namespace LatteMarche.Application.AnalisiLatte.Services
 
         public List<Report> Synch()
         {
+            var from = DateTime.Today.AddDays(-this.depth);
+            var to = DateTime.Today.AddDays(1);
+
             var mailOptions = new MailOptions() { HostName = this.hostName, Port = this.port, Username = this.username, Password = this.password };
-            var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Today.AddDays(1) };
-            //var mailFilters = new MailFilters() { From = this.from, Since = DateTime.Today.AddDays(-this.depth), Before = DateTime.Now };
+            var mailFilters = new MailFilters() { From = this.from, Since = from, Before = to };
+
             var ftpOptions = String.IsNullOrEmpty(ftpUrl) ? null : new FtpOptions() { Url = this.ftpUrl, Username = this.ftpUsername, Password = this.ftpPassword };
 
             // download reports 

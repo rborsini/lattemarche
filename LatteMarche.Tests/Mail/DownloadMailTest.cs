@@ -15,14 +15,15 @@ namespace LatteMarche.Tests.Mail
     public class DownloadMailTest
     {
 
-        //[Test]
+        [Test]
         public void DownloadMail_Test()
         {
             var hostname = "we-code.it";
             var username = "lattemarche@we-code.it";
             var password = "Lattemarche123";
+            var port = 993;
 
-            using (ImapClient client = new ImapClient(hostname, 993, username, password, AuthMethod.Login, true))
+            using (ImapClient client = new ImapClient(hostname, port, username, password, AuthMethod.Login, true))
             {
 
                 var searchCondition = SearchCondition.SentSince(new DateTime(2012, 8, 23));
