@@ -43,9 +43,9 @@
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" v-if="analisiTable.Rows.length > 0" >
 
-      <div class="row" v-if="analisiTable.Rows.length > 0" >
+      <div class="row" >
         <div class="col-12 mt-3">
           <button class="btn btn-primary float-right" v-on:click="downloadExcel()" >Esporta excel</button>
         </div>        
