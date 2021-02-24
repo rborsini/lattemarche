@@ -21,7 +21,7 @@ namespace LatteMarche.Application.AnalisiLatte.Interfaces
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        List<AnalisiDto> Search(AnalisiSearchDto searchDto);
+        List<AnalisiDto> Search(AnalisiSearchDto searchDto, int idUtente);
 
         /// <summary>
         /// Dropdown categorie

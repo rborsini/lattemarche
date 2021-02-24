@@ -6,6 +6,7 @@ using LatteMarche.Application.AnalisiLatte.Dtos;
 using RB.Excel;
 using WeCode.MVC.Controllers;
 using WeCode.MVC.Attributes;
+using LatteMarche.Application.Utenti.Interfaces;
 
 namespace LatteMarche.WebApi.Controllers_Api
 {
@@ -18,14 +19,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IAnalisiService analisiService;
+        private IUtentiService utentiService;
 
         #endregion
 
         #region Constructors
 
-        public AnalisiController(IAnalisiService analisiService)
+        public AnalisiController(IAnalisiService analisiService, IUtentiService utentiService)
         {
             this.analisiService = analisiService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -52,14 +55,16 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpGet]
         public IHttpActionResult Search([FromUri] AnalisiSearchDto searchDto)
         {
-            return Ok(this.analisiService.Search(searchDto));
+            var utente = this.utentiService.GetByUsername(User.Identity.Name);
+            return Ok(this.analisiService.Search(searchDto, utente.Id));
         }
 
         [ViewItem(nameof(Excel), "Analisi", "Excel")]
         [HttpGet]
         public IHttpActionResult Excel([FromUri] AnalisiSearchDto searchDto)
         {
-            var list = this.analisiService.Search(searchDto);
+            var utente = this.utentiService.GetByUsername(User.Identity.Name);
+            var list = this.analisiService.Search(searchDto, utente.Id);
 
             byte[] content = LatteMarche.WebApi.Helpers.ExcelAnalisiLatteHelper.MakeExcel(list);
 

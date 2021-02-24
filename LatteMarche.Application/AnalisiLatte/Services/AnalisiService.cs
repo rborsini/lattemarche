@@ -43,18 +43,20 @@ namespace LatteMarche.Application.AnalisiLatte.Services
         private IRepository<ValoreAnalisi, long> valoriRepository;
 
         private IAssamService assamService;
+        private IUtentiService utentiService;
         
         #endregion
 
         #region Constructor
 
-        public AnalisiService(IUnitOfWork uow, IMapper mapper, IAssamService assamService)
+        public AnalisiService(IUnitOfWork uow, IMapper mapper, IAssamService assamService, IUtentiService utentiService)
             : base(uow, mapper)
         {
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.valoriRepository = this.uow.Get<ValoreAnalisi, long>();
 
-            this.assamService = assamService;            
+            this.assamService = assamService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -79,9 +81,9 @@ namespace LatteMarche.Application.AnalisiLatte.Services
             return dropdown;
         }
 
-        public List<AnalisiDto> Search(AnalisiSearchDto searchDto)
+        public List<AnalisiDto> Search(AnalisiSearchDto searchDto, int idUtente)
         {
-            var query = this.repository.Query;
+            IQueryable<Analisi> query = AnalisiAutorizzate(idUtente);
 
             query = query.Where(a => a.IdAllevamento.HasValue || a.IdProduttore.HasValue);
 
@@ -119,6 +121,71 @@ namespace LatteMarche.Application.AnalisiLatte.Services
             }
 
             return ConvertToDtoList(query.ToList());
+        }
+
+        private IQueryable<Analisi> AnalisiAutorizzate(int idUtente)
+        {
+            var query = this.repository.DbSet;
+            var utente = this.utentiService.Details(idUtente);
+
+            switch (utente.IdProfilo)
+            {
+                case 1:     // Admin
+                    return query;
+
+                case 7:     // Acquirente
+
+                    var allevamentiIds = this.uow.Get<PrelievoLatte, int>().DbSet
+                        .Where(p => p.IdAcquirente == utente.IdAcquirente)
+                        .Select(p => p.IdAllevamento.Value)
+                        .Distinct()
+                        .ToList();
+
+                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
+
+                case 3:     // allevamenti associati all'utente
+
+                    allevamentiIds = this.allevamentiRepository.DbSet
+                        .Where(a => a.IdUtente == idUtente)
+                        .Select(a => a.Id).ToList();
+
+                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
+
+                case 4:     // Laboratorio
+
+                    return query;
+
+                case 5:     // Trasportatore
+                    
+                    return query.Where(a => a.IdAllevamento == -1);
+
+                case 6:     // Destinatario
+
+                    allevamentiIds = this.uow.Get<PrelievoLatte, int>().DbSet
+                        .Where(p => p.IdDestinatario == utente.IdDestinatario)
+                        .Select(p => p.IdAllevamento.Value)
+                        .Distinct()
+                        .ToList();
+
+                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
+
+
+                case 8:     // Cessionario
+
+                    allevamentiIds = this.uow.Get<PrelievoLatte, int>().DbSet
+                        .Where(p => p.IdCessionario == utente.IdCessionario)
+                        .Select(p => p.IdAllevamento.Value)
+                        .Distinct()
+                        .ToList();
+
+                    return query.Where(a => allevamentiIds.Contains(a.IdAllevamento.Value));
+
+                default:
+                    return query;
+
+            }
+
+
         }
 
         public override AnalisiDto Update(AnalisiDto model)
