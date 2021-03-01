@@ -30,6 +30,15 @@ namespace LatteMarche.Application.Dispositivi.Services
 
         #region Methods
 
+        public override DispositivoMobileDto Create(DispositivoMobileDto model)
+        {
+            var entity = this.mapper.Map<DispositivoMobile>(model);
+            this.repository.Add(entity);
+            this.uow.SaveChanges();
+
+            return this.mapper.Map<DispositivoMobileDto>(entity);
+        }
+
         public PagedResult<DispositivoMobileDto> Search(DispositiviSearchDto searchDto)
         {
             IQueryable<DispositivoMobile> query = this.repository.Query;

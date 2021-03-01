@@ -273,7 +273,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 {
                     try
                     {
-                        var dto = restService.Download(device.GetIdentifier()).Result;
+                        var dto = restService.DownloadDb(device.GetIdentifier()).Result;
                         sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
 
                         this.UltimoAggiornamento = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss}";

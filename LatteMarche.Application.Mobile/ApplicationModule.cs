@@ -32,6 +32,7 @@ namespace LatteMarche.Application.Mobile
             builder.AddAutoMapper(this.GetType().Assembly);
 
             RegisterService<MobileService, IMobileService>(builder);
+            RegisterService<TrasbordiService, ITrasbordiService>(builder);
 
             base.Load(builder);
         }

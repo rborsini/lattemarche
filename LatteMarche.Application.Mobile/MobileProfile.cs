@@ -3,6 +3,7 @@ using AutoMapper.Configuration;
 using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Common;
 using LatteMarche.Core.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,14 @@ namespace LatteMarche.Application.Mobile
             CreateMap<PrelievoLatteDto, PrelievoLatte>()
                 .ForMember(dest => dest.LastChange, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.LastOperation, opt => opt.MapFrom(src => OperationEnum.Added))
+                ;
+
+            CreateMap<TrasbordoDto, Trasbordo>()
+                .ForMember(dest => dest.Prelievi_JSON, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Prelievi)))
+                ;
+
+            CreateMap<Trasbordo, TrasbordoDto>()
+                .ForMember(dest => dest.Prelievi, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<PrelievoLatteDto>>(src.Prelievi_JSON)))
                 ;
 
         }

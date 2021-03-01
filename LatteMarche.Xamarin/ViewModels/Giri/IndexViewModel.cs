@@ -33,6 +33,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private IDevice device = DependencyService.Get<IDevice>();
         private IAcquirentiService acquirentiService => DependencyService.Get<IAcquirentiService>();
         private IAllevamentiService allevamentiService => DependencyService.Get<IAllevamentiService>();
+        private IAutoCisterneService autocisterneService => DependencyService.Get<IAutoCisterneService>();
         private IDestinatariService destinatariService => DependencyService.Get<IDestinatariService>();
         private ICessionariService cessionariService => DependencyService.Get<ICessionariService>();
         private ITemplateGiroService templateService => DependencyService.Get<ITemplateGiroService>();
@@ -110,6 +111,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     var item = Mapper.Map<ItemViewModel>(giro);
 
                     item.OnItem_Closing += Item_OnItem_Closing;
+                    item.OnItem_Transfering += Item_OnItem_Transfering;
                     item.OnItem_Opening += Item_OnItem_Opening;
                     item.OnItem_Printing += Item_OnItem_Printing;
                     item.OnItem_Deleting += Item_OnItem_Deleting;
@@ -151,7 +153,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private async void Item_OnItem_Printing(object sender, EventArgs e)
         {
             var choices = new string[] { "1", "2", "3", "4", "5" };
-
             var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
 
             if (index == -1)
@@ -253,6 +254,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                         var item = Mapper.Map<ItemViewModel>(giro);
 
                         item.OnItem_Closing += Item_OnItem_Closing;
+                        item.OnItem_Transfering += Item_OnItem_Transfering;
                         item.OnItem_Opening += Item_OnItem_Opening;
                         item.OnItem_Printing += Item_OnItem_Printing;
                         item.OnItem_Deleting += Item_OnItem_Deleting;
@@ -276,6 +278,10 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
         }
 
+        /// <summary>
+        /// Caricamento elenco definizioni giro
+        /// </summary>
+        /// <returns></returns>
         private List<TemplateGiro> GetTemplateList()
         {
             var giriAperti = this.giriService.GetGiriApertiAsync().Result;
@@ -286,6 +292,46 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 .Where(t => !templateAperti.Contains(t.Id))
                 .OrderBy(t => t.Descrizione)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Caricamento trasbordo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Item_OnItem_Transfering(object sender, EventArgs e)
+        {
+            var targhe = this.autocisterneService.GetItemsAsync().Result.Where(a => !a.Selezionata).Select(a => a.Targa).ToArray();
+            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Autocistena di destinazione", choices: targhe);
+
+            if (index == -1)
+                return;
+
+            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Trasbordo giro", lottieAnimation: "LottieLogo1.json");
+            try
+            {
+                VersionTracking.Track();
+
+                await Task.Run(() =>
+                {
+                    var location = GeolocationService.GetLocation();
+                    TrasbordaGiro(sender as ItemViewModel, location, targhe[index]);
+                });
+
+                Analytics.TrackEvent("Giro trasbordato", new Dictionary<string, string>());
+                SentrySdk.CaptureMessage("Giro trasbordato", Sentry.Protocol.SentryLevel.Info);
+
+                await loadingDialog.DismissAsync();
+                await this.page.DisplayAlert("Info", "Giro trasbordato", "OK");
+                await ExecuteLoadItemsCommand();
+            }
+            catch (Exception exc)
+            {
+                await loadingDialog.DismissAsync();
+
+                SentrySdk.CaptureException(exc);
+                Crashes.TrackError(exc);
+            }
         }
 
         /// <summary>
@@ -326,6 +372,54 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         }
 
+        /// <summary>
+        /// Trasbordo giro
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="location"></param>
+        private void TrasbordaGiro(ItemViewModel item, Location location, string targaDestinazione)
+        {
+            var giro = this.giriService.GetItemAsync(item.Id).Result;
+
+            var prelievi = this.prelieviService.GetByGiro(item.Id).Result;
+
+            foreach (var prelievo in prelievi)
+                prelievo.Giro = giro;
+
+            var prelieviDto = Mapper.Map<List<PrelievoLatteDto>>(prelievi);
+
+            var trasportatore = this.trasportatoriService.GetCurrent().Result;
+
+            foreach (var prelievoDto in prelieviDto)
+                prelievoDto.IdTrasportatore = trasportatore.Id;
+
+            var autocisterna = this.autocisterneService.GetDefaultAsync().Result;
+
+            var trasbordoDto = new TrasbordoDto()
+            {
+                IMEI_Origine = this.device.GetIdentifier(),
+                Targa_Origine = autocisterna.Targa,
+                Targa_Destinazione = targaDestinazione,
+                Data = DateTime.Now,
+                IdTemplateGiro = giro.IdTemplateGiro.Value,
+                Lat = location != null ? Convert.ToDecimal(location.Latitude) : (decimal?)null,
+                Lng = location != null ? Convert.ToDecimal(location.Longitude) : (decimal?)null,
+                Prelievi = prelieviDto
+            };
+
+            // chiamata REST upload dati
+            if (this.restService.UploadTrasbordo(trasbordoDto).Result != null)
+            {
+                giro.DataConsegna = DateTime.Now;
+                giro.DataUpload = DateTime.Now;
+                this.giriService.UpdateItemAsync(giro).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Chiusura giro
+        /// </summary>
+        /// <param name="sender"></param>
         private void ChiudiGiro(object sender)
         {
             var item = sender as ItemViewModel;
@@ -344,6 +438,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
         }
 
+        /// <summary>
+        /// Invio giro al portale
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="location"></param>
         private void InviaGiro(object sender, Location location)
         {
             var item = sender as ItemViewModel;
@@ -376,7 +475,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             };
 
             // chiamata REST upload dati
-            if (this.restService.Upload(uploadDto).Result)
+            if (this.restService.UploadPrelievi(uploadDto).Result)
             {
                 giro.DataUpload = DateTime.Now;
                 this.giriService.UpdateItemAsync(giro).Wait();

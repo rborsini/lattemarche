@@ -140,6 +140,7 @@
     <Compile Include="Models\RuoloUtente.cs" />
     <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Synch.cs" />
+    <Compile Include="Models\Trasbordo.cs" />
     <Compile Include="Models\UtenteXAcquirente.cs" />
     <Compile Include="Models\UtenteXCessionario.cs" />
     <Compile Include="Models\UtenteXDestinatario.cs" />

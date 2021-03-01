@@ -108,7 +108,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                     if (this.RegistrazionePendente)
                     {
-                        var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
+                        var dbDto = this.restService.DownloadDb(this.device.GetIdentifier()).Result;
                         this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
                         isActive = dbDto != null;
                     }
@@ -178,7 +178,7 @@ namespace LatteMarche.Xamarin.ViewModels.Synch
 
                     if (isActive)
                     {
-                        var dbDto = this.restService.Download(this.device.GetIdentifier()).Result;
+                        var dbDto = this.restService.DownloadDb(this.device.GetIdentifier()).Result;
                         this.sincronizzazioneService.UpdateDatabaseSync(dbDto).Wait();
                     }
 

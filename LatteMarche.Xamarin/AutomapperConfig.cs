@@ -39,6 +39,11 @@ namespace LatteMarche.Xamarin
 				.ForMember(dest => dest.IdGiro, opt => opt.MapFrom(src => src.Giro.IdTemplateGiro))
 				;
 
+			mappings.CreateMap<PrelievoLatteDto, Prelievo>()
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
+				.ForMember(dest => dest.Quantita_kg, opt => opt.MapFrom(src => src.Quantita))
+				;
+
 			#endregion
 
 			#region ViewModels
@@ -47,6 +52,13 @@ namespace LatteMarche.Xamarin
 				.ForMember(dest => dest.SubTotaleStr, opt => opt.MapFrom(src => $"{src.Prelievi.Sum(p => p.Quantita_kg)} kg - {src.Prelievi.Sum(p => p.Quantita_lt)} lt"));
 
 			mappings.CreateMap<Prelievo, ViewModels.Prelievi.ItemViewModel>();
+
+			mappings.CreateMap<TrasbordoDto, ViewModels.Trasbordi.ItemViewModel>()
+				.ForMember(dest => dest.TargaOrigine, opt => opt.MapFrom(src => src.Targa_Origine))
+				.ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
+				.ForMember(dest => dest.NumeroPrelievi, opt => opt.MapFrom(src => src.Prelievi.Count))
+				.ForMember(dest => dest.Dto, opt => opt.MapFrom(src => src))
+				;
 
 			#endregion
 

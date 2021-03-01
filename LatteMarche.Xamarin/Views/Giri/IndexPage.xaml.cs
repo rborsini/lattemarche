@@ -52,7 +52,7 @@ namespace LatteMarche.Xamarin.Views.Giri
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            viewModel.LoadItemsCommand.Execute(null);
+            this.viewModel.LoadItemsCommand.Execute(null);
         }
 
         #endregion

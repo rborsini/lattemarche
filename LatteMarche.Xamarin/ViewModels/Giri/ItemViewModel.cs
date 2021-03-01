@@ -16,6 +16,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         #region Constants
 
         private const string CHIUDI = "Chiudi";
+        private const string TRASBORDA = "Trasborda";
         private const string RIAPRI = "Riapri";
         private const string STAMPA = "Stampa";
         private const string ELIMINA = "Elimina";
@@ -51,6 +52,9 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
                     actions.Add(new MaterialMenuItem { Text = CHIUDI });
 
+                if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
+                    actions.Add(new MaterialMenuItem { Text = TRASBORDA });
+
                 if (this.DataConsegna.HasValue)
                     actions.Add(new MaterialMenuItem { Text = STAMPA });
 
@@ -71,6 +75,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         #region Events
 
         public event EventHandler OnItem_Closing;
+        public event EventHandler OnItem_Transfering;
         public event EventHandler OnItem_Opening;
         public event EventHandler OnItem_Printing;
         public event EventHandler OnItem_Deleting;
@@ -92,6 +97,9 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             {
                 case CHIUDI:
                     this.OnItem_Closing(this, null);
+                    break;
+                case TRASBORDA:
+                    this.OnItem_Transfering(this, null);
                     break;
                 case RIAPRI:
                     this.OnItem_Opening(this, null);

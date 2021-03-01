@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LatteMarche.Xamarin.Converters"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="LatteMarche.Xamarin.Views.Trasbordi.IndexPage"
+             Title="Trasbordi">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InvertBooleanConverter x:Key="invertBoolean" />
+        </ResourceDictionary>
+    </ContentPage.Resources>    
+    <ScrollView VerticalOptions="Fill">
+        <StackLayout>
+            <StackLayout IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}" Margin="10,10,10,10">
+
+                <ListView x:Name="ItemsListView"
+                            IsVisible="{Binding NoData, Converter={StaticResource invertBoolean}}"
+                            ItemsSource="{Binding Items}"
+                            VerticalOptions="FillAndExpand"
+                            RefreshCommand="{Binding LoadItemsCommand}"
+                            CachingStrategy="RecycleElement"
+                            SeparatorVisibility="None" HasUnevenRows="True"                         
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <material:MaterialCard BackgroundColor="{Binding BackgroundColor}" Margin="0, 3, 0, 3" CornerRadius="5" Elevation="1" HeightRequest="200" HorizontalOptions="FillAndExpand" >
+                                        
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="35*" />
+                                                <ColumnDefinition Width="65*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="Origine:" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="End" ></Label>
+                                            <Label Text="{Binding TargaOrigine}" Grid.Row="0" Grid.Column="1" LineBreakMode="TailTruncation" FontSize="Medium" Margin="0,0,0,0" TextColor="#000"/>
+
+                                            <Label Text="Data:" Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="End"  ></Label>
+                                            <Label Text="{Binding Data}" Grid.Row="1" Grid.Column="1" LineBreakMode="TailTruncation" FontSize="Small" Margin="0,0,0,0" TextColor="#777"/>
+
+                                            <Label Text="Num prelievi:" Grid.Row="2" Grid.Column="0" HorizontalTextAlignment="End"  ></Label>
+                                            <Label Text="{Binding NumeroPrelievi}" Grid.Row="2" Grid.Column="1" TextColor="#777" FontSize="Small" Margin="0,0,0,0" />
+
+                                            <material:MaterialButton Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#D8D8D8" Text="Importa" Command="{Binding ImportCommand}" TextColor="Black"  />
+
+                                        </Grid>
+
+                                    </material:MaterialCard>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding NoData}"
+                HorizontalOptions="Center"
+                VerticalOptions="Fill"
+                Orientation="Vertical"
+                Padding="0,60"
+            >
+
+                <Image Source="empty_drawer.png" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                <Label FontSize="Medium" TextColor="#373737" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"  WidthRequest="300" Margin="0,25" TextType="Html" HorizontalTextAlignment="Center">
+                    <Label.Text>
+                        <![CDATA[
+                        Non ci sono <strong>trasbordi</strong> pendenti
+                        ]]>
+
+                    </Label.Text>
+                </Label>
+
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

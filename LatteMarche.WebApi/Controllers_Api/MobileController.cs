@@ -11,6 +11,12 @@ namespace LatteMarche.WebApi.Controllers_Api
     [ApiExceptionFilter]
     public class MobileController : ApiController
     {
+        #region Constants
+
+        private const string PAGE_NAME = "Mobile";
+
+        #endregion
+
         #region Fields
 
         private IMobileService mobileService;
@@ -28,7 +34,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
-        [ViewItem(nameof(Register), "Mobile", "Registrazione")]
+        [ViewItem(nameof(Register), PAGE_NAME, "Registrazione")]
         [HttpPost]
         public IHttpActionResult Register([FromBody] DispositivoDto deviceInfo)
         {
@@ -38,7 +44,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
-        [ViewItem(nameof(Download), "Mobile", "Download")]
+        [ViewItem(nameof(Download), PAGE_NAME, "Download")]
         [HttpGet]
         public IHttpActionResult Download(string imei)
         {
@@ -48,7 +54,7 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
-        [ViewItem(nameof(Upload), "Mobile", "Upload")]
+        [ViewItem(nameof(Upload), PAGE_NAME, "Upload")]
         [HttpPost]
         public IHttpActionResult Upload([FromBody] UploadDto dto)
         {

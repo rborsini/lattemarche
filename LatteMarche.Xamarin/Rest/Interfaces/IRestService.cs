@@ -9,8 +9,14 @@ namespace LatteMarche.Xamarin.Rest.Interfaces
 
         Task<DispositivoDto> Register(DispositivoDto dto);
 
-        Task<DownloadDto> Download(string imei);
+        Task<DownloadDto> DownloadDb(string imei);
 
-        Task<bool> Upload(UploadDto dto);
+        Task<bool> UploadPrelievi(UploadDto dto);
+
+        Task<TrasbordoDto> UploadTrasbordo(TrasbordoDto trasbordo);
+
+        Task<List<TrasbordoDto>> DownloadTrasbordi(string imei);
+
+        Task<bool> ChiudiTrasbordo(long id);
     }
 }

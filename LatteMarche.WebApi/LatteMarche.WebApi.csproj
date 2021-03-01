@@ -427,6 +427,7 @@
     <Content Include="dist\prod\js\prelieviLatteEdit.js.map" />
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
     <None Include="Properties\PublishProfiles\Deploy_TEST.pubxml" />
+    <None Include="Properties\PublishProfiles\Dev.pubxml" />
     <None Include="Properties\PublishProfiles\Dev_Local.pubxml" />
     <None Include="Properties\PublishProfiles\lattemarche - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\lattemarche - ReadOnly - FTP.pubxml" />
@@ -500,6 +501,7 @@
     <Compile Include="Controllers_Api\ComuniController.cs" />
     <Compile Include="Controllers_Api\PrelieviLatteController.cs" />
     <Compile Include="Controllers_Api\GiriController.cs" />
+    <Compile Include="Controllers_Api\TrasbordiController.cs" />
     <Compile Include="Controllers_Web\AnalisiController.cs" />
     <Compile Include="Filters\ApiCustomAuthorize.cs" />
     <Compile Include="Filters\MvcCustomAuthorize.cs" />

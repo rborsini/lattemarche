@@ -80,6 +80,7 @@ namespace LatteMarche.Xamarin
             DependencyService.Register<StampantiService>();
             DependencyService.Register<TemplateGiroService>();
             DependencyService.Register<TipiLatteService>();
+            DependencyService.Register<TrasbordiService>();
             DependencyService.Register<TrasportatoriService>();
 
 
@@ -118,7 +119,7 @@ namespace LatteMarche.Xamarin
                         var ultimoDownload = sincronizzazioneService.GetLastAysnc(Enums.SynchType.Download).Result;
                         if (ultimoDownload != null && (DateTime.Now - ultimoDownload.Timestamp).TotalSeconds > MinSecondsToRefreshDb)
                         {
-                            var dto = restService.Download(device.GetIdentifier()).Result;
+                            var dto = restService.DownloadDb(device.GetIdentifier()).Result;
                             sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
 
                             Analytics.TrackEvent("Download avvenuto", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });

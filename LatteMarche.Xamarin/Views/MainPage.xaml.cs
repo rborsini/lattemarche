@@ -40,6 +40,9 @@ namespace LatteMarche.Xamarin.Views
             {
                 switch (id)
                 {
+                    case (int)MenuItemType.Trasbordi:
+                        MenuPages.Add(id, new NavigationPage(new Trasbordi.IndexPage()));
+                        break;
                     case (int)MenuItemType.Impostazioni:
                         MenuPages.Add(id, new NavigationPage(new Impostazioni.IndexPage()));
                         break;
