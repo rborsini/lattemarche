@@ -29,6 +29,7 @@ namespace LatteMarche.Xamarin.Zebra.Models
             public TipoLatte TipoLatte { get; set; }
             public DateTime? DataPrelievo { get; set; }
             public decimal? Quantita_kg { get; set; }
+            public string Trasbordo { get; set; }
         }
 
     }

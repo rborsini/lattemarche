@@ -7,6 +7,7 @@ using Sentry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -19,7 +20,8 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
         #region Fields
 
         private IDevice device = DependencyService.Get<IDevice>();
-        
+
+        private IGiriService giriService => DependencyService.Get<IGiriService>();
         private ITrasbordiService trasbordiService => DependencyService.Get<ITrasbordiService>();
         private IRestService restService => DependencyService.Get<IRestService>();
 
@@ -102,6 +104,31 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
 
             this.IsBusy = true;
 
+            // verifica giro chiuso dello stesso tipo
+            var giriAperti = this.giriService.GetGiriApertiAsync().Result;
+            if(giriAperti.ToList().Any(g => g.IdTemplateGiro == item.Dto.IdTemplateGiro))
+            {
+                await this.page.DisplayAlert("Info", "Non è possibile importare il trasbordo selezionato. Chiudere il giro locale e ripetere l'importazione.", "OK");
+                return;
+            }
+
+            // selezione scomparto
+            var elencoScomparti = new List<string> { "1", "2", "3", "4", "5", "6" };
+            var indiciSelezionati = new List<int>();
+
+            var result = await MaterialDialog.Instance.SelectChoicesAsync(title: "Seleziona scomparti", selectedIndices: indiciSelezionati, dismissiveText: "Annulla", choices: elencoScomparti.ToArray());
+            var scomparti = new List<string>();
+
+            if (result != null)
+            {
+                foreach (var index in result)
+                {
+                    scomparti.Add(elencoScomparti[index]);
+                }
+            }
+
+            var scomparto = String.Join("-", scomparti);
+
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Importazione trasbordo", lottieAnimation: "LottieLogo1.json");
             this.NoData = false;
 
@@ -109,11 +136,12 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
             {
                 await Task.Run(() =>
                 {
-                    this.trasbordiService.Import(item.Dto).Wait();
-                    this.restService.ChiudiTrasbordo(item.Dto.Id);
+                    this.trasbordiService.Import(item.Dto, scomparto).Wait();
+                    this.restService.ChiudiTrasbordo(item.Dto.Id);                    
                 });
 
-                await ExecuteLoadItemsCommand();
+                await this.page.DisplayAlert("Info", "Trasbordo importato", "OK");
+                this.Items.Remove(item);
             }
             catch (Exception exc)
             {

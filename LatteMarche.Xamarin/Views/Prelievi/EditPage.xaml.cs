@@ -110,7 +110,7 @@ namespace LatteMarche.Xamarin.Views.Prelievi
 
                 // destinatario default
                 var idDestinatarioDefault = allevamento.IdDestinatarioDefault;
-                if (idDestinatarioDefault.HasValue && idDestinatarioDefault.Value != this.viewModel.DestinatarioSelezionato.Id)
+                if (idDestinatarioDefault.HasValue && this.viewModel.DestinatarioSelezionato != null && idDestinatarioDefault.Value != this.viewModel.DestinatarioSelezionato.Id)
                 {
                     this.viewModel.DestinatarioSelezionato = this.viewModel.Destinatari.First(a => a.Id == idDestinatarioDefault.Value);
                 }

@@ -320,6 +320,9 @@ namespace LatteMarche.Xamarin.Migrations
                     b.Property<string>("Titolo")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Trasbordo")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdGiro");

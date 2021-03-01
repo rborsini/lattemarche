@@ -92,12 +92,12 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             int lineSpacing = 30;
             var cmd = "";
 
-            if(registroRaccolta.LavaggioCisterna)
+            if (registroRaccolta.LavaggioCisterna)
             {
                 y += lineSpacing;
                 cmd += $"TEXT {p} {x} {y} Effettuato lavaggio cistena \r\n";
                 y += lineSpacing * 2;
-            }          
+            }
 
             return cmd;
         }
@@ -169,15 +169,25 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             cmd += $"TEXT {p} {x} {y} {PadRight("PARTO", 7, ' ')} {PadRight("P.IVA-PROV.", 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight("", 11, ' ')} {PadRight("Prod\\Del", 16, ' ')} {PadRight("Conducente", 16, ' ')} \r\n";
 
             decimal qtaTot = 0;
+            var trasbordi = registro.Items.Select(p => p.Trasbordo).Where(t => !string.IsNullOrEmpty(t)).Distinct().ToList();
+
             foreach (var prelievo in registro.Items.OrderBy(p => p.Scomparto))
             {
                 y += 40;
 
+                var scomparto = prelievo.Scomparto;
+
+                if (!String.IsNullOrEmpty(prelievo.Trasbordo))
+                {
+                    var index = trasbordi.IndexOf(prelievo.Trasbordo);
+                    scomparto += $" {GetAsterixs(index + 1)}";
+                }
+
                 var allevamento = prelievo.Allevamento;
                 var tipoLatte = prelievo.TipoLatte;
 
-                var scomparto_1 = prelievo.Scomparto.Length > 7 ? prelievo.Scomparto.Substring(0, 7) : prelievo.Scomparto;
-                var scomparto_2 = prelievo.Scomparto.Length > 7 ? prelievo.Scomparto.Substring(7, prelievo.Scomparto.Length - 7) : "";
+                var scomparto_1 = scomparto.Length > 7 ? scomparto.Substring(0, 7) : scomparto;
+                var scomparto_2 = scomparto.Length > 7 ? scomparto.Substring(7, scomparto.Length - 7) : "";
                 var ragioneSociale = $"{allevamento?.RagioneSociale}";
                 var pIvaProv = $"{allevamento?.P_IVA}-{allevamento?.Provincia}";
                 var tipo = $"{tipoLatte?.Codice}";
@@ -197,9 +207,26 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             y += 40;
             cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaTot.ToString("#"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
+            // Trasbordi
+            for (int i = 0; i < trasbordi.Count; i++)
+            {
+                y += 40;
+                cmd += $"TEXT {p} {x} {y} {GetAsterixs(i + 1)}  {trasbordi[i]} \r\n";
+            }
+
             y += 40;
 
             return cmd;
+        }
+
+        private string GetAsterixs(int index)
+        {
+            var result = "";
+
+            for (var i = 0; i < index; i++)
+                result += "*";
+
+            return result;
         }
 
     }

@@ -36,5 +36,7 @@ namespace LatteMarche.Xamarin.Db.Models
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }
 
+        public string Trasbordo { get; set; }
+
     }
 }

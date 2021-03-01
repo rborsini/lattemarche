@@ -202,7 +202,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                         Allevamento = allevamento,
                         DataPrelievo = prelievo.DataPrelievo,
                         Quantita_kg = prelievo.Quantita_kg,
-                        TipoLatte = allevamento != null ? allevamento.TipoLatte : null
+                        TipoLatte = allevamento != null ? allevamento.TipoLatte : null,
+                        Trasbordo = prelievo.Trasbordo
                     });
                 }
 

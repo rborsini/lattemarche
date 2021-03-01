@@ -132,11 +132,22 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
 
             // CONTENUTO TABELLA
             decimal quantitaTotale = 0;
+
+            var trasbordi = registro.Items.Select(p => p.Trasbordo).Where(t => !string.IsNullOrEmpty(t)).Distinct().ToList();
+
             foreach (var prelievo in registro.Items.OrderBy(p => p.Scomparto))
             {
 
+                var scomparto = prelievo.Scomparto;
+
+                if(!String.IsNullOrEmpty(prelievo.Trasbordo))
+                {
+                    var index = trasbordi.IndexOf(prelievo.Trasbordo);
+                    scomparto += $"{GetAsterixs(index)}";
+                }
+
                 y += 20;
-                cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{prelievo.Scomparto}^FS"; // Numero scomparto
+                cmd += $"^CFA,{tableFontSize}^FO{leftOffset},{y}^FD{scomparto}^FS"; // Numero scomparto
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{PadRight(prelievo.Allevamento.RagioneSociale.ToString(), 16, ' ')}^FS"; // Nome produttore
                 y += 20;
                 cmd += $"^CFA,{tableFontSize}^FO110,{y}^FD{prelievo.Allevamento.P_IVA}-{prelievo.Allevamento.Provincia}^FS"; // P.iva / Prov.
@@ -157,6 +168,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             y += 40;
             cmd += $"^FO{leftOffset},{y}^GB{lineWidth},1,1^FS"; // Linea
 
+            // Trasbordi
+            for (int i = 0; i < trasbordi.Count; i++)
+            {
+                y += 40;
+                cmd += $"^CFA,{h6}^FO{leftOffset},160^FD{GetAsterixs(i+1)}  {trasbordi[i]}^FS";
+            }
+
             y += 40;
 
             // FIRME
@@ -174,5 +192,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.ZPL
             return cmd;
         }
 
+        private string GetAsterixs(int index)
+        {
+            var result = "";
+
+            for (var i = 0; i < index; i++)
+                result += "*";
+
+            return result;
+        }
     }
 }

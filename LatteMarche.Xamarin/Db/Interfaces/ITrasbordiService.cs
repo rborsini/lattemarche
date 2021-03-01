@@ -8,6 +8,6 @@ namespace LatteMarche.Xamarin.Db.Interfaces
 {
     interface ITrasbordiService
     {
-        Task Import(TrasbordoDto trasbordo);
+        Task Import(TrasbordoDto trasbordo, string scomparto);
     }
 }
