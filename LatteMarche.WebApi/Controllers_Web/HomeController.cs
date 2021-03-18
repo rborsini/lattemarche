@@ -33,13 +33,13 @@ namespace LatteMarche.WebApi.Controllers_Web
         {
             
             var token = Session["token"];
+            var user = this.utentiService.Details(User.Identity.Name);
 
-            if (token == null && !String.IsNullOrEmpty(User.Identity.Name))
-                Session["token"] = this.utentiService.Details(User.Identity.Name).Token;
+            if (user != null && token == null && !String.IsNullOrEmpty(User.Identity.Name))
+                Session["token"] = user.Token;
 
-            if (User.Identity.IsAuthenticated)
+            if (user != null && User.Identity.IsAuthenticated)
             {
-                var user = this.utentiService.Details(User.Identity.Name);
                 if(user.IdProfilo != 4) // laboratorio
                 {
                     return View("Dashboard", Session["token"]);
