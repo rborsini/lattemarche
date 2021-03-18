@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LatteMarche.Core\LatteMarche.Core.csproj">
-      <Project>{7399BB9D-FA00-400E-B9F8-C78751CE153F}</Project>
+      <Project>{7399bb9d-fa00-400e-b9f8-c78751ce153f}</Project>
       <Name>LatteMarche.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\LatteMarche.EntityFramework\LatteMarche.EntityFramework.csproj">

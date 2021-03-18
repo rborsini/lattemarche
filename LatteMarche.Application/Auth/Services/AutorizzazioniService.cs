@@ -213,6 +213,10 @@ namespace LatteMarche.Application.Auth.Services
                 List<Autorizzazione> autorizzazioni = autorizzazioniRepository.Query.ToList();
 
                 var utente = utentiRepository.DbSet.FirstOrDefault(u => u.Username == username);
+
+                if (utente == null)
+                    return result;
+
                 List<long> ruoli = new List<long>() { utente.IdProfilo };
 
                 //List<long> ruoli = utentiRepository

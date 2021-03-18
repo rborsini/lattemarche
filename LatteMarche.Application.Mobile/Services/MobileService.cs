@@ -263,13 +263,20 @@ namespace LatteMarche.Application.Mobile.Services
         /// <returns></returns>
         private int? GetAcquirenteDefault(List<PrelievoLatte> prelievi)
         {
-            return prelievi
+            var idAcquirenteDefault = prelievi
                 .Where(p => p.IdAcquirente.HasValue)
                 .GroupBy(p => p.IdAcquirente)
                 .OrderByDescending(gp => gp.Count())
                 .Select(g => g.Key)
                 .FirstOrDefault();
 
+            if(idAcquirenteDefault.HasValue)
+            {
+                var acquirente = this.acquirentiRepository.GetById(idAcquirenteDefault.Value);
+                idAcquirenteDefault = acquirente != null && acquirente.Abilitato ? idAcquirenteDefault : (int?)null;
+            }
+
+            return idAcquirenteDefault;
         }
 
         /// <summary>
@@ -279,12 +286,20 @@ namespace LatteMarche.Application.Mobile.Services
         /// <returns></returns>
         private int? GetCessionarioDefault(List<PrelievoLatte> prelievi)
         {
-            return prelievi
+            var idCessionarioDeafult = prelievi
                 .Where(p => p.IdCessionario.HasValue)
                 .GroupBy(p => p.IdCessionario)
                 .OrderByDescending(gp => gp.Count())
                 .Select(g => g.Key)
                 .FirstOrDefault();
+
+            if (idCessionarioDeafult.HasValue)
+            {
+                var cessionario = this.cessionariRepository.GetById(idCessionarioDeafult.Value);
+                idCessionarioDeafult = cessionario != null && cessionario.Abilitato ? idCessionarioDeafult : (int?)null;
+            }
+
+            return idCessionarioDeafult;
         }
 
         /// <summary>
@@ -294,12 +309,21 @@ namespace LatteMarche.Application.Mobile.Services
         /// <returns></returns>
         private int? GetDestinatarioDefault(List<PrelievoLatte> prelievi)
         {
-            return prelievi
+            var idDestinatarioDefault = prelievi
                 .Where(p => p.IdDestinatario.HasValue)
                 .GroupBy(p => p.IdDestinatario)
                 .OrderByDescending(gp => gp.Count())
                 .Select(g => g.Key)
                 .FirstOrDefault();
+
+            if (idDestinatarioDefault.HasValue)
+            {
+                var destinatario = this.destinatariRepository.GetById(idDestinatarioDefault.Value);
+                idDestinatarioDefault = destinatario != null && destinatario.Abilitato ? idDestinatarioDefault : (int?)null;
+            }
+
+            return idDestinatarioDefault;
+
         }
 
         /// <summary>
