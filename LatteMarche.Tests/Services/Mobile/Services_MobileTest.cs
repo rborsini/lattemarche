@@ -21,9 +21,6 @@ namespace LatteMarche.Tests.Services.Mobile
         private const int ID_PROFILO_ALLEVATORE = 3;            // Allevatore
         private const int ID_TIPO_LATTE_QM = 1;                 // QM Alta Qualità
 
-        private const int ID_ACQUIRENTE_DEFAULT = 123;
-        private const int ID_DESTINATARIO_DEFAULT = 321;
-
         #endregion
 
         #region Fields
@@ -45,6 +42,9 @@ namespace LatteMarche.Tests.Services.Mobile
         private IMobileService mobileService;
 
         private DbCleaner dbCleaner;
+
+        private int idAcquirenteDefault;
+        private int idDestinatarioDefault;
 
         private Utente trasportatore;
         private Utente allevatore;
@@ -122,7 +122,7 @@ namespace LatteMarche.Tests.Services.Mobile
                     .With(u => u.Abilitato = true)
                 .Build();
 
-            this.acquirentiRepository.Add(acquirente);
+            this.acquirentiRepository.Add(acquirente);            
 
             // cessionario
             var cessionario = Builder<Cessionario>
@@ -141,6 +141,11 @@ namespace LatteMarche.Tests.Services.Mobile
                 .Build();
 
             this.destinatariRepository.Add(destinatario);
+
+            this.uow.SaveChanges();
+
+            this.idAcquirenteDefault = acquirente.Id;
+            this.idDestinatarioDefault = destinatario.Id;
         }
 
         [TearDown]
@@ -202,8 +207,8 @@ namespace LatteMarche.Tests.Services.Mobile
             var prelievi = new List<PrelievoLatte>();
             for (int i = 1; i <= 100; i++)
             {
-                var idAcquirente = i % 4 == 0 ? i : ID_ACQUIRENTE_DEFAULT;
-                var idDestinatario = i % 4 == 0 ? i : ID_DESTINATARIO_DEFAULT;
+                var idAcquirente = i % 4 == 0 ? i : this.idAcquirenteDefault;
+                var idDestinatario = i % 4 == 0 ? i : this.idDestinatarioDefault;
 
                 prelievi.Add(Builder<PrelievoLatte>
                     .CreateNew()
@@ -240,8 +245,8 @@ namespace LatteMarche.Tests.Services.Mobile
             Assert.IsNotNull(allevamentoDto.Latitudine);
             Assert.IsNotNull(allevamentoDto.Longitudine);
 
-            Assert.AreEqual(ID_ACQUIRENTE_DEFAULT, allevamentoDto.IdAcquirenteDefault);
-            Assert.AreEqual(ID_DESTINATARIO_DEFAULT, allevamentoDto.IdDestinatarioDefault);
+            Assert.AreEqual(this.idAcquirenteDefault, allevamentoDto.IdAcquirenteDefault);
+            Assert.AreEqual(this.idDestinatarioDefault, allevamentoDto.IdDestinatarioDefault);
 
             Assert.AreEqual(5.95, allevamentoDto.Quantita_Min);         // 5° percentile
             Assert.AreEqual(95.05, allevamentoDto.Quantita_Max);        // 5° percentile
