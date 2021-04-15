@@ -101,6 +101,9 @@
     <Reference Include="FizzWare.NBuilder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5651b03e12e42c12, processorArchitecture=MSIL">
       <HintPath>..\packages\NBuilder.6.1.0\lib\net40\FizzWare.NBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.5.10.3\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
     <Reference Include="MailKit, Version=2.10.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.2.10.1\lib\net46\MailKit.dll</HintPath>
     </Reference>
@@ -158,6 +161,8 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WeCode.Application, Version=1.20.10.20, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCode.Application.1.20.11.12\lib\net461\WeCode.Application.dll</HintPath>
     </Reference>
@@ -188,6 +193,7 @@
     <Compile Include="Services\DbCleaner.cs" />
     <Compile Include="Services\Dispositivi\Services_DispositiviTest.cs" />
     <Compile Include="Services\Mobile\Services_MobileTest.cs" />
+    <Compile Include="Services\Prelievi\Services_PrelieviTest.cs" />
     <Compile Include="Services\Utenti\Services_AcquirenteTest.cs" />
     <Compile Include="Services\Utenti\Services_AllevatoreTest.cs" />
     <Compile Include="Services\Utenti\Services_CessionarioTest.cs" />

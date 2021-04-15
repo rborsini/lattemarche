@@ -381,7 +381,7 @@ namespace LatteMarche.Application.Latte.Services
         /// </summary>
         /// <param name="searchDto"></param>
         /// <returns></returns>
-        public List<V_PrelievoLatte> Sitra(DateTime data)
+        public List<PrelievoLatteDto> Sitra(DateTime data)
         {
             IQueryable<V_PrelievoLatte> query = this.v_prelieviLatteRepository.DbSet;
 
@@ -392,7 +392,9 @@ namespace LatteMarche.Application.Latte.Services
 
             query = query.OrderBy(r => r.Allevamento);
 
-            return query.ToList();
+            var entities = query.ToList();
+
+            return this.mapper.Map<List<PrelievoLatteDto>>(entities);
         }
 
         /// <summary>

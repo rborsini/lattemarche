@@ -14,7 +14,12 @@ namespace LatteMarche.Application.PrelieviLatte
             CreateMap<PrelievoLatteDto, PrelievoLatte>();
 
             CreateMap<V_PrelievoLatte, PrelievoLatte>();
-            CreateMap<V_PrelievoLatte, PrelievoLatteDto>();
+            
+            CreateMap<V_PrelievoLatte, PrelievoLatteDto>()
+                .ForMember(dest => dest.DataPrelievoStr, opt => opt.Ignore())
+                .ForMember(dest => dest.DataUltimaMungituraStr, opt => opt.Ignore())
+                .ForMember(dest => dest.DataConsegnaStr, opt => opt.Ignore())
+                ;
 
             CreateMap<Lotto, LottoDto>();
             CreateMap<LottoDto, Lotto>();
