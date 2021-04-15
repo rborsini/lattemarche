@@ -164,7 +164,8 @@ namespace LatteMarche.WebApi.Controllers_Api
                 this.LogDebug("InvioSitra", $"data [{data}]");
 
                 // prelievi giorno precedente
-                List<PrelievoLatteDto> prelieviDaInviare = this.mapper.Map<List<PrelievoLatteDto>>(this.prelieviLatteService.Sitra(data));
+                var prelieviDaInviare = this.prelieviLatteService.Sitra(data);
+                //List<PrelievoLatteDto> prelieviDaInviare = this.mapper.Map<List<PrelievoLatteDto>>(prelievi);
 
                 this.LogDebug("InvioSitra", $"prelievi giornalieri [{prelieviDaInviare.Count}]");
 
