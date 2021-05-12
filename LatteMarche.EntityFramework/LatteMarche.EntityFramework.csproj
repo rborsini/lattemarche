@@ -191,6 +191,10 @@
     <Compile Include="Migrations\202103010835155_AggiuntaTabella_Trasbordi.designer.cs">
       <DependentUpon>202103010835155_AggiuntaTabella_Trasbordi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs" />
+    <Compile Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.designer.cs">
+      <DependentUpon>202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LatteMarcheDbContext.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103010835155_AggiuntaTabella_Trasbordi.resx">
       <DependentUpon>202103010835155_AggiuntaTabella_Trasbordi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.resx">
+      <DependentUpon>202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

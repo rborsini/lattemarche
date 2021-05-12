@@ -207,12 +207,13 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             y += 40;
             cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaTot.ToString("#"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
 
-            // Trasbordi
-            for (int i = 0; i < trasbordi.Count; i++)
-            {
-                y += 40;
-                cmd += $"TEXT {p} {x} {y} {GetAsterixs(i + 1)}  {trasbordi[i]} \r\n";
-            }
+            // #326826
+            //// Trasbordi
+            //for (int i = 0; i < trasbordi.Count; i++)
+            //{
+            //    y += 40;
+            //    cmd += $"TEXT {p} {x} {y} {GetAsterixs(i + 1)}  {trasbordi[i]} \r\n";
+            //}
 
             y += 40;
 

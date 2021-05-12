@@ -1,11 +1,8 @@
 ﻿using Autofac;
 using Bogus;
 using FluentAssertions;
-using LatteMarche.Application.Autocisterne.Interfaces;
-using LatteMarche.Application.Dispositivi.Dtos;
-using LatteMarche.Application.Dispositivi.Interfaces;
-using LatteMarche.Application.Mobile.Dtos;
-using LatteMarche.Application.Mobile.Interfaces;
+using LatteMarche.Application.Trasbordi.Dtos;
+using LatteMarche.Application.Trasbordi.Interfaces;
 using LatteMarche.Core.Models;
 using NUnit.Framework;
 using System;
@@ -22,11 +19,9 @@ namespace LatteMarche.Tests.Services.Trasbordi
     {
         #region Constants
 
-        private const string IMEI_ORIGINE = "1111";
-        private const string TARGA_ORIGINE = "EA-005-NE";
-
-        private const string IMEI_DESTINAZIONE = "2222";
-        private const string TARGA_DESTINAZIONE = "FA-259-AD";
+        private const int ID_PROFILO_TRASPORTATORE = 5;
+        private const string CODICE_GIRO = "L1";
+        private const string DENOMINAZIONE_GIRO = "Latte 1";
 
         #endregion
 
@@ -36,22 +31,21 @@ namespace LatteMarche.Tests.Services.Trasbordi
 
         private IUnitOfWork uow;
 
+        private IRepository<Utente, int> utentiRepository;
         private IRepository<Trasbordo, long> trasbordiRepository;
+        private IRepository<Giro, int> giriRepository;
 
-        private IAutocisterneService autocisterneService;
-        private IDispositiviService dispositiviService;
         private ITrasbordiService trasbordiService;
 
         private DbCleaner dbCleaner;
 
-        private Faker<DispositivoMobileDto> dispositiviFaker;
-        private Faker<PrelievoLatteDto> prelieviFaker;
-        private Faker<TrasbordoDto> trabordiFaker;
+        private Faker<Utente> utentiFaker;
+        private Faker<Giro> giriFaker;
+        private Faker<Trasbordo> trabordiFaker;
 
         #endregion
 
         #region Constructor
-
         public Services_TrasbordiTest()
         {
             AutoFacConfig.Configure();
@@ -61,10 +55,10 @@ namespace LatteMarche.Tests.Services.Trasbordi
             this.uow = this.scope.Resolve<IUnitOfWork>();
             this.dbCleaner = new DbCleaner(uow);
 
+            this.utentiRepository = this.uow.Get<Utente, int>();
             this.trasbordiRepository = this.uow.Get<Trasbordo, long>();
+            this.giriRepository = this.uow.Get<Giro, int>();
 
-            this.autocisterneService = this.scope.Resolve<IAutocisterneService>();
-            this.dispositiviService = this.scope.Resolve<IDispositiviService>();
             this.trasbordiService = this.scope.Resolve<ITrasbordiService>();
         }
 
@@ -75,60 +69,53 @@ namespace LatteMarche.Tests.Services.Trasbordi
         [SetUp]
         public void Init()
         {
-            var autocisterna_origine = this.autocisterneService.Create(new Application.Autocisterne.Dtos.AutocisternaDto() { Targa = TARGA_ORIGINE });
-            var autocisterna_destinazione = this.autocisterneService.Create(new Application.Autocisterne.Dtos.AutocisternaDto() { Targa = TARGA_DESTINAZIONE });
+            // trasportatore
+            this.utentiFaker = new Faker<Utente>("it")
+                .RuleFor(f => f.IdProfilo, f => ID_PROFILO_TRASPORTATORE);
 
-            this.dispositiviFaker = new Faker<DispositivoMobileDto>("it")
-                .RuleFor(f => f.Attivo, f => true)
-                .RuleFor(f => f.DataRegistrazione, f => DateTime.UtcNow)
-                .RuleFor(f => f.DataUltimoDownload, f => DateTime.UtcNow)
-                .RuleFor(f => f.DataUltimoUpload, f => DateTime.UtcNow)
-                .RuleSet("origine", (set) =>
-                {
-                    set.RuleFor(f => f.Id, f => IMEI_ORIGINE);
-                    set.RuleFor(f => f.IdAutocisterna, f => autocisterna_origine.Id);
-                })
-                .RuleSet("destinazione", (set) =>
-                {
-                    set.RuleFor(f => f.Id, f => IMEI_DESTINAZIONE);
-                    set.RuleFor(f => f.IdAutocisterna, f => autocisterna_destinazione.Id);
-                })
+            var trasportatore = this.utentiFaker.Generate();
+            this.utentiRepository.Add(trasportatore);
+            this.uow.SaveChanges();
+
+            // giri
+            this.giriFaker = new Faker<Giro>("it")
+                .RuleFor(f => f.CodiceGiro, f => CODICE_GIRO)
+                .RuleFor(f => f.Denominazione, f => DENOMINAZIONE_GIRO)
+                .RuleFor(f => f.IdTrasportatore, f => trasportatore.Id)
                 ;
 
-            var dispositivoOrigine = this.dispositiviFaker.Generate("default,origine");
-            var dispositivoDestinazione = this.dispositiviFaker.Generate("default,destinazione");
+            var giro = this.giriFaker.Generate();
+            this.giriRepository.Add(giro);
+            this.uow.SaveChanges();
 
-            this.dispositiviService.Create(dispositivoOrigine);
-            this.dispositiviService.Create(dispositivoDestinazione);
-
-            this.prelieviFaker = new Faker<PrelievoLatteDto>("it")
-                .RuleFor(f => f.DataPrelievo, f => DateTime.Now)
-                .RuleFor(f => f.DataUltimaMungitura, f => DateTime.Today)
-                .RuleFor(f => f.IdAcquirente, f => 1)
-                .RuleFor(f => f.IdAllevamento, f => 1)
-                .RuleFor(f => f.IdAutocisterna, f => 1)
-                .RuleFor(f => f.IdDestinatario, f => 1)
-                .RuleFor(f => f.IdGiro, f => 1)
-                .RuleFor(f => f.IdTrasportatore, f => 1)
-                .RuleFor(f => f.Lat, f => Convert.ToDecimal(f.Address.Latitude()))
-                .RuleFor(f => f.Lng, f => Convert.ToDecimal(f.Address.Longitude()))
-                .RuleFor(f => f.NumeroMungiture, f => 1)
-                .RuleFor(f => f.Quantita, f => 111)
-                .RuleFor(f => f.Scomparto, f => "2-3")
-                .RuleFor(f => f.Temperatura, f => 2)
-                ;
-
-            this.trabordiFaker = new Faker<TrasbordoDto>("it")
+            // trasbordi
+            this.trabordiFaker = new Faker<Trasbordo>("it")
                 .RuleFor(f => f.IMEI_Origine, f => f.Hacker.Abbreviation())
                 .RuleFor(f => f.Targa_Origine, f => "EA-005-NE")
                 .RuleFor(f => f.IMEI_Destinazione, f => f.Hacker.Abbreviation())
-                .RuleFor(f => f.Targa_Destinazione, f => TARGA_DESTINAZIONE)
-                .RuleFor(f => f.Data, f => DateTime.Now)
+                .RuleFor(f => f.Targa_Destinazione, f => "FA-259-AD")                
                 .RuleFor(f => f.Lat, f => Convert.ToDecimal(f.Address.Latitude()))
                 .RuleFor(f => f.Lng, f => Convert.ToDecimal(f.Address.Longitude()))
-                .RuleFor(f => f.IdTemplateGiro, f => 1)
-                .RuleFor(f => f.Prelievi, f => this.prelieviFaker.Generate(3))
+                .RuleFor(f => f.IdTemplateGiro, f => giro.Id)
+                .RuleSet("today", (set) =>
+                {
+                    set.RuleFor(f => f.Data, f => DateTime.Now);
+                })
+
+                .RuleSet("yesterday", (set) =>
+                {
+                    set.RuleFor(f => f.Data, f => DateTime.Now.AddDays(-1));
+                })
                 ;
+
+            var trasbordi = this.trabordiFaker.Generate(10, "default, today");
+            this.trasbordiRepository.Add(trasbordi);
+            this.uow.SaveChanges();
+
+            trasbordi = this.trabordiFaker.Generate(10, "default, yesterday");
+            this.trasbordiRepository.Add(trasbordi);
+            this.uow.SaveChanges();
+
         }
 
         [TearDown]
@@ -142,40 +129,28 @@ namespace LatteMarche.Tests.Services.Trasbordi
         #region Test Methods
 
         [Test]
-        public void TrasbordiService_Push()
+        public void TrasbordiService_Search()
         {
-            var trasbordoDto = this.trabordiFaker.Generate();
-            trasbordoDto = this.trasbordiService.Push(trasbordoDto);
-            trasbordoDto.Should().NotBeNull();
+            var trasbordi = this.trasbordiService.Search(new TrasbordiSearchDto()
+            {
+                DataInizio = DateTime.Today
+            });
 
-            var trasbordo = this.trasbordiRepository.GetById(trasbordoDto.Id);
-            trasbordo.Targa_Destinazione.Should().Be(TARGA_DESTINAZIONE);
-
+            trasbordi.Should().HaveCount(10);
         }
 
         [Test]
-        public void TrasbordiService_Pull()
+        public void TrasbordiService_Details()
         {
-            var trasbordoDto = this.trabordiFaker.Generate();
-            trasbordoDto = this.trasbordiService.Push(trasbordoDto);
+            var trasbordi = this.trasbordiService.Search(null);
 
-            var trasbordi = this.trasbordiService.Pull(trasbordoDto.IMEI_Destinazione);
-            trasbordi.Should().HaveCount(1);
+            var trasbordo = this.trasbordiService.Details(trasbordi[0].Id);
+            trasbordo.Should().NotBeNull();
+
+            trasbordo.DenominazioneGiro.Should().Be(DENOMINAZIONE_GIRO);
         }
-
-        [Test]
-        public void TrasbordiService_Close()
-        {
-            var trasbordoDto = this.trabordiFaker.Generate();
-            trasbordoDto = this.trasbordiService.Push(trasbordoDto);
-
-            this.trasbordiService.Close(trasbordoDto.Id);
-
-            var trasbordo = this.trasbordiRepository.GetById(trasbordoDto.Id);
-            trasbordo.Chiuso.Should().Be(true);
-        }
-
 
         #endregion
+
     }
 }

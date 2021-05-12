@@ -189,8 +189,18 @@
                     <input type="text" :disabled="isReadOnly" class="form-control" v-model="prelievoLatte.CodiceSitra" />
                   </div>                                
                 </div>  
-
+                
               </div>                    
+
+              <!-- Trasbordo -->
+              <div v-if="prelievoLatte.Trasbordo" class="row form-group">
+                <div class="offset-1 col-5 row">
+                  <label class="col-2" >Trasbordo</label>
+                  <div class="col-4">
+                    <a v-if="prelievoLatte.Trasbordo" v-bind:href="'trasbordi/edit?id=' + prelievoLatte.Trasbordo.Id" >{{ prelievoLatte.Trasbordo.Data_Str }}</a>
+                  </div>
+                </div>
+              </div>
 
 
               <!-- Annulla / Salva -->

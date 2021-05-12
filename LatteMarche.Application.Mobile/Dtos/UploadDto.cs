@@ -19,6 +19,8 @@ namespace LatteMarche.Application.Mobile.Dtos
         public string Marca { get; set; }
         public string VersioneOS { get; set; }
         public string Nome { get; set; }
+        public int? IdAutocisterna { get; set; }
+
 
         public UploadDto()
         {

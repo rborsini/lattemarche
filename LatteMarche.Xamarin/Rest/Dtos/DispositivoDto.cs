@@ -23,5 +23,6 @@ namespace LatteMarche.Xamarin.Rest.Dtos
         public string VersioneApp { get; set; }
 
         public int? IdTrasportatore { get; set; }
+        public int? IdAutocisterna { get; set; }
     }
 }

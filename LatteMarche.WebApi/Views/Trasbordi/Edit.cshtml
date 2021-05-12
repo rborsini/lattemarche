@@ -1,0 +1,33 @@
+﻿@using LatteMarche.WebApi.Models
+@using LatteMarche.WebApi.Helpers
+
+@section Breadcrumb
+{
+    @{
+        BreadcrumbViewModel bm = new BreadcrumbViewModel();
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { ControllerName = "Trasbordi", DisplayName = "Trasbordi" });
+        bm.Items.Add(new BreadcrumbViewModel.BreadcrumbItem() { DisplayName = "Modifica" });
+    }
+
+
+    @* Breadcrumb *@
+    @Html.Partial("_Breadcrumb", bm)
+}
+
+<div id="app">
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44"></script>
+
+<!-- Js -->
+@section Js
+{
+    @{
+        var version = System.Configuration.ConfigurationManager.AppSettings["version"];
+        var folder = EnvHelper.IsProd ? "prod/js" : "dev";
+        var url = "~/dist/" + folder + "/trasbordiEdit.js";
+
+        <script src="@Url.Content(url)?ver=@version"></script>
+    }
+}

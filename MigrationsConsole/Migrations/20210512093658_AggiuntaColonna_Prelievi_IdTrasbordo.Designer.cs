@@ -3,14 +3,16 @@ using System;
 using LatteMarche.Xamarin.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MigrationsConsole.Migrations
 {
     [DbContext(typeof(LatteMarcheDbContext))]
-    partial class LatteMarcheDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210512093658_AggiuntaColonna_Prelievi_IdTrasbordo")]
+    partial class AggiuntaColonna_Prelievi_IdTrasbordo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

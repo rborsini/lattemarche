@@ -13,6 +13,7 @@ using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using WeCode.Application.Exceptions;
 using AutoMapper;
+using LatteMarche.Application.Trasbordi.Interfaces;
 
 namespace LatteMarche.Application.Latte.Services
 {
@@ -25,18 +26,25 @@ namespace LatteMarche.Application.Latte.Services
         private IRepository<V_PrelievoLatte, int> v_prelieviLatteRepository;
         private IRepository<Allevamento, int> allevamentiRepository;
         private IUtentiService utentiService;
+        private ITrasbordiService trasbordiService;
 
         #endregion
 
         #region Constructor
 
-        public PrelieviLatteService(IUnitOfWork uow, IMapper mapper, IUtentiService utentiService)
+        public PrelieviLatteService(
+            IUnitOfWork uow, 
+            IMapper mapper, 
+            IUtentiService utentiService,
+            ITrasbordiService trasbordiService
+            )
             : base(uow, mapper)
         {
             this.v_prelieviLatteRepository = this.uow.Get<V_PrelievoLatte, int>();
             this.allevamentiRepository = uow.Get<Allevamento, int>();
 
             this.utentiService = utentiService;
+            this.trasbordiService = trasbordiService;
         }
 
         #endregion
@@ -50,7 +58,11 @@ namespace LatteMarche.Application.Latte.Services
         /// <returns></returns>
         public override PrelievoLatteDto Details(int key)
         {
-            var dto = base.Details(key);
+            var entity = this.repository.GetById(key);
+            if (entity == null)
+                return null;
+
+            var dto = this.mapper.Map<PrelievoLatteDto>(entity);
 
             if(dto.IdAllevamento.HasValue)
             {
@@ -61,7 +73,10 @@ namespace LatteMarche.Application.Latte.Services
                     dto.Allevamento_Lat = allevamento.Latitudine;
                     dto.Allevamento_Lng = allevamento.Longitudine;
                 }
-            }            
+            }
+
+            if (entity.IdTrasbordo.HasValue)
+                dto.Trasbordo = this.trasbordiService.Details(entity.IdTrasbordo.Value);
 
             return dto;
         }

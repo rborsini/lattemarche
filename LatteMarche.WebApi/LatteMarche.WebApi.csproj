@@ -335,7 +335,6 @@
     <Content Include="dist\prod\css\prelieviLatteEdit.css" />
     <Content Include="dist\prod\css\prelieviLatteIndex.css" />
     <Content Include="dist\prod\css\select2.min.css" />
-    <Content Include="dist\prod\css\utentiEdit.css" />
     <Content Include="dist\prod\dashboardIndex.html" />
     <Content Include="dist\prod\destinatariIndex.html" />
     <Content Include="dist\prod\dispositiviIndex.html" />
@@ -359,6 +358,8 @@
     <Content Include="dist\prod\js\ruoliIndex.js" />
     <Content Include="dist\prod\js\ruoliNew.js" />
     <Content Include="dist\prod\js\tipiLatteIndex.js" />
+    <Content Include="dist\prod\js\trasbordiEdit.js" />
+    <Content Include="dist\prod\js\trasbordiIndex.js" />
     <Content Include="dist\prod\js\utentiEdit.js" />
     <Content Include="dist\prod\js\utentiIndex.js" />
     <Content Include="dist\prod\laboratoriIndex.html" />
@@ -379,6 +380,8 @@
     <Content Include="dist\prod\ruoliIndex.html" />
     <Content Include="dist\prod\ruoliNew.html" />
     <Content Include="dist\prod\tipiLatteIndex.html" />
+    <Content Include="dist\prod\trasbordiEdit.html" />
+    <Content Include="dist\prod\trasbordiIndex.html" />
     <Content Include="dist\prod\utentiEdit.html" />
     <Content Include="dist\prod\utentiIndex.html" />
     <Content Include="favicon.ico" />
@@ -426,6 +429,8 @@
     <Content Include="Content\plugins\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="dist\prod\js\prelieviLatteEdit.js.map" />
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
+    <Content Include="dist\prod\js\trasbordiEdit.js.map" />
+    <Content Include="dist\prod\js\trasbordiIndex.js.map" />
     <None Include="Properties\PublishProfiles\Deploy_TEST.pubxml" />
     <None Include="Properties\PublishProfiles\Dev.pubxml" />
     <None Include="Properties\PublishProfiles\Dev_Local.pubxml" />
@@ -456,6 +461,8 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Prelievi\Edit.cshtml" />
     <Content Include="Views\Analisi\Produttori.cshtml" />
+    <Content Include="Views\Trasbordi\Edit.cshtml" />
+    <Content Include="Views\Trasbordi\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -503,6 +510,7 @@
     <Compile Include="Controllers_Api\GiriController.cs" />
     <Compile Include="Controllers_Api\TrasbordiController.cs" />
     <Compile Include="Controllers_Web\AnalisiController.cs" />
+    <Compile Include="Controllers_Web\TrasbordiController.cs" />
     <Compile Include="Filters\ApiCustomAuthorize.cs" />
     <Compile Include="Filters\MvcCustomAuthorize.cs" />
     <Compile Include="Filters\ViewItem.cs" />

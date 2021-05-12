@@ -42,6 +42,7 @@ namespace LatteMarche.Xamarin.Db.Services
                         prelievo.Titolo = allevamento.RagioneSociale;
                         prelievo.Quantita_lt = Math.Round(prelievo.Quantita_kg.Value / tipoLatte.FattoreConversione.Value, 1);
                         prelievo.Scomparto = scomparto;
+                        prelievo.IdTrasbordo = trasbordo.Id;
                         prelievo.Trasbordo = $"Trasbordo da {trasbordo.Targa_Origine} a {trasbordo.Targa_Destinazione} del {trasbordo.Data:dd-MM-yyyy}";
 
                         await context.Set<Prelievo>().AddAsync(prelievo);

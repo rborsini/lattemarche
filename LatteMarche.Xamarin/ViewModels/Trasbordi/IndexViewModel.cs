@@ -109,6 +109,7 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
             if(giriAperti.ToList().Any(g => g.IdTemplateGiro == item.Dto.IdTemplateGiro))
             {
                 await this.page.DisplayAlert("Info", "Non è possibile importare il trasbordo selezionato. Chiudere il giro locale e ripetere l'importazione.", "OK");
+                this.IsBusy = false;
                 return;
             }
 
@@ -137,7 +138,8 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
                 await Task.Run(() =>
                 {
                     this.trasbordiService.Import(item.Dto, scomparto).Wait();
-                    this.restService.ChiudiTrasbordo(item.Dto.Id);                    
+                    this.restService.ChiudiTrasbordo(item.Dto.Id);
+                    this.giriService.ArchiviaGiroPrecedenteAsync(item.Dto.IdTemplateGiro).Wait();
                 });
 
                 await this.page.DisplayAlert("Info", "Trasbordo importato", "OK");

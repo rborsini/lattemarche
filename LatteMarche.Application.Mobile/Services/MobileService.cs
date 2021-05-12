@@ -86,11 +86,17 @@ namespace LatteMarche.Application.Mobile.Services
             {
                 dispositivo.VersioneApp = deviceInfo.VersioneApp;
                 dispositivo.VersioneOS = deviceInfo.VersioneOS;
-                dispositivo.Latitudine = deviceInfo.Lat;
-                dispositivo.Longitudine = deviceInfo.Lng;
                 dispositivo.Marca = deviceInfo.Marca;
                 dispositivo.Modello = deviceInfo.Modello;
-                //dispositivo.Nome = deviceInfo.Nome;
+
+                if(deviceInfo.Lat.HasValue)
+                    dispositivo.Latitudine = deviceInfo.Lat;
+
+                if(deviceInfo.Lng.HasValue)
+                    dispositivo.Longitudine = deviceInfo.Lng;
+
+                if (deviceInfo.IdAutocisterna.HasValue)
+                    dispositivo.IdAutocisterna = deviceInfo.IdAutocisterna;                
 
                 this.dispositiviRepository.Update(dispositivo);
                 this.uow.SaveChanges();

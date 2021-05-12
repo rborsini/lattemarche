@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Location;
 using AutoMapper;
+using LatteMarche.Application.Trasbordi.Dtos;
 using LatteMarche.Common;
 using LatteMarche.Core.Models;
 using RB.Date;
@@ -95,6 +96,9 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
         public string DeviceId { get; set; }
 
         public int? IdTipoLatte { get; set; }
+        
+
+        public TrasbordoDto Trasbordo { get; set; }
 
         #endregion
 

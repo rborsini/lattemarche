@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Bogus;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using LatteMarche.Application.PrelieviLatte.Interfaces;
@@ -35,10 +36,13 @@ namespace LatteMarche.Tests.Services.Prelievi
         private IUnitOfWork uow;
 
         private IRepository<PrelievoLatte, int> prelieviRepository;
+        private IRepository<Trasbordo, long> trasbordiRepository;
 
         private IPrelieviLatteService prelieviLatteService;
 
         private DbCleaner dbCleaner;
+
+        private long ID_TRASBORDO;
 
         #endregion
 
@@ -54,6 +58,7 @@ namespace LatteMarche.Tests.Services.Prelievi
             this.dbCleaner = new DbCleaner(uow);
 
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
+            this.trasbordiRepository = this.uow.Get<Trasbordo, long>();
 
             this.prelieviLatteService = this.scope.Resolve<IPrelieviLatteService>();
         }
@@ -65,6 +70,23 @@ namespace LatteMarche.Tests.Services.Prelievi
         [SetUp]
         public void Init()
         {
+            // trasbordo
+            var trabordiFaker = new Faker<Trasbordo>("it")
+                .RuleFor(f => f.IMEI_Origine, f => f.Hacker.Abbreviation())
+                .RuleFor(f => f.Targa_Origine, f => "EA-005-NE")
+                .RuleFor(f => f.IMEI_Destinazione, f => f.Hacker.Abbreviation())
+                .RuleFor(f => f.Targa_Destinazione, f => "FA-259-AD")
+                .RuleFor(f => f.Lat, f => Convert.ToDecimal(f.Address.Latitude()))
+                .RuleFor(f => f.Lng, f => Convert.ToDecimal(f.Address.Longitude()))
+                .RuleFor(f => f.IdTemplateGiro, f => 1)
+                .RuleFor(f => f.Data, f => DateTime.Now);
+
+            var trasbordo = trabordiFaker.Generate();
+            this.trasbordiRepository.Add(trasbordo);
+            this.uow.SaveChanges();
+
+            this.ID_TRASBORDO = trasbordo.Id;
+
             // prelievi
             var prelievi = new List<PrelievoLatte>();
             for (int i = 1; i <= 10; i++)
@@ -74,6 +96,7 @@ namespace LatteMarche.Tests.Services.Prelievi
                         .With(p => p.IdTipoLatte = ID_TIPO_LATTE_QM)
                         .With(p => p.DataPrelievo = DateTime.Now)
                         .With(p => p.DataUltimaMungitura = DateTime.Now)
+                        .With(p => p.IdTrasbordo = ID_TRASBORDO)
                     .Build()
                 );
             }
@@ -100,6 +123,15 @@ namespace LatteMarche.Tests.Services.Prelievi
             // il caricamento dai prelievi sitra non deve troncare l'ora del prelievo e della mungitura
             prelieviDaInviare.All(p => p.DataPrelievo.Value.Hour != 0).Should().BeTrue();
             prelieviDaInviare.All(p => p.DataUltimaMungitura.Value.Hour != 0).Should().BeTrue();
+        }
+
+        [Test]
+        public void PrelieviLatteService_Details()
+        {
+            var prelievo = this.prelieviRepository.Query.FirstOrDefault();
+            var prelievoDto = this.prelieviLatteService.Details(prelievo.Id);
+
+            prelievoDto.Trasbordo.Should().NotBeNull();
         }
 
         #endregion
