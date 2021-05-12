@@ -109,6 +109,7 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
             if(giriAperti.ToList().Any(g => g.IdTemplateGiro == item.Dto.IdTemplateGiro))
             {
                 await this.page.DisplayAlert("Info", "Non è possibile importare il trasbordo selezionato. Chiudere il giro locale e ripetere l'importazione.", "OK");
+                this.IsBusy = false;
                 return;
             }
 
