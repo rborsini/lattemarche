@@ -335,7 +335,6 @@
     <Content Include="dist\prod\css\prelieviLatteEdit.css" />
     <Content Include="dist\prod\css\prelieviLatteIndex.css" />
     <Content Include="dist\prod\css\select2.min.css" />
-    <Content Include="dist\prod\css\utentiEdit.css" />
     <Content Include="dist\prod\dashboardIndex.html" />
     <Content Include="dist\prod\destinatariIndex.html" />
     <Content Include="dist\prod\dispositiviIndex.html" />

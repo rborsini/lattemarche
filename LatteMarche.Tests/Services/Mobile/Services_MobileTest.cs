@@ -36,6 +36,7 @@ namespace LatteMarche.Tests.Services.Mobile
         private IRepository<Allevamento, int> allevamentiRepository;
         private IRepository<Giro, int> giriRepository;
 
+        private IRepository<Autocisterna, int> autocisterneRepository;
         private IRepository<Acquirente, int> acquirentiRepository;
         private IRepository<Cessionario, int> cessionariRepository;
         private IRepository<Destinatario, int> destinatariRepository;
@@ -44,6 +45,7 @@ namespace LatteMarche.Tests.Services.Mobile
 
         private DbCleaner dbCleaner;
 
+        private Autocisterna autocisterna;
         private Acquirente acquirente;
         private Destinatario destinatario;
         private Utente trasportatore;
@@ -71,6 +73,7 @@ namespace LatteMarche.Tests.Services.Mobile
             this.allevamentiRepository = this.uow.Get<Allevamento, int>();
             this.giriRepository = this.uow.Get<Giro, int>();
 
+            this.autocisterneRepository = this.uow.Get<Autocisterna, int>();
             this.acquirentiRepository = this.uow.Get<Acquirente, int>();
             this.cessionariRepository = this.uow.Get<Cessionario, int>();
             this.destinatariRepository = this.uow.Get<Destinatario, int>();
@@ -85,6 +88,12 @@ namespace LatteMarche.Tests.Services.Mobile
         [SetUp]
         public void Init()
         {
+            this.autocisterna = Builder<Autocisterna>
+                .CreateNew()
+                .Build();
+
+            this.autocisterna = this.autocisterneRepository.Add(autocisterna);
+
             // utente trasportatore
             this.trasportatore = Builder<Utente>
                 .CreateNew()
@@ -283,7 +292,8 @@ namespace LatteMarche.Tests.Services.Mobile
                 IMEI = imei,
                 Lat = 12,
                 Lng = 42,
-                VersioneApp = "0.1"
+                VersioneApp = "0.1",
+                IdAutocisterna = this.autocisterna.Id
             };
 
             uploadDto.Prelievi = Builder<Application.Mobile.Dtos.PrelievoLatteDto>

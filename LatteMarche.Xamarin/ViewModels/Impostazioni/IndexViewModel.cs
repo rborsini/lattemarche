@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
 using LatteMarche.Xamarin.Interfaces;
+using LatteMarche.Xamarin.Rest.Dtos;
 using LatteMarche.Xamarin.Rest.Interfaces;
 using LatteMarche.Xamarin.Views.Synch;
 using LatteMarche.Xamarin.Zebra;
@@ -245,6 +246,9 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 if (this.autocisternaSelezionata != null)
                     this.autoCisterneService.SetDefaultAsync(this.autocisternaSelezionata.Id).Wait();
 
+                // aggiornamento backend
+                await Register(this.autocisternaSelezionata.Id);
+
                 await loadingDialog.DismissAsync();
 
                 if (this.autocisternaSelezionata != null)
@@ -259,6 +263,26 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
+        }
+
+        private async Task Register(int idAutocisterna)
+        {
+            VersionTracking.Track();
+            var restService = DependencyService.Get<IRestService>();
+            var device = DependencyService.Get<IDevice>();
+
+            var dispositivoDto = new DispositivoDto()
+            {
+                Id = device.GetIdentifier(),
+                VersioneApp = VersionTracking.CurrentVersion,
+                VersioneOS = DeviceInfo.VersionString,
+                Marca = DeviceInfo.Manufacturer,
+                Modello = DeviceInfo.Model,
+                Nome = DeviceInfo.Name,
+                IdAutocisterna = idAutocisterna
+            };
+
+            await restService.Register(dispositivoDto);
         }
 
         private async Task ExecuteUpdateCommand()
