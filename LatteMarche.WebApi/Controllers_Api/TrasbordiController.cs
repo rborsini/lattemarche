@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Application.Mobile.Dtos;
 using LatteMarche.Application.Mobile.Interfaces;
+using LatteMarche.Application.Trasbordi.Dtos;
 using LatteMarche.WebApi.Filters;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,19 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Fields
 
-        private ITrasbordiService trasbordiService;
+        private LatteMarche.Application.Mobile.Interfaces.ITrasbordiService trasbordiMobileService;
+        private LatteMarche.Application.Trasbordi.Interfaces.ITrasbordiService trasbordiService;
 
         #endregion
 
         #region Constructor
 
-        public TrasbordiController(ITrasbordiService trasbordiService)
+        public TrasbordiController(
+            LatteMarche.Application.Mobile.Interfaces.ITrasbordiService trasbordiMobileService,
+            LatteMarche.Application.Trasbordi.Interfaces.ITrasbordiService trasbordiService
+            )
         {
+            this.trasbordiMobileService = trasbordiMobileService;
             this.trasbordiService = trasbordiService;
         }
 
@@ -36,12 +42,35 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Methods
 
+        [ViewItem(nameof(Search), PAGE_NAME, "Ricerca")]
+        [HttpGet]
+        public IHttpActionResult Search([FromUri] TrasbordiSearchDto searchDto)
+        {
+            try
+            {
+                var list = this.trasbordiService.Search(searchDto);
+                return Ok(list);
+            }
+            catch (Exception exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        [ViewItem(nameof(Details), PAGE_NAME, "Dettaglio")]
+        [HttpGet]
+        public IHttpActionResult Details(int id)
+        {
+            var dto = this.trasbordiService.Details(id);
+            return Ok(dto);
+        }
+
         [ViewItem(nameof(Push), PAGE_NAME, "Caricamento")]
         [HttpPost]
-        public IHttpActionResult Push([FromBody] TrasbordoDto trasbordo)
+        public IHttpActionResult Push([FromBody] LatteMarche.Application.Mobile.Dtos.TrasbordoDto trasbordo)
         {
 
-            var dto = this.trasbordiService.Push(trasbordo);
+            var dto = this.trasbordiMobileService.Push(trasbordo);
             return Ok(dto);
 
         }
@@ -51,7 +80,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         public IHttpActionResult Pull(string imei)
         {
 
-            var model = this.trasbordiService.Pull(imei);
+            var model = this.trasbordiMobileService.Pull(imei);
             return Ok(model);
 
         }
@@ -60,7 +89,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Close([FromUri] long id)
         {
-            this.trasbordiService.Close(id);
+            this.trasbordiMobileService.Close(id);
             return Ok();
 
         }

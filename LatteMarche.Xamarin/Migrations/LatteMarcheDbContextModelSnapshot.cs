@@ -296,6 +296,9 @@ namespace LatteMarche.Xamarin.Migrations
                     b.Property<int?>("IdGiro")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("IdTrasbordo")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("Lat")
                         .HasColumnType("TEXT");
 

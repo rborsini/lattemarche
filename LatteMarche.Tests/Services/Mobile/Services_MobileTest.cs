@@ -20,6 +20,7 @@ namespace LatteMarche.Tests.Services.Mobile
         private const int ID_PROFILO_TRASPORTATORE = 5;         // Trasportatore
         private const int ID_PROFILO_ALLEVATORE = 3;            // Allevatore
         private const int ID_TIPO_LATTE_QM = 1;                 // QM Alta Qualità
+        private const long ID_TRASBORDO = 12;
 
         #endregion
 
@@ -292,6 +293,7 @@ namespace LatteMarche.Tests.Services.Mobile
                         .With(p => p.DataConsegna = DateTime.Now)
                         .With(p => p.DataPrelievo = DateTime.Now)
                         .With(p => p.DataUltimaMungitura = DateTime.Now)
+                        .With(p => p.IdTrasbordo = ID_TRASBORDO)
                 .Build()
                 .ToList();
 
@@ -301,6 +303,7 @@ namespace LatteMarche.Tests.Services.Mobile
             Assert.AreEqual(3, prelievi.Count);
 
             Assert.AreEqual(ID_TIPO_LATTE_QM, prelievi[0].IdTipoLatte.Value);
+            Assert.AreEqual(ID_TRASBORDO, prelievi[0].IdTrasbordo.Value);
 
             Assert.AreEqual(imei, prelievi.First().DeviceId);
 

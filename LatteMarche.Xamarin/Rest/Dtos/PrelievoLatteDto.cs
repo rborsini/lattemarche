@@ -26,6 +26,7 @@ namespace LatteMarche.Xamarin.Rest.Dtos
         public int IdAutocisterna { get; set; }
         public int IdGiro { get; set; }
 
+        public long? IdTrasbordo { get; set; }
 
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }

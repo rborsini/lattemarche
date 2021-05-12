@@ -197,6 +197,7 @@
     <Compile Include="Services\Dispositivi\Services_DispositiviTest.cs" />
     <Compile Include="Services\Mobile\Services_MobileTest.cs" />
     <Compile Include="Services\Prelievi\Services_PrelieviTest.cs" />
+    <Compile Include="Services\Mobile\Services_TrasbordiTest.cs" />
     <Compile Include="Services\Trasbordi\Services_TrasbordiTest.cs" />
     <Compile Include="Services\Utenti\Services_AcquirenteTest.cs" />
     <Compile Include="Services\Utenti\Services_AllevatoreTest.cs" />

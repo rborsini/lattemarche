@@ -286,6 +286,11 @@
     <Compile Include="AnalisiLatte\Dtos\LaboratorioAnalisiDto.cs" />
     <Compile Include="AnalisiLatte\Interfaces\ILaboratoriAnalisiService.cs" />
     <Compile Include="AnalisiLatte\Services\LaboratoriAnalisiService.cs" />
+    <Compile Include="Trasbordi\Dtos\TrasbordiSearchDto.cs" />
+    <Compile Include="Trasbordi\Dtos\TrasbordoDto.cs" />
+    <Compile Include="Trasbordi\Interfaces\ITrasbordiService.cs" />
+    <Compile Include="Trasbordi\Services\TrasbordiService.cs" />
+    <Compile Include="Trasbordi\TrasbordiProfile.cs" />
     <Compile Include="Trasportatori\Interfaces\ITrasportatoriService.cs" />
     <Compile Include="Trasportatori\Services\TrasportatoriService.cs" />
     <Compile Include="Utenti\Dtos\LaboratorioDto.cs" />

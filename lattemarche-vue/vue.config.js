@@ -46,6 +46,12 @@ module.exports = {
         },
         tipiLatteIndex: {            
             entry: 'src/pages/tipiLatte/index.ts'
+        },           
+        trasbordiEdit: {            
+            entry: 'src/pages/trasbordi/edit.ts'
+        },  
+        trasbordiIndex: {            
+            entry: 'src/pages/trasbordi/index.ts'
         },                                                                                                                         
         utentiEdit: {            
             entry: 'src/pages/utenti/edit.ts'

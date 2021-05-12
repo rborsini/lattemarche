@@ -1,5 +1,6 @@
 ﻿import $ from 'jquery';
 import { BaseSearchModel } from './baseSearch.model';
+import { Trasbordo } from './trasbordo.model';
 
 export class PrelievoLatte {
     public DataConsegna: string = "";
@@ -38,6 +39,8 @@ export class PrelievoLatte {
     public DistanzaAllevamento_Str: string = "";
     public DeviceId: string = "";
     public CodiceSitra: string = "";
+
+    public Trasbordo: Trasbordo = new Trasbordo();
 }
 
 

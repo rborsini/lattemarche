@@ -40,6 +40,8 @@ using LatteMarche.Application.Trasportatori.Interfaces;
 using LatteMarche.Application.Trasportatori.Services;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using WeCode.Application;
+using LatteMarche.Application.Trasbordi.Interfaces;
+using LatteMarche.Application.Trasbordi.Services;
 
 namespace LatteMarche.Application
 {
@@ -82,6 +84,7 @@ namespace LatteMarche.Application
             RegisterService<SynchService, ISynchService>(builder);
             RegisterService<TipiLatteService, ITipiLatteService>(builder);
             RegisterService<TipiProfiloService, ITipiProfiloService>(builder);
+            RegisterService<TrasbordiService, ITrasbordiService>(builder);
             RegisterService<TrasportatoriService, ITrasportatoriService>(builder);
             RegisterService<UtentiService, IUtentiService>(builder);
             RegisterService<WidgetsService, IWidgetsService>(builder);
