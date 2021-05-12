@@ -21,9 +21,6 @@ namespace LatteMarche.Tests.Services.Mobile
         private const int ID_PROFILO_ALLEVATORE = 3;            // Allevatore
         private const int ID_TIPO_LATTE_QM = 1;                 // QM Alta Qualità
 
-        private const int ID_ACQUIRENTE_DEFAULT = 123;
-        private const int ID_DESTINATARIO_DEFAULT = 321;
-
         #endregion
 
         #region Fields
@@ -46,6 +43,8 @@ namespace LatteMarche.Tests.Services.Mobile
 
         private DbCleaner dbCleaner;
 
+        private Acquirente acquirente;
+        private Destinatario destinatario;
         private Utente trasportatore;
         private Utente allevatore;
         private Allevamento allevamento;
@@ -116,7 +115,7 @@ namespace LatteMarche.Tests.Services.Mobile
             this.allevamento = this.allevamentiRepository.Add(this.allevamento);
 
             // acquirente
-            var acquirente = Builder<Acquirente>
+            this.acquirente = Builder<Acquirente>
                 .CreateNew()
                     .With(u => u.IdComune = ID_COMUNE)
                     .With(u => u.Abilitato = true)
@@ -126,7 +125,7 @@ namespace LatteMarche.Tests.Services.Mobile
 
             // cessionario
             var cessionario = Builder<Cessionario>
-                .CreateNew()
+                .CreateNew()                    
                     .With(u => u.IdComune = ID_COMUNE)
                     .With(u => u.Abilitato = true)
                 .Build();
@@ -134,7 +133,7 @@ namespace LatteMarche.Tests.Services.Mobile
             this.cessionariRepository.Add(cessionario);
 
             // destinatario
-            var destinatario = Builder<Destinatario>
+            this.destinatario = Builder<Destinatario>
                 .CreateNew()
                     .With(u => u.IdComune = ID_COMUNE)
                     .With(u => u.Abilitato = true)
@@ -202,8 +201,8 @@ namespace LatteMarche.Tests.Services.Mobile
             var prelievi = new List<PrelievoLatte>();
             for (int i = 1; i <= 100; i++)
             {
-                var idAcquirente = i % 4 == 0 ? i : ID_ACQUIRENTE_DEFAULT;
-                var idDestinatario = i % 4 == 0 ? i : ID_DESTINATARIO_DEFAULT;
+                var idAcquirente = i % 4 == 0 ? i : this.acquirente.Id;
+                var idDestinatario = i % 4 == 0 ? i : this.destinatario.Id;
 
                 prelievi.Add(Builder<PrelievoLatte>
                     .CreateNew()
@@ -240,8 +239,8 @@ namespace LatteMarche.Tests.Services.Mobile
             Assert.IsNotNull(allevamentoDto.Latitudine);
             Assert.IsNotNull(allevamentoDto.Longitudine);
 
-            Assert.AreEqual(ID_ACQUIRENTE_DEFAULT, allevamentoDto.IdAcquirenteDefault);
-            Assert.AreEqual(ID_DESTINATARIO_DEFAULT, allevamentoDto.IdDestinatarioDefault);
+            Assert.AreEqual(this.acquirente.Id, allevamentoDto.IdAcquirenteDefault);
+            Assert.AreEqual(this.destinatario.Id, allevamentoDto.IdDestinatarioDefault);
 
             Assert.AreEqual(5.95, allevamentoDto.Quantita_Min);         // 5° percentile
             Assert.AreEqual(95.05, allevamentoDto.Quantita_Max);        // 5° percentile

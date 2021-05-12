@@ -31,7 +31,7 @@ namespace LatteMarche.Application.PrelieviLatte.Interfaces
         /// Caricamento 
         /// </summary>
         /// <returns></returns>
-        List<V_PrelievoLatte> Sitra(DateTime data);
+        List<PrelievoLatteDto> Sitra(DateTime data);
 
         /// <summary>
         /// Pull prelievi per sincronizzazione
