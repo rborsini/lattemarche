@@ -138,7 +138,8 @@ namespace LatteMarche.Xamarin.ViewModels.Trasbordi
                 await Task.Run(() =>
                 {
                     this.trasbordiService.Import(item.Dto, scomparto).Wait();
-                    this.restService.ChiudiTrasbordo(item.Dto.Id);                    
+                    this.restService.ChiudiTrasbordo(item.Dto.Id);
+                    this.giriService.ArchiviaGiroPrecedenteAsync(item.Dto.IdTemplateGiro).Wait();
                 });
 
                 await this.page.DisplayAlert("Info", "Trasbordo importato", "OK");
