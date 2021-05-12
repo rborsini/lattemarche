@@ -45,6 +45,9 @@ namespace LatteMarche.Tests.Services.Mobile
 
         private DbCleaner dbCleaner;
 
+        private int idAcquirenteDefault;
+        private int idDestinatarioDefault;
+
         private Autocisterna autocisterna;
         private Acquirente acquirente;
         private Destinatario destinatario;
