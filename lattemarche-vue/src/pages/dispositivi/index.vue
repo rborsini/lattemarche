@@ -4,6 +4,13 @@
     <!-- waiter -->
     <waiter ref="waiter"></waiter>
 
+		<!-- Pannello notifica rimozione -->
+		<notification-dialog ref="removedDialog" :title="'Conferma rimozione'" :message="'Dispositivo rimosso correttamente'" v-on:ok="reload()"></notification-dialog>
+
+		<!-- Pannello modale conferma eliminazione -->
+		<confirm-dialog ref="confirmDeleteDialog" :title="'Conferma eliminazione'" :message="'Sei sicuro di voler rimuovere il dispositivo selezionato?'" v-on:confirmed="onRemove()"></confirm-dialog>
+
+
     <!-- Pannello editazione dettaglio -->
     <editazione-dispositivo-modal
       ref="editazioneDispositivoModal"
@@ -32,6 +39,7 @@
         <th>Lat</th>
         <th>Lng</th>
         <th></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -44,9 +52,12 @@ import Waiter from "../../components/waiter.vue";
 
 import DataTable from "../../components/dataTable.vue";
 import EditazioneDispositivoModal from "../dispositivi/edit.vue";
+import ConfirmDialog from "../../components/confirmDialog.vue";
+import NotificationDialog from "../../components/notificationDialog.vue";
 
 import { Dispositivo } from "../../models/dispositivo.model";
 import { DispositiviService } from "../../services/dispositivi.service";
+import { UrlService } from "@/services/url.service";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -60,12 +71,16 @@ declare module "vue/types/vue" {
   components: {
     DataTable,
     Waiter,
+		NotificationDialog,
+		ConfirmDialog,
     EditazioneDispositivoModal
   }
 })
 export default class DispositiviIndexPage extends Vue {
   $refs: any = {
     editazioneDispositivoModal: Vue,
+    confirmDeleteDialog: Vue,
+    removedDialog: Vue,
     waiter: Vue,
     table: Vue
   };
@@ -75,6 +90,7 @@ export default class DispositiviIndexPage extends Vue {
   public tableOptions: any = {};
   public dispositivi: Dispositivo[] = [];
   public dispositivo: Dispositivo = new Dispositivo();
+  public idDispositivo: string = "";
 
   constructor() {
     super();
@@ -90,6 +106,13 @@ export default class DispositiviIndexPage extends Vue {
     this.$refs.waiter.open();
     this.$refs.table.load();
   }
+
+	// rimozione dispositivo
+	public onRemove() {
+		this.dispositiviService.delete(this.idDispositivo).then((response) => {
+			this.$refs.removedDialog.open();
+		});
+	}
 
   // inizializzazione tabella
   private initTable(): void {
@@ -161,17 +184,24 @@ export default class DispositiviIndexPage extends Vue {
     options.columns.push({
       render: function(data: any, type: any, row: any) {
         var html = '<div class="text-center">';
-        html +=
-          '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' +
-          row.Id +
-          '" ><i class="far fa-edit"></i></a>';
+        html += '<a class="edit" title="modifica" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-edit"></i></a>';
         html += "</div>";
-
         return html;
       },
       className: "edit-column",
       orderable: false
     });
+
+		options.columns.push({
+			render: function(data: any, type: any, row: any) {
+				var html = '<div class="text-center">';
+				html += '<a class="pl-3 delete" title="Elimina" style="cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+				html += "</div>";
+				return html;
+			},
+			className: "remove-column",
+			orderable: false,
+		});
 
     this.tableOptions = options;
   }
@@ -190,6 +220,13 @@ export default class DispositiviIndexPage extends Vue {
         this.$refs.editazioneDispositivoModal.open();
       });
     });
+
+		$(".delete").click((event) => {
+			var element = $(event.currentTarget);
+			this.idDispositivo = $(element).data("row-id");
+
+			this.$refs.confirmDeleteDialog.open();
+		});    
   }
 
   // evento chiusura popup
@@ -197,5 +234,10 @@ export default class DispositiviIndexPage extends Vue {
     this.$refs.table.load();
     // window.location = window.location;
   }
+
+  // reload della pagina sullo stesso id
+  public reload() {
+      UrlService.reload();
+  }  
 }
 </script>

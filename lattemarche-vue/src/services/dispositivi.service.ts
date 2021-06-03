@@ -16,4 +16,8 @@ export class DispositiviService {
         return axios.put('/api/dispositivi/update', dispositivo);
     }
 
+    public delete(id: string): AxiosPromise<Dispositivo> {
+        return axios.delete('/api/dispositivi/delete?id=' + id);
+    }
+
 }

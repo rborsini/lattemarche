@@ -67,6 +67,15 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         }
 
+        [ViewItem(nameof(Delete), "Dispositivi", "Rimozione")]
+        [HttpDelete]
+        public IHttpActionResult Delete(string id)
+        {
+
+            this.dispositiviService.Delete(id);
+            return Ok();
+
+        }
 
         #endregion
 
