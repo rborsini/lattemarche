@@ -48,6 +48,7 @@ namespace LatteMarche.Tests.Services.Mobile
         private int idAcquirenteDefault;
         private int idDestinatarioDefault;
 
+        private List<Autocisterna> autocisterne;
         private Autocisterna autocisterna;
         private Acquirente acquirente;
         private Destinatario destinatario;
@@ -91,12 +92,6 @@ namespace LatteMarche.Tests.Services.Mobile
         [SetUp]
         public void Init()
         {
-            this.autocisterna = Builder<Autocisterna>
-                .CreateNew()
-                .Build();
-
-            this.autocisterna = this.autocisterneRepository.Add(autocisterna);
-
             // utente trasportatore
             this.trasportatore = Builder<Utente>
                 .CreateNew()
@@ -106,6 +101,17 @@ namespace LatteMarche.Tests.Services.Mobile
                 .Build();
 
             this.trasportatore = this.utentiRepository.Add(trasportatore);
+
+            // autocisterne
+            this.autocisterne = Builder<Autocisterna>
+                .CreateListOfSize(2)
+                    .All()
+                        .With(a => a.IdTrasportatore = this.trasportatore.Id)
+                .Build()
+                .ToList();
+
+            this.autocisterneRepository.Add(this.autocisterne);
+            this.autocisterna = autocisterne.First();
 
             // utente allevatore
             this.allevatore = Builder<Utente>

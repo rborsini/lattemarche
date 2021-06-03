@@ -60,7 +60,8 @@ namespace LatteMarche.Xamarin.Rest.Services
 
         public async Task<DownloadDto> DownloadDb(string imei)
         {
-            var client = new RestClient($"{this.endpoint}/api/Mobile/Download?imei={imei}");
+            var url = $"{this.endpoint}/api/Mobile/Download?imei={imei}";
+            var client = new RestClient(url);
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = await client.ExecuteAsync(request);

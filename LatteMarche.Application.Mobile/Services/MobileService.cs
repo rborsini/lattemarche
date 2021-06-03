@@ -116,78 +116,76 @@ namespace LatteMarche.Application.Mobile.Services
         /// <returns></returns>
         public DownloadDto Download(string id)
         {
-            DownloadDto db = null;
             var dispositivo = this.dispositiviRepository.GetById(id);
+            if (dispositivo == null || !dispositivo.Attivo)
+                return null;
+            
+            var db = new DownloadDto();
 
-            if (dispositivo != null && dispositivo.Attivo)
+            if (dispositivo.IdTrasportatore.HasValue)
             {
-                db = new DownloadDto();
+                var idTrasportatore = dispositivo.IdTrasportatore.Value;
 
-                if (dispositivo.IdTrasportatore.HasValue)
+                db.Trasportatore = this.mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
+                db.Autocisterna = this.mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
+                db.Autocisterne = this.mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
+
+                db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
+
+                foreach (var giro in db.Giri)
                 {
-                    var idTrasportatore = dispositivo.IdTrasportatore.Value;
+                    var giroFull = this.giriRepository.GetById(giro.Id);
 
-                    db.Trasportatore = this.mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
-                    db.Autocisterna = this.mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
-                    db.Autocisterne = this.mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
+                    var allevamentiXGiro = giroFull.Allevamenti.Where(a => a.Priorita.HasValue && a.Allevamento.IdUtente.HasValue).ToList();
 
-                    db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
-
-                    foreach (var giro in db.Giri)
+                    foreach (var axg in allevamentiXGiro)
                     {
-                        var giroFull = this.giriRepository.GetById(giro.Id);
+                        var allevamento = axg.Allevamento;
+                        var utente = allevamento != null ? allevamento.Utente : null;
+                        var comune = utente != null ? utente.Comune : null;
 
-                        var allevamentiXGiro = giroFull.Allevamenti.Where(a => a.Priorita.HasValue && a.Allevamento.IdUtente.HasValue).ToList();
+                        var prelievi = GetPrelievi(allevamento.Id, 100);
+                        var temperature = prelievi.Where(p => p.Temperatura.HasValue).Select(p => p.Temperatura.Value).ToArray();
+                        var quantita = prelievi.Where(p => p.Quantita.HasValue).Select(p => p.Quantita.Value).ToArray();
 
-                        foreach (var axg in allevamentiXGiro)
+                        giro.Allevamenti.Add(new AllevamentoDto()
                         {
-                            var allevamento = axg.Allevamento;
-                            var utente = allevamento != null ? allevamento.Utente : null;
-                            var comune = utente != null ? utente.Comune : null;
+                            IdAllevamento = allevamento.Id,
+                            IdTemplateGiro = giro.Id,
+                            IdTipoLatte = utente != null ? utente.IdTipoLatte : (int?)null,
+                            Indirizzo = allevamento != null ? allevamento.IndirizzoAllevamento.Trim() : "",
+                            CAP = comune != null ? comune.CAP.Trim() : "",
+                            Comune = comune != null ? comune.Descrizione.Trim() : "",
+                            Provincia = comune != null ? comune.Provincia : "",
+                            Priorita = axg.Priorita,
+                            P_IVA = utente != null && !String.IsNullOrEmpty(utente.PivaCF) ? utente.PivaCF.Trim() : "",
+                            RagioneSociale = utente != null ? utente.RagioneSociale.Trim() : "",
+                            Latitudine = allevamento?.Latitudine,
+                            Longitudine = allevamento?.Longitudine,
+                            IdAcquirenteDefault = GetAcquirenteDefault(prelievi),
+                            IdCessionarioDefault = GetCessionarioDefault(prelievi),
+                            IdDestinatarioDefault = GetDestinatarioDefault(prelievi),
+                            Temperatura_Min = GetPercentile(temperature, 5),
+                            Temperatura_Max = GetPercentile(temperature, 95),
+                            Quantita_Min = GetPercentile(quantita, 5),
+                            Quantita_Max = GetPercentile(quantita, 95)
+                        });
 
-                            var prelievi = GetPrelievi(allevamento.Id, 100);
-                            var temperature = prelievi.Where(p => p.Temperatura.HasValue).Select(p => p.Temperatura.Value).ToArray();
-                            var quantita = prelievi.Where(p => p.Quantita.HasValue).Select(p => p.Quantita.Value).ToArray();
-
-                            giro.Allevamenti.Add(new AllevamentoDto()
-                            {
-                                IdAllevamento = allevamento.Id,
-                                IdTemplateGiro = giro.Id,
-                                IdTipoLatte = utente != null ? utente.IdTipoLatte : (int?)null,
-                                Indirizzo = allevamento != null ? allevamento.IndirizzoAllevamento.Trim() : "",
-                                CAP = comune != null ? comune.CAP.Trim() : "",
-                                Comune = comune != null ? comune.Descrizione.Trim() : "",
-                                Provincia = comune != null ? comune.Provincia : "",
-                                Priorita = axg.Priorita,
-                                P_IVA = utente != null && !String.IsNullOrEmpty(utente.PivaCF) ? utente.PivaCF.Trim() : "",
-                                RagioneSociale = utente != null ? utente.RagioneSociale.Trim() : "",
-                                Latitudine = allevamento?.Latitudine,
-                                Longitudine = allevamento?.Longitudine,
-                                IdAcquirenteDefault = GetAcquirenteDefault(prelievi),
-                                IdCessionarioDefault = GetCessionarioDefault(prelievi),
-                                IdDestinatarioDefault = GetDestinatarioDefault(prelievi),
-                                Temperatura_Min = GetPercentile(temperature, 5),
-                                Temperatura_Max = GetPercentile(temperature, 95),
-                                Quantita_Min = GetPercentile(quantita, 5),
-                                Quantita_Max = GetPercentile(quantita, 95)
-                            });
-
-                        }
                     }
-
-                    db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
-                    db.Acquirenti = this.mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
-                    db.Destinatari = this.mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
-                    db.Cessionari = this.mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
-
                 }
 
-                dispositivo.DataUltimoDownload = DateTime.UtcNow;
-                this.dispositiviRepository.Update(dispositivo);
-                this.uow.SaveChanges();
+                db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
+                db.Acquirenti = this.mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
+                db.Destinatari = this.mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
+                db.Cessionari = this.mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
 
-                PushNotificationsService.Instance.Push(id);
             }
+
+            dispositivo.DataUltimoDownload = DateTime.UtcNow;
+            this.dispositiviRepository.Update(dispositivo);
+            this.uow.SaveChanges();
+
+            PushNotificationsService.Instance.Push(id);
 
             return db;
         }

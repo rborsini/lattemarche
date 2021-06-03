@@ -300,10 +300,11 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                         var dto = restService.DownloadDb(device.GetIdentifier()).Result;
                         sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
 
-                        this.UltimoAggiornamento = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss}";
+                        this.UltimoAggiornamento = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss}";                        
 
                         Analytics.TrackEvent("Download avvenuto", new Dictionary<string, string>() { { "dto", JsonConvert.SerializeObject(dto) } });
                         SentrySdk.CaptureMessage("Download avvenuto", Sentry.Protocol.SentryLevel.Info);
+                        
                     }
                     catch (Exception exc)
                     {
@@ -312,6 +313,8 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                     }
 
                 });
+
+                await this.ExecuteLoadCommand();
 
                 await loadingDialog.DismissAsync();
                 await this.page.DisplayAlert("Info", "Aggiornamento avvenuto con successo", "OK");
