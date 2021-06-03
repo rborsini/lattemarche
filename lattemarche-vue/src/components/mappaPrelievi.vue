@@ -34,6 +34,14 @@
                         label: 'A'
                     });
 
+                    if(p.Trasbordo) {
+                        new google.maps.Marker({
+                            position: { lat: p.Trasbordo.Lat, lng: p.Trasbordo.Lng },
+                            map,
+                            label: 'T'
+                        }); 
+                    }
+
                 }
             }
 

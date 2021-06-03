@@ -244,7 +244,19 @@
                     <div class="col-4">
                       <input disabled type="number" class="form-control" v-model="prelievoLatte.Allevamento_Lng" />
                     </div>                        
-                  </div>                                    
+                  </div>
+
+                  <div v-if="prelievoLatte.Trasbordo" class="row pt-1">
+                    <label class="col-2"><b>Trasbordo</b></label>
+                    <label class="col-1">Lat</label>
+                    <div class="col-4">
+                      <input disabled type="number" class="form-control" v-model="prelievoLatte.Trasbordo.Lat" />
+                    </div>
+                    <label class="col-1">Lng</label>
+                    <div class="col-4">
+                      <input disabled type="number" class="form-control" v-model="prelievoLatte.Trasbordo.Lng" />
+                    </div>                        
+                  </div>                                                 
                 </div>
                 
                 <div class="col-5 row pt-3">
