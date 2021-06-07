@@ -22,8 +22,8 @@ namespace LatteMarche.Core.Models
         public DateTime Data { get; set; }
         public int IdTemplateGiro { get; set; }
         public string Prelievi_JSON { get; set; }
-        public decimal? Lat { get; set; }
-        public decimal? Lng { get; set; }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
         public bool Chiuso { get; set; }
     }
 }

@@ -76,8 +76,8 @@ namespace LatteMarche.Tests.Services.Prelievi
                 .RuleFor(f => f.Targa_Origine, f => "EA-005-NE")
                 .RuleFor(f => f.IMEI_Destinazione, f => f.Hacker.Abbreviation())
                 .RuleFor(f => f.Targa_Destinazione, f => "FA-259-AD")
-                .RuleFor(f => f.Lat, f => Convert.ToDecimal(f.Address.Latitude()))
-                .RuleFor(f => f.Lng, f => Convert.ToDecimal(f.Address.Longitude()))
+                .RuleFor(f => f.Lat, f => Convert.ToDouble(f.Address.Latitude()))
+                .RuleFor(f => f.Lng, f => Convert.ToDouble(f.Address.Longitude()))
                 .RuleFor(f => f.IdTemplateGiro, f => 1)
                 .RuleFor(f => f.Data, f => DateTime.Now);
 

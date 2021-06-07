@@ -187,13 +187,9 @@
     <Compile Include="Migrations\202102231601160_AggiuntaColonna_AnalisiLatte_Categoria.designer.cs">
       <DependentUpon>202102231601160_AggiuntaColonna_AnalisiLatte_Categoria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202103010835155_AggiuntaTabella_Trasbordi.cs" />
-    <Compile Include="Migrations\202103010835155_AggiuntaTabella_Trasbordi.designer.cs">
-      <DependentUpon>202103010835155_AggiuntaTabella_Trasbordi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs" />
-    <Compile Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.designer.cs">
-      <DependentUpon>202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs</DependentUpon>
+    <Compile Include="Migrations\202106071451579_AggiuntaTabella_Trasbordi.cs" />
+    <Compile Include="Migrations\202106071451579_AggiuntaTabella_Trasbordi.designer.cs">
+      <DependentUpon>202106071451579_AggiuntaTabella_Trasbordi.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,11 +277,8 @@
     <EmbeddedResource Include="Migrations\202102231601160_AggiuntaColonna_AnalisiLatte_Categoria.resx">
       <DependentUpon>202102231601160_AggiuntaColonna_AnalisiLatte_Categoria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103010835155_AggiuntaTabella_Trasbordi.resx">
-      <DependentUpon>202103010835155_AggiuntaTabella_Trasbordi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.resx">
-      <DependentUpon>202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106071451579_AggiuntaTabella_Trasbordi.resx">
+      <DependentUpon>202106071451579_AggiuntaTabella_Trasbordi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

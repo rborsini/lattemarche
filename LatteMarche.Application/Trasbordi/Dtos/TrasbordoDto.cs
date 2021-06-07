@@ -17,8 +17,8 @@ namespace LatteMarche.Application.Trasbordi.Dtos
         public int IdTemplateGiro { get; set; }
         public string DenominazioneGiro { get; set; }
 
-        public decimal? Lat { get; set; }
-        public decimal? Lng { get; set; }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
 
         public DateTime Data { get; set; }
 

@@ -7,13 +7,13 @@ namespace LatteMarche.EntityFramework.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AggiuntaColonna_Prelievi_IdTrasbordo : IMigrationMetadata
+    public sealed partial class AggiuntaTabella_Trasbordi : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AggiuntaColonna_Prelievi_IdTrasbordo));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AggiuntaTabella_Trasbordi));
         
         string IMigrationMetadata.Id
         {
-            get { return "202105120945089_AggiuntaColonna_Prelievi_IdTrasbordo"; }
+            get { return "202106071451579_AggiuntaTabella_Trasbordi"; }
         }
         
         string IMigrationMetadata.Source

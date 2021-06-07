@@ -19,16 +19,18 @@
                         Data = c.DateTime(nullable: false),
                         IdTemplateGiro = c.Int(nullable: false),
                         Prelievi_JSON = c.String(),
-                        Lat = c.Decimal(precision: 18, scale: 2),
-                        Lng = c.Decimal(precision: 18, scale: 2),
+                        Lat = c.Double(),
+                        Lng = c.Double(),
                         Chiuso = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
+            AddColumn("dbo.PRELIEVO_LATTE", "ID_TRASBORDO", c => c.Long());
         }
         
         public override void Down()
         {
+            DropColumn("dbo.PRELIEVO_LATTE", "ID_TRASBORDO");
             DropTable("dbo.TRASBORDI");
         }
     }
