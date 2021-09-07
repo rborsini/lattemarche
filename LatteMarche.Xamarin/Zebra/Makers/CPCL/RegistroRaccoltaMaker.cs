@@ -164,11 +164,12 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
 
             // intestazione
             y += 30;
-            cmd += $"TEXT {p} {x} {y} {PadRight("SCOMP", 7, ' ')} {PadRight("PRODUTTORE", 30, ' ')} {PadRight("TIPO", 10, ' ')} {PadRight("kg", 5, ' ')} {PadRight("ORA", 11, ' ')} {PadRight("Firma", 16, ' ')} {PadRight("Firma", 16, ' ')} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("SCOMP", 7, ' ')} {PadRight("PRODUTTORE", 30, ' ')} {PadRight("TIPO", 10, ' ')} {PadRight("lt", 5, ' ')} {PadRight("kg", 5, ' ')} {PadRight("ORA", 11, ' ')} {PadRight("Firma", 13, ' ')} {PadRight("Firma", 13, ' ')} \r\n";
             y += 25;
-            cmd += $"TEXT {p} {x} {y} {PadRight("PARTO", 7, ' ')} {PadRight("P.IVA-PROV.", 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight("", 11, ' ')} {PadRight("Prod\\Del", 16, ' ')} {PadRight("Conducente", 16, ' ')} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("PARTO", 7, ' ')} {PadRight("P.IVA-PROV.", 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight("", 5, ' ')} {PadRight("", 11, ' ')} {PadRight("Prod\\Del", 13, ' ')} {PadRight("Conducente", 13, ' ')} \r\n";
 
-            decimal qtaTot = 0;
+            decimal qtaLtTot = 0;
+            decimal qtaKgTot = 0;
             var trasbordi = registro.Items.Select(p => p.Trasbordo).Where(t => !string.IsNullOrEmpty(t)).Distinct().ToList();
 
             foreach (var prelievo in registro.Items.OrderBy(p => p.Scomparto))
@@ -186,26 +187,30 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
                 var allevamento = prelievo.Allevamento;
                 var tipoLatte = prelievo.TipoLatte;
 
+                var qtaLt = prelievo.Quantita_kg.HasValue && tipoLatte.FattoreConversione.HasValue ? prelievo.Quantita_kg.Value / tipoLatte.FattoreConversione.Value : (decimal?)null;
+
                 var scomparto_1 = scomparto.Length > 7 ? scomparto.Substring(0, 7) : scomparto;
                 var scomparto_2 = scomparto.Length > 7 ? scomparto.Substring(7, scomparto.Length - 7) : "";
                 var ragioneSociale = $"{allevamento?.RagioneSociale}";
                 var pIvaProv = $"{allevamento?.P_IVA}-{allevamento?.Provincia}";
                 var tipo = $"{tipoLatte?.Codice}";
-                var qta = $"{prelievo.Quantita_kg:#}";
+                var lt = $"{Convert.ToInt32(qtaLt)}";
+                var kg = $"{prelievo.Quantita_kg:#}";
                 var ora = $"{prelievo.DataPrelievo:HH:mm}";
                 var data = $"{prelievo.DataPrelievo:dd/MM/yyyy}";
 
-                qtaTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
+                qtaLtTot += qtaLt.HasValue ? qtaLt.Value : 0;
+                qtaKgTot += prelievo.Quantita_kg.HasValue ? prelievo.Quantita_kg.Value : 0;
 
-                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_1, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(qta, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_1, 7, ' ')} {PadRight(ragioneSociale, 28, ' ')}   {PadRight(tipo, 10, ' ')} {PadRight(lt, 5, ' ')} {PadRight(kg, 5, ' ')} {PadRight(ora, 11, ' ')} {PadRight("", 13, ' ')} {PadRight("", 13, ' ')} \r\n";
 
                 y += 25;
-                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_2, 7, ' ')} {PadRight(pIvaProv, 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight(data, 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+                cmd += $"TEXT {p} {x} {y} {PadRight(scomparto_2, 7, ' ')} {PadRight(pIvaProv, 30, ' ')} {PadRight("", 10, ' ')} {PadRight("", 5, ' ')} {PadRight("", 5, ' ')} {PadRight(data, 11, ' ')} {PadRight("", 13, ' ')} {PadRight("", 13, ' ')} \r\n";
             }
 
             // Totali
             y += 40;
-            cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaTot.ToString("#"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 16, ' ')} {PadRight("", 16, ' ')} \r\n";
+            cmd += $"TEXT {p} {x} {y} {PadRight("", 7, ' ')} {PadRight("TOTALI", 30, ' ')} {PadRight("", 10, ' ')} {PadRight(qtaLtTot.ToString("#"), 5, ' ')} {PadRight(qtaKgTot.ToString("#"), 5, ' ')} {PadRight("", 11, ' ')} {PadRight("", 13, ' ')} {PadRight("", 13, ' ')} \r\n";
 
             // #326826
             //// Trasbordi
