@@ -16,5 +16,8 @@ namespace LatteMarche.Xamarin.Db.Models
         public string Comune { get; set; }
         public string Provincia { get; set; }
         public string P_IVA { get; set; }
+
+        public string Riga_3 => $"{this.CAP} {this.Comune} ({this.Provincia})";
+        public string Riga_4 => $"P.IVA {this.P_IVA}";
     }
 }

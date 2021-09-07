@@ -43,7 +43,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private IRestService restService => DependencyService.Get<IRestService>();
 
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
-        private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
+
         private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
 
         private List<TemplateGiro> templateList;
@@ -152,29 +152,10 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// <param name="e"></param>
         private async void Item_OnItem_Printing(object sender, EventArgs e)
         {
-            var choices = new string[] { "1", "2", "3", "4", "5" };
-            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
-
-            if (index == -1)
-                return;
-
-            var input = choices[index];
-
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
             try
             {
                 var item = sender as ItemViewModel;
-
-                //await Task.Run(() =>
-                //{
-                var stampante = this.stampantiService.GetDefaultAsync().Result;
-
-                if (stampante == null)
-                    throw new Exception("Nessuna stampante associata");
-
-                var printer = DependencyService.Get<IPrinter>();
-                printer.MacAddress = stampante.MacAddress;
 
                 var giro = this.giriService.GetItemAsync(item.Id).Result;
                 giro.Prelievi = this.prelieviService.GetByGiro(item.Id).Result.ToList();
@@ -182,7 +163,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                 var registroRaccolta = new RegistroRaccolta();
 
-                registroRaccolta.NumeroCopie = Convert.ToInt32(input);
                 registroRaccolta.Acquirente = GetAcquirente(giro).Result;
                 registroRaccolta.Cessionario = GetCessionario(giro).Result;
                 registroRaccolta.Destinatario = GetDestinatario(giro).Result;
@@ -207,21 +187,13 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     });
                 }
 
-                await printer.PrintLabel(registroRaccolta);
+                var previewPage = new PrintPreviewPage(registroRaccolta);
+                await this.navigation.PushAsync(previewPage);
 
-                //});
-
-                await loadingDialog.DismissAsync();
-
-                Analytics.TrackEvent("Stampa ricevuta consegna");
-                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
-
-                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
             }
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                await loadingDialog.DismissAsync();
 
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);

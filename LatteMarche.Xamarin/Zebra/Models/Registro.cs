@@ -9,6 +9,9 @@ namespace LatteMarche.Xamarin.Zebra.Models
     {
         public DateTime Data { get; set; }
 
+        public string Data_Text => $"Data: {this.Data:dd/MM/yyyy}";
+        public string Ora_Text => $"Ora: {this.Data:HH:mm}";
+
         public int NumeroCopie { get; set; }
 
         public string Header_1 => "latte marche";

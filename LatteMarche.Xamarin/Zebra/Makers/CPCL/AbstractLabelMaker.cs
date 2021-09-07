@@ -115,14 +115,14 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             cmd += $"TEXT {p} {x} {y} {indAcq} {indDest}\r\n";
 
             // cap / comune / prov
-            var comAcq = PadRight($"{acq?.CAP} {acq?.Comune} ({acq?.Provincia})", sxColWidth);
-            var comDest = PadRight($"{dest?.CAP} {dest?.Comune} ({dest?.Provincia})", sxColWidth);
+            var comAcq = PadRight($"{acq?.Riga_3})", sxColWidth);
+            var comDest = PadRight($"{dest?.Riga_3})", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {comAcq} {comDest}\r\n";
 
             // P IVA
-            var pivaAcq = PadRight($"P.IVA {acq?.P_IVA}", sxColWidth);
-            var pivaDest = PadRight($"P.IVA {dest?.P_IVA}", sxColWidth);
+            var pivaAcq = PadRight($"{acq?.Riga_4}", sxColWidth);
+            var pivaDest = PadRight($"{dest?.Riga_4}", sxColWidth);
             y += lineSpacing;
             cmd += $"TEXT {p} {x} {y} {pivaAcq} {pivaDest}\r\n";
 
@@ -197,8 +197,8 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             var giro = registro.Giro;
 
             // Data / Giro
-            var data = PadRight($"Data: {registro.Data.ToString("dd/MM/yyyy")}", sxColWidth);
-            var giroText = PadRight($"Giro: {giro?.Descrizione}", sxColWidth);
+            var data = PadRight($"{registro.Data_Text}", sxColWidth);
+            var giroText = PadRight($"{giro?.Descrizione}", sxColWidth);
             cmd += $"TEXT {h1} {x} {y} {data} {giroText}\r\n";
             y += lineSpacing;
 

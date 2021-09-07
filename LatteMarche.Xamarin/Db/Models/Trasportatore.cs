@@ -14,6 +14,10 @@ namespace LatteMarche.Xamarin.Db.Models
         public string Indirizzo { get; set; }
         public string P_IVA { get; set; }
 
+        public string Riga_1 => $"Targa automezzo: {this.AutoCisterna.Targa}";
+        public string Riga_2 => $"Trasportatore: {this.RagioneSociale}";
+        public string Riga_4 => $"P. IVA: {this.P_IVA}";
+
         public virtual List<AutoCisterna> AutoCisterne { get; set; }
 
         public AutoCisterna AutoCisterna

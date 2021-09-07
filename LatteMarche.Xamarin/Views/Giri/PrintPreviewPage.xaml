@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"             
+             x:Class="LatteMarche.Xamarin.Views.Giri.PrintPreviewPage"
+             Title="Anteprima ricevuta raccolta">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="16" >
+                <!-- header -->
+                <StackLayout x:Name="header" >
+                    <Label Text="{Binding RegistroRaccolta.Titolo}" Style="{StaticResource Preview_Title}"  />
+                    <Label Text="{Binding RegistroRaccolta.SottoTitolo}" Style="{StaticResource Preview_Text}" />
+                    <Label Text="{Binding RegistroRaccolta.LatteCrudoConforme}" Style="{StaticResource Preview_Subtitle}" />
+                </StackLayout>
+                
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+                
+                <!-- acquirente / destinatario -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- acquirente -->
+                    <StackLayout x:Name="acquirente" Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Acquirente" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroRaccolta.Acquirente.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Acquirente.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Acquirente.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Acquirente.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- destinatario -->
+                    <StackLayout x:Name="destinatario" Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Destinatario" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroRaccolta.Destinatario.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Destinatario.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Destinatario.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Destinatario.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- trasportatore / cessionario -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- trasportatore -->
+                    <StackLayout x:Name="trasportatore" Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Trasportatore" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroRaccolta.Trasportatore.Riga_1}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Trasportatore.Riga_2}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Trasportatore.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Trasportatore.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- cessionario -->
+                    <StackLayout x:Name="cessionario" Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Cessionario" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroRaccolta.Cessionario.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Cessionario.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Cessionario.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroRaccolta.Cessionario.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- lavaggio cisterna -->
+                <Label Text="{Binding RegistroRaccolta.LavaggioCisterna_Text}" Style="{StaticResource Preview_Text}" Padding="0,10,0,0" />
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- giro / lotto -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- data / ora -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="{Binding RegistroRaccolta.Data_Text}" Style="{StaticResource Preview_Lotto}" />
+                        <Label Text="{Binding RegistroRaccolta.Ora_Text}" Style="{StaticResource Preview_Lotto}" />
+                    </StackLayout>
+
+                    <!-- giro / lotto -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="{Binding RegistroRaccolta.Giro_Text}" Style="{StaticResource Preview_Lotto}" />
+                        <Label Text="{Binding RegistroRaccolta.Lotto_Text}" Style="{StaticResource Preview_Lotto}" />
+                    </StackLayout>
+                </Grid>
+                
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- prelievi -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Text="SCOMP." Style="{StaticResource Preview_Subtitle}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="PRODUTTORE" Style="{StaticResource Preview_Subtitle}"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="TIPO" Style="{StaticResource Preview_Subtitle}"/>
+                    <Label Grid.Row="0" Grid.Column="3" Text="lt" Style="{StaticResource Preview_Subtitle}"/>
+                    <Label Grid.Row="0" Grid.Column="4" Text="kg" Style="{StaticResource Preview_Subtitle}"/>
+                    <Label Grid.Row="0" Grid.Column="5" Text="ORA" Style="{StaticResource Preview_Subtitle}"/>
+
+                </Grid>
+
+                <StackLayout BindableLayout.ItemsSource="{Binding RegistroRaccolta.Items}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Scomparto}" Style="{StaticResource Preview_Text}"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Allevamento.RagioneSociale}" Style="{StaticResource Preview_Text}"/>
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Allevamento.TipoLatte.Codice}" Style="{StaticResource Preview_Text}"/>
+                                <Label Grid.Row="0" Grid.Column="3" Text="{Binding Quantita_lt_Text}" Style="{StaticResource Preview_Text}"/>
+                                <Label Grid.Row="0" Grid.Column="4" Text="{Binding Quantita_kg_Text}" Style="{StaticResource Preview_Text}"/>
+                                <Label Grid.Row="0" Grid.Column="5" Text="{Binding DataPrelievo_Text}" Style="{StaticResource Preview_Text}"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- firme -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- acquirente -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Firma Acquirente \ Delegato" Style="{StaticResource Preview_Text}" Padding="0,0,0,35" />
+                        <BoxView Style="{StaticResource Separator}" />
+                    </StackLayout>
+
+                    <!-- destinatario -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Firma Destinatario" Style="{StaticResource Preview_Text}" Padding="0,0,0,35" />
+                        <BoxView Style="{StaticResource Separator}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- footer -->
+                <Label Text="{Binding RegistroRaccolta.Footer}" Style="{StaticResource Preview_Text}" />
+
+                <material:MaterialButton Margin="0,20,0,40" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="STAMPA" Command="{Binding PrintCommand}" TextColor="Black" VerticalOptions="Center" />
+
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

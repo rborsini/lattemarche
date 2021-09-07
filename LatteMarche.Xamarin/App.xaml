@@ -13,6 +13,42 @@
                 <On Platform="Android"
                     Value="materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
+
+            <Style x:Key="Separator" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Color" Value="Gray" />
+                <Setter Property="Margin" Value="0, 5, 0, 5" />
+                <Setter Property="Opacity" Value="0.5" />
+            </Style>
+
+            <!-- Anteprima ricevute -->
+            
+            <!-- Titolo -->
+            <Style x:Key="Preview_Title" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Padding" Value="0,0,0,5"/>
+            </Style>
+
+            <!-- Sotto titolo -->
+            <Style x:Key="Preview_Subtitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="Padding" Value="0,0,0,5"/>
+            </Style>
+
+            <!-- Lotto -->
+            <Style x:Key="Preview_Lotto" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Micro"/>
+            </Style>
+
+            <!-- Testo -->
+            <Style x:Key="Preview_Text" TargetType="Label">
+                <Setter Property="FontSize" Value="Micro"/>
+            </Style>
+
         </ResourceDictionary>
 
         <mtrl:MaterialColorConfiguration x:Key="Material.Color"
@@ -28,6 +64,8 @@
             Secondary="#593196"
             SecondaryVariant="#593196"
             Surface="#FFFFFF" />
+
+
 
         <mtrl:MaterialConfiguration x:Key="Material.Configuration"
             ColorConfiguration="{StaticResource Material.Color}" />
