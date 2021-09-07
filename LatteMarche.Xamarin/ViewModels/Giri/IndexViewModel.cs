@@ -483,6 +483,10 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
                 // aggiornamento tabella sincronizzazioni
                 this.sincronizzazioneService.AddAsync(SynchType.Upload).Wait();
+
+                // aggiornamento database
+                var dto = restService.DownloadDb(device.GetIdentifier()).Result;
+                sincronizzazioneService.UpdateDatabaseSync(dto).Wait();
             }
             else
             {
