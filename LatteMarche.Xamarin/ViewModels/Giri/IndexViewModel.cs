@@ -193,8 +193,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             }
             catch (Exception exc)
             {
-                this.IsBusy = false;
-
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);
 

@@ -107,7 +107,7 @@ namespace LatteMarche.Xamarin.Zebra.Makers.CPCL
             y += lineSpacing;
 
             var prod = registroConsegna.Allevamento;
-            var text = PadRight($"{prod?.RagioneSociale} {prod?.CAP} {prod?.Provincia} - {prod?.Comune} - {prod?.P_IVA}", WIDTH);
+            var text = PadRight($"{registroConsegna.Produttore_Text}", WIDTH);
 
             cmd += $"TEXT {p} {x} {y} {text} \r\n";
             y += (lineSpacing * 2);

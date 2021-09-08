@@ -1,12 +1,208 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LatteMarche.Xamarin.Views.Prelievi.PrintPreviewPage">
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:matd="clr-namespace:XF.Material.Forms.UI.Dialogs;assembly=XF.Material"                  
+             x:Class="LatteMarche.Xamarin.Views.Prelievi.PrintPreviewPage"
+             Title="Anteprima ricevuta consegna">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="16" >
+                <!-- header -->
+                <StackLayout x:Name="header" >
+                    <Label Text="{Binding RegistroConsegna.Titolo}" Style="{StaticResource Preview_Title}"  />
+                    <Label Text="{Binding RegistroConsegna.SottoTitolo}" Style="{StaticResource Preview_Text}" />
+                    <Label Text="{Binding RegistroConsegna.LatteCrudoConforme}" Style="{StaticResource Preview_Subtitle}" />
+                </StackLayout>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- acquirente / destinatario -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- acquirente -->
+                    <StackLayout x:Name="acquirente" Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Acquirente" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroConsegna.Acquirente.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Acquirente.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Acquirente.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Acquirente.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- destinatario -->
+                    <StackLayout x:Name="destinatario" Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Destinatario" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroConsegna.Destinatario.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Destinatario.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Destinatario.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Destinatario.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- trasportatore / cessionario -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- trasportatore -->
+                    <StackLayout x:Name="trasportatore" Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Trasportatore" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroConsegna.Trasportatore.Riga_1}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Trasportatore.Riga_2}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Trasportatore.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Trasportatore.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- cessionario -->
+                    <StackLayout x:Name="cessionario" Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Cessionario" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="{Binding RegistroConsegna.Cessionario.RagioneSociale}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Cessionario.Indirizzo}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Cessionario.Riga_3}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Cessionario.Riga_4}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>                
+                
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- giro / lotto -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- data -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="{Binding RegistroConsegna.Data_Text}" Style="{StaticResource Preview_Lotto}" />
+                    </StackLayout>
+
+                    <!-- giro -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="{Binding RegistroConsegna.Giro_Text}" Style="{StaticResource Preview_Lotto}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- produttore -->
+                <StackLayout x:Name="produttore" Grid.Row="0" Grid.Column="0" Spacing="0" >
+                    <Label Text="Produttore:" Style="{StaticResource Preview_Subtitle}" />
+                    <Label Text="{Binding RegistroConsegna.Produttore_Text}" Style="{StaticResource Preview_Text}" />
+                </StackLayout>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- qta / litri -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- kg / num mungiture / temp -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="{Binding RegistroConsegna.Quantita_kg_Text}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.NumeroMungiture_Text}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Temperatura_Text}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- litri / ora / tipo latte -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="{Binding RegistroConsegna.Quantita_lt_Text}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.Ora_Text}" Style="{StaticResource Preview_Text}" />
+                        <Label Text="{Binding RegistroConsegna.TipoLatte_Text}" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>
+
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- conferimenti -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- progr. conferimenti / mensile / annuale -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Progr. conferimenti" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="Mensile:" Style="{StaticResource Preview_Text}" />
+                        <Label Text="Annuale:" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+
+                    <!-- analisi qualità / grasso / proteine / .... -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Analisi Qualità" Style="{StaticResource Preview_Subtitle}" />
+                        <Label Text="Grasso %:" Style="{StaticResource Preview_Text}" />
+                        <Label Text="Proteine %:" Style="{StaticResource Preview_Text}" />
+                        <Label Text="C.B.T. ufc/ml %:" Style="{StaticResource Preview_Text}" />
+                        <Label Text="C.S./ml:" Style="{StaticResource Preview_Text}" />
+                    </StackLayout>
+                </Grid>                
+                
+                <!-- separatore -->
+                <BoxView Style="{StaticResource Separator}" />
+
+                <!-- firme -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- produttore -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="0" >
+                        <Label Text="Firma Produttore \ Delegato" Style="{StaticResource Preview_Text}" Padding="0,0,0,35" />
+                        <BoxView Style="{StaticResource Separator}" />
+                    </StackLayout>
+
+                    <!-- trasportatore -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="0" >
+                        <Label Text="Firma Trasportatore" Style="{StaticResource Preview_Text}" Padding="0,0,0,35" />
+                        <BoxView Style="{StaticResource Separator}" />
+                    </StackLayout>
+                </Grid>                
+                
+                <!-- footer -->
+                <Label Text="{Binding RegistroConsegna.Footer}" Style="{StaticResource Preview_Text}" />
+
+                <material:MaterialButton Margin="0,20,0,40" WidthRequest="250" HeightRequest="60" BackgroundColor="#D8D8D8" HorizontalOptions="Center" Text="STAMPA" Command="{Binding PrintCommand}" TextColor="Black" VerticalOptions="Center" />
+
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

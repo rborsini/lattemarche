@@ -14,6 +14,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
         // Produttore
         public Allevamento Allevamento { get; set; }
 
+        public string Produttore_Text => $"{this.Allevamento?.RagioneSociale} {this.Allevamento?.CAP} {this.Allevamento?.Provincia} - {this.Allevamento?.Comune} - {this.Allevamento?.P_IVA}";
+
         // Quantità
         public string Scomparto { get; set; }
         public decimal? Quantita_kg { get; set; }
@@ -21,7 +23,13 @@ namespace LatteMarche.Xamarin.Zebra.Models
         public decimal? Temperatura { get; set; }
         public int? NumeroMungiture { get; set; }
         public DateTime? DataUltimaMungitura { get; set; }
-        public TipoLatte TipoLatte { get; set; }                
+        public TipoLatte TipoLatte { get; set; }
+
+        public string Quantita_kg_Text => this.Quantita_kg.HasValue ? $"Quantità kg: {Convert.ToInt32(this.Quantita_kg.Value)}" : string.Empty;
+        public string Quantita_lt_Text => this.Quantita_lt.HasValue ? $"Quantità lt: {Convert.ToInt32(this.Quantita_lt.Value)}" : string.Empty;
+        public string NumeroMungiture_Text => this.NumeroMungiture.HasValue ? $"N. Mung.: {this.NumeroMungiture.Value}" : string.Empty;
+        public string Temperatura_Text => this.Temperatura.HasValue ? $"Temp. : {this.Temperatura.Value:#.0}" : string.Empty;
+        public string TipoLatte_Text => this.TipoLatte != null ? $"Tipo Latte: {this.TipoLatte.Codice}" : string.Empty;
 
         // Quota latte
         public decimal? QuotaLatte_Qta_Tct { get; set; }
@@ -49,6 +57,8 @@ namespace LatteMarche.Xamarin.Zebra.Models
 
         // Informazioni
         public string Comunicazione { get; set; }
+
+        public string Giro_Text => this.Giro != null ? this.Giro.Descrizione : string.Empty;
 
         public RegistroConsegna()
         {

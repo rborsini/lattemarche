@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LatteMarche.Xamarin.ViewModels.Prelievi;
+using LatteMarche.Xamarin.Zebra.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +14,21 @@ namespace LatteMarche.Xamarin.Views.Prelievi
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PrintPreviewPage : ContentPage
     {
-        public PrintPreviewPage()
+        #region Fields
+
+        private PrintPreviewViewModel viewModel;
+
+        #endregion
+
+        #region Constructor
+
+        public PrintPreviewPage(RegistroConsegna registroConsegna)
         {
             InitializeComponent();
+
+            BindingContext = this.viewModel = new PrintPreviewViewModel(Navigation, this, registroConsegna);
         }
+
+        #endregion
     }
 }

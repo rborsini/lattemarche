@@ -6,18 +6,19 @@ using Microsoft.AppCenter.Crashes;
 using Sentry;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
-namespace LatteMarche.Xamarin.ViewModels.Giri
+namespace LatteMarche.Xamarin.ViewModels.Prelievi
 {
     public class PrintPreviewViewModel : BaseViewModel
     {
         #region Fields
 
-        private RegistroRaccolta registroRaccolta;
+        private RegistroConsegna registroConsegna;
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
 
@@ -25,10 +26,10 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         #region Properties
 
-        public RegistroRaccolta RegistroRaccolta
+        public RegistroConsegna RegistroConsegna
         {
-            get { return this.registroRaccolta; }
-            set { SetProperty(ref this.registroRaccolta, value); }
+            get { return this.registroConsegna; }
+            set { SetProperty(ref this.registroConsegna, value); }
         }
 
         public Command PrintCommand { get; set; }
@@ -37,12 +38,12 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         #region Constructor
 
-        public PrintPreviewViewModel(INavigation navigation, Page page, RegistroRaccolta registroRaccolta)
+        public PrintPreviewViewModel(INavigation navigation, Page page, RegistroConsegna registroConsegna)
             : base(navigation, page)
         {
             this.navigation = navigation;
             this.page = page;
-            this.RegistroRaccolta = registroRaccolta;
+            this.RegistroConsegna = registroConsegna;
 
             this.PrintCommand = new Command(async () => await ExecutePrintCommand());
         }
@@ -63,24 +64,34 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
             var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
 
-            this.registroRaccolta.NumeroCopie = Convert.ToInt32(input);
+            this.registroConsegna.NumeroCopie = Convert.ToInt32(input);
 
             try
             {
+                Debug.WriteLine("Print Command");
+                this.IsBusy = true;
 
                 var stampante = this.stampantiService.GetDefaultAsync().Result;
-
                 if (stampante == null)
-                    throw new Exception("Nessuna stampante associata");
+                {
+                    await loadingDialog.DismissAsync();
+                    await this.page.DisplayAlert("Attenzione", "Nessuna stampante selezionata", "OK");
+                    return;
+                }
 
-                var printer = DependencyService.Get<IPrinter>();
-                printer.MacAddress = stampante.MacAddress;
+                await Task.Run(() =>
+                {
+                    var printer = DependencyService.Get<IPrinter>();
+                    printer.MacAddress = stampante.MacAddress;
 
-                await printer.PrintLabel(this.registroRaccolta);
+                    printer.PrintLabel(registroConsegna);
+                });
+
+                this.IsBusy = false;
                 await loadingDialog.DismissAsync();
 
-                Analytics.TrackEvent("Stampa ricevuta consegna");
-                SentrySdk.CaptureMessage("Stampa ricevuta consegna", Sentry.Protocol.SentryLevel.Info);
+                Analytics.TrackEvent("Stampa ricevuta raccolta");
+                SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
 
                 await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
                 await navigation.PopAsync();
@@ -88,7 +99,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
             catch (Exception exc)
             {
                 this.IsBusy = false;
-                //await loadingDialog.DismissAsync();
+                await loadingDialog.DismissAsync();
 
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);

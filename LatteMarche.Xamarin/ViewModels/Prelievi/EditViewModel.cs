@@ -1,5 +1,6 @@
 ﻿using LatteMarche.Xamarin.Db.Interfaces;
 using LatteMarche.Xamarin.Db.Models;
+using LatteMarche.Xamarin.Views.Prelievi;
 using LatteMarche.Xamarin.Zebra.Interfaces;
 using LatteMarche.Xamarin.Zebra.Models;
 using Microsoft.AppCenter.Analytics;
@@ -429,7 +430,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
             {
 
                 // rilevamento posizione
-                var status = Permissions.RequestAsync<Permissions.LocationWhenInUse>().Result;                
+                var status = Permissions.RequestAsync<Permissions.LocationWhenInUse>().Result;
                 if (status != PermissionStatus.Granted)
                 {
                     await loadingDialog.DismissAsync();
@@ -518,88 +519,46 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         /// <returns></returns>
         private async Task ExecutePrintCommand()
         {
-
-            var choices = new string[] { "1", "2", "3", "4", "5" };
-
-            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Numero copie", choices: choices);
-
-            if (index == -1)
-                return;
-
-            var input = choices[index];
-
-
-            var loadingDialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Stampa in corso", lottieAnimation: "LottieLogo1.json");
-
             try
             {
-                Debug.WriteLine("Print Command");
-                this.IsBusy = true;
 
-                var stampante = this.stampantiService.GetDefaultAsync().Result;
-                if (stampante == null)
-                {
-                    await loadingDialog.DismissAsync();
-                    await this.page.DisplayAlert("Attenzione", "Nessuna stampante selezionata", "OK");
-                    return;
-                }
+                this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
+                this.prelievo.DataConsegna = DateTime.Now;
+                await this.prelieviService.UpdateItemAsync(this.prelievo);
 
-                await Task.Run(() =>
-                {
-                    var printer = DependencyService.Get<IPrinter>();
-                    printer.MacAddress = stampante.MacAddress;
+                var registroConsegna = new RegistroConsegna();
 
-                    this.prelievo = this.prelieviService.GetItemAsync(this.Id).Result;
-                    this.prelievo.DataConsegna = DateTime.Now;
-                    this.prelieviService.UpdateItemAsync(this.prelievo);
+                var giro = this.giriService.GetItemAsync(this.idGiro).Result;
 
-                    var registroConsegna = new RegistroConsegna();
+                registroConsegna.Acquirente = GetAcquirente(this.prelievo.IdAcquirente).Result;
+                registroConsegna.Cessionario = GetCessionario(this.prelievo.IdCessionario).Result;
+                registroConsegna.Destinatario = GetDestinatario(this.prelievo.IdDestinatario).Result;
+                registroConsegna.Giro = GetTemplateGiro(giro?.IdTemplateGiro).Result;
+                registroConsegna.Trasportatore = this.trasportatoriService.GetCurrent().Result;
 
-                    registroConsegna.NumeroCopie = Convert.ToInt32(input);
+                registroConsegna.Allevamento = GetAllevamento(this.prelievo.IdAllevamento).Result;
+                registroConsegna.Data = this.prelievo.DataConsegna.Value;
 
-                    var giro = this.giriService.GetItemAsync(this.idGiro).Result;
+                registroConsegna.DataPrelievo = this.prelievo.DataPrelievo;
+                registroConsegna.Scomparto = this.prelievo.Scomparto;
+                registroConsegna.Quantita_kg = this.prelievo.Quantita_kg;
+                registroConsegna.Quantita_lt = this.prelievo.Quantita_lt;
+                registroConsegna.NumeroMungiture = this.prelievo.NumeroMungiture;
+                registroConsegna.Temperatura = this.prelievo.Temperatura;
+                registroConsegna.DataUltimaMungitura = this.prelievo.DataUltimaMungitura;
+                registroConsegna.TipoLatte = registroConsegna.Allevamento != null ? registroConsegna.Allevamento.TipoLatte : null;
 
-                    registroConsegna.Acquirente = GetAcquirente(this.prelievo.IdAcquirente).Result;
-                    registroConsegna.Cessionario = GetCessionario(this.prelievo.IdCessionario).Result;
-                    registroConsegna.Destinatario = GetDestinatario(this.prelievo.IdDestinatario).Result;
-                    registroConsegna.Giro = GetTemplateGiro(giro?.IdTemplateGiro).Result;
-                    registroConsegna.Trasportatore = this.trasportatoriService.GetCurrent().Result;
+                var previewPage = new PrintPreviewPage(registroConsegna);
+                await this.navigation.PushAsync(previewPage);
 
-                    registroConsegna.Allevamento = GetAllevamento(this.prelievo.IdAllevamento).Result;
-                    registroConsegna.Data = this.prelievo.DataConsegna.Value;
-
-                    registroConsegna.DataPrelievo = this.prelievo.DataPrelievo;
-                    registroConsegna.Scomparto = this.prelievo.Scomparto;
-                    registroConsegna.Quantita_kg = this.prelievo.Quantita_kg;
-                    registroConsegna.Quantita_lt = this.prelievo.Quantita_lt;
-                    registroConsegna.NumeroMungiture = this.prelievo.NumeroMungiture;
-                    registroConsegna.Temperatura = this.prelievo.Temperatura;
-                    registroConsegna.DataUltimaMungitura = this.prelievo.DataUltimaMungitura;
-                    registroConsegna.TipoLatte = registroConsegna.Allevamento != null ? registroConsegna.Allevamento.TipoLatte : null;
-
-                    printer.PrintLabel(registroConsegna);
-                });
-
-                this.IsBusy = false;
-                await loadingDialog.DismissAsync();
-
-                Analytics.TrackEvent("Stampa ricevuta raccolta");
-                SentrySdk.CaptureMessage("Stampa ricevuta raccolta", Sentry.Protocol.SentryLevel.Info);
-
-                await this.page.DisplayAlert("Info", "Stampa effettuata", "OK");
-                await navigation.PopAsync();
             }
             catch (Exception exc)
             {
-                this.IsBusy = false;
-                await loadingDialog.DismissAsync();
-
                 SentrySdk.CaptureException(exc);
                 Crashes.TrackError(exc);
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
-
         }
 
         /// <summary>
