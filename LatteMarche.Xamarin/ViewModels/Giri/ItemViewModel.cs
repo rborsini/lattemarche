@@ -18,7 +18,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private const string CHIUDI = "Chiudi";
         private const string TRASBORDA = "Trasborda";
         private const string RIAPRI = "Riapri";
-        private const string STAMPA = "Stampa";
+        private const string STAMPA = "Anteprima";
         private const string ELIMINA = "Elimina";
 
         #endregion
@@ -55,8 +55,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
                     actions.Add(new MaterialMenuItem { Text = TRASBORDA });
 
-                if (this.DataConsegna.HasValue)
-                    actions.Add(new MaterialMenuItem { Text = STAMPA });
+                actions.Add(new MaterialMenuItem { Text = STAMPA });
 
                 if (!this.DataUpload.HasValue && !this.DataConsegna.HasValue)
                     actions.Add(new MaterialMenuItem { Text = ELIMINA });
