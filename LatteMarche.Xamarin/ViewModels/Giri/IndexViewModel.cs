@@ -322,7 +322,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 {
                     var location = GeolocationService.GetLocation();
 
-                    ChiudiGiro(sender);
+                    ChiudiGiro(sender).Wait();
                     InviaGiro(sender, location);
                 });
 
@@ -391,14 +391,14 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         /// Chiusura giro
         /// </summary>
         /// <param name="sender"></param>
-        private void ChiudiGiro(object sender)
+        private async Task ChiudiGiro(object sender)
         {
             var item = sender as ItemViewModel;
-            var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
+            var templateGiro = await GetTemplateGiro(item.IdTemplateGiro);
 
-            var giro = this.giriService.GetItemAsync(item.Id).Result;
+            var giro = await this.giriService.GetItemAsync(item.Id);
             giro.DataConsegna = DateTime.Now;
-            giro.CodiceLotto = $"{templateGiro?.Codice}{giro.DataConsegna:ddMMyyHHmm}";
+            giro.CodiceLotto = $"{templateGiro.Codice}{giro.DataConsegna:ddMMyyHHmm}";
             this.giriService.UpdateItemAsync(giro).Wait();
 
             var prelievi = this.prelieviService.GetByGiro(giro.Id).Result;
@@ -478,7 +478,6 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 await Task.Run(() =>
                 {
                     var item = sender as ItemViewModel;
-                    var templateGiro = GetTemplateGiro(item.IdTemplateGiro).Result;
 
                     // Salvataggio codice lotto
                     var giro = this.giriService.GetItemAsync(item.Id).Result;
