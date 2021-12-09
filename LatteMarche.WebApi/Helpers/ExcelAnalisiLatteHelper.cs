@@ -5,6 +5,7 @@ using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -39,14 +40,19 @@ namespace LatteMarche.WebApi.Helpers
             table.Columns.Add("Data accettazione", typeof(DateTime));
             table.Columns.Add("Data prelievo", typeof(DateTime));
 
+            var formatProvider = new CultureInfo("it-IT");
+
             foreach(var row in list)
             {
+                var i = 0;
                 foreach(var value in row.Valori)
                 {
                     if(!table.Columns.OfType<DataColumn>().Any(c => c.ColumnName == value.Nome))
                     {
-                        table.Columns.Add(value.Nome, typeof(string));
+                        var type = GetColumnType(list, i);
+                        table.Columns.Add(value.Nome, type);
                     }
+                    i++;
                 }
             }
 
@@ -66,7 +72,7 @@ namespace LatteMarche.WebApi.Helpers
                 foreach(var value in row.Valori)
                 {
                     decimal decimalValue = 0;
-                    if(Decimal.TryParse(value.Valore, out decimalValue))
+                    if(Decimal.TryParse(value.Valore, System.Globalization.NumberStyles.Float, formatProvider, out decimalValue))
                         dataRow.SetField(value.Nome, decimalValue);
                     else
                         dataRow.SetField(value.Nome, value.Valore);
@@ -76,6 +82,16 @@ namespace LatteMarche.WebApi.Helpers
             }
 
             return table;
+        }
+
+        private static Type GetColumnType(List<AnalisiDto> list, int columnIndex)
+        {
+            var cellValues = list.Select(r => columnIndex < r.Valori.Count ? r.Valori[columnIndex].Valore : "").ToList();
+            decimal decimalValue = 0;
+            if (cellValues.All(v => Decimal.TryParse(v, out decimalValue)))
+                return typeof(decimal);
+            else
+                return typeof(string);
         }
 
         private static byte[] ConvertToByteArray(XLWorkbook book)
