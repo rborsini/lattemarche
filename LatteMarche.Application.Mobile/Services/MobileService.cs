@@ -5,6 +5,7 @@ using LatteMarche.Core;
 using LatteMarche.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,7 +120,7 @@ namespace LatteMarche.Application.Mobile.Services
             var dispositivo = this.dispositiviRepository.GetById(id);
             if (dispositivo == null || !dispositivo.Attivo)
                 return null;
-            
+
             var db = new DownloadDto();
 
             if (dispositivo.IdTrasportatore.HasValue)
@@ -129,8 +130,11 @@ namespace LatteMarche.Application.Mobile.Services
                 db.Trasportatore = this.mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
                 db.Autocisterna = this.mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
                 db.Autocisterne = this.mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
-
                 db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
+                db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
+
+                var idTipiLatte = db.TipiLatte.Select(tl => tl.Id).ToList();
+                var prelieviAutocisterna = GetPrelieviAutocisterna(db.Autocisterna.Id, 1000);
 
                 foreach (var giro in db.Giri)
                 {
@@ -144,7 +148,7 @@ namespace LatteMarche.Application.Mobile.Services
                         var utente = allevamento != null ? allevamento.Utente : null;
                         var comune = utente != null ? utente.Comune : null;
 
-                        var prelievi = GetPrelievi(allevamento.Id, 100);
+                        var prelievi = prelieviAutocisterna.Where(p => p.IdAllevamento == allevamento.Id).ToList();
                         var temperature = prelievi.Where(p => p.Temperatura.HasValue).Select(p => p.Temperatura.Value).ToArray();
                         var quantita = prelievi.Where(p => p.Quantita.HasValue).Select(p => p.Quantita.Value).ToArray();
 
@@ -152,7 +156,7 @@ namespace LatteMarche.Application.Mobile.Services
                         {
                             IdAllevamento = allevamento.Id,
                             IdTemplateGiro = giro.Id,
-                            IdTipoLatte = utente != null ? utente.IdTipoLatte : (int?)null,
+                            IdTipoLatte = utente != null && idTipiLatte.Contains(utente.IdTipoLatte) ? utente.IdTipoLatte : (int?)null,
                             Indirizzo = allevamento != null ? allevamento.IndirizzoAllevamento.Trim() : "",
                             CAP = comune != null ? comune.CAP.Trim() : "",
                             Comune = comune != null ? comune.Descrizione.Trim() : "",
@@ -170,15 +174,12 @@ namespace LatteMarche.Application.Mobile.Services
                             Quantita_Min = GetPercentile(quantita, 5),
                             Quantita_Max = GetPercentile(quantita, 95)
                         });
-
                     }
                 }
 
-                db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
                 db.Acquirenti = this.mapper.Map<List<AcquirenteDto>>(this.acquirentiRepository.Query.Where(a => a.Abilitato).ToList());
                 db.Destinatari = this.mapper.Map<List<DestinatarioDto>>(this.destinatariRepository.Query.Where(a => a.Abilitato).ToList());
                 db.Cessionari = this.mapper.Map<List<CessionarioDto>>(this.cessionariRepository.Query.Where(a => a.Abilitato).ToList());
-
             }
 
             dispositivo.DataUltimoDownload = DateTime.UtcNow;
@@ -342,6 +343,20 @@ namespace LatteMarche.Application.Mobile.Services
                 .Query
                 .Where(p => p.IdAllevamento == idAllevamento)
                 .OrderByDescending(p => p.DataConsegna)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Recupero prelievi
+        /// </summary>
+        /// <param name="idAllevamento"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        private List<PrelievoLatte> GetPrelieviAutocisterna(int idAutocisterna, int size)
+        {
+            return this.prelieviRepository
+                .Query
+                .Where(p => p.IdAutocisterna == idAutocisterna)
                 .ToList();
         }
 
