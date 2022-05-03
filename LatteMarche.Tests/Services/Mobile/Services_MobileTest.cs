@@ -233,6 +233,7 @@ namespace LatteMarche.Tests.Services.Mobile
                         .With(p => p.IdAllevamento = allevamento.Id)
                         .With(p => p.IdAcquirente = idAcquirente)
                         .With(p => p.IdDestinatario = idDestinatario)
+                        .With(p => p.IdAutocisterna = this.autocisterna.Id)
                         .With(p => p.Quantita = i)
                         .With(p => p.Temperatura = i)
                     .Build()
