@@ -2,8 +2,11 @@
 using LatteMarche.Application.Mobile.Interfaces;
 using LatteMarche.Application.Trasbordi.Dtos;
 using LatteMarche.WebApi.Filters;
+using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -24,6 +27,8 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         private LatteMarche.Application.Mobile.Interfaces.ITrasbordiService trasbordiMobileService;
         private LatteMarche.Application.Trasbordi.Interfaces.ITrasbordiService trasbordiService;
+
+        private static ILog log = LogManager.GetLogger(typeof(MobileController));
 
         #endregion
 
@@ -69,8 +74,19 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Push([FromBody] LatteMarche.Application.Mobile.Dtos.TrasbordoDto trasbordo)
         {
+            var sw = new Stopwatch();
+
+            log.Info($"api/Trasbordi/Push trasbordo: {JsonConvert.SerializeObject(trasbordo)}");
+
+            sw.Start();
 
             var dto = this.trasbordiMobileService.Push(trasbordo);
+
+            sw.Stop();
+
+            log.Info($"api/Trasbordi/Push [{sw.Elapsed}] dto: {JsonConvert.SerializeObject(dto)}");
+
+
             return Ok(dto);
 
         }
@@ -79,8 +95,18 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpGet]
         public IHttpActionResult Pull(string imei)
         {
+            var sw = new Stopwatch();
+
+            log.Info($"api/Trasbordi/Pull imei: {imei}");
+
+            sw.Start();
 
             var model = this.trasbordiMobileService.Pull(imei);
+
+            sw.Stop();
+
+            log.Info($"api/Trasbordi/Push [{sw.Elapsed}] model: {JsonConvert.SerializeObject(model)}");
+
             return Ok(model);
 
         }
@@ -89,7 +115,18 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Close([FromUri] long id)
         {
+            var sw = new Stopwatch();
+
+            log.Info($"api/Trasbordi/Close id: {id}");
+
+            sw.Start();
+
             this.trasbordiMobileService.Close(id);
+
+            sw.Stop();
+
+            log.Info($"api/Trasbordi/Close [{sw.Elapsed}]");
+
             return Ok();
 
         }
