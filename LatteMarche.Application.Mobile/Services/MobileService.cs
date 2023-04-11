@@ -258,7 +258,9 @@ namespace LatteMarche.Application.Mobile.Services
         /// <returns></returns>
         private List<Autocisterna> GetAutocisterne(DispositivoMobile dispositivo)
         {
-            return this.autocisterneRepository.DbSet.Where(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value).ToList();
+            return this.autocisterneRepository.DbSet
+                //.Where(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value)
+                .ToList();
         }
 
         /// <summary>

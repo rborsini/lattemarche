@@ -108,6 +108,11 @@ namespace LatteMarche.Xamarin.Db.Services
                     var autocisterna = Mapper.Map<AutoCisterna>(dto.Autocisterna);
                     var autocisterne = Mapper.Map<List<AutoCisterna>>(dto.Autocisterne);
 
+                    foreach(var a in autocisterne.Where(a => a.IdTrasportatore != trasportatore.Id))                        
+                    {
+                        a.IdTrasportatore = (int?)null;
+                    }
+
                     if(autocisterna != null)
                     {
                         var autocisternaSelezionata = autocisterne.First(a => a.Id == autocisterna.Id);

@@ -30,6 +30,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
         private IMaterialModalPage loadingDialog;
 
         private IStampantiService stampantiService => DependencyService.Get<IStampantiService>();
+        private ITrasportatoriService trasportatoriService => DependencyService.Get<ITrasportatoriService>();
         private IAutoCisterneService autoCisterneService => DependencyService.Get<IAutoCisterneService>();
         private ISincronizzazioneService sincronizzazioneService = DependencyService.Get<ISincronizzazioneService>();
         private IAmbientiService ambientiService = DependencyService.Get<IAmbientiService>();
@@ -148,7 +149,7 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
                 this.StampanteSelezionata = stampanti.FirstOrDefault(s => s.Selezionata);
                 this.StampantiPresenti = this.Stampanti.Count > 0;
 
-                var autocisterne = this.autoCisterneService.GetItemsAsync().Result;
+                var autocisterne = await LoadAutocisterne();
                 this.Autocisterne = new ObservableCollection<AutoCisterna>(autocisterne);
                 this.AutocisternaSelezionata = autocisterne.FirstOrDefault(a => a.Selezionata);
 
@@ -177,6 +178,14 @@ namespace LatteMarche.Xamarin.ViewModels.Impostazioni
 
                 await this.page.DisplayAlert("Errore", "Si è verificato un errore imprevisto. Contattare l'amministratore", "OK");
             }
+        }
+
+        private async Task<IEnumerable<AutoCisterna>> LoadAutocisterne()
+        {
+            var trasportatore = await this.trasportatoriService.GetCurrent();
+            var autocisterne = await this.autoCisterneService.GetItemsAsync();
+
+            return autocisterne.Where(ac => ac.IdTrasportatore == trasportatore.Id).ToList();
         }
 
         private async Task ExecuteDiscoveryCommand()

@@ -273,7 +273,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         private async void Item_OnItem_Transfering(object sender, EventArgs e)
         {
             var targhe = this.autocisterneService.GetItemsAsync().Result.Where(a => !a.Selezionata).Select(a => a.Targa).ToArray();
-            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Autocistena di destinazione", choices: targhe);
+            var index = await MaterialDialog.Instance.SelectChoiceAsync(title: "Autocisterna di destinazione", choices: targhe);
 
             if (index == -1)
                 return;

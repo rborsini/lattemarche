@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29728.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatteMarche.WebApi", "LatteMarche.WebApi\LatteMarche.WebApi.csproj", "{E34BC3B1-B6E5-43FA-AF6E-5D4004859C5A}"
 EndProject
@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZebraPrinterlConsole", "Zeb
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "lattemarche-vue", "lattemarche-vue\", "{F050BA14-BB3B-4B0C-A5F8-06B87C4868F0}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55380"
 		Debug.AspNetCompiler.PhysicalPath = "lattemarche-vue\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55380\"
