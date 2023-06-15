@@ -257,8 +257,9 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
         {
             var giriAperti = this.giriService.GetGiriApertiAsync().Result;
             var templateAperti = giriAperti.Select(g => g.IdTemplateGiro).Distinct().ToList();
+            var trasportatore = this.trasportatoriService.GetCurrent().Result;
 
-            return this.templateService.GetItemsAsync()
+            return this.templateService.GetItemsAsync(trasportatore.Id)
                 .Result
                 .Where(t => !templateAperti.Contains(t.Id))
                 .OrderBy(t => t.Descrizione)

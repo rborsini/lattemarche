@@ -11,6 +11,7 @@ namespace LatteMarche.Application.Mobile.Dtos
         public int Id { get; set; }
         public string Codice { get; set; }
         public string Descrizione { get; set; }
+        public int IdTrasportatore { get; set; }
 
         public List<AllevamentoDto> Allevamenti { get; set; }
 

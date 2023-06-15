@@ -145,7 +145,11 @@ namespace LatteMarche.Xamarin.Db.Services
                     LogEvent(dto, "Add Template giri", dto.Giri);
                     var giri = Mapper.Map<List<TemplateGiro>>(dto.Giri);
 
-                    giri.ForEach(g => g.IdTrasportatore = trasportatore.Id);
+                    foreach(var giro in giri)
+                    {
+                        if (giro.IdTrasportatore != trasportatore.Id)
+                            giro.IdTrasportatore = (int?)null;
+                    }
 
                     this.templateGiriService.AddRangeItemAsync(giri).Wait();
 
