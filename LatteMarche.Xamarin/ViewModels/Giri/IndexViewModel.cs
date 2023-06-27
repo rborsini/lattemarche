@@ -224,6 +224,13 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                     {
                         var item = Mapper.Map<ItemViewModel>(giro);
 
+                        if(giro.IdTemplateGiro.HasValue)
+                        {
+                            var templateGiro = this.templateGiroService.GetItemAsync(giro.IdTemplateGiro.Value).Result;
+                            item.GiroDaTrasbordo = templateGiro == null || !templateGiro.IdTrasportatore.HasValue;
+                        }
+
+
                         item.OnItem_Closing += Item_OnItem_Closing;
                         item.OnItem_Transfering += Item_OnItem_Transfering;
                         item.OnItem_Opening += Item_OnItem_Opening;

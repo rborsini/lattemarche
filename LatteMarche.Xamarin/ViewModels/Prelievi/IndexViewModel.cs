@@ -34,6 +34,7 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         private Giro giro;
 
         private IPrelieviService prelieviService => DependencyService.Get<IPrelieviService>();
+        private ITemplateGiroService templateGiroService => DependencyService.Get<ITemplateGiroService>();
 
         private ObservableCollection<ItemViewModel> prelievi;
 
@@ -41,7 +42,9 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
 
         #region Properties
 
-        public bool IsReadOnly => this.giro != null && this.giro.DataConsegna.HasValue;
+        public bool GiroDaTrasbordo { get; set; }
+
+        public bool IsReadOnly => (this.giro != null && this.giro.DataConsegna.HasValue) || this.GiroDaTrasbordo;
 
         public bool IsEditable => !this.IsReadOnly;
 
@@ -63,7 +66,13 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
         public IndexViewModel(INavigation navigation, Page page, Giro giro)
             : base(navigation, page)
         {
-            
+
+            if(giro != null && giro.IdTemplateGiro.HasValue)
+            {
+                var templateGiro = this.templateGiroService.GetItemAsync(giro.IdTemplateGiro.Value).Result;
+                this.GiroDaTrasbordo = templateGiro == null || !templateGiro.IdTrasportatore.HasValue;
+            }
+
             this.Prelievi = new ObservableCollection<ItemViewModel>();
             this.giro = giro;
 
@@ -100,7 +109,11 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     var prelievi = this.prelieviService.GetByGiro(this.giro.Id).Result;
                     var items = Mapper.Map<List<ItemViewModel>>(prelievi.ToList());
 
-                    items.ForEach(i => { i.ReadOnly = this.giro.DataConsegna.HasValue; });
+                    items.ForEach(i => 
+                        { 
+                            i.ReadOnly = this.giro.DataConsegna.HasValue || this.GiroDaTrasbordo;  
+                        }
+                    );
 
                     this.Prelievi = new ObservableCollection<ItemViewModel>(items);
 

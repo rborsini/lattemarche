@@ -25,12 +25,11 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         #region Properties
 
-        public Color BackgroundColor => this.DataConsegna.HasValue ? Color.FromHex("#CCC") : Color.FromHex("#FFF");
+        public Color BackgroundColor => this.GiroDaTrasbordo || this.DataConsegna.HasValue ? Color.FromHex("#CCC") : Color.FromHex("#FFF");
 
         public int Id { get; set; }
 
         public int? IdTemplateGiro { get; set; }
-
         public string Titolo { get; set; }
 
         public string CodiceLotto { get; set; }
@@ -43,6 +42,8 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
 
         public DateTime? DataUpload { get; set; }
 
+        public bool GiroDaTrasbordo { get; set; }
+
         public MaterialMenuItem[] Actions
         {
             get
@@ -52,7 +53,7 @@ namespace LatteMarche.Xamarin.ViewModels.Giri
                 if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
                     actions.Add(new MaterialMenuItem { Text = CHIUDI });
 
-                if (!this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
+                if (!this.GiroDaTrasbordo && !this.DataConsegna.HasValue && Connectivity.NetworkAccess != NetworkAccess.None)
                     actions.Add(new MaterialMenuItem { Text = TRASBORDA });
 
                 actions.Add(new MaterialMenuItem { Text = STAMPA });

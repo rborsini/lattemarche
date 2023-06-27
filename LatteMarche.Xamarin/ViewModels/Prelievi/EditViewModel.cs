@@ -339,8 +339,10 @@ namespace LatteMarche.Xamarin.ViewModels.Prelievi
                     }
 
                     var giro = this.giriService.GetItemAsync(this.idGiro).Result;
+                    var templateGiro = this.templateGiroService.GetItemAsync(giro.IdTemplateGiro.Value).Result;
+                    var giroDaTrasbordo = templateGiro == null || !templateGiro.IdTrasportatore.HasValue;
 
-                    this.IsEditable = !giro.DataConsegna.HasValue;
+                    this.IsEditable = !giro.DataConsegna.HasValue && !giroDaTrasbordo;
 
                     var acquirenti = this.acquirentiService.GetItemsAsync().Result;
                     var cessionari = this.cessionariService.GetItemsAsync().Result;

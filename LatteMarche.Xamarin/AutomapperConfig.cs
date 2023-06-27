@@ -49,7 +49,8 @@ namespace LatteMarche.Xamarin
 			#region ViewModels
 
 			mappings.CreateMap<Giro, ViewModels.Giri.ItemViewModel>()
-				.ForMember(dest => dest.SubTotaleStr, opt => opt.MapFrom(src => $"{src.Prelievi.Sum(p => p.Quantita_kg)} kg - {src.Prelievi.Sum(p => p.Quantita_lt)} lt"));
+				.ForMember(dest => dest.SubTotaleStr, opt => opt.MapFrom(src => $"{src.Prelievi.Sum(p => p.Quantita_kg)} kg - {src.Prelievi.Sum(p => p.Quantita_lt)} lt"))
+				;
 
 			mappings.CreateMap<Prelievo, ViewModels.Prelievi.ItemViewModel>();
 
