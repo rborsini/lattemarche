@@ -45,6 +45,7 @@ namespace LatteMarche.WebApi.Controllers_Web
         }
 
         [ViewItem("Save", "Prelievi - Dettaglio", "Modifica")]
+        [ViewItem("Delete", "Prelievi - Dettaglio", "Rimozione")]
         [ViewItem("Mappa", "Prelievi - Dettaglio", "Mappa")]
         [ViewItem(nameof(Edit), "Prelievi - Dettaglio", "Sola lettura")]
         [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]

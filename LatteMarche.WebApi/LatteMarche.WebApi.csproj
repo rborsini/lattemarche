@@ -434,7 +434,10 @@
     <None Include="Properties\PublishProfiles\Deploy_TEST.pubxml" />
     <None Include="Properties\PublishProfiles\Dev.pubxml" />
     <None Include="Properties\PublishProfiles\Dev_Local.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\lattemarche - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lattemarche - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Properties\PublishProfiles\Dev_Local.pubxml.user" />
     <Content Include="Scripts\jquery-1.6.4.js" />

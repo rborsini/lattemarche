@@ -131,7 +131,7 @@
         <th>Acquirente</th>
         <th>Destinatario</th>
         <th>Tipo Latte</th>
-        <th v-if="idProfilo == 1" ></th>
+        <th></th>
       </template>
 
       <!-- foot -->
@@ -144,7 +144,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th v-if="idProfilo == 1"></th>
+        <th></th>
       </template>
     </data-table>
   </div>
@@ -153,8 +153,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch, Emit } from "vue-property-decorator";
-import axios, { AxiosPromise } from 'axios';
 
 import Waiter from "../../components/waiter.vue";
 import DataTable from "../../components/dataTable.vue";
@@ -163,20 +161,14 @@ import Datepicker from "../../components/datepicker.vue";
 import NotificationDialog from "../../components/notificationDialog.vue";
 import ConfirmDialog from "../../components/confirmDialog.vue";
 
-import { Trasportatore } from "../../models/trasportatore.model";
-import { Acquirente } from "../../models/acquirente.model";
-import { Destinatario } from "../../models/destinatario.model";
 import { PrelievoLatte, PrelieviLatteSearchModel } from "../../models/prelievoLatte.model";
-import { TipoLatte } from "../../models/tipoLatte.model";
 
 import { PrelieviLatteService } from "../../services/prelieviLatte.service";
 import { DropdownService } from "../../services/dropdown.service";
 import { UrlService } from "@/services/url.service";
 
-import { Dropdown, DropdownItem } from "../../models/dropdown.model";
-import { parseJSON } from 'jquery';
+import { Dropdown } from "../../models/dropdown.model";
 import { AuthorizationsService } from '@/services/authorizations.service';
-import { BaseSearchModel } from '@/models/baseSearch.model';
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -230,6 +222,8 @@ export default class PrelieviLatteIndexPage extends Vue {
   public canSearchCessionario: boolean = true;
   public canHighligthRow: boolean = false;
   public idProfilo: any = '';
+  public canEdit: boolean = true;
+  public canRemove: boolean = true;
 
   public totale_prelievi_kg: number = 0;
   public totale_prelievi_lt: number = 0;
@@ -247,7 +241,7 @@ export default class PrelieviLatteIndexPage extends Vue {
 
   public mounted() {
     this.readPermissions();
-    this.initTable();
+    this.initTable(this.canEdit, this.canRemove);
     this.loadDropdown();
     this.initSearchBox();  
 
@@ -307,7 +301,7 @@ export default class PrelieviLatteIndexPage extends Vue {
   }
 
   // inizializzazione tabella
-  private initTable(): void {
+  private initTable(canEdit: boolean, canRemove: boolean): void {
     var options: any = {};
     options.responsive = true;
     options.columns = [];
@@ -362,23 +356,27 @@ export default class PrelieviLatteIndexPage extends Vue {
     options.columns.push({ className: "truncate", data: "Destinatario" });
     options.columns.push({ className: "truncate",  width: "20px", data: "SiglaLatte" });
 
-    if(this.idProfilo == 1) {
-      options.columns.push({
-        render: function(data: any, type: any, row: any) {
-          var html = '<div class="text-center">';
+    options.columns.push({
+      render: function(data: any, type: any, row: any) {
+        var html = '<div class="text-center">';
 
+        if(canEdit) {
           html += '<a class="edit" title="modifica" style="width: 30px;cursor: pointer;" href="/prelievi/edit?id=' + row.Id + '" ><i class="far fa-edit"></i></a>';            
+        }
+
+        if(canRemove) {
           html += '<a class="pl-3 delete" title="elimina" style="width: 30px;cursor: pointer;" data-row-id="' + row.Id + '" ><i class="far fa-trash-alt"></i></a>';
+        }
 
-          html += "</div>";
+        html += "</div>";
 
-          return html;
-        },
-        width: "60px",
-        className: "edit-column",
-        orderable: false
-      });
-    }
+        return html;
+      },
+      width: "60px",
+      className: "edit-column",
+      orderable: false
+    });
+    
 
     options.orderFixed = [0, "asc"];
 
@@ -540,6 +538,8 @@ export default class PrelieviLatteIndexPage extends Vue {
   // lettura permessi da jwt
   private readPermissions() {
     this.canHighligthRow = AuthorizationsService.isViewItemAuthorized("Prelievi","Index","FlagCoordinate");
+    this.canEdit = AuthorizationsService.isViewItemAuthorized("Prelievi","Edit","Edit");
+    this.canRemove = AuthorizationsService.isViewItemAuthorized("Prelievi","Edit","Delete");
   }  
 
 }

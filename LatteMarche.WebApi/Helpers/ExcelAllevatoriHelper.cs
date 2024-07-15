@@ -1,6 +1,7 @@
 ﻿using LatteMarche.Core.Models;
 using LatteMarche.WebApi.Models;
 using NPOI.HSSF.UserModel;
+using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
@@ -110,6 +111,15 @@ namespace LatteMarche.WebApi.Helpers
             cellStyle.BorderBottom = BorderStyle.Thin;
             cellStyle.BorderLeft = BorderStyle.Thin;
             cellStyle.BorderRight = BorderStyle.Thin;
+
+
+            var red = HSSFColor.Red.Index;
+            var green = HSSFColor.Green.Index;
+
+            var background = prelievo.DistanzaAllevamento.HasValue && prelievo.DistanzaAllevamento.Value > 500 ? red : green;
+                
+            cellStyle.FillForegroundColor = background;
+            cellStyle.FillPattern = FillPattern.SolidForeground;
 
             cellStyle.VerticalAlignment = VerticalAlignment.Top;
 
