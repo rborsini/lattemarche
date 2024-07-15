@@ -130,8 +130,8 @@ namespace LatteMarche.Application.Mobile.Services
                 db.Trasportatore = this.mapper.Map<TrasportatoreDto>(this.trasportatoriRepository.GetById(idTrasportatore));
                 db.Autocisterna = this.mapper.Map<AutocisternaDto>(GetAutocisterna(dispositivo));
                 db.Autocisterne = this.mapper.Map<List<AutocisternaDto>>(GetAutocisterne(dispositivo));
-                //db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
-                db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore > 0).ToList());
+                db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore == idTrasportatore).ToList());
+                //db.Giri = this.mapper.Map<List<TemplateGiroDto>>(this.giriRepository.DbSet.Where(g => g.IdTrasportatore > 0).ToList());
                 db.TipiLatte = this.mapper.Map<List<TipoLatteDto>>(this.tipiLatteRepository.Query);
 
                 var idTipiLatte = db.TipiLatte.Select(tl => tl.Id).ToList();
@@ -260,7 +260,7 @@ namespace LatteMarche.Application.Mobile.Services
         private List<Autocisterna> GetAutocisterne(DispositivoMobile dispositivo)
         {
             return this.autocisterneRepository.DbSet
-                //.Where(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value)
+                .Where(a => a.IdTrasportatore == dispositivo.IdTrasportatore.Value)
                 .ToList();
         }
 
