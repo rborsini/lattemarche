@@ -4,6 +4,7 @@ import GraficoWidgetModel from "@/models/graficoWidget.model";
 import { AnalisiQuantitativaWidget } from '@/models/analisiQuantitativaWidget.model';
 import { AnalisiQualitativaWidget } from '@/models/analisiQualitativaWidget.model';
 import { AnalisiComparativaWidget } from '@/models/analisiComparativaWidget.model';
+import { WidgetMap, WidgetMapSearchModel } from '@/models/mapAllevamenti.model';
 
 export default class WidgetsService {
     constructor() { }
@@ -31,4 +32,8 @@ export default class WidgetsService {
     public analisiComparativa(idAllevamento: number, da: string, a: string): AxiosPromise<AnalisiComparativaWidget> {
         return axios.get('/api/widgets/analisiComparativa?idAllevamento=' + idAllevamento + '&da=' + da + '&a=' + a);
     }
+
+    public analisiMappa(searchModel: WidgetMapSearchModel): AxiosPromise<WidgetMap> {
+        return axios.post('/api/widgets/analisiMappa', searchModel);
+    }    
 }

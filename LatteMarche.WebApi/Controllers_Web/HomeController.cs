@@ -79,6 +79,7 @@ namespace LatteMarche.WebApi.Controllers_Web
 
             analisi.Items.Add(MakeViewModel("Produttori", "Produttori", "Analisi"));
             analisi.Items.Add(MakeViewModel("Analisi latte", "Index", "AnalisiLatte"));
+            analisi.Items.Add(MakeViewModel("Geografica", "Map", "Analisi"));
 
             model.Add(analisi);
 

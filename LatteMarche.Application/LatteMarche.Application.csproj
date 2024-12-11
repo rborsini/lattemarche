@@ -225,11 +225,15 @@
     <Compile Include="Dashboard\Dtos\WidgetAnalisiComparativaDto.cs" />
     <Compile Include="Dashboard\Dtos\WidgetAnalisiQuantitativaDto.cs" />
     <Compile Include="Dashboard\Dtos\WidgetGraficoDto.cs" />
+    <Compile Include="Dashboard\Dtos\WidgetMapDto.cs" />
     <Compile Include="Dashboard\Dtos\WidgetSommarioDto.cs" />
+    <Compile Include="Dashboard\Filters\MapSearchDto.cs" />
     <Compile Include="Dashboard\Interfaces\IAnalisiComparativaService.cs" />
+    <Compile Include="Dashboard\Interfaces\IAnalisiMappaService.cs" />
     <Compile Include="Dashboard\Interfaces\IAnalisiQualitativaService.cs" />
     <Compile Include="Dashboard\Interfaces\IAnalisiQuantitativaService.cs" />
     <Compile Include="Dashboard\Interfaces\IWidgetsService.cs" />
+    <Compile Include="Dashboard\Services\AnalisiMappaService.cs" />
     <Compile Include="Dashboard\Services\AnalisiQualitativaService.cs" />
     <Compile Include="Dashboard\Services\AnalisiComparativaService.cs" />
     <Compile Include="Dashboard\Services\AnalisiQuantitativaService.cs" />

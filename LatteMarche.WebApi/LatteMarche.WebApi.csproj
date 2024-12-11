@@ -462,6 +462,7 @@
     <Content Include="Views\Analisi\Produttori.cshtml" />
     <Content Include="Views\Trasbordi\Edit.cshtml" />
     <Content Include="Views\Trasbordi\Index.cshtml" />
+    <Content Include="Views\Analisi\Map.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

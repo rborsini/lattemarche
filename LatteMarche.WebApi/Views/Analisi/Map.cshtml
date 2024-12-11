@@ -19,6 +19,11 @@
 <div id="app">
 </div>
 
+@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44"></script>*@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44&libraries=marker"></script>
+
+
+
 
 <!-- Js -->
 @section Js
@@ -26,7 +31,7 @@
     @{
         var version = System.Configuration.ConfigurationManager.AppSettings["version"];
         var folder = EnvHelper.IsProd ? "prod/js" : "dev";
-        var url = "~/dist/" + folder + "/analisiProduttoriIndex.js";
+        var url = "~/dist/" + folder + "/analisiMapIndex.js";
 
         <script src="@Url.Content(url)?ver=@version"></script>
     }

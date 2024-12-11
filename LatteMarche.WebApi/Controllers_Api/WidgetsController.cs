@@ -1,5 +1,6 @@
 ﻿
 using LatteMarche.Application.Dashboard.Dtos;
+using LatteMarche.Application.Dashboard.Filters;
 using LatteMarche.Application.Dashboard.Interfaces;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Filters;
@@ -32,6 +33,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         private IAnalisiComparativaService analisiComparativaService;
         private IAnalisiQualitativaService analisiQualitativaService;
         private IAnalisiQuantitativaService analisiQuantitativaService;
+        private IAnalisiMappaService analisiMappaService;
 
         #endregion
 
@@ -42,13 +44,15 @@ namespace LatteMarche.WebApi.Controllers_Api
             IUtentiService utentiService, 
             IAnalisiComparativaService analisiComparativaService,
             IAnalisiQualitativaService analisiQualitativaService,
-            IAnalisiQuantitativaService analisiQuantitativaService)
+            IAnalisiQuantitativaService analisiQuantitativaService,
+            IAnalisiMappaService analisiMappaService)
         {
             this.widgetsService = widgetsService;
             this.utentiService = utentiService;
             this.analisiComparativaService = analisiComparativaService;
             this.analisiQualitativaService = analisiQualitativaService;
             this.analisiQuantitativaService = analisiQuantitativaService;
+            this.analisiMappaService = analisiMappaService;
         }
 
         #endregion
@@ -145,6 +149,21 @@ namespace LatteMarche.WebApi.Controllers_Api
         public IHttpActionResult AnalisiComparativa(int idAllevamento, string da, string a)
         {
             var dto = this.analisiComparativaService.Load(idAllevamento, DateHelper.ConvertToDateTime(da).Value, DateHelper.ConvertToDateTime(a).Value);
+            return Ok(dto);
+        }
+
+        /// <summary>
+        /// Analisi mappa
+        /// </summary>
+        /// <returns></returns>
+        [ViewItem(nameof(AnalisiMappa), PAGE_NAME, "Analisi Mappa")]
+        [HttpPost]
+        public IHttpActionResult AnalisiMappa([FromBody] MapSearchDto searchDto)
+        {
+            var dto = this.analisiMappaService.Load(searchDto);
+
+            //dto.Markers = dto.Markers.Where(a => a.Allevamento_Id == 468).ToList();
+
             return Ok(dto);
         }
 

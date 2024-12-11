@@ -41,6 +41,16 @@ namespace LatteMarche.WebApi.Controllers_Web
             return View(idProfilo);
         }
 
+        [ViewItem(nameof(Map), "Analisi", "Map")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
+        public ActionResult Map()
+        {
+            var utente = this.utentiService.Details(User.Identity.Name);
+            int idProfilo = utente != null ? utente.IdProfilo : 0;
+
+            return View(idProfilo);
+        }
+
         #endregion
 
     }

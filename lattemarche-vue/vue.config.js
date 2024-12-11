@@ -8,6 +8,9 @@ module.exports = {
         analisiLatteIndex: {            
             entry: 'src/pages/analisiLatte/index.ts'
         },   
+        analisiMapIndex: {            
+            entry: 'src/pages/analisiMap/index.ts'
+        },           
         analisiProduttoriIndex: {            
             entry: 'src/pages/analisiProduttori/index.ts'
         },                
