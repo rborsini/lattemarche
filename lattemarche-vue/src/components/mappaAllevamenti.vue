@@ -28,9 +28,9 @@
 
                     // https://developers.google.com/maps/documentation/javascript/advanced-markers/basic-customization
                     let pin = new google.maps.marker.PinElement({
-                                background: allevamento.Acquirente_Color,
-                                borderColor: allevamento.TipoLatte_Color,
-                                glyphColor: allevamento.TipoLatte_Color
+                                background: allevamento.Color,
+                                // borderColor: allevamento.Color,
+                                // glyphColor: allevamento.Color
                             });
 
                     var marker = new google.maps.marker.AdvancedMarkerElement({
@@ -43,10 +43,6 @@
                     });                    
 
                     google.maps.event.addListener(marker, 'click', function (e) {
-                        console.log("marker", marker);
-                        console.log("e", e);
-                        console.log("e.latLng", e.latLng.lat());
-                        console.log("$(this)", $($(this)[0]));
 
                         var allevamento = null;    
                         for(var i = 0; i < allevamenti.length; i++) {
@@ -61,6 +57,7 @@
                                             <div class="row"><label class="col-3"><b>Allevamento:</b></label><div class="col-9"><b>${allevamento.Allevamento}</b></div></div>
                                             <div class="row"><label class="col-3">Acquirente:</label><div class="col-9">${allevamento.Acquirente}</div></div>
                                             <div class="row"><label class="col-3">Tipo latte:</label><div class="col-9">${allevamento.TipoLatte}</div></div>
+                                            <div class="row"><label class="col-3">Gir:</label><div class="col-9">${allevamento.Giro}</div></div>
                                          </div>` 
                         });                        
                         infoWindow.open(map, this);
