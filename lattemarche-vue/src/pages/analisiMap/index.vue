@@ -143,11 +143,11 @@ export default class AnalisiMapIndexPage extends Vue {
 
     public mounted() {
 
-        // this.parameters.DataFine_Str = DateService.formatDate(new Date());
-        // this.parameters.DataInizio_Str = DateService.formatDate(DateService.subtractMonth(new Date()));
+        this.parameters.DataFine_Str = DateService.formatDate(new Date());
+        this.parameters.DataInizio_Str = DateService.formatDate(DateService.subtractMonth(new Date()));
 
-        this.parameters.DataInizio_Str = '01-01-2022';
-        this.parameters.DataFine_Str = '01-01-2023';
+        // this.parameters.DataInizio_Str = '01-01-2022';
+        // this.parameters.DataFine_Str = '01-01-2023';
 
         this.loadDropdown();
         this.initMap();

@@ -140,7 +140,7 @@ namespace LatteMarche.Application.Dashboard.Services
                 prelieviClause += $" AND giri.CODICE_GIRO =  '{searchDto.CodiceGiro}' ";
 
             if (searchDto.IdTrasportatore.HasValue && searchDto.IdTrasportatore != 0)
-                prelieviClause += $" AND ID_TRASPORTATORE =  {searchDto.IdTrasportatore} ";
+                prelieviClause += $" AND prelievi.ID_TRASPORTATORE =  {searchDto.IdTrasportatore} ";
 
             if (searchDto.IdAcquirente.HasValue && searchDto.IdAcquirente != 0)
                 prelieviClause += $" AND ID_ACQUIRENTE =  {searchDto.IdAcquirente} ";

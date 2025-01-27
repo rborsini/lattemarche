@@ -322,9 +322,11 @@
     <Content Include="Content\plugins\popper\popper.min.js" />
     <Content Include="dist\prod\acquirentiIndex.html" />
     <Content Include="dist\prod\analisiLatteIndex.html" />
+    <Content Include="dist\prod\analisiMapIndex.html" />
     <Content Include="dist\prod\analisiProduttoriIndex.html" />
     <Content Include="dist\prod\cessionariIndex.html" />
     <Content Include="dist\prod\changePassword.html" />
+    <Content Include="dist\prod\css\analisiMapIndex.css" />
     <Content Include="dist\prod\css\analisiProduttoriIndex.css" />
     <Content Include="dist\prod\css\bootstrap-datepicker.min.css" />
     <Content Include="dist\prod\css\chunk-common.css" />
@@ -342,6 +344,7 @@
     <Content Include="dist\prod\giriIndex.html" />
     <Content Include="dist\prod\js\acquirentiIndex.js" />
     <Content Include="dist\prod\js\analisiLatteIndex.js" />
+    <Content Include="dist\prod\js\analisiMapIndex.js" />
     <Content Include="dist\prod\js\analisiProduttoriIndex.js" />
     <Content Include="dist\prod\js\cessionariIndex.js" />
     <Content Include="dist\prod\js\changePassword.js" />
@@ -431,6 +434,7 @@
     <Content Include="dist\prod\js\analisiProduttoriIndex.js.map" />
     <Content Include="dist\prod\js\trasbordiEdit.js.map" />
     <Content Include="dist\prod\js\trasbordiIndex.js.map" />
+    <Content Include="dist\prod\js\analisiMapIndex.js.map" />
     <None Include="Properties\PublishProfiles\Deploy_TEST.pubxml" />
     <None Include="Properties\PublishProfiles\Dev.pubxml" />
     <None Include="Properties\PublishProfiles\Dev_Local.pubxml" />
