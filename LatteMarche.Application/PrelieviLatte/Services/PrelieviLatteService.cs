@@ -434,13 +434,27 @@ namespace LatteMarche.Application.Latte.Services
             dbEntity.Temperatura = viewEntity.Temperatura;
             dbEntity.NumeroMungiture = viewEntity.NumeroMungiture;
             dbEntity.Scomparto = viewEntity.Scomparto;
-            dbEntity.LottoConsegna = viewEntity.LottoConsegna;
-            dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
-            dbEntity.CodiceSitra = viewEntity.CodiceSitra;
-            dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
-            dbEntity.Lat = viewEntity.Lat;
-            dbEntity.Lng = viewEntity.Lng;
-            dbEntity.IdGiro = viewEntity.IdGiro;
+
+            if (!String.IsNullOrEmpty(viewEntity.LottoConsegna))
+                dbEntity.LottoConsegna = viewEntity.LottoConsegna;
+
+            if (!String.IsNullOrEmpty(viewEntity.SerialeLabAnalisi))
+                dbEntity.SerialeLabAnalisi = viewEntity.SerialeLabAnalisi;
+
+            if(!String.IsNullOrEmpty(viewEntity.CodiceSitra))
+                dbEntity.CodiceSitra = viewEntity.CodiceSitra;
+
+            if(viewEntity.IdAutocisterna.HasValue)
+                dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
+            
+            if(viewEntity.Lat.HasValue)
+                dbEntity.Lat = viewEntity.Lat;
+
+            if(viewEntity.Lng.HasValue)
+                dbEntity.Lng = viewEntity.Lng;
+            
+            if(viewEntity.IdGiro.HasValue)
+                dbEntity.IdGiro = viewEntity.IdGiro;
 
             return dbEntity;
         }
