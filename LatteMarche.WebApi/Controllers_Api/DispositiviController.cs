@@ -1,5 +1,7 @@
 ﻿using LatteMarche.Application.Dispositivi.Dtos;
 using LatteMarche.Application.Dispositivi.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
+using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Filters;
 using log4net;
 using System;
@@ -18,6 +20,7 @@ namespace LatteMarche.WebApi.Controllers_Api
         #region Fields
 
         private IDispositiviService dispositiviService;
+        private IUtentiService utentiService;
 
         private static ILog log = LogManager.GetLogger(typeof(DispositiviController));
 
@@ -25,9 +28,13 @@ namespace LatteMarche.WebApi.Controllers_Api
 
         #region Constructors
 
-        public DispositiviController(IDispositiviService dispositiviService)
+        public DispositiviController(
+            IDispositiviService dispositiviService,
+            IUtentiService utentiService
+            )
         {
             this.dispositiviService = dispositiviService;
+            this.utentiService = utentiService;
         }
 
         #endregion
@@ -39,6 +46,9 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Search([FromBody] DataTableAjaxPostModel filterModel, [FromUri] DispositiviSearchDto searchDto)
         {
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+
+            searchDto.Tenant = utente.Tenant != "all" ? utente.Tenant : null;
             searchDto.FullText = filterModel.Search.Value;
 
             searchDto = JQueryDataTableHelper.Merge<DispositiviSearchDto>(filterModel, searchDto);

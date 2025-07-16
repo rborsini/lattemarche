@@ -89,8 +89,13 @@ namespace LatteMarche.Application.Latte.Services
         public IQueryable<V_PrelievoLatte> PrelieviAutorizzati(int idUtente)
         
          {
-            var query = this.v_prelieviLatteRepository.DbSet;
+            var query = this.v_prelieviLatteRepository.DbSet.AsQueryable();
             var utente = this.utentiService.Details(idUtente);
+
+            if(!String.IsNullOrEmpty(utente.Tenant) && utente.Tenant != "all")
+            {
+                query = query.Where(p => p.Tenant == utente.Tenant);
+            }   
 
             switch (utente.IdProfilo)
             {
@@ -382,6 +387,12 @@ namespace LatteMarche.Application.Latte.Services
             if(!String.IsNullOrEmpty(searchDto.CodiceGiro))
             {
                 query = query.Where(p => p.LottoConsegna.StartsWith(searchDto.CodiceGiro));
+            }
+
+            // Tenant 
+            if (!String.IsNullOrEmpty(searchDto.Tenant))
+            {
+                query = query.Where(p => p.Tenant == searchDto.Tenant);
             }
 
             query = query

@@ -160,6 +160,8 @@ namespace LatteMarche.Core.Models
         [Column("SIGLA_LATTE")]
         public string SiglaLatte { get; set; }
 
+        public string Tenant { get; set; }
+
 
 
     }

@@ -11,4 +11,5 @@ export class Dispositivo {
     public Trasportatore_RagioneSociale: string = "";
     public IdAutocisterna: number = 0;
     public Autocisterna_Targa: string = "";
+    public Tenant: string = "";
 }

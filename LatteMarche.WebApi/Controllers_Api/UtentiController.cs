@@ -48,8 +48,14 @@ namespace LatteMarche.WebApi.Controllers_Api
         [ETag]
         public IHttpActionResult Index()
         {
+            var user = this.utentiService.GetByUsername(User.Identity.Name);
+            var pagedResult = this.utentiService.Search(new UtentiSearchDto()
+            {
+                Length = -1,
+                Tenant = user.Tenant != "all" ? user.Tenant : ""
+            });
 
-            return Ok(this.utentiService.Index());
+            return Ok(pagedResult.FilteredList);
 
         }
 
@@ -130,7 +136,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult Search([FromBody] DataTableAjaxPostModel filterModel, [FromUri] UtentiSearchDto searchDto)
         {
+            var user = this.utentiService.GetByUsername(User.Identity.Name);
+
             searchDto.FullText = filterModel.Search.Value;
+            searchDto.Tenant = user.Tenant != "all" ? user.Tenant : "";
 
             searchDto = JQueryDataTableHelper.Merge<UtentiSearchDto>(filterModel, searchDto);
             var pagedResult = this.utentiService.Search(searchDto);

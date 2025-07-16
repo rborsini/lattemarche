@@ -34,7 +34,7 @@ namespace LatteMarche.Application.Allevamenti.Services
         public AllevamentiService(IUnitOfWork uow, IUtentiService utentiService)
         {
             this.uow = uow;
-            this.repository = this.uow.Get<Allevamento, int>();
+            this.repository = this.uow.Get<Allevamento, int>();            
             this.prelieviRepository = this.uow.Get<PrelievoLatte, int>();
             this.utentiService = utentiService;
         }
@@ -63,12 +63,16 @@ namespace LatteMarche.Application.Allevamenti.Services
 
         private IQueryable<Allevamento> GetQuery(int? idUtente = null)
         {
-            var query = this.repository.DbSet;
+            var query = this.repository.DbSet.AsQueryable();
 
             if (!idUtente.HasValue)
                 return query;
 
             var utente = this.utentiService.Details(idUtente.Value);
+
+            if(!String.IsNullOrEmpty(utente.Tenant) && utente.Tenant != "all")
+                query = query.Where(a => a.Utente.Tenant == utente.Tenant);
+
             var allevamentiIds = new List<int?>();
 
             switch (utente.IdProfilo)
@@ -78,6 +82,7 @@ namespace LatteMarche.Application.Allevamenti.Services
 
                 case 7:     // Acquirente
                     allevamentiIds = this.prelieviRepository.DbSet
+                        .Where(p => p.IdAcquirente == utente.IdAcquirente)
                         .Where(p => p.IdAcquirente == utente.IdAcquirente)
                         .Select(p => p.IdAllevamento)
                         .Distinct()

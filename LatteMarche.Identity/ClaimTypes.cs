@@ -11,6 +11,7 @@ namespace LatteMarche.Identity.OAuth
         username,
         displayName,
         roles,
-        permissions
+        permissions,
+        tenant
     }
 }

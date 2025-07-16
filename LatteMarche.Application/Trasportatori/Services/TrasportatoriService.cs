@@ -73,6 +73,10 @@ namespace LatteMarche.Application.Trasportatori.Services
                 return query;
 
             var utente = this.utentiService.Details(idUtente.Value);
+
+            if (!String.IsNullOrEmpty(utente.Tenant) && utente.Tenant != "all")
+                query = query.Where(a => a.Tenant == utente.Tenant);
+
             var trasportatoriIds = new List<int?>();
 
             switch (utente.IdProfilo)

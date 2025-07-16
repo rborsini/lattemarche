@@ -13,5 +13,7 @@ namespace LatteMarche.Application.Dispositivi.Dtos
 
         public string FullText { get; set; }
 
+        public string Tenant { get; set; }
+
     }
 }

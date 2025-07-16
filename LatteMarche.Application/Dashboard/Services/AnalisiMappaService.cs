@@ -148,6 +148,9 @@ namespace LatteMarche.Application.Dashboard.Services
             if (searchDto.IdTipoLatte.HasValue && searchDto.IdTipoLatte != 0)
                 prelieviClause += $" AND ID_TIPO_LATTE =  {searchDto.IdTipoLatte} ";
 
+            if(!String.IsNullOrEmpty(searchDto.Tenant))
+                prelieviClause += $" AND utenti.TENANT =  '{searchDto.Tenant}' ";
+
             query = query.Replace("{prelieviClause}", prelieviClause);
 
             widget.Markers = this.uow.Context.Database.SqlQuery<Marker>(query).ToList();

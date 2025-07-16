@@ -43,5 +43,6 @@ namespace LatteMarche.Application.Dashboard.Filters
         public int? IdTrasportatore { get; set; }
 
         public string AggregazioneColore { get; set; }
+        public string Tenant { get; set; }
     }
 }

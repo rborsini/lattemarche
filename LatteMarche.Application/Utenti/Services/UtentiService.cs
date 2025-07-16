@@ -306,6 +306,12 @@ namespace LatteMarche.Application.Utenti.Services
                 query = query.Where(u => u.Username.Contains(searchDto.Username));
             }
 
+            // Tenant
+            if(!String.IsNullOrEmpty(searchDto.Tenant))
+            {
+                query = query.Where(u => u.Tenant == searchDto.Tenant);
+            }
+
             // full text
             if(!String.IsNullOrEmpty(searchDto.FullText))
             {
@@ -353,6 +359,7 @@ namespace LatteMarche.Application.Utenti.Services
             dbEntity.Abilitato = viewEntity.Abilitato;
             dbEntity.Visibile = viewEntity.Visibile;
             dbEntity.IdComune = viewEntity.IdComune;
+            dbEntity.Tenant = viewEntity.Tenant;
 
             dbEntity.UtenteXAcquirente = UpdateUtenteXAcquirente(dbEntity.UtenteXAcquirente, viewEntity.UtenteXAcquirente);
             dbEntity.UtenteXCessionario = UpdateUtenteXCessionario(dbEntity.UtenteXCessionario, viewEntity.UtenteXCessionario);

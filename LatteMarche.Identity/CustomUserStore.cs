@@ -116,7 +116,8 @@ namespace LatteMarche.Identity
                     PasswordHash = utente.Password,
                     Password = utente.Password,
                     UserName = utente.Username,
-                    Roles = new List<string>() { profilo.Descrizione.Trim() }
+                    Roles = new List<string>() { profilo.Descrizione.Trim() },
+                    Tenant = utente.Tenant
                 };
             }
 

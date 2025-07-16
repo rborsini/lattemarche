@@ -266,6 +266,9 @@ namespace LatteMarche.WebApi.Controllers_Api
             try
             {
                 UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+
+                searchDto.Tenant = utente.Tenant != "all" ? utente.Tenant : null;
+
                 var list = this.prelieviLatteService.Search(searchDto, utente.Id);
                 return Ok(list);
             }
@@ -281,6 +284,9 @@ namespace LatteMarche.WebApi.Controllers_Api
         {
 
             UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+
+            searchDto.Tenant = utente.Tenant != "all" ? utente.Tenant : null;
+
             var list = this.prelieviLatteService.Search(searchDto, utente.Id);
 
             byte[] content = LatteMarche.WebApi.Helpers.ExcelAllevatoriHelper.MakeExcelTot(list);

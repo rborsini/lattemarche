@@ -2,6 +2,7 @@
 using LatteMarche.Application.Dashboard.Dtos;
 using LatteMarche.Application.Dashboard.Filters;
 using LatteMarche.Application.Dashboard.Interfaces;
+using LatteMarche.Application.Utenti.Dtos;
 using LatteMarche.Application.Utenti.Interfaces;
 using LatteMarche.WebApi.Filters;
 using RB.Date;
@@ -160,6 +161,10 @@ namespace LatteMarche.WebApi.Controllers_Api
         [HttpPost]
         public IHttpActionResult AnalisiMappa([FromBody] MapSearchDto searchDto)
         {
+            UtenteDto utente = this.utentiService.GetByUsername(User.Identity.Name);
+
+            searchDto.Tenant = utente.Tenant != "all" ? utente.Tenant : null;
+
             var dto = this.analisiMappaService.Load(searchDto);
 
             //dto.Markers = dto.Markers.Where(a => a.Allevamento_Id == 468).ToList();

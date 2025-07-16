@@ -50,7 +50,7 @@
 								<label class="offset-1 col-sm-1">Tipo profilo</label>
 								<div class="col-sm-4">
 									<select2 class="form-control" :disabled="utente.Id != 0" :options="profilo.Items" :value.sync="utente.IdProfilo" :value-field="'Value'" :text-field="'Text'" />
-								</div>
+								</div>							
 
 								<!-- Acquirente -->
 								<label v-if="utente.IdProfilo == 7" class="col-sm-1">Acquirente</label>
@@ -140,6 +140,14 @@
 									<input type="text" class="form-control" v-model="utente.Cellulare" />
 								</div>
 							</div>
+
+							<!-- tenant -->
+							<div class="row form-group">
+								<label class="offset-1 col-sm-1">Tenant</label>
+								<div class="col-sm-4">
+									<select2 class="form-control" :disabled="tenant != 'all'" :options="tenants.Items" :value.sync="utente.Tenant" :value-field="'Value'" :text-field="'Text'" />
+								</div>
+							</div>							
 
 							<!-- note -->
 							<div class="row form-group">
@@ -332,6 +340,7 @@ export default class App extends Vue {
 	public isReadOnly: boolean = false;
 	public isAdmin: boolean = false;
 	public btnDeleteVisible: boolean = false;
+	public tenant: string = "";
 
 	public utentiService: UtentiService = new UtentiService();
 	public dropdownService: DropdownService = new DropdownService();
@@ -348,6 +357,7 @@ export default class App extends Vue {
 	public cessionario: Dropdown = new Dropdown();
 	public destinatario: Dropdown = new Dropdown();
 	public tipoLatte: Dropdown = new Dropdown();
+	public tenants: Dropdown = new Dropdown();
 
 	public password_1: string = "";
 	public password_2: string = "";
@@ -362,6 +372,9 @@ export default class App extends Vue {
 		var id = UrlService.getUrlParameter("id");
 		if (id) {
 			this.load(id);
+		} else {
+			this.utente = new Utente();
+			this.utente.Tenant = AuthorizationsService.getCurrentTenant();
 		}
 		this.loadDropdown();
 
@@ -434,6 +447,8 @@ export default class App extends Vue {
 			this.tipoLatte = response.data["tipiLatte"] as Dropdown;
 			this.profilo = response.data["profili"] as Dropdown;
 		});
+
+		this.tenants = this.dropdownService.getTenants();
 	}
 
 	public loadComuni(provincia: string): void {
@@ -506,6 +521,7 @@ export default class App extends Vue {
 
 		this.isReadOnly = !AuthorizationsService.isViewItemAuthorized("Utenti", "Edit", "Edit");
 		this.btnDeleteVisible = AuthorizationsService.isViewItemAuthorized("Utenti", "Edit", "Delete");
+		this.tenant = AuthorizationsService.getCurrentTenant();
 	}
 
 	// reload della pagina sullo stesso id

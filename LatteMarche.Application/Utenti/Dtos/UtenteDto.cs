@@ -74,6 +74,8 @@ namespace LatteMarche.Application.Utenti.Dtos
         public int? IdCessionario { get; set; }
         public int? IdAziendaTrasporti { get; set; }
 
+        public string Tenant { get; set; }
+
         public List<AllevamentoDto> Allevamenti { get; set; }
 
         public List<AutocisternaDto> Autocisterne { get; set; }

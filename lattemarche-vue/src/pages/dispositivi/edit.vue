@@ -62,6 +62,19 @@
                         </div>                        
                     </div>       
 
+                    <!-- Tenant -->
+                    <div class="row form-group">
+                        <label class="col-3">Tenant</label>
+                        <div class="col-9">
+                            <select2 class="form-control"
+                                    :disabled="tenant !== 'all'"
+                                    :options="tenants.Items"
+                                    :value.sync="dispositivo.Tenant"
+                                    :value-field="'Value'"
+                                    :text-field="'Text'" />
+                        </div>                        
+                    </div>                         
+
                     <!-- Marca -->
                     <div class="row form-group">
                         <label class="col-3">Marca</label>
@@ -116,6 +129,7 @@
     import { DispositiviService } from "../../services/dispositivi.service";
     import { Trasportatore } from "../../models/trasportatore.model";
     import { DropdownService} from "../../services/dropdown.service";
+import { AuthorizationsService } from "@/services/authorizations.service";
 
 
     @Component({
@@ -131,9 +145,11 @@
 
         public trasportatori: Dropdown = new Dropdown();
         public autocisterne: Dropdown = new Dropdown();
+        public tenants: Dropdown = new Dropdown();
         public attivo: boolean = false;
         public idTrasportatoreSelezionato: number = 0;
         public idAutocisternaSelezionata: number = 0;
+        public tenant: string = "";
 
         public dispositiviService: DispositiviService;
         public dropdownService: DropdownService;
@@ -153,10 +169,13 @@
         }
 
         mounted() {
+            this.tenant = AuthorizationsService.getCurrentTenant();
             this.dropdownService.getTrasportatori()
                 .then(response => {
                     this.trasportatori = response.data;
                 });
+
+            this.tenants = this.dropdownService.getTenants();
         }
 
         public open(): void {

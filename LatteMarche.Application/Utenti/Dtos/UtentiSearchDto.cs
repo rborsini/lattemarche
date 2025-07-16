@@ -22,5 +22,6 @@ namespace LatteMarche.Application.Utenti.Dtos
         public string Username { get; set; }
 
         public string FullText { get; set; }
+        public string Tenant { get; set; }
     }
 }

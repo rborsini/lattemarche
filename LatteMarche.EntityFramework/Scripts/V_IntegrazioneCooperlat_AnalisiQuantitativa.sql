@@ -63,3 +63,5 @@ FROM
 
 WHERE 
 	prelievi.DATA_PRELIEVO > (SELECT GETDATE() - 15)
+	and
+	utenti_allevamento.TENANT = 'Cooperlat'

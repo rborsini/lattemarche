@@ -30,6 +30,8 @@ export class Utente {
     public IdCessionario?: number;
     public IdAziendaTrasporti?: number;
 
+    public Tenant: string = "";
+
     public Allevamenti: Allevamento[] = [];
     public Autocisterne: Autocisterna[] = [];
 

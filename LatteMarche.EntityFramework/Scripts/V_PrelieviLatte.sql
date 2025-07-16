@@ -29,7 +29,8 @@ SELECT
 	tipo_latte.FATTORE_CONVERSIONE,
     tipo_latte.ID_TIPO_LATTE,
     tipo_latte.DESCRIZIONE AS DESCR_LATTE, 
-    tipo_latte.DESCRIZIONE_BREVE AS SIGLA_LATTE
+    tipo_latte.DESCRIZIONE_BREVE AS SIGLA_LATTE,
+	utenti_allevamento.TENANT
 FROM            
 
 	PRELIEVO_LATTE AS prelievi

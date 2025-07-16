@@ -70,6 +70,8 @@ namespace LatteMarche.Application.Dispositivi.Dtos
         public string VersioneOS { get; set; }
         public string Nome { get; set; }
 
+        public string Tenant { get; set; }
+
 
     }
 }

@@ -85,6 +85,8 @@ namespace LatteMarche.Application.PrelieviLatte.Dtos
 
         public int IdUtente { get; set; }
 
+        public string Tenant { get; set; }
+
         #endregion
     }
 }

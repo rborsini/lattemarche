@@ -57,6 +57,12 @@ namespace LatteMarche.Application.Dispositivi.Services
                                     );
             }
 
+            // tenant
+            if(!String.IsNullOrEmpty(searchDto.Tenant))
+            {
+                query = query.Where(u => u.Tenant == searchDto.Tenant);
+            }
+
             // ordinamento
             query = this.ApplySorting(query, searchDto.Order);
 
@@ -79,6 +85,7 @@ namespace LatteMarche.Application.Dispositivi.Services
             dbEntity.Nome = viewEntity.Nome;
             dbEntity.IdTrasportatore = viewEntity.IdTrasportatore;
             dbEntity.IdAutocisterna = viewEntity.IdAutocisterna;
+            dbEntity.Tenant = viewEntity.Tenant;
 
             return dbEntity;
         }

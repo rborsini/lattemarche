@@ -61,4 +61,14 @@ export class DropdownService {
         return axios.get("/api/giri/dropdown?idTrasportatore=" + idTrasportatore);
     }
 
+    public getTenants(): Dropdown {
+        var dropdown = new Dropdown();
+
+        dropdown.Items.push({ Value: 'Cooperlat', Text: 'Cooperlat' });
+        dropdown.Items.push({ Value: 'LatteMarche', Text: 'LatteMarche' });
+        dropdown.Items.push({ Value: 'all', Text: 'Tutti' });
+
+        return dropdown;
+    }
+
 }

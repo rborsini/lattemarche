@@ -20,6 +20,7 @@ namespace LatteMarche.Identity
             claims.Add(new Claim(LatteMarcheClaimTypes.displayName.ToString(), user.DisplayName));
             claims.Add(new Claim(LatteMarcheClaimTypes.roles.ToString(), String.Join("|", user.Roles)));
             claims.Add(new Claim(LatteMarcheClaimTypes.permissions.ToString(), String.Join("|", user.Permissions)));
+            claims.Add(new Claim(LatteMarcheClaimTypes.tenant.ToString(), user.Tenant));
 
             return claims;
         }

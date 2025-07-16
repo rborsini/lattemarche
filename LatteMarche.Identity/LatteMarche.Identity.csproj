@@ -183,9 +183,6 @@
     <Reference Include="WeCode.Data, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WeCode.Data.1.20.10.21\lib\net461\WeCode.Data.dll</HintPath>
     </Reference>
-    <Reference Include="WeCode.Identity, Version=1.20.10.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeCode.Identity.1.20.10.20\lib\net461\WeCode.Identity.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClaimsProvider.cs" />
@@ -209,6 +206,10 @@
     <ProjectReference Include="..\LatteMarche.EntityFramework\LatteMarche.EntityFramework.csproj">
       <Project>{939a98bb-3372-4bbc-8a9c-213113aee01c}</Project>
       <Name>LatteMarche.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeCode.Identity\WeCode.Identity.csproj">
+      <Project>{e3526d0b-866d-47e1-8228-4d1957f1f0af}</Project>
+      <Name>WeCode.Identity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

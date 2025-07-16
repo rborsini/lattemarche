@@ -76,6 +76,10 @@ namespace LatteMarche.Core.Models
         [Column("TOKEN")]
         public string Token { get; set; }
 
+        [Column("TENANT")]
+        [MaxLength(50)]
+        public string Tenant { get; set; }
+
         public virtual List<RuoloUtente> RuoliUtente { get; set; }
 
         public virtual UtenteXAcquirente UtenteXAcquirente { get; set; }

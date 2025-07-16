@@ -59,6 +59,10 @@ namespace LatteMarche.Core.Models
         [Column("ID_AUTOCISTERNA")]
         public int? IdAutocisterna { get; set; }
 
+        [Column("TENANT")]
+        [MaxLength(50)]
+        public string Tenant { get; set; }
+
         public virtual Autocisterna Autocisterna { get; set; }
 
     }

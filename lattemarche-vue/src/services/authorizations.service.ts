@@ -45,6 +45,11 @@ export class AuthorizationsService {
         }        
     }
 
+    public static getCurrentTenant(): string {
+        var jwt = localStorage.getItem('jwt') as string
+        var obj = AuthorizationsService.decodeToken(jwt);
+        return obj.tenant as string;        
+    }
 
     public static getCurrentRole() {
         var jwt = localStorage.getItem('jwt') as string
