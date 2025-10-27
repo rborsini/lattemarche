@@ -17,7 +17,7 @@ namespace LatteMarche.Application.Dashboard.Services
     {
         #region Constants
 
-        public const int MESE_INIZIO_STAGIONE = 7;
+        public const int MESE_INIZIO_STAGIONE = 1;
 
         #endregion
 
