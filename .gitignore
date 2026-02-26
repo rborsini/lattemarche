@@ -47,3 +47,26 @@ Thumbs.db
 
 /lattemarche.Vue/cypress/screenshots
 /lattemarche.Vue/cypress/videos
+
+# Configuration files
+Web.config
+App.config
+
+# Keep configuration templates
+!Web.config.template
+!App.config.template
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Azure publish profiles
+*.PublishSettings
+*.pubxml
+*.pubxml.user
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
