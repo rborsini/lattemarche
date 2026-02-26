@@ -48,6 +48,8 @@ Thumbs.db
 /lattemarche.Vue/cypress/screenshots
 /lattemarche.Vue/cypress/videos
 
+/PowerShellScripts/database_backup.bat
+
 # Configuration files
 Web.config
 App.config
