@@ -15,8 +15,7 @@
 
                 var options = {
                     center: center,
-                    zoom: zoom,
-                    mapId: "AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44"
+                    zoom: zoom
                 };
                 
                 var map = new google.maps.Map(document.getElementById("map"), options);

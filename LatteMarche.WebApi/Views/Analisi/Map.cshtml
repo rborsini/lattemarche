@@ -19,8 +19,10 @@
 <div id="app">
 </div>
 
-@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44"></script>*@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSxyGo60OyYxJYi18QSBcOFpMOeErtc44&libraries=marker"></script>
+@{
+    var googleMapsKey = System.Configuration.ConfigurationManager.AppSettings["googleMapsApiKey"];
+}
+<script src="https://maps.googleapis.com/maps/api/js?key=@googleMapsKey&libraries=marker"></script>
 
 
 
